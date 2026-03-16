@@ -1,0 +1,45 @@
+# Xcode build artifacts
+ios/*.xcodeproj/xcuserdata/
+ios/*.xcworkspace/xcuserdata/
+ios/DerivedData/
+ios/build/
+ios/*.ipa
+ios/*.dSYM.zip
+ios/*.dSYM
+
+# Android build artifacts
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/*.apk
+android/*.aab
+
+# Credentials & secrets — NEVER commit
+*.mobileprovision
+*.p12
+*.p8
+google-services.json
+GoogleService-Info.plist
+Secrets.swift
+keystore.jks
+*.keystore
+release.properties
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# SPM
+ios/.build/
+ios/Package.resolved
+
+# Editor
+.swiftpm/
+*.swp
+*~
+.idea/
+*.iml
