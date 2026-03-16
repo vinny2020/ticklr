@@ -1,0 +1,90 @@
+<svg width="240" height="500" viewBox="0 0 240 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="and-screen-tickle">
+      <rect x="8" y="8" width="224" height="484" rx="20"/>
+    </clipPath>
+  </defs>
+
+  <!-- Phone frame -->
+  <rect x="2" y="2" width="236" height="496" rx="24" fill="#1A1A1A" stroke="#2E2E2E" stroke-width="2"/>
+  <rect x="8" y="8" width="224" height="484" rx="20" fill="#FAFAFA"/>
+
+  <!-- Punch-hole camera -->
+  <circle cx="120" cy="22" r="5" fill="#1A1A1A"/>
+
+  <g clip-path="url(#and-screen-tickle)">
+
+    <!-- Status bar -->
+    <rect x="8" y="8" width="224" height="28" fill="#FAFAFA"/>
+    <text x="20" y="23" font-family="sans-serif" font-size="9" fill="#1C1C1C">9:41</text>
+    <text x="196" y="23" font-family="sans-serif" font-size="9" fill="#1C1C1C">▌▌▌ 🔋</text>
+
+    <!-- Top app bar -->
+    <rect x="8" y="36" width="224" height="52" fill="#FAFAFA"/>
+    <text x="20" y="71" font-family="sans-serif" font-size="22" font-weight="700" fill="#0A1628">Tickle</text>
+    <circle cx="210" cy="60" r="14" fill="#2563EB"/>
+    <text x="210" y="65" font-family="sans-serif" font-size="18" fill="#FFF" text-anchor="middle">+</text>
+
+    <!-- DUE section header -->
+    <text x="18" y="106" font-family="sans-serif" font-size="11" font-weight="700" fill="#F5C842">⏰  DUE</text>
+
+    <!-- Due card -->
+    <rect x="16" y="112" width="208" height="64" rx="12" fill="#FFF" filter="url(#shadow)"/>
+    <rect x="16" y="112" width="4" height="64" rx="2" fill="#F5C842"/>
+    <circle cx="44" cy="144" r="16" fill="#FEF9C3"/>
+    <text x="44" y="149" font-family="sans-serif" font-size="12" font-weight="600" fill="#F5C842" text-anchor="middle">SR</text>
+    <text x="70" y="138" font-family="sans-serif" font-size="13" font-weight="500" fill="#0A1628">Sarah Rivera</text>
+    <rect x="70" y="143" width="52" height="13" rx="6" fill="#FEF9C3"/>
+    <text x="96" y="153" font-family="sans-serif" font-size="9" font-weight="600" fill="#F5C842" text-anchor="middle">Monthly</text>
+    <text x="126" y="153" font-family="sans-serif" font-size="9" fill="#F5C842">Today</text>
+    <text x="200" y="149" font-family="sans-serif" font-size="20" fill="#F5C842" text-anchor="middle">✓</text>
+
+    <!-- UPCOMING section header -->
+    <text x="18" y="194" font-family="sans-serif" font-size="11" font-weight="700" fill="#757575">UPCOMING</text>
+
+    <!-- Upcoming card 1 -->
+    <rect x="16" y="200" width="208" height="64" rx="12" fill="#FFF"/>
+    <circle cx="44" cy="232" r="16" fill="#DBEAFE"/>
+    <text x="44" y="237" font-family="sans-serif" font-size="12" font-weight="600" fill="#2563EB" text-anchor="middle">AJ</text>
+    <text x="70" y="226" font-family="sans-serif" font-size="13" font-weight="500" fill="#0A1628">Alex Johnson</text>
+    <rect x="70" y="231" width="46" height="13" rx="6" fill="#EFF6FF"/>
+    <text x="93" y="241" font-family="sans-serif" font-size="9" font-weight="600" fill="#2563EB" text-anchor="middle">Weekly</text>
+    <text x="120" y="241" font-family="sans-serif" font-size="9" fill="#757575">In 3d</text>
+    <text x="70" y="257" font-family="sans-serif" font-size="10" fill="#9E9E9E">Ask about the new role</text>
+    <text x="200" y="236" font-family="sans-serif" font-size="18" fill="#BDBDBD" text-anchor="middle">○</text>
+
+    <!-- Upcoming card 2 -->
+    <rect x="16" y="272" width="208" height="60" rx="12" fill="#FFF"/>
+    <circle cx="44" cy="302" r="16" fill="#DBEAFE"/>
+    <text x="44" y="307" font-family="sans-serif" font-size="12" font-weight="600" fill="#2563EB" text-anchor="middle">MT</text>
+    <text x="70" y="296" font-family="sans-serif" font-size="13" font-weight="500" fill="#0A1628">Marcus Torres</text>
+    <rect x="70" y="301" width="54" height="13" rx="6" fill="#EFF6FF"/>
+    <text x="97" y="311" font-family="sans-serif" font-size="9" font-weight="600" fill="#2563EB" text-anchor="middle">Quarterly</text>
+    <text x="128" y="311" font-family="sans-serif" font-size="9" fill="#757575">In 18d</text>
+    <text x="200" y="306" font-family="sans-serif" font-size="18" fill="#BDBDBD" text-anchor="middle">○</text>
+
+    <!-- SNOOZED section -->
+    <text x="18" y="350" font-family="sans-serif" font-size="11" font-weight="700" fill="#757575">SNOOZED</text>
+    <rect x="16" y="356" width="208" height="52" rx="12" fill="#FFF" opacity="0.5"/>
+    <circle cx="44" cy="382" r="16" fill="#DBEAFE" opacity="0.5"/>
+    <text x="44" y="387" font-family="sans-serif" font-size="12" font-weight="600" fill="#2563EB" text-anchor="middle" opacity="0.5">PW</text>
+    <text x="70" y="378" font-family="sans-serif" font-size="13" font-weight="500" fill="#0A1628" opacity="0.5">Priya Wang</text>
+    <text x="70" y="394" font-family="sans-serif" font-size="9" fill="#9E9E9E" opacity="0.5">Snoozed · In 5d</text>
+
+  </g>
+
+  <!-- Bottom nav bar -->
+  <rect x="8" y="440" width="224" height="52" fill="#FAFAFA"/>
+  <line x1="8" y1="440" x2="232" y2="440" stroke="#E0E0E0" stroke-width="0.5"/>
+  <text x="30" y="459" font-family="sans-serif" font-size="16" fill="#9E9E9E" text-anchor="middle">👥</text>
+  <text x="30" y="470" font-family="sans-serif" font-size="7" fill="#9E9E9E" text-anchor="middle">Network</text>
+  <text x="90" y="459" font-family="sans-serif" font-size="16" fill="#2563EB" text-anchor="middle">🔔</text>
+  <text x="90" y="470" font-family="sans-serif" font-size="7" fill="#2563EB" text-anchor="middle">Tickle</text>
+  <text x="150" y="459" font-family="sans-serif" font-size="16" fill="#9E9E9E" text-anchor="middle">✉️</text>
+  <text x="150" y="470" font-family="sans-serif" font-size="7" fill="#9E9E9E" text-anchor="middle">Compose</text>
+  <text x="210" y="459" font-family="sans-serif" font-size="16" fill="#9E9E9E" text-anchor="middle">⚙️</text>
+  <text x="210" y="470" font-family="sans-serif" font-size="7" fill="#9E9E9E" text-anchor="middle">Settings</text>
+
+  <!-- Gesture bar -->
+  <rect x="88" y="486" width="64" height="3" rx="2" fill="#BDBDBD"/>
+</svg>

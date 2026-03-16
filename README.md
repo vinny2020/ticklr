@@ -2,6 +2,20 @@
 
 A privacy-first personal network manager for iOS and Android. Build your contact network, stay connected on your schedule with the tickle calendar, and send messages — all stored locally with no cloud, no account required.
 
+## Screenshots
+
+### iOS (Swift 6 · SwiftUI · SwiftData)
+
+| Network | Tickle | Compose |
+|:-------:|:------:|:-------:|
+| <img src="ios/assets/screenshots/network.svg" width="200"/> | <img src="ios/assets/screenshots/tickle.svg" width="200"/> | <img src="ios/assets/screenshots/compose.svg" width="200"/> |
+
+### Android (Kotlin · Jetpack Compose · Room)
+
+| Network | Tickle | Compose |
+|:-------:|:------:|:-------:|
+| <img src="android/assets/screenshots/network.svg" width="200"/> | <img src="android/assets/screenshots/tickle.svg" width="200"/> | <img src="android/assets/screenshots/compose.svg" width="200"/> |
+
 ## Repository Structure
 
 ```
@@ -53,10 +67,9 @@ Or open `android/` in Android Studio.
 ## Roadmap
 - [x] iOS scaffold + SwiftData models
 - [x] Pulse brand identity + launch screen
-- [ ] iOS tickle calendar feature
+- [x] iOS tickle calendar feature
+- [x] Android scaffold + full feature parity
 - [ ] iOS contacts import (CNContactStore + LinkedIn CSV)
-- [ ] Android scaffold
-- [ ] Android feature parity
 - [ ] iCloud backup (iOS)
 - [ ] Android backup
 - [ ] App Store submission

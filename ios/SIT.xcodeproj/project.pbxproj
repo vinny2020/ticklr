@@ -11,66 +11,66 @@
 		0AAF8EE95887350E7C99F7EE /* LinkedInCSVParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFE5D9B2591E4B4A53F5EEC /* LinkedInCSVParser.swift */; };
 		0D2238D22D7D6B71207125AE /* ComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07B4E4B1B6C11A40612610C /* ComposeView.swift */; };
 		14F8E46F4BFA63D2A966D1E3 /* MessageTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72098A45B6ACBC527F5DF0B9 /* MessageTemplate.swift */; };
+		1E545FD4190C1C446704B66C /* LaunchScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F033D809DFE50DA44209A95 /* LaunchScreenView.swift */; };
 		269CE081BABF3F3BA97789BF /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977BE8990F41F718C2693EFD /* OnboardingView.swift */; };
 		2970A9D57220A93546777D79 /* MessageComposerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADEFE7A1ADA2B9E3DDBBD81 /* MessageComposerService.swift */; };
 		2F11F03CED37CEFEAF6410B0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA413473ADA828136F21753 /* ContentView.swift */; };
+		3776CAD925C0664B6FF9E9D1 /* TickleScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F298878BB7FB2F2C63DC2B /* TickleScheduler.swift */; };
 		3CDE11B16868A7F2DDFD13C5 /* ContactGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC789856C13EA9BCE0A6EC /* ContactGroup.swift */; };
 		52085F8A3661CAC307051F47 /* SITApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1887449FF664ADCCCB1BFC3 /* SITApp.swift */; };
 		5A5E6D78A77DB4752D80029F /* ContactImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AD38DE9F1FCCBD8B82DEED /* ContactImportService.swift */; };
+		7974F9853F73A0B668DC9434 /* TickleRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2BE0559EF55B0E2A1DDE54 /* TickleRowView.swift */; };
+		87A33E844F620CDCCD8CE218 /* TickleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A933C06096E53F2DAD773D26 /* TickleListView.swift */; };
+		8F1E67EA6595ADCB9A6BF386 /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACA061EE9A732D89FD3E0F3 /* GroupListView.swift */; };
 		9297D334A3D68D53C67BFD9F /* ContactDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60220490DD5F5ED7374E537 /* ContactDetailView.swift */; };
 		9DD78D4E8731D90E051F27B5 /* ContactRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9125614ECAB9E4D8E5428E51 /* ContactRowView.swift */; };
-		A1B2C3D4E5F6A7B8C9D0E1F2 /* AddContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E1D0C9B8A7F6E5D4C3B2A1 /* AddContactView.swift */; };
-		AA11BB22CC33DD44EE55FF01 /* TickleScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11BB22CC33DD44EE55FF02 /* TickleScheduler.swift */; };
-		AA11BB22CC33DD44EE55FF03 /* TickleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11BB22CC33DD44EE55FF04 /* TickleListView.swift */; };
-		AA11BB22CC33DD44EE55FF05 /* TickleRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11BB22CC33DD44EE55FF06 /* TickleRowView.swift */; };
-		AA11BB22CC33DD44EE55FF07 /* TickleEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11BB22CC33DD44EE55FF08 /* TickleEditView.swift */; };
-		AA11BB22CC33DD44EE55FF11 /* TickleReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11BB22CC33DD44EE55FF10 /* TickleReminder.swift */; };
+		AA45ECE01D150F16D5ABCA61 /* TickleEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4BF582AFC377CF7A29ADC9 /* TickleEditView.swift */; };
+		B2BD7C0B33BAD05A00A48A4A /* TickleReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB38137353FDCD5606A5A8FF /* TickleReminder.swift */; };
 		B562F1151D319743E4D59DCA /* ImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBD25432AF93E7B78C501EE /* ImportView.swift */; };
 		BE71756F8B58A6933A31D204 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C7E0EBE485C198DCF9669E /* SettingsView.swift */; };
-		C3D4E5F6A7B8C9D0E1F2A3B4 /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E5F6A7B8C9D0E1F2A3B4C5 /* GroupListView.swift */; };
-		E5F6A7B8C9D0E1F2A3B4C5D6 /* GroupDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C7D8E9F0A1B2C3D4E5F6A7 /* GroupDetailView.swift */; };
+		D609C6E0139C34921E6946A8 /* AddContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77347A9F53BFBE3E1672671 /* AddContactView.swift */; };
 		E6375B744B2953B0F1C25B49 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EBB61C7877871E721045C7 /* Contact.swift */; };
-		FF10EE20DD30CC40BB50AA60 /* LaunchScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF10EE20DD30CC40BB50AA61 /* LaunchScreenView.swift */; };
+		EE6799477C84F06A43F4FC8C /* GroupDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033862D2DB3D8A467AAFFA5D /* GroupDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		00F298878BB7FB2F2C63DC2B /* TickleScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleScheduler.swift; sourceTree = "<group>"; };
 		02B1CFCC3988DCAF2034813A /* NetworkListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkListView.swift; sourceTree = "<group>"; };
+		033862D2DB3D8A467AAFFA5D /* GroupDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailView.swift; sourceTree = "<group>"; };
 		0A9EDE946F2D00EC70ED4A84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0EFE5D9B2591E4B4A53F5EEC /* LinkedInCSVParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedInCSVParser.swift; sourceTree = "<group>"; };
+		0F033D809DFE50DA44209A95 /* LaunchScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenView.swift; sourceTree = "<group>"; };
 		50AD38DE9F1FCCBD8B82DEED /* ContactImportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactImportService.swift; sourceTree = "<group>"; };
 		53C7E0EBE485C198DCF9669E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		5CA413473ADA828136F21753 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		63EBB61C7877871E721045C7 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		72098A45B6ACBC527F5DF0B9 /* MessageTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTemplate.swift; sourceTree = "<group>"; };
+		8ACA061EE9A732D89FD3E0F3 /* GroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListView.swift; sourceTree = "<group>"; };
 		8FBD25432AF93E7B78C501EE /* ImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportView.swift; sourceTree = "<group>"; };
 		9125614ECAB9E4D8E5428E51 /* ContactRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRowView.swift; sourceTree = "<group>"; };
 		977BE8990F41F718C2693EFD /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		A60220490DD5F5ED7374E537 /* ContactDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailView.swift; sourceTree = "<group>"; };
-		AA11BB22CC33DD44EE55FF02 /* TickleScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleScheduler.swift; sourceTree = "<group>"; };
-		AA11BB22CC33DD44EE55FF04 /* TickleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleListView.swift; sourceTree = "<group>"; };
-		AA11BB22CC33DD44EE55FF06 /* TickleRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleRowView.swift; sourceTree = "<group>"; };
-		AA11BB22CC33DD44EE55FF08 /* TickleEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleEditView.swift; sourceTree = "<group>"; };
-		AA11BB22CC33DD44EE55FF10 /* TickleReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleReminder.swift; sourceTree = "<group>"; };
+		A933C06096E53F2DAD773D26 /* TickleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleListView.swift; sourceTree = "<group>"; };
+		AB2BE0559EF55B0E2A1DDE54 /* TickleRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleRowView.swift; sourceTree = "<group>"; };
 		B1887449FF664ADCCCB1BFC3 /* SITApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SITApp.swift; sourceTree = "<group>"; };
 		B5CC789856C13EA9BCE0A6EC /* ContactGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactGroup.swift; sourceTree = "<group>"; };
-		B6C7D8E9F0A1B2C3D4E5F6A7 /* GroupDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailView.swift; sourceTree = "<group>"; };
+		BB38137353FDCD5606A5A8FF /* TickleReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleReminder.swift; sourceTree = "<group>"; };
+		CA4BF582AFC377CF7A29ADC9 /* TickleEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleEditView.swift; sourceTree = "<group>"; };
 		CADEFE7A1ADA2B9E3DDBBD81 /* MessageComposerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageComposerService.swift; sourceTree = "<group>"; };
-		D4E5F6A7B8C9D0E1F2A3B4C5 /* GroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListView.swift; sourceTree = "<group>"; };
 		E07B4E4B1B6C11A40612610C /* ComposeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeView.swift; sourceTree = "<group>"; };
-		F2E1D0C9B8A7F6E5D4C3B2A1 /* AddContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactView.swift; sourceTree = "<group>"; };
-		FAD22AA30EE4F0BA962C1655 /* SIT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SIT.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		FF10EE20DD30CC40BB50AA61 /* LaunchScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenView.swift; sourceTree = "<group>"; };
+		E77347A9F53BFBE3E1672671 /* AddContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactView.swift; sourceTree = "<group>"; };
+		FAD22AA30EE4F0BA962C1655 /* SIT.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = SIT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
 		04D0E0B997D54CDC9E47B531 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				F2E1D0C9B8A7F6E5D4C3B2A1 /* AddContactView.swift */,
+				E77347A9F53BFBE3E1672671 /* AddContactView.swift */,
 				A60220490DD5F5ED7374E537 /* ContactDetailView.swift */,
 				9125614ECAB9E4D8E5428E51 /* ContactRowView.swift */,
-				B6C7D8E9F0A1B2C3D4E5F6A7 /* GroupDetailView.swift */,
-				D4E5F6A7B8C9D0E1F2A3B4C5 /* GroupListView.swift */,
+				033862D2DB3D8A467AAFFA5D /* GroupDetailView.swift */,
+				8ACA061EE9A732D89FD3E0F3 /* GroupListView.swift */,
 				02B1CFCC3988DCAF2034813A /* NetworkListView.swift */,
 			);
 			path = Network;
@@ -107,7 +107,7 @@
 				04D0E0B997D54CDC9E47B531 /* Network */,
 				38AE8D59BE6A7951737BF4A1 /* Onboarding */,
 				64A945003494BD80EC9A3181 /* Settings */,
-				AA11BB22CC33DD44EE55FF09 /* Tickle */,
+				79DA010937C896B33F1B0252 /* Tickle */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -125,7 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				5CA413473ADA828136F21753 /* ContentView.swift */,
-				FF10EE20DD30CC40BB50AA61 /* LaunchScreenView.swift */,
+				0F033D809DFE50DA44209A95 /* LaunchScreenView.swift */,
 				B1887449FF664ADCCCB1BFC3 /* SITApp.swift */,
 			);
 			path = App;
@@ -139,25 +139,25 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		79DA010937C896B33F1B0252 /* Tickle */ = {
+			isa = PBXGroup;
+			children = (
+				CA4BF582AFC377CF7A29ADC9 /* TickleEditView.swift */,
+				A933C06096E53F2DAD773D26 /* TickleListView.swift */,
+				AB2BE0559EF55B0E2A1DDE54 /* TickleRowView.swift */,
+			);
+			path = Tickle;
+			sourceTree = "<group>";
+		};
 		965C7FB9B3951DB86AD5C169 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				63EBB61C7877871E721045C7 /* Contact.swift */,
 				B5CC789856C13EA9BCE0A6EC /* ContactGroup.swift */,
 				72098A45B6ACBC527F5DF0B9 /* MessageTemplate.swift */,
-				AA11BB22CC33DD44EE55FF10 /* TickleReminder.swift */,
+				BB38137353FDCD5606A5A8FF /* TickleReminder.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		AA11BB22CC33DD44EE55FF09 /* Tickle */ = {
-			isa = PBXGroup;
-			children = (
-				AA11BB22CC33DD44EE55FF04 /* TickleListView.swift */,
-				AA11BB22CC33DD44EE55FF06 /* TickleRowView.swift */,
-				AA11BB22CC33DD44EE55FF08 /* TickleEditView.swift */,
-			);
-			path = Tickle;
 			sourceTree = "<group>";
 		};
 		B9E711472E0A67C680D625C7 /* Products */ = {
@@ -187,7 +187,7 @@
 				50AD38DE9F1FCCBD8B82DEED /* ContactImportService.swift */,
 				0EFE5D9B2591E4B4A53F5EEC /* LinkedInCSVParser.swift */,
 				CADEFE7A1ADA2B9E3DDBBD81 /* MessageComposerService.swift */,
-				AA11BB22CC33DD44EE55FF02 /* TickleScheduler.swift */,
+				00F298878BB7FB2F2C63DC2B /* TickleScheduler.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -219,7 +219,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 2630;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					B2C0561D284F2617E641F70B = {
+						DevelopmentTeam = "";
+					};
+				};
 			};
 			buildConfigurationList = AC48426003E1810AF25784DA /* Build configuration list for PBXProject "SIT" */;
 			developmentRegion = en;
@@ -245,23 +250,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A1B2C3D4E5F6A7B8C9D0E1F2 /* AddContactView.swift in Sources */,
+				D609C6E0139C34921E6946A8 /* AddContactView.swift in Sources */,
 				0D2238D22D7D6B71207125AE /* ComposeView.swift in Sources */,
-				C3D4E5F6A7B8C9D0E1F2A3B4 /* GroupListView.swift in Sources */,
-				E5F6A7B8C9D0E1F2A3B4C5D6 /* GroupDetailView.swift in Sources */,
 				E6375B744B2953B0F1C25B49 /* Contact.swift in Sources */,
-				AA11BB22CC33DD44EE55FF11 /* TickleReminder.swift in Sources */,
-				AA11BB22CC33DD44EE55FF01 /* TickleScheduler.swift in Sources */,
-				AA11BB22CC33DD44EE55FF03 /* TickleListView.swift in Sources */,
-				AA11BB22CC33DD44EE55FF05 /* TickleRowView.swift in Sources */,
-				AA11BB22CC33DD44EE55FF07 /* TickleEditView.swift in Sources */,
 				9297D334A3D68D53C67BFD9F /* ContactDetailView.swift in Sources */,
 				3CDE11B16868A7F2DDFD13C5 /* ContactGroup.swift in Sources */,
 				5A5E6D78A77DB4752D80029F /* ContactImportService.swift in Sources */,
 				9DD78D4E8731D90E051F27B5 /* ContactRowView.swift in Sources */,
 				2F11F03CED37CEFEAF6410B0 /* ContentView.swift in Sources */,
-				FF10EE20DD30CC40BB50AA60 /* LaunchScreenView.swift in Sources */,
+				EE6799477C84F06A43F4FC8C /* GroupDetailView.swift in Sources */,
+				8F1E67EA6595ADCB9A6BF386 /* GroupListView.swift in Sources */,
 				B562F1151D319743E4D59DCA /* ImportView.swift in Sources */,
+				1E545FD4190C1C446704B66C /* LaunchScreenView.swift in Sources */,
 				0AAF8EE95887350E7C99F7EE /* LinkedInCSVParser.swift in Sources */,
 				2970A9D57220A93546777D79 /* MessageComposerService.swift in Sources */,
 				14F8E46F4BFA63D2A966D1E3 /* MessageTemplate.swift in Sources */,
@@ -269,6 +269,11 @@
 				269CE081BABF3F3BA97789BF /* OnboardingView.swift in Sources */,
 				52085F8A3661CAC307051F47 /* SITApp.swift in Sources */,
 				BE71756F8B58A6933A31D204 /* SettingsView.swift in Sources */,
+				AA45ECE01D150F16D5ABCA61 /* TickleEditView.swift in Sources */,
+				87A33E844F620CDCCD8CE218 /* TickleListView.swift in Sources */,
+				B2BD7C0B33BAD05A00A48A4A /* TickleReminder.swift in Sources */,
+				7974F9853F73A0B668DC9434 /* TickleRowView.swift in Sources */,
+				3776CAD925C0664B6FF9E9D1 /* TickleScheduler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,7 +319,6 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -329,7 +333,6 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = SIT;
 				SDKROOT = iphoneos;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 6.0;
@@ -341,7 +344,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Sources/SIT/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -358,7 +360,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Sources/SIT/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -409,7 +410,6 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -431,7 +431,6 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = SIT;
 				SDKROOT = iphoneos;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 6.0;

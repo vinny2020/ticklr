@@ -1,0 +1,88 @@
+<svg width="240" height="500" viewBox="0 0 240 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="and-screen-network">
+      <rect x="8" y="8" width="224" height="484" rx="20"/>
+    </clipPath>
+  </defs>
+
+  <!-- Phone frame -->
+  <rect x="2" y="2" width="236" height="496" rx="24" fill="#1A1A1A" stroke="#2E2E2E" stroke-width="2"/>
+  <rect x="8" y="8" width="224" height="484" rx="20" fill="#FAFAFA"/>
+
+  <!-- Punch-hole camera -->
+  <circle cx="120" cy="22" r="5" fill="#1A1A1A"/>
+
+  <g clip-path="url(#and-screen-network)">
+
+    <!-- Status bar -->
+    <rect x="8" y="8" width="224" height="28" fill="#FAFAFA"/>
+    <text x="20" y="23" font-family="sans-serif" font-size="9" fill="#1C1C1C">9:41</text>
+    <text x="196" y="23" font-family="sans-serif" font-size="9" fill="#1C1C1C">▌▌▌ 🔋</text>
+
+    <!-- Top app bar -->
+    <rect x="8" y="36" width="224" height="52" fill="#FAFAFA"/>
+    <text x="20" y="71" font-family="sans-serif" font-size="22" font-weight="700" fill="#0A1628">Network</text>
+    <circle cx="210" cy="60" r="14" fill="#2563EB"/>
+    <text x="210" y="65" font-family="sans-serif" font-size="18" fill="#FFF" text-anchor="middle">+</text>
+
+    <!-- Search bar -->
+    <rect x="16" y="94" width="208" height="36" rx="18" fill="#EFEFEF"/>
+    <text x="44" y="116" font-family="sans-serif" font-size="12" fill="#9E9E9E">Search contacts…</text>
+    <text x="26" y="117" font-family="sans-serif" font-size="13" fill="#9E9E9E">🔍</text>
+
+    <!-- Divider -->
+    <line x1="16" y1="138" x2="224" y2="138" stroke="#E0E0E0" stroke-width="0.5"/>
+
+    <!-- Contact row 1 -->
+    <circle cx="46" cy="162" r="18" fill="#DBEAFE"/>
+    <text x="46" y="167" font-family="sans-serif" font-size="13" font-weight="600" fill="#2563EB" text-anchor="middle">AJ</text>
+    <text x="74" y="157" font-family="sans-serif" font-size="14" font-weight="500" fill="#0A1628">Alex Johnson</text>
+    <text x="74" y="172" font-family="sans-serif" font-size="11" fill="#757575">Acme Corp</text>
+    <line x1="66" y1="182" x2="224" y2="182" stroke="#EEEEEE" stroke-width="0.5"/>
+
+    <!-- Contact row 2 -->
+    <circle cx="46" cy="204" r="18" fill="#DBEAFE"/>
+    <text x="46" y="209" font-family="sans-serif" font-size="13" font-weight="600" fill="#2563EB" text-anchor="middle">SR</text>
+    <text x="74" y="199" font-family="sans-serif" font-size="14" font-weight="500" fill="#0A1628">Sarah Rivera</text>
+    <text x="74" y="214" font-family="sans-serif" font-size="11" fill="#757575">Freelance</text>
+    <text x="200" y="207" font-family="sans-serif" font-size="9" fill="#BDBDBD">in</text>
+    <line x1="66" y1="224" x2="224" y2="224" stroke="#EEEEEE" stroke-width="0.5"/>
+
+    <!-- Contact row 3 -->
+    <circle cx="46" cy="246" r="18" fill="#DBEAFE"/>
+    <text x="46" y="251" font-family="sans-serif" font-size="13" font-weight="600" fill="#2563EB" text-anchor="middle">MT</text>
+    <text x="74" y="241" font-family="sans-serif" font-size="14" font-weight="500" fill="#0A1628">Marcus Torres</text>
+    <text x="74" y="256" font-family="sans-serif" font-size="11" fill="#757575">Stripe</text>
+    <line x1="66" y1="266" x2="224" y2="266" stroke="#EEEEEE" stroke-width="0.5"/>
+
+    <!-- Contact row 4 -->
+    <circle cx="46" cy="288" r="18" fill="#DBEAFE"/>
+    <text x="46" y="293" font-family="sans-serif" font-size="13" font-weight="600" fill="#2563EB" text-anchor="middle">PW</text>
+    <text x="74" y="283" font-family="sans-serif" font-size="14" font-weight="500" fill="#0A1628">Priya Wang</text>
+    <text x="74" y="298" font-family="sans-serif" font-size="11" fill="#757575">Google</text>
+    <line x1="66" y1="308" x2="224" y2="308" stroke="#EEEEEE" stroke-width="0.5"/>
+
+    <!-- Contact row 5 -->
+    <circle cx="46" cy="330" r="18" fill="#DBEAFE"/>
+    <text x="46" y="335" font-family="sans-serif" font-size="13" font-weight="600" fill="#2563EB" text-anchor="middle">JK</text>
+    <text x="74" y="325" font-family="sans-serif" font-size="14" font-weight="500" fill="#0A1628">James Kim</text>
+    <text x="74" y="340" font-family="sans-serif" font-size="11" fill="#757575">Consultant</text>
+    <line x1="66" y1="350" x2="224" y2="350" stroke="#EEEEEE" stroke-width="0.5"/>
+
+  </g>
+
+  <!-- Bottom nav bar -->
+  <rect x="8" y="440" width="224" height="52" fill="#FAFAFA"/>
+  <line x1="8" y1="440" x2="232" y2="440" stroke="#E0E0E0" stroke-width="0.5"/>
+  <text x="30" y="459" font-family="sans-serif" font-size="16" fill="#2563EB" text-anchor="middle">👥</text>
+  <text x="30" y="470" font-family="sans-serif" font-size="7" fill="#2563EB" text-anchor="middle">Network</text>
+  <text x="90" y="459" font-family="sans-serif" font-size="16" fill="#9E9E9E" text-anchor="middle">🔔</text>
+  <text x="90" y="470" font-family="sans-serif" font-size="7" fill="#9E9E9E" text-anchor="middle">Tickle</text>
+  <text x="150" y="459" font-family="sans-serif" font-size="16" fill="#9E9E9E" text-anchor="middle">✉️</text>
+  <text x="150" y="470" font-family="sans-serif" font-size="7" fill="#9E9E9E" text-anchor="middle">Compose</text>
+  <text x="210" y="459" font-family="sans-serif" font-size="16" fill="#9E9E9E" text-anchor="middle">⚙️</text>
+  <text x="210" y="470" font-family="sans-serif" font-size="7" fill="#9E9E9E" text-anchor="middle">Settings</text>
+
+  <!-- Gesture bar -->
+  <rect x="88" y="486" width="64" height="3" rx="2" fill="#BDBDBD"/>
+</svg>
