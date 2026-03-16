@@ -1,0 +1,84 @@
+<svg width="240" height="500" viewBox="0 0 240 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="screen-tickle">
+      <rect x="8" y="8" width="224" height="484" rx="36"/>
+    </clipPath>
+  </defs>
+
+  <!-- Phone frame -->
+  <rect x="2" y="2" width="236" height="496" rx="40" fill="#1C1C1E" stroke="#3A3A3C" stroke-width="2"/>
+  <rect x="8" y="8" width="224" height="484" rx="36" fill="#F2F2F7"/>
+
+  <!-- Dynamic island -->
+  <rect x="88" y="18" width="64" height="14" rx="7" fill="#1C1C1E"/>
+
+  <g clip-path="url(#screen-tickle)">
+
+    <!-- Nav bar -->
+    <rect x="8" y="8" width="224" height="88" fill="#F2F2F7"/>
+    <text x="24" y="82" font-family="-apple-system, sans-serif" font-size="28" font-weight="700" fill="#000">Tickle</text>
+    <text x="196" y="80" font-family="-apple-system, sans-serif" font-size="22" fill="#5856D6">+</text>
+
+    <!-- DUE section header -->
+    <rect x="16" y="95" width="208" height="26" rx="0" fill="transparent"/>
+    <text x="18" y="112" font-family="-apple-system, sans-serif" font-size="12" font-weight="600" fill="#F5C842">⏰  DUE</text>
+
+    <!-- Due card 1 -->
+    <rect x="16" y="120" width="208" height="64" rx="12" fill="#FFF"/>
+    <circle cx="44" cy="152" r="16" fill="#FEF3C7"/>
+    <text x="44" y="157" font-family="-apple-system, sans-serif" font-size="12" font-weight="600" fill="#F5C842" text-anchor="middle">SR</text>
+    <text x="70" y="146" font-family="-apple-system, sans-serif" font-size="13" font-weight="500" fill="#000">Sarah Rivera</text>
+    <rect x="70" y="151" width="52" height="13" rx="6" fill="#FEF3C7"/>
+    <text x="96" y="161" font-family="-apple-system, sans-serif" font-size="9" font-weight="600" fill="#F5C842" text-anchor="middle">Monthly</text>
+    <text x="130" y="161" font-family="-apple-system, sans-serif" font-size="9" fill="#F5C842">Today</text>
+    <text x="200" y="156" font-family="-apple-system, sans-serif" font-size="20" fill="#F5C842" text-anchor="middle">✓</text>
+
+    <!-- UPCOMING section header -->
+    <text x="18" y="202" font-family="-apple-system, sans-serif" font-size="12" font-weight="600" fill="#8E8E93" text-transform="uppercase">UPCOMING</text>
+
+    <!-- Upcoming card 1 -->
+    <rect x="16" y="210" width="208" height="64" rx="12" fill="#FFF"/>
+    <circle cx="44" cy="242" r="16" fill="#EEF0FF"/>
+    <text x="44" y="247" font-family="-apple-system, sans-serif" font-size="12" font-weight="600" fill="#5856D6" text-anchor="middle">AJ</text>
+    <text x="70" y="236" font-family="-apple-system, sans-serif" font-size="13" font-weight="500" fill="#000">Alex Johnson</text>
+    <rect x="70" y="241" width="46" height="13" rx="6" fill="#E5E5EA"/>
+    <text x="93" y="251" font-family="-apple-system, sans-serif" font-size="9" font-weight="600" fill="#636366" text-anchor="middle">Weekly</text>
+    <text x="122" y="251" font-family="-apple-system, sans-serif" font-size="9" fill="#8E8E93">In 3d</text>
+    <text x="70" y="267" font-family="-apple-system, sans-serif" font-size="10" fill="#8E8E93">Ask about the new role</text>
+    <text x="200" y="246" font-family="-apple-system, sans-serif" font-size="20" fill="#C7C7CC" text-anchor="middle">○</text>
+
+    <!-- Upcoming card 2 -->
+    <rect x="16" y="282" width="208" height="64" rx="12" fill="#FFF"/>
+    <circle cx="44" cy="314" r="16" fill="#EEF0FF"/>
+    <text x="44" y="319" font-family="-apple-system, sans-serif" font-size="12" font-weight="600" fill="#5856D6" text-anchor="middle">MT</text>
+    <text x="70" y="308" font-family="-apple-system, sans-serif" font-size="13" font-weight="500" fill="#000">Marcus Torres</text>
+    <rect x="70" y="313" width="54" height="13" rx="6" fill="#E5E5EA"/>
+    <text x="97" y="323" font-family="-apple-system, sans-serif" font-size="9" font-weight="600" fill="#636366" text-anchor="middle">Quarterly</text>
+    <text x="128" y="323" font-family="-apple-system, sans-serif" font-size="9" fill="#8E8E93">In 18d</text>
+    <text x="200" y="318" font-family="-apple-system, sans-serif" font-size="20" fill="#C7C7CC" text-anchor="middle">○</text>
+
+    <!-- Snoozed section -->
+    <text x="18" y="364" font-family="-apple-system, sans-serif" font-size="12" font-weight="600" fill="#8E8E93">SNOOZED</text>
+    <rect x="16" y="372" width="208" height="52" rx="12" fill="#FFF" opacity="0.55"/>
+    <circle cx="44" cy="398" r="16" fill="#EEF0FF" opacity="0.55"/>
+    <text x="44" y="403" font-family="-apple-system, sans-serif" font-size="12" font-weight="600" fill="#5856D6" text-anchor="middle" opacity="0.55">PW</text>
+    <text x="70" y="394" font-family="-apple-system, sans-serif" font-size="13" font-weight="500" fill="#000" opacity="0.55">Priya Wang</text>
+    <text x="70" y="410" font-family="-apple-system, sans-serif" font-size="9" fill="#8E8E93" opacity="0.55">Snoozed · In 5d</text>
+
+  </g>
+
+  <!-- Tab bar -->
+  <rect x="8" y="444" width="224" height="48" fill="#F2F2F7"/>
+  <line x1="8" y1="444" x2="232" y2="444" stroke="#C6C6C8" stroke-width="0.5"/>
+  <text x="30" y="462" font-family="-apple-system, sans-serif" font-size="16" fill="#8E8E93" text-anchor="middle">👥</text>
+  <text x="30" y="473" font-family="-apple-system, sans-serif" font-size="8" fill="#8E8E93" text-anchor="middle">Network</text>
+  <text x="90" y="462" font-family="-apple-system, sans-serif" font-size="16" fill="#5856D6" text-anchor="middle">🔔</text>
+  <text x="90" y="473" font-family="-apple-system, sans-serif" font-size="8" fill="#5856D6" text-anchor="middle">Tickle</text>
+  <text x="150" y="462" font-family="-apple-system, sans-serif" font-size="16" fill="#8E8E93" text-anchor="middle">✉️</text>
+  <text x="150" y="473" font-family="-apple-system, sans-serif" font-size="8" fill="#8E8E93" text-anchor="middle">Compose</text>
+  <text x="210" y="462" font-family="-apple-system, sans-serif" font-size="16" fill="#8E8E93" text-anchor="middle">⚙️</text>
+  <text x="210" y="473" font-family="-apple-system, sans-serif" font-size="8" fill="#8E8E93" text-anchor="middle">Settings</text>
+
+  <!-- Home indicator -->
+  <rect x="88" y="488" width="64" height="4" rx="2" fill="#3A3A3C" opacity="0.3"/>
+</svg>

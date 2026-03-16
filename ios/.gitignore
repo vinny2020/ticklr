@@ -1,0 +1,40 @@
+# Xcode build artifacts
+**/xcuserdata/
+DerivedData/
+build/
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Credentials & secrets — NEVER commit these
+*.mobileprovision
+*.p12
+*.p8
+GoogleService-Info.plist
+Secrets.swift
+Config.xcconfig
+
+# OS junk
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# SPM
+.build/
+Package.resolved
+
+# CocoaPods (not used, but just in case)
+Pods/
+Podfile.lock
+
+# Fastlane
+fastlane/report.xml
+fastlane/screenshots
+fastlane/test_output
+
+# Editor
+.swiftpm/
+*.swp
+*~

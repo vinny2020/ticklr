@@ -1,0 +1,16 @@
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <!-- Navy background -->
+  <rect width="120" height="120" rx="28" fill="#0A1628"/>
+  <!-- Blue speech bubble body -->
+  <rect x="10" y="16" width="92" height="62" rx="18" fill="#2563EB"/>
+  <!-- Bubble tail (bottom-left triangle) -->
+  <polygon points="10,78 32,78 10,100" fill="#2563EB"/>
+  <!-- Amber EKG wave -->
+  <polyline
+    points="14,47 26,47 33,26 43,68 51,33 57,55 64,47 106,47"
+    fill="none"
+    stroke="#F5C842"
+    stroke-width="3.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"/>
+</svg>

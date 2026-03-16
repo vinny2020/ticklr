@@ -1,0 +1,91 @@
+<svg width="240" height="500" viewBox="0 0 240 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="screen-compose">
+      <rect x="8" y="8" width="224" height="484" rx="36"/>
+    </clipPath>
+  </defs>
+
+  <!-- Phone frame -->
+  <rect x="2" y="2" width="236" height="496" rx="40" fill="#1C1C1E" stroke="#3A3A3C" stroke-width="2"/>
+  <rect x="8" y="8" width="224" height="484" rx="36" fill="#F2F2F7"/>
+
+  <!-- Dynamic island -->
+  <rect x="88" y="18" width="64" height="14" rx="7" fill="#1C1C1E"/>
+
+  <g clip-path="url(#screen-compose)">
+
+    <!-- Nav bar -->
+    <rect x="8" y="8" width="224" height="88" fill="#F2F2F7"/>
+    <text x="24" y="82" font-family="-apple-system, sans-serif" font-size="28" font-weight="700" fill="#000">Compose</text>
+
+    <!-- Send button in toolbar -->
+    <rect x="162" y="64" width="62" height="26" rx="13" fill="#5856D6"/>
+    <text x="185" y="81" font-family="-apple-system, sans-serif" font-size="10" font-weight="600" fill="#FFF">2 ✈</text>
+
+    <!-- Recipients section header -->
+    <rect x="16" y="95" width="208" height="22" rx="0" fill="transparent"/>
+    <text x="18" y="110" font-family="-apple-system, sans-serif" font-size="11" font-weight="600" fill="#8E8E93">RECIPIENTS</text>
+
+    <!-- Contact row 1 — selected -->
+    <rect x="16" y="116" width="208" height="48" rx="0" fill="#FFF"/>
+    <circle cx="40" cy="140" r="14" fill="#EEF0FF"/>
+    <text x="40" y="145" font-family="-apple-system, sans-serif" font-size="11" font-weight="600" fill="#5856D6" text-anchor="middle">AJ</text>
+    <text x="62" y="136" font-family="-apple-system, sans-serif" font-size="13" font-weight="500" fill="#000">Alex Johnson</text>
+    <text x="62" y="150" font-family="-apple-system, sans-serif" font-size="10" fill="#8E8E93">Acme Corp</text>
+    <circle cx="204" cy="140" r="10" fill="#5856D6"/>
+    <text x="204" y="144" font-family="-apple-system, sans-serif" font-size="11" fill="#FFF" text-anchor="middle">✓</text>
+    <line x1="54" y1="164" x2="224" y2="164" stroke="#E5E5EA" stroke-width="0.5"/>
+
+    <!-- Contact row 2 — selected -->
+    <rect x="16" y="164" width="208" height="48" rx="0" fill="#FFF"/>
+    <circle cx="40" cy="188" r="14" fill="#EEF0FF"/>
+    <text x="40" y="193" font-family="-apple-system, sans-serif" font-size="11" font-weight="600" fill="#5856D6" text-anchor="middle">SR</text>
+    <text x="62" y="184" font-family="-apple-system, sans-serif" font-size="13" font-weight="500" fill="#000">Sarah Rivera</text>
+    <text x="62" y="198" font-family="-apple-system, sans-serif" font-size="10" fill="#8E8E93">Freelance</text>
+    <circle cx="204" cy="188" r="10" fill="#5856D6"/>
+    <text x="204" y="192" font-family="-apple-system, sans-serif" font-size="11" fill="#FFF" text-anchor="middle">✓</text>
+    <line x1="54" y1="212" x2="224" y2="212" stroke="#E5E5EA" stroke-width="0.5"/>
+
+    <!-- Contact row 3 — unselected -->
+    <rect x="16" y="212" width="208" height="48" rx="0" fill="#FFF"/>
+    <circle cx="40" cy="236" r="14" fill="#EEF0FF"/>
+    <text x="40" y="241" font-family="-apple-system, sans-serif" font-size="11" font-weight="600" fill="#5856D6" text-anchor="middle">MT</text>
+    <text x="62" y="232" font-family="-apple-system, sans-serif" font-size="13" font-weight="500" fill="#000">Marcus Torres</text>
+    <text x="62" y="246" font-family="-apple-system, sans-serif" font-size="10" fill="#8E8E93">Stripe</text>
+    <line x1="54" y1="260" x2="224" y2="260" stroke="#E5E5EA" stroke-width="0.5"/>
+
+    <!-- Message section header -->
+    <text x="18" y="278" font-family="-apple-system, sans-serif" font-size="11" font-weight="600" fill="#8E8E93">MESSAGE</text>
+
+    <!-- Message card -->
+    <rect x="16" y="284" width="208" height="100" rx="10" fill="#FFF"/>
+    <!-- Template picker row -->
+    <text x="28" y="302" font-family="-apple-system, sans-serif" font-size="12" fill="#8E8E93">Template</text>
+    <text x="160" y="302" font-family="-apple-system, sans-serif" font-size="12" fill="#5856D6">Catch-up ›</text>
+    <line x1="28" y1="310" x2="208" y2="310" stroke="#E5E5EA" stroke-width="0.5"/>
+    <!-- Message body text -->
+    <text x="28" y="328" font-family="-apple-system, sans-serif" font-size="11" fill="#3C3C43">Hey, just thinking of you —</text>
+    <text x="28" y="342" font-family="-apple-system, sans-serif" font-size="11" fill="#3C3C43">hope things are going well!</text>
+    <text x="28" y="358" font-family="-apple-system, sans-serif" font-size="11" fill="#3C3C43">Let's catch up soon.</text>
+    <!-- Cursor blink -->
+    <rect x="28" y="365" width="1.5" height="12" rx="1" fill="#5856D6"/>
+
+  </g>
+
+  <!-- Tab bar -->
+  <rect x="8" y="444" width="224" height="48" fill="#F2F2F7"/>
+  <line x1="8" y1="444" x2="232" y2="444" stroke="#C6C6C8" stroke-width="0.5"/>
+  <text x="30" y="462" font-family="-apple-system, sans-serif" font-size="16" fill="#8E8E93" text-anchor="middle">👥</text>
+  <text x="30" y="473" font-family="-apple-system, sans-serif" font-size="8" fill="#8E8E93" text-anchor="middle">Network</text>
+  <text x="80" y="462" font-family="-apple-system, sans-serif" font-size="16" fill="#8E8E93" text-anchor="middle">🔔</text>
+  <text x="80" y="473" font-family="-apple-system, sans-serif" font-size="8" fill="#8E8E93" text-anchor="middle">Tickle</text>
+  <text x="120" y="462" font-family="-apple-system, sans-serif" font-size="16" fill="#8E8E93" text-anchor="middle">👾</text>
+  <text x="120" y="473" font-family="-apple-system, sans-serif" font-size="8" fill="#8E8E93" text-anchor="middle">Groups</text>
+  <text x="160" y="462" font-family="-apple-system, sans-serif" font-size="16" fill="#5856D6" text-anchor="middle">✉️</text>
+  <text x="160" y="473" font-family="-apple-system, sans-serif" font-size="8" fill="#5856D6" text-anchor="middle">Compose</text>
+  <text x="210" y="462" font-family="-apple-system, sans-serif" font-size="16" fill="#8E8E93" text-anchor="middle">⚙️</text>
+  <text x="210" y="473" font-family="-apple-system, sans-serif" font-size="8" fill="#8E8E93" text-anchor="middle">Settings</text>
+
+  <!-- Home indicator -->
+  <rect x="88" y="488" width="64" height="4" rx="2" fill="#3A3A3C" opacity="0.3"/>
+</svg>
