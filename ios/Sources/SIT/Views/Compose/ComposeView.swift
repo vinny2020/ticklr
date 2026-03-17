@@ -11,6 +11,16 @@ struct ComposeView: View {
     @State private var messageBody = ""
     @State private var showingComposer = false
     @State private var showingCannotSendAlert = false
+    @State private var searchText = ""
+
+    var filteredContacts: [Contact] {
+        guard !searchText.isEmpty else { return contacts }
+        return contacts.filter {
+            $0.fullName.localizedCaseInsensitiveContains(searchText) ||
+            $0.company.localizedCaseInsensitiveContains(searchText) ||
+            $0.jobTitle.localizedCaseInsensitiveContains(searchText)
+        }
+    }
 
     var recipients: [String] {
         contacts
@@ -26,7 +36,7 @@ struct ComposeView: View {
         NavigationStack {
             Form {
                 Section("Recipients") {
-                    ForEach(contacts) { contact in
+                    ForEach(filteredContacts) { contact in
                         Button {
                             if selectedContacts.contains(contact.id) {
                                 selectedContacts.remove(contact.id)
@@ -77,6 +87,7 @@ struct ComposeView: View {
                 }
             }
             .navigationTitle("Compose")
+            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search contacts")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
