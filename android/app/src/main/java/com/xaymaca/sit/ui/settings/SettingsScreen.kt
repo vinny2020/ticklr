@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.CloudUpload
-import androidx.compose.material.icons.filled.Message
+import androidx.compose.material.icons.automirrored.filled.Message
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -68,7 +68,7 @@ fun SettingsScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    Icons.Default.Message,
+                    Icons.AutoMirrored.Filled.Message,
                     contentDescription = null,
                     tint = Cobalt,
                     modifier = Modifier.size(24.dp)

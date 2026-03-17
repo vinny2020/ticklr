@@ -28,7 +28,8 @@ object DatabaseModule {
             context,
             SITDatabase::class.java,
             "sit_database"
-        ).build()
+        ).fallbackToDestructiveMigration()
+            .build()
     }
 
     @Provides

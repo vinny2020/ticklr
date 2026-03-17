@@ -9,6 +9,7 @@ import com.xaymaca.sit.service.ContactImportService
 import com.xaymaca.sit.service.LinkedInCSVParser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.io.InputStream
@@ -23,7 +24,7 @@ class NetworkViewModel @Inject constructor(
 
     val searchQuery = MutableStateFlow("")
 
-    @OptIn(ExperimentalCoroutinesApi::class)
+    @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
     val filteredContacts: StateFlow<List<Contact>> = searchQuery
         .debounce(300)
         .flatMapLatest { query ->
