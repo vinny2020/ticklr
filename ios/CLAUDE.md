@@ -1,8 +1,8 @@
-# CLAUDE.md — SIT: Stay in Touch
+# CLAUDE.md — SIT: Stay in Touch (iOS)
 
 ## What This App Is
 
-SIT (Stay in Touch) is a privacy-first iOS native app. Users build a curated personal contact network, organize contacts into groups, and send SMS/MMS via the native Messages app. A tickle calendar lets users set recurring reminders to reach out to specific contacts or groups on a schedule. All data is stored locally using SwiftData. No cloud, no analytics, no account required.
+SIT (Stay in Touch) is a privacy-first iOS native app. Users build a curated personal contact network, organize contacts into groups, set recurring tickle reminders to stay in touch, and send SMS/MMS via the native Messages app. All data is stored locally using SwiftData. No cloud, no analytics, no account required.
 
 ## Architecture
 
@@ -11,6 +11,7 @@ SIT (Stay in Touch) is a privacy-first iOS native app. Users build a curated per
 - **Persistence**: SwiftData (`@Model` classes in `Models/`)
 - **Min target**: iOS 17.0
 - **No third-party dependencies** — only Apple frameworks
+- **Real-world dataset**: 1,808 contacts imported — optimize for large lists, not small ones
 
 ## Project Structure
 
@@ -18,170 +19,135 @@ SIT (Stay in Touch) is a privacy-first iOS native app. Users build a curated per
 Sources/SIT/
 ├── App/
 │   ├── SITApp.swift               # @main, ModelContainer, launch → onboarding → main flow
-│   ├── ContentView.swift          # Root TabView (Network, Tickle, Compose, Settings)
-│   └── LaunchScreenView.swift     # Animated Pulse logo splash (2s, then fades)
+│   ├── ContentView.swift          # Root TabView: Network, Tickle, Groups, Compose, Settings
+│   └── LaunchScreenView.swift     # Animated Pulse logo splash (2s fade)
 ├── Models/
-│   ├── Contact.swift              # @Model — core contact entity
-│   ├── ContactGroup.swift         # @Model — group/circle of contacts
-│   ├── MessageTemplate.swift      # @Model — reusable message templates
-│   └── TickleReminder.swift       # @Model — recurring reach-out reminder
+│   ├── Contact.swift              # @Model
+│   ├── ContactGroup.swift         # @Model
+│   ├── MessageTemplate.swift      # @Model
+│   └── TickleReminder.swift       # @Model
 ├── Views/
 │   ├── Network/
-│   │   ├── NetworkListView.swift
+│   │   ├── NetworkListView.swift  # Searchable list, sort by lastName
 │   │   ├── ContactRowView.swift
-│   │   └── ContactDetailView.swift
+│   │   ├── ContactDetailView.swift # Full edit form (@Bindable)
+│   │   ├── AddContactView.swift
+│   │   ├── GroupListView.swift
+│   │   └── GroupDetailView.swift
 │   ├── Tickle/
-│   │   ├── TickleListView.swift   # TODO: main tickle dashboard
-│   │   ├── TickleRowView.swift    # TODO: single reminder row with due status
-│   │   └── TickleEditView.swift   # TODO: create/edit a reminder
+│   │   ├── TickleListView.swift   # Sections: Due/Overdue, Upcoming, Snoozed
+│   │   ├── TickleRowView.swift
+│   │   └── TickleEditView.swift
 │   ├── Compose/
-│   │   └── ComposeView.swift
+│   │   └── ComposeView.swift      # Multi-select + search + template picker
 │   ├── Onboarding/
 │   │   ├── OnboardingView.swift
-│   │   └── ImportView.swift
+│   │   └── ImportView.swift       # iOS Contacts + LinkedIn CSV — both fully wired
 │   └── Settings/
 │       └── SettingsView.swift
 ├── Services/
-│   ├── ContactImportService.swift
-│   ├── LinkedInCSVParser.swift
-│   ├── MessageComposerService.swift
-│   └── TickleScheduler.swift      # TODO: next-date calc + notification scheduling
+│   ├── ContactImportService.swift # CNContactStore bulk import — implemented
+│   ├── LinkedInCSVParser.swift    # CSV parsing — implemented
+│   ├── MessageComposerService.swift # MFMessageComposeVC wrapper — implemented
+│   └── TickleScheduler.swift      # UNUserNotificationCenter — implemented
 └── Resources/
     ├── Info.plist
     └── Assets.xcassets/
 ```
 
-## SwiftData Models (Summary)
 
-### Contact
-`id`, `firstName`, `lastName`, `phoneNumbers:[String]`, `emails:[String]`, `company`, `jobTitle`, `notes`, `tags:[String]`, `groups:[ContactGroup]`, `importSource: ImportSource`, `createdAt`, `lastContactedAt`
+## What's Complete ✅
 
-### ContactGroup
-`id`, `name`, `emoji`, `contacts:[Contact]`
+- `LaunchScreenView` — animated Pulse EKG splash, 2s fade
+- `SITApp` — launch → onboarding → main tab flow
+- All SwiftData models — Contact, ContactGroup, MessageTemplate, TickleReminder
+- `NetworkListView` — searchable (name, company), sort by lastName, empty states
+- `ContactDetailView` — full @Bindable edit form
+- `AddContactView` — manual contact creation
+- `GroupListView` + `GroupDetailView` — group management
+- `ContactImportService` — CNContactStore bulk import with permission handling
+- `LinkedInCSVParser` — full CSV parsing, handles metadata lines, all fields mapped
+- `ImportView` — both import paths wired, file picker, error handling, step-by-step LinkedIn guide
+- `TickleListView` — Due/Upcoming/Snoozed sections, swipe actions (complete, snooze, edit, delete)
+- `TickleRowView` — avatar, frequency badge, due date, checkmark
+- `TickleEditView` — full create/edit sheet
+- `TickleScheduler` — nextDueDate logic for all frequencies, UNUserNotificationCenter integration
+- `ComposeView` — multi-select contacts with search (name, company, job title), template picker, send button with count badge
+- `MessageComposerService` — MFMessageComposeViewController UIViewControllerRepresentable
+- `ContentView` — 5-tab navigation (Network, Tickle, Groups, Compose, Settings)
+- Search on both Network and Compose screens
 
-### MessageTemplate
-`id`, `title`, `body`, `createdAt`
+## What's Left to Build
 
-### TickleReminder ← NEW
-`id`, `contact: Contact?`, `group: ContactGroup?`, `note`, `frequency: TickleFrequency`, `startDate`, `nextDueDate`, `lastCompletedDate`, `status: TickleStatus`, `createdAt`
+### Priority 1 — Message Templates CRUD (High)
+`SettingsView` needs a Templates section so users can create/edit/delete templates.
+Currently `ComposeView` has a template picker but there's no way to create templates.
 
-**TickleFrequency** enum: `.daily`, `.weekly`, `.biweekly`, `.monthly`, `.bimonthly`, `.quarterly`, `.custom`
+**Build:**
+- `TemplateListView` — list of templates with add/edit/delete
+- `TemplateEditView` — sheet with title (TextField) and body (TextEditor) fields
+- Wire into `SettingsView` as a `NavigationLink("Message Templates")`
+- Add a default starter template on first launch (e.g. "Checking in — Hey, just wanted to check in!")
 
-**TickleStatus** enum: `.active`, `.snoozed`, `.completed`
+### Priority 2 — App Icon (High)
+`Assets.xcassets` has no AppIcon set yet — app shows default icon on device.
+
+**Pulse identity:**
+- Background: Navy `#0A1628`
+- Bubble: Cobalt `#2563EB`
+- EKG wave: Amber `#F5C842`
+- Required sizes: 1024x1024 (App Store), 60pt @2x/@3x, 40pt @2x/@3x, 29pt @2x/@3x, 20pt @2x/@3x
+
+### Priority 3 — Settings Expansion (Medium)
+`SettingsView` is minimal. Expand with:
+- Notification preferences (enable/disable tickle notifications)
+- Default tickle frequency preference
+- Contact count display ("1,808 contacts")
+- App version from bundle
+
+### Priority 4 — Android (When Ready)
+See `android/CLAUDE.md` — full spec there.
+Start with: Room database setup, Compose theme (Pulse colors), NavHost scaffold.
+
 
 ## Key Conventions
 
 - All SwiftData models use `@Model` macro — never CoreData
 - Views receive `modelContext` via `@Environment(\.modelContext)`
 - Services are structs with static methods — no singletons
-- `MessageComposerService` wraps `MFMessageComposeViewController` via `UIViewControllerRepresentable`
 - Never call network APIs — fully offline
-- Use `UNUserNotificationCenter` for tickle local notifications — no push required
+- `MFMessageComposeViewController` only works on real device — not Simulator
+- Optimize all lists for 1,800+ contacts — use `@Query` with sort descriptors, avoid in-memory filtering of the full set where possible
 
-## Brand / Design
+## Brand
 
-- **Identity**: Pulse logo — navy background (#0A1628), blue bubble (#2563EB), amber EKG wave (#F5C842)
-- **Wordmark**: Syne 800 weight, "SIT" + tracking-wide "STAY IN TOUCH" subtitle
-- **Accent color**: amber `#F5C842` for tickle due states, CTAs
-- **Launch screen**: `LaunchScreenView.swift` — animated EKG wave, 2s display, fades to app
+- **Background**: Navy `#0A1628`
+- **Primary action**: Cobalt `#2563EB`
+- **Accent / tickle due**: Amber `#F5C842` (`Color(red: 0.96, green: 0.78, blue: 0.25)`)
 - **Tab tint**: `.indigo`
+- **Wordmark**: Syne 800 — "SIT" / "STAY IN TOUCH"
 
-## Tickle Feature — Full Spec
+## LinkedIn Import Notes
 
-### User stories
-- "Remind me to call my father every Sunday"
-- "Check in with my colleague every 2 months about opportunities"
-- "Ping my college friends group every quarter"
-
-### TickleListView
-- Sections: **Due today / overdue** (amber accent), **Upcoming** (normal), **Snoozed** (muted)
-- Each row: contact avatar + name, frequency badge, next due date, checkmark action
-- Tapping checkmark → marks complete, advances `nextDueDate` by frequency interval
-- Swipe actions: Snooze (1 week), Edit, Delete
-- Empty state: "No tickles yet — add one from a contact's detail page"
-
-### TickleEditView (sheet)
-- Pick contact OR group (not both)
-- Set frequency (Picker from TickleFrequency)
-- Set start date (DatePicker)
-- Optional note ("Ask about the new role", "Wish happy birthday")
-- Save → creates TickleReminder, schedules local notification
-
-### TickleScheduler (service)
-```swift
-struct TickleScheduler {
-    static func scheduleNotification(for reminder: TickleReminder)
-    static func cancelNotification(for reminder: TickleReminder)
-    static func markComplete(reminder: TickleReminder, context: ModelContext)
-    static func nextDueDate(from date: Date, frequency: TickleFrequency) -> Date
-    static func snooze(reminder: TickleReminder, days: Int, context: ModelContext)
-}
-```
-
-### nextDueDate logic
-- `.daily` → +1 day
-- `.weekly` → +7 days
-- `.biweekly` → +14 days
-- `.monthly` → +1 month (Calendar.current.date(byAdding:))
-- `.bimonthly` → +2 months
-- `.quarterly` → +3 months
-- `.custom` → user-defined interval in days (add `customIntervalDays: Int?` field)
-
-### LinkedIn Import UX Notes
-- LinkedIn data export takes 10–30 minutes after requesting — surface this clearly in the UI
-- The entire flow works on iPhone in Safari — no desktop required
-- iOS Files app handles zip extraction natively — user taps the zip, CSV appears
-- LinkedIn only includes email if the connection has made it visible — some contacts will import name/company only
-- LinkedIn never includes phone numbers — user must add manually after import
-- `ImportView` has a step-by-step guide built in as `LinkedInStep` rows
-
-### Local notifications
-- Use `UNUserNotificationCenter`
-- Request `.alert + .sound` permission on first tickle creation
-- Notification title: "Time to reach out to [Name]"
-- Notification body: reminder.note (if set) else frequency string
-- Identifier: `"tickle-\(reminder.id.uuidString)"`
-- Trigger: `UNCalendarNotificationTrigger` at 9am on `nextDueDate`
-
-### ContentView tab addition
-Add a **Tickle** tab between Network and Compose:
-```swift
-TickleListView()
-    .tabItem { Label("Tickle", systemImage: "bell.badge.clock") }
-```
-
-## What's Already Built
-
-- `LaunchScreenView` — animated Pulse logo splash ✅
-- `SITApp` — launch → onboarding → main flow ✅
-- `TickleReminder` model stub ✅
-- All other views as stubs ✅
-- `ContactImportService`, `LinkedInCSVParser`, `MessageComposerService` — signatures ready ✅
-
-## What Claude Code Should Build Next
-
-**Priority 1 — Tickle feature (new)**
-1. `TickleListView` — sectioned list (due/upcoming/snoozed) with swipe actions
-2. `TickleRowView` — row with avatar, frequency badge, due date, checkmark
-3. `TickleEditView` — sheet for creating/editing a reminder
-4. `TickleScheduler` — nextDueDate logic + UNUserNotificationCenter integration
-5. Add Tickle tab to `ContentView`
-6. Add "Add Tickle" button to `ContactDetailView`
-
-**Priority 2 — Core features**
-7. `ContactImportService` — implement CNContactStore bulk fetch
-8. `LinkedInCSVParser` — implement CSV parsing wiring in ImportView
-9. `ContactDetailView` — full @Bindable edit form
-10. `MessageComposerService` — wire into ComposeView
-11. `MessageTemplate` CRUD in SettingsView
+- Export takes 10–30 min — surfaced in ImportView UI ✅
+- Entire flow works on iPhone in Safari — no desktop required ✅
+- LinkedIn never includes phone numbers — user must add manually
+- Emails only present if connection made them visible
+- `LinkedInStep` is the reusable numbered-step component in ImportView
 
 ## Build & Run
 
 ```bash
-xcodegen generate
+cd ios
+xcodegen generate   # only needed after project.yml changes
 open SIT.xcodeproj
 ```
-Target: physical iPhone — MFMessageComposeViewController and UNUserNotificationCenter require real device.
+
+After `xcodegen generate`, re-select signing team:
+Xcode → SIT target → Signing & Capabilities → Team → Vincent Stoessel (Personal Team)
+
+Target device: physical iPhone — `MFMessageComposeViewController` requires real device.
+Simulator is fine for all other features including tickle notifications.
 
 ## Sensitive Files — Never Commit
 `*.mobileprovision`, `*.p12`, `*.p8`, any file with API keys or Team IDs
