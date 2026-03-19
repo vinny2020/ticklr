@@ -12,6 +12,9 @@ struct SettingsView: View {
 
     @State private var systemAuthStatus: UNAuthorizationStatus = .notDetermined
     @State private var seedMessage: String? = nil
+    #if DEBUG
+    @State private var showClearConfirm = false
+    #endif
 
     private var appVersion: String {
         Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
@@ -100,6 +103,11 @@ struct SettingsView: View {
                         }
                     }
                     .foregroundColor(.yellow)
+
+                    Button("Clear All Contacts", role: .destructive) {
+                        showClearConfirm = true
+                    }
+
                     if let msg = seedMessage {
                         Text(msg)
                             .font(.caption)
@@ -108,7 +116,22 @@ struct SettingsView: View {
                 } header: {
                     Text("Debug")
                 } footer: {
-                    Text("Seeds 20 fake contacts from bundled CSV. Visible in debug builds only.")
+                    Text("Debug only — not visible in release builds.")
+                }
+                .confirmationDialog(
+                    "Clear all contacts?",
+                    isPresented: $showClearConfirm,
+                    titleVisibility: .visible
+                ) {
+                    Button("Delete All Contacts", role: .destructive) {
+                        let all = (try? modelContext.fetch(FetchDescriptor<Contact>())) ?? []
+                        all.forEach { modelContext.delete($0) }
+                        try? modelContext.save()
+                        seedMessage = "All contacts cleared ✓"
+                    }
+                    Button("Cancel", role: .cancel) {}
+                } message: {
+                    Text("This will permanently delete all contacts from the app. This cannot be undone.")
                 }
                 #endif
             }
