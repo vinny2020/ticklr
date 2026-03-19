@@ -95,11 +95,13 @@ struct SettingsView: View {
                 #if DEBUG
                 Section {
                     Button("Load Test Contacts") {
-                        do {
-                            try SeedDataService.seedTestContacts(context: modelContext)
-                            seedMessage = "Test contacts loaded ✓"
-                        } catch {
-                            seedMessage = "Seed failed: \(error.localizedDescription)"
+                        Task { @MainActor in
+                            do {
+                                try SeedDataService.seedTestContacts(context: modelContext)
+                                seedMessage = "Test contacts loaded ✓"
+                            } catch {
+                                seedMessage = "Seed failed: \(error.localizedDescription)"
+                            }
                         }
                     }
                     .foregroundColor(.yellow)
@@ -124,10 +126,14 @@ struct SettingsView: View {
                     titleVisibility: .visible
                 ) {
                     Button("Delete All Contacts", role: .destructive) {
-                        let all = (try? modelContext.fetch(FetchDescriptor<Contact>())) ?? []
-                        all.forEach { modelContext.delete($0) }
-                        try? modelContext.save()
-                        seedMessage = "All contacts cleared ✓"
+                        Task { @MainActor in
+                            let all = (try? modelContext.fetch(FetchDescriptor<Contact>())) ?? []
+                            for contact in all {
+                                modelContext.delete(contact)
+                            }
+                            try? modelContext.save()
+                            seedMessage = "All contacts cleared ✓"
+                        }
                     }
                     Button("Cancel", role: .cancel) {}
                 } message: {
