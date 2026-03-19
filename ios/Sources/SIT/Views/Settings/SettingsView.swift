@@ -11,6 +11,7 @@ struct SettingsView: View {
     @Query private var contacts: [Contact]
 
     @State private var systemAuthStatus: UNAuthorizationStatus = .notDetermined
+    @State private var seedMessage: String? = nil
 
     private var appVersion: String {
         Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
@@ -86,6 +87,30 @@ struct SettingsView: View {
                         hasCompletedOnboarding = false
                     }
                 }
+
+                // MARK: — Debug (compiled out in Release)
+                #if DEBUG
+                Section {
+                    Button("Load Test Contacts") {
+                        do {
+                            try SeedDataService.seedTestContacts(context: modelContext)
+                            seedMessage = "Test contacts loaded ✓"
+                        } catch {
+                            seedMessage = "Seed failed: \(error.localizedDescription)"
+                        }
+                    }
+                    .foregroundColor(.yellow)
+                    if let msg = seedMessage {
+                        Text(msg)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                } header: {
+                    Text("Debug")
+                } footer: {
+                    Text("Seeds 20 fake contacts from bundled CSV. Visible in debug builds only.")
+                }
+                #endif
             }
             .navigationTitle("Settings")
             .task { await fetchNotificationStatus() }

@@ -2,6 +2,7 @@ package com.xaymaca.sit.ui.settings
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.BugReport
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.CloudUpload
 import androidx.compose.material.icons.automirrored.filled.Message
@@ -17,6 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.xaymaca.sit.ui.theme.Amber
 import com.xaymaca.sit.ui.theme.Cobalt
 import com.xaymaca.sit.ui.theme.NavyLight
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -26,7 +28,17 @@ fun SettingsScreen(
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val sendDirectly by viewModel.sendDirectly.collectAsState()
+    val seedMessage by viewModel.seedMessage.collectAsState()
     var showResetConfirm by remember { mutableStateOf(false) }
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+
+    LaunchedEffect(seedMessage) {
+        seedMessage?.let {
+            snackbarHostState.showSnackbar(it)
+            viewModel.clearSeedMessage()
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -38,6 +50,7 @@ fun SettingsScreen(
                 )
             )
         },
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         containerColor = MaterialTheme.colorScheme.background
     ) { paddingValues ->
         Column(
@@ -143,6 +156,17 @@ fun SettingsScreen(
                 iconTint = MaterialTheme.colorScheme.error,
                 onClick = { showResetConfirm = true }
             )
+
+            if (viewModel.isDebug) {
+                HorizontalDivider(color = NavyLight, modifier = Modifier.padding(start = 56.dp))
+                SettingsRow(
+                    icon = Icons.Default.BugReport,
+                    title = "Load Test Contacts",
+                    subtitle = "Seeds 20 fake contacts from assets (debug only)",
+                    iconTint = Amber,
+                    onClick = { viewModel.loadTestContacts() }
+                )
+            }
         }
     }
 
