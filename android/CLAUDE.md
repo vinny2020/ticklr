@@ -108,21 +108,25 @@ app/src/main/java/com/xaymaca/sit/
 - `ImportScreen` — LinkedIn CSV + contacts import
 - `ContactImportService` — ContactsContract import
 - `LinkedInCSVParser` — mirrors iOS implementation
-- `SettingsScreen` + `SettingsViewModel`
+- `SettingsScreen` + `SettingsViewModel` — includes debug "Load Test Contacts" button
+- `SeedDataService` — DEBUG only, loads `test_contacts.csv` from assets
 - `LaunchScreen` — Pulse identity splash
 - `OnboardingScreen`
 - Unit tests — LinkedInCSVParser, StringListConverter, TickleScheduler (all passing)
 - Build artifacts present — app has been compiled and built successfully
+- Screenshot prep — `./gradlew screenshotPrep` sets 9:41, full signal, 100% battery, no notifications
+- Screenshot teardown — `./gradlew screenshotTeardown` restores normal status bar
 
 ## What's Left
 
 ### Android — Play Store Prep
-- **App signing** — create release keystore, configure in build.gradle
-- **Play Store listing** — screenshots from emulator, description, keywords
-- **Privacy policy URL** — required by Google Play
-- **App icon** — ✅ Already done — adaptive icon with Pulse identity (navy bg, cobalt bubble, amber EKG wave)
+- **App signing** — create release keystore, configure in `build.gradle`
+- **Play Store listing** — screenshots using Pixel 7 Pro AVD + `./gradlew screenshotPrep`
+- **Privacy policy URL** — already live at `xaymaca.com/sit/privacy` ✅
+- **App icon** — ✅ Already done — adaptive icon with Pulse identity
 
 ### Android — Nice to Have
+- **Clear All Contacts debug button** — iOS has it, Android only has Load (parity gap)
 - **SmsManager direct send UX** — surface the "send directly vs open Messages" preference in Settings
 - **Search on ComposeScreen** — parity with iOS (filter contacts while selecting recipients)
 

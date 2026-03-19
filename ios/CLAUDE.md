@@ -61,7 +61,7 @@ Sources/SIT/
 
 ## What's Complete ✅ — Full iOS Feature Set
 
-- `LaunchScreenView` — animated Pulse EKG splash, 2s fade
+- `LaunchScreenView` — animated Pulse EKG splash, 2s fade, tagline "YOUR PEOPLE MATTER"
 - `SITApp` — launch → onboarding → main flow with animation
 - All SwiftData models — Contact, ContactGroup, MessageTemplate, TickleReminder (with customIntervalDays)
 - `NetworkListView` — searchable by name/company, sorted lastName, empty states
@@ -79,22 +79,22 @@ Sources/SIT/
 - `MessageComposerService` — MFMessageComposeViewController UIViewControllerRepresentable
 - `TemplateListView` — full CRUD, edit button, swipe-to-delete, seeds default template on first launch
 - `TemplateEditView` — title + body form, create and edit modes, Save disabled when empty
-- `SettingsView` — contacts count, import link, templates link, notification toggle (with system permission awareness), default tickle frequency picker, app version from bundle, reset onboarding
+- `SettingsView` — contacts count, import link, templates link, notification toggle, default tickle frequency picker, app version from bundle, reset onboarding, debug tools
 - `ContentView` — 5-tab navigation: Network, Tickle, Groups, Compose, Settings
-- Search on both Network and Compose screens
-- `AppIcon.appiconset` — all required sizes (20–1024pt), Pulse identity
+- `SeedDataService` — DEBUG only, loads `test_contacts.csv` from bundle via `LinkedInCSVParser`
+- Debug section in Settings — "Load Test Contacts" + "Clear All Contacts" (both `#if DEBUG` only)
+- App icon — single `icon_1024.png` in modern universal format, Pulse identity
+- `PRODUCT_NAME` set to `Ticklr` — shows correctly under icon on home screen
+- Portrait-only orientation locked via `UISupportedInterfaceOrientations` in `project.yml`
 
 ## What's Left
 
 ### iOS — App Store Prep
-- **TestFlight** — enroll at developer.apple.com ($99), archive build, distribute
-- **App Store listing** — screenshots, description, keywords, privacy policy URL
-- **Privacy policy** — required for App Store; must document local-only data storage
-
-### Android
-See `android/CLAUDE.md` — full spec there.
-Suggested first session prompt:
-> "Read android/CLAUDE.md then build items 1–3: Room database setup, Compose theme with Pulse colors, and main NavHost scaffold"
+- **Screenshots** — use `Settings → Debug → Clear All Contacts` then `Load Test Contacts` for clean 20-contact dataset, then take screenshots on Pixel 7 Pro emulator equivalent
+- **TestFlight** — enroll at developer.apple.com ($99/yr), archive build, distribute internally first
+- **App Store listing** — screenshots (iPhone 6.9" required), description, keywords
+- **Privacy policy URL** — already live at `xaymaca.com/sit/privacy` ✅
+- **Support URL** — already live at `xaymaca.com/sit/support` ✅
 
 
 ## Key Conventions
@@ -129,15 +129,20 @@ Suggested first session prompt:
 
 ```bash
 cd ios
-xcodegen generate   # only needed after project.yml changes
+xcodegen generate   # required after ANY project.yml change or new file added
 open SIT.xcodeproj
 ```
 
 After `xcodegen generate`, re-select signing team:
 Xcode → SIT target → Signing & Capabilities → Team → Vincent Stoessel (Personal Team)
 
+**IMPORTANT**: Always run `xcodegen generate` after:
+- Adding new Swift or resource files
+- Changing `project.yml`
+- Pulling changes that include new files
+
 Real device required for: `MFMessageComposeViewController` (SMS compose)
-Simulator fine for: everything else including tickle notifications
+Simulator fine for: everything else including tickle notifications, debug seeding
 
 ## Sensitive Files — Never Commit
 `*.mobileprovision`, `*.p12`, `*.p8`, any file with API keys or Team IDs
