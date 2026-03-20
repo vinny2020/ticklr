@@ -31,9 +31,16 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions { jvmTarget = "17" }
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+        }
+    }
 
-    buildFeatures { compose = true }
+    buildFeatures {
+        compose = true
+        buildConfig = true
+    }
 
     testOptions {
         unitTests.all {
@@ -144,9 +151,8 @@ tasks.register("screenshotPrep") {
         val adb = "adb"
 
         fun adb(vararg args: String) {
-            exec {
-                commandLine(adb, *args)
-                isIgnoreExitValue = true
+            runCatching {
+                ProcessBuilder(listOf(adb) + args.toList()).inheritIO().start().waitFor()
             }
         }
 
@@ -195,11 +201,10 @@ tasks.register("screenshotTeardown") {
     description = "Exits demo mode and restores normal status bar"
 
     doLast {
-        exec {
-            commandLine("adb", "shell", "am", "broadcast",
-                "-a", "com.android.systemui.demo",
-                "-e", "command", "exit")
-            isIgnoreExitValue = true
+        runCatching {
+            ProcessBuilder(listOf("adb", "shell", "am", "broadcast",
+                "-a", "com.android.systemui.demo", "-e", "command", "exit"))
+                .inheritIO().start().waitFor()
         }
         println("✅  Demo mode exited. Status bar restored.")
     }

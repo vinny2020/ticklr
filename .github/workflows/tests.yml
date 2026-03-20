@@ -7,8 +7,8 @@ on:
     branches: [main]
 
 jobs:
-  test:
-    name: Unit Tests
+  ios-tests:
+    name: iOS Unit Tests
     runs-on: macos-15
 
     steps:
@@ -40,5 +40,39 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-results
+          name: ios-test-results
           path: ios/test-results.xml
+
+  android-tests:
+    name: Android Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ hashFiles('android/gradle/libs.versions.toml', 'android/**/*.gradle.kts') }}
+          restore-keys: gradle-
+
+      - name: Run tests
+        working-directory: android
+        run: ./gradlew testDebugUnitTest
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-test-results
+          path: android/app/build/reports/tests/testDebugUnitTest/
