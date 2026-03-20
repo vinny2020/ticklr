@@ -117,9 +117,28 @@ app/src/main/java/com/xaymaca/sit/
 - Screenshot prep — `./gradlew screenshotPrep` sets 9:41, full signal, 100% battery, no notifications
 - Screenshot teardown — `./gradlew screenshotTeardown` restores normal status bar
 
-## What's Left
+## Play Store Submission Status
 
-### Android — Play Store Prep
+- ✅ Signed release AAB built successfully
+- ✅ Keystore created at `~/Documents/ticklr-release.keystore` (alias: `ticklr`)
+- ✅ Signing config wired into `build.gradle.kts`
+- ✅ Google Play Developer account enrolled
+- ⏳ Blocked: Google requires physical Android device to verify developer account
+- ⏳ Once device verified: upload AAB to Play Console, complete store listing, submit
+
+### When you find the Android device:
+1. Complete Google Play developer account verification on the physical device
+2. Go to play.google.com/console → Create app → Ticklr
+3. Upload `android/app/release/app-release.aab`
+4. Fill store listing from `docs/app-store-listing.md`
+5. Short description (80 chars): "Privacy-first contact manager with tickle reminders"
+6. Complete Data safety section — declare no data collected
+7. Set price to Free → Submit for review (3–7 days)
+
+### Keystore reminder
+The keystore at `~/Documents/ticklr-release.keystore` is critical — back it up to 1Password or encrypted cloud storage. Losing it means you can never update the app on Play Store.
+
+
 - **App signing** — create release keystore, configure in `build.gradle`
 - **Play Store listing** — screenshots using Pixel 7 Pro AVD + `./gradlew screenshotPrep`
 - **Privacy policy URL** — already live at `xaymaca.com/sit/privacy` ✅
