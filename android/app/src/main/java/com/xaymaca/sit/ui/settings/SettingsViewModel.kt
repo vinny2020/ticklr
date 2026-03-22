@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.xaymaca.sit.BuildConfig
 import com.xaymaca.sit.SITApp
+import com.xaymaca.sit.data.repository.ContactRepository
 import com.xaymaca.sit.service.SeedDataService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -16,7 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val seedDataService: SeedDataService
+    private val seedDataService: SeedDataService,
+    private val contactRepository: ContactRepository
 ) : ViewModel() {
 
     private val prefs = context.getSharedPreferences(SITApp.PREFS_NAME, Context.MODE_PRIVATE)
@@ -44,6 +46,17 @@ class SettingsViewModel @Inject constructor(
                 _seedMessage.value = "Loaded $count test contacts"
             } catch (e: Exception) {
                 _seedMessage.value = "Seed failed: ${e.message}"
+            }
+        }
+    }
+
+    fun clearAllContacts() {
+        viewModelScope.launch {
+            try {
+                contactRepository.deleteAllContacts()
+                _seedMessage.value = "All contacts cleared"
+            } catch (e: Exception) {
+                _seedMessage.value = "Clear failed: ${e.message}"
             }
         }
     }

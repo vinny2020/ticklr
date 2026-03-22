@@ -27,6 +27,9 @@ interface ContactDao {
     @Delete
     suspend fun delete(contact: Contact)
 
+    @Query("DELETE FROM contacts")
+    suspend fun deleteAll()
+
     @Query(
         "SELECT * FROM contacts WHERE " +
         "firstName LIKE '%' || :query || '%' OR " +

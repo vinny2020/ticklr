@@ -5,6 +5,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BugReport
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.CloudUpload
+import androidx.compose.material.icons.filled.DeleteForever
 import androidx.compose.material.icons.automirrored.filled.Message
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.*
@@ -30,6 +31,7 @@ fun SettingsScreen(
     val sendDirectly by viewModel.sendDirectly.collectAsState()
     val seedMessage by viewModel.seedMessage.collectAsState()
     var showResetConfirm by remember { mutableStateOf(false) }
+    var showClearConfirm by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
@@ -166,6 +168,14 @@ fun SettingsScreen(
                     iconTint = Amber,
                     onClick = { viewModel.loadTestContacts() }
                 )
+                HorizontalDivider(color = NavyLight, modifier = Modifier.padding(start = 56.dp))
+                SettingsRow(
+                    icon = Icons.Default.DeleteForever,
+                    title = "Clear All Contacts",
+                    subtitle = "Permanently deletes all contacts (debug only)",
+                    iconTint = MaterialTheme.colorScheme.error,
+                    onClick = { showClearConfirm = true }
+                )
             }
         }
     }
@@ -187,6 +197,27 @@ fun SettingsScreen(
             },
             dismissButton = {
                 TextButton(onClick = { showResetConfirm = false }) { Text("Cancel") }
+            }
+        )
+    }
+
+    if (showClearConfirm) {
+        AlertDialog(
+            onDismissRequest = { showClearConfirm = false },
+            title = { Text("Clear All Contacts") },
+            text = { Text("This will permanently delete all contacts. This cannot be undone.") },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showClearConfirm = false
+                        viewModel.clearAllContacts()
+                    }
+                ) {
+                    Text("Clear All", color = MaterialTheme.colorScheme.error)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showClearConfirm = false }) { Text("Cancel") }
             }
         )
     }
