@@ -1,6 +1,6 @@
 import XCTest
 import SwiftData
-@testable import SIT
+@testable import Ticklr
 
 @MainActor
 final class LinkedInCSVParserTests: XCTestCase {

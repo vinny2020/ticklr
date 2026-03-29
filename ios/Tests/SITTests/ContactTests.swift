@@ -1,5 +1,5 @@
 import XCTest
-@testable import SIT
+@testable import Ticklr
 
 final class ContactTests: XCTestCase {
 

@@ -7,47 +7,47 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		009899ECFC62260BA66D23A3 /* TickleSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8316646A179885792C4004 /* TickleSchedulerTests.swift */; };
-		071492986777B847898522D5 /* NetworkListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B1CFCC3988DCAF2034813A /* NetworkListView.swift */; };
-		0AAF8EE95887350E7C99F7EE /* LinkedInCSVParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFE5D9B2591E4B4A53F5EEC /* LinkedInCSVParser.swift */; };
-		0D2238D22D7D6B71207125AE /* ComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07B4E4B1B6C11A40612610C /* ComposeView.swift */; };
-		0FCABB7D359FB3FA5E5D129F /* test_contacts.csv in Resources */ = {isa = PBXBuildFile; fileRef = C3BA80FD4DE962EB1F107E78 /* test_contacts.csv */; };
-		14F8E46F4BFA63D2A966D1E3 /* MessageTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72098A45B6ACBC527F5DF0B9 /* MessageTemplate.swift */; };
-		1E545FD4190C1C446704B66C /* LaunchScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F033D809DFE50DA44209A95 /* LaunchScreenView.swift */; };
-		269CE081BABF3F3BA97789BF /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977BE8990F41F718C2693EFD /* OnboardingView.swift */; };
-		2970A9D57220A93546777D79 /* MessageComposerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADEFE7A1ADA2B9E3DDBBD81 /* MessageComposerService.swift */; };
-		2F11F03CED37CEFEAF6410B0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA413473ADA828136F21753 /* ContentView.swift */; };
-		3776CAD925C0664B6FF9E9D1 /* TickleScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F298878BB7FB2F2C63DC2B /* TickleScheduler.swift */; };
-		3CDE11B16868A7F2DDFD13C5 /* ContactGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC789856C13EA9BCE0A6EC /* ContactGroup.swift */; };
-		52085F8A3661CAC307051F47 /* SITApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1887449FF664ADCCCB1BFC3 /* SITApp.swift */; };
-		5A5E6D78A77DB4752D80029F /* ContactImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AD38DE9F1FCCBD8B82DEED /* ContactImportService.swift */; };
-		6394DE5615427A1AD88DAEBC /* LinkedInCSVParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D196741B99B788C9E325C3 /* LinkedInCSVParserTests.swift */; };
-		6D172F1641E14E58544258B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 209311518915490C7F72039B /* Assets.xcassets */; };
-		6FBB4FE01FF1DECEEAE8DE2E /* ContactTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D31DBFE56E32631DD7B650 /* ContactTests.swift */; };
-		73CB70BD7E32A737AA20B8BB /* TemplateEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F765EEB318998C9E229F0F /* TemplateEditView.swift */; };
-		7463CA29C22CCB900195A4EC /* TemplateListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA698C2842FF3F307B474724 /* TemplateListView.swift */; };
-		7974F9853F73A0B668DC9434 /* TickleRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2BE0559EF55B0E2A1DDE54 /* TickleRowView.swift */; };
-		87A33E844F620CDCCD8CE218 /* TickleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A933C06096E53F2DAD773D26 /* TickleListView.swift */; };
-		8F1E67EA6595ADCB9A6BF386 /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACA061EE9A732D89FD3E0F3 /* GroupListView.swift */; };
-		9297D334A3D68D53C67BFD9F /* ContactDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60220490DD5F5ED7374E537 /* ContactDetailView.swift */; };
-		9DD78D4E8731D90E051F27B5 /* ContactRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9125614ECAB9E4D8E5428E51 /* ContactRowView.swift */; };
-		AA45ECE01D150F16D5ABCA61 /* TickleEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4BF582AFC377CF7A29ADC9 /* TickleEditView.swift */; };
-		B2BD7C0B33BAD05A00A48A4A /* TickleReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB38137353FDCD5606A5A8FF /* TickleReminder.swift */; };
-		B562F1151D319743E4D59DCA /* ImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBD25432AF93E7B78C501EE /* ImportView.swift */; };
-		BE71756F8B58A6933A31D204 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C7E0EBE485C198DCF9669E /* SettingsView.swift */; };
-		D609C6E0139C34921E6946A8 /* AddContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77347A9F53BFBE3E1672671 /* AddContactView.swift */; };
-		E6375B744B2953B0F1C25B49 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EBB61C7877871E721045C7 /* Contact.swift */; };
-		EE6799477C84F06A43F4FC8C /* GroupDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033862D2DB3D8A467AAFFA5D /* GroupDetailView.swift */; };
-		F17E0CF002C078D2CACDD900 /* SeedDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9413278558DA1F8BBE00FF96 /* SeedDataService.swift */; };
+		0C03E3E93AEAAEAB358CF5C3 /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACA061EE9A732D89FD3E0F3 /* GroupListView.swift */; };
+		0C41C7D26198E0DC2C958072 /* AddContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77347A9F53BFBE3E1672671 /* AddContactView.swift */; };
+		12FCF35AA80528F2EF325924 /* ContactRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9125614ECAB9E4D8E5428E51 /* ContactRowView.swift */; };
+		16BE362388D0211580E586D0 /* TickleScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F298878BB7FB2F2C63DC2B /* TickleScheduler.swift */; };
+		184D3DD687352B351AB7A501 /* NetworkListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B1CFCC3988DCAF2034813A /* NetworkListView.swift */; };
+		20030189F6FC7FC341A0510D /* LaunchScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F033D809DFE50DA44209A95 /* LaunchScreenView.swift */; };
+		34A284E142196787F146D1B3 /* test_contacts.csv in Resources */ = {isa = PBXBuildFile; fileRef = C3BA80FD4DE962EB1F107E78 /* test_contacts.csv */; };
+		353AA993FFB1A862D307ED9F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 209311518915490C7F72039B /* Assets.xcassets */; };
+		43434A6ACC0CD3146036A11C /* TickleSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8316646A179885792C4004 /* TickleSchedulerTests.swift */; };
+		4BE808CBAA4EA9D55409DD82 /* ContactImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AD38DE9F1FCCBD8B82DEED /* ContactImportService.swift */; };
+		4C98B38D7EF3EE65F2FD1A58 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EBB61C7877871E721045C7 /* Contact.swift */; };
+		5188A4195E2A5CA01730175F /* MessageTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72098A45B6ACBC527F5DF0B9 /* MessageTemplate.swift */; };
+		568B2F7E2C0A37B9505FFDE4 /* ContactGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC789856C13EA9BCE0A6EC /* ContactGroup.swift */; };
+		5A2E74BD7F7B979AE5B1C4F3 /* TickleReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB38137353FDCD5606A5A8FF /* TickleReminder.swift */; };
+		5C6F6974D1ED58434BB9CFDF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C7E0EBE485C198DCF9669E /* SettingsView.swift */; };
+		6A89CDD6B79D3E4E9E4BDBCE /* TickleEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4BF582AFC377CF7A29ADC9 /* TickleEditView.swift */; };
+		7116F3F3FE61E7C0FDF86F7E /* MessageComposerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADEFE7A1ADA2B9E3DDBBD81 /* MessageComposerService.swift */; };
+		840D3C6377E1F347573EAE19 /* TemplateEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F765EEB318998C9E229F0F /* TemplateEditView.swift */; };
+		87572A827C3A4DED6D5E968C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA413473ADA828136F21753 /* ContentView.swift */; };
+		8BB34E5F91AFE802C9B16626 /* ImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBD25432AF93E7B78C501EE /* ImportView.swift */; };
+		8CF13461108C2CC7E64EB847 /* SeedDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9413278558DA1F8BBE00FF96 /* SeedDataService.swift */; };
+		9283E70E0707CC70CFA0AD0F /* ContactTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D31DBFE56E32631DD7B650 /* ContactTests.swift */; };
+		949EFAA2F52FC214F6E65F95 /* TickleRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2BE0559EF55B0E2A1DDE54 /* TickleRowView.swift */; };
+		9CA0D612EF182E101FDE37A4 /* LinkedInCSVParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D196741B99B788C9E325C3 /* LinkedInCSVParserTests.swift */; };
+		AF7B9499DE3B99B9194191B5 /* GroupDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033862D2DB3D8A467AAFFA5D /* GroupDetailView.swift */; };
+		CCCCA1639CE5316D17A6AE7E /* LinkedInCSVParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFE5D9B2591E4B4A53F5EEC /* LinkedInCSVParser.swift */; };
+		D2644F8AB791907856A6E389 /* ComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07B4E4B1B6C11A40612610C /* ComposeView.swift */; };
+		D85DBFDBA2D0DACA843EA1A9 /* ContactDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60220490DD5F5ED7374E537 /* ContactDetailView.swift */; };
+		E01711F3B9475DEFFD7DDDD4 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977BE8990F41F718C2693EFD /* OnboardingView.swift */; };
+		F01FB1D28CE1BD691A9DD989 /* TemplateListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA698C2842FF3F307B474724 /* TemplateListView.swift */; };
+		F48BE3B2B06B47E783EAAC70 /* SITApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1887449FF664ADCCCB1BFC3 /* SITApp.swift */; };
+		FCEBEAFB511E04C6C968B5BA /* TickleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A933C06096E53F2DAD773D26 /* TickleListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		F2B1B0A4DA0D41DB7BF59F83 /* PBXContainerItemProxy */ = {
+		A5DC26CDE387B33113AF29A7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A5D2D54CCBEE20463A2C48F7 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = B2C0561D284F2617E641F70B;
-			remoteInfo = SIT;
+			remoteGlobalIDString = 1CADC66CDEC975B92B6E11C1;
+			remoteInfo = Ticklr;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -60,9 +60,10 @@
 		0EFE5D9B2591E4B4A53F5EEC /* LinkedInCSVParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedInCSVParser.swift; sourceTree = "<group>"; };
 		0F033D809DFE50DA44209A95 /* LaunchScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenView.swift; sourceTree = "<group>"; };
 		10D31DBFE56E32631DD7B650 /* ContactTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTests.swift; sourceTree = "<group>"; };
-		1F1406565C9981D68E6EBC93 /* SITTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = file; name = SITTests.xctest; path = Ticklr.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		209311518915490C7F72039B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		30D196741B99B788C9E325C3 /* LinkedInCSVParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedInCSVParserTests.swift; sourceTree = "<group>"; };
+		45775744E6927B98A73B2CAC /* Ticklr.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Ticklr.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		49E849839D5DE00393F1F990 /* TicklrTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = TicklrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50AD38DE9F1FCCBD8B82DEED /* ContactImportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactImportService.swift; sourceTree = "<group>"; };
 		53C7E0EBE485C198DCF9669E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		5CA413473ADA828136F21753 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -80,13 +81,12 @@
 		B1887449FF664ADCCCB1BFC3 /* SITApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SITApp.swift; sourceTree = "<group>"; };
 		B5CC789856C13EA9BCE0A6EC /* ContactGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactGroup.swift; sourceTree = "<group>"; };
 		BB38137353FDCD5606A5A8FF /* TickleReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleReminder.swift; sourceTree = "<group>"; };
-		C3BA80FD4DE962EB1F107E78 /* test_contacts.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = test_contacts.csv; sourceTree = "<group>"; };
+		C3BA80FD4DE962EB1F107E78 /* test_contacts.csv */ = {isa = PBXFileReference; path = test_contacts.csv; sourceTree = "<group>"; };
 		CA4BF582AFC377CF7A29ADC9 /* TickleEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleEditView.swift; sourceTree = "<group>"; };
 		CADEFE7A1ADA2B9E3DDBBD81 /* MessageComposerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageComposerService.swift; sourceTree = "<group>"; };
 		E07B4E4B1B6C11A40612610C /* ComposeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeView.swift; sourceTree = "<group>"; };
 		E5F765EEB318998C9E229F0F /* TemplateEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateEditView.swift; sourceTree = "<group>"; };
 		E77347A9F53BFBE3E1672671 /* AddContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactView.swift; sourceTree = "<group>"; };
-		FAD22AA30EE4F0BA962C1655 /* Ticklr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ticklr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -206,8 +206,8 @@
 		B9E711472E0A67C680D625C7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FAD22AA30EE4F0BA962C1655 /* Ticklr.app */,
-				1F1406565C9981D68E6EBC93 /* SITTests.xctest */,
+				45775744E6927B98A73B2CAC /* Ticklr.app */,
+				49E849839D5DE00393F1F990 /* TicklrTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -240,41 +240,41 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		2E897AE05B52A8BAD8F94342 /* SITTests */ = {
+		1CADC66CDEC975B92B6E11C1 /* Ticklr */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5E90E23A8AB138B383B697FE /* Build configuration list for PBXNativeTarget "SITTests" */;
+			buildConfigurationList = A60F1F0EAA90B225EED52E40 /* Build configuration list for PBXNativeTarget "Ticklr" */;
 			buildPhases = (
-				C62CAAA99672E864A7F30D1A /* Sources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				83997DD8A10914B53A0DD680 /* PBXTargetDependency */,
-			);
-			name = SITTests;
-			packageProductDependencies = (
-			);
-			productName = SITTests;
-			productReference = 1F1406565C9981D68E6EBC93 /* SITTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		B2C0561D284F2617E641F70B /* SIT */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 6566BA27CFE2B4E96E8726A2 /* Build configuration list for PBXNativeTarget "SIT" */;
-			buildPhases = (
-				2A2BD6E033E191FDEAEB0EE5 /* Sources */,
-				8D2B3F386333DECBFFA6FFC1 /* Resources */,
+				09D936D7CEFA9598925D6336 /* Sources */,
+				0475A16C1DE763B86E0DD15E /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = SIT;
+			name = Ticklr;
 			packageProductDependencies = (
 			);
-			productName = SIT;
-			productReference = FAD22AA30EE4F0BA962C1655 /* Ticklr.app */;
+			productName = Ticklr;
+			productReference = 45775744E6927B98A73B2CAC /* Ticklr.app */;
 			productType = "com.apple.product-type.application";
+		};
+		659D71ADC995ABBCE6F3FA86 /* TicklrTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9B5A7C0CB687F086F447159A /* Build configuration list for PBXNativeTarget "TicklrTests" */;
+			buildPhases = (
+				CE51D64CBBEE230A290345F1 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				571D3599E26F7E2453C5373C /* PBXTargetDependency */,
+			);
+			name = TicklrTests;
+			packageProductDependencies = (
+			);
+			productName = TicklrTests;
+			productReference = 49E849839D5DE00393F1F990 /* TicklrTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -285,7 +285,10 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
-					2E897AE05B52A8BAD8F94342 = {
+					1CADC66CDEC975B92B6E11C1 = {
+						DevelopmentTeam = "";
+					};
+					659D71ADC995ABBCE6F3FA86 = {
 						DevelopmentTeam = "";
 					};
 				};
@@ -304,96 +307,130 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B2C0561D284F2617E641F70B /* SIT */,
-				2E897AE05B52A8BAD8F94342 /* SITTests */,
+				1CADC66CDEC975B92B6E11C1 /* Ticklr */,
+				659D71ADC995ABBCE6F3FA86 /* TicklrTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		8D2B3F386333DECBFFA6FFC1 /* Resources */ = {
+		0475A16C1DE763B86E0DD15E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D172F1641E14E58544258B0 /* Assets.xcassets in Resources */,
-				0FCABB7D359FB3FA5E5D129F /* test_contacts.csv in Resources */,
+				353AA993FFB1A862D307ED9F /* Assets.xcassets in Resources */,
+				34A284E142196787F146D1B3 /* test_contacts.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		2A2BD6E033E191FDEAEB0EE5 /* Sources */ = {
+		09D936D7CEFA9598925D6336 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D609C6E0139C34921E6946A8 /* AddContactView.swift in Sources */,
-				0D2238D22D7D6B71207125AE /* ComposeView.swift in Sources */,
-				E6375B744B2953B0F1C25B49 /* Contact.swift in Sources */,
-				9297D334A3D68D53C67BFD9F /* ContactDetailView.swift in Sources */,
-				3CDE11B16868A7F2DDFD13C5 /* ContactGroup.swift in Sources */,
-				5A5E6D78A77DB4752D80029F /* ContactImportService.swift in Sources */,
-				9DD78D4E8731D90E051F27B5 /* ContactRowView.swift in Sources */,
-				2F11F03CED37CEFEAF6410B0 /* ContentView.swift in Sources */,
-				EE6799477C84F06A43F4FC8C /* GroupDetailView.swift in Sources */,
-				8F1E67EA6595ADCB9A6BF386 /* GroupListView.swift in Sources */,
-				B562F1151D319743E4D59DCA /* ImportView.swift in Sources */,
-				1E545FD4190C1C446704B66C /* LaunchScreenView.swift in Sources */,
-				0AAF8EE95887350E7C99F7EE /* LinkedInCSVParser.swift in Sources */,
-				2970A9D57220A93546777D79 /* MessageComposerService.swift in Sources */,
-				14F8E46F4BFA63D2A966D1E3 /* MessageTemplate.swift in Sources */,
-				071492986777B847898522D5 /* NetworkListView.swift in Sources */,
-				269CE081BABF3F3BA97789BF /* OnboardingView.swift in Sources */,
-				52085F8A3661CAC307051F47 /* SITApp.swift in Sources */,
-				F17E0CF002C078D2CACDD900 /* SeedDataService.swift in Sources */,
-				BE71756F8B58A6933A31D204 /* SettingsView.swift in Sources */,
-				73CB70BD7E32A737AA20B8BB /* TemplateEditView.swift in Sources */,
-				7463CA29C22CCB900195A4EC /* TemplateListView.swift in Sources */,
-				AA45ECE01D150F16D5ABCA61 /* TickleEditView.swift in Sources */,
-				87A33E844F620CDCCD8CE218 /* TickleListView.swift in Sources */,
-				B2BD7C0B33BAD05A00A48A4A /* TickleReminder.swift in Sources */,
-				7974F9853F73A0B668DC9434 /* TickleRowView.swift in Sources */,
-				3776CAD925C0664B6FF9E9D1 /* TickleScheduler.swift in Sources */,
+				0C41C7D26198E0DC2C958072 /* AddContactView.swift in Sources */,
+				D2644F8AB791907856A6E389 /* ComposeView.swift in Sources */,
+				4C98B38D7EF3EE65F2FD1A58 /* Contact.swift in Sources */,
+				D85DBFDBA2D0DACA843EA1A9 /* ContactDetailView.swift in Sources */,
+				568B2F7E2C0A37B9505FFDE4 /* ContactGroup.swift in Sources */,
+				4BE808CBAA4EA9D55409DD82 /* ContactImportService.swift in Sources */,
+				12FCF35AA80528F2EF325924 /* ContactRowView.swift in Sources */,
+				87572A827C3A4DED6D5E968C /* ContentView.swift in Sources */,
+				AF7B9499DE3B99B9194191B5 /* GroupDetailView.swift in Sources */,
+				0C03E3E93AEAAEAB358CF5C3 /* GroupListView.swift in Sources */,
+				8BB34E5F91AFE802C9B16626 /* ImportView.swift in Sources */,
+				20030189F6FC7FC341A0510D /* LaunchScreenView.swift in Sources */,
+				CCCCA1639CE5316D17A6AE7E /* LinkedInCSVParser.swift in Sources */,
+				7116F3F3FE61E7C0FDF86F7E /* MessageComposerService.swift in Sources */,
+				5188A4195E2A5CA01730175F /* MessageTemplate.swift in Sources */,
+				184D3DD687352B351AB7A501 /* NetworkListView.swift in Sources */,
+				E01711F3B9475DEFFD7DDDD4 /* OnboardingView.swift in Sources */,
+				F48BE3B2B06B47E783EAAC70 /* SITApp.swift in Sources */,
+				8CF13461108C2CC7E64EB847 /* SeedDataService.swift in Sources */,
+				5C6F6974D1ED58434BB9CFDF /* SettingsView.swift in Sources */,
+				840D3C6377E1F347573EAE19 /* TemplateEditView.swift in Sources */,
+				F01FB1D28CE1BD691A9DD989 /* TemplateListView.swift in Sources */,
+				6A89CDD6B79D3E4E9E4BDBCE /* TickleEditView.swift in Sources */,
+				FCEBEAFB511E04C6C968B5BA /* TickleListView.swift in Sources */,
+				5A2E74BD7F7B979AE5B1C4F3 /* TickleReminder.swift in Sources */,
+				949EFAA2F52FC214F6E65F95 /* TickleRowView.swift in Sources */,
+				16BE362388D0211580E586D0 /* TickleScheduler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C62CAAA99672E864A7F30D1A /* Sources */ = {
+		CE51D64CBBEE230A290345F1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6FBB4FE01FF1DECEEAE8DE2E /* ContactTests.swift in Sources */,
-				6394DE5615427A1AD88DAEBC /* LinkedInCSVParserTests.swift in Sources */,
-				009899ECFC62260BA66D23A3 /* TickleSchedulerTests.swift in Sources */,
+				9283E70E0707CC70CFA0AD0F /* ContactTests.swift in Sources */,
+				9CA0D612EF182E101FDE37A4 /* LinkedInCSVParserTests.swift in Sources */,
+				43434A6ACC0CD3146036A11C /* TickleSchedulerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		83997DD8A10914B53A0DD680 /* PBXTargetDependency */ = {
+		571D3599E26F7E2453C5373C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = B2C0561D284F2617E641F70B /* SIT */;
-			targetProxy = F2B1B0A4DA0D41DB7BF59F83 /* PBXContainerItemProxy */;
+			target = 1CADC66CDEC975B92B6E11C1 /* Ticklr */;
+			targetProxy = A5DC26CDE387B33113AF29A7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		05D25721596F9C1EF6016FEA /* Debug */ = {
+		1E7C63571427392CD9A5A9DA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = Sources/SIT/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.xaymaca.sit;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		31D4B24CFC329274435BCCD9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = Sources/SIT/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.xaymaca.sit;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		502DF3D2408C68B532D4EE51 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xaymaca.sit.tests;
+				PRODUCT_NAME = TicklrTests;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SIT.app/SIT";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ticklr.app/Ticklr";
 			};
-			name = Debug;
+			name = Release;
 		};
 		73F2218FE6EA378E0ACFF10A /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -454,54 +491,22 @@
 			};
 			name = Release;
 		};
-		B7E3EE5BE24CEA03DDA513A4 /* Release */ = {
+		D2A51B52D05DC79BE5C14C79 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xaymaca.sit.tests;
+				PRODUCT_NAME = TicklrTests;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SIT.app/SIT";
-			};
-			name = Release;
-		};
-		E0C49FC53528F7FEC3F85CF1 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = A22UWTG6TN;
-				INFOPLIST_FILE = Sources/SIT/Resources/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.xaymaca.sit;
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = 1;
-			};
-			name = Release;
-		};
-		EE457643BB038CF8F4333825 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = A22UWTG6TN;
-				INFOPLIST_FILE = Sources/SIT/Resources/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.xaymaca.sit;
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ticklr.app/Ticklr";
 			};
 			name = Debug;
 		};
@@ -574,20 +579,20 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5E90E23A8AB138B383B697FE /* Build configuration list for PBXNativeTarget "SITTests" */ = {
+		9B5A7C0CB687F086F447159A /* Build configuration list for PBXNativeTarget "TicklrTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				05D25721596F9C1EF6016FEA /* Debug */,
-				B7E3EE5BE24CEA03DDA513A4 /* Release */,
+				D2A51B52D05DC79BE5C14C79 /* Debug */,
+				502DF3D2408C68B532D4EE51 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		6566BA27CFE2B4E96E8726A2 /* Build configuration list for PBXNativeTarget "SIT" */ = {
+		A60F1F0EAA90B225EED52E40 /* Build configuration list for PBXNativeTarget "Ticklr" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				EE457643BB038CF8F4333825 /* Debug */,
-				E0C49FC53528F7FEC3F85CF1 /* Release */,
+				31D4B24CFC329274435BCCD9 /* Debug */,
+				1E7C63571427392CD9A5A9DA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

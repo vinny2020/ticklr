@@ -14,7 +14,7 @@ settings:
     DEVELOPMENT_TEAM: ""
 
 targets:
-  SIT:
+  Ticklr:
     type: application
     platform: iOS
     sources:
@@ -42,16 +42,18 @@ targets:
     dependencies: []
     scheme:
       testTargets:
-        - SITTests
+        - TicklrTests
 
-  SITTests:
+  TicklrTests:
     type: bundle.unit-test
     platform: iOS
     sources:
       - path: Tests/SITTests
     settings:
       base:
+        PRODUCT_NAME: TicklrTests
         PRODUCT_BUNDLE_IDENTIFIER: com.xaymaca.sit.tests
         SWIFT_VERSION: "6.0"
+        GENERATE_INFOPLIST_FILE: YES
     dependencies:
-      - target: SIT
+      - target: Ticklr
