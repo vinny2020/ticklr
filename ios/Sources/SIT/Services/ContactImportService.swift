@@ -38,6 +38,6 @@ struct ContactImportService {
         }
 
         try context.save()
-        print("SIT: Imported \(imported) contacts from iOS")
+        print("Ticklr: Imported \(imported) contacts from iOS")
     }
 }

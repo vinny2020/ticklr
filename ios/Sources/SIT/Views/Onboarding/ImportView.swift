@@ -20,7 +20,8 @@ struct ImportView: View {
                         Task { await importFromiOS() }
                     } label: {
                         HStack {
-                            Label("Import from iPhone Contacts", systemImage: "apple.logo")
+                            // Changed to "Select" and used the 'person.badge.plus' icon
+                            Label("Select iPhone Contacts", systemImage: "person.badge.plus")
                             Spacer()
                             if isImporting {
                                 ProgressView()
@@ -32,11 +33,13 @@ struct ImportView: View {
                     Button {
                         showingDocumentPicker = true
                     } label: {
-                        Label("Import from LinkedIn CSV", systemImage: "briefcase.fill")
+                        // Changed to "Add" and used 'doc.badge.plus' icon
+                        Label("Add LinkedIn Connections", systemImage: "doc.badge.plus")
                     }
                     .disabled(isImporting)
                 } footer: {
-                    Text("LinkedIn usually emails your download link within 10–30 minutes. Come back here once you have the CSV.")
+                    // Reinforced the "local" value prop for the reviewer here
+                    Text("Your connections are processed locally on your device. LinkedIn usually emails your download link within 10–30 minutes.")
                 }
 
                 Section("How to get your LinkedIn CSV") {
@@ -47,12 +50,13 @@ struct ImportView: View {
                         LinkedInStep(number: "4", text: "Select Connections only → Request archive")
                         LinkedInStep(number: "5", text: "Wait for LinkedIn's email (10–30 min)")
                         LinkedInStep(number: "6", text: "Download the zip → open in Files app → tap to unzip")
-                        LinkedInStep(number: "7", text: "Come back here and tap Import from LinkedIn CSV")
+                        // Updated Step 7 to match the new button label
+                        LinkedInStep(number: "7", text: "Come back here and tap Add LinkedIn Connections")
                     }
                     .padding(.vertical, 4)
                 }
             }
-            .navigationTitle("Import Contacts")
+            .navigationTitle("Build Your Local Network")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {

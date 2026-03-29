@@ -43,7 +43,7 @@ struct ComposeView: View {
                             } else {
                                 selectedContacts.insert(contact.id)
                                 if contact.phoneNumbers.isEmpty {
-                                    print("SIT: ⚠️ \(contact.fullName) has no phone number — cannot include in SMS")
+                                    print("Ticklr: ⚠️ \(contact.fullName) has no phone number — cannot include in SMS")
                                 }
                             }
                         } label: {

@@ -38,7 +38,7 @@ struct NetworkListView: View {
                         Button {
                             showingImport = true
                         } label: {
-                            Label("Import Contacts", systemImage: "square.and.arrow.down")
+                            Label("Get Started", systemImage: "square.and.arrow.down")
                         }
                     } label: {
                         Image(systemName: "plus")

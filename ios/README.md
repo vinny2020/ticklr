@@ -86,7 +86,7 @@ open SIT.xcodeproj
 
 ## Importing Contacts
 
-**From iOS Contacts** — tap **+** → Import Contacts in the Network tab. Requires Contacts permission (requested on first import).
+**From iOS Contacts** — tap **+** → Start Your Network in the Network tab. Requires Contacts permission (requested on first import).
 
 **From LinkedIn** — export your connections from LinkedIn (Settings → Data Privacy → Get a copy of your data → Connections). Import the `Connections.csv` file via the + menu.
 

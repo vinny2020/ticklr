@@ -45,7 +45,7 @@ struct LinkedInCSVParser {
         }
 
         try context.save()
-        print("SIT: Imported \(imported) contacts from LinkedIn CSV")
+        print("Ticklr: Imported \(imported) contacts from LinkedIn CSV")
     }
 
     private static func parseCSVLine(_ line: String) -> [String] {

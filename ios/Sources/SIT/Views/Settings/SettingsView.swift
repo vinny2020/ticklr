@@ -33,7 +33,7 @@ struct SettingsView: View {
                 // MARK: — Data
                 Section("Data") {
                     LabeledContent("Contacts", value: contacts.count.formatted())
-                    NavigationLink("Import Contacts") {
+                    NavigationLink("Start Your Network") {
                         ImportView()
                     }
                     NavigationLink("Message Templates") {
