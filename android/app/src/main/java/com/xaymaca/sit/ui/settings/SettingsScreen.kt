@@ -1,5 +1,6 @@
 package com.xaymaca.sit.ui.settings
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BugReport
@@ -7,6 +8,7 @@ import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.CloudUpload
 import androidx.compose.material.icons.filled.DeleteForever
 import androidx.compose.material.icons.automirrored.filled.Message
+import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -19,7 +21,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.xaymaca.sit.ui.theme.Amber
 import com.xaymaca.sit.ui.theme.Cobalt
 import com.xaymaca.sit.ui.theme.NavyLight
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -29,11 +30,16 @@ fun SettingsScreen(
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val sendDirectly by viewModel.sendDirectly.collectAsState()
+    val themeMode by viewModel.themeMode.collectAsState()
     val seedMessage by viewModel.seedMessage.collectAsState()
+    
+    var showThemeDialog by remember { mutableStateOf(false) }
+    var tempThemeMode by remember(showThemeDialog) { mutableIntStateOf(themeMode) }
+    
     var showResetConfirm by remember { mutableStateOf(false) }
     var showClearConfirm by remember { mutableStateOf(false) }
+    
     val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
 
     LaunchedEffect(seedMessage) {
         seedMessage?.let {
@@ -61,6 +67,24 @@ fun SettingsScreen(
                 .padding(paddingValues)
                 .padding(vertical = 8.dp)
         ) {
+            // Appearance section
+            SettingsSectionHeader("Appearance")
+
+            val themeLabel = when (themeMode) {
+                1 -> "Light"
+                2 -> "Dark"
+                else -> "System Default"
+            }
+
+            SettingsRow(
+                icon = Icons.Default.Palette,
+                title = "Theme",
+                subtitle = themeLabel,
+                onClick = { showThemeDialog = true }
+            )
+
+            HorizontalDivider(color = NavyLight, modifier = Modifier.padding(start = 56.dp))
+
             // Data section
             SettingsSectionHeader("Data")
 
@@ -122,7 +146,7 @@ fun SettingsScreen(
                     .padding(horizontal = 16.dp, vertical = 12.dp)
             ) {
                 Text(
-                    "Ticklr",
+                    "SIT",
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.SemiBold
                 )
@@ -180,6 +204,41 @@ fun SettingsScreen(
         }
     }
 
+    if (showThemeDialog) {
+        AlertDialog(
+            onDismissRequest = { showThemeDialog = false },
+            title = { Text("Choose Theme") },
+            text = {
+                Column {
+                    ThemeOption("System Default", tempThemeMode == 0) {
+                        tempThemeMode = 0
+                    }
+                    ThemeOption("Light", tempThemeMode == 1) {
+                        tempThemeMode = 1
+                    }
+                    ThemeOption("Dark", tempThemeMode == 2) {
+                        tempThemeMode = 2
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        viewModel.setThemeMode(tempThemeMode)
+                        showThemeDialog = false
+                    }
+                ) {
+                    Text("OK")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showThemeDialog = false }) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
+
     if (showResetConfirm) {
         AlertDialog(
             onDismissRequest = { showResetConfirm = false },
@@ -224,6 +283,25 @@ fun SettingsScreen(
 }
 
 @Composable
+private fun ThemeOption(
+    text: String,
+    selected: Boolean,
+    onClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        RadioButton(selected = selected, onClick = onClick)
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(text, style = MaterialTheme.typography.bodyLarge)
+    }
+}
+
+@Composable
 private fun SettingsSectionHeader(title: String) {
     Text(
         text = title.uppercase(),
@@ -244,10 +322,8 @@ private fun SettingsRow(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 12.dp)
-            .also {
-                // Make the whole row clickable via a gesture detector
-            },
+            .clickable(onClick = onClick)
+            .padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
@@ -271,12 +347,10 @@ private fun SettingsRow(
                 )
             }
         }
-        TextButton(onClick = onClick, contentPadding = PaddingValues(0.dp)) {
-            Icon(
-                Icons.Default.ChevronRight,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
+        Icon(
+            Icons.Default.ChevronRight,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant
+        )
     }
 }

@@ -55,9 +55,9 @@ private val SITLightColorScheme = lightColorScheme(
     onBackground = LightOnSurface,
     surface = White,
     onSurface = LightOnSurface,
-    surfaceVariant = Color(0xFFE4E8F0),
-    onSurfaceVariant = Color(0xFF4A5568),
-    outline = Color(0xFF9AA5B4),
+    surfaceVariant = Color(0xFFE2E8F0),
+    onSurfaceVariant = LightOnSurfaceSecondary,
+    outline = LightOnSurfaceTertiary,
     outlineVariant = Color(0xFFCBD5E1)
 )
 

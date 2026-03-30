@@ -28,6 +28,11 @@ class SettingsViewModel @Inject constructor(
     )
     val sendDirectly: StateFlow<Boolean> = _sendDirectly
 
+    private val _themeMode = MutableStateFlow(
+        prefs.getInt(SITApp.KEY_THEME_MODE, 0)
+    )
+    val themeMode: StateFlow<Int> = _themeMode
+
     private val _seedMessage = MutableStateFlow<String?>(null)
     val seedMessage: StateFlow<String?> = _seedMessage
 
@@ -37,6 +42,11 @@ class SettingsViewModel @Inject constructor(
         val newValue = !_sendDirectly.value
         _sendDirectly.value = newValue
         prefs.edit().putBoolean(SITApp.KEY_SEND_SMS_DIRECTLY, newValue).apply()
+    }
+
+    fun setThemeMode(mode: Int) {
+        _themeMode.value = mode
+        prefs.edit().putInt(SITApp.KEY_THEME_MODE, mode).apply()
     }
 
     fun loadTestContacts() {

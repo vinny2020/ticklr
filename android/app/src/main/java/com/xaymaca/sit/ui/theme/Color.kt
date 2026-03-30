@@ -18,7 +18,9 @@ val OnNavy = Color(0xFFE8EDF5)
 val OnNavySecondary = Color(0xFF8FA3BF)
 val OnNavyTertiary = Color(0xFF5C738A)
 
-// Light theme fallbacks (minimal usage — app is primarily dark)
+// Light theme colors
 val White = Color(0xFFFFFFFF)
 val LightSurface = Color(0xFFF5F7FA)
 val LightOnSurface = Color(0xFF0A1628)
+val LightOnSurfaceSecondary = Color(0xFF2D3748) // Darker gray for readability
+val LightOnSurfaceTertiary = Color(0xFF4A5568)
