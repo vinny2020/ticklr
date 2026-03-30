@@ -1,5 +1,6 @@
 package com.xaymaca.sit.ui.theme
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
@@ -62,7 +63,7 @@ private val SITLightColorScheme = lightColorScheme(
 
 @Composable
 fun SITTheme(
-    darkTheme: Boolean = true, // SIT is primarily a dark-theme app
+    darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
     val colorScheme = if (darkTheme) SITDarkColorScheme else SITLightColorScheme
