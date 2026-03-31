@@ -15,16 +15,16 @@ android {
         applicationId = "com.xaymaca.sit"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.1"
     }
 
     signingConfigs {
         create("release") {
-            storeFile = file("/Users/vincentstoessel/Documents/ticklr-release.keystore")
-            storePassword = "ticklr2026"
-            keyAlias = "ticklr"
-            keyPassword = "ticklr2026"
+            storeFile = project.findProperty("RELEASE_STORE_FILE")?.let { file(it) }
+            storePassword = project.findProperty("RELEASE_STORE_PASSWORD") as String?
+            keyAlias = project.findProperty("RELEASE_KEY_ALIAS") as String?
+            keyPassword = project.findProperty("RELEASE_KEY_PASSWORD") as String?
         }
     }
 
