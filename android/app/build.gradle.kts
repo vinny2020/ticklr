@@ -15,8 +15,8 @@ android {
         applicationId = "com.xaymaca.sit"
         minSdk = 26
         targetSdk = 35
-        versionCode = 9
-        versionName = "1.3.5"
+        versionCode = 12
+        versionName = "1.3.7"
     }
 
     signingConfigs {
