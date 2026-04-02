@@ -7,8 +7,11 @@ import com.xaymaca.sit.data.model.ContactGroup
 import com.xaymaca.sit.data.model.GroupWithContacts
 import com.xaymaca.sit.data.repository.ContactRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,6 +32,17 @@ class GroupViewModel @Inject constructor(
     val allContacts: StateFlow<List<Contact>> = contactRepository
         .getAllContacts()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    private val _toastMessage = MutableStateFlow<String?>(null)
+    val toastMessage: StateFlow<String?> = _toastMessage.asStateFlow()
+
+    fun showToast(message: String) {
+        _toastMessage.value = message
+        viewModelScope.launch {
+            delay(2000)
+            _toastMessage.value = null
+        }
+    }
 
     fun createGroup(name: String, emoji: String) {
         viewModelScope.launch {

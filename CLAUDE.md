@@ -71,3 +71,35 @@ Android: gated by `BuildConfig.DEBUG` in `SettingsViewModel.kt` via `SeedDataSer
 **Android** — `SmsManager` can send silently with SEND_SMS permission. Intent fallback also available.
 
 > Android's silent SMS send is a meaningful UX advantage. Surface as a user preference in Settings.
+
+---
+
+## 🚧 Next Feature: Group Member Selection — Add Confirmation Toast
+
+### Problem
+When a user picks a person from the contact list to add to a group, the contact disappears from
+the list immediately with no feedback. This is confusing — the user doesn't know if the action
+succeeded or where the contact went.
+
+### Solution
+Show a brief, unobtrusive **toast/snackbar** message after a contact is added to a group.
+
+**Message format:**
+- Short group name: `"John User added to Hiking Crew"`
+- Long group name (>20 chars): `"John User added to group"` (truncate group name, use generic fallback)
+
+**Behavior:**
+- Auto-dismisses after ~2 seconds
+- Non-blocking — user can keep selecting contacts
+- Appears at the bottom of the screen (above tab bar on iOS, standard snackbar position on Android)
+- Uses existing brand colors: Cobalt `#2563EB` background, white text
+
+### Group Name Character Limit
+To prevent overflow in toasts, labels, and list rows, enforce a **30-character maximum** on group names.
+- Show character count in the group name text field (e.g., `"12 / 30"`)
+- Disable save if name is empty or exceeds 30 characters
+- Apply on both create and edit flows
+
+### Scope
+This feature must be implemented on **both iOS and Android** with matching UX behavior.
+See platform CLAUDE.md files for implementation details.

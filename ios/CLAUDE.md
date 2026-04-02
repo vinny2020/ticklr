@@ -97,6 +97,44 @@ See `docs/app-store-listing.md` for the complete App Store submission copy inclu
 - URLs (support, marketing, privacy policy)
 - Screenshot order and tips
 
+## 🚧 Next Feature: Group Member Selection — Add Confirmation Toast
+
+### Context
+When a user picks a contact from the list inside `GroupDetailView` to add to a group, the contact
+disappears from the list with no feedback. This is confusing UX.
+
+### What to Build
+
+**1. Toast notification in `GroupDetailView.swift`**
+
+After a contact is successfully added to a group, show a brief overlay message:
+- Format: `"<FirstName> <LastName> added to <GroupName>"` if group name ≤ 20 chars
+- Format: `"<FirstName> <LastName> added to group"` if group name > 20 chars
+- Auto-dismiss after 2 seconds
+- Non-blocking — user can continue selecting contacts while it's visible
+- Position: bottom of screen, above tab bar safe area
+- Style: Cobalt `#2563EB` background, white text, rounded corners, subtle drop shadow
+- Implement as a SwiftUI overlay modifier — no third-party libraries
+
+**2. Character limit on group name in `GroupDetailView.swift` (create + edit flows)**
+
+- Max 30 characters for group name
+- Show live character count: `"12 / 30"` displayed below the text field in a muted color
+- Disable Save/Create button if name is empty OR exceeds 30 characters
+- Apply to both the create-new-group sheet and the inline edit field
+
+### Files Likely Involved
+- `Views/Network/GroupDetailView.swift` — primary file; add toast overlay + char limit logic
+- Possibly `Views/Network/GroupListView.swift` — if group creation sheet lives there
+
+### Key Constraints
+- Swift 6 strict concurrency — use `@MainActor` where needed
+- SwiftUI only — no UIKit for the toast
+- No third-party dependencies
+- Toast must not block interaction with the list underneath it
+
+---
+
 ## What's Left
 
 ### iOS — App Store Prep

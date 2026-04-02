@@ -96,7 +96,9 @@ struct GroupEditSheet: View {
     }
 
     private var isEditing: Bool { group != nil }
-    private var canSave: Bool { !name.trimmingCharacters(in: .whitespaces).isEmpty }
+    private var canSave: Bool {
+        !name.trimmingCharacters(in: .whitespaces).isEmpty && name.count <= 30
+    }
 
     var body: some View {
         NavigationStack {
@@ -134,6 +136,12 @@ struct GroupEditSheet: View {
 
                 Section("Name") {
                     TextField("Group name", text: $name)
+                    HStack {
+                        Spacer()
+                        Text("\(name.count) / 30")
+                            .font(.caption)
+                            .foregroundStyle(name.count > 30 ? .red : .secondary)
+                    }
                 }
             }
             .navigationTitle(isEditing ? "Edit Group" : "New Group")

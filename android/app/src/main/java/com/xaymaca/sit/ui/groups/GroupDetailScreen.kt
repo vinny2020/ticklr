@@ -11,6 +11,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.material3.*
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.runtime.*
@@ -39,6 +42,7 @@ fun GroupDetailScreen(
     var showAddSheet by remember { mutableStateOf(false) }
 
     val allContacts by viewModel.allContacts.collectAsState()
+    val toastMessage by viewModel.toastMessage.collectAsState()
 
     LaunchedEffect(groupId) {
         val gwc = viewModel.getGroupWithContacts(groupId)
@@ -61,83 +65,89 @@ fun GroupDetailScreen(
         allContacts.filter { it.id !in memberIds }
     }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    val g = group
-                    if (g != null) {
-                        Text("${g.emoji} ${g.name}", fontWeight = FontWeight.Bold)
-                    }
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background,
-                    titleContentColor = MaterialTheme.colorScheme.onBackground
-                )
-            )
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { showAddSheet = true },
-                containerColor = Cobalt,
-                contentColor = MaterialTheme.colorScheme.onPrimary
-            ) {
-                Icon(Icons.Default.Add, contentDescription = "Add members")
-            }
-        },
-        containerColor = MaterialTheme.colorScheme.background
-    ) { paddingValues ->
-        if (members.isEmpty()) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    "No members yet. Tap + to add.",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-        } else {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues),
-                contentPadding = PaddingValues(bottom = 88.dp)
-            ) {
-                items(members, key = { it.id }) { contact ->
-                    SwipeToRemoveMemberRow(
-                        contact = contact,
-                        onClick = { onContactClick(contact.id) },
-                        onRemove = {
-                            viewModel.removeMember(contact.id, groupId)
+    Box(modifier = Modifier.fillMaxSize()) {
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = {
+                        val g = group
+                        if (g != null) {
+                            Text("${g.emoji} ${g.name}", fontWeight = FontWeight.Bold)
                         }
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = onBack) {
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.background,
+                        titleContentColor = MaterialTheme.colorScheme.onBackground
                     )
-                    HorizontalDivider(
-                        color = NavyLight,
-                        thickness = 0.5.dp,
-                        modifier = Modifier.padding(start = 72.dp)
+                )
+            },
+            floatingActionButton = {
+                FloatingActionButton(
+                    onClick = { showAddSheet = true },
+                    containerColor = Cobalt,
+                    contentColor = MaterialTheme.colorScheme.onPrimary
+                ) {
+                    Icon(Icons.Default.Add, contentDescription = "Add members")
+                }
+            },
+            containerColor = MaterialTheme.colorScheme.background
+        ) { paddingValues ->
+            if (members.isEmpty()) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        "No members yet. Tap + to add.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
+                }
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues),
+                    contentPadding = PaddingValues(bottom = 88.dp)
+                ) {
+                    items(members, key = { it.id }) { contact ->
+                        SwipeToRemoveMemberRow(
+                            contact = contact,
+                            onClick = { onContactClick(contact.id) },
+                            onRemove = {
+                                viewModel.removeMember(contact.id, groupId)
+                            }
+                        )
+                        HorizontalDivider(
+                            color = NavyLight,
+                            thickness = 0.5.dp,
+                            modifier = Modifier.padding(start = 72.dp)
+                        )
+                    }
                 }
             }
         }
-    }
 
-    if (showAddSheet) {
-        AddMembersBottomSheet(
-            candidates = nonMembers,
-            onAdd = { contact ->
-                viewModel.addMember(contact.id, groupId)
-            },
-            onDismiss = { showAddSheet = false }
-        )
+        if (showAddSheet) {
+            AddMembersBottomSheet(
+                candidates = nonMembers,
+                toastMessage = toastMessage,
+                onAdd = { contact ->
+                    viewModel.addMember(contact.id, groupId)
+                    val groupName = group?.name ?: ""
+                    val displayName = if (groupName.length <= 20) groupName else "group"
+                    viewModel.showToast("${contact.fullName} added to $displayName")
+                },
+                onDismiss = { showAddSheet = false }
+            )
+        }
     }
 }
 
@@ -220,6 +230,7 @@ private fun SwipeToRemoveMemberRow(
 @Composable
 private fun AddMembersBottomSheet(
     candidates: List<Contact>,
+    toastMessage: String?,
     onAdd: (Contact) -> Unit,
     onDismiss: () -> Unit
 ) {
@@ -230,73 +241,107 @@ private fun AddMembersBottomSheet(
         sheetState = sheetState,
         containerColor = MaterialTheme.colorScheme.surface
     ) {
-        Text(
-            text = "Add Members",
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
-        )
-        if (candidates.isEmpty()) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(120.dp),
-                contentAlignment = Alignment.Center
-            ) {
+        Box(modifier = Modifier.fillMaxWidth().heightIn(min = 200.dp)) {
+            Column {
                 Text(
-                    "All contacts are already in this group",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    text = "Add Members",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
                 )
-            }
-        } else {
-            LazyColumn(
-                contentPadding = PaddingValues(bottom = 48.dp)
-            ) {
-                items(candidates, key = { it.id }) { contact ->
-                    Row(
+                if (candidates.isEmpty()) {
+                    Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clickable {
-                                onAdd(contact)
-                            }
-                            .padding(horizontal = 16.dp, vertical = 12.dp),
-                        verticalAlignment = Alignment.CenterVertically
+                            .height(120.dp),
+                        contentAlignment = Alignment.Center
                     ) {
-                        Box(
-                            modifier = Modifier
-                                .size(40.dp)
-                                .clip(CircleShape)
-                                .background(Cobalt),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = contact.initials,
-                                style = MaterialTheme.typography.labelLarge,
-                                fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.onPrimary
-                            )
-                        }
-                        Spacer(modifier = Modifier.width(12.dp))
-                        Column(modifier = Modifier.weight(1f)) {
-                            Text(
-                                text = contact.fullName.ifBlank { "No Name" },
-                                style = MaterialTheme.typography.bodyLarge,
-                                fontWeight = FontWeight.Medium
-                            )
-                            if (contact.company.isNotBlank()) {
-                                Text(
-                                    text = contact.company,
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                                )
+                        Text(
+                            "All contacts are already in this group",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                } else {
+                    LazyColumn(
+                        contentPadding = PaddingValues(bottom = 48.dp)
+                    ) {
+                        items(candidates, key = { it.id }) { contact ->
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable { onAdd(contact) }
+                                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(40.dp)
+                                        .clip(CircleShape)
+                                        .background(Cobalt),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        text = contact.initials,
+                                        style = MaterialTheme.typography.labelLarge,
+                                        fontWeight = FontWeight.Bold,
+                                        color = MaterialTheme.colorScheme.onPrimary
+                                    )
+                                }
+                                Spacer(modifier = Modifier.width(12.dp))
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(
+                                        text = contact.fullName.ifBlank { "No Name" },
+                                        style = MaterialTheme.typography.bodyLarge,
+                                        fontWeight = FontWeight.Medium
+                                    )
+                                    if (contact.company.isNotBlank()) {
+                                        Text(
+                                            text = contact.company,
+                                            style = MaterialTheme.typography.bodySmall,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                                        )
+                                    }
+                                }
+                                TextButton(onClick = { onAdd(contact) }) {
+                                    Text("Add", color = Cobalt)
+                                }
                             }
-                        }
-                        TextButton(onClick = { onAdd(contact) }) {
-                            Text("Add", color = Cobalt)
                         }
                     }
                 }
+            }
+
+            // Toast overlay — inside the sheet's own window layer so it paints on top
+            GroupToast(
+                message = toastMessage,
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 24.dp)
+            )
+        }
+    }
+}
+
+@Composable
+private fun GroupToast(message: String?, modifier: Modifier = Modifier) {
+    AnimatedVisibility(
+        visible = message != null,
+        enter = fadeIn(),
+        exit = fadeOut(),
+        modifier = modifier
+    ) {
+        message?.let {
+            Surface(
+                shape = RoundedCornerShape(12.dp),
+                color = Cobalt
+            ) {
+                Text(
+                    text = it,
+                    color = Color.White,
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp)
+                )
             }
         }
     }

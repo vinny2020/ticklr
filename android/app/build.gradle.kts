@@ -142,6 +142,7 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.kotlin.test)
     testImplementation(libs.gson)
+    testImplementation(libs.kotlinx.coroutines.test)
 }
 
 // ---------------------------------------------------------------------------

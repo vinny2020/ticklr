@@ -28,7 +28,7 @@ object DatabaseModule {
             context,
             SITDatabase::class.java,
             "sit_database"
-        ).fallbackToDestructiveMigration()
+        ).fallbackToDestructiveMigration(dropAllTables = true)
             .build()
     }
 

@@ -83,6 +83,8 @@ private struct AddMembersSheet: View {
     @Query(sort: \Contact.lastName) private var allContacts: [Contact]
 
     @State private var searchText = ""
+    @State private var toastMessage = ""
+    @State private var showToast = false
 
     var nonMembers: [Contact] {
         let memberIDs = Set(group.contacts.map { $0.id })
@@ -100,6 +102,13 @@ private struct AddMembersSheet: View {
                 Button {
                     group.contacts.append(contact)
                     try? modelContext.save()
+                    let displayName = group.name.count <= 20 ? group.name : "group"
+                    toastMessage = "\(contact.fullName) added to \(displayName)"
+                    showToast = true
+                    Task {
+                        try? await Task.sleep(for: .seconds(2))
+                        showToast = false
+                    }
                 } label: {
                     HStack {
                         ContactRowView(contact: contact)
@@ -129,6 +138,21 @@ private struct AddMembersSheet: View {
                     ContentUnavailableView.search
                 }
             }
+            .overlay(alignment: .bottom) {
+                if showToast {
+                    Text(toastMessage)
+                        .font(.subheadline)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 10)
+                        .background(Color(red: 0.145, green: 0.388, blue: 0.922))
+                        .foregroundStyle(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .shadow(radius: 4)
+                        .padding(.bottom, 16)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                }
+            }
+            .animation(.easeInOut(duration: 0.3), value: showToast)
         }
     }
 }
