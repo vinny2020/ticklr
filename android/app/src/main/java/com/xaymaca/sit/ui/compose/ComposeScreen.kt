@@ -11,8 +11,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -23,13 +23,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.xaymaca.sit.data.model.Contact
-import com.xaymaca.sit.data.model.MessageTemplate
 import com.xaymaca.sit.service.SmsService
 import com.xaymaca.sit.ui.shared.TicklrToast
-import com.xaymaca.sit.ui.theme.Amber
 import com.xaymaca.sit.ui.theme.Cobalt
 import com.xaymaca.sit.ui.theme.NavyLight
 
@@ -48,7 +44,6 @@ fun ComposeScreen(
     val searchQuery by viewModel.searchQuery.collectAsState()
     val sortOrder by viewModel.sortOrder.collectAsState()
 
-    val gson = remember { Gson() }
     var showTemplateDropdown by remember { mutableStateOf(false) }
     var showSaveTemplateDialog by remember { mutableStateOf(false) }
     var showSortDropdown by remember { mutableStateOf(false) }
@@ -57,13 +52,7 @@ fun ComposeScreen(
     // Contacts with at least one phone number among the selected set — used for send dispatch only
     val validSelectedContacts = remember(contacts, selectedIds) {
         contacts.filter { contact ->
-            contact.id in selectedIds && run {
-                val phones: List<String> = try {
-                    val type = object : TypeToken<List<String>>() {}.type
-                    gson.fromJson(contact.phoneNumbers, type) ?: emptyList()
-                } catch (e: Exception) { emptyList() }
-                phones.isNotEmpty()
-            }
+            contact.id in selectedIds && parseJsonStringArray(contact.phoneNumbers).isNotEmpty()
         }
     }
 
@@ -184,12 +173,9 @@ fun ComposeScreen(
                             context, android.Manifest.permission.SEND_SMS
                         ) == PackageManager.PERMISSION_GRANTED
 
-                        val phoneNumbers = validSelectedContacts.flatMap { contact ->
-                            try {
-                                val type = object : TypeToken<List<String>>() {}.type
-                                gson.fromJson<List<String>>(contact.phoneNumbers, type) ?: emptyList()
-                            } catch (e: Exception) { emptyList() }
-                        }.take(validSelectedContacts.size) // one number per contact
+                        val phoneNumbers = validSelectedContacts.mapNotNull { contact ->
+                            parseJsonStringArray(contact.phoneNumbers).firstOrNull()
+                        }
 
                         if (sendDirectly && hasSmsPermission) {
                             val results = smsService.sendSmsToMany(context, phoneNumbers, messageBody)
@@ -235,7 +221,7 @@ fun ComposeScreen(
                 Spacer(modifier = Modifier.width(8.dp))
                 Box {
                     IconButton(onClick = { showSortDropdown = true }) {
-                        Icon(Icons.Default.Sort, contentDescription = "Sort")
+                        Icon(Icons.AutoMirrored.Filled.Sort, contentDescription = "Sort")
                     }
                     DropdownMenu(
                         expanded = showSortDropdown,
@@ -331,6 +317,17 @@ fun ComposeScreen(
             }
         )
     }
+}
+
+private fun parseJsonStringArray(json: String): List<String> {
+    val trimmed = json.trim()
+    if (trimmed == "[]" || trimmed.isBlank()) return emptyList()
+    return trimmed
+        .removePrefix("[")
+        .removeSuffix("]")
+        .split(",")
+        .map { it.trim().removeSurrounding("\"") }
+        .filter { it.isNotBlank() }
 }
 
 @Composable

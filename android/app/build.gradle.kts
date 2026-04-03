@@ -1,3 +1,11 @@
+import java.util.Properties
+
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.inputStream().use { localProperties.load(it) }
+}
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -17,16 +25,16 @@ android {
         applicationId = "com.xaymaca.sit"
         minSdk = 26
         targetSdk = 35
-        versionCode = 18
-        versionName = "1.4.3"
+        versionCode = 19
+        versionName = "1.4.4"
     }
 
     signingConfigs {
         create("release") {
-            storeFile = project.findProperty("RELEASE_STORE_FILE")?.let { file(it) }
-            storePassword = project.findProperty("RELEASE_STORE_PASSWORD") as String?
-            keyAlias = project.findProperty("RELEASE_KEY_ALIAS") as String?
-            keyPassword = project.findProperty("RELEASE_KEY_PASSWORD") as String?
+            storeFile = localProperties.getProperty("RELEASE_STORE_FILE")?.let { file(it) }
+            storePassword = localProperties.getProperty("RELEASE_STORE_PASSWORD")
+            keyAlias = localProperties.getProperty("RELEASE_KEY_ALIAS")
+            keyPassword = localProperties.getProperty("RELEASE_KEY_PASSWORD")
         }
     }
 
@@ -247,7 +255,7 @@ tasks.register("tagRelease") {
     group = "release"
     description = "Creates and pushes an annotated git tag for the current release build"
 
-    dependsOn("assembleRelease")
+    mustRunAfter("assembleRelease", "bundleRelease")
 
     doLast {
         val versionName = android.defaultConfig.versionName

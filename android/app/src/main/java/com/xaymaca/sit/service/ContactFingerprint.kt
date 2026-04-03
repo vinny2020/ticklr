@@ -1,7 +1,5 @@
 package com.xaymaca.sit.service
 
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import java.security.MessageDigest
 
 /**
@@ -20,9 +18,6 @@ import java.security.MessageDigest
  */
 object ContactFingerprint {
 
-    private val gson = Gson()
-    private val listType = object : TypeToken<List<String>>() {}.type
-
     fun compute(
         firstName: String,
         lastName: String,
@@ -32,13 +27,8 @@ object ContactFingerprint {
         val first = firstName.trim().lowercase()
         val last = lastName.trim().lowercase()
 
-        val phones: List<String> = try {
-            gson.fromJson<List<String>>(phoneNumbersJson, listType) ?: emptyList()
-        } catch (e: Exception) { emptyList() }
-
-        val emails: List<String> = try {
-            gson.fromJson<List<String>>(emailsJson, listType) ?: emptyList()
-        } catch (e: Exception) { emptyList() }
+        val phones: List<String> = parseJsonStringArray(phoneNumbersJson)
+        val emails: List<String> = parseJsonStringArray(emailsJson)
 
         val primaryPhone = phones.firstOrNull()?.replace(Regex("[^0-9]"), "") ?: ""
         val primaryEmail = emails.firstOrNull()?.trim()?.lowercase() ?: ""
@@ -49,6 +39,17 @@ object ContactFingerprint {
 
         val raw = "$first|$last|$contactKey"
         return sha1(raw)
+    }
+
+    private fun parseJsonStringArray(json: String): List<String> {
+        val trimmed = json.trim()
+        if (trimmed == "[]" || trimmed.isBlank()) return emptyList()
+        return trimmed
+            .removePrefix("[")
+            .removeSuffix("]")
+            .split(",")
+            .map { it.trim().removeSurrounding("\"") }
+            .filter { it.isNotBlank() }
     }
 
     private fun sha1(input: String): String {

@@ -22,6 +22,9 @@
 -keep class * implements com.google.gson.TypeAdapterFactory
 -keep class * implements com.google.gson.JsonSerializer
 -keep class * implements com.google.gson.JsonDeserializer
+# Safety net: preserve Gson TypeToken generic signatures so R8 doesn't strip them
+-keep class com.google.gson.reflect.TypeToken { *; }
+-keep class * extends com.google.gson.reflect.TypeToken
 
 # WorkManager
 -keep class androidx.work.** { *; }
