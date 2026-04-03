@@ -18,10 +18,17 @@ class SeedDataService @Inject constructor(
     private val contactRepository: ContactRepository,
     private val linkedInCSVParser: LinkedInCSVParser
 ) {
-    suspend fun seedTestContacts(): Int = withContext(Dispatchers.IO) {
+    suspend fun seedTestContacts(): SeedResult = withContext(Dispatchers.IO) {
         val inputStream = context.assets.open("test_contacts.csv")
         val contacts = linkedInCSVParser.parse(inputStream)
-        contacts.forEach { contactRepository.insertContact(it) }
-        contacts.size
+        var inserted = 0
+        var skipped = 0
+        contacts.forEach { contact ->
+            val rowId = contactRepository.insertContact(contact)
+            if (rowId == -1L) skipped++ else inserted++
+        }
+        SeedResult(inserted, skipped)
     }
+
+    data class SeedResult(val inserted: Int, val skipped: Int)
 }

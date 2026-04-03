@@ -1,5 +1,6 @@
 import SwiftData
 import Foundation
+import CryptoKit
 
 enum ImportSource: String, Codable {
     case manual
@@ -21,6 +22,8 @@ final class Contact {
     var importSource: ImportSource
     var createdAt: Date
     var lastContactedAt: Date?
+    /// SHA-1 fingerprint for deduplication. Empty = unset.
+    var fingerprint: String
 
     @Relationship(deleteRule: .nullify, inverse: \ContactGroup.contacts)
     var groups: [ContactGroup]
@@ -36,7 +39,8 @@ final class Contact {
         jobTitle: String = "",
         notes: String = "",
         tags: [String] = [],
-        importSource: ImportSource = .manual
+        importSource: ImportSource = .manual,
+        fingerprint: String = ""
     ) {
         self.id = UUID()
         self.firstName = firstName
@@ -50,6 +54,7 @@ final class Contact {
         self.importSource = importSource
         self.createdAt = Date()
         self.groups = []
+        self.fingerprint = fingerprint
     }
 
     var fullName: String {

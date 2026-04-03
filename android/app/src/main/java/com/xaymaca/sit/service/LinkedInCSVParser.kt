@@ -8,7 +8,6 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import javax.inject.Inject
 import javax.inject.Singleton
-
 /**
  * Parses LinkedIn Connections CSV export.
  * Expected columns: First Name, Last Name, Email Address, Company, Position
@@ -74,16 +73,21 @@ class LinkedInCSVParser @Inject constructor() {
             val phone = col(phoneIdx)
             val phones: List<String> = if (phone.isNotBlank()) listOf(phone) else emptyList()
 
+            val phoneNumbersJson = gson.toJson(phones)
+            val emailsJson = gson.toJson(emails)
+            val fingerprint = ContactFingerprint.compute(firstName, lastName, phoneNumbersJson, emailsJson)
+
             result.add(
                 Contact(
                     firstName = firstName,
                     lastName = lastName,
-                    phoneNumbers = gson.toJson(phones),
-                    emails = gson.toJson(emails),
+                    phoneNumbers = phoneNumbersJson,
+                    emails = emailsJson,
                     company = col(companyIdx),
                     jobTitle = col(positionIdx),
                     importSource = ImportSource.LINKEDIN.name,
-                    createdAt = System.currentTimeMillis()
+                    createdAt = System.currentTimeMillis(),
+                    fingerprint = fingerprint
                 )
             )
             dataLine = reader.readLine()

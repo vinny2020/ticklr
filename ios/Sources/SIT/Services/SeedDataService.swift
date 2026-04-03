@@ -10,15 +10,11 @@ struct SeedDataService {
     /// Inserts all contacts from the bundled test_contacts.csv into the given context.
     /// Returns the number of contacts inserted.
     @discardableResult
-    static func seedTestContacts(context: ModelContext) throws -> Int {
+    static func seedTestContacts(context: ModelContext) throws -> (imported: Int, skipped: Int) {
         guard let url = Bundle.main.url(forResource: "test_contacts", withExtension: "csv") else {
             throw SeedError.fileNotFound
         }
-        try LinkedInCSVParser.parse(url: url, context: context)
-        // Count how many were just inserted by fetching total
-        let descriptor = FetchDescriptor<Contact>()
-        let all = try context.fetch(descriptor)
-        return all.count
+        return try LinkedInCSVParser.parse(url: url, context: context)
     }
 
     enum SeedError: LocalizedError {

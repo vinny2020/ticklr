@@ -1,21 +1,21 @@
-First Name,Last Name,Email Address,Company,Position
-Alice,Nguyen,alice.nguyen@example.com,Stripe,Staff Engineer
-Marcus,Thompson,marcus.t@example.com,Netflix,Engineering Manager
-Priya,Patel,priya.patel@example.com,Google,Product Manager
-Jordan,Williams,jordan.w@example.com,Anthropic,Research Scientist
-Sofia,Reyes,sofia.reyes@example.com,Figma,Design Lead
-Daniel,Kim,d.kim@example.com,Shopify,Senior Backend Engineer
-Aisha,Johnson,aisha.j@example.com,Canva,Head of Growth
-Liam,O'Brien,liam.obrien@example.com,Atlassian,Platform Architect
-Mei,Chen,mei.chen@example.com,Notion,iOS Engineer
-Carlos,Morales,c.morales@example.com,Vercel,DevRel Engineer
-Fatima,Al-Hassan,fatima.ah@example.com,HubSpot,Customer Success Lead
-Tobias,Schneider,tobias.s@example.com,SAP,Solutions Architect
-Yuki,Tanaka,yuki.tanaka@example.com,Sony,UX Researcher
-Keisha,Brown,keisha.b@example.com,Salesforce,Principal Engineer
-Raj,Sharma,raj.sharma@example.com,Microsoft,Azure Architect
-Ingrid,Lindqvist,ingrid.l@example.com,Spotify,Data Scientist
-Kwame,Asante,kwame.a@example.com,Square,Android Engineer
-Valentina,Rossi,v.rossi@example.com,Ferrari,Digital Transformation Lead
-Noah,Okafor,noah.o@example.com,Intercom,Head of Support
-Hannah,Fischer,h.fischer@example.com,Zalando,Engineering Director
+First Name,Last Name,Email Address,Company,Position,Phone Number
+Alice,Nguyen,alice.nguyen@example.com,Stripe,Staff Engineer,+1 (415) 302-7841
+Marcus,Thompson,marcus.t@example.com,Netflix,Engineering Manager,+1 (310) 874-5523
+Priya,Patel,priya.patel@example.com,Google,Product Manager,+1 (650) 219-3367
+Jordan,Williams,jordan.w@example.com,Anthropic,Research Scientist,+1 (628) 447-9012
+Sofia,Reyes,sofia.reyes@example.com,Figma,Design Lead,+1 (415) 763-1184
+Daniel,Kim,d.kim@example.com,Shopify,Senior Backend Engineer,+1 (416) 558-2290
+Aisha,Johnson,aisha.j@example.com,Canva,Head of Growth,+1 (213) 940-6635
+Liam,O'Brien,liam.obrien@example.com,Atlassian,Platform Architect,+1 (619) 381-7754
+Mei,Chen,mei.chen@example.com,Notion,iOS Engineer,+1 (510) 276-4489
+Carlos,Morales,c.morales@example.com,Vercel,DevRel Engineer,+1 (512) 803-9921
+Fatima,Al-Hassan,fatima.ah@example.com,HubSpot,Customer Success Lead,+1 (617) 724-3308
+Tobias,Schneider,tobias.s@example.com,SAP,Solutions Architect,+1 (408) 591-6647
+Yuki,Tanaka,yuki.tanaka@example.com,Sony,UX Researcher,+1 (310) 482-1193
+Keisha,Brown,keisha.b@example.com,Salesforce,Principal Engineer,+1 (415) 930-8872
+Raj,Sharma,raj.sharma@example.com,Microsoft,Azure Architect,+1 (425) 673-5541
+Ingrid,Lindqvist,ingrid.l@example.com,Spotify,Data Scientist,+1 (212) 347-8806
+Kwame,Asante,kwame.a@example.com,Square,Android Engineer,+1 (415) 209-7763
+Valentina,Rossi,v.rossi@example.com,Ferrari,Digital Transformation Lead,+1 (305) 816-4492
+Noah,Okafor,noah.o@example.com,Intercom,Head of Support,+1 (415) 558-3317
+Hannah,Fischer,h.fischer@example.com,Zalando,Engineering Director,+1 (646) 772-0095

@@ -97,8 +97,15 @@ struct SettingsView: View {
                     Button("Load Test Contacts") {
                         Task { @MainActor in
                             do {
-                                try SeedDataService.seedTestContacts(context: modelContext)
-                                seedMessage = "Test contacts loaded ✓"
+                                let result = try SeedDataService.seedTestContacts(context: modelContext)
+                                switch (result.imported, result.skipped) {
+                                case (_, 0):
+                                    seedMessage = "Loaded \(result.imported) test contacts ✓"
+                                case (0, _):
+                                    seedMessage = "All \(result.skipped) contacts already exist"
+                                default:
+                                    seedMessage = "Loaded \(result.imported) new, skipped \(result.skipped) duplicates"
+                                }
                             } catch {
                                 seedMessage = "Seed failed: \(error.localizedDescription)"
                             }

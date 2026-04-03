@@ -10,10 +10,12 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Work
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -23,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.xaymaca.sit.data.model.Contact
+import com.xaymaca.sit.data.model.ImportSource
 import com.xaymaca.sit.ui.theme.Cobalt
 import com.xaymaca.sit.ui.theme.NavyLight
 
@@ -243,5 +246,20 @@ private fun ContactRow(
                 )
             }
         }
+
+        Spacer(modifier = Modifier.width(4.dp))
+
+        // Import source icon
+        val importIcon = when (contact.importSource) {
+            ImportSource.LINKEDIN.name -> Icons.Default.Work
+            ImportSource.IOS_CONTACTS.name -> Icons.Default.Phone
+            else -> Icons.Default.Edit
+        }
+        Icon(
+            importIcon,
+            contentDescription = "Import source",
+            modifier = Modifier.size(12.dp),
+            tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.35f)
+        )
     }
 }

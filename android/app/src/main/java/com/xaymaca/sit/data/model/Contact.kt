@@ -1,9 +1,13 @@
 package com.xaymaca.sit.data.model
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "contacts")
+@Entity(
+    tableName = "contacts",
+    indices = [Index(value = ["fingerprint"], unique = true)]
+)
 data class Contact(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val firstName: String = "",
@@ -19,7 +23,9 @@ data class Contact(
     val tags: String = "[]",
     val importSource: String = ImportSource.MANUAL.name,
     val createdAt: Long = System.currentTimeMillis(),
-    val lastContactedAt: Long = 0L
+    val lastContactedAt: Long = 0L,
+    /** SHA-1 fingerprint for deduplication. Empty string = unset (not deduplicated). */
+    val fingerprint: String = ""
 ) {
     val fullName: String get() = "$firstName $lastName".trim()
 

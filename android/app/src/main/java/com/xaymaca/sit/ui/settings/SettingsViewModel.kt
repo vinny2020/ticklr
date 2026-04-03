@@ -55,8 +55,12 @@ class SettingsViewModel @Inject constructor(
     fun loadTestContacts() {
         viewModelScope.launch {
             try {
-                val count = seedDataService.seedTestContacts()
-                _seedMessage.value = "Loaded $count test contacts"
+                val result = seedDataService.seedTestContacts()
+                _seedMessage.value = when {
+                    result.skipped == 0 -> "Loaded ${result.inserted} test contacts ✓"
+                    result.inserted == 0 -> "All ${result.skipped} contacts already exist"
+                    else -> "Loaded ${result.inserted} new, skipped ${result.skipped} duplicates"
+                }
             } catch (e: Exception) {
                 _seedMessage.value = "Seed failed: ${e.message}"
             }

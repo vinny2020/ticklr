@@ -7,6 +7,7 @@ import com.xaymaca.sit.data.model.ContactGroup
 import com.xaymaca.sit.data.model.ContactGroupCrossRef
 import com.xaymaca.sit.data.model.ContactWithGroups
 import com.xaymaca.sit.data.model.GroupWithContacts
+import com.xaymaca.sit.service.ContactFingerprint
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -28,7 +29,18 @@ class ContactRepository @Inject constructor(
     suspend fun getContactWithGroups(id: Long): ContactWithGroups? =
         contactDao.getContactWithGroups(id)
 
-    suspend fun insertContact(contact: Contact): Long = contactDao.insert(contact)
+    suspend fun insertContact(contact: Contact): Long {
+        // Stamp fingerprint if not already set (e.g. manual adds via AddContactScreen)
+        val stamped = if (contact.fingerprint.isBlank()) {
+            contact.copy(
+                fingerprint = ContactFingerprint.compute(
+                    contact.firstName, contact.lastName,
+                    contact.phoneNumbers, contact.emails
+                )
+            )
+        } else contact
+        return contactDao.insert(stamped)
+    }
 
     suspend fun updateContact(contact: Contact) = contactDao.update(contact)
 
