@@ -32,13 +32,13 @@ object ContactFingerprint {
         val first = firstName.trim().lowercase()
         val last = lastName.trim().lowercase()
 
-        val phones: List<String> = runCatching {
-            gson.fromJson(phoneNumbersJson, listType)
-        }.getOrDefault(emptyList())
+        val phones: List<String> = try {
+            gson.fromJson<List<String>>(phoneNumbersJson, listType) ?: emptyList()
+        } catch (e: Exception) { emptyList() }
 
-        val emails: List<String> = runCatching {
-            gson.fromJson(emailsJson, listType)
-        }.getOrDefault(emptyList())
+        val emails: List<String> = try {
+            gson.fromJson<List<String>>(emailsJson, listType) ?: emptyList()
+        } catch (e: Exception) { emptyList() }
 
         val primaryPhone = phones.firstOrNull()?.replace(Regex("[^0-9]"), "") ?: ""
         val primaryEmail = emails.firstOrNull()?.trim()?.lowercase() ?: ""

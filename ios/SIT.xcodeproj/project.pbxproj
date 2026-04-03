@@ -36,6 +36,7 @@
 		D2644F8AB791907856A6E389 /* ComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07B4E4B1B6C11A40612610C /* ComposeView.swift */; };
 		D85DBFDBA2D0DACA843EA1A9 /* ContactDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60220490DD5F5ED7374E537 /* ContactDetailView.swift */; };
 		E01711F3B9475DEFFD7DDDD4 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977BE8990F41F718C2693EFD /* OnboardingView.swift */; };
+		EB7DAC0AD2F9B1BEF8BED719 /* ContactFingerprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D98A08F7576CDC556F9440C /* ContactFingerprint.swift */; };
 		F01FB1D28CE1BD691A9DD989 /* TemplateListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA698C2842FF3F307B474724 /* TemplateListView.swift */; };
 		F48BE3B2B06B47E783EAAC70 /* SITApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1887449FF664ADCCCB1BFC3 /* SITApp.swift */; };
 		FCEBEAFB511E04C6C968B5BA /* TickleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A933C06096E53F2DAD773D26 /* TickleListView.swift */; };
@@ -60,10 +61,11 @@
 		0EFE5D9B2591E4B4A53F5EEC /* LinkedInCSVParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedInCSVParser.swift; sourceTree = "<group>"; };
 		0F033D809DFE50DA44209A95 /* LaunchScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenView.swift; sourceTree = "<group>"; };
 		10D31DBFE56E32631DD7B650 /* ContactTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTests.swift; sourceTree = "<group>"; };
+		1D98A08F7576CDC556F9440C /* ContactFingerprint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactFingerprint.swift; sourceTree = "<group>"; };
 		209311518915490C7F72039B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		30D196741B99B788C9E325C3 /* LinkedInCSVParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedInCSVParserTests.swift; sourceTree = "<group>"; };
 		45775744E6927B98A73B2CAC /* Ticklr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ticklr.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		49E849839D5DE00393F1F990 /* TicklrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TicklrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		49E849839D5DE00393F1F990 /* TicklrTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = TicklrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50AD38DE9F1FCCBD8B82DEED /* ContactImportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactImportService.swift; sourceTree = "<group>"; };
 		53C7E0EBE485C198DCF9669E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		5CA413473ADA828136F21753 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 		E7BA9F90FAAE44CD99FEE7EC /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				1D98A08F7576CDC556F9440C /* ContactFingerprint.swift */,
 				50AD38DE9F1FCCBD8B82DEED /* ContactImportService.swift */,
 				0EFE5D9B2591E4B4A53F5EEC /* LinkedInCSVParser.swift */,
 				CADEFE7A1ADA2B9E3DDBBD81 /* MessageComposerService.swift */,
@@ -283,7 +286,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 2640;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					659D71ADC995ABBCE6F3FA86 = {
 						DevelopmentTeam = "";
@@ -331,6 +334,7 @@
 				D2644F8AB791907856A6E389 /* ComposeView.swift in Sources */,
 				4C98B38D7EF3EE65F2FD1A58 /* Contact.swift in Sources */,
 				D85DBFDBA2D0DACA843EA1A9 /* ContactDetailView.swift in Sources */,
+				EB7DAC0AD2F9B1BEF8BED719 /* ContactFingerprint.swift in Sources */,
 				568B2F7E2C0A37B9505FFDE4 /* ContactGroup.swift in Sources */,
 				4BE808CBAA4EA9D55409DD82 /* ContactImportService.swift in Sources */,
 				12FCF35AA80528F2EF325924 /* ContactRowView.swift in Sources */,
@@ -383,16 +387,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = A22UWTG6TN;
-				DYLIB_CURRENT_VERSION = 3;
 				INFOPLIST_FILE = Sources/SIT/Resources/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Ticklr;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xaymaca.sit;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -404,17 +404,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = A22UWTG6TN;
-				DYLIB_CURRENT_VERSION = 3;
 				INFOPLIST_FILE = Sources/SIT/Resources/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Ticklr Dev";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
-				PRODUCT_BUNDLE_IDENTIFIER = com.xaymaca.sit.debug;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xaymaca.sit;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -473,12 +469,11 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -488,12 +483,11 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = Ticklr;
 				SDKROOT = iphoneos;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 6.0;
@@ -553,12 +547,11 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -574,13 +567,12 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = Ticklr;
 				SDKROOT = iphoneos;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 6.0;
