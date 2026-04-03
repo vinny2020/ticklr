@@ -8,7 +8,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.*
-import com.xaymaca.sit.ui.launch.LaunchScreen
 import com.xaymaca.sit.ui.nav.NavGraph
 import com.xaymaca.sit.ui.theme.SITTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,12 +43,7 @@ class MainActivity : ComponentActivity() {
             }
 
             SITTheme(darkTheme = useDarkTheme) {
-                var launchComplete by remember { mutableStateOf(false) }
-                if (!launchComplete) {
-                    LaunchScreen(onComplete = { launchComplete = true })
-                } else {
-                    NavGraph()
-                }
+                NavGraph()
             }
         }
     }
