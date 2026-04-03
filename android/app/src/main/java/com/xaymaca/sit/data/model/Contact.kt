@@ -1,13 +1,9 @@
 package com.xaymaca.sit.data.model
 
 import androidx.room.Entity
-import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(
-    tableName = "contacts",
-    indices = [Index(value = ["fingerprint"], unique = true)]
-)
+@Entity(tableName = "contacts")
 data class Contact(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val firstName: String = "",

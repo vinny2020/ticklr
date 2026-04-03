@@ -30,7 +30,6 @@ class ContactRepository @Inject constructor(
         contactDao.getContactWithGroups(id)
 
     suspend fun insertContact(contact: Contact): Long {
-        // Stamp fingerprint if not already set (e.g. manual adds via AddContactScreen)
         val stamped = if (contact.fingerprint.isBlank()) {
             contact.copy(
                 fingerprint = ContactFingerprint.compute(
@@ -39,6 +38,12 @@ class ContactRepository @Inject constructor(
                 )
             )
         } else contact
+
+        // Deduplicate via query rather than relying on DB index
+        if (stamped.fingerprint.isNotBlank() &&
+            contactDao.countByFingerprint(stamped.fingerprint) > 0) {
+            return -1L // duplicate, skip
+        }
         return contactDao.insert(stamped)
     }
 

@@ -21,6 +21,9 @@ interface ContactDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(contact: Contact): Long
 
+    @Query("SELECT COUNT(*) FROM contacts WHERE fingerprint = :fingerprint AND fingerprint != ''")
+    suspend fun countByFingerprint(fingerprint: String): Int
+
     @Update
     suspend fun update(contact: Contact)
 
