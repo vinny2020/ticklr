@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    id("com.google.gms.google-services")
+    alias(libs.plugins.firebase.crashlytics.plugin)
     jacoco
 }
 
@@ -15,8 +17,8 @@ android {
         applicationId = "com.xaymaca.sit"
         minSdk = 26
         targetSdk = 35
-        versionCode = 16
-        versionName = "1.4.1"
+        versionCode = 17
+        versionName = "1.4.2"
     }
 
     signingConfigs {
@@ -135,6 +137,11 @@ dependencies {
 
     // Gson (JSON serialization for Room list fields)
     implementation(libs.gson)
+
+    // Firebase (crash reporting — release builds only)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.analytics)
 
     debugImplementation(libs.compose.ui.tooling)
 
