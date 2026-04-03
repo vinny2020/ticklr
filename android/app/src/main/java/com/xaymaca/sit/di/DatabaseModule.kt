@@ -2,6 +2,8 @@ package com.xaymaca.sit.di
 
 import android.content.Context
 import androidx.room.Room
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.xaymaca.sit.data.dao.ContactDao
 import com.xaymaca.sit.data.dao.ContactGroupDao
 import com.xaymaca.sit.data.dao.MessageTemplateDao
@@ -21,6 +23,18 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
 
+    /**
+     * v2 → v3: Add fingerprint column + unique index for contact deduplication.
+     * Existing contacts get an empty fingerprint ("") which is treated as unset —
+     * they remain in the DB untouched and will get fingerprinted on next edit/re-import.
+     */
+    private val MIGRATION_2_3 = object : Migration(2, 3) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE contacts ADD COLUMN fingerprint TEXT NOT NULL DEFAULT ''")
+            db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS index_contacts_fingerprint ON contacts(fingerprint) WHERE fingerprint != ''")
+        }
+    }
+
     @Provides
     @Singleton
     fun provideSITDatabase(@ApplicationContext context: Context): SITDatabase {
@@ -28,7 +42,9 @@ object DatabaseModule {
             context,
             SITDatabase::class.java,
             "sit_database"
-        ).fallbackToDestructiveMigration(dropAllTables = true)
+        )
+            .addMigrations(MIGRATION_2_3)
+            .fallbackToDestructiveMigration(dropAllTables = true)
             .build()
     }
 
