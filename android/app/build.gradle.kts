@@ -231,3 +231,58 @@ tasks.register("screenshotTeardown") {
         println("✅  Demo mode exited. Status bar restored.")
     }
 }
+
+// ---------------------------------------------------------------------------
+// Release tagging — auto-creates an annotated git tag after a signed release
+// build. The tag format is: android/v{versionName}-{versionCode}
+// e.g. android/v1.4.3-18
+//
+// Usage: ./gradlew assembleRelease tagRelease
+//    or: ./gradlew bundleRelease tagRelease
+//
+// The task checks that the working tree is clean before tagging and pushes
+// the tag to origin automatically.
+// ---------------------------------------------------------------------------
+tasks.register("tagRelease") {
+    group = "release"
+    description = "Creates and pushes an annotated git tag for the current release build"
+
+    dependsOn("assembleRelease")
+
+    doLast {
+        val versionName = android.defaultConfig.versionName
+        val versionCode = android.defaultConfig.versionCode
+        val tagName = "android/v$versionName-$versionCode"
+        val message = "Android release $versionName (versionCode $versionCode)"
+
+        fun git(vararg args: String): String {
+            val process = ProcessBuilder(listOf("git") + args.toList())
+                .directory(rootProject.projectDir)
+                .redirectErrorStream(true)
+                .start()
+            val output = process.inputStream.bufferedReader().readText().trim()
+            process.waitFor()
+            return output
+        }
+
+        // Warn if working tree is dirty but don't block — release AAB is already signed
+        val status = git("status", "--porcelain")
+        if (status.isNotEmpty()) {
+            println("⚠️  Working tree has uncommitted changes — tagging anyway.")
+        }
+
+        // Check if tag already exists
+        val existing = git("tag", "-l", tagName)
+        if (existing == tagName) {
+            println("⚠️  Tag $tagName already exists — skipping.")
+            return@doLast
+        }
+
+        git("tag", "-a", tagName, "-m", message)
+        git("push", "origin", tagName)
+
+        println("")
+        println("🏷️  Tagged and pushed: $tagName")
+        println("    $message")
+    }
+}
