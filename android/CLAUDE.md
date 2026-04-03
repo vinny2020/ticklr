@@ -2,6 +2,91 @@
 
 ---
 
+## 🔴 CRITICAL FIX REQUIRED — Gson TypeToken R8 Crash (Production)
+
+**Crashlytics issue:** `9309f0532c76b10b7a2073eaac91d5bc`
+**Affects:** Release builds only (Play Store). Debug builds are unaffected.
+**Version introduced:** 1.4.3 (versionCode 18)
+
+### Root Cause
+`ContactFingerprint.kt` uses `TypeToken<List<String>>` to deserialize JSON via Gson.
+R8 (the release build shrinker) strips generic type signatures at compile time.
+At runtime Gson cannot determine the target type → `IllegalStateException` → crash.
+
+```
+Caused by java.lang.IllegalStateException: TypeToken must be created with a type argument:
+new TypeToken<...>() {}; When using code shrinkers (ProGuard, R8, ...) make sure
+that generic signatures are preserved.
+  at com.google.gson.reflect.TypeToken.getTypeTokenTypeArgument
+  at p7.b.<clinit>   ← ContactFingerprint
+```
+
+### Fix — Two files
+
+**1. `service/ContactFingerprint.kt`**
+
+Remove all Gson usage entirely. Replace with a simple string parser that is R8-safe:
+
+- Remove imports: `com.google.gson.Gson`, `com.google.gson.reflect.TypeToken`
+- Remove fields: `private val gson = Gson()` and `private val listType = ...`
+- Replace the two `runCatching { gson.fromJson(...) }` blocks with calls to a new
+  private helper function:
+
+```kotlin
+private fun parseJsonStringArray(json: String): List<String> {
+    val trimmed = json.trim()
+    if (trimmed == "[]" || trimmed.isBlank()) return emptyList()
+    return trimmed
+        .removePrefix("[")
+        .removeSuffix("]")
+        .split(",")
+        .map { it.trim().removeSurrounding("\"") }
+        .filter { it.isNotBlank() }
+}
+```
+
+Then replace:
+```kotlin
+// OLD — crashes in release
+val phones: List<String> = try {
+    gson.fromJson<List<String>>(phoneNumbersJson, listType) ?: emptyList()
+} catch (e: Exception) { emptyList() }
+
+val emails: List<String> = try {
+    gson.fromJson<List<String>>(emailsJson, listType) ?: emptyList()
+} catch (e: Exception) { emptyList() }
+```
+
+With:
+```kotlin
+// NEW — R8-safe, no Gson needed
+val phones: List<String> = parseJsonStringArray(phoneNumbersJson)
+val emails: List<String> = parseJsonStringArray(emailsJson)
+```
+
+**2. `app/proguard-rules.pro`**
+
+Add as a safety net for any other Gson TypeToken usage in the project:
+
+```proguard
+# Preserve Gson generic signatures so R8 doesn't strip them
+-keepattributes Signature
+-keepattributes *Annotation*
+-keep class com.google.gson.reflect.TypeToken { *; }
+-keep class * extends com.google.gson.reflect.TypeToken
+```
+
+### Why debug builds didn't crash
+Debug builds skip R8/ProGuard minification entirely — generic signatures are preserved.
+Release builds run R8 → signatures stripped → Gson TypeToken fails at runtime.
+
+### After fixing
+- Bump versionCode and versionName
+- Run `./gradlew bundleRelease tagRelease` to build, tag, and push
+- Verify in Firebase Crashlytics that issue `9309f0532c76b10b7a2073eaac91d5bc` stops occurring
+
+---
+
 ## 🐛 Bugs & Improvements — ComposeScreen (from device testing)
 
 The following issues were observed on a physical Android device on `ComposeScreen`.
