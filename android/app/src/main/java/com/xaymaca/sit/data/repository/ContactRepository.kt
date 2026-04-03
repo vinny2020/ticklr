@@ -36,6 +36,11 @@ class ContactRepository @Inject constructor(
 
     suspend fun deleteAllContacts() = contactDao.deleteAll()
 
+    suspend fun deleteAllGroups() {
+        contactGroupDao.deleteAllCrossRefs()
+        contactGroupDao.deleteAll()
+    }
+
     // Groups
     fun getAllGroups(): Flow<List<ContactGroup>> = contactGroupDao.getAll()
 

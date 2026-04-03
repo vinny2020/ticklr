@@ -11,6 +11,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -27,6 +28,7 @@ import com.google.gson.reflect.TypeToken
 import com.xaymaca.sit.data.model.Contact
 import com.xaymaca.sit.data.model.MessageTemplate
 import com.xaymaca.sit.service.SmsService
+import com.xaymaca.sit.ui.shared.TicklrToast
 import com.xaymaca.sit.ui.theme.Amber
 import com.xaymaca.sit.ui.theme.Cobalt
 import com.xaymaca.sit.ui.theme.NavyLight
@@ -42,13 +44,17 @@ fun ComposeScreen(
     val selectedIds by viewModel.selectedContactIds.collectAsState()
     val messageBody by viewModel.messageBody.collectAsState()
     val sendDirectly by viewModel.sendDirectly.collectAsState()
+    val toastMessage by viewModel.toastMessage.collectAsState()
+    val searchQuery by viewModel.searchQuery.collectAsState()
+    val sortOrder by viewModel.sortOrder.collectAsState()
 
     val gson = remember { Gson() }
     var showTemplateDropdown by remember { mutableStateOf(false) }
     var showSaveTemplateDialog by remember { mutableStateOf(false) }
+    var showSortDropdown by remember { mutableStateOf(false) }
     var templateTitleInput by remember { mutableStateOf("") }
 
-    // Count selected contacts that have at least one phone number
+    // Contacts with at least one phone number among the selected set — used for send dispatch only
     val validSelectedContacts = remember(contacts, selectedIds) {
         contacts.filter { contact ->
             contact.id in selectedIds && run {
@@ -61,6 +67,7 @@ fun ComposeScreen(
         }
     }
 
+    Box(modifier = Modifier.fillMaxSize()) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -157,7 +164,7 @@ fun ComposeScreen(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "${validSelectedContacts.size} recipient${if (validSelectedContacts.size != 1) "s" else ""} selected",
+                    text = "${selectedIds.size} recipient${if (selectedIds.size != 1) "s" else ""} selected",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -210,6 +217,52 @@ fun ComposeScreen(
 
             HorizontalDivider(color = NavyLight)
 
+            // Search + sort bar
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                OutlinedTextField(
+                    value = searchQuery,
+                    onValueChange = viewModel::setSearchQuery,
+                    modifier = Modifier.weight(1f),
+                    label = { Text("Search contacts") },
+                    singleLine = true,
+                    shape = RoundedCornerShape(10.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Box {
+                    IconButton(onClick = { showSortDropdown = true }) {
+                        Icon(Icons.Default.Sort, contentDescription = "Sort")
+                    }
+                    DropdownMenu(
+                        expanded = showSortDropdown,
+                        onDismissRequest = { showSortDropdown = false }
+                    ) {
+                        listOf(
+                            ComposeViewModel.SortOrder.AZ     to "A – Z",
+                            ComposeViewModel.SortOrder.ZA     to "Z – A",
+                            ComposeViewModel.SortOrder.RECENT to "Recently Added"
+                        ).forEach { (order, label) ->
+                            DropdownMenuItem(
+                                text = {
+                                    Text(
+                                        label,
+                                        fontWeight = if (sortOrder == order) FontWeight.Bold else FontWeight.Normal
+                                    )
+                                },
+                                onClick = {
+                                    viewModel.setSortOrder(order)
+                                    showSortDropdown = false
+                                }
+                            )
+                        }
+                    }
+                }
+            }
+
             // Contact list with checkboxes
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
@@ -225,6 +278,15 @@ fun ComposeScreen(
             }
         }
     }
+
+        TicklrToast(
+            message = toastMessage,
+            onDismiss = viewModel::clearToast,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 24.dp)
+        )
+    } // end Box
 
     if (showSaveTemplateDialog) {
         AlertDialog(
@@ -286,7 +348,7 @@ private fun ContactCheckRow(
     ) {
         Checkbox(
             checked = isSelected,
-            onCheckedChange = { onToggle() },
+            onCheckedChange = null, // Row.clickable handles toggle; null prevents double-fire
             colors = CheckboxDefaults.colors(checkedColor = Cobalt)
         )
         Spacer(modifier = Modifier.width(8.dp))

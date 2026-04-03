@@ -27,4 +27,7 @@ interface TickleReminderDao {
 
     @Query("SELECT * FROM tickle_reminders WHERE nextDueDate <= :now AND status = 'ACTIVE'")
     suspend fun getDueReminders(now: Long): List<TickleReminder>
+
+    @Query("DELETE FROM tickle_reminders")
+    suspend fun deleteAll()
 }

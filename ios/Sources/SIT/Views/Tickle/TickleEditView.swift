@@ -18,6 +18,8 @@ struct TickleEditView: View {
     @State private var startDate: Date
     @State private var note: String
     @State private var showingContactPicker = false
+    @State private var showToast = false
+    @State private var toastMessage = ""
 
     private var isEditing: Bool { existing != nil }
 
@@ -123,6 +125,21 @@ struct TickleEditView: View {
             .sheet(isPresented: $showingContactPicker) {
                 ContactPickerSheet(selected: $selectedContact)
             }
+            .overlay(alignment: .bottom) {
+                if showToast {
+                    Text(toastMessage)
+                        .font(.subheadline)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 10)
+                        .background(Color(red: 0.145, green: 0.388, blue: 0.922))
+                        .foregroundStyle(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .shadow(radius: 4)
+                        .padding(.bottom, 16)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                }
+            }
+            .animation(.easeInOut(duration: 0.3), value: showToast)
         }
     }
 
@@ -154,7 +171,12 @@ struct TickleEditView: View {
             TickleScheduler.scheduleNotification(for: reminder)
         }
         try? modelContext.save()
-        dismiss()
+        toastMessage = isEditing ? "Tickle updated" : "Tickle saved"
+        showToast = true
+        Task {
+            try? await Task.sleep(for: .seconds(2))
+            dismiss()
+        }
     }
 }
 

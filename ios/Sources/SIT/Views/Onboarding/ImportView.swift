@@ -38,8 +38,7 @@ struct ImportView: View {
                     }
                     .disabled(isImporting)
                 } footer: {
-                    // Reinforced the "local" value prop for the reviewer here
-                    Text("Your connections are processed locally on your device. LinkedIn usually emails your download link within 10–30 minutes.")
+                    Text("Your connections are processed locally on your device. LinkedIn usually emails your download link within 10–30 minutes.\n\nLinkedIn data gives you the who — names and companies. You'll add phone numbers manually after importing.")
                 }
 
                 Section("How to get your LinkedIn CSV") {

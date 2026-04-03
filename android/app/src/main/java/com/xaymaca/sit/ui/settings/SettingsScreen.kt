@@ -1,5 +1,7 @@
 package com.xaymaca.sit.ui.settings
 
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.compose.foundation.clickable
@@ -82,6 +84,7 @@ fun SettingsScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .verticalScroll(rememberScrollState())
                 .padding(paddingValues)
                 .padding(vertical = 8.dp)
         ) {
@@ -213,8 +216,8 @@ fun SettingsScreen(
                 HorizontalDivider(color = NavyLight, modifier = Modifier.padding(start = 56.dp))
                 SettingsRow(
                     icon = Icons.Default.DeleteForever,
-                    title = "Clear All Contacts",
-                    subtitle = "Permanently deletes all contacts (debug only)",
+                    title = "Clear All Data",
+                    subtitle = "Permanently deletes contacts, groups & tickles (debug only)",
                     iconTint = MaterialTheme.colorScheme.error,
                     onClick = { showClearConfirm = true }
                 )
@@ -281,8 +284,8 @@ fun SettingsScreen(
     if (showClearConfirm) {
         AlertDialog(
             onDismissRequest = { showClearConfirm = false },
-            title = { Text("Clear All Contacts") },
-            text = { Text("This will permanently delete all contacts. This cannot be undone.") },
+            title = { Text("Clear All Data") },
+            text = { Text("This will permanently delete all contacts, groups, and tickles. This cannot be undone.") },
             confirmButton = {
                 TextButton(
                     onClick = {

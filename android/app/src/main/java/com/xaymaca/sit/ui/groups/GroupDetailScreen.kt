@@ -11,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -40,6 +41,7 @@ fun GroupDetailScreen(
     var group by remember { mutableStateOf<ContactGroup?>(null) }
     var members by remember { mutableStateOf(listOf<Contact>()) }
     var showAddSheet by remember { mutableStateOf(false) }
+    var showEditDialog by remember { mutableStateOf(false) }
 
     val allContacts by viewModel.allContacts.collectAsState()
     val toastMessage by viewModel.toastMessage.collectAsState()
@@ -78,6 +80,11 @@ fun GroupDetailScreen(
                     navigationIcon = {
                         IconButton(onClick = onBack) {
                             Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        }
+                    },
+                    actions = {
+                        IconButton(onClick = { showEditDialog = true }) {
+                            Icon(Icons.Default.Edit, contentDescription = "Edit group")
                         }
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
@@ -133,6 +140,18 @@ fun GroupDetailScreen(
                     }
                 }
             }
+        }
+
+        val currentGroup = group
+        if (showEditDialog && currentGroup != null) {
+            EditGroupDialog(
+                group = currentGroup,
+                onDismiss = { showEditDialog = false },
+                onSave = { name, emoji ->
+                    viewModel.updateGroup(currentGroup.copy(name = name, emoji = emoji))
+                    showEditDialog = false
+                }
+            )
         }
 
         if (showAddSheet) {
@@ -321,6 +340,69 @@ private fun AddMembersBottomSheet(
             )
         }
     }
+}
+
+@Composable
+private fun EditGroupDialog(
+    group: ContactGroup,
+    onDismiss: () -> Unit,
+    onSave: (name: String, emoji: String) -> Unit
+) {
+    var name by remember { mutableStateOf(group.name) }
+    var emoji by remember { mutableStateOf(group.emoji) }
+    val canSave = name.trim().isNotEmpty() && name.length <= 30
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Edit Group") },
+        text = {
+            Column {
+                OutlinedTextField(
+                    value = emoji,
+                    onValueChange = { if (it.length <= 2) emoji = it },
+                    label = { Text("Emoji") },
+                    singleLine = true,
+                    modifier = Modifier.width(80.dp),
+                    shape = RoundedCornerShape(8.dp)
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { if (it.length <= 30) name = it },
+                    label = { Text("Group Name") },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(8.dp),
+                    supportingText = {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.End
+                        ) {
+                            Text(
+                                text = "${name.length} / 30",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = if (name.length >= 30)
+                                    MaterialTheme.colorScheme.error
+                                else
+                                    MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(
+                onClick = { onSave(name.trim(), emoji.trim().ifBlank { "👥" }) },
+                enabled = canSave
+            ) {
+                Text("Save", color = Cobalt)
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) { Text("Cancel") }
+        }
+    )
 }
 
 @Composable

@@ -3,9 +3,11 @@ package com.xaymaca.sit.ui.settings
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.work.WorkManager
 import com.xaymaca.sit.BuildConfig
 import com.xaymaca.sit.SITApp
 import com.xaymaca.sit.data.repository.ContactRepository
+import com.xaymaca.sit.data.repository.TickleRepository
 import com.xaymaca.sit.service.SeedDataService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -18,7 +20,8 @@ import javax.inject.Inject
 class SettingsViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val seedDataService: SeedDataService,
-    private val contactRepository: ContactRepository
+    private val contactRepository: ContactRepository,
+    private val tickleRepository: TickleRepository
 ) : ViewModel() {
 
     private val prefs = context.getSharedPreferences(SITApp.PREFS_NAME, Context.MODE_PRIVATE)
@@ -64,7 +67,10 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 contactRepository.deleteAllContacts()
-                _seedMessage.value = "All contacts cleared"
+                contactRepository.deleteAllGroups()
+                tickleRepository.deleteAllReminders()
+                WorkManager.getInstance(context).cancelAllWork()
+                _seedMessage.value = "All data cleared ✓"
             } catch (e: Exception) {
                 _seedMessage.value = "Clear failed: ${e.message}"
             }

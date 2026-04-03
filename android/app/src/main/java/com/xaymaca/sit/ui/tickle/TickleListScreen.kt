@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.Snooze
 import androidx.compose.material3.*
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.runtime.*
+import kotlinx.coroutines.launch
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -170,6 +171,7 @@ private fun TickleReminderRow(
     onSnooze: () -> Unit,
     onDelete: () -> Unit
 ) {
+    val scope = rememberCoroutineScope()
     val dismissState = rememberSwipeToDismissBoxState(
         confirmValueChange = { value ->
             when (value) {
@@ -185,6 +187,14 @@ private fun TickleReminderRow(
             }
         }
     )
+
+    // After a complete swipe (StartToEnd), reset the row so it animates back.
+    // The item will move to Upcoming via DB update; delete stays dismissed.
+    LaunchedEffect(dismissState.currentValue) {
+        if (dismissState.currentValue == SwipeToDismissBoxValue.StartToEnd) {
+            scope.launch { dismissState.reset() }
+        }
+    }
 
     SwipeToDismissBox(
         state = dismissState,

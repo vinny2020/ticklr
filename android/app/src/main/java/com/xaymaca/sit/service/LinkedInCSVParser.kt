@@ -46,6 +46,7 @@ class LinkedInCSVParser @Inject constructor() {
         val emailIdx = headers.indexOfFirst { it.trim().equals("Email Address", ignoreCase = true) }
         val companyIdx = headers.indexOfFirst { it.trim().equals("Company", ignoreCase = true) }
         val positionIdx = headers.indexOfFirst { it.trim().equals("Position", ignoreCase = true) }
+        val phoneIdx = headers.indexOfFirst { it.trim().equals("Phone Number", ignoreCase = true) }
 
         if (firstNameIdx == -1 && lastNameIdx == -1) return emptyList()
 
@@ -70,11 +71,14 @@ class LinkedInCSVParser @Inject constructor() {
             val email = col(emailIdx)
             val emails: List<String> = if (email.isNotBlank()) listOf(email) else emptyList()
 
+            val phone = col(phoneIdx)
+            val phones: List<String> = if (phone.isNotBlank()) listOf(phone) else emptyList()
+
             result.add(
                 Contact(
                     firstName = firstName,
                     lastName = lastName,
-                    phoneNumbers = gson.toJson(emptyList<String>()),
+                    phoneNumbers = gson.toJson(phones),
                     emails = gson.toJson(emails),
                     company = col(companyIdx),
                     jobTitle = col(positionIdx),

@@ -26,4 +26,6 @@ class TickleRepository @Inject constructor(
     suspend fun updateReminder(reminder: TickleReminder) = tickleReminderDao.update(reminder)
 
     suspend fun deleteReminder(reminder: TickleReminder) = tickleReminderDao.delete(reminder)
+
+    suspend fun deleteAllReminders() = tickleReminderDao.deleteAll()
 }

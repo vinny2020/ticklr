@@ -11,8 +11,10 @@ import com.xaymaca.sit.data.repository.TickleRepository
 import com.xaymaca.sit.service.TickleScheduler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -24,6 +26,9 @@ class TickleViewModel @Inject constructor(
     private val contactRepository: ContactRepository,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
+
+    private val _toastMessage = MutableStateFlow<String?>(null)
+    val toastMessage: StateFlow<String?> = _toastMessage.asStateFlow()
 
     val allReminders: StateFlow<List<TickleReminder>> = tickleRepository
         .getAllReminders()
@@ -83,20 +88,23 @@ class TickleViewModel @Inject constructor(
         }
     }
 
-    fun upsert(reminder: TickleReminder) {
+    fun upsert(reminder: TickleReminder, isNew: Boolean) {
         viewModelScope.launch {
             val id = tickleRepository.upsertReminder(reminder)
             val finalId = if (reminder.id == 0L) id else reminder.id
-            // Determine contact name for notification
             val contactName = reminder.contactId?.let { cId ->
                 contactRepository.getContactById(cId)?.fullName
             } ?: "your contact"
             TickleScheduler.scheduleNotification(
                 context, finalId, contactName, reminder.note, reminder.nextDueDate
             )
-            // Ensure daily worker is scheduled
             TickleScheduler.scheduleWorker(context)
+            _toastMessage.value = if (isNew) "Tickle saved" else "Tickle updated"
         }
+    }
+
+    fun clearToast() {
+        _toastMessage.value = null
     }
 
     suspend fun getReminderById(id: Long): TickleReminder? = tickleRepository.getReminderById(id)

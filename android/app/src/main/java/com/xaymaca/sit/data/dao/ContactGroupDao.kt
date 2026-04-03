@@ -32,6 +32,12 @@ interface ContactGroupDao {
     @Delete
     suspend fun delete(group: ContactGroup)
 
+    @Query("DELETE FROM contact_groups")
+    suspend fun deleteAll()
+
+    @Query("DELETE FROM contact_group_cross_ref")
+    suspend fun deleteAllCrossRefs()
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertCrossRef(crossRef: ContactGroupCrossRef)
 

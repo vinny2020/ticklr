@@ -27,6 +27,20 @@ struct ContactRowView: View {
 
             Spacer()
 
+            // Reachability icons — muted, trailing
+            HStack(spacing: 4) {
+                if !contact.phoneNumbers.isEmpty {
+                    Image(systemName: "phone.fill")
+                        .font(.caption)
+                        .foregroundStyle(.secondary.opacity(0.6))
+                }
+                if !contact.emails.isEmpty {
+                    Image(systemName: "envelope.fill")
+                        .font(.caption)
+                        .foregroundStyle(.secondary.opacity(0.6))
+                }
+            }
+
             Image(systemName: importIcon(for: contact.importSource))
                 .font(.caption2)
                 .foregroundStyle(.tertiary)

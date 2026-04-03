@@ -13,6 +13,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,7 +26,9 @@ class ComposeViewModel @Inject constructor(
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 
-    val contacts: StateFlow<List<Contact>> = contactRepository
+    enum class SortOrder { AZ, ZA, RECENT }
+
+    private val allContacts: StateFlow<List<Contact>> = contactRepository
         .getAllContacts()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
@@ -32,13 +36,36 @@ class ComposeViewModel @Inject constructor(
         .getAllTemplates()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    val searchQuery = MutableStateFlow("")
+    val sortOrder = MutableStateFlow(SortOrder.AZ)
+
+    val contacts: StateFlow<List<Contact>> = combine(allContacts, searchQuery, sortOrder) { list, query, sort ->
+        val filtered = if (query.isBlank()) list
+        else list.filter {
+            it.firstName.contains(query, ignoreCase = true) ||
+            it.lastName.contains(query, ignoreCase = true) ||
+            it.company.contains(query, ignoreCase = true)
+        }
+        when (sort) {
+            SortOrder.AZ     -> filtered.sortedBy { it.lastName.lowercase() }
+            SortOrder.ZA     -> filtered.sortedByDescending { it.lastName.lowercase() }
+            SortOrder.RECENT -> filtered.sortedByDescending { it.createdAt }
+        }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
     val selectedContactIds = MutableStateFlow<Set<Long>>(emptySet())
     val messageBody = MutableStateFlow("")
+
+    private val _toastMessage = MutableStateFlow<String?>(null)
+    val toastMessage: StateFlow<String?> = _toastMessage.asStateFlow()
 
     val sendDirectly: StateFlow<Boolean> = MutableStateFlow(
         context.getSharedPreferences(SITApp.PREFS_NAME, Context.MODE_PRIVATE)
             .getBoolean(SITApp.KEY_SEND_SMS_DIRECTLY, false)
     )
+
+    fun setSearchQuery(query: String) { searchQuery.value = query }
+    fun setSortOrder(order: SortOrder) { sortOrder.value = order }
 
     fun toggleContactSelection(contactId: Long) {
         val current = selectedContactIds.value.toMutableSet()
@@ -68,7 +95,12 @@ class ComposeViewModel @Inject constructor(
             messageTemplateRepository.insertTemplate(
                 MessageTemplate(title = title.trim(), body = body.trim())
             )
+            _toastMessage.value = "Template saved"
         }
+    }
+
+    fun clearToast() {
+        _toastMessage.value = null
     }
 
     fun deleteTemplate(template: MessageTemplate) {

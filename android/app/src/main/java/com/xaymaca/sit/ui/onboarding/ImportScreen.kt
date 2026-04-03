@@ -171,8 +171,8 @@ fun ImportScreen(
             // Import from LinkedIn CSV button
             ImportOptionCard(
                 icon = Icons.Default.FileOpen,
-                title = "Import from LinkedIn CSV",
-                subtitle = "Export your connections from LinkedIn and select the CSV file.",
+                title = "Seed your network from LinkedIn CSV",
+                subtitle = "LinkedIn exports include names and companies — no phone numbers. You'll add contact details manually after importing.",
                 onClick = {
                     csvPickerLauncher.launch("text/*")
                 },

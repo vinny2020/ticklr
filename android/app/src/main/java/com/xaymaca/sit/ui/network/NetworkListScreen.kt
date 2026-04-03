@@ -10,7 +10,9 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -218,6 +220,26 @@ private fun ContactRow(
                     text = contact.company,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
+
+        // Reachability icons — muted, 16dp, trailing
+        val hasPhone = contact.phoneNumbers.length > 2
+        val hasEmail = contact.emails.length > 2
+        if (hasPhone || hasEmail) {
+            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                if (hasPhone) Icon(
+                    Icons.Default.Phone,
+                    contentDescription = "Has phone",
+                    modifier = Modifier.size(16.dp),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
+                )
+                if (hasEmail) Icon(
+                    Icons.Default.Email,
+                    contentDescription = "Has email",
+                    modifier = Modifier.size(16.dp),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
                 )
             }
         }

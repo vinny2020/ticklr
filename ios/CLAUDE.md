@@ -173,6 +173,49 @@ After a contact is successfully added to a group, show a brief overlay message:
 - Emails only present if connection made them visible
 - `LinkedInStep` is the reusable numbered-step component in ImportView
 
+### 🔄 UX Copy Update: Set Expectations on LinkedIn Import
+
+**What to change:**
+LinkedIn imports only bring in name + company + job title — no phone numbers, rarely an email.
+Users may be confused when imported contacts appear "empty." Update the copy in `ImportView`
+to frame LinkedIn import as **relationship seeding**, not a full contact sync.
+
+**Suggested language (use as a guide, polish the tone to match the app's voice):**
+- Heading or subtitle: `"Seed your network from LinkedIn"`
+- Helper text beneath: `"LinkedIn exports include names and companies — no phone numbers.
+  You'll add contact details manually after importing."`
+- Or as a callout card: `"LinkedIn data gives you the who. You fill in the how to reach them."`
+
+**Where:** `Views/Onboarding/ImportView.swift` — update the LinkedIn section description copy.
+Do not change the step-by-step instructions, only the framing copy above or around them.
+
+---
+
+## 🚧 Enhancement: Contact Reachability Icons on Network List
+
+### What to Build
+In `NetworkListView` (and `ContactRowView`), show small inline icons next to each contact
+indicating how they can be reached:
+
+- 📧 Envelope icon — contact has at least one email address
+- 📞 Phone icon — contact has at least one phone number
+- Both icons — contact has both
+- No icons — contact has neither (LinkedIn-only seed data)
+
+**Design:**
+- Use SF Symbols: `envelope` and `phone` (or `envelope.fill` / `phone.fill`)
+- Size: `.caption` / 12pt, muted color (e.g. `Color.secondary` or a dimmed Cobalt)
+- Position: trailing end of the contact row, before the chevron if one exists
+- Must not clutter the row — keep icons small and subtle
+
+**Logic:**
+- Email present: `!contact.emails.isEmpty`
+- Phone present: `!contact.phoneNumbers.isEmpty`
+
+**Files likely involved:**
+- `Views/Network/ContactRowView.swift` — primary; add icon row
+- `Views/Network/NetworkListView.swift` — verify rows use `ContactRowView`
+
 ## Build & Run
 
 ```bash

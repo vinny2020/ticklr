@@ -25,8 +25,10 @@ import com.xaymaca.sit.data.model.TickleReminder
 import com.xaymaca.sit.service.TickleScheduler
 import com.xaymaca.sit.ui.groups.GroupViewModel
 import com.xaymaca.sit.ui.network.NetworkViewModel
+import com.xaymaca.sit.ui.shared.TicklrToast
 import com.xaymaca.sit.ui.theme.Amber
 import com.xaymaca.sit.ui.theme.Cobalt
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,6 +45,7 @@ fun TickleEditScreen(
     val coroutineScope = rememberCoroutineScope()
     val contacts by networkViewModel.filteredContacts.collectAsState()
     val groups by groupViewModel.groups.collectAsState()
+    val toastMessage by tickleViewModel.toastMessage.collectAsState()
 
     // Form state
     var selectedTab by remember { mutableIntStateOf(0) } // 0 = Contact, 1 = Group
@@ -94,6 +97,7 @@ fun TickleEditScreen(
         }
     }
 
+    Box(modifier = Modifier.fillMaxSize()) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -127,7 +131,8 @@ fun TickleEditScreen(
                                     startDate = startDate,
                                     nextDueDate = nextDue
                                 )
-                                tickleViewModel.upsert(reminder)
+                                tickleViewModel.upsert(reminder, isNew = tickleId == null)
+                                delay(2000)
                                 onSaved()
                             }
                         },
@@ -210,16 +215,15 @@ fun TickleEditScreen(
                                 )
                             }
                         }
-                        if (selectedContact == null) {
-                            items(filteredContacts.take(8)) { contact ->
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .clickable {
-                                            selectedContact = contact
-                                            contactSearch = ""
-                                        }
-                                        .padding(vertical = 8.dp),
+                        items(filteredContacts.take(8)) { contact ->
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable {
+                                        selectedContact = contact
+                                        contactSearch = ""
+                                    }
+                                    .padding(vertical = 8.dp),
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Box(
@@ -240,7 +244,6 @@ fun TickleEditScreen(
                                     Text(contact.fullName, style = MaterialTheme.typography.bodyLarge)
                                 }
                             }
-                        }
                     } else {
                         item {
                             Text(
@@ -370,6 +373,15 @@ fun TickleEditScreen(
             }
         }
     }
+
+        TicklrToast(
+            message = toastMessage,
+            onDismiss = tickleViewModel::clearToast,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 24.dp)
+        )
+    } // end Box
 }
 
 @Composable
