@@ -6,116 +6,209 @@ struct ComposeView: View {
     @Query(sort: \Contact.lastName) private var contacts: [Contact]
     @Query(sort: \MessageTemplate.title) private var templates: [MessageTemplate]
 
-    @State private var selectedContacts: Set<UUID> = []
+    @State private var selectedContact: Contact?
     @State private var selectedTemplate: MessageTemplate?
     @State private var messageBody = ""
+    @State private var searchText = ""
     @State private var showingComposer = false
     @State private var showingCannotSendAlert = false
-    @State private var searchText = ""
+    @FocusState private var searchFocused: Bool
+
+    // MARK: — Derived
 
     var filteredContacts: [Contact] {
-        guard !searchText.isEmpty else { return contacts }
+        guard !searchText.isEmpty else { return [] }
         return contacts.filter {
             $0.fullName.localizedCaseInsensitiveContains(searchText) ||
-            $0.company.localizedCaseInsensitiveContains(searchText) ||
-            $0.jobTitle.localizedCaseInsensitiveContains(searchText)
+            $0.company.localizedCaseInsensitiveContains(searchText)
         }
     }
 
-    var recipients: [String] {
-        contacts
-            .filter { selectedContacts.contains($0.id) }
-            .flatMap { $0.phoneNumbers }
+    var recipientPhone: String? {
+        selectedContact?.phoneNumbers.first
     }
 
-    var selectedHaveNoPhones: Bool {
-        !selectedContacts.isEmpty && recipients.isEmpty
+    var canSend: Bool {
+        selectedContact != nil && recipientPhone != nil && !messageBody.trimmingCharacters(in: .whitespaces).isEmpty
     }
+
+    // MARK: — Body
 
     var body: some View {
         NavigationStack {
-            Form {
-                Section("Recipients") {
-                    ForEach(filteredContacts) { contact in
-                        Button {
-                            if selectedContacts.contains(contact.id) {
-                                selectedContacts.remove(contact.id)
-                            } else {
-                                selectedContacts.insert(contact.id)
-                                if contact.phoneNumbers.isEmpty {
-                                    print("Ticklr: ⚠️ \(contact.fullName) has no phone number — cannot include in SMS")
+            ScrollView {
+                VStack(alignment: .leading, spacing: 16) {
+
+                    // MARK: To field
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("To")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .padding(.horizontal)
+
+                        if let contact = selectedContact {
+                            // Selected contact chip
+                            HStack {
+                                Text(contact.fullName)
+                                    .font(.body)
+                                    .fontWeight(.medium)
+                                Spacer()
+                                Button {
+                                    selectedContact = nil
+                                    searchText = ""
+                                    searchFocused = true
+                                } label: {
+                                    Image(systemName: "xmark.circle.fill")
+                                        .foregroundStyle(.secondary)
                                 }
+                            }
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 10)
+                            .background(Color(.secondarySystemBackground))
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .padding(.horizontal)
+
+                            if contact.phoneNumbers.isEmpty {
+                                Label("No phone number on file", systemImage: "exclamationmark.triangle.fill")
+                                    .font(.caption)
+                                    .foregroundStyle(.orange)
+                                    .padding(.horizontal)
+                            }
+                        } else {
+                            // Search field
+                            TextField("Search contacts…", text: $searchText)
+                                .textFieldStyle(.roundedBorder)
+                                .focused($searchFocused)
+                                .padding(.horizontal)
+                                .autocorrectionDisabled()
+
+                            // Dropdown results
+                            if !filteredContacts.isEmpty {
+                                VStack(spacing: 0) {
+                                    ForEach(filteredContacts) { contact in
+                                        Button {
+                                            selectedContact = contact
+                                            searchText = ""
+                                            searchFocused = false
+                                        } label: {
+                                            HStack {
+                                                VStack(alignment: .leading, spacing: 2) {
+                                                    Text(contact.fullName)
+                                                        .font(.body)
+                                                        .foregroundStyle(.primary)
+                                                    if !contact.company.isEmpty {
+                                                        Text(contact.company)
+                                                            .font(.caption)
+                                                            .foregroundStyle(.secondary)
+                                                    }
+                                                }
+                                                Spacer()
+                                                if contact.phoneNumbers.isEmpty {
+                                                    Image(systemName: "exclamationmark.circle")
+                                                        .foregroundStyle(.orange)
+                                                        .font(.caption)
+                                                }
+                                            }
+                                            .padding(.horizontal, 14)
+                                            .padding(.vertical, 10)
+                                        }
+                                        if contact.id != filteredContacts.last?.id {
+                                            Divider().padding(.leading, 14)
+                                        }
+                                    }
+                                }
+                                .background(Color(.secondarySystemBackground))
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .padding(.horizontal)
+                            }
+                        }
+                    }
+
+                    // MARK: Template dropdown (only if templates exist)
+                    if !templates.isEmpty {
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text("Template")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                                .padding(.horizontal)
+
+                            Menu {
+                                Button("None") {
+                                    selectedTemplate = nil
+                                }
+                                ForEach(templates) { template in
+                                    Button(template.title) {
+                                        selectedTemplate = template
+                                        messageBody = template.body
+                                    }
+                                }
+                            } label: {
+                                HStack {
+                                    Text(selectedTemplate?.title ?? "Select template")
+                                        .foregroundStyle(selectedTemplate == nil ? .secondary : .primary)
+                                    Spacer()
+                                    Image(systemName: "chevron.up.chevron.down")
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                }
+                                .padding(.horizontal, 14)
+                                .padding(.vertical, 10)
+                                .background(Color(.secondarySystemBackground))
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                            }
+                            .padding(.horizontal)
+                        }
+                    }
+
+                    // MARK: Message body
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("Message")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .padding(.horizontal)
+
+                        TextEditor(text: $messageBody)
+                            .frame(minHeight: 120)
+                            .padding(8)
+                            .background(Color(.secondarySystemBackground))
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .padding(.horizontal)
+                    }
+
+                    // MARK: Send button
+                    HStack {
+                        Spacer()
+                        Button {
+                            if MessageComposerView.canSendMessages() {
+                                showingComposer = true
+                            } else {
+                                showingCannotSendAlert = true
                             }
                         } label: {
-                            HStack {
-                                ContactRowView(contact: contact)
-                                Spacer()
-                                if selectedContacts.contains(contact.id) {
-                                    Image(systemName: contact.phoneNumbers.isEmpty
-                                          ? "exclamationmark.circle"
-                                          : "checkmark.circle.fill")
-                                        .foregroundStyle(contact.phoneNumbers.isEmpty ? .orange : .indigo)
-                                }
+                            HStack(spacing: 6) {
+                                Image(systemName: "paperplane.fill")
+                                Text("Send")
+                                    .fontWeight(.semibold)
                             }
+                            .padding(.horizontal, 24)
+                            .padding(.vertical, 12)
+                            .background(canSend ? Color.indigo : Color(.systemGray5))
+                            .foregroundStyle(canSend ? .white : Color(.systemGray2))
+                            .clipShape(Capsule())
                         }
-                        .tint(.primary)
+                        .disabled(!canSend)
                     }
+                    .padding(.horizontal)
+                    .padding(.bottom, 16)
                 }
-
-                Section("Message") {
-                    if !templates.isEmpty {
-                        Picker("Template", selection: $selectedTemplate) {
-                            Text("None").tag(Optional<MessageTemplate>.none)
-                            ForEach(templates) { t in
-                                Text(t.title).tag(Optional(t))
-                            }
-                        }
-                        .onChange(of: selectedTemplate) { _, template in
-                            messageBody = template?.body ?? ""
-                        }
-                    }
-                    TextEditor(text: $messageBody)
-                        .frame(minHeight: 80)
-                }
-
-                if selectedHaveNoPhones {
-                    Section {
-                        Label("Selected contacts have no phone numbers", systemImage: "exclamationmark.triangle")
-                            .font(.caption)
-                            .foregroundStyle(.orange)
-                    }
-                }
+                .padding(.top, 16)
             }
             .navigationTitle("Compose")
-            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search contacts")
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        if MessageComposerView.canSendMessages() {
-                            showingComposer = true
-                        } else {
-                            showingCannotSendAlert = true
-                        }
-                    } label: {
-                        HStack(spacing: 5) {
-                            if !selectedContacts.isEmpty {
-                                Text("\(selectedContacts.count)")
-                                    .font(.subheadline.weight(.semibold))
-                            }
-                            Image(systemName: "paperplane.fill")
-                                .font(.subheadline)
-                        }
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 7)
-                        .background(recipients.isEmpty ? Color(.systemGray5) : Color.indigo)
-                        .foregroundStyle(recipients.isEmpty ? Color(.systemGray2) : .white)
-                        .clipShape(Capsule())
-                    }
-                    .disabled(recipients.isEmpty)
+            .navigationBarTitleDisplayMode(.large)
+            .sheet(isPresented: $showingComposer, onDismiss: clearCompose) {
+                if let phone = recipientPhone {
+                    MessageComposerView(recipients: [phone], body: messageBody)
                 }
-            }
-            .sheet(isPresented: $showingComposer) {
-                MessageComposerView(recipients: recipients, body: messageBody)
             }
             .alert("Cannot Send Messages", isPresented: $showingCannotSendAlert) {
                 Button("OK", role: .cancel) {}
@@ -123,5 +216,14 @@ struct ComposeView: View {
                 Text("This device is not configured to send SMS messages.")
             }
         }
+    }
+
+    // MARK: — Helpers
+
+    private func clearCompose() {
+        selectedContact = nil
+        selectedTemplate = nil
+        messageBody = ""
+        searchText = ""
     }
 }
