@@ -252,7 +252,7 @@ private fun ContactRow(
         // Import source icon
         val importIcon = when (contact.importSource) {
             ImportSource.LINKEDIN.name -> Icons.Default.Work
-            ImportSource.IOS_CONTACTS.name -> Icons.Default.Phone
+            ImportSource.IOS_CONTACTS.name -> Icons.Default.Person
             else -> Icons.Default.Edit
         }
         Icon(
