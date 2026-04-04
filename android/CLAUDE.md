@@ -1,5 +1,149 @@
 # CLAUDE.md — Ticklr Android
 
+---
+
+## 🎨 REDESIGN: ComposeScreen — Single Contact + Template Dropdown
+
+### Design Goals
+Current `ComposeScreen` is too busy. New design:
+- **One contact at a time** — no multi-select, no checkbox list
+- **Template dropdown only** — no save/create template on this screen
+- **Template CRUD** moves to dedicated screens under Settings
+- **Contact search with dropdown results** — no scrollable LazyColumn
+- Focused layout that works with keyboard open
+
+### New ComposeScreen Layout (top to bottom)
+
+```
+┌────────────────────────────────────────┐
+│  Compose                         [TopBar]
+├────────────────────────────────────────┤
+│  To: [Search contacts field]           │  OutlinedTextField, single line
+│      [Selected contact chip + X]       │  shown below field when contact selected
+├────────────────────────────────────────┤
+│  [Template dropdown — only if          │  OutlinedButton "Select template ▾"
+│   templates exist, hidden otherwise]   │  selecting auto-fills message body
+├────────────────────────────────────────┤
+│  Message                               │
+│  ┌──────────────────────────────────┐  │
+│  │  OutlinedTextField (min 120dp)   │  │
+│  └──────────────────────────────────┘  │
+├────────────────────────────────────────┤
+│                       [Send button →]  │  disabled until contact + message set
+└────────────────────────────────────────┘
+```
+
+### Contact Search Behavior
+- Typing in "To:" filters contacts by name/company in real time
+- Results appear as `DropdownMenu` anchored below field (not a LazyColumn)
+- Tapping a result: selects contact, clears search text, shows chip, moves focus to message
+- Chip shows full name + X button to clear and re-search
+- If selected contact has no phone number: inline warning "No phone number on file"
+
+### Template Dropdown Behavior
+- Hidden entirely if `templates.isEmpty()`
+- Selecting a template populates `messageBody` — user can still edit after
+- Label: "Select template" when none, template title when selected
+
+### Send Button
+- Enabled only when: contact selected AND has phone number AND message not blank
+- Respects `sendDirectly` pref — SmsManager or Intent
+- After send: clear contact + message, show TicklrToast "Message sent ✓"
+- **Remove all multi-recipient logic** — single contact only
+
+---
+
+### ComposeViewModel Changes
+
+**Remove:**
+- `selectedContactIds: MutableStateFlow<Set<Long>>`
+- `toggleContactSelection(contactId: Long)`
+- `clearSelection()`
+- `SortOrder` enum, `sortOrder` StateFlow, `setSortOrder()`
+- `saveTemplate()` — moves to `TemplateViewModel`
+- `deleteTemplate()` — moves to `TemplateViewModel`
+
+**Add:**
+- `selectedContact: MutableStateFlow<Contact?>` — single selected contact
+- `fun selectContact(contact: Contact)` — sets contact, clears searchQuery
+- `fun clearContact()` — clears selectedContact
+- `fun clearCompose()` — clears selectedContact + messageBody
+- `val canSend: StateFlow<Boolean>` — contact != null && phones not empty && message not blank
+
+**Keep:** `searchQuery`, `setSearchQuery()`, `contacts` (filtered, no sort), `templates`,
+`messageBody`, `setMessage()`, `applyTemplate()`, `sendDirectly`, `toastMessage`, `clearToast()`
+
+---
+
+### New Template Management Screens (under `ui/settings/`)
+
+#### `TemplateListScreen.kt`
+- `LazyColumn` of all templates — title + 2-line body preview
+- Swipe to delete (same SwipeToDismiss pattern as TickleListScreen)
+- FAB "+" → navigate to `TemplateEditScreen(templateId = -1)`
+- Empty state: "No templates yet. Tap + to create one."
+- Seeds default "Checking in" template on first launch via SharedPrefs flag
+  `hasSeededDefaultTemplates` (mirror iOS behavior)
+
+#### `TemplateEditScreen.kt`
+- Two fields: `Title` (single line) + `Body` (multiline min 80dp)
+- Save/Update button in TopBar — disabled until both fields non-blank
+- Pre-populate when editing existing template
+- On save: call ViewModel → popBackStack
+
+#### `TemplateViewModel.kt`
+```kotlin
+@HiltViewModel
+class TemplateViewModel @Inject constructor(
+    private val repo: MessageTemplateRepository
+) : ViewModel() {
+    val templates: StateFlow<List<MessageTemplate>>
+    fun saveTemplate(title: String, body: String)
+    fun updateTemplate(template: MessageTemplate)
+    fun deleteTemplate(template: MessageTemplate)
+    fun seedDefaultIfNeeded(prefs: SharedPreferences)
+}
+```
+
+---
+
+### Navigation Changes
+
+**`Screen.kt` — add:**
+```kotlin
+object TemplateList : Screen("template_list")
+data class TemplateEdit(val id: Long = -1L) : Screen("template_edit/{templateId}") {
+    companion object {
+        const val ROUTE = "template_edit/{templateId}"
+        fun createRoute(id: Long = -1L) = "template_edit/$id"
+    }
+}
+```
+
+**`NavGraph.kt` — add composables for TemplateList and TemplateEdit**
+
+**`SettingsScreen.kt` — add `onTemplates: () -> Unit` param + SettingsRow in Data section**
+
+---
+
+### Files to Create
+- `ui/settings/TemplateListScreen.kt`
+- `ui/settings/TemplateEditScreen.kt`
+- `ui/settings/TemplateViewModel.kt`
+
+### Files to Modify
+- `ui/compose/ComposeScreen.kt` — full redesign
+- `ui/compose/ComposeViewModel.kt` — per changes above
+- `ui/nav/Screen.kt` — add TemplateList + TemplateEdit
+- `ui/nav/NavGraph.kt` — add template composables, update SettingsScreen call
+- `ui/settings/SettingsScreen.kt` — add onTemplates param + row
+
+### Files to Leave Alone
+- `data/model/MessageTemplate.kt`, `data/dao/MessageTemplateDao.kt`,
+  `data/repository/MessageTemplateRepository.kt`, all other screens
+
+---
+
 ## Architecture — MVVM + Repository
 - **UI**: Jetpack Compose (no XML layouts)
 - **State**: ViewModel + StateFlow
