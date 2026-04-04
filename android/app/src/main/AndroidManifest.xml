@@ -8,9 +8,6 @@
     <!-- SMS sending — direct send with SmsManager -->
     <uses-permission android:name="android.permission.SEND_SMS" />
 
-    <!-- Optional: SMS receive for read receipts -->
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-
     <!-- Local notifications (Android 13+) -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 

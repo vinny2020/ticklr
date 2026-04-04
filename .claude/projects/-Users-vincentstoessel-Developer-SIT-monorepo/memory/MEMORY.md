@@ -1,0 +1,1 @@
+- [iOS build preferences](feedback_ios_build.md) — Use `generic/platform=iOS` with signing team intact; no simulator, no stripped signing
