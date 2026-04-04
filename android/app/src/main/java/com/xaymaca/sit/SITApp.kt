@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.content.Context
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
@@ -24,6 +25,8 @@ class SITApp : Application(), Configuration.Provider {
     override fun onCreate() {
         super.onCreate()
         createNotificationChannel()
+        // Disable ad personalization — Ticklr does not use advertising ID
+        FirebaseAnalytics.getInstance(this).setUserProperty("allow_personalized_ads", "false")
         // Enable Crashlytics in debug so local crashes appear in Firebase Console
         // Set to false to suppress debug noise if needed
         FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)

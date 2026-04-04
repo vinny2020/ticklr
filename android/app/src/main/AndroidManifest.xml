@@ -8,6 +8,9 @@
     <!-- SMS sending — direct send with SmsManager -->
     <uses-permission android:name="android.permission.SEND_SMS" />
 
+    <!-- Force remove RECEIVE_SMS if added by dependencies -->
+    <uses-permission android:name="android.permission.RECEIVE_SMS" tools:node="remove" />
+
     <!-- Local notifications (Android 13+) -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
@@ -16,6 +19,10 @@
 
     <!-- WorkManager exact alarm scheduling -->
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+
+    <!-- Explicitly remove AD_ID permission injected by Firebase Analytics -->
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID"
+        tools:node="remove" />
 
     <application
         android:name=".SITApp"
