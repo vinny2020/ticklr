@@ -2,6 +2,78 @@
 
 ---
 
+## 🚧 Feature: ContactDetailScreen — Add Group Button + Compose Button
+
+### What to Build
+
+Add two action buttons to `ContactDetailScreen` immediately below the existing
+"Add Tickle" button:
+
+---
+
+#### Button 1: Add to Group
+
+**Label:** `"Add to Group"` with `Icons.Default.Group`, Cobalt color
+**Behavior:**
+- Tapping opens a `ModalBottomSheet` (or `AlertDialog`) listing all existing groups
+- Each row: group name with a checkmark `Icons.Default.Check` if contact is already a member
+- Tapping a row toggles membership — add if not member, remove if already a member
+- At the bottom of the list: a `"+ Create New Group"` row that expands an inline
+  `OutlinedTextField` + `"Create"` button
+- On create: insert new group, add contact to it, collapse the inline field
+- Max 30 char group name, Create button disabled when blank
+
+**ViewModel changes needed in `NetworkViewModel`:**
+- `fun getGroupsForContact(contactId: Long): Flow<List<ContactGroup>>`
+  (already exists in `ContactRepository` — just expose it)
+- `fun getAllGroups(): Flow<List<ContactGroup>>`
+  (already exists — just expose it in NetworkViewModel or use a shared GroupViewModel)
+- `fun addContactToGroup(contactId: Long, groupId: Long)`
+- `fun removeContactFromGroup(contactId: Long, groupId: Long)`
+- `fun createGroupAndAddContact(groupName: String, contactId: Long)`
+
+**Note:** `ContactRepository` already has `addContactToGroup` and `removeContactFromGroup`.
+Expose them via `NetworkViewModel` or inject `GroupViewModel` into the screen.
+
+---
+
+#### Button 2: Message
+
+**Label:** `"Message"` with `Icons.AutoMirrored.Filled.Send`, Cobalt color
+**Behavior:**
+- Only enabled if the contact has at least one phone number
+- On tap: immediately opens SMS intent pre-populated with `contact.phoneNumbers.first`
+  and an empty body — bypasses ComposeScreen entirely for speed
+- Use `SmsService.sendSmsIntent(context, listOf(phone), "")` which opens the Messages app
+- If no phone number: button is greyed out, show `"No phone number on file"` tooltip or
+  just rely on the existing empty state already shown in ContactDetailScreen
+
+**No new ViewModel needed** — fire the intent directly from the composable using `LocalContext`.
+
+---
+
+### Button Layout
+
+Replace the current single "Add Tickle" Button with this layout:
+
+```
+┌─────────────────────┐  ┌─────────────────────┐
+│  🔔 Add Tickle      │  │  👥 Add to Group    │
+└─────────────────────┘  └─────────────────────┘
+┌──────────────────────────────────────────────┐
+│              → Message                        │
+└──────────────────────────────────────────────┘
+```
+
+Use a `Row` for the first two buttons (equal weight with `Modifier.weight(1f)`),
+then a full-width Button for Message below. Tickle stays Amber. Both new buttons use Cobalt.
+
+**Also fix:** `ContactDetailScreen` currently uses Gson `TypeToken` to parse phone/email/tags
+— replace with the R8-safe `parseJsonStringArray()` helper (same pattern as ComposeScreen).
+This is the same R8 crash risk documented in the critical fix section above.
+
+---
+
 ## 🎨 REDESIGN: ComposeScreen — Single Contact + Template Dropdown
 
 ### Design Goals

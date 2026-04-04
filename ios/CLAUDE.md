@@ -97,6 +97,73 @@ See `docs/app-store-listing.md` for the complete App Store submission copy inclu
 - URLs (support, marketing, privacy policy)
 - Screenshot order and tips
 
+## 🚧 Feature: ContactDetailView — Add Group Button + Compose Button
+
+### What to Build
+
+Add two action buttons to `ContactDetailView` immediately below the existing
+"Add Tickle Reminder" button:
+
+---
+
+#### Button 1: Add to Group
+
+**Label:** `"Add to Group"` with `person.3.fill` SF Symbol, Cobalt tint
+**Behavior:**
+- Tapping opens a sheet showing all existing groups in a `List`
+- Each row shows the group emoji + name, with a checkmark if the contact is already a member
+- Tapping a group row toggles membership (add if not member, remove if already member)
+- At the bottom of the list, a `"+ Create New Group"` button opens a simple inline
+  `TextField` + `"Create"` button — creates the group and immediately adds the contact to it
+- Sheet has a `"Done"` dismiss button in the toolbar
+- No navigation push — use a `.sheet` presentation
+
+**New group creation in the sheet:**
+- `TextField("Group name…")` + `Button("Create")`
+- On create: insert new `ContactGroup` into context, add contact to it, dismiss inline creation
+- Max 30 chars on group name (mirror existing GroupDetailView constraint)
+- Empty name disables Create button
+
+**Files:** `ContactDetailView.swift` — add `@State private var showingAddToGroup = false`
+and the sheet with its own `@Query(sort: \ContactGroup.name) private var allGroups`
+
+---
+
+#### Button 2: Message
+
+**Label:** `"Message"` with `message.fill` SF Symbol, Cobalt tint
+**Behavior:**
+- Only enabled if `!contact.phoneNumbers.isEmpty`
+- If disabled: show button greyed out (no phone number state already visible on detail view)
+- On tap: opens `MFMessageComposeViewController` (via existing `MessageComposerService`)
+  pre-populated with `contact.phoneNumbers.first` as recipient, empty body
+- Uses the same `MessageComposerView` UIViewControllerRepresentable already in the project
+
+**Files:** `ContactDetailView.swift` — add `@State private var showingCompose = false`
+and `.sheet(isPresented: $showingCompose) { MessageComposerView(recipients: [phone], body: "") }`
+
+---
+
+### Button Layout
+
+Place both buttons in a single `HStack` replacing the current single-button Section,
+so they sit side by side:
+
+```
+┌──────────────────┐  ┌──────────────────┐
+│  🔔 Add Tickle   │  │  👥 Add to Group │
+└──────────────────┘  └──────────────────┘
+┌──────────────────────────────────────────┐
+│          💬 Message                      │
+└──────────────────────────────────────────┘
+```
+
+Or use a `VStack` of two rows if HStack feels cramped — use your judgment on device.
+Tickle stays Amber. Add to Group and Message use Cobalt.
+Message button full-width since it's the primary send action.
+
+---
+
 ## 🚧 Next Feature: Group Member Selection — Add Confirmation Toast
 
 ### Context
