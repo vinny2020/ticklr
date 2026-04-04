@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,8 +24,6 @@ class ComposeViewModel @Inject constructor(
     private val messageTemplateRepository: MessageTemplateRepository,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
-
-    enum class SortOrder { AZ, ZA, RECENT }
 
     private val allContacts: StateFlow<List<Contact>> = contactRepository
         .getAllContacts()
@@ -37,23 +34,19 @@ class ComposeViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val searchQuery = MutableStateFlow("")
-    val sortOrder = MutableStateFlow(SortOrder.AZ)
 
-    val contacts: StateFlow<List<Contact>> = combine(allContacts, searchQuery, sortOrder) { list, query, sort ->
-        val filtered = if (query.isBlank()) list
+    val contacts: StateFlow<List<Contact>> = combine(allContacts, searchQuery) { list, query ->
+        if (query.isBlank()) list
         else list.filter {
             it.firstName.contains(query, ignoreCase = true) ||
             it.lastName.contains(query, ignoreCase = true) ||
             it.company.contains(query, ignoreCase = true)
         }
-        when (sort) {
-            SortOrder.AZ     -> filtered.sortedBy { it.lastName.lowercase() }
-            SortOrder.ZA     -> filtered.sortedByDescending { it.lastName.lowercase() }
-            SortOrder.RECENT -> filtered.sortedByDescending { it.createdAt }
-        }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    val selectedContactIds = MutableStateFlow<Set<Long>>(emptySet())
+    private val _selectedContact = MutableStateFlow<Contact?>(null)
+    val selectedContact: StateFlow<Contact?> = _selectedContact.asStateFlow()
+
     val messageBody = MutableStateFlow("")
 
     private val _toastMessage = MutableStateFlow<String?>(null)
@@ -64,17 +57,27 @@ class ComposeViewModel @Inject constructor(
             .getBoolean(SITApp.KEY_SEND_SMS_DIRECTLY, false)
     )
 
-    fun setSearchQuery(query: String) { searchQuery.value = query }
-    fun setSortOrder(order: SortOrder) { sortOrder.value = order }
+    val canSend: StateFlow<Boolean> = combine(
+        _selectedContact, messageBody
+    ) { contact, body ->
+        contact != null && contact.phoneNumbers.isNotBlank() &&
+            contact.phoneNumbers != "[]" && body.isNotBlank()
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
-    fun toggleContactSelection(contactId: Long) {
-        val current = selectedContactIds.value.toMutableSet()
-        if (current.contains(contactId)) {
-            current.remove(contactId)
-        } else {
-            current.add(contactId)
-        }
-        selectedContactIds.value = current
+    fun setSearchQuery(query: String) { searchQuery.value = query }
+
+    fun selectContact(contact: Contact) {
+        _selectedContact.value = contact
+        searchQuery.value = ""
+    }
+
+    fun clearContact() {
+        _selectedContact.value = null
+    }
+
+    fun clearCompose() {
+        _selectedContact.value = null
+        messageBody.value = ""
     }
 
     fun setMessage(text: String) {
@@ -85,27 +88,11 @@ class ComposeViewModel @Inject constructor(
         messageBody.value = template.body
     }
 
-    fun clearSelection() {
-        selectedContactIds.value = emptySet()
-        messageBody.value = ""
-    }
-
-    fun saveTemplate(title: String, body: String) {
-        viewModelScope.launch {
-            messageTemplateRepository.insertTemplate(
-                MessageTemplate(title = title.trim(), body = body.trim())
-            )
-            _toastMessage.value = "Template saved"
-        }
+    fun showToast(message: String) {
+        _toastMessage.value = message
     }
 
     fun clearToast() {
         _toastMessage.value = null
-    }
-
-    fun deleteTemplate(template: MessageTemplate) {
-        viewModelScope.launch {
-            messageTemplateRepository.deleteTemplate(template)
-        }
     }
 }

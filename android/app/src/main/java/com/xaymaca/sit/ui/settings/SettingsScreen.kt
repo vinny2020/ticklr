@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.DeleteForever
 import androidx.compose.material.icons.automirrored.filled.Message
 import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.automirrored.filled.TextSnippet
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -31,6 +32,7 @@ import com.xaymaca.sit.ui.theme.NavyLight
 @Composable
 fun SettingsScreen(
     onImport: () -> Unit,
+    onTemplates: () -> Unit,
     onResetOnboarding: () -> Unit,
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
@@ -114,6 +116,15 @@ fun SettingsScreen(
                 title = "Import Contacts",
                 subtitle = "From phone or LinkedIn CSV",
                 onClick = onImport
+            )
+
+            HorizontalDivider(color = NavyLight, modifier = Modifier.padding(start = 56.dp))
+
+            SettingsRow(
+                icon = Icons.AutoMirrored.Filled.TextSnippet,
+                title = "Message Templates",
+                subtitle = "Create and manage reusable messages",
+                onClick = onTemplates
             )
 
             HorizontalDivider(color = NavyLight, modifier = Modifier.padding(start = 56.dp))

@@ -29,6 +29,8 @@ import com.xaymaca.sit.ui.network.NetworkListScreen
 import com.xaymaca.sit.ui.onboarding.ImportScreen
 import com.xaymaca.sit.ui.onboarding.OnboardingScreen
 import com.xaymaca.sit.ui.settings.SettingsScreen
+import com.xaymaca.sit.ui.settings.TemplateEditScreen
+import com.xaymaca.sit.ui.settings.TemplateListScreen
 import com.xaymaca.sit.ui.tickle.TickleEditScreen
 import com.xaymaca.sit.ui.tickle.TickleListScreen
 
@@ -239,12 +241,33 @@ fun NavGraph() {
             composable(Screen.Settings.route) {
                 SettingsScreen(
                     onImport = { navController.navigate(Screen.Import.route) },
+                    onTemplates = { navController.navigate(Screen.TemplateList.route) },
                     onResetOnboarding = {
                         prefs.edit().putBoolean(SITApp.KEY_ONBOARDING_COMPLETE, false).apply()
                         navController.navigate(Screen.Onboarding.route) {
                             popUpTo(0) { inclusive = true }
                         }
                     }
+                )
+            }
+
+            // Template management
+            composable(Screen.TemplateList.route) {
+                TemplateListScreen(
+                    onBack = { navController.popBackStack() },
+                    onAddTemplate = { navController.navigate(Screen.TemplateEdit.createRoute(-1L)) },
+                    onEditTemplate = { id -> navController.navigate(Screen.TemplateEdit.createRoute(id)) }
+                )
+            }
+
+            composable(
+                route = Screen.TemplateEdit.ROUTE,
+                arguments = listOf(navArgument("templateId") { type = NavType.LongType })
+            ) { backStackEntry ->
+                val templateId = backStackEntry.arguments?.getLong("templateId") ?: -1L
+                TemplateEditScreen(
+                    templateId = templateId,
+                    onBack = { navController.popBackStack() }
                 )
             }
         }

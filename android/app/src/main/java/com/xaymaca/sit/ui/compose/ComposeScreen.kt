@@ -1,33 +1,26 @@
 package com.xaymaca.sit.ui.compose
 
 import android.content.pm.PackageManager
-import android.widget.Toast
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.automirrored.filled.Send
-import androidx.compose.material.icons.automirrored.filled.Sort
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.xaymaca.sit.data.model.Contact
 import com.xaymaca.sit.service.SmsService
 import com.xaymaca.sit.ui.shared.TicklrToast
 import com.xaymaca.sit.ui.theme.Cobalt
-import com.xaymaca.sit.ui.theme.NavyLight
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,73 +30,140 @@ fun ComposeScreen(
     val context = LocalContext.current
     val contacts by viewModel.contacts.collectAsState()
     val templates by viewModel.templates.collectAsState()
-    val selectedIds by viewModel.selectedContactIds.collectAsState()
+    val selectedContact by viewModel.selectedContact.collectAsState()
     val messageBody by viewModel.messageBody.collectAsState()
     val sendDirectly by viewModel.sendDirectly.collectAsState()
     val toastMessage by viewModel.toastMessage.collectAsState()
     val searchQuery by viewModel.searchQuery.collectAsState()
-    val sortOrder by viewModel.sortOrder.collectAsState()
+    val canSend by viewModel.canSend.collectAsState()
 
     var showTemplateDropdown by remember { mutableStateOf(false) }
-    var showSaveTemplateDialog by remember { mutableStateOf(false) }
-    var showSortDropdown by remember { mutableStateOf(false) }
-    var templateTitleInput by remember { mutableStateOf("") }
-
-    // Contacts with at least one phone number among the selected set — used for send dispatch only
-    val validSelectedContacts = remember(contacts, selectedIds) {
-        contacts.filter { contact ->
-            contact.id in selectedIds && parseJsonStringArray(contact.phoneNumbers).isNotEmpty()
-        }
-    }
+    var showContactDropdown by remember { mutableStateOf(false) }
+    var selectedTemplateName by remember { mutableStateOf<String?>(null) }
+    val messageFocusRequester = remember { FocusRequester() }
 
     Box(modifier = Modifier.fillMaxSize()) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Compose", fontWeight = FontWeight.Bold) },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background,
-                    titleContentColor = MaterialTheme.colorScheme.onBackground
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = { Text("Compose", fontWeight = FontWeight.Bold) },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.background,
+                        titleContentColor = MaterialTheme.colorScheme.onBackground
+                    )
                 )
-            )
-        },
-        containerColor = MaterialTheme.colorScheme.background
-    ) { paddingValues ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        ) {
-            // Template picker
-            Row(
+            },
+            containerColor = MaterialTheme.colorScheme.background
+        ) { paddingValues ->
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .padding(horizontal = 16.dp)
             ) {
-                Box(modifier = Modifier.weight(1f)) {
-                    OutlinedButton(
-                        onClick = { showTemplateDropdown = true },
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // To: contact search field
+                Box {
+                    OutlinedTextField(
+                        value = if (selectedContact != null) "" else searchQuery,
+                        onValueChange = { query ->
+                            if (selectedContact == null) {
+                                viewModel.setSearchQuery(query)
+                                showContactDropdown = query.isNotBlank()
+                            }
+                        },
                         modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(10.dp)
-                    ) {
-                        Text(
-                            "Templates",
-                            modifier = Modifier.weight(1f)
-                        )
-                        Icon(Icons.Default.ArrowDropDown, contentDescription = null)
-                    }
+                        label = { Text("To") },
+                        placeholder = { Text("Search contacts…") },
+                        singleLine = true,
+                        shape = RoundedCornerShape(10.dp),
+                        enabled = selectedContact == null
+                    )
                     DropdownMenu(
-                        expanded = showTemplateDropdown,
-                        onDismissRequest = { showTemplateDropdown = false }
+                        expanded = showContactDropdown && contacts.isNotEmpty() && selectedContact == null,
+                        onDismissRequest = { showContactDropdown = false }
                     ) {
-                        if (templates.isEmpty()) {
+                        contacts.take(8).forEach { contact ->
                             DropdownMenuItem(
-                                text = { Text("No templates saved") },
-                                onClick = { showTemplateDropdown = false },
-                                enabled = false
+                                text = {
+                                    Column {
+                                        Text(contact.fullName.ifBlank { "No Name" }, fontWeight = FontWeight.Medium)
+                                        if (contact.company.isNotBlank()) {
+                                            Text(
+                                                contact.company,
+                                                style = MaterialTheme.typography.bodySmall,
+                                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                                            )
+                                        }
+                                    }
+                                },
+                                onClick = {
+                                    viewModel.selectContact(contact)
+                                    showContactDropdown = false
+                                    selectedTemplateName = null
+                                }
                             )
-                        } else {
+                        }
+                    }
+                }
+
+                // Selected contact chip
+                if (selectedContact != null) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    InputChip(
+                        selected = true,
+                        onClick = {},
+                        label = { Text(selectedContact!!.fullName.ifBlank { "No Name" }) },
+                        trailingIcon = {
+                            IconButton(
+                                onClick = { viewModel.clearContact() },
+                                modifier = Modifier.size(18.dp)
+                            ) {
+                                Icon(
+                                    Icons.Default.Close,
+                                    contentDescription = "Remove contact",
+                                    modifier = Modifier.size(14.dp)
+                                )
+                            }
+                        },
+                        colors = InputChipDefaults.inputChipColors(
+                            selectedContainerColor = Cobalt.copy(alpha = 0.15f),
+                            selectedLabelColor = Cobalt
+                        )
+                    )
+                    // No phone warning
+                    val phones = parseJsonStringArray(selectedContact!!.phoneNumbers)
+                    if (phones.isEmpty()) {
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Text(
+                            "No phone number on file",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Template dropdown — hidden if no templates
+                if (templates.isNotEmpty()) {
+                    Box {
+                        OutlinedButton(
+                            onClick = { showTemplateDropdown = true },
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(10.dp)
+                        ) {
+                            Text(
+                                text = selectedTemplateName ?: "Select template",
+                                modifier = Modifier.weight(1f)
+                            )
+                            Icon(Icons.Default.ArrowDropDown, contentDescription = null)
+                        }
+                        DropdownMenu(
+                            expanded = showTemplateDropdown,
+                            onDismissRequest = { showTemplateDropdown = false }
+                        ) {
                             templates.forEach { template ->
                                 DropdownMenuItem(
                                     text = {
@@ -118,152 +178,67 @@ fun ComposeScreen(
                                     },
                                     onClick = {
                                         viewModel.applyTemplate(template)
+                                        selectedTemplateName = template.title
                                         showTemplateDropdown = false
                                     }
                                 )
                             }
                         }
                     }
+                    Spacer(modifier = Modifier.height(16.dp))
                 }
-                Spacer(modifier = Modifier.width(8.dp))
-                TextButton(onClick = { showSaveTemplateDialog = true }) {
-                    Text("Save", color = Cobalt)
-                }
-            }
 
-            // Message editor
-            OutlinedTextField(
-                value = messageBody,
-                onValueChange = viewModel::setMessage,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(min = 100.dp, max = 200.dp)
-                    .padding(horizontal = 16.dp),
-                label = { Text("Message") },
-                placeholder = { Text("Type your message…") },
-                shape = RoundedCornerShape(10.dp)
-            )
-
-            // Selected count + send button
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = "${selectedIds.size} recipient${if (selectedIds.size != 1) "s" else ""} selected",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                Button(
-                    onClick = {
-                        if (messageBody.isBlank()) {
-                            Toast.makeText(context, "Message is empty", Toast.LENGTH_SHORT).show()
-                            return@Button
-                        }
-                        if (validSelectedContacts.isEmpty()) {
-                            Toast.makeText(context, "Select at least one contact", Toast.LENGTH_SHORT).show()
-                            return@Button
-                        }
-
-                        val smsService = SmsService()
-                        val hasSmsPermission = ContextCompat.checkSelfPermission(
-                            context, android.Manifest.permission.SEND_SMS
-                        ) == PackageManager.PERMISSION_GRANTED
-
-                        val phoneNumbers = validSelectedContacts.mapNotNull { contact ->
-                            parseJsonStringArray(contact.phoneNumbers).firstOrNull()
-                        }
-
-                        if (sendDirectly && hasSmsPermission) {
-                            val results = smsService.sendSmsToMany(context, phoneNumbers, messageBody)
-                            val successCount = results.values.count { it }
-                            Toast.makeText(
-                                context,
-                                "Sent to $successCount/${phoneNumbers.size} recipients",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            viewModel.clearSelection()
-                        } else {
-                            val intent = smsService.sendSmsIntent(context, phoneNumbers, messageBody)
-                            context.startActivity(intent)
-                        }
-                    },
-                    enabled = validSelectedContacts.isNotEmpty() && messageBody.isNotBlank(),
-                    colors = ButtonDefaults.buttonColors(containerColor = Cobalt),
-                    shape = RoundedCornerShape(10.dp)
-                ) {
-                    Icon(Icons.AutoMirrored.Filled.Send, contentDescription = null)
-                    Spacer(modifier = Modifier.width(6.dp))
-                    Text("Send")
-                }
-            }
-
-            HorizontalDivider(color = NavyLight)
-
-            // Search + sort bar
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+                // Message body
                 OutlinedTextField(
-                    value = searchQuery,
-                    onValueChange = viewModel::setSearchQuery,
-                    modifier = Modifier.weight(1f),
-                    label = { Text("Search contacts") },
-                    singleLine = true,
+                    value = messageBody,
+                    onValueChange = viewModel::setMessage,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(min = 120.dp)
+                        .focusRequester(messageFocusRequester),
+                    label = { Text("Message") },
+                    placeholder = { Text("Type your message…") },
                     shape = RoundedCornerShape(10.dp)
                 )
-                Spacer(modifier = Modifier.width(8.dp))
-                Box {
-                    IconButton(onClick = { showSortDropdown = true }) {
-                        Icon(Icons.AutoMirrored.Filled.Sort, contentDescription = "Sort")
-                    }
-                    DropdownMenu(
-                        expanded = showSortDropdown,
-                        onDismissRequest = { showSortDropdown = false }
-                    ) {
-                        listOf(
-                            ComposeViewModel.SortOrder.AZ     to "A – Z",
-                            ComposeViewModel.SortOrder.ZA     to "Z – A",
-                            ComposeViewModel.SortOrder.RECENT to "Recently Added"
-                        ).forEach { (order, label) ->
-                            DropdownMenuItem(
-                                text = {
-                                    Text(
-                                        label,
-                                        fontWeight = if (sortOrder == order) FontWeight.Bold else FontWeight.Normal
-                                    )
-                                },
-                                onClick = {
-                                    viewModel.setSortOrder(order)
-                                    showSortDropdown = false
-                                }
-                            )
-                        }
-                    }
-                }
-            }
 
-            // Contact list with checkboxes
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(bottom = 32.dp)
-            ) {
-                items(contacts, key = { it.id }) { contact ->
-                    ContactCheckRow(
-                        contact = contact,
-                        isSelected = contact.id in selectedIds,
-                        onToggle = { viewModel.toggleContactSelection(contact.id) }
-                    )
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Send button
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    Button(
+                        onClick = {
+                            val contact = selectedContact ?: return@Button
+                            val phones = parseJsonStringArray(contact.phoneNumbers)
+                            val phone = phones.firstOrNull() ?: return@Button
+                            val smsService = SmsService()
+                            val hasSmsPermission = ContextCompat.checkSelfPermission(
+                                context, android.Manifest.permission.SEND_SMS
+                            ) == PackageManager.PERMISSION_GRANTED
+
+                            if (sendDirectly && hasSmsPermission) {
+                                smsService.sendSms(context, phone, messageBody)
+                            } else {
+                                val intent = smsService.sendSmsIntent(context, listOf(phone), messageBody)
+                                context.startActivity(intent)
+                            }
+                            viewModel.clearCompose()
+                            selectedTemplateName = null
+                            viewModel.showToast("Message sent \u2713")
+                        },
+                        enabled = canSend,
+                        colors = ButtonDefaults.buttonColors(containerColor = Cobalt),
+                        shape = RoundedCornerShape(10.dp)
+                    ) {
+                        Icon(Icons.AutoMirrored.Filled.Send, contentDescription = null)
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text("Send")
+                    }
                 }
             }
         }
-    }
 
         TicklrToast(
             message = toastMessage,
@@ -271,50 +246,6 @@ fun ComposeScreen(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 24.dp)
-        )
-    } // end Box
-
-    if (showSaveTemplateDialog) {
-        AlertDialog(
-            onDismissRequest = { showSaveTemplateDialog = false },
-            title = { Text("Save Template") },
-            text = {
-                Column {
-                    OutlinedTextField(
-                        value = templateTitleInput,
-                        onValueChange = { templateTitleInput = it },
-                        label = { Text("Template Name") },
-                        singleLine = true,
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(8.dp)
-                    )
-                    if (messageBody.isNotBlank()) {
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(
-                            text = "\"${messageBody.take(80)}…\"",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                }
-            },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        if (templateTitleInput.isNotBlank() && messageBody.isNotBlank()) {
-                            viewModel.saveTemplate(templateTitleInput, messageBody)
-                            templateTitleInput = ""
-                            showSaveTemplateDialog = false
-                        }
-                    },
-                    enabled = templateTitleInput.isNotBlank() && messageBody.isNotBlank()
-                ) {
-                    Text("Save", color = Cobalt)
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { showSaveTemplateDialog = false }) { Text("Cancel") }
-            }
         )
     }
 }
@@ -328,56 +259,4 @@ private fun parseJsonStringArray(json: String): List<String> {
         .split(",")
         .map { it.trim().removeSurrounding("\"") }
         .filter { it.isNotBlank() }
-}
-
-@Composable
-private fun ContactCheckRow(
-    contact: Contact,
-    isSelected: Boolean,
-    onToggle: () -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onToggle)
-            .padding(horizontal = 16.dp, vertical = 10.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Checkbox(
-            checked = isSelected,
-            onCheckedChange = null, // Row.clickable handles toggle; null prevents double-fire
-            colors = CheckboxDefaults.colors(checkedColor = Cobalt)
-        )
-        Spacer(modifier = Modifier.width(8.dp))
-        Box(
-            modifier = Modifier
-                .size(40.dp)
-                .clip(CircleShape)
-                .background(if (isSelected) Cobalt else MaterialTheme.colorScheme.surfaceVariant),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = contact.initials,
-                style = MaterialTheme.typography.labelLarge,
-                fontWeight = FontWeight.Bold,
-                color = if (isSelected) MaterialTheme.colorScheme.onPrimary
-                        else MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-        Spacer(modifier = Modifier.width(10.dp))
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = contact.fullName.ifBlank { "No Name" },
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Medium
-            )
-            if (contact.company.isNotBlank()) {
-                Text(
-                    text = contact.company,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-        }
-    }
 }

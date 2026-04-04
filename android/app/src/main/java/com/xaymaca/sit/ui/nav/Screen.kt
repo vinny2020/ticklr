@@ -28,4 +28,11 @@ sealed class Screen(val route: String) {
     object Settings : Screen("settings")
     object Onboarding : Screen("onboarding")
     object Import : Screen("import")
+    object TemplateList : Screen("template_list")
+    data class TemplateEdit(val id: Long = -1L) : Screen("template_edit/{templateId}") {
+        companion object {
+            const val ROUTE = "template_edit/{templateId}"
+            fun createRoute(id: Long = -1L) = "template_edit/$id"
+        }
+    }
 }
