@@ -2,6 +2,8 @@ import SwiftUI
 import SwiftData
 
 struct ComposeView: View {
+    var onCancel: (() -> Void)? = nil
+
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Contact.lastName) private var contacts: [Contact]
     @Query(sort: \MessageTemplate.title) private var templates: [MessageTemplate]
@@ -210,6 +212,7 @@ struct ComposeView: View {
                     if selectedContact != nil || !messageBody.isEmpty {
                         Button("Cancel") {
                             clearCompose()
+                            onCancel?()
                         }
                         .foregroundStyle(.secondary)
                     }

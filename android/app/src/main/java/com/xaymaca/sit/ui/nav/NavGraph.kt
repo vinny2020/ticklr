@@ -234,7 +234,17 @@ fun NavGraph() {
 
             // Compose
             composable(Screen.Compose.route) {
-                ComposeScreen()
+                ComposeScreen(
+                    onNavigateToNetwork = {
+                        navController.navigate(Screen.Network.route) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    }
+                )
             }
 
             // Settings

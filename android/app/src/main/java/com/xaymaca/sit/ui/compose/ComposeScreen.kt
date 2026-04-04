@@ -25,6 +25,7 @@ import com.xaymaca.sit.ui.theme.Cobalt
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ComposeScreen(
+    onNavigateToNetwork: () -> Unit = {},
     viewModel: ComposeViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -52,6 +53,7 @@ fun ComposeScreen(
                             IconButton(onClick = {
                                 viewModel.clearCompose()
                                 selectedTemplateName = null
+                                onNavigateToNetwork()
                             }) {
                                 Icon(
                                     Icons.Default.Close,
