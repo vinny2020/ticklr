@@ -3,6 +3,7 @@ import SwiftData
 
 struct ComposeView: View {
     var onCancel: (() -> Void)? = nil
+    var initialContact: Contact? = nil
 
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Contact.lastName) private var contacts: [Contact]
@@ -204,6 +205,11 @@ struct ComposeView: View {
                     .padding(.bottom, 16)
                 }
                 .padding(.top, 16)
+            }
+            .onAppear {
+                if let c = initialContact, selectedContact == nil {
+                    selectedContact = c
+                }
             }
             .navigationTitle("Compose")
             .navigationBarTitleDisplayMode(.large)

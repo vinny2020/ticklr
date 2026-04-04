@@ -10,6 +10,7 @@ import com.xaymaca.sit.data.repository.ContactRepository
 import com.xaymaca.sit.data.repository.MessageTemplateRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -69,6 +70,13 @@ class ComposeViewModel @Inject constructor(
     fun selectContact(contact: Contact) {
         _selectedContact.value = contact
         searchQuery.value = ""
+    }
+
+    fun preSelectContact(contactId: Long) {
+        viewModelScope.launch {
+            val contact = contactRepository.getContactById(contactId)
+            if (contact != null) selectContact(contact)
+        }
     }
 
     fun clearContact() {

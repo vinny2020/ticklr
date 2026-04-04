@@ -1,15 +1,20 @@
 import SwiftUI
 import SwiftData
 
+private enum ActiveSheet: Identifiable {
+    case edit, addTickle, addToGroup, compose
+    var id: Int { hashValue }
+}
+
 struct ContactDetailView: View {
     @Bindable var contact: Contact
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
-    @State private var isEditing = false
+    @State private var activeSheet: ActiveSheet?
     @State private var showingDeleteConfirm = false
-    @State private var showingAddTickle = false
 
     private let amber = Color(red: 0.96, green: 0.78, blue: 0.25)
+    private let cobalt = Color(red: 0.145, green: 0.388, blue: 0.922)
 
     var body: some View {
         List {
@@ -93,13 +98,33 @@ struct ContactDetailView: View {
             }
 
             Section {
+                HStack(spacing: 12) {
+                    Button {
+                        activeSheet = .addTickle
+                    } label: {
+                        Label("Add Tickle", systemImage: "bell.badge")
+                            .foregroundStyle(amber)
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.plain)
+                    Button {
+                        activeSheet = .addToGroup
+                    } label: {
+                        Label("Add to Group", systemImage: "person.3.fill")
+                            .foregroundStyle(cobalt)
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.plain)
+                }
                 Button {
-                    showingAddTickle = true
+                    activeSheet = .compose
                 } label: {
-                    Label("Add Tickle Reminder", systemImage: "bell.badge")
-                        .foregroundStyle(amber)
+                    Label("Message", systemImage: "message.fill")
+                        .foregroundStyle(contact.phoneNumbers.isEmpty ? Color.secondary : cobalt)
                         .frame(maxWidth: .infinity)
                 }
+                .buttonStyle(.plain)
+                .disabled(contact.phoneNumbers.isEmpty)
             }
 
             Section {
@@ -115,14 +140,23 @@ struct ContactDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button("Edit") { isEditing = true }
+                Button("Edit") { activeSheet = .edit }
             }
         }
-        .sheet(isPresented: $isEditing) {
-            ContactEditSheet(contact: contact)
-        }
-        .sheet(isPresented: $showingAddTickle) {
-            TickleEditView(contact: contact)
+        .sheet(item: $activeSheet) { sheet in
+            switch sheet {
+            case .edit:
+                ContactEditSheet(contact: contact)
+            case .addTickle:
+                TickleEditView(contact: contact)
+            case .addToGroup:
+                AddToGroupSheet(contact: contact)
+            case .compose:
+                ComposeView(
+                    onCancel: { activeSheet = nil },
+                    initialContact: contact
+                )
+            }
         }
         .confirmationDialog(
             "Delete \(contact.fullName)?",
@@ -136,6 +170,87 @@ struct ContactDetailView: View {
             }
         } message: {
             Text("This cannot be undone.")
+        }
+    }
+}
+
+// MARK: - Add to Group Sheet
+
+private struct AddToGroupSheet: View {
+    let contact: Contact
+    @Environment(\.modelContext) private var modelContext
+    @Environment(\.dismiss) private var dismiss
+    @Query(sort: \ContactGroup.name) private var allGroups: [ContactGroup]
+
+    @State private var showingCreateField = false
+    @State private var newGroupName = ""
+
+    var body: some View {
+        NavigationStack {
+            List {
+                ForEach(allGroups) { group in
+                    let isMember = contact.groups.contains(where: { $0.id == group.id })
+                    Button {
+                        if isMember {
+                            contact.groups.removeAll { $0.id == group.id }
+                        } else {
+                            contact.groups.append(group)
+                        }
+                        try? modelContext.save()
+                    } label: {
+                        HStack {
+                            Text(group.emoji)
+                            Text(group.name)
+                            Spacer()
+                            if isMember {
+                                Image(systemName: "checkmark")
+                                    .foregroundStyle(Color(red: 0.145, green: 0.388, blue: 0.922))
+                            }
+                        }
+                    }
+                    .tint(.primary)
+                }
+
+                if showingCreateField {
+                    VStack(alignment: .leading, spacing: 4) {
+                        HStack {
+                            TextField("Group name…", text: $newGroupName)
+                                .onChange(of: newGroupName) { _, v in
+                                    if v.count > 30 { newGroupName = String(v.prefix(30)) }
+                                }
+                            Button("Create") {
+                                let trimmed = newGroupName.trimmingCharacters(in: .whitespaces)
+                                guard !trimmed.isEmpty else { return }
+                                let group = ContactGroup(name: trimmed, emoji: "👥")
+                                modelContext.insert(group)
+                                contact.groups.append(group)
+                                try? modelContext.save()
+                                newGroupName = ""
+                                showingCreateField = false
+                            }
+                            .disabled(newGroupName.trimmingCharacters(in: .whitespaces).isEmpty)
+                        }
+                        Text("\(newGroupName.count) / 30")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                } else {
+                    Button {
+                        showingCreateField = true
+                    } label: {
+                        Label("Create New Group", systemImage: "plus")
+                            .foregroundStyle(Color(red: 0.145, green: 0.388, blue: 0.922))
+                    }
+                }
+            }
+            .navigationTitle("Add to Group")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Done") { dismiss() }
+                        .fontWeight(.semibold)
+                }
+            }
         }
     }
 }

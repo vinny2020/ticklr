@@ -15,7 +15,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import androidx.navigation.navArgument
@@ -169,7 +168,16 @@ fun NavGraph() {
                     contactId = contactId,
                     onBack = { navController.popBackStack() },
                     onAddTickle = { navController.navigate(Screen.TickleEdit.createRouteWithContact(contactId)) },
-                    onEdit = { navController.navigate("edit_contact/$contactId") }
+                    onEdit = { navController.navigate("edit_contact/$contactId") },
+                    onCompose = { id ->
+                        navController.navigate("compose?contactId=$id") {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = false
+                        }
+                    }
                 )
             }
 
@@ -232,9 +240,17 @@ fun NavGraph() {
                 )
             }
 
-            // Compose
-            composable(Screen.Compose.route) {
+            // Compose — accepts optional contactId query param for pre-selection from ContactDetailScreen
+            composable(
+                route = "${Screen.Compose.route}?contactId={contactId}",
+                arguments = listOf(navArgument("contactId") {
+                    type = NavType.LongType
+                    defaultValue = -1L
+                })
+            ) { backStackEntry ->
+                val contactId = backStackEntry.arguments?.getLong("contactId")?.takeIf { it != -1L }
                 ComposeScreen(
+                    initialContactId = contactId,
                     onNavigateToNetwork = {
                         navController.navigate(Screen.Network.route) {
                             popUpTo(navController.graph.findStartDestination().id) {

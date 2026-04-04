@@ -2,7 +2,7 @@
 
 ---
 
-## 🚧 Feature: ContactDetailScreen — Add Group Button + Compose Button
+## ✅ Feature: ContactDetailScreen — Add Group Button + Compose Button (complete)
 
 ### What to Build
 
@@ -317,7 +317,9 @@ app/src/main/java/com/xaymaca/sit/
 - `TickleEditScreen` — create/edit with contact/group picker, frequency, date, note; contact search clears on selection; save/update shows `"Tickle saved"` / `"Tickle updated"` toast
 - `TickleScheduler` — nextDueDate logic + WorkManager scheduling
 - `TickleWorker` — WorkManager Worker for background notifications
-- `ComposeScreen` + `ComposeViewModel` — multi-select + SMS send; search + sort (A–Z / Z–A / Recently Added); recipient count and Send button both driven by `selectedContactIds` StateFlow; template save shows `"Template saved"` toast
+- `ComposeScreen` + `ComposeViewModel` — single-contact redesign; contact search with DropdownMenu chip; template dropdown (hidden if empty); canSend StateFlow; "Message sent ✓" toast after send
+- `TemplateListScreen` + `TemplateEditScreen` + `TemplateViewModel` — full template CRUD under Settings; swipe-to-delete; seeds default "Checking in" template on first launch; accessed via "Message Templates" row in Settings
+- `ContactDetailScreen` — "Add Tickle" + "Add to Group" buttons in Row, full-width "Message" button below; `ModalBottomSheet` for group membership toggle + inline "Create New Group" (30-char limit); Gson TypeToken replaced with R8-safe `parseJsonStringArray()`
 - `SmsService` — SmsManager direct send + Intent fallback
 - `ImportScreen` — LinkedIn CSV + contacts import; LinkedIn section framed as relationship seeding with correct copy
 - `ContactImportService` — ContactsContract import

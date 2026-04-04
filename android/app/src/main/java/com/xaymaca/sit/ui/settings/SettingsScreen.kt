@@ -152,7 +152,7 @@ fun SettingsScreen(
                         fontWeight = FontWeight.Medium
                     )
                     Text(
-                        "Uses SmsManager instead of opening Messages app. Android advantage over iOS.",
+                        "Uses SmsManager instead of opening Messages app.",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )

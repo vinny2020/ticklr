@@ -8,6 +8,7 @@ import com.xaymaca.sit.data.model.GroupWithContacts
 import com.xaymaca.sit.data.repository.ContactRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -75,6 +76,18 @@ class GroupViewModel @Inject constructor(
             contactRepository.removeContactFromGroup(contactId, groupId)
         }
     }
+
+    fun createGroupAndAddContact(groupName: String, contactId: Long) {
+        viewModelScope.launch {
+            val groupId = contactRepository.insertGroup(
+                ContactGroup(name = groupName.trim(), emoji = "👥")
+            )
+            contactRepository.addContactToGroup(contactId, groupId)
+        }
+    }
+
+    fun getGroupsForContact(contactId: Long): Flow<List<ContactGroup>> =
+        contactRepository.getGroupsForContact(contactId)
 
     suspend fun getGroupById(id: Long): ContactGroup? = contactRepository.getGroupById(id)
 

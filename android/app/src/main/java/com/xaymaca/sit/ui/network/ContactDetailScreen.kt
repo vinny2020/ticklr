@@ -5,13 +5,17 @@ import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -23,9 +27,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.xaymaca.sit.data.model.Contact
+import com.xaymaca.sit.ui.groups.GroupViewModel
 import com.xaymaca.sit.ui.theme.Amber
 import com.xaymaca.sit.ui.theme.Cobalt
 
@@ -36,12 +39,19 @@ fun ContactDetailScreen(
     onBack: () -> Unit,
     onAddTickle: () -> Unit,
     onEdit: () -> Unit,
-    viewModel: NetworkViewModel = hiltViewModel()
+    onCompose: (Long) -> Unit = {},
+    viewModel: NetworkViewModel = hiltViewModel(),
+    groupViewModel: GroupViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     var contact by remember { mutableStateOf<Contact?>(null) }
     var showDeleteDialog by remember { mutableStateOf(false) }
-    val gson = remember { Gson() }
+    var showGroupSheet by remember { mutableStateOf(false) }
+
+    val allGroups by groupViewModel.groups.collectAsState()
+    val contactGroups by groupViewModel.getGroupsForContact(contactId)
+        .collectAsState(initial = emptyList())
+    val contactGroupIds = remember(contactGroups) { contactGroups.map { it.id }.toSet() }
 
     LaunchedEffect(contactId) {
         contact = viewModel.getContactById(contactId)
@@ -80,20 +90,9 @@ fun ContactDetailScreen(
                 CircularProgressIndicator(color = Cobalt)
             }
         } else {
-            val phoneNumbers: List<String> = try {
-                val type = object : TypeToken<List<String>>() {}.type
-                gson.fromJson(c.phoneNumbers, type) ?: emptyList()
-            } catch (e: Exception) { emptyList() }
-
-            val emails: List<String> = try {
-                val type = object : TypeToken<List<String>>() {}.type
-                gson.fromJson(c.emails, type) ?: emptyList()
-            } catch (e: Exception) { emptyList() }
-
-            val tags: List<String> = try {
-                val type = object : TypeToken<List<String>>() {}.type
-                gson.fromJson(c.tags, type) ?: emptyList()
-            } catch (e: Exception) { emptyList() }
+            val phoneNumbers = parseJsonStringArray(c.phoneNumbers)
+            val emails = parseJsonStringArray(c.emails)
+            val tags = parseJsonStringArray(c.tags)
 
             LazyColumn(
                 modifier = Modifier
@@ -143,22 +142,55 @@ fun ContactDetailScreen(
                     }
                 }
 
-                // Add Tickle button
+                // Add Tickle + Add to Group buttons (row)
+                item {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(IntrinsicSize.Max)
+                            .padding(horizontal = 24.dp, vertical = 4.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Button(
+                            onClick = onAddTickle,
+                            modifier = Modifier.weight(1f).fillMaxHeight(),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Amber,
+                                contentColor = MaterialTheme.colorScheme.background
+                            ),
+                            shape = RoundedCornerShape(10.dp)
+                        ) {
+                            Icon(Icons.Default.Notifications, contentDescription = null, modifier = Modifier.size(18.dp))
+                            Spacer(modifier = Modifier.width(6.dp))
+                            Text("Add Tickle", fontWeight = FontWeight.SemiBold)
+                        }
+                        Button(
+                            onClick = { showGroupSheet = true },
+                            modifier = Modifier.weight(1f).fillMaxHeight(),
+                            colors = ButtonDefaults.buttonColors(containerColor = Cobalt),
+                            shape = RoundedCornerShape(10.dp)
+                        ) {
+                            Icon(Icons.Default.Group, contentDescription = null, modifier = Modifier.size(18.dp))
+                            Spacer(modifier = Modifier.width(6.dp))
+                            Text("Add to Group", fontWeight = FontWeight.SemiBold)
+                        }
+                    }
+                }
+
+                // Message button (full width)
                 item {
                     Button(
-                        onClick = onAddTickle,
+                        onClick = { onCompose(contactId) },
+                        enabled = phoneNumbers.isNotEmpty(),
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 24.dp, vertical = 4.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Amber,
-                            contentColor = MaterialTheme.colorScheme.background
-                        ),
+                        colors = ButtonDefaults.buttonColors(containerColor = Cobalt),
                         shape = RoundedCornerShape(10.dp)
                     ) {
-                        Icon(Icons.Default.Notifications, contentDescription = null)
+                        Icon(Icons.AutoMirrored.Filled.Send, contentDescription = null, modifier = Modifier.size(18.dp))
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text("Add Tickle", fontWeight = FontWeight.SemiBold)
+                        Text("Message", fontWeight = FontWeight.SemiBold)
                     }
                 }
 
@@ -248,6 +280,24 @@ fun ContactDetailScreen(
         }
     }
 
+    // Add to Group bottom sheet
+    if (showGroupSheet) {
+        val c = contact
+        if (c != null) {
+            AddToGroupSheet(
+                contactId = contactId,
+                allGroups = allGroups,
+                memberGroupIds = contactGroupIds,
+                onToggle = { groupId, isMember ->
+                    if (isMember) groupViewModel.removeMember(contactId, groupId)
+                    else groupViewModel.addMember(contactId, groupId)
+                },
+                groupViewModel = groupViewModel,
+                onDismiss = { showGroupSheet = false }
+            )
+        }
+    }
+
     if (showDeleteDialog) {
         val c = contact
         if (c != null) {
@@ -276,6 +326,110 @@ fun ContactDetailScreen(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun AddToGroupSheet(
+    contactId: Long,
+    allGroups: List<com.xaymaca.sit.data.model.ContactGroup>,
+    memberGroupIds: Set<Long>,
+    onToggle: (Long, Boolean) -> Unit,
+    groupViewModel: GroupViewModel,
+    onDismiss: () -> Unit
+) {
+    var showCreateField by remember { mutableStateOf(false) }
+    var newGroupName by remember { mutableStateOf("") }
+
+    ModalBottomSheet(onDismissRequest = onDismiss) {
+        Column(modifier = Modifier.fillMaxWidth()) {
+            Text(
+                "Add to Group",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
+            )
+
+            if (allGroups.isEmpty() && !showCreateField) {
+                Text(
+                    "No groups yet.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                )
+            }
+
+            allGroups.forEach { group ->
+                val isMember = group.id in memberGroupIds
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onToggle(group.id, isMember) }
+                        .padding(horizontal = 16.dp, vertical = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        "${group.emoji} ${group.name}",
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier.weight(1f)
+                    )
+                    if (isMember) {
+                        Icon(
+                            Icons.Default.Check,
+                            contentDescription = "Member",
+                            tint = Cobalt,
+                            modifier = Modifier.size(20.dp)
+                        )
+                    }
+                }
+                HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+            }
+
+            // Create new group row
+            if (!showCreateField) {
+                TextButton(
+                    onClick = { showCreateField = true },
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                ) {
+                    Text("+ Create New Group", color = Cobalt)
+                }
+            } else {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    OutlinedTextField(
+                        value = newGroupName,
+                        onValueChange = { if (it.length <= 30) newGroupName = it },
+                        modifier = Modifier.weight(1f),
+                        label = { Text("Group name") },
+                        singleLine = true,
+                        shape = RoundedCornerShape(10.dp),
+                        supportingText = { Text("${newGroupName.length} / 30") }
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Button(
+                        onClick = {
+                            if (newGroupName.isNotBlank()) {
+                                groupViewModel.createGroupAndAddContact(newGroupName, contactId)
+                                newGroupName = ""
+                                showCreateField = false
+                            }
+                        },
+                        enabled = newGroupName.isNotBlank(),
+                        colors = ButtonDefaults.buttonColors(containerColor = Cobalt),
+                        shape = RoundedCornerShape(10.dp)
+                    ) {
+                        Text("Create")
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(32.dp))
+        }
+    }
+}
+
 @Composable
 private fun SectionHeader(title: String) {
     Text(
@@ -284,4 +438,15 @@ private fun SectionHeader(title: String) {
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 4.dp, end = 16.dp)
     )
+}
+
+private fun parseJsonStringArray(json: String): List<String> {
+    val trimmed = json.trim()
+    if (trimmed == "[]" || trimmed.isBlank()) return emptyList()
+    return trimmed
+        .removePrefix("[")
+        .removeSuffix("]")
+        .split(",")
+        .map { it.trim().removeSurrounding("\"") }
+        .filter { it.isNotBlank() }
 }

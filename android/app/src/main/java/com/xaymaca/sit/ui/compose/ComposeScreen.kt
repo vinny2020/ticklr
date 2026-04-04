@@ -26,8 +26,12 @@ import com.xaymaca.sit.ui.theme.Cobalt
 @Composable
 fun ComposeScreen(
     onNavigateToNetwork: () -> Unit = {},
+    initialContactId: Long? = null,
     viewModel: ComposeViewModel = hiltViewModel()
 ) {
+    LaunchedEffect(initialContactId) {
+        if (initialContactId != null) viewModel.preSelectContact(initialContactId)
+    }
     val context = LocalContext.current
     val contacts by viewModel.contacts.collectAsState()
     val templates by viewModel.templates.collectAsState()
