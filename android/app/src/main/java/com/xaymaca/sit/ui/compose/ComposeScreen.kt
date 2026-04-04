@@ -47,6 +47,20 @@ fun ComposeScreen(
             topBar = {
                 TopAppBar(
                     title = { Text("Compose", fontWeight = FontWeight.Bold) },
+                    actions = {
+                        if (selectedContact != null || messageBody.isNotBlank()) {
+                            IconButton(onClick = {
+                                viewModel.clearCompose()
+                                selectedTemplateName = null
+                            }) {
+                                Icon(
+                                    Icons.Default.Close,
+                                    contentDescription = "Clear compose",
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                        }
+                    },
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = MaterialTheme.colorScheme.background,
                         titleContentColor = MaterialTheme.colorScheme.onBackground

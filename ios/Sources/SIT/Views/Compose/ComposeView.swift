@@ -205,6 +205,16 @@ struct ComposeView: View {
             }
             .navigationTitle("Compose")
             .navigationBarTitleDisplayMode(.large)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    if selectedContact != nil || !messageBody.isEmpty {
+                        Button("Cancel") {
+                            clearCompose()
+                        }
+                        .foregroundStyle(.secondary)
+                    }
+                }
+            }
             .sheet(isPresented: $showingComposer, onDismiss: clearCompose) {
                 if let phone = recipientPhone {
                     MessageComposerView(recipients: [phone], body: messageBody)
