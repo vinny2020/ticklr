@@ -53,6 +53,17 @@ class GroupViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Returns true if any existing group has the same name (case-insensitive).
+     * Pass [excludeId] when editing so the group's own current name is not flagged.
+     */
+    fun isGroupNameTaken(name: String, excludeId: Long = -1L): Boolean {
+        val trimmed = name.trim()
+        return groups.value.any {
+            it.name.equals(trimmed, ignoreCase = true) && it.id != excludeId
+        }
+    }
+
     fun updateGroup(group: ContactGroup) {
         viewModelScope.launch {
             contactRepository.updateGroup(group)

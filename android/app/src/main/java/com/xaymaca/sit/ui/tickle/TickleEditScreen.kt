@@ -47,6 +47,9 @@ fun TickleEditScreen(
     val groups by groupViewModel.groups.collectAsState()
     val toastMessage by tickleViewModel.toastMessage.collectAsState()
 
+    var showCreateGroupDialog by remember { mutableStateOf(false) }
+    var newGroupName by remember { mutableStateOf("") }
+
     // Form state
     var selectedTab by remember { mutableIntStateOf(0) } // 0 = Contact, 1 = Group
     var selectedContact by remember { mutableStateOf<Contact?>(null) }
@@ -261,6 +264,35 @@ fun TickleEditScreen(
                                     trailingIcon = null
                                 )
                             }
+                        } else if (groups.isEmpty()) {
+                            item {
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(vertical = 24.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                                ) {
+                                    Text(
+                                        "No groups yet",
+                                        style = MaterialTheme.typography.bodyLarge,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                    Text(
+                                        "Groups let you tickle everyone on a team or in a circle at once.",
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                                    )
+                                    Button(
+                                        onClick = { showCreateGroupDialog = true },
+                                        colors = ButtonDefaults.buttonColors(containerColor = Cobalt),
+                                        shape = RoundedCornerShape(10.dp)
+                                    ) {
+                                        Text("Create a Group")
+                                    }
+                                }
+                            }
                         } else {
                             items(groups) { group ->
                                 Row(
@@ -382,6 +414,74 @@ fun TickleEditScreen(
                 .padding(bottom = 24.dp)
         )
     } // end Box
+
+    if (showCreateGroupDialog) {
+        val isDuplicate = newGroupName.trim().isNotBlank() &&
+            groupViewModel.isGroupNameTaken(newGroupName)
+        AlertDialog(
+            onDismissRequest = {
+                showCreateGroupDialog = false
+                newGroupName = ""
+            },
+            title = { Text("New Group") },
+            text = {
+                Column {
+                    OutlinedTextField(
+                        value = newGroupName,
+                        onValueChange = { if (it.length <= 30) newGroupName = it },
+                        label = { Text("Group name") },
+                        singleLine = true,
+                        isError = isDuplicate,
+                        shape = RoundedCornerShape(10.dp),
+                        supportingText = {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                if (isDuplicate) {
+                                    Text(
+                                        "Name already exists",
+                                        color = MaterialTheme.colorScheme.error,
+                                        style = MaterialTheme.typography.bodySmall
+                                    )
+                                } else {
+                                    androidx.compose.foundation.layout.Spacer(
+                                        modifier = Modifier.weight(1f)
+                                    )
+                                }
+                                Text("${newGroupName.length}/30")
+                            }
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        val name = newGroupName.trim()
+                        if (name.isNotBlank() && !isDuplicate) {
+                            groupViewModel.createGroup(name, "👥")
+                            showCreateGroupDialog = false
+                            newGroupName = ""
+                            selectedTab = 1
+                        }
+                    },
+                    enabled = newGroupName.isNotBlank() && !isDuplicate
+                ) {
+                    Text("Create", color = Cobalt)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = {
+                    showCreateGroupDialog = false
+                    newGroupName = ""
+                }) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
 }
 
 @Composable

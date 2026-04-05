@@ -1,5 +1,6 @@
 package com.xaymaca.sit.ui.compose
 
+import android.content.Context
 import android.content.pm.PackageManager
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,8 +17,10 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.PopupProperties
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.xaymaca.sit.SITApp
 import com.xaymaca.sit.service.SmsService
 import com.xaymaca.sit.ui.shared.TicklrToast
 import com.xaymaca.sit.ui.theme.Cobalt
@@ -37,7 +40,6 @@ fun ComposeScreen(
     val templates by viewModel.templates.collectAsState()
     val selectedContact by viewModel.selectedContact.collectAsState()
     val messageBody by viewModel.messageBody.collectAsState()
-    val sendDirectly by viewModel.sendDirectly.collectAsState()
     val toastMessage by viewModel.toastMessage.collectAsState()
     val searchQuery by viewModel.searchQuery.collectAsState()
     val canSend by viewModel.canSend.collectAsState()
@@ -102,7 +104,8 @@ fun ComposeScreen(
                     )
                     DropdownMenu(
                         expanded = showContactDropdown && contacts.isNotEmpty() && selectedContact == null,
-                        onDismissRequest = { showContactDropdown = false }
+                        onDismissRequest = { showContactDropdown = false },
+                        properties = PopupProperties(focusable = false)
                     ) {
                         contacts.take(8).forEach { contact ->
                             DropdownMenuItem(
@@ -237,6 +240,11 @@ fun ComposeScreen(
                             val hasSmsPermission = ContextCompat.checkSelfPermission(
                                 context, android.Manifest.permission.SEND_SMS
                             ) == PackageManager.PERMISSION_GRANTED
+
+                            // Read pref fresh at send time — not from a stale ViewModel StateFlow
+                            val sendDirectly = context
+                                .getSharedPreferences(SITApp.PREFS_NAME, Context.MODE_PRIVATE)
+                                .getBoolean(SITApp.KEY_SEND_SMS_DIRECTLY, false)
 
                             if (sendDirectly && hasSmsPermission) {
                                 smsService.sendSms(context, phone, messageBody)

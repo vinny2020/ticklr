@@ -2,6 +2,21 @@
 
 ---
 
+## 🛠️ Pending Tasks — Start Here
+
+Task files contain full diagnosis, root cause, and exact code changes. Read the task file
+before making any changes.
+
+| Task file | Type | What it covers |
+|---|---|---|
+| `tasks/fix-compose-bugs.md` | 🐛 Bug fix | (1) Direct SMS toggle ignored in ComposeScreen — pref read once at ViewModel init, never updated. (2) Contact search field loses focus when DropdownMenu opens — menu steals focus. Scoped to `ui/compose/ComposeScreen.kt` + `ComposeViewModel.kt`. |
+| `tasks/feature-tickle-empty-groups-prompt.md` | ✨ Feature | Show empty state + inline "Create a Group" dialog when Group tab has no groups in `TickleEditScreen`. Scoped to `ui/tickle/TickleEditScreen.kt` only. |
+| `tasks/feature-unique-group-names.md` | ✨ Feature | Prevent duplicate group names at all creation and rename entry points (GroupListScreen, GroupDetailScreen, ContactDetailScreen, TickleEditScreen). Adds `isGroupNameTaken()` to `GroupViewModel`. |
+
+**Recommended execution order:** fix-compose-bugs → feature-tickle-empty-groups-prompt → feature-unique-group-names (the unique-names task references the dialog added by the empty-groups task).
+
+---
+
 ## ✅ Feature: ContactDetailScreen — Add Group Button + Compose Button (complete)
 
 ### What to Build

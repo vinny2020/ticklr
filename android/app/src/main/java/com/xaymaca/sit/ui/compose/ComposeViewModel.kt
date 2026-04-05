@@ -1,15 +1,12 @@
 package com.xaymaca.sit.ui.compose
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.xaymaca.sit.SITApp
 import com.xaymaca.sit.data.model.Contact
 import com.xaymaca.sit.data.model.MessageTemplate
 import com.xaymaca.sit.data.repository.ContactRepository
 import com.xaymaca.sit.data.repository.MessageTemplateRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -22,8 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ComposeViewModel @Inject constructor(
     private val contactRepository: ContactRepository,
-    private val messageTemplateRepository: MessageTemplateRepository,
-    @ApplicationContext private val context: Context
+    private val messageTemplateRepository: MessageTemplateRepository
 ) : ViewModel() {
 
     private val allContacts: StateFlow<List<Contact>> = contactRepository
@@ -52,11 +48,6 @@ class ComposeViewModel @Inject constructor(
 
     private val _toastMessage = MutableStateFlow<String?>(null)
     val toastMessage: StateFlow<String?> = _toastMessage.asStateFlow()
-
-    val sendDirectly: StateFlow<Boolean> = MutableStateFlow(
-        context.getSharedPreferences(SITApp.PREFS_NAME, Context.MODE_PRIVATE)
-            .getBoolean(SITApp.KEY_SEND_SMS_DIRECTLY, false)
-    )
 
     val canSend: StateFlow<Boolean> = combine(
         _selectedContact, messageBody

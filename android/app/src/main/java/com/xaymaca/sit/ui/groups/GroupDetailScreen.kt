@@ -150,7 +150,8 @@ fun GroupDetailScreen(
                 onSave = { name, emoji ->
                     viewModel.updateGroup(currentGroup.copy(name = name, emoji = emoji))
                     showEditDialog = false
-                }
+                },
+                isNameTaken = { viewModel.isGroupNameTaken(it, excludeId = currentGroup.id) }
             )
         }
 
@@ -346,11 +347,15 @@ private fun AddMembersBottomSheet(
 private fun EditGroupDialog(
     group: ContactGroup,
     onDismiss: () -> Unit,
-    onSave: (name: String, emoji: String) -> Unit
+    onSave: (name: String, emoji: String) -> Unit,
+    isNameTaken: (String) -> Boolean
 ) {
     var name by remember { mutableStateOf(group.name) }
     var emoji by remember { mutableStateOf(group.emoji) }
-    val canSave = name.trim().isNotEmpty() && name.length <= 30
+    val isDuplicate = name.trim().isNotBlank() &&
+        !name.trim().equals(group.name.trim(), ignoreCase = true) &&
+        isNameTaken(name)
+    val canSave = name.trim().isNotEmpty() && name.length <= 30 && !isDuplicate
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -371,20 +376,28 @@ private fun EditGroupDialog(
                     onValueChange = { if (it.length <= 30) name = it },
                     label = { Text("Group Name") },
                     singleLine = true,
+                    isError = isDuplicate,
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(8.dp),
                     supportingText = {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.End
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
+                            if (isDuplicate) {
+                                Text(
+                                    "Name already exists",
+                                    color = MaterialTheme.colorScheme.error,
+                                    style = MaterialTheme.typography.bodySmall
+                                )
+                            } else {
+                                Spacer(modifier = Modifier.weight(1f))
+                            }
                             Text(
                                 text = "${name.length} / 30",
                                 style = MaterialTheme.typography.bodySmall,
-                                color = if (name.length >= 30)
-                                    MaterialTheme.colorScheme.error
-                                else
-                                    MaterialTheme.colorScheme.onSurfaceVariant
+                                color = if (name.length >= 30) MaterialTheme.colorScheme.error
+                                        else MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
                     }

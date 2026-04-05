@@ -392,6 +392,8 @@ private fun AddToGroupSheet(
                     Text("+ Create New Group", color = Cobalt)
                 }
             } else {
+                val isDuplicateInline = newGroupName.trim().isNotBlank() &&
+                    groupViewModel.isGroupNameTaken(newGroupName)
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -404,19 +406,30 @@ private fun AddToGroupSheet(
                         modifier = Modifier.weight(1f),
                         label = { Text("Group name") },
                         singleLine = true,
+                        isError = isDuplicateInline,
                         shape = RoundedCornerShape(10.dp),
-                        supportingText = { Text("${newGroupName.length} / 30") }
+                        supportingText = {
+                            if (isDuplicateInline) {
+                                Text(
+                                    "Name already exists",
+                                    color = MaterialTheme.colorScheme.error,
+                                    style = MaterialTheme.typography.bodySmall
+                                )
+                            } else {
+                                Text("${newGroupName.length} / 30")
+                            }
+                        }
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Button(
                         onClick = {
-                            if (newGroupName.isNotBlank()) {
+                            if (newGroupName.isNotBlank() && !isDuplicateInline) {
                                 groupViewModel.createGroupAndAddContact(newGroupName, contactId)
                                 newGroupName = ""
                                 showCreateField = false
                             }
                         },
-                        enabled = newGroupName.isNotBlank(),
+                        enabled = newGroupName.isNotBlank() && !isDuplicateInline,
                         colors = ButtonDefaults.buttonColors(containerColor = Cobalt),
                         shape = RoundedCornerShape(10.dp)
                     ) {

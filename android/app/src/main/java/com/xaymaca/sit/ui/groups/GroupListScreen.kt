@@ -102,7 +102,8 @@ fun GroupListScreen(
             onCreate = { name, emoji ->
                 viewModel.createGroup(name, emoji)
                 showCreateDialog = false
-            }
+            },
+            isNameTaken = { viewModel.isGroupNameTaken(it) }
         )
     }
 
@@ -200,10 +201,12 @@ private fun GroupRow(groupWithContacts: GroupWithContacts, onClick: () -> Unit) 
 @Composable
 private fun CreateGroupDialog(
     onDismiss: () -> Unit,
-    onCreate: (String, String) -> Unit
+    onCreate: (String, String) -> Unit,
+    isNameTaken: (String) -> Boolean
 ) {
     var name by remember { mutableStateOf("") }
     var emoji by remember { mutableStateOf("👥") }
+    val isDuplicate = name.trim().isNotBlank() && isNameTaken(name)
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -224,17 +227,28 @@ private fun CreateGroupDialog(
                     onValueChange = { if (it.length <= 30) name = it },
                     label = { Text("Group Name") },
                     singleLine = true,
+                    isError = isDuplicate,
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(8.dp),
                     supportingText = {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.End
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
+                            if (isDuplicate) {
+                                Text(
+                                    "Name already exists",
+                                    color = MaterialTheme.colorScheme.error,
+                                    style = MaterialTheme.typography.bodySmall
+                                )
+                            } else {
+                                Spacer(modifier = Modifier.weight(1f))
+                            }
                             Text(
                                 text = "${name.length} / 30",
                                 style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                                color = if (name.length >= 30) MaterialTheme.colorScheme.error
+                                        else MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
                     }
@@ -243,8 +257,8 @@ private fun CreateGroupDialog(
         },
         confirmButton = {
             TextButton(
-                onClick = { if (name.isNotBlank()) onCreate(name, emoji) },
-                enabled = name.isNotBlank()
+                onClick = { if (name.isNotBlank() && !isDuplicate) onCreate(name, emoji) },
+                enabled = name.isNotBlank() && !isDuplicate
             ) {
                 Text("Create", color = Cobalt)
             }
