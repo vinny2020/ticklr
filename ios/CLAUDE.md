@@ -1,5 +1,88 @@
 # CLAUDE.md — Ticklr (iOS)
 
+---
+
+## 🛠️ Pending Tasks — Start Here
+
+These are parity issues found by comparing against the Android implementation. Both affect real UX.
+
+### Task 1 — Empty group state in `TickleEditView` (Group picker)
+
+**File:** `Views/Tickle/TickleEditView.swift`
+
+**Problem:** When no groups exist and the user switches to the Group segment in `TickleEditView`,
+the native `Picker` renders only "Choose a group" with nothing selectable. There is no empty state
+message and no way to create a group without abandoning the screen (losing all form state).
+
+**Fix:** Detect `allGroups.isEmpty` inside the Group branch of the `Who` section.
+Instead of the `Picker`, show:
+- A brief message: `"No groups yet"` + subtext `"Groups let you tickle everyone on a team or in a circle at once."`
+- A `Button("Create a Group")` that presents `GroupEditSheet(group: nil)` as a sheet
+- After the sheet dismisses, if a group was created it will appear in `allGroups` (driven by `@Query`) and the Picker can then be shown
+
+No new state needed beyond `@State private var showingCreateGroupSheet = false`.
+`@Query(sort: \ContactGroup.name) private var allGroups` is already present.
+
+**Scope:** `TickleEditView.swift` only — no ViewModel, no navigation changes.
+
+---
+
+### Task 2 — Duplicate group names allowed
+
+**Files:** `Views/Network/GroupListView.swift`, `Views/Network/ContactDetailView.swift`
+
+**Problem:** `GroupEditSheet.canSave` only checks `!name.isEmpty && name.count <= 30`.
+No uniqueness check exists at any group creation or rename entry point:
+1. `GroupListView` → `+` button → `GroupEditSheet(group: nil)` — create, no dupe check
+2. `GroupListView` → swipe Edit → `GroupEditSheet(group: group)` — rename, no dupe check
+3. `ContactDetailView` → `AddToGroupSheet` inline create field — `Create` button only checks non-blank
+
+**Fix:**
+
+`GroupEditSheet` already receives `group: ContactGroup?` (nil = create, non-nil = edit).
+It needs a way to query existing group names for the uniqueness check.
+
+Add `@Query(sort: \ContactGroup.name) private var allGroups: [ContactGroup]` to `GroupEditSheet`
+and derive a `isDuplicate` flag:
+
+```swift
+private var isDuplicate: Bool {
+    let trimmed = name.trimmingCharacters(in: .whitespaces)
+    guard !trimmed.isEmpty else { return false }
+    return allGroups.contains {
+        $0.name.caseInsensitiveCompare(trimmed) == .orderedSame &&
+        $0.id != group?.id  // allow rename to same name
+    }
+}
+```
+
+Update `canSave`:
+```swift
+private var canSave: Bool {
+    !name.trimmingCharacters(in: .whitespaces).isEmpty &&
+    name.count <= 30 &&
+    !isDuplicate
+}
+```
+
+Show error text below the name field when `isDuplicate`:
+```swift
+if isDuplicate {
+    Text("A group with this name already exists")
+        .font(.caption)
+        .foregroundStyle(.red)
+}
+```
+
+For `AddToGroupSheet` inline create in `ContactDetailView`:
+- Derive `isDuplicateInline` the same way using the existing `allGroups` `@Query`
+- Disable the `Create` button when `isDuplicateInline`
+- Show `Text("Name already exists").font(.caption).foregroundStyle(.red)` below the field
+
+**Scope:** `GroupListView.swift` (`GroupEditSheet`) + `ContactDetailView.swift` (`AddToGroupSheet`).
+
+---
+
 ## What This App Is
 
 Ticklr is a privacy-first iOS native app. Users build a curated personal contact network, organize contacts into groups, set recurring tickle reminders to stay in touch, and send SMS/MMS via the native Messages app. All data is stored locally using SwiftData. No cloud, no analytics, no account required.
