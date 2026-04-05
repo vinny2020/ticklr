@@ -212,6 +212,13 @@ private struct AddToGroupSheet: View {
                 }
 
                 if showingCreateField {
+                    let isDuplicateInline = {
+                        let trimmed = newGroupName.trimmingCharacters(in: .whitespaces)
+                        guard !trimmed.isEmpty else { return false }
+                        return allGroups.contains {
+                            $0.name.caseInsensitiveCompare(trimmed) == .orderedSame
+                        }
+                    }()
                     VStack(alignment: .leading, spacing: 4) {
                         HStack {
                             TextField("Group name…", text: $newGroupName)
@@ -228,11 +235,20 @@ private struct AddToGroupSheet: View {
                                 newGroupName = ""
                                 showingCreateField = false
                             }
-                            .disabled(newGroupName.trimmingCharacters(in: .whitespaces).isEmpty)
+                            .disabled(newGroupName.trimmingCharacters(in: .whitespaces).isEmpty || isDuplicateInline)
                         }
-                        Text("\(newGroupName.count) / 30")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
+                        HStack {
+                            if isDuplicateInline {
+                                Text("Name already exists")
+                                    .font(.caption)
+                                    .foregroundStyle(.red)
+                            } else {
+                                Spacer()
+                            }
+                            Text("\(newGroupName.count) / 30")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
                     }
                 } else {
                     Button {

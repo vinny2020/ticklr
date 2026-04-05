@@ -79,6 +79,7 @@ struct GroupEditSheet: View {
     let group: ContactGroup?
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
+    @Query(sort: \ContactGroup.name) private var allGroups: [ContactGroup]
 
     @State private var name: String
     @State private var emoji: String
@@ -96,8 +97,18 @@ struct GroupEditSheet: View {
     }
 
     private var isEditing: Bool { group != nil }
+    private var isDuplicate: Bool {
+        let trimmed = name.trimmingCharacters(in: .whitespaces)
+        guard !trimmed.isEmpty else { return false }
+        return allGroups.contains {
+            $0.name.caseInsensitiveCompare(trimmed) == .orderedSame &&
+            $0.id != group?.id
+        }
+    }
     private var canSave: Bool {
-        !name.trimmingCharacters(in: .whitespaces).isEmpty && name.count <= 30
+        !name.trimmingCharacters(in: .whitespaces).isEmpty &&
+        name.count <= 30 &&
+        !isDuplicate
     }
 
     var body: some View {
@@ -137,7 +148,13 @@ struct GroupEditSheet: View {
                 Section("Name") {
                     TextField("Group name", text: $name)
                     HStack {
-                        Spacer()
+                        if isDuplicate {
+                            Text("A group with this name already exists")
+                                .font(.caption)
+                                .foregroundStyle(.red)
+                        } else {
+                            Spacer()
+                        }
                         Text("\(name.count) / 30")
                             .font(.caption)
                             .foregroundStyle(name.count > 30 ? .red : .secondary)

@@ -18,6 +18,7 @@ struct TickleEditView: View {
     @State private var startDate: Date
     @State private var note: String
     @State private var showingContactPicker = false
+    @State private var showingCreateGroupSheet = false
     @State private var showToast = false
     @State private var toastMessage = ""
 
@@ -79,6 +80,19 @@ struct TickleEditView: View {
                             }
                         }
                         .tint(.primary)
+                    } else if allGroups.isEmpty {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("No groups yet")
+                                .foregroundStyle(.secondary)
+                            Text("Groups let you tickle everyone on a team or in a circle at once.")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                            Button("Create a Group") {
+                                showingCreateGroupSheet = true
+                            }
+                            .foregroundStyle(Color(red: 0.145, green: 0.388, blue: 0.922))
+                        }
+                        .padding(.vertical, 4)
                     } else {
                         Picker("Group", selection: $selectedGroup) {
                             Text("Choose a group").tag(Optional<ContactGroup>.none)
@@ -124,6 +138,9 @@ struct TickleEditView: View {
             }
             .sheet(isPresented: $showingContactPicker) {
                 ContactPickerSheet(selected: $selectedContact)
+            }
+            .sheet(isPresented: $showingCreateGroupSheet) {
+                GroupEditSheet(group: nil)
             }
             .overlay(alignment: .bottom) {
                 if showToast {
