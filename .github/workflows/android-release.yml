@@ -70,7 +70,7 @@ jobs:
             -PplayTrack=${{ steps.version.outputs.track }} \
             -PversionName=${{ steps.version.outputs.version_name }} \
             -PversionCode=${{ steps.version.outputs.version_code }} \
-            -Pandroid.injected.signing.store.file=release.keystore \
+            -Pandroid.injected.signing.store.file=$(pwd)/app/release.keystore \
             -Pandroid.injected.signing.store.password=$KEYSTORE_PASSWORD \
             -Pandroid.injected.signing.key.alias=$KEY_ALIAS \
             -Pandroid.injected.signing.key.password=$KEY_PASSWORD
