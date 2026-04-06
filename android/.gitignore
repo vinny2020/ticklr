@@ -5,3 +5,8 @@ app/release/
 local.properties
 *.apk
 *.aab
+
+# Credentials (KEEP THESE SECRET)
+play-service-account.json
+*.keystore
+*.jks

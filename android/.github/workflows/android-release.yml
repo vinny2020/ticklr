@@ -1,0 +1,89 @@
+name: Android Release
+
+on:
+  push:
+    tags:
+      - 'v*'          # triggers on any tag like v1.2.0, v1.2.0-beta, etc.
+
+jobs:
+  build-and-publish:
+    name: Build & Publish to Play Store
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Parse version and track from tag
+        id: version
+        run: |
+          TAG="${GITHUB_REF#refs/tags/}"          # e.g. v1.2.0-beta
+          VERSION="${TAG#v}"                       # e.g. 1.2.0-beta
+
+          # Extract track from suffix (default: production)
+          if [[ "$VERSION" == *"-internal" ]]; then
+            TRACK="internal"
+            VERSION_NAME="${VERSION%-internal}"
+          elif [[ "$VERSION" == *"-alpha" ]]; then
+            TRACK="alpha"
+            VERSION_NAME="${VERSION%-alpha}"
+          elif [[ "$VERSION" == *"-beta" ]]; then
+            TRACK="beta"
+            VERSION_NAME="${VERSION%-beta}"
+          else
+            TRACK="production"
+            VERSION_NAME="$VERSION"
+          fi
+
+          echo "track=$TRACK"           >> $GITHUB_OUTPUT
+          echo "version_name=$VERSION_NAME" >> $GITHUB_OUTPUT
+          echo "version_code=$GITHUB_RUN_NUMBER" >> $GITHUB_OUTPUT
+          echo "▸ Version: $VERSION_NAME | Track: $TRACK | Build: $GITHUB_RUN_NUMBER"
+
+      - name: Decode keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > app/release.keystore
+
+      - name: Write Play Store service account
+        run: |
+          echo '${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}' > app/play-service-account.json
+
+      - name: Write Google Services JSON
+        run: |
+          echo '${{ secrets.GOOGLE_SERVICES_JSON }}' > app/google-services.json
+
+      - name: Build & publish AAB
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          ./gradlew publishReleaseBundle \
+            -PplayTrack=${{ steps.version.outputs.track }} \
+            -PversionName=${{ steps.version.outputs.version_name }} \
+            -PversionCode=${{ steps.version.outputs.version_code }} \
+            -Pandroid.injected.signing.store.file=release.keystore \
+            -Pandroid.injected.signing.store.password=$KEYSTORE_PASSWORD \
+            -Pandroid.injected.signing.key.alias=$KEY_ALIAS \
+            -Pandroid.injected.signing.key.password=$KEY_PASSWORD
+
+      - name: Clean up secrets
+        if: always()
+        run: |
+          rm -f app/release.keystore
+          rm -f app/play-service-account.json
+          rm -f app/google-services.json
+
+      - name: Summary
+        run: |
+          echo "### ✅ Android build shipped" >> $GITHUB_STEP_SUMMARY
+          echo "- **Version:** ${{ steps.version.outputs.version_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Build:** ${{ steps.version.outputs.version_code }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Track:** ${{ steps.version.outputs.track }}" >> $GITHUB_STEP_SUMMARY

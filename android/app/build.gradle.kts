@@ -15,6 +15,7 @@ plugins {
     id("com.google.gms.google-services")
     alias(libs.plugins.firebase.crashlytics.plugin)
     jacoco
+    alias(libs.plugins.play.publisher)
 }
 
 android {
@@ -25,16 +26,19 @@ android {
         applicationId = "com.xaymaca.sit"
         minSdk = 26
         targetSdk = 35
-        versionCode = 25
-        versionName = "1.4.10"
+        // Allow GitHub Actions to override version code and name from the tag/run number
+        versionCode = project.findProperty("versionCode")?.toString()?.toInt() ?: 26
+        versionName = project.findProperty("versionName")?.toString() ?: "1.4.11"
     }
 
     signingConfigs {
         create("release") {
-            storeFile = localProperties.getProperty("RELEASE_STORE_FILE")?.let { file(it) }
-            storePassword = localProperties.getProperty("RELEASE_STORE_PASSWORD")
-            keyAlias = localProperties.getProperty("RELEASE_KEY_ALIAS")
-            keyPassword = localProperties.getProperty("RELEASE_KEY_PASSWORD")
+            // Prioritize environment variables for GitHub Actions/CI
+            val keystoreFile = System.getenv("RELEASE_STORE_FILE") ?: localProperties.getProperty("RELEASE_STORE_FILE")
+            storeFile = keystoreFile?.let { file(it) }
+            storePassword = System.getenv("RELEASE_STORE_PASSWORD") ?: localProperties.getProperty("RELEASE_STORE_PASSWORD")
+            keyAlias = System.getenv("RELEASE_KEY_ALIAS") ?: localProperties.getProperty("RELEASE_KEY_ALIAS")
+            keyPassword = System.getenv("RELEASE_KEY_PASSWORD") ?: localProperties.getProperty("RELEASE_KEY_PASSWORD")
         }
     }
 
@@ -74,6 +78,27 @@ android {
             }
         }
     }
+}
+
+// Play Publisher configuration for Google Play Store deployment via GitHub Actions
+play {
+    // serviceAccountCredentials can be a file or a JSON string from environment variable
+    val serviceAccountFile = file("play-service-account.json")
+    if (serviceAccountFile.exists()) {
+        serviceAccountCredentials.set(serviceAccountFile)
+    } else {
+        // Fallback to environment variable if file is missing (e.g. on CI)
+        val jsonKey = System.getenv("PLAY_SERVICE_ACCOUNT_JSON")
+        if (!jsonKey.isNullOrEmpty()) {
+            serviceAccountCredentials.set(file("play-service-account-ci.json").apply {
+                writeText(jsonKey)
+            })
+        }
+    }
+    
+    // Support dynamic track selection via command line property -PplayTrack
+    track.set(project.findProperty("playTrack")?.toString() ?: "internal")
+    defaultToAppBundles.set(true)
 }
 
 // JaCoCo coverage report task
@@ -163,15 +188,6 @@ dependencies {
 // ---------------------------------------------------------------------------
 // Screenshot prep task — run before taking Play Store screenshots
 // Usage: ./gradlew screenshotPrep
-//
-// What it does:
-//   1. Sets the clock to 9:41 AM (standard store screenshot time)
-//   2. Sets battery to 100%, plugged-in appearance
-//   3. Enables Do Not Disturb (no notification icons)
-//   4. Hides the navigation bar demo mode
-//   5. Prints reminder to take screenshots, then tears down demo mode
-//
-// Requires a running emulator or connected device (adb must be on PATH).
 // ---------------------------------------------------------------------------
 tasks.register("screenshotPrep") {
     group = "screenshot"
@@ -209,7 +225,7 @@ tasks.register("screenshotPrep") {
             "-e", "command", "notifications",
             "-e", "visible", "false")
 
-        // Show full signal bars + wifi
+        // Show full signal bars + Wi-Fi
         adb("shell", "am", "broadcast", "-a", "com.android.systemui.demo",
             "-e", "command", "network",
             "-e", "mobile", "show",
@@ -242,14 +258,7 @@ tasks.register("screenshotTeardown") {
 
 // ---------------------------------------------------------------------------
 // Release tagging — auto-creates an annotated git tag after a signed release
-// build. The tag format is: android/v{versionName}-{versionCode}
-// e.g. android/v1.4.3-18
-//
-// Usage: ./gradlew assembleRelease tagRelease
-//    or: ./gradlew bundleRelease tagRelease
-//
-// The task checks that the working tree is clean before tagging and pushes
-// the tag to origin automatically.
+// build.
 // ---------------------------------------------------------------------------
 tasks.register("tagRelease") {
     group = "release"
@@ -273,7 +282,7 @@ tasks.register("tagRelease") {
             return output
         }
 
-        // Warn if working tree is dirty but don't block — release AAB is already signed
+        // Warn if working tree is dirty but don't block
         val status = git("status", "--porcelain")
         if (status.isNotEmpty()) {
             println("⚠️  Working tree has uncommitted changes — tagging anyway.")
