@@ -3,7 +3,7 @@ name: Android Release
 on:
   push:
     tags:
-      - 'v*'          # triggers on any tag like v1.2.0, v1.2.0-beta, etc.
+      - 'v*'
 
 jobs:
   build-and-publish:
@@ -24,13 +24,13 @@ jobs:
       - name: Parse version and track from tag
         id: version
         run: |
-          TAG="${GITHUB_REF#refs/tags/}"          # e.g. v1.2.0-beta
-          VERSION="${TAG#v}"                       # e.g. 1.2.0-beta
+          TAG="${GITHUB_REF#refs/tags/}"
+          VERSION="${TAG#v}"
 
-          # Extract track from suffix (default: production)
-          if [[ "$VERSION" == *"-internal" ]]; then
-            TRACK="internal"
-            VERSION_NAME="${VERSION%-internal}"
+          # Default to 'internal' track
+          if [[ "$VERSION" == *"-production" ]]; then
+            TRACK="production"
+            VERSION_NAME="${VERSION%-production}"
           elif [[ "$VERSION" == *"-alpha" ]]; then
             TRACK="alpha"
             VERSION_NAME="${VERSION%-alpha}"
@@ -38,14 +38,20 @@ jobs:
             TRACK="beta"
             VERSION_NAME="${VERSION%-beta}"
           else
-            TRACK="production"
+            TRACK="internal"
             VERSION_NAME="$VERSION"
           fi
 
+          # SAFE INTEGER VERSION CODE
+          # Current highest in Play Store is 25. 
+          # 100 + GITHUB_RUN_NUMBER will start at 101, 102...
+          # This is a safe 32-bit integer.
+          VCODE=$((100 + GITHUB_RUN_NUMBER))
+
           echo "track=$TRACK"           >> $GITHUB_OUTPUT
           echo "version_name=$VERSION_NAME" >> $GITHUB_OUTPUT
-          echo "version_code=$GITHUB_RUN_NUMBER" >> $GITHUB_OUTPUT
-          echo "▸ Version: $VERSION_NAME | Track: $TRACK | Build: $GITHUB_RUN_NUMBER"
+          echo "version_code=$VCODE" >> $GITHUB_OUTPUT
+          echo "▸ Version: $VERSION_NAME | Track: $TRACK | Code: $VCODE"
 
       - name: Decode keystore
         run: |
@@ -86,5 +92,5 @@ jobs:
         run: |
           echo "### ✅ Android build shipped" >> $GITHUB_STEP_SUMMARY
           echo "- **Version:** ${{ steps.version.outputs.version_name }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Build:** ${{ steps.version.outputs.version_code }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Build (versionCode):** ${{ steps.version.outputs.version_code }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Track:** ${{ steps.version.outputs.track }}" >> $GITHUB_STEP_SUMMARY
