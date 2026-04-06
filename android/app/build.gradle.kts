@@ -27,8 +27,8 @@ android {
         minSdk = 26
         targetSdk = 35
         // Allow GitHub Actions to override version code and name from the tag/run number
-        versionCode = project.findProperty("versionCode")?.toString()?.toInt() ?: 26
-        versionName = project.findProperty("versionName")?.toString() ?: "1.4.11"
+        versionCode = project.findProperty("versionCode")?.toString()?.toInt() ?: 27
+        versionName = project.findProperty("versionName")?.toString() ?: "1.4.12"
     }
 
     signingConfigs {
