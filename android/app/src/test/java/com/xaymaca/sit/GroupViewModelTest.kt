@@ -34,6 +34,7 @@ class GroupViewModelTest {
         override suspend fun getById(id: Long): Contact? = null
         override suspend fun getContactWithGroups(id: Long): ContactWithGroups? = null
         override suspend fun insert(contact: Contact): Long = 0L
+        override suspend fun countByFingerprint(fingerprint: String): Int = 0
         override suspend fun update(contact: Contact) {}
         override suspend fun delete(contact: Contact) {}
         override suspend fun deleteAll() {}
@@ -49,6 +50,8 @@ class GroupViewModelTest {
         override suspend fun insert(group: ContactGroup): Long = 0L
         override suspend fun update(group: ContactGroup) {}
         override suspend fun delete(group: ContactGroup) {}
+        override suspend fun deleteAll() {}
+        override suspend fun deleteAllCrossRefs() {}
         override suspend fun insertCrossRef(crossRef: ContactGroupCrossRef) {}
         override suspend fun deleteCrossRef(crossRef: ContactGroupCrossRef) {}
         override fun getGroupsForContact(contactId: Long): Flow<List<ContactGroup>> = flowOf(emptyList())

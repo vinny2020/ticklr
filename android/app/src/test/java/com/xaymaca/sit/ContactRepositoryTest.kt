@@ -30,6 +30,7 @@ class ContactRepositoryTest {
             contacts.add(contact)
             return contact.id
         }
+        override suspend fun countByFingerprint(fingerprint: String): Int = contacts.count { it.fingerprint == fingerprint }
         override suspend fun update(contact: Contact) {
             val idx = contacts.indexOfFirst { it.id == contact.id }
             if (idx >= 0) contacts[idx] = contact
@@ -53,6 +54,8 @@ class ContactRepositoryTest {
         override suspend fun insert(group: ContactGroup): Long = 0L
         override suspend fun update(group: ContactGroup) {}
         override suspend fun delete(group: ContactGroup) {}
+        override suspend fun deleteAll() {}
+        override suspend fun deleteAllCrossRefs() {}
         override suspend fun insertCrossRef(crossRef: ContactGroupCrossRef) {}
         override suspend fun deleteCrossRef(crossRef: ContactGroupCrossRef) {}
         override fun getGroupsForContact(contactId: Long): Flow<List<ContactGroup>> = flowOf(emptyList())
