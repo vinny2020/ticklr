@@ -3,7 +3,7 @@ name: Android Release
 on:
   push:
     tags:
-      - 'v*'          # triggers on any tag like v1.2.0, v1.2.0-beta, etc.
+      - 'android/v*'          # triggers on any tag like v1.2.0, v1.2.0-beta, etc.
 
 jobs:
   build-and-publish:
