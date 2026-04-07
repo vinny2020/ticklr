@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -51,6 +52,27 @@ class TickleViewModel @Inject constructor(
     val snoozedReminders: StateFlow<List<TickleReminder>> = allReminders
         .map { list -> list.filter { it.status == TickleStatus.SNOOZED.name } }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    /** Maps reminder.id → display initial derived from its linked contact or group name. */
+    val reminderInitials: StateFlow<Map<Long, String>> = combine(
+        allReminders,
+        contactRepository.getAllContacts(),
+        contactRepository.getAllGroups()
+    ) { reminders, contacts, groups ->
+        val contactMap = contacts.associateBy { it.id }
+        val groupMap = groups.associateBy { it.id }
+        reminders.associate { reminder ->
+            val initial = when {
+                reminder.groupId != null ->
+                    groupMap[reminder.groupId]?.name?.firstOrNull()?.uppercaseChar()?.toString() ?: "G"
+                reminder.contactId != null -> {
+                    contactMap[reminder.contactId]?.initials?.firstOrNull()?.toString() ?: "?"
+                }
+                else -> "T"
+            }
+            reminder.id to initial
+        }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
 
     fun markComplete(reminder: TickleReminder) {
         viewModelScope.launch {
