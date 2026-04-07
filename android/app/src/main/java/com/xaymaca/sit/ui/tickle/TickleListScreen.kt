@@ -41,6 +41,7 @@ fun TickleListScreen(
     val dueReminders by viewModel.dueReminders.collectAsState()
     val upcomingReminders by viewModel.upcomingReminders.collectAsState()
     val snoozedReminders by viewModel.snoozedReminders.collectAsState()
+    val reminderInitials by viewModel.reminderInitials.collectAsState()
 
     Scaffold(
         topBar = {
@@ -99,6 +100,7 @@ fun TickleListScreen(
                     items(dueReminders, key = { it.id }) { reminder ->
                         TickleReminderRow(
                             reminder = reminder,
+                            initial = reminderInitials[reminder.id] ?: "T",
                             isDue = true,
                             onClick = { onEditTickle(reminder.id) },
                             onComplete = { viewModel.markComplete(reminder) },
@@ -116,6 +118,7 @@ fun TickleListScreen(
                     items(upcomingReminders, key = { it.id }) { reminder ->
                         TickleReminderRow(
                             reminder = reminder,
+                            initial = reminderInitials[reminder.id] ?: "T",
                             isDue = false,
                             onClick = { onEditTickle(reminder.id) },
                             onComplete = { viewModel.markComplete(reminder) },
@@ -133,6 +136,7 @@ fun TickleListScreen(
                     items(snoozedReminders, key = { it.id }) { reminder ->
                         TickleReminderRow(
                             reminder = reminder,
+                            initial = reminderInitials[reminder.id] ?: "T",
                             isDue = false,
                             onClick = { onEditTickle(reminder.id) },
                             onComplete = { viewModel.markComplete(reminder) },
@@ -165,6 +169,7 @@ private fun TickleSectionHeader(title: String, color: Color = MaterialTheme.colo
 @Composable
 private fun TickleReminderRow(
     reminder: TickleReminder,
+    initial: String,
     isDue: Boolean,
     onClick: () -> Unit,
     onComplete: () -> Unit,
@@ -249,7 +254,6 @@ private fun TickleReminderRow(
                 .padding(horizontal = 16.dp, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Initials avatar placeholder (contact name resolved at ViewModel level in production)
             Box(
                 modifier = Modifier
                     .size(44.dp)
@@ -258,7 +262,7 @@ private fun TickleReminderRow(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "T",
+                    text = initial,
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.Bold,
                     color = if (isDue) MaterialTheme.colorScheme.background
