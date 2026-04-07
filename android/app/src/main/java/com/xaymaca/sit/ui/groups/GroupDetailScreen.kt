@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -255,6 +256,11 @@ private fun AddMembersBottomSheet(
     onDismiss: () -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    var searchQuery by remember { mutableStateOf("") }
+    val filteredContacts = remember(candidates, searchQuery) {
+        if (searchQuery.isBlank()) candidates
+        else candidates.filter { it.fullName.contains(searchQuery, ignoreCase = true) }
+    }
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -269,6 +275,19 @@ private fun AddMembersBottomSheet(
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
                 )
+                if (candidates.isNotEmpty()) {
+                    OutlinedTextField(
+                        value = searchQuery,
+                        onValueChange = { searchQuery = it },
+                        placeholder = { Text("Filter contacts…") },
+                        leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
+                        singleLine = true,
+                        shape = RoundedCornerShape(24.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                    )
+                }
                 if (candidates.isEmpty()) {
                     Box(
                         modifier = Modifier
@@ -282,11 +301,24 @@ private fun AddMembersBottomSheet(
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
+                } else if (filteredContacts.isEmpty()) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(120.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            "No contacts match",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
                 } else {
                     LazyColumn(
                         contentPadding = PaddingValues(bottom = 48.dp)
                     ) {
-                        items(candidates, key = { it.id }) { contact ->
+                        items(filteredContacts, key = { it.id }) { contact ->
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()

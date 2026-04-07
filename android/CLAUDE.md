@@ -354,6 +354,30 @@ app/src/main/java/com/xaymaca/sit/
 ### Android — Nice to Have
 - **SmsManager direct send UX** — surface the "send directly vs open Messages" preference in Settings
 
+- **Contact filter in `AddMemberSheet`** — The bottom sheet that opens when adding members to a group (`GroupDetailScreen.kt`, composable `AddMemberSheet` ~line 249) has no search/filter field. Users with large contact lists have to scroll to find someone. iOS already has this via `.searchable()` on its `NavigationStack`. Add a filter text field to Android to match.
+
+  **Implementation — all changes are inside `AddMemberSheet`:**
+  1. Add state: `var searchQuery by remember { mutableStateOf("") }`
+  2. Derive filtered list: `val filteredContacts = contacts.filter { it.displayName.contains(searchQuery, ignoreCase = true) }`
+  3. Insert an `OutlinedTextField` between the "Add Member" title `Text` and the `LazyColumn`:
+     ```kotlin
+     OutlinedTextField(
+         value = searchQuery,
+         onValueChange = { searchQuery = it },
+         placeholder = { Text("Filter contacts…") },
+         leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
+         singleLine = true,
+         shape = RoundedCornerShape(24.dp),
+         modifier = Modifier
+             .fillMaxWidth()
+             .padding(horizontal = 16.dp, vertical = 8.dp)
+     )
+     ```
+  4. Pass `filteredContacts` instead of `contacts` to the `LazyColumn`'s `items()` call.
+  5. `searchQuery` resets naturally when the sheet is dismissed (scoped to composable lifetime) — verify this is true in practice and add an explicit `LaunchedEffect` reset if needed.
+
+  **iOS reference:** `ios/Sources/SIT/Views/Network/GroupDetailView.swift` — `AddMemberSheet` uses `@State private var searchText` filtered against `displayName`, applied via `.searchable()` on the `NavigationStack`. Case-insensitive match on `displayName`.
+
 ---
 
 ## Key Notes
