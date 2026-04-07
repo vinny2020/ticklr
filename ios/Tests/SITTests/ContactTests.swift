@@ -2,7 +2,7 @@ import XCTest
 @testable import Ticklr
 
 final class ContactTests: XCTestCase {
-    // Commit test 2
+    // Commit test 3
 
     // MARK: - fullName
 
