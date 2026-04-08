@@ -171,10 +171,9 @@ dependencies {
     // Gson (JSON serialization for Room list fields)
     implementation(libs.gson)
 
-    // Firebase (crash reporting — release builds only)
+    // Firebase (crash reporting only — Analytics intentionally excluded)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.crashlytics)
-    implementation(libs.firebase.analytics)
 
     debugImplementation(libs.compose.ui.tooling)
 
