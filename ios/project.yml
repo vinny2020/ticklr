@@ -43,6 +43,7 @@ targets:
           - pt
           - sv
           - cs
+        ITSAppUsesNonExemptEncryption: false
         NSContactsUsageDescription: "Ticklr needs access to your contacts to help you build your personal network."
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
