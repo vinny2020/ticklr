@@ -8,7 +8,7 @@ final class LinkedInCSVParserTests: XCTestCase {
     var container: ModelContainer!
     var context: ModelContext!
 
-    override func setUpWithError() throws {
+    override func setUp() async throws {
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
         container = try ModelContainer(
             for: Contact.self, ContactGroup.self, TickleReminder.self,
@@ -17,7 +17,7 @@ final class LinkedInCSVParserTests: XCTestCase {
         context = ModelContext(container)
     }
 
-    override func tearDown() {
+    override func tearDown() async throws {
         container = nil
         context = nil
     }
