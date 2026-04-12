@@ -31,12 +31,12 @@ struct SettingsView: View {
         NavigationStack {
             List {
                 // MARK: — Data
-                Section("Data") {
-                    LabeledContent("Contacts", value: contacts.count.formatted())
-                    NavigationLink("Start Your Network") {
+                Section(String(localized: "settings.section.data")) {
+                    LabeledContent(String(localized: "settings.row.contacts"), value: contacts.count.formatted())
+                    NavigationLink(String(localized: "settings.row.importContacts")) {
                         ImportView()
                     }
-                    NavigationLink("Message Templates") {
+                    NavigationLink(String(localized: "settings.row.messageTemplates")) {
                         TemplateListView()
                     }
                 }
@@ -44,8 +44,8 @@ struct SettingsView: View {
                 // MARK: — Notifications
                 Section {
                     if systemAuthStatus == .denied {
-                        LabeledContent("Tickle Reminders") {
-                            Button("Enable in Settings") {
+                        LabeledContent(String(localized: "settings.row.tickleReminders")) {
+                            Button(String(localized: "settings.button.enableInSettings")) {
                                 if let url = URL(string: UIApplication.openSettingsURLString) {
                                     UIApplication.shared.open(url)
                                 }
@@ -53,40 +53,40 @@ struct SettingsView: View {
                             .font(.subheadline)
                         }
                     } else {
-                        Toggle("Tickle Reminders", isOn: $notificationsEnabled)
+                        Toggle(String(localized: "settings.row.tickleReminders"), isOn: $notificationsEnabled)
                             .onChange(of: notificationsEnabled) { _, enabled in
                                 handleNotificationToggle(enabled: enabled)
                             }
                     }
                 } header: {
-                    Text("Notifications")
+                    Text(String(localized: "settings.section.notifications"))
                 } footer: {
                     if systemAuthStatus == .denied {
-                        Text("Notification access was denied. Enable it in iOS Settings to receive tickle reminders.")
+                        Text(String(localized: "settings.footer.notificationsDenied"))
                     } else if !notificationsEnabled {
-                        Text("Tickle notifications are off. You can still view due reminders in the app.")
+                        Text(String(localized: "settings.footer.notificationsOff"))
                     }
                 }
 
                 // MARK: — Tickle Defaults
-                Section("Tickle Defaults") {
-                    Picker("Default Frequency", selection: defaultFrequency) {
+                Section(String(localized: "settings.section.tickleDefaults")) {
+                    Picker(String(localized: "settings.row.defaultFrequency"), selection: defaultFrequency) {
                         ForEach(TickleFrequency.allCases.filter { $0 != .custom }, id: \.self) { freq in
-                            Text(freq.rawValue).tag(freq)
+                            Text(freq.localizedName).tag(freq)
                         }
                     }
                 }
 
                 // MARK: — About
-                Section("About") {
-                    LabeledContent("App", value: "Ticklr")
-                    LabeledContent("Version", value: appVersion)
-                    LabeledContent("Built by", value: "Xaymaca")
+                Section(String(localized: "settings.section.about")) {
+                    LabeledContent(String(localized: "settings.row.app"), value: "Ticklr")
+                    LabeledContent(String(localized: "settings.row.version"), value: appVersion)
+                    LabeledContent(String(localized: "settings.row.builtBy"), value: "Xaymaca")
                 }
 
                 // MARK: — Reset
                 Section {
-                    Button("Reset Onboarding", role: .destructive) {
+                    Button(String(localized: "settings.button.resetOnboarding"), role: .destructive) {
                         hasCompletedOnboarding = false
                     }
                 }
@@ -151,7 +151,7 @@ struct SettingsView: View {
                 }
                 #endif
             }
-            .navigationTitle("Settings")
+            .navigationTitle(String(localized: "settings.navTitle"))
             .task { await fetchNotificationStatus() }
         }
     }

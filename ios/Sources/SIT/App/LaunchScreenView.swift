@@ -25,7 +25,7 @@ struct LaunchScreenView: View {
                         .tracking(4)
                 }
 
-                Text("Your network. Your rules.")
+                Text(String(localized: "launch.tagline"))
                     .font(.system(size: 13, weight: .regular))
                     .foregroundStyle(.white.opacity(0.3))
                     .padding(.top, 4)

@@ -20,8 +20,7 @@ struct ImportView: View {
                         Task { await importFromiOS() }
                     } label: {
                         HStack {
-                            // Changed to "Select" and used the 'person.badge.plus' icon
-                            Label("Select iPhone Contacts", systemImage: "person.badge.plus")
+                            Label(String(localized: "import.button.iphoneContacts"), systemImage: "person.badge.plus")
                             Spacer()
                             if isImporting {
                                 ProgressView()
@@ -33,33 +32,31 @@ struct ImportView: View {
                     Button {
                         showingDocumentPicker = true
                     } label: {
-                        // Changed to "Add" and used 'doc.badge.plus' icon
-                        Label("Add LinkedIn Connections", systemImage: "doc.badge.plus")
+                        Label(String(localized: "import.button.linkedinConnections"), systemImage: "doc.badge.plus")
                     }
                     .disabled(isImporting)
                 } footer: {
-                    Text("Your connections are processed locally on your device. LinkedIn usually emails your download link within 10–30 minutes.\n\nLinkedIn data gives you the who — names and companies. You'll add phone numbers manually after importing.")
+                    Text(String(localized: "import.footer.description"))
                 }
 
-                Section("How to get your LinkedIn CSV") {
+                Section(String(localized: "import.section.linkedinGuide")) {
                     VStack(alignment: .leading, spacing: 10) {
-                        LinkedInStep(number: "1", text: "Open linkedin.com in Safari (works on iPhone)")
-                        LinkedInStep(number: "2", text: "Tap your photo → Settings & Privacy")
-                        LinkedInStep(number: "3", text: "Data Privacy → Get a copy of your data")
-                        LinkedInStep(number: "4", text: "Select Connections only → Request archive")
-                        LinkedInStep(number: "5", text: "Wait for LinkedIn's email (10–30 min)")
-                        LinkedInStep(number: "6", text: "Download the zip → open in Files app → tap to unzip")
-                        // Updated Step 7 to match the new button label
-                        LinkedInStep(number: "7", text: "Come back here and tap Add LinkedIn Connections")
+                        LinkedInStep(number: "1", text: String(localized: "import.step.1"))
+                        LinkedInStep(number: "2", text: String(localized: "import.step.2"))
+                        LinkedInStep(number: "3", text: String(localized: "import.step.3"))
+                        LinkedInStep(number: "4", text: String(localized: "import.step.4"))
+                        LinkedInStep(number: "5", text: String(localized: "import.step.5"))
+                        LinkedInStep(number: "6", text: String(localized: "import.step.6"))
+                        LinkedInStep(number: "7", text: String(localized: "import.step.7"))
                     }
                     .padding(.vertical, 4)
                 }
             }
-            .navigationTitle("Build Your Local Network")
+            .navigationTitle(String(localized: "import.navTitle"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Done") { dismiss() }
+                    Button(String(localized: "common.done")) { dismiss() }
                 }
             }
             .fileImporter(
@@ -76,10 +73,10 @@ struct ImportView: View {
                     showingError = true
                 }
             }
-            .alert("Import Error", isPresented: $showingError) {
-                Button("OK", role: .cancel) {}
+            .alert(String(localized: "import.alert.error.title"), isPresented: $showingError) {
+                Button(String(localized: "common.ok"), role: .cancel) {}
             } message: {
-                Text(importError ?? "Unknown error")
+                Text(verbatim: importError ?? "")
             }
         }
     }
@@ -126,7 +123,7 @@ private struct LinkedInStep: View {
                 .frame(width: 20, height: 20)
                 .background(Color.indigo)
                 .clipShape(Circle())
-            Text(text)
+            Text(verbatim: text)
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)

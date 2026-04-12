@@ -55,10 +55,10 @@ struct TickleEditView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Who") {
+                Section(String(localized: "tickleEdit.section.who")) {
                     Picker("", selection: $targetType) {
-                        Text("Contact").tag(TargetType.contact)
-                        Text("Group").tag(TargetType.group)
+                        Text(String(localized: "tickleEdit.target.contact")).tag(TargetType.contact)
+                        Text(String(localized: "tickleEdit.target.group")).tag(TargetType.group)
                     }
                     .pickerStyle(.segmented)
                     .listRowBackground(Color.clear)
@@ -72,7 +72,7 @@ struct TickleEditView: View {
                                 if let c = selectedContact {
                                     Text(c.fullName).foregroundStyle(.primary)
                                 } else {
-                                    Text("Choose a contact").foregroundStyle(.secondary)
+                                    Text(String(localized: "tickleEdit.placeholder.contact")).foregroundStyle(.secondary)
                                 }
                                 Spacer()
                                 Image(systemName: "chevron.right")
@@ -82,20 +82,20 @@ struct TickleEditView: View {
                         .tint(.primary)
                     } else if allGroups.isEmpty {
                         VStack(alignment: .leading, spacing: 8) {
-                            Text("No groups yet")
+                            Text(String(localized: "tickleEdit.noGroups.title"))
                                 .foregroundStyle(.secondary)
-                            Text("Groups let you tickle everyone on a team or in a circle at once.")
+                            Text(String(localized: "tickleEdit.noGroups.description"))
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
-                            Button("Create a Group") {
+                            Button(String(localized: "tickleEdit.button.createGroup")) {
                                 showingCreateGroupSheet = true
                             }
                             .foregroundStyle(Color(red: 0.145, green: 0.388, blue: 0.922))
                         }
                         .padding(.vertical, 4)
                     } else {
-                        Picker("Group", selection: $selectedGroup) {
-                            Text("Choose a group").tag(Optional<ContactGroup>.none)
+                        Picker(String(localized: "tickleEdit.target.group"), selection: $selectedGroup) {
+                            Text(String(localized: "tickleEdit.placeholder.group")).tag(Optional<ContactGroup>.none)
                             ForEach(allGroups) { group in
                                 HStack {
                                     Text(group.emoji)
@@ -107,31 +107,31 @@ struct TickleEditView: View {
                     }
                 }
 
-                Section("Schedule") {
-                    Picker("Frequency", selection: $frequency) {
+                Section(String(localized: "tickleEdit.section.schedule")) {
+                    Picker(String(localized: "tickleEdit.row.frequency"), selection: $frequency) {
                         ForEach(TickleFrequency.allCases, id: \.self) { f in
-                            Text(f.rawValue).tag(f)
+                            Text(f.localizedName).tag(f)
                         }
                     }
                     if frequency == .custom {
-                        Stepper("Every \(customIntervalDays) day\(customIntervalDays == 1 ? "" : "s")",
+                        Stepper(String(localized: "tickleEdit.stepper.customInterval \(customIntervalDays)"),
                                 value: $customIntervalDays, in: 1...365)
                     }
-                    DatePicker("Starting", selection: $startDate, displayedComponents: .date)
+                    DatePicker(String(localized: "tickleEdit.row.starting"), selection: $startDate, displayedComponents: .date)
                 }
 
-                Section("Note") {
-                    TextField("e.g. Ask about the new role", text: $note)
+                Section(String(localized: "tickleEdit.section.note")) {
+                    TextField(String(localized: "tickleEdit.placeholder.note"), text: $note)
                 }
             }
-            .navigationTitle(isEditing ? "Edit Tickle" : "New Tickle")
+            .navigationTitle(isEditing ? String(localized: "tickleEdit.navTitle.edit") : String(localized: "tickleEdit.navTitle.new"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("Cancel") { dismiss() }
+                    Button(String(localized: "common.cancel")) { dismiss() }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Save") { save() }
+                    Button(String(localized: "common.save")) { save() }
                         .disabled(!canSave)
                         .fontWeight(.semibold)
                 }
@@ -144,7 +144,7 @@ struct TickleEditView: View {
             }
             .overlay(alignment: .bottom) {
                 if showToast {
-                    Text(toastMessage)
+                    Text(verbatim: toastMessage)
                         .font(.subheadline)
                         .padding(.horizontal, 16)
                         .padding(.vertical, 10)
@@ -188,7 +188,9 @@ struct TickleEditView: View {
             TickleScheduler.scheduleNotification(for: reminder)
         }
         try? modelContext.save()
-        toastMessage = isEditing ? "Tickle updated" : "Tickle saved"
+        toastMessage = isEditing
+            ? String(localized: "tickleEdit.toast.updated")
+            : String(localized: "tickleEdit.toast.saved")
         showToast = true
         Task {
             try? await Task.sleep(for: .seconds(2))
@@ -230,20 +232,20 @@ private struct ContactPickerSheet: View {
                 }
                 .tint(.primary)
             }
-            .searchable(text: $searchText, prompt: "Search contacts")
-            .navigationTitle("Choose Contact")
+            .searchable(text: $searchText, prompt: String(localized: "contactPicker.search"))
+            .navigationTitle(String(localized: "contactPicker.navTitle"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Cancel") { dismiss() }
+                    Button(String(localized: "common.cancel")) { dismiss() }
                 }
             }
             .overlay {
                 if contacts.isEmpty {
                     ContentUnavailableView(
-                        "No contacts",
+                        String(localized: "contactPicker.empty.title"),
                         systemImage: "person.slash",
-                        description: Text("Add contacts first from the Network tab")
+                        description: Text(String(localized: "contactPicker.empty.description"))
                     )
                 } else if !searchText.isEmpty && filtered.isEmpty {
                     ContentUnavailableView.search

@@ -28,25 +28,25 @@ struct AddContactView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Name") {
-                    TextField("First name", text: $firstName)
-                    TextField("Last name", text: $lastName)
+                Section(String(localized: "contact.section.name")) {
+                    TextField(String(localized: "contact.placeholder.firstName"), text: $firstName)
+                    TextField(String(localized: "contact.placeholder.lastName"), text: $lastName)
                 }
 
-                Section("Work") {
-                    TextField("Company", text: $company)
-                    TextField("Job title", text: $jobTitle)
+                Section(String(localized: "contact.section.work")) {
+                    TextField(String(localized: "contact.placeholder.company"), text: $company)
+                    TextField(String(localized: "contact.placeholder.jobTitle"), text: $jobTitle)
                 }
 
-                Section("Phone") {
+                Section(String(localized: "contact.section.phone")) {
                     ForEach(phoneNumbers.indices, id: \.self) { i in
-                        TextField("Phone number", text: $phoneNumbers[i])
+                        TextField(String(localized: "contact.placeholder.phoneNumber"), text: $phoneNumbers[i])
                             .keyboardType(.phonePad)
                     }
                     .onDelete { phoneNumbers.remove(atOffsets: $0) }
                     HStack {
-                        TextField("Add phone", text: $newPhone).keyboardType(.phonePad)
-                        Button("Add") {
+                        TextField(String(localized: "contact.placeholder.addPhone"), text: $newPhone).keyboardType(.phonePad)
+                        Button(String(localized: "common.add")) {
                             let v = newPhone.trimmingCharacters(in: .whitespaces)
                             guard !v.isEmpty else { return }
                             phoneNumbers.append(v)
@@ -56,18 +56,18 @@ struct AddContactView: View {
                     }
                 }
 
-                Section("Email") {
+                Section(String(localized: "contact.section.email")) {
                     ForEach(emails.indices, id: \.self) { i in
-                        TextField("Email address", text: $emails[i])
+                        TextField(String(localized: "contact.placeholder.emailAddress"), text: $emails[i])
                             .keyboardType(.emailAddress)
                             .textInputAutocapitalization(.never)
                     }
                     .onDelete { emails.remove(atOffsets: $0) }
                     HStack {
-                        TextField("Add email", text: $newEmail)
+                        TextField(String(localized: "contact.placeholder.addEmail"), text: $newEmail)
                             .keyboardType(.emailAddress)
                             .textInputAutocapitalization(.never)
-                        Button("Add") {
+                        Button(String(localized: "common.add")) {
                             let v = newEmail.trimmingCharacters(in: .whitespaces)
                             guard !v.isEmpty else { return }
                             emails.append(v)
@@ -77,17 +77,17 @@ struct AddContactView: View {
                     }
                 }
 
-                Section("Notes") {
+                Section(String(localized: "contact.section.notes")) {
                     TextEditor(text: $notes)
                         .frame(minHeight: 80)
                 }
 
-                Section("Tags") {
+                Section(String(localized: "contact.section.tags")) {
                     ForEach(tags, id: \.self) { tag in Text(tag) }
                         .onDelete { tags.remove(atOffsets: $0) }
                     HStack {
-                        TextField("Add tag", text: $newTag)
-                        Button("Add") {
+                        TextField(String(localized: "contact.placeholder.addTag"), text: $newTag)
+                        Button(String(localized: "common.add")) {
                             let v = newTag.trimmingCharacters(in: .whitespaces)
                             guard !v.isEmpty else { return }
                             tags.append(v)
@@ -98,7 +98,7 @@ struct AddContactView: View {
                 }
 
                 if !groups.isEmpty {
-                    Section("Groups") {
+                    Section(String(localized: "contact.section.groups")) {
                         ForEach(groups) { group in
                             Button {
                                 if selectedGroupIDs.contains(group.id) {
@@ -121,14 +121,14 @@ struct AddContactView: View {
                     }
                 }
             }
-            .navigationTitle("New Contact")
+            .navigationTitle(String(localized: "addContact.navTitle"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("Cancel") { dismiss() }
+                    Button(String(localized: "common.cancel")) { dismiss() }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Save") { save() }
+                    Button(String(localized: "common.save")) { save() }
                         .disabled(!canSave)
                         .fontWeight(.semibold)
                 }

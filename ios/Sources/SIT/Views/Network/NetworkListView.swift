@@ -25,20 +25,20 @@ struct NetworkListView: View {
                 }
             }
             .listStyle(.plain)
-            .searchable(text: $searchText, prompt: "Search your network")
-            .navigationTitle("Network")
+            .searchable(text: $searchText, prompt: String(localized: "networkList.search"))
+            .navigationTitle(String(localized: "networkList.navTitle"))
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Menu {
                         Button {
                             showingAddContact = true
                         } label: {
-                            Label("New Contact", systemImage: "person.badge.plus")
+                            Label(String(localized: "networkList.menu.newContact"), systemImage: "person.badge.plus")
                         }
                         Button {
                             showingImport = true
                         } label: {
-                            Label("Get Started", systemImage: "square.and.arrow.down")
+                            Label(String(localized: "networkList.menu.getStarted"), systemImage: "square.and.arrow.down")
                         }
                     } label: {
                         Image(systemName: "plus")
@@ -48,9 +48,9 @@ struct NetworkListView: View {
             .overlay {
                 if contacts.isEmpty {
                     ContentUnavailableView(
-                        "No contacts yet",
+                        String(localized: "networkList.empty.title"),
                         systemImage: "person.2.slash",
-                        description: Text("Tap + to add from your iPhone or LinkedIn")
+                        description: Text(String(localized: "networkList.empty.description"))
                     )
                 } else if !searchText.isEmpty && filtered.isEmpty {
                     ContentUnavailableView.search

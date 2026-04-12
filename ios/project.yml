@@ -28,6 +28,21 @@ targets:
     info:
       path: Sources/SIT/Resources/Info.plist
       properties:
+        CFBundleDevelopmentRegion: en
+        CFBundleLocalizations:
+          - en
+          - es
+          - fr
+          - de
+          - it
+          - nl
+          - el
+          - pl
+          - ro
+          - hu
+          - pt
+          - sv
+          - cs
         NSContactsUsageDescription: "Ticklr needs access to your contacts to help you build your personal network."
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait

@@ -4,6 +4,547 @@
 
 ## 🛠️ Pending Tasks — Start Here
 
+### Task 0 ✅ COMPLETE — Phase 1 Internationalization: Extract all hardcoded strings to String Catalog
+
+**Goal:** Every user-visible string in the iOS app must come from a localized source so that
+adding a new language later is a translation-only task — no code changes required.
+
+**Approach — Use Xcode String Catalogs (`.xcstrings`)**
+
+iOS 17+ supports String Catalogs natively. Since our min target is iOS 17.0, use this approach
+instead of legacy `Localizable.strings` files. String Catalogs give us compiler-checked keys,
+pluralization support, and Xcode's built-in translation editor for free.
+
+**Step-by-step:**
+
+1. **Create the String Catalog file**
+   - Add `Sources/SIT/Resources/Localizable.xcstrings` (Xcode type: "String Catalog")
+   - Add the file to `project.yml` under the Ticklr target sources if needed — XcodeGen should
+     pick it up automatically from the `Sources/SIT` source path, but verify after generation.
+   - Set development language to English (`en`).
+
+2. **Extract strings from every SwiftUI view file**
+
+   Replace every hardcoded `"string"` in SwiftUI `Text()`, `Label()`, `Button()`,
+   `.navigationTitle()`, `Section()`, `.confirmationDialog()`, `ContentUnavailableView()`,
+   `Toggle()`, `Picker()`, and `LabeledContent()` calls with `String(localized:)` keys.
+
+   **Naming convention for keys:** Use dot-separated, lowercase, descriptive keys that include
+   the screen context. Examples:
+   ```
+   "settings.section.data"              → "Data"
+   "settings.row.importContacts"        → "Start Your Network"
+   "settings.row.messageTemplates"      → "Message Templates"
+   "settings.about.appName"             → "Ticklr"
+   "settings.about.builtBy"             → "Built by Xaymaca"
+   "tickleList.section.due"             → "Due"
+   "tickleList.section.upcoming"        → "Upcoming"
+   "tickleList.section.snoozed"         → "Snoozed"
+   "tickleList.empty.title"             → "No tickles yet"
+   "tickleList.empty.description"       → "Add one from a contact's detail page, or tap +"
+   "common.save"                        → "Save"
+   "common.cancel"                      → "Cancel"
+   "common.delete"                      → "Delete"
+   "common.done"                        → "Done"
+   "common.edit"                        → "Edit"
+   "common.ok"                          → "OK"
+   ```
+
+   **Pattern — before:**
+   ```swift
+   Text("No tickles yet")
+   ```
+
+   **Pattern — after:**
+   ```swift
+   Text(String(localized: "tickleList.empty.title"))
+   ```
+
+   For strings with interpolation, use `String(localized:)` with a default value:
+   ```swift
+   // Before:
+   Text("Loaded \(result.imported) test contacts ✓")
+   // After:
+   Text(String(localized: "debug.seedResult.loaded \(result.imported)",
+               defaultValue: "Loaded \(result.imported) test contacts ✓"))
+   ```
+
+   **Files to modify (all in `Sources/SIT/Views/`):**
+   - `Settings/SettingsView.swift` (~25 strings)
+   - `Settings/TemplateListView.swift`
+   - `Settings/TemplateEditView.swift`
+   - `Tickle/TickleListView.swift` (~10 strings)
+   - `Tickle/TickleRowView.swift` (relative date labels: "Today", "Yesterday", "Xd overdue", etc.)
+   - `Tickle/TickleEditView.swift` (~15 strings)
+   - `Network/NetworkListView.swift`
+   - `Network/ContactRowView.swift`
+   - `Network/ContactDetailView.swift` (~20 strings)
+   - `Network/AddContactView.swift`
+   - `Network/GroupListView.swift`
+   - `Network/GroupDetailView.swift`
+   - `Compose/ComposeView.swift`
+   - `Onboarding/OnboardingView.swift`
+   - `Onboarding/ImportView.swift` (~15 strings)
+   - `App/ContentView.swift` (tab labels)
+   - `App/LaunchScreenView.swift` ("YOUR PEOPLE MATTER" tagline)
+
+3. **Localize relative date strings in `TickleRowView.swift`**
+
+   The view currently builds relative dates with hardcoded English like `"Today"`, `"Yesterday"`,
+   `"3d overdue"`, `"In 2d"`. Replace these with `String(localized:)` keys that use string
+   interpolation for the numbers. Example keys:
+   ```
+   "tickleRow.due.today"                → "Today"
+   "tickleRow.due.yesterday"            → "Yesterday"
+   "tickleRow.due.overdue \(days)"      → "%lld d overdue"
+   "tickleRow.due.upcoming \(days)"     → "In %lld d"
+   ```
+
+4. **Localize `TickleFrequency` enum display names**
+
+   The `TickleFrequency` enum's `rawValue` strings (e.g. "Weekly", "Monthly") are shown in
+   pickers and labels. Add a `localizedName` computed property:
+   ```swift
+   var localizedName: String {
+       switch self {
+       case .daily:   return String(localized: "frequency.daily")
+       case .weekly:  return String(localized: "frequency.weekly")
+       case .monthly: return String(localized: "frequency.monthly")
+       case .custom:  return String(localized: "frequency.custom")
+       }
+   }
+   ```
+   Then replace all UI references from `freq.rawValue` to `freq.localizedName`.
+
+5. **Do NOT localize these:**
+   - `#if DEBUG` sections (seed messages, debug buttons) — these are developer-only
+   - Model property names or database keys
+   - SF Symbol names
+   - Brand name "Ticklr" when used as the app name (keep as literal)
+   - The tagline "YOUR PEOPLE MATTER" — keep as brand, do not localize
+
+6. **Run `xcodegen generate` after adding the `.xcstrings` file**
+
+7. **Add unit tests for localization coverage**
+
+   Create `Tests/SITTests/LocalizationTests.swift` with tests that verify:
+   - The String Catalog file exists in the bundle
+   - Key sample strings resolve to non-empty values (catch missing keys)
+   - Strings with interpolation format correctly
+   ```swift
+   import XCTest
+   @testable import Ticklr
+
+   final class LocalizationTests: XCTestCase {
+       func testKeyStringsAreNotEmpty() {
+           let keys = [
+               "settings.section.data",
+               "tickleList.section.due",
+               "common.save",
+               "common.cancel",
+               "onboarding.welcome.title"
+           ]
+           for key in keys {
+               let localized = String(localized: String.LocalizationValue(key))
+               XCTAssertFalse(localized.isEmpty, "Localized string for '\(key)' should not be empty")
+               // If key == localized, the key was not found in the catalog
+               XCTAssertNotEqual(localized, key, "Key '\(key)' was not found in String Catalog")
+           }
+       }
+   }
+   ```
+
+8. **Verify the app builds and all existing + new tests pass**
+
+   ```bash
+   cd ios
+   xcodegen generate
+   xcodebuild test \
+     -project SIT.xcodeproj \
+     -scheme Ticklr \
+     -destination 'platform=iOS Simulator,name=iPhone 16' \
+     -resultBundlePath TestResults \
+     2>&1 | tail -30
+   ```
+
+**Gotchas & constraints:**
+- **Do not break the running app.** Every `String(localized:)` call must have a corresponding
+  entry in the `.xcstrings` catalog with the English value, otherwise the UI will show raw keys.
+  Work file-by-file: extract strings → add to catalog → build → verify before moving to the next.
+- **SwiftUI `Text` accepts `LocalizedStringKey` by default.** When you write `Text("Hello")`,
+  SwiftUI already treats it as a localization key. However, we want *explicit* keys (not the
+  English string as the key) for maintainability. Use `Text(String(localized: "key"))` so that
+  keys are stable even if English copy changes.
+- **`Section("header")` and `.navigationTitle("title")` also accept `LocalizedStringKey`.** Same
+  rule applies — use explicit keys via `String(localized:)`.
+- **Pluralization:** For strings like "X contacts", use String Catalog's built-in plural rules
+  rather than manual `if count == 1` checks.
+- **The `project.yml` does not currently list `CFBundleLocalizations`.** You may need to add
+  `en` to the Info.plist properties in `project.yml`:
+  ```yaml
+  CFBundleDevelopmentRegion: en
+  CFBundleLocalizations:
+    - en
+  ```
+- **Do NOT add any new languages yet.** This task is English-only string extraction.
+  Adding languages (e.g. Spanish, French) is Phase 2 — a separate task.
+
+**Scope:** All SwiftUI view files + `TickleFrequency` enum + new test file. No model changes,
+no service changes, no navigation changes, no new dependencies.
+
+---
+
+### Task 0b ✅ COMPLETE — Phase 2: Locale-aware date/time and number formatting
+
+**Prerequisite:** Task 0 (Phase 1) must be complete — all UI strings extracted to String Catalog.
+
+**Goal:** Ensure all dates, times, and numbers displayed in the app respect the user's locale
+settings, so that when translations are added in Phase 3, dates render correctly (e.g.
+"11 avr. 2026" in French vs "Apr 11, 2026" in English).
+
+**What needs to change:**
+
+1. **Audit `.formatted()` calls — most are already locale-aware**
+
+   Swift's `.formatted(date: .abbreviated, time: .omitted)` on `Date` already respects the
+   device locale. Verify this is the case in:
+   - `TickleRowView.swift` line 39: `reminder.nextDueDate.formatted(date: .abbreviated, time: .omitted)`
+   - `TickleEditView.swift` — any date picker labels or date display
+   - `TickleListView.swift` — section headers if they show dates
+
+   **Action:** Run the app in Simulator with locale set to French (`Settings → General →
+   Language & Region → Region → France`) and verify dates render in French format. If they
+   do, no code changes needed — just document this as verified.
+
+2. **Replace manual relative date logic with `RelativeDateTimeFormatter`**
+
+   `TickleRowView.swift` currently computes relative dates manually ("Today", "Yesterday",
+   "3d overdue", "In 2d") using `Calendar.current` and `String(localized:)` keys. This works
+   for simple translations, but `RelativeDateTimeFormatter` would give us:
+   - Proper locale-aware phrasing (e.g. "hace 3 días" in Spanish, "il y a 3 jours" in French)
+   - Automatic pluralization across all languages
+   - Less maintenance — Apple handles the grammar
+
+   **However**, the current manual approach gives us more UI control (short labels like "3d overdue"
+   vs the formatter's "3 days ago"). **Decision point:**
+
+   **Option A (Recommended — keep manual, it's already localized):**
+   The Phase 1 `String(localized:)` keys with interpolation already handle this. The String
+   Catalog supports plural variants per key, so `"tickleRow.due.overdue \(days)"` can have
+   different forms for `one` vs `other` in each language. No code change needed — just ensure
+   the String Catalog entries have plural variants configured.
+
+   **Option B (Use RelativeDateTimeFormatter):**
+   ```swift
+   private var dueDateLabel: String {
+       let formatter = RelativeDateTimeFormatter()
+       formatter.unitsStyle = .abbreviated  // "2 days ago" → "2d ago"
+       formatter.dateTimeStyle = .named     // "today", "yesterday"
+       return formatter.localizedString(for: reminder.nextDueDate, relativeTo: Date())
+   }
+   ```
+   Downside: less control over exact wording, "overdue" framing lost (it just says "2 days ago").
+
+   **Go with Option A** unless there's a specific reason to switch.
+
+3. **Verify number formatting**
+
+   `SettingsView.swift` uses `contacts.count.formatted()` which is already locale-aware
+   (renders "1,808" in English, "1 808" in French, "1.808" in German). Verify in Simulator.
+
+4. **Localize notification text in `TickleScheduler.swift`**
+
+   Check how notification content strings are built in `TickleScheduler.scheduleNotification()`.
+   If the notification body includes user-facing text like "Time to reach out to John!", that
+   string must use `String(localized:)` too. Notification content created via
+   `UNMutableNotificationContent` runs outside SwiftUI but `String(localized:)` works in any
+   Swift context.
+
+   **Files:**
+   - `Services/TickleScheduler.swift` — find all `.body = "..."` and `.title = "..."` assignments
+
+5. **Add/update tests**
+
+   Add a test in `LocalizationTests.swift` that verifies date formatting respects locale:
+   ```swift
+   func testDateFormattingRespectsLocale() {
+       let date = Date(timeIntervalSince1970: 0) // Jan 1, 1970
+       let formatted = date.formatted(date: .abbreviated, time: .omitted)
+       // Just verify it returns a non-empty string — exact format depends on test environment locale
+       XCTAssertFalse(formatted.isEmpty)
+   }
+   ```
+
+6. **Build and run all tests**
+
+   ```bash
+   cd ios && xcodegen generate
+   xcodebuild test -project SIT.xcodeproj -scheme Ticklr \
+     -destination 'platform=iOS Simulator,name=iPhone 16' 2>&1 | tail -30
+   ```
+
+**Gotchas:**
+- `RelativeDateTimeFormatter` output varies by OS version — test on iOS 17.0 specifically
+- The `Date.formatted()` API respects `Locale.current` automatically — do NOT hardcode a locale
+- Notification strings are evaluated at schedule time, not delivery time. If the user changes
+  their language between scheduling and receiving, the notification will be in the old language.
+  This is an acceptable trade-off — don't over-engineer it.
+
+**Scope:** `TickleRowView.swift` (audit only if Option A), `TickleScheduler.swift` (notification
+strings), `LocalizationTests.swift`. Minimal code changes expected.
+
+---
+
+### Task 0c ✅ COMPLETE — Phase 3: Add first non-English language (Spanish)
+
+**Prerequisite:** Task 0 (Phase 1) and Task 0b (Phase 2) must be complete.
+
+**Goal:** Add full Spanish (`es`) translation to prove the i18n pipeline works end-to-end,
+and confirm the app renders correctly in a non-English locale.
+
+**Step-by-step:**
+
+1. **Add Spanish to the String Catalog**
+
+   Open `Sources/SIT/Resources/Localizable.xcstrings` and add `es` (Spanish) as a supported
+   language. Xcode's String Catalog editor allows adding languages directly — it will create
+   blank entries for every existing key.
+
+   Alternatively, from the command line / code: the `.xcstrings` file is JSON under the hood.
+   Each key has a `localizations` dict. Add an `"es"` entry for each key:
+   ```json
+   "settings.section.data": {
+       "localizations": {
+           "en": { "stringUnit": { "state": "translated", "value": "Data" } },
+           "es": { "stringUnit": { "state": "translated", "value": "Datos" } }
+       }
+   }
+   ```
+
+2. **Translate all keys**
+
+   Provide Spanish translations for every key in the catalog. Group them logically:
+
+   **Common:**
+   | Key | English | Spanish |
+   |-----|---------|---------|
+   | `common.save` | Save | Guardar |
+   | `common.cancel` | Cancel | Cancelar |
+   | `common.delete` | Delete | Eliminar |
+   | `common.done` | Done | Listo |
+   | `common.edit` | Edit | Editar |
+   | `common.ok` | OK | Aceptar |
+   | `common.reset` | Reset | Restablecer |
+   | `common.create` | Create | Crear |
+
+   **Frequencies:**
+   | Key | English | Spanish |
+   |-----|---------|---------|
+   | `frequency.daily` | Daily | Diario |
+   | `frequency.weekly` | Weekly | Semanal |
+   | `frequency.biweekly` | Every 2 weeks | Cada 2 semanas |
+   | `frequency.monthly` | Monthly | Mensual |
+   | `frequency.bimonthly` | Every 2 months | Cada 2 meses |
+   | `frequency.quarterly` | Quarterly | Trimestral |
+   | `frequency.custom` | Custom | Personalizado |
+
+   **Do NOT translate these:**
+   - "Ticklr" (brand name)
+   - "Xaymaca" (company name)
+   - "YOUR PEOPLE MATTER" (brand tagline — keep English)
+
+   For the full set (~188 keys), translate every remaining string. Use a professional
+   translator or translation service for production quality. For initial implementation,
+   Claude can generate draft translations that should be reviewed by a native speaker.
+
+3. **Configure plural variants for Spanish**
+
+   Spanish pluralization is similar to English (one/other), but verify that keys with
+   interpolated counts have proper plural forms in the String Catalog:
+   ```json
+   "tickleRow.due.overdue %lld": {
+       "localizations": {
+           "es": {
+               "variations": {
+                   "plural": {
+                       "one": { "stringUnit": { "value": "%lld día vencido" } },
+                       "other": { "stringUnit": { "value": "%lld días vencido" } }
+                   }
+               }
+           }
+       }
+   }
+   ```
+
+4. **Update `project.yml` to declare supported localizations**
+
+   ```yaml
+   info:
+     properties:
+       CFBundleDevelopmentRegion: en
+       CFBundleLocalizations:
+         - en
+         - es
+   ```
+
+   Run `xcodegen generate` after this change.
+
+5. **Test in Spanish locale**
+
+   In Simulator: `Settings → General → Language & Region → Español`
+   Verify every screen:
+   - [ ] Settings screen — all labels, section headers, dialogs
+   - [ ] Tickle list — section headers, empty state, swipe actions
+   - [ ] Tickle edit — all form labels, picker options, frequency names
+   - [ ] Network list — search placeholder, empty state
+   - [ ] Contact detail — all labels, button text, group sheet
+   - [ ] Group list + detail — all labels, toast messages
+   - [ ] Compose — all labels, template picker, send button
+   - [ ] Onboarding + Import — all copy
+   - [ ] Launch screen — tagline (should stay English)
+
+6. **Add Spanish locale test**
+
+   In `LocalizationTests.swift`:
+   ```swift
+   func testSpanishTranslationsExist() {
+       let bundle = Bundle(for: type(of: self))  // or Bundle.main in app target
+       let esBundle = Bundle(path: bundle.path(forResource: "es", ofType: "lproj")!)
+       XCTAssertNotNil(esBundle, "Spanish localization bundle should exist")
+
+       // Spot-check a few keys
+       let save = NSLocalizedString("common.save", bundle: esBundle!, comment: "")
+       XCTAssertEqual(save, "Guardar")
+   }
+   ```
+
+   **Note:** With String Catalogs, testing specific locale bundles may work differently than
+   with `.strings` files. If `Bundle(path:)` doesn't work for `.xcstrings`, use an alternative
+   approach: set `UserDefaults` `AppleLanguages` to `["es"]` in a test setUp and verify
+   `String(localized:)` returns Spanish strings.
+
+7. **Build and run all tests**
+
+   ```bash
+   cd ios && xcodegen generate
+   xcodebuild test -project SIT.xcodeproj -scheme Ticklr \
+     -destination 'platform=iOS Simulator,name=iPhone 16' 2>&1 | tail -30
+   ```
+
+**Gotchas:**
+- **String Catalogs are JSON.** They can be edited programmatically, but be careful not to
+  corrupt the structure. Prefer Xcode's editor if possible.
+- **App Store requires all supported languages to be complete.** Don't ship a half-translated
+  app — every key must have a Spanish value before release.
+- **Date/number formatting follows the device's Region setting**, not the Language setting.
+  A user can have Language=Spanish but Region=United States — dates will still be in US format.
+  This is correct Apple behavior, don't fight it.
+- **Xcode previews** default to the development language. To preview in Spanish, add
+  `.environment(\.locale, Locale(identifier: "es"))` to preview providers.
+
+**Scope:** `Localizable.xcstrings` (add all Spanish translations), `project.yml` (add `es` to
+CFBundleLocalizations), `LocalizationTests.swift` (add Spanish tests). No Swift code changes
+needed — all wiring was done in Phase 1.
+
+---
+
+### Task 0d — Phase 4: RTL (Right-to-Left) language support (optional)
+
+**Prerequisite:** Tasks 0, 0b, and 0c must be complete. Only needed if targeting Arabic, Hebrew,
+Urdu, Farsi, or other RTL languages.
+
+**Goal:** Ensure the app layout mirrors correctly for RTL locales and add the first RTL language.
+
+**What needs to change:**
+
+1. **Audit layout direction behavior**
+
+   SwiftUI handles RTL automatically for most standard components:
+   - `HStack` reverses child order in RTL
+   - `NavigationStack` flips back buttons
+   - `List` and `Form` flip row layout
+   - `.padding(.leading)` maps to right side in RTL
+
+   **Run the app in Arabic locale** (Simulator → Settings → Arabic) and screenshot every
+   screen. Look for:
+   - Text alignment issues (any hardcoded `.leading` that should stay `.leading`)
+   - Icons that should mirror (arrows, chevrons) vs icons that should NOT mirror (checkmarks,
+     clock faces, the Ticklr logo)
+   - `HStack` layouts that look wrong when reversed
+
+2. **Fix SF Symbol mirroring**
+
+   Some SF Symbols auto-mirror in RTL, others don't. For symbols that represent directional
+   actions, ensure they mirror:
+   ```swift
+   Image(systemName: "chevron.right")
+       .flipsForRightToLeftLayoutDirection(true)  // if not auto-mirroring
+   ```
+
+   Symbols that should NOT mirror: `checkmark`, `bell`, `plus`, `trash`, `pencil`, brand logo.
+
+3. **Fix any hardcoded layout**
+
+   Search for these patterns that break in RTL:
+   - `HStack` with `.frame(alignment: .leading)` — should use `.leading` (OK, it flips)
+   - `.padding(.trailing, 16)` — fine, it flips
+   - Hardcoded `x` offsets in `.offset()` or `.position()` — these do NOT flip automatically
+   - `Text` with explicit `.multilineTextAlignment(.leading)` — this is OK, `.leading` flips
+   - Any `CGAffineTransform` or manual frame calculations
+
+4. **Test the launch screen and onboarding**
+
+   The animated Pulse logo and "YOUR PEOPLE MATTER" tagline in `LaunchScreenView.swift` should
+   remain centered and not flip. The onboarding flow should read naturally in RTL.
+
+5. **Add Arabic (or Hebrew) translations**
+
+   Follow the same process as Phase 3:
+   - Add `ar` to the String Catalog
+   - Translate all ~188 keys
+   - Add `ar` to `CFBundleLocalizations` in `project.yml`
+   - Arabic has complex plural rules (zero, one, two, few, many, other) — configure all
+     plural variants in the String Catalog
+
+6. **Add RTL-specific tests**
+
+   ```swift
+   func testLayoutDirectionRTL() {
+       // Verify the app doesn't crash when launched in RTL
+       let view = ContentView()
+           .environment(\.layoutDirection, .rightToLeft)
+           .environment(\.locale, Locale(identifier: "ar"))
+       // Snapshot test or just verify it renders without errors
+       let _ = try? view.inspect()  // if using ViewInspector
+   }
+   ```
+
+7. **Build and run all tests in RTL simulator**
+
+   ```bash
+   cd ios && xcodegen generate
+   # Run with RTL pseudolanguage to catch layout issues:
+   xcodebuild test -project SIT.xcodeproj -scheme Ticklr \
+     -destination 'platform=iOS Simulator,name=iPhone 16' \
+     -testLanguage ar -testRegion SA \
+     2>&1 | tail -30
+   ```
+
+**Gotchas:**
+- **Portrait-only lock is fine for RTL.** No orientation changes needed.
+- **`Text(verbatim:)` does not flip** — it renders the string as-is. This is correct for
+  phone numbers, URLs, and code. Verify `Text(verbatim: dueDateLabel)` in `TickleRowView`
+  still looks right in RTL (numbers should stay LTR even in RTL context — this is standard).
+- **Arabic text is significantly wider** than English in some fonts — test for truncation.
+- **SwiftUI's `.searchable()` modifier** already handles RTL text input. No changes needed.
+- **This is the most labor-intensive phase.** Budget extra time for visual QA on every screen.
+
+**Scope:** Visual audit of all screens, SF Symbol mirroring fixes, Arabic translations in
+String Catalog, `project.yml` update, new tests. Minimal Swift code changes — mostly
+SwiftUI auto-handles RTL.
+
+---
+
 These are parity issues found by comparing against the Android implementation. Both affect real UX.
 
 ### Task 1 — Empty group state in `TickleEditView` (Group picker)

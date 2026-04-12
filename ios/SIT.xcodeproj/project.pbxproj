@@ -28,8 +28,10 @@
 		87572A827C3A4DED6D5E968C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA413473ADA828136F21753 /* ContentView.swift */; };
 		8BB34E5F91AFE802C9B16626 /* ImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBD25432AF93E7B78C501EE /* ImportView.swift */; };
 		8CF13461108C2CC7E64EB847 /* SeedDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9413278558DA1F8BBE00FF96 /* SeedDataService.swift */; };
+		919527C153F058BE1EDA72A3 /* LocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A27D41F38F9FB5871748B89 /* LocalizationTests.swift */; };
 		9283E70E0707CC70CFA0AD0F /* ContactTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D31DBFE56E32631DD7B650 /* ContactTests.swift */; };
 		949EFAA2F52FC214F6E65F95 /* TickleRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2BE0559EF55B0E2A1DDE54 /* TickleRowView.swift */; };
+		984F8919395A52436BA23ECC /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 52B2D827FDB5FDABB740E34A /* Localizable.xcstrings */; };
 		9CA0D612EF182E101FDE37A4 /* LinkedInCSVParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D196741B99B788C9E325C3 /* LinkedInCSVParserTests.swift */; };
 		AF7B9499DE3B99B9194191B5 /* GroupDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033862D2DB3D8A467AAFFA5D /* GroupDetailView.swift */; };
 		CCCCA1639CE5316D17A6AE7E /* LinkedInCSVParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFE5D9B2591E4B4A53F5EEC /* LinkedInCSVParser.swift */; };
@@ -64,13 +66,15 @@
 		1D98A08F7576CDC556F9440C /* ContactFingerprint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactFingerprint.swift; sourceTree = "<group>"; };
 		209311518915490C7F72039B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		30D196741B99B788C9E325C3 /* LinkedInCSVParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedInCSVParserTests.swift; sourceTree = "<group>"; };
-		45775744E6927B98A73B2CAC /* Ticklr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ticklr.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		49E849839D5DE00393F1F990 /* TicklrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TicklrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		45775744E6927B98A73B2CAC /* Ticklr.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Ticklr.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		49E849839D5DE00393F1F990 /* TicklrTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = TicklrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50AD38DE9F1FCCBD8B82DEED /* ContactImportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactImportService.swift; sourceTree = "<group>"; };
+		52B2D827FDB5FDABB740E34A /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		53C7E0EBE485C198DCF9669E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		5CA413473ADA828136F21753 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		63EBB61C7877871E721045C7 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		72098A45B6ACBC527F5DF0B9 /* MessageTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTemplate.swift; sourceTree = "<group>"; };
+		7A27D41F38F9FB5871748B89 /* LocalizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationTests.swift; sourceTree = "<group>"; };
 		8ACA061EE9A732D89FD3E0F3 /* GroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListView.swift; sourceTree = "<group>"; };
 		8FBD25432AF93E7B78C501EE /* ImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportView.swift; sourceTree = "<group>"; };
 		9125614ECAB9E4D8E5428E51 /* ContactRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRowView.swift; sourceTree = "<group>"; };
@@ -83,7 +87,7 @@
 		B1887449FF664ADCCCB1BFC3 /* SITApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SITApp.swift; sourceTree = "<group>"; };
 		B5CC789856C13EA9BCE0A6EC /* ContactGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactGroup.swift; sourceTree = "<group>"; };
 		BB38137353FDCD5606A5A8FF /* TickleReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleReminder.swift; sourceTree = "<group>"; };
-		C3BA80FD4DE962EB1F107E78 /* test_contacts.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = test_contacts.csv; sourceTree = "<group>"; };
+		C3BA80FD4DE962EB1F107E78 /* test_contacts.csv */ = {isa = PBXFileReference; path = test_contacts.csv; sourceTree = "<group>"; };
 		CA4BF582AFC377CF7A29ADC9 /* TickleEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleEditView.swift; sourceTree = "<group>"; };
 		CADEFE7A1ADA2B9E3DDBBD81 /* MessageComposerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageComposerService.swift; sourceTree = "<group>"; };
 		E07B4E4B1B6C11A40612610C /* ComposeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeView.swift; sourceTree = "<group>"; };
@@ -110,6 +114,7 @@
 			children = (
 				209311518915490C7F72039B /* Assets.xcassets */,
 				0A9EDE946F2D00EC70ED4A84 /* Info.plist */,
+				52B2D827FDB5FDABB740E34A /* Localizable.xcstrings */,
 				C3BA80FD4DE962EB1F107E78 /* test_contacts.csv */,
 			);
 			path = Resources;
@@ -168,6 +173,7 @@
 			children = (
 				10D31DBFE56E32631DD7B650 /* ContactTests.swift */,
 				30D196741B99B788C9E325C3 /* LinkedInCSVParserTests.swift */,
+				7A27D41F38F9FB5871748B89 /* LocalizationTests.swift */,
 				0B8316646A179885792C4004 /* TickleSchedulerTests.swift */,
 			);
 			name = SITTests;
@@ -288,6 +294,9 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
+					1CADC66CDEC975B92B6E11C1 = {
+						DevelopmentTeam = "";
+					};
 					659D71ADC995ABBCE6F3FA86 = {
 						DevelopmentTeam = "";
 					};
@@ -298,7 +307,19 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				Base,
+				cs,
+				de,
+				el,
 				en,
+				es,
+				fr,
+				hu,
+				it,
+				nl,
+				pl,
+				pt,
+				ro,
+				sv,
 			);
 			mainGroup = 19FBD3B5DE9B723F24932E42;
 			minimizedProjectReferenceProxies = 1;
@@ -319,6 +340,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				353AA993FFB1A862D307ED9F /* Assets.xcassets in Resources */,
+				984F8919395A52436BA23ECC /* Localizable.xcstrings in Resources */,
 				34A284E142196787F146D1B3 /* test_contacts.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -367,6 +389,7 @@
 			files = (
 				9283E70E0707CC70CFA0AD0F /* ContactTests.swift in Sources */,
 				9CA0D612EF182E101FDE37A4 /* LinkedInCSVParserTests.swift in Sources */,
+				919527C153F058BE1EDA72A3 /* LocalizationTests.swift in Sources */,
 				43434A6ACC0CD3146036A11C /* TickleSchedulerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -387,7 +410,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = A22UWTG6TN;
 				INFOPLIST_FILE = Sources/SIT/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -404,7 +426,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = A22UWTG6TN;
 				INFOPLIST_FILE = Sources/SIT/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -469,7 +490,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -483,7 +504,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				MARKETING_VERSION = 1.4.10;
+				MARKETING_VERSION = 1.4.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = Ticklr;
@@ -547,7 +568,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -567,7 +588,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				MARKETING_VERSION = 1.4.10;
+				MARKETING_VERSION = 1.4.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;

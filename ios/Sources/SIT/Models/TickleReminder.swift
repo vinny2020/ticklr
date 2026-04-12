@@ -9,6 +9,18 @@ enum TickleFrequency: String, Codable, CaseIterable {
     case bimonthly    = "Every 2 months"
     case quarterly    = "Quarterly"
     case custom       = "Custom"
+
+    var localizedName: String {
+        switch self {
+        case .daily:     return String(localized: "frequency.daily")
+        case .weekly:    return String(localized: "frequency.weekly")
+        case .biweekly:  return String(localized: "frequency.biweekly")
+        case .monthly:   return String(localized: "frequency.monthly")
+        case .bimonthly: return String(localized: "frequency.bimonthly")
+        case .quarterly: return String(localized: "frequency.quarterly")
+        case .custom:    return String(localized: "frequency.custom")
+        }
+    }
 }
 
 enum TickleStatus: String, Codable {

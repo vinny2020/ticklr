@@ -25,8 +25,8 @@ struct TickleScheduler {
             name = "someone"
         }
 
-        content.title = "Time to reach out to \(name)"
-        content.body = reminder.note.isEmpty ? reminder.frequency.rawValue : reminder.note
+        content.title = String(localized: "notification.title \(name)")
+        content.body = reminder.note.isEmpty ? reminder.frequency.localizedName : reminder.note
         content.sound = .default
 
         let trigger: UNNotificationTrigger

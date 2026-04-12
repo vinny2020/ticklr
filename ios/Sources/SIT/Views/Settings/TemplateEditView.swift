@@ -17,22 +17,22 @@ struct TemplateEditView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Title") {
-                    TextField("e.g. Checking in", text: $title)
+                Section(String(localized: "templateEdit.section.title")) {
+                    TextField(String(localized: "templateEdit.placeholder.title"), text: $title)
                 }
-                Section("Message") {
+                Section(String(localized: "templateEdit.section.message")) {
                     TextEditor(text: $body_)
                         .frame(minHeight: 120)
                 }
             }
-            .navigationTitle(isEditing ? "Edit Template" : "New Template")
+            .navigationTitle(isEditing ? String(localized: "templateEdit.navTitle.edit") : String(localized: "templateEdit.navTitle.new"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { dismiss() }
+                    Button(String(localized: "common.cancel")) { dismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") { save() }
+                    Button(String(localized: "common.save")) { save() }
                         .disabled(title.trimmingCharacters(in: .whitespaces).isEmpty)
                 }
             }
@@ -44,7 +44,7 @@ struct TemplateEditView: View {
             }
             .overlay(alignment: .bottom) {
                 if showToast {
-                    Text(toastMessage)
+                    Text(verbatim: toastMessage)
                         .font(.subheadline)
                         .padding(.horizontal, 16)
                         .padding(.vertical, 10)
@@ -70,7 +70,9 @@ struct TemplateEditView: View {
             let newTemplate = MessageTemplate(title: trimmedTitle, body: trimmedBody)
             modelContext.insert(newTemplate)
         }
-        toastMessage = isEditing ? "Template updated" : "Template saved"
+        toastMessage = isEditing
+            ? String(localized: "templateEdit.toast.updated")
+            : String(localized: "templateEdit.toast.saved")
         showToast = true
         Task {
             try? await Task.sleep(for: .seconds(2))

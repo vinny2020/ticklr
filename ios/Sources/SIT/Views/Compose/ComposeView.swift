@@ -44,7 +44,7 @@ struct ComposeView: View {
 
                     // MARK: To field
                     VStack(alignment: .leading, spacing: 6) {
-                        Text("To")
+                        Text(String(localized: "compose.label.to"))
                             .font(.caption)
                             .foregroundStyle(.secondary)
                             .padding(.horizontal)
@@ -72,14 +72,14 @@ struct ComposeView: View {
                             .padding(.horizontal)
 
                             if contact.phoneNumbers.isEmpty {
-                                Label("No phone number on file", systemImage: "exclamationmark.triangle.fill")
+                                Label(String(localized: "compose.warning.noPhone"), systemImage: "exclamationmark.triangle.fill")
                                     .font(.caption)
                                     .foregroundStyle(.orange)
                                     .padding(.horizontal)
                             }
                         } else {
                             // Search field
-                            TextField("Search contacts…", text: $searchText)
+                            TextField(String(localized: "compose.search"), text: $searchText)
                                 .textFieldStyle(.roundedBorder)
                                 .focused($searchFocused)
                                 .padding(.horizontal)
@@ -130,13 +130,13 @@ struct ComposeView: View {
                     // MARK: Template dropdown (only if templates exist)
                     if !templates.isEmpty {
                         VStack(alignment: .leading, spacing: 6) {
-                            Text("Template")
+                            Text(String(localized: "compose.label.template"))
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                                 .padding(.horizontal)
 
                             Menu {
-                                Button("None") {
+                                Button(String(localized: "compose.template.none")) {
                                     selectedTemplate = nil
                                 }
                                 ForEach(templates) { template in
@@ -147,7 +147,7 @@ struct ComposeView: View {
                                 }
                             } label: {
                                 HStack {
-                                    Text(selectedTemplate?.title ?? "Select template")
+                                    Text(verbatim: selectedTemplate?.title ?? String(localized: "compose.placeholder.template"))
                                         .foregroundStyle(selectedTemplate == nil ? .secondary : .primary)
                                     Spacer()
                                     Image(systemName: "chevron.up.chevron.down")
@@ -165,7 +165,7 @@ struct ComposeView: View {
 
                     // MARK: Message body
                     VStack(alignment: .leading, spacing: 6) {
-                        Text("Message")
+                        Text(String(localized: "compose.label.message"))
                             .font(.caption)
                             .foregroundStyle(.secondary)
                             .padding(.horizontal)
@@ -190,7 +190,7 @@ struct ComposeView: View {
                         } label: {
                             HStack(spacing: 6) {
                                 Image(systemName: "paperplane.fill")
-                                Text("Send")
+                                Text(String(localized: "compose.button.send"))
                                     .fontWeight(.semibold)
                             }
                             .padding(.horizontal, 24)
@@ -211,12 +211,12 @@ struct ComposeView: View {
                     selectedContact = c
                 }
             }
-            .navigationTitle("Compose")
+            .navigationTitle(String(localized: "compose.navTitle"))
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     if selectedContact != nil || !messageBody.isEmpty {
-                        Button("Cancel") {
+                        Button(String(localized: "common.cancel")) {
                             clearCompose()
                             onCancel?()
                         }
@@ -229,10 +229,10 @@ struct ComposeView: View {
                     MessageComposerView(recipients: [phone], body: messageBody)
                 }
             }
-            .alert("Cannot Send Messages", isPresented: $showingCannotSendAlert) {
-                Button("OK", role: .cancel) {}
+            .alert(String(localized: "compose.alert.cannotSend.title"), isPresented: $showingCannotSendAlert) {
+                Button(String(localized: "common.ok"), role: .cancel) {}
             } message: {
-                Text("This device is not configured to send SMS messages.")
+                Text(String(localized: "compose.alert.cannotSend.message"))
             }
         }
     }

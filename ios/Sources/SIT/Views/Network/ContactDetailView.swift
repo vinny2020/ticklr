@@ -49,7 +49,7 @@ struct ContactDetailView: View {
             }
 
             if !contact.phoneNumbers.isEmpty {
-                Section("Phone") {
+                Section(String(localized: "contact.section.phone")) {
                     ForEach(contact.phoneNumbers, id: \.self) { phone in
                         let cleaned = phone.filter { $0.isNumber || $0 == "+" }
                         if let url = URL(string: "tel:\(cleaned)"), !cleaned.isEmpty {
@@ -62,7 +62,7 @@ struct ContactDetailView: View {
             }
 
             if !contact.emails.isEmpty {
-                Section("Email") {
+                Section(String(localized: "contact.section.email")) {
                     ForEach(contact.emails, id: \.self) { email in
                         if let url = URL(string: "mailto:\(email)") {
                             Link(email, destination: url)
@@ -74,20 +74,20 @@ struct ContactDetailView: View {
             }
 
             if !contact.notes.isEmpty {
-                Section("Notes") {
+                Section(String(localized: "contact.section.notes")) {
                     Text(contact.notes).foregroundStyle(.secondary)
                 }
             }
 
             if !contact.tags.isEmpty {
-                Section("Tags") {
+                Section(String(localized: "contact.section.tags")) {
                     Text(contact.tags.joined(separator: " · "))
                         .foregroundStyle(.secondary)
                 }
             }
 
             if !contact.groups.isEmpty {
-                Section("Groups") {
+                Section(String(localized: "contact.section.groups")) {
                     ForEach(contact.groups) { group in
                         HStack {
                             Text(group.emoji)
@@ -102,7 +102,7 @@ struct ContactDetailView: View {
                     Button {
                         activeSheet = .addTickle
                     } label: {
-                        Label("Add Tickle", systemImage: "bell.badge")
+                        Label(String(localized: "contactDetail.button.addTickle"), systemImage: "bell.badge")
                             .foregroundStyle(amber)
                             .frame(maxWidth: .infinity)
                     }
@@ -110,7 +110,7 @@ struct ContactDetailView: View {
                     Button {
                         activeSheet = .addToGroup
                     } label: {
-                        Label("Add to Group", systemImage: "person.3.fill")
+                        Label(String(localized: "contactDetail.button.addToGroup"), systemImage: "person.3.fill")
                             .foregroundStyle(cobalt)
                             .frame(maxWidth: .infinity)
                     }
@@ -119,7 +119,7 @@ struct ContactDetailView: View {
                 Button {
                     activeSheet = .compose
                 } label: {
-                    Label("Message", systemImage: "message.fill")
+                    Label(String(localized: "contactDetail.button.message"), systemImage: "message.fill")
                         .foregroundStyle(contact.phoneNumbers.isEmpty ? Color.secondary : cobalt)
                         .frame(maxWidth: .infinity)
                 }
@@ -131,7 +131,7 @@ struct ContactDetailView: View {
                 Button(role: .destructive) {
                     showingDeleteConfirm = true
                 } label: {
-                    Label("Delete Contact", systemImage: "trash")
+                    Label(String(localized: "contactDetail.button.deleteContact"), systemImage: "trash")
                         .frame(maxWidth: .infinity)
                 }
             }
@@ -140,7 +140,7 @@ struct ContactDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button("Edit") { activeSheet = .edit }
+                Button(String(localized: "common.edit")) { activeSheet = .edit }
             }
         }
         .sheet(item: $activeSheet) { sheet in
@@ -159,17 +159,17 @@ struct ContactDetailView: View {
             }
         }
         .confirmationDialog(
-            "Delete \(contact.fullName)?",
+            String(localized: "contactDetail.deleteConfirm.title \(contact.fullName)"),
             isPresented: $showingDeleteConfirm,
             titleVisibility: .visible
         ) {
-            Button("Delete Contact", role: .destructive) {
+            Button(String(localized: "contactDetail.button.deleteContact"), role: .destructive) {
                 modelContext.delete(contact)
                 try? modelContext.save()
                 dismiss()
             }
         } message: {
-            Text("This cannot be undone.")
+            Text(String(localized: "common.cannotUndo"))
         }
     }
 }
@@ -221,11 +221,11 @@ private struct AddToGroupSheet: View {
                     }()
                     VStack(alignment: .leading, spacing: 4) {
                         HStack {
-                            TextField("Group name…", text: $newGroupName)
+                            TextField(String(localized: "addToGroup.placeholder.groupName"), text: $newGroupName)
                                 .onChange(of: newGroupName) { _, v in
                                     if v.count > 30 { newGroupName = String(v.prefix(30)) }
                                 }
-                            Button("Create") {
+                            Button(String(localized: "common.create")) {
                                 let trimmed = newGroupName.trimmingCharacters(in: .whitespaces)
                                 guard !trimmed.isEmpty else { return }
                                 let group = ContactGroup(name: trimmed, emoji: "👥")
@@ -239,7 +239,7 @@ private struct AddToGroupSheet: View {
                         }
                         HStack {
                             if isDuplicateInline {
-                                Text("Name already exists")
+                                Text(String(localized: "addToGroup.error.duplicateName"))
                                     .font(.caption)
                                     .foregroundStyle(.red)
                             } else {
@@ -254,16 +254,16 @@ private struct AddToGroupSheet: View {
                     Button {
                         showingCreateField = true
                     } label: {
-                        Label("Create New Group", systemImage: "plus")
+                        Label(String(localized: "addToGroup.button.createNew"), systemImage: "plus")
                             .foregroundStyle(Color(red: 0.145, green: 0.388, blue: 0.922))
                     }
                 }
             }
-            .navigationTitle("Add to Group")
+            .navigationTitle(String(localized: "addToGroup.navTitle"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Done") { dismiss() }
+                    Button(String(localized: "common.done")) { dismiss() }
                         .fontWeight(.semibold)
                 }
             }
@@ -309,25 +309,25 @@ private struct ContactEditSheet: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Name") {
-                    TextField("First name", text: $firstName)
-                    TextField("Last name", text: $lastName)
+                Section(String(localized: "contact.section.name")) {
+                    TextField(String(localized: "contact.placeholder.firstName"), text: $firstName)
+                    TextField(String(localized: "contact.placeholder.lastName"), text: $lastName)
                 }
 
-                Section("Work") {
-                    TextField("Company", text: $company)
-                    TextField("Job title", text: $jobTitle)
+                Section(String(localized: "contact.section.work")) {
+                    TextField(String(localized: "contact.placeholder.company"), text: $company)
+                    TextField(String(localized: "contact.placeholder.jobTitle"), text: $jobTitle)
                 }
 
-                Section("Phone") {
+                Section(String(localized: "contact.section.phone")) {
                     ForEach(phoneNumbers.indices, id: \.self) { i in
-                        TextField("Phone number", text: $phoneNumbers[i])
+                        TextField(String(localized: "contact.placeholder.phoneNumber"), text: $phoneNumbers[i])
                             .keyboardType(.phonePad)
                     }
                     .onDelete { phoneNumbers.remove(atOffsets: $0) }
                     HStack {
-                        TextField("Add phone", text: $newPhone).keyboardType(.phonePad)
-                        Button("Add") {
+                        TextField(String(localized: "contact.placeholder.addPhone"), text: $newPhone).keyboardType(.phonePad)
+                        Button(String(localized: "common.add")) {
                             let v = newPhone.trimmingCharacters(in: .whitespaces)
                             guard !v.isEmpty else { return }
                             phoneNumbers.append(v)
@@ -337,18 +337,18 @@ private struct ContactEditSheet: View {
                     }
                 }
 
-                Section("Email") {
+                Section(String(localized: "contact.section.email")) {
                     ForEach(emails.indices, id: \.self) { i in
-                        TextField("Email address", text: $emails[i])
+                        TextField(String(localized: "contact.placeholder.emailAddress"), text: $emails[i])
                             .keyboardType(.emailAddress)
                             .textInputAutocapitalization(.never)
                     }
                     .onDelete { emails.remove(atOffsets: $0) }
                     HStack {
-                        TextField("Add email", text: $newEmail)
+                        TextField(String(localized: "contact.placeholder.addEmail"), text: $newEmail)
                             .keyboardType(.emailAddress)
                             .textInputAutocapitalization(.never)
-                        Button("Add") {
+                        Button(String(localized: "common.add")) {
                             let v = newEmail.trimmingCharacters(in: .whitespaces)
                             guard !v.isEmpty else { return }
                             emails.append(v)
@@ -358,17 +358,17 @@ private struct ContactEditSheet: View {
                     }
                 }
 
-                Section("Notes") {
+                Section(String(localized: "contact.section.notes")) {
                     TextEditor(text: $notes)
                         .frame(minHeight: 80)
                 }
 
-                Section("Tags") {
+                Section(String(localized: "contact.section.tags")) {
                     ForEach(tags, id: \.self) { tag in Text(tag) }
                         .onDelete { tags.remove(atOffsets: $0) }
                     HStack {
-                        TextField("Add tag", text: $newTag)
-                        Button("Add") {
+                        TextField(String(localized: "contact.placeholder.addTag"), text: $newTag)
+                        Button(String(localized: "common.add")) {
                             let v = newTag.trimmingCharacters(in: .whitespaces)
                             guard !v.isEmpty else { return }
                             tags.append(v)
@@ -379,7 +379,7 @@ private struct ContactEditSheet: View {
                 }
 
                 if !allGroups.isEmpty {
-                    Section("Groups") {
+                    Section(String(localized: "contact.section.groups")) {
                         ForEach(allGroups) { group in
                             Button {
                                 if selectedGroupIDs.contains(group.id) {
@@ -402,14 +402,14 @@ private struct ContactEditSheet: View {
                     }
                 }
             }
-            .navigationTitle("Edit Contact")
+            .navigationTitle(String(localized: "contactEdit.navTitle"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("Cancel") { dismiss() }
+                    Button(String(localized: "common.cancel")) { dismiss() }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Save") { save() }
+                    Button(String(localized: "common.save")) { save() }
                         .fontWeight(.semibold)
                 }
             }

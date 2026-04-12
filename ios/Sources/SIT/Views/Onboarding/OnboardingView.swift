@@ -17,7 +17,7 @@ struct OnboardingView: View {
                     .font(.largeTitle)
                     .fontWeight(.bold)
 
-                Text("Your personal network, privately.\nNo cloud. No social graph. Just your people.")
+                Text(String(localized: "onboarding.subtitle"))
                     .font(.body)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
@@ -30,7 +30,7 @@ struct OnboardingView: View {
                 Button {
                     showingImport = true
                 } label: {
-                    Label("Get Started", systemImage: "arrow.right.circle.fill")
+                    Label(String(localized: "onboarding.button.getStarted"), systemImage: "arrow.right.circle.fill")
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(Color.indigo)
@@ -41,7 +41,7 @@ struct OnboardingView: View {
                 Button {
                     hasCompletedOnboarding = true
                 } label: {
-                    Text("Start with empty network")
+                    Text(String(localized: "onboarding.button.skipImport"))
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }

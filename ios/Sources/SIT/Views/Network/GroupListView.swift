@@ -21,7 +21,7 @@ struct GroupListView: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(group.name)
-                                Text("\(group.contacts.count) contact\(group.contacts.count == 1 ? "" : "s")")
+                                Text(String(localized: "groupList.contactCount \(group.contacts.count)"))
                                     .font(.caption)
                                     .foregroundStyle(.secondary)
                             }
@@ -33,18 +33,18 @@ struct GroupListView: View {
                             modelContext.delete(group)
                             try? modelContext.save()
                         } label: {
-                            Label("Delete", systemImage: "trash")
+                            Label(String(localized: "common.delete"), systemImage: "trash")
                         }
                         Button {
                             editingGroup = group
                         } label: {
-                            Label("Edit", systemImage: "pencil")
+                            Label(String(localized: "common.edit"), systemImage: "pencil")
                         }
                         .tint(.indigo)
                     }
                 }
             }
-            .navigationTitle("Groups")
+            .navigationTitle(String(localized: "groupList.navTitle"))
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
@@ -57,9 +57,9 @@ struct GroupListView: View {
             .overlay {
                 if groups.isEmpty {
                     ContentUnavailableView(
-                        "No groups yet",
+                        String(localized: "groupList.empty.title"),
                         systemImage: "person.3.sequence",
-                        description: Text("Tap + to create your first group")
+                        description: Text(String(localized: "groupList.empty.description"))
                     )
                 }
             }
@@ -114,7 +114,7 @@ struct GroupEditSheet: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Emoji") {
+                Section(String(localized: "groupEdit.section.emoji")) {
                     LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 6), spacing: 12) {
                         ForEach(suggestedEmoji, id: \.self) { e in
                             Button {
@@ -138,18 +138,18 @@ struct GroupEditSheet: View {
                     .padding(.vertical, 4)
 
                     HStack {
-                        Text("Custom")
+                        Text(String(localized: "groupEdit.label.custom"))
                             .foregroundStyle(.secondary)
-                        TextField("or type any emoji", text: $emoji)
+                        TextField(String(localized: "groupEdit.placeholder.customEmoji"), text: $emoji)
                             .multilineTextAlignment(.trailing)
                     }
                 }
 
-                Section("Name") {
-                    TextField("Group name", text: $name)
+                Section(String(localized: "groupEdit.section.name")) {
+                    TextField(String(localized: "groupEdit.placeholder.name"), text: $name)
                     HStack {
                         if isDuplicate {
-                            Text("A group with this name already exists")
+                            Text(String(localized: "groupEdit.error.duplicate"))
                                 .font(.caption)
                                 .foregroundStyle(.red)
                         } else {
@@ -161,14 +161,14 @@ struct GroupEditSheet: View {
                     }
                 }
             }
-            .navigationTitle(isEditing ? "Edit Group" : "New Group")
+            .navigationTitle(isEditing ? String(localized: "groupEdit.navTitle.edit") : String(localized: "groupEdit.navTitle.new"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("Cancel") { dismiss() }
+                    Button(String(localized: "common.cancel")) { dismiss() }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Save") { save() }
+                    Button(String(localized: "common.save")) { save() }
                         .disabled(!canSave)
                         .fontWeight(.semibold)
                 }

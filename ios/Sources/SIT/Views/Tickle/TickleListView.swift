@@ -37,7 +37,7 @@ struct TickleListView: View {
                             row(for: reminder)
                         }
                     } header: {
-                        Label("Due", systemImage: "clock.badge.exclamationmark")
+                        Label(String(localized: "tickleList.section.due"), systemImage: "clock.badge.exclamationmark")
                             .foregroundStyle(amber)
                             .font(.subheadline.weight(.semibold))
                             .textCase(nil)
@@ -45,7 +45,7 @@ struct TickleListView: View {
                 }
 
                 if !upcoming.isEmpty {
-                    Section("Upcoming") {
+                    Section(String(localized: "tickleList.section.upcoming")) {
                         ForEach(upcoming) { reminder in
                             row(for: reminder)
                         }
@@ -53,7 +53,7 @@ struct TickleListView: View {
                 }
 
                 if !snoozed.isEmpty {
-                    Section("Snoozed") {
+                    Section(String(localized: "tickleList.section.snoozed")) {
                         ForEach(snoozed) { reminder in
                             row(for: reminder)
                                 .opacity(0.55)
@@ -62,7 +62,7 @@ struct TickleListView: View {
                 }
             }
             .listStyle(.insetGrouped)
-            .navigationTitle("Tickle")
+            .navigationTitle(String(localized: "tickleList.navTitle"))
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button { showingAdd = true } label: {
@@ -73,9 +73,9 @@ struct TickleListView: View {
             .overlay {
                 if allReminders.isEmpty {
                     ContentUnavailableView(
-                        "No tickles yet",
+                        String(localized: "tickleList.empty.title"),
                         systemImage: "bell.badge",
-                        description: Text("Add one from a contact's detail page, or tap +")
+                        description: Text(String(localized: "tickleList.empty.description"))
                     )
                 }
             }
@@ -97,7 +97,7 @@ struct TickleListView: View {
             Button {
                 TickleScheduler.markComplete(reminder: reminder, context: modelContext)
             } label: {
-                Label("Done", systemImage: "checkmark")
+                Label(String(localized: "common.done"), systemImage: "checkmark")
             }
             .tint(amber)
         }
@@ -107,18 +107,18 @@ struct TickleListView: View {
                 modelContext.delete(reminder)
                 try? modelContext.save()
             } label: {
-                Label("Delete", systemImage: "trash")
+                Label(String(localized: "common.delete"), systemImage: "trash")
             }
             Button {
                 editingReminder = reminder
             } label: {
-                Label("Edit", systemImage: "pencil")
+                Label(String(localized: "common.edit"), systemImage: "pencil")
             }
             .tint(.indigo)
             Button {
                 TickleScheduler.snooze(reminder: reminder, days: 7, context: modelContext)
             } label: {
-                Label("Snooze", systemImage: "zzz")
+                Label(String(localized: "tickleList.action.snooze"), systemImage: "zzz")
             }
             .tint(.orange)
         }

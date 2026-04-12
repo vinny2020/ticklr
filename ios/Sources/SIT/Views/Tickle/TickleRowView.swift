@@ -13,7 +13,7 @@ struct TickleRowView: View {
     private var displayName: String {
         if let contact = reminder.contact { return contact.fullName }
         if let group = reminder.group { return group.name }
-        return "Unknown"
+        return String(localized: "tickleRow.unknown")
     }
 
     private var avatarText: String {
@@ -27,14 +27,14 @@ struct TickleRowView: View {
     private var dueDateLabel: String {
         let cal = Calendar.current
         let now = Date()
-        if cal.isDateInToday(reminder.nextDueDate) { return "Today" }
-        if cal.isDateInYesterday(reminder.nextDueDate) { return "Yesterday" }
+        if cal.isDateInToday(reminder.nextDueDate) { return String(localized: "tickleRow.due.today") }
+        if cal.isDateInYesterday(reminder.nextDueDate) { return String(localized: "tickleRow.due.yesterday") }
         if reminder.nextDueDate < now {
             let days = cal.dateComponents([.day], from: reminder.nextDueDate, to: now).day ?? 0
-            return "\(days)d overdue"
+            return String(localized: "tickleRow.due.overdue \(days)")
         }
         if let days = cal.dateComponents([.day], from: now, to: reminder.nextDueDate).day, days < 8 {
-            return "In \(days)d"
+            return String(localized: "tickleRow.due.upcoming \(days)")
         }
         return reminder.nextDueDate.formatted(date: .abbreviated, time: .omitted)
     }
@@ -54,13 +54,13 @@ struct TickleRowView: View {
                 Text(displayName)
                     .font(.body).fontWeight(.medium)
                 HStack(spacing: 6) {
-                    Text(reminder.frequency.rawValue)
+                    Text(reminder.frequency.localizedName)
                         .font(.caption2).fontWeight(.medium)
                         .padding(.horizontal, 6).padding(.vertical, 2)
                         .background(isDue ? amber.opacity(0.15) : Color(.systemGray5))
                         .foregroundStyle(isDue ? amber : .secondary)
                         .clipShape(Capsule())
-                    Text(dueDateLabel)
+                    Text(verbatim: dueDateLabel)
                         .font(.caption)
                         .foregroundStyle(isDue ? amber : .secondary)
                 }

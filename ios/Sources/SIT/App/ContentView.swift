@@ -12,19 +12,19 @@ struct ContentView: View {
         if hasCompletedOnboarding {
             TabView(selection: $selectedTab) {
                 NetworkListView()
-                    .tabItem { Label("Network", systemImage: "person.2.fill") }
+                    .tabItem { Label(String(localized: "tab.network"), systemImage: "person.2.fill") }
                     .tag(AppTab.network)
                 TickleListView()
-                    .tabItem { Label("Tickle", systemImage: "bell.badge.fill") }
+                    .tabItem { Label(String(localized: "tab.tickle"), systemImage: "bell.badge.fill") }
                     .tag(AppTab.tickle)
                 GroupListView()
-                    .tabItem { Label("Groups", systemImage: "person.3.fill") }
+                    .tabItem { Label(String(localized: "tab.groups"), systemImage: "person.3.fill") }
                     .tag(AppTab.groups)
                 ComposeView(onCancel: { selectedTab = .network })
-                    .tabItem { Label("Compose", systemImage: "square.and.pencil") }
+                    .tabItem { Label(String(localized: "tab.compose"), systemImage: "square.and.pencil") }
                     .tag(AppTab.compose)
                 SettingsView()
-                    .tabItem { Label("Settings", systemImage: "gearshape.fill") }
+                    .tabItem { Label(String(localized: "tab.settings"), systemImage: "gearshape.fill") }
                     .tag(AppTab.settings)
             }
             .tint(.indigo)

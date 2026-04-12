@@ -29,11 +29,11 @@ struct GroupDetailView: View {
                     group.contacts.removeAll(where: { $0.id == contact.id })
                     try? modelContext.save()
                 } label: {
-                    Label("Remove", systemImage: "person.badge.minus")
+                    Label(String(localized: "groupDetail.action.remove"), systemImage: "person.badge.minus")
                 }
             }
         }
-        .searchable(text: $searchText, prompt: "Search \(group.name)")
+        .searchable(text: $searchText, prompt: String(localized: "groupDetail.search.prompt \(group.name)"))
         .navigationTitle("\(group.emoji) \(group.name)")
         .navigationBarTitleDisplayMode(.large)
         .toolbar {
@@ -42,12 +42,12 @@ struct GroupDetailView: View {
                     Button {
                         showingAddMembers = true
                     } label: {
-                        Label("Add Members", systemImage: "person.badge.plus")
+                        Label(String(localized: "groupDetail.menu.addMembers"), systemImage: "person.badge.plus")
                     }
                     Button {
                         showingEditGroup = true
                     } label: {
-                        Label("Edit Group", systemImage: "pencil")
+                        Label(String(localized: "groupDetail.menu.editGroup"), systemImage: "pencil")
                     }
                 } label: {
                     Image(systemName: "ellipsis.circle")
@@ -57,9 +57,9 @@ struct GroupDetailView: View {
         .overlay {
             if group.contacts.isEmpty {
                 ContentUnavailableView(
-                    "No members yet",
+                    String(localized: "groupDetail.empty.title"),
                     systemImage: "person.badge.plus",
-                    description: Text("Tap ··· to add contacts to this group")
+                    description: Text(String(localized: "groupDetail.empty.description"))
                 )
             } else if !searchText.isEmpty && members.isEmpty {
                 ContentUnavailableView.search
@@ -102,8 +102,11 @@ private struct AddMembersSheet: View {
                 Button {
                     group.contacts.append(contact)
                     try? modelContext.save()
-                    let displayName = group.name.count <= 20 ? group.name : "group"
-                    toastMessage = "\(contact.fullName) added to \(displayName)"
+                    if group.name.count <= 20 {
+                        toastMessage = String(localized: "addMembers.toast.addedToNamedGroup \(contact.fullName) \(group.name)")
+                    } else {
+                        toastMessage = String(localized: "addMembers.toast.addedToGroup \(contact.fullName)")
+                    }
                     showToast = true
                     Task {
                         try? await Task.sleep(for: .seconds(2))
@@ -119,20 +122,20 @@ private struct AddMembersSheet: View {
                 }
                 .tint(.primary)
             }
-            .searchable(text: $searchText, prompt: "Search contacts")
-            .navigationTitle("Add to \(group.name)")
+            .searchable(text: $searchText, prompt: String(localized: "addMembers.search"))
+            .navigationTitle(String(localized: "addMembers.navTitle \(group.name)"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Done") { dismiss() }
+                    Button(String(localized: "common.done")) { dismiss() }
                 }
             }
             .overlay {
                 if nonMembers.isEmpty && searchText.isEmpty {
                     ContentUnavailableView(
-                        "Everyone's in this group",
+                        String(localized: "addMembers.empty.title"),
                         systemImage: "checkmark.circle",
-                        description: Text("All contacts are already members")
+                        description: Text(String(localized: "addMembers.empty.description"))
                     )
                 } else if nonMembers.isEmpty {
                     ContentUnavailableView.search
@@ -140,7 +143,7 @@ private struct AddMembersSheet: View {
             }
             .overlay(alignment: .bottom) {
                 if showToast {
-                    Text(toastMessage)
+                    Text(verbatim: toastMessage)
                         .font(.subheadline)
                         .padding(.horizontal, 16)
                         .padding(.vertical, 10)

@@ -29,7 +29,7 @@ struct TemplateListView: View {
             }
             .onDelete(perform: deleteTemplates)
         }
-        .navigationTitle("Message Templates")
+        .navigationTitle(String(localized: "templateList.navTitle"))
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
