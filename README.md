@@ -73,7 +73,7 @@ Or open `android/` in Android Studio.
 - [x] Android contacts import (ContactsContract + LinkedIn CSV)
 - [ ] iCloud backup (iOS)
 - [ ] Android backup
-- [ ] App Store submission
+- [x] App Store submission
 - [ ] Google Play submission
 
 Built by [Xaymaca](https://xaymaca.com) — Build Smarter with AI.
