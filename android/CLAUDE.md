@@ -2,6 +2,41 @@
 
 ---
 
+## ✅ Completed Tasks
+
+### ~~Task 0 — Phase 1 Internationalization: Extract all hardcoded strings to `strings.xml`~~ ✅ DONE (2026-04-12)
+
+**Summary of what was done:**
+- Populated `res/values/strings.xml` with ~150 keys covering all Compose screens
+- Replaced every hardcoded string in all 14 screen files with `stringResource(R.string.key)`
+- ViewModel toast strings (`TickleViewModel`, `ComposeViewModel`, `GroupViewModel`) use `context.getString()` via `@ApplicationContext`
+- `TickleFrequency` enum display names mapped to resource IDs via `FrequencyExtensions.kt`
+- `TickleAlarmReceiver.kt` created (was missing from repo) with `context.getString()` for notification strings
+- `StringResourceTest.kt` — 10 test methods verifying all string resource keys exist at compile time
+- Bug fixes along the way: duplicate `<receiver>` in AndroidManifest, missing `ic_notification` drawable, nullable `versionName` in SettingsScreen, bottom nav missing on Compose screen (route query-param stripping)
+
+---
+
+### ~~Task 0b — Phase 2: Locale-aware date/time and number formatting~~ ✅ DONE (2026-04-12)
+
+**Summary of what was done:**
+- Audited entire codebase — no `SimpleDateFormat` with hardcoded locales found
+- Notification strings in `TickleWorker` and `TickleAlarmReceiver` now use `context.getString(R.string.tickle_notification_title/body)`
+- Added `StringResourceTest` methods for notification key coverage
+- Date math (millisecond arithmetic in `TickleListScreen`) is locale-neutral — no changes needed
+
+---
+
+### ~~Task 0c — Phase 3: Add first non-English language (Spanish)~~ ✅ DONE (2026-04-12) — extended to 12 languages
+
+**Summary of what was done:**
+- Created full translations for 12 languages: Spanish (`es`), French (`fr`), German (`de`), Italian (`it`), Dutch (`nl`), Greek (`el`), Polish (`pl`), Romanian (`ro`), Hungarian (`hu`), Portuguese (`pt`), Swedish (`sv`), Czech (`cs`)
+- Complex plural rules correctly handled: Polish and Czech use `one/few/many/other`; Romanian uses `one/few/other`
+- `resourceConfigurations` in `build.gradle.kts` restricts bundled locales to the 13 supported (`en` + 12 above)
+- `TranslationCompletenessTest.kt` — data-driven test catches missing or extra keys in all 12 translation files; adding a new language requires only one map entry
+
+---
+
 ## 🛠️ Pending Tasks — Start Here
 
 ### Task 0 — Phase 1 Internationalization: Extract all hardcoded strings to `strings.xml`
@@ -274,7 +309,7 @@ dependencies.
 
 ---
 
-### Task 0b — Phase 2: Locale-aware date/time and number formatting
+### ~~Task 0b — Phase 2: Locale-aware date/time and number formatting~~ ✅ DONE (2026-04-12)
 
 **Prerequisite:** Task 0 (Phase 1) must be complete — all UI strings extracted to `strings.xml`.
 
@@ -410,7 +445,7 @@ settings, so that when translations are added in Phase 3, dates render correctly
 
 ---
 
-### Task 0c — Phase 3: Add first non-English language (Spanish)
+### ~~Task 0c — Phase 3: Add first non-English language (Spanish)~~ ✅ DONE (2026-04-12) — extended to 12 languages
 
 **Prerequisite:** Task 0 (Phase 1) and Task 0b (Phase 2) must be complete.
 
