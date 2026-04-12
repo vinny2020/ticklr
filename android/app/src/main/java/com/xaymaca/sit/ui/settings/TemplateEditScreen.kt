@@ -7,9 +7,11 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.xaymaca.sit.R
 import com.xaymaca.sit.ui.theme.Cobalt
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -33,10 +35,15 @@ fun TemplateEditScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(if (isEditing) "Edit Template" else "New Template", fontWeight = FontWeight.Bold) },
+                title = {
+                    Text(
+                        stringResource(if (isEditing) R.string.template_edit_edit_title else R.string.template_edit_new_title),
+                        fontWeight = FontWeight.Bold
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.common_back))
                     }
                 },
                 actions = {
@@ -54,7 +61,7 @@ fun TemplateEditScreen(
                         enabled = canSave
                     ) {
                         Text(
-                            if (isEditing) "Update" else "Save",
+                            stringResource(if (isEditing) R.string.common_update else R.string.common_save),
                             color = if (canSave) Cobalt else MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
@@ -77,7 +84,7 @@ fun TemplateEditScreen(
                 value = title,
                 onValueChange = { title = it },
                 modifier = Modifier.fillMaxWidth(),
-                label = { Text("Title") },
+                label = { Text(stringResource(R.string.template_edit_title_label)) },
                 singleLine = true,
                 shape = RoundedCornerShape(10.dp)
             )
@@ -88,7 +95,7 @@ fun TemplateEditScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .heightIn(min = 80.dp),
-                label = { Text("Body") },
+                label = { Text(stringResource(R.string.template_edit_body_label)) },
                 shape = RoundedCornerShape(10.dp)
             )
         }

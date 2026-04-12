@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App -->
+    <string name="app_name">Ticklr</string>
+
+    <!-- Common -->
+    <string name="common_save">Spara</string>
+    <string name="common_cancel">Avbryt</string>
+    <string name="common_delete">Ta bort</string>
+    <string name="common_remove">Ta bort</string>
+    <string name="common_ok">OK</string>
+    <string name="common_reset">Återställ</string>
+    <string name="common_create">Skapa</string>
+    <string name="common_back">Tillbaka</string>
+    <string name="common_no_name">Inget namn</string>
+    <string name="common_add">Lägg till</string>
+    <string name="common_update">Uppdatera</string>
+    <string name="common_send">Skicka</string>
+    <string name="common_edit">Redigera</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Inställningar</string>
+    <string name="settings_section_appearance">Utseende</string>
+    <string name="settings_section_data">Data</string>
+    <string name="settings_section_messaging">Meddelanden</string>
+    <string name="settings_section_about">Om</string>
+    <string name="settings_section_developer">Utvecklare</string>
+    <string name="settings_theme_title">Tema</string>
+    <string name="settings_theme_system">Systemstandard</string>
+    <string name="settings_theme_light">Ljust</string>
+    <string name="settings_theme_dark">Mörkt</string>
+    <string name="settings_import_title">Importera kontakter</string>
+    <string name="settings_import_subtitle">Från telefonen eller LinkedIn-CSV</string>
+    <string name="settings_templates_title">Meddelandemallar</string>
+    <string name="settings_templates_subtitle">Skapa och hantera återanvändbara meddelanden</string>
+    <string name="settings_sms_direct_title">Skicka SMS direkt</string>
+    <string name="settings_sms_direct_subtitle">Använder SmsManager istället för att öppna appen Meddelanden.</string>
+    <string name="settings_about_privacy">Integritet i första hand. Inget moln, ingen analys, inget konto krävs. All data lagras på enheten.</string>
+    <string name="settings_about_built_by">Skapad av Xaymaca</string>
+    <string name="settings_about_version">Version %1$s</string>
+    <string name="settings_reset_onboarding_title">Återställ introduktion</string>
+    <string name="settings_reset_onboarding_subtitle">Visa välkomstskärmen igen</string>
+    <string name="settings_reset_confirm_message">Du kommer att föras tillbaka till välkomstskärmen. Dina data tas inte bort.</string>
+    <string name="settings_clear_data_title">Rensa all data</string>
+    <string name="settings_clear_data_message">Detta tar permanent bort alla kontakter, grupper och tickles. Det går inte att ångra.</string>
+    <string name="settings_clear_data_confirm">Rensa allt</string>
+    <string name="settings_choose_theme">Välj tema</string>
+    <string name="settings_debug_load_title">Läs in testkontakter</string>
+    <string name="settings_debug_load_subtitle">Läser in 20 falska kontakter från resurser (endast debug)</string>
+    <string name="settings_debug_clear_subtitle">Tar permanent bort kontakter, grupper och tickles (endast debug)</string>
+
+    <!-- Tickle list -->
+    <string name="tickle_list_title">Tickle</string>
+    <string name="tickle_list_add_fab">Lägg till tickle</string>
+    <string name="tickle_list_section_due">Försenade</string>
+    <string name="tickle_list_section_upcoming">Kommande</string>
+    <string name="tickle_list_section_snoozed">Uppskjutna</string>
+    <string name="tickle_list_empty_title">Inga tickles ännu</string>
+    <string name="tickle_list_empty_description">Tryck på + för att schemalägga en påminnelse</string>
+    <string name="tickle_row_action_done">Klar</string>
+    <string name="tickle_row_action_snooze">Skjut upp</string>
+    <string name="tickle_row_action_delete">Ta bort</string>
+    <string name="tickle_row_default_note">Tickle-påminnelse</string>
+    <string name="tickle_row_today">Idag</string>
+    <string name="tickle_row_tomorrow">Imorgon</string>
+    <string name="tickle_row_yesterday">Igår</string>
+    <string name="tickle_row_in_days">Om %1$dd</string>
+    <string name="tickle_row_days_overdue">%1$dd försenad</string>
+
+    <!-- Tickle edit -->
+    <string name="tickle_edit_new_title">Ny Tickle</string>
+    <string name="tickle_edit_title">Redigera Tickle</string>
+    <string name="tickle_edit_tab_contact">Kontakt</string>
+    <string name="tickle_edit_tab_group">Grupp</string>
+    <string name="tickle_edit_section_contact">KONTAKT</string>
+    <string name="tickle_edit_section_group">GRUPP</string>
+    <string name="tickle_edit_search_contacts">Sök kontakter</string>
+    <string name="tickle_edit_section_frequency">FREKVENS</string>
+    <string name="tickle_edit_section_custom_interval">ANPASSAT INTERVALL (DAGAR)</string>
+    <string name="tickle_edit_section_note">ANTECKNING (VALFRITT)</string>
+    <string name="tickle_edit_note_placeholder">Vad att prata om…</string>
+    <string name="tickle_edit_custom_interval_days">%1$d dagar</string>
+    <string name="tickle_edit_no_groups_title">Inga grupper ännu</string>
+    <string name="tickle_edit_no_groups_description">Med grupper kan du skicka en tickle till hela ett team eller en krets på en gång.</string>
+    <string name="tickle_edit_create_group_button">Skapa en grupp</string>
+    <string name="tickle_edit_new_group_dialog_title">Ny grupp</string>
+    <string name="tickle_edit_group_name_label">Gruppnamn</string>
+    <string name="tickle_saved">Tickle sparad</string>
+    <string name="tickle_updated">Tickle uppdaterad</string>
+    <string name="tickle_notification_contact_fallback">din kontakt</string>
+    <string name="tickle_notification_title">Dags att kontakta %1$s</string>
+    <string name="tickle_notification_body">Dina människor spelar roll — skicka ett snabbt meddelande idag.</string>
+
+    <!-- Network list -->
+    <string name="network_title">Nätverk</string>
+    <string name="network_more_options">Fler alternativ</string>
+    <string name="network_import_contacts">Importera kontakter</string>
+    <string name="network_search_placeholder">Sök kontakter…</string>
+    <string name="network_empty_title">Inga kontakter ännu</string>
+    <string name="network_empty_description">Tryck på + för att lägga till någon</string>
+    <string name="network_add_contact_fab">Lägg till kontakt</string>
+    <string name="network_delete_title">Ta bort kontakt</string>
+    <string name="network_delete_message">Ta bort %1$s från ditt nätverk? Det går inte att ångra.</string>
+    <string name="network_contact_has_phone">Har telefon</string>
+    <string name="network_contact_has_email">Har e-post</string>
+    <string name="network_contact_import_source">Importkälla</string>
+
+    <!-- Contact detail -->
+    <string name="contact_detail_add_tickle">Lägg till Tickle</string>
+    <string name="contact_detail_add_to_group">Lägg till i grupp</string>
+    <string name="contact_detail_message">Meddelande</string>
+    <string name="contact_detail_section_phone">Telefon</string>
+    <string name="contact_detail_section_email">E-post</string>
+    <string name="contact_detail_section_notes">Anteckningar</string>
+    <string name="contact_detail_section_tags">Taggar</string>
+    <string name="contact_detail_delete">Ta bort kontakt</string>
+    <string name="contact_add_to_group_title">Lägg till i grupp</string>
+    <string name="contact_add_to_group_empty">Inga grupper ännu.</string>
+    <string name="contact_add_to_group_create_new">+ Skapa ny grupp</string>
+    <string name="contact_add_to_group_group_name">Gruppnamn</string>
+    <string name="contact_group_member_check">Medlem</string>
+
+    <!-- Add / Edit contact -->
+    <string name="add_contact_title">Ny kontakt</string>
+    <string name="edit_contact_title">Redigera kontakt</string>
+    <string name="add_contact_section_name">Namn</string>
+    <string name="add_contact_section_work">Arbete</string>
+    <string name="add_contact_section_phone">Telefon</string>
+    <string name="add_contact_section_email">E-post</string>
+    <string name="add_contact_section_notes">Anteckningar</string>
+    <string name="add_contact_section_tags">Taggar</string>
+    <string name="add_contact_first_name">Förnamn</string>
+    <string name="add_contact_last_name">Efternamn</string>
+    <string name="add_contact_company">Företag</string>
+    <string name="add_contact_job_title">Befattning</string>
+    <string name="add_contact_phone_n">Telefon %1$d</string>
+    <string name="add_contact_email_n">E-post %1$d</string>
+    <string name="add_contact_add_phone">Lägg till telefon</string>
+    <string name="add_contact_add_email">Lägg till e-post</string>
+    <string name="add_contact_notes_label">Anteckningar</string>
+    <string name="add_contact_add_tag_label">Lägg till tagg</string>
+    <string name="add_contact_add_tag_button">Lägg till tagg</string>
+
+    <!-- Groups list -->
+    <string name="group_list_title">Grupper</string>
+    <string name="group_list_empty_title">Inga grupper ännu</string>
+    <string name="group_list_empty_description">Tryck på + för att skapa en grupp</string>
+    <string name="group_list_create_fab">Skapa grupp</string>
+    <string name="group_delete_title">Ta bort grupp</string>
+    <string name="group_delete_message">Ta bort \"%1$s\"? Kontakter tas inte bort.</string>
+    <string name="group_new_dialog_title">Ny grupp</string>
+    <string name="group_dialog_emoji_label">Emoji</string>
+    <string name="group_dialog_name_label">Gruppnamn</string>
+    <string name="group_dialog_name_exists">Namnet finns redan</string>
+    <string name="group_dialog_char_count">%1$d / 30</string>
+    <plurals name="group_list_member_count">
+        <item quantity="one">%1$d medlem</item>
+        <item quantity="other">%1$d medlemmar</item>
+    </plurals>
+
+    <!-- Group detail -->
+    <string name="group_detail_empty">Inga medlemmar ännu. Tryck på + för att lägga till.</string>
+    <string name="group_detail_add_members_title">Lägg till medlemmar</string>
+    <string name="group_detail_filter_placeholder">Filtrera kontakter…</string>
+    <string name="group_detail_all_in_group">Alla kontakter finns redan i den här gruppen</string>
+    <string name="group_detail_no_match">Inga kontakter matchar</string>
+    <string name="group_detail_add_member_button">Lägg till</string>
+    <string name="group_detail_member_added">%1$s tillagd i %2$s</string>
+    <string name="group_detail_member_added_generic">%1$s tillagd i grupp</string>
+    <string name="group_detail_edit_group">Redigera grupp</string>
+    <string name="group_detail_add_members_fab">Lägg till medlemmar</string>
+    <string name="group_edit_dialog_title">Redigera grupp</string>
+
+    <!-- Compose -->
+    <string name="compose_title">Skriv</string>
+    <string name="compose_clear">Rensa meddelande</string>
+    <string name="compose_to_label">Till</string>
+    <string name="compose_search_placeholder">Sök kontakter…</string>
+    <string name="compose_no_phone">Inget telefonnummer registrerat</string>
+    <string name="compose_select_template">Välj mall</string>
+    <string name="compose_message_label">Meddelande</string>
+    <string name="compose_message_placeholder">Skriv ditt meddelande…</string>
+    <string name="compose_remove_contact">Ta bort kontakt</string>
+    <string name="compose_message_sent">Meddelande skickat \u2713</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_tagline">DINA MÄNNISKOR SPELAR ROLL</string>
+    <string name="onboarding_description">Ditt personliga nätverk, privat.\nInget moln. Inget socialt nätverk. Bara dina människor.</string>
+    <string name="onboarding_import_button">Importera kontakter</string>
+    <string name="onboarding_start_empty">Börja med tomt nätverk</string>
+
+    <!-- Import -->
+    <string name="import_title">Importera kontakter</string>
+    <string name="import_success_card">%1$d kontakter importerade</string>
+    <string name="import_from_phone_title">Importera från telefonkontakter</string>
+    <string name="import_from_phone_subtitle">Synkronisera dina kontakter från enhetens adressbok.</string>
+    <string name="import_from_linkedin_title">Fyll ditt nätverk från LinkedIn-CSV</string>
+    <string name="import_from_linkedin_subtitle">LinkedIn-exporter innehåller namn och företag utan telefonnummer. Du lägger till kontaktuppgifter manuellt efter importen.</string>
+    <string name="import_linkedin_instructions_title">Hur du exporterar från LinkedIn</string>
+    <string name="import_linkedin_instructions">1. Gå till linkedin.com\n2. Tryck på Jag → Inställningar och sekretess\n3. Datasekretess → Hämta en kopia av dina data\n4. Välj \"Kontakter\" och begär export\n5. Ladda ner CSV-filen och välj den här</string>
+    <string name="import_continue_button">Fortsätt till nätverket</string>
+    <string name="import_skip_button">Hoppa över för nu</string>
+    <string name="import_snackbar_success">%1$d kontakter importerade</string>
+    <string name="import_snackbar_linkedin">%1$d LinkedIn-kontakter importerade</string>
+    <string name="import_snackbar_permission_denied">Åtkomst till kontakter nekad</string>
+    <string name="import_snackbar_failed">Importen misslyckades: %1$s</string>
+    <string name="import_snackbar_could_not_open">Det gick inte att öppna filen</string>
+
+    <!-- Template list -->
+    <string name="template_list_title">Meddelandemallar</string>
+    <string name="template_list_empty">Inga mallar ännu. Tryck på + för att skapa en.</string>
+    <string name="template_add_fab">Lägg till mall</string>
+    <string name="template_delete_icon">Ta bort</string>
+
+    <!-- Template edit -->
+    <string name="template_edit_new_title">Ny mall</string>
+    <string name="template_edit_edit_title">Redigera mall</string>
+    <string name="template_edit_title_label">Titel</string>
+    <string name="template_edit_body_label">Innehåll</string>
+
+    <!-- Bottom nav -->
+    <string name="nav_network">Nätverk</string>
+    <string name="nav_tickle">Tickle</string>
+    <string name="nav_groups">Grupper</string>
+    <string name="nav_compose">Skriv</string>
+    <string name="nav_settings">Inställningar</string>
+
+    <!-- Frequency display names -->
+    <string name="frequency_daily">Dagligen</string>
+    <string name="frequency_weekly">Veckovis</string>
+    <string name="frequency_biweekly">Varannan vecka</string>
+    <string name="frequency_monthly">Månadsvis</string>
+    <string name="frequency_bimonthly">Varannan månad</string>
+    <string name="frequency_quarterly">Kvartalsvis</string>
+    <string name="frequency_custom">Anpassad</string>
+</resources>

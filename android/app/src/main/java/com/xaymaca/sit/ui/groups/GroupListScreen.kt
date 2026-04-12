@@ -15,9 +15,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.xaymaca.sit.R
 import com.xaymaca.sit.data.model.ContactGroup
 import com.xaymaca.sit.data.model.GroupWithContacts
 import com.xaymaca.sit.ui.theme.Cobalt
@@ -37,7 +40,7 @@ fun GroupListScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text("Groups", fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.group_list_title), fontWeight = FontWeight.Bold)
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.background,
@@ -51,7 +54,7 @@ fun GroupListScreen(
                 containerColor = Cobalt,
                 contentColor = MaterialTheme.colorScheme.onPrimary
             ) {
-                Icon(Icons.Default.Add, contentDescription = "Create group")
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.group_list_create_fab))
             }
         },
         containerColor = MaterialTheme.colorScheme.background
@@ -65,13 +68,13 @@ fun GroupListScreen(
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
-                        "No groups yet",
+                        stringResource(R.string.group_list_empty_title),
                         style = MaterialTheme.typography.titleMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        "Tap + to create a group",
+                        stringResource(R.string.group_list_empty_description),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -110,8 +113,8 @@ fun GroupListScreen(
     groupToDelete?.let { group ->
         AlertDialog(
             onDismissRequest = { groupToDelete = null },
-            title = { Text("Delete Group") },
-            text = { Text("Delete \"${group.name}\"? Contacts will not be removed.") },
+            title = { Text(stringResource(R.string.group_delete_title)) },
+            text = { Text(stringResource(R.string.group_delete_message, group.name)) },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -119,11 +122,13 @@ fun GroupListScreen(
                         groupToDelete = null
                     }
                 ) {
-                    Text("Delete", color = MaterialTheme.colorScheme.error)
+                    Text(stringResource(R.string.common_delete), color = MaterialTheme.colorScheme.error)
                 }
             },
             dismissButton = {
-                TextButton(onClick = { groupToDelete = null }) { Text("Cancel") }
+                TextButton(onClick = { groupToDelete = null }) {
+                    Text(stringResource(R.string.common_cancel))
+                }
             }
         )
     }
@@ -156,7 +161,7 @@ private fun SwipeToDeleteGroupRow(
             ) {
                 Icon(
                     Icons.Default.Delete,
-                    contentDescription = "Delete",
+                    contentDescription = stringResource(R.string.common_delete),
                     tint = Color.White,
                     modifier = Modifier.padding(end = 16.dp)
                 )
@@ -190,7 +195,7 @@ private fun GroupRow(groupWithContacts: GroupWithContacts, onClick: () -> Unit) 
             )
             val count = groupWithContacts.contacts.size
             Text(
-                text = if (count == 1) "1 member" else "$count members",
+                text = pluralStringResource(R.plurals.group_list_member_count, count, count),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -210,13 +215,13 @@ private fun CreateGroupDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("New Group") },
+        title = { Text(stringResource(R.string.group_new_dialog_title)) },
         text = {
             Column {
                 OutlinedTextField(
                     value = emoji,
                     onValueChange = { if (it.length <= 2) emoji = it },
-                    label = { Text("Emoji") },
+                    label = { Text(stringResource(R.string.group_dialog_emoji_label)) },
                     singleLine = true,
                     modifier = Modifier.width(80.dp),
                     shape = RoundedCornerShape(8.dp)
@@ -225,7 +230,7 @@ private fun CreateGroupDialog(
                 OutlinedTextField(
                     value = name,
                     onValueChange = { if (it.length <= 30) name = it },
-                    label = { Text("Group Name") },
+                    label = { Text(stringResource(R.string.group_dialog_name_label)) },
                     singleLine = true,
                     isError = isDuplicate,
                     modifier = Modifier.fillMaxWidth(),
@@ -237,7 +242,7 @@ private fun CreateGroupDialog(
                         ) {
                             if (isDuplicate) {
                                 Text(
-                                    "Name already exists",
+                                    stringResource(R.string.group_dialog_name_exists),
                                     color = MaterialTheme.colorScheme.error,
                                     style = MaterialTheme.typography.bodySmall
                                 )
@@ -245,7 +250,7 @@ private fun CreateGroupDialog(
                                 Spacer(modifier = Modifier.weight(1f))
                             }
                             Text(
-                                text = "${name.length} / 30",
+                                text = stringResource(R.string.group_dialog_char_count, name.length),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = if (name.length >= 30) MaterialTheme.colorScheme.error
                                         else MaterialTheme.colorScheme.onSurfaceVariant
@@ -260,11 +265,11 @@ private fun CreateGroupDialog(
                 onClick = { if (name.isNotBlank() && !isDuplicate) onCreate(name, emoji) },
                 enabled = name.isNotBlank() && !isDuplicate
             ) {
-                Text("Create", color = Cobalt)
+                Text(stringResource(R.string.common_create), color = Cobalt)
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
+            TextButton(onClick = onDismiss) { Text(stringResource(R.string.common_cancel)) }
         }
     )
 }

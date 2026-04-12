@@ -21,9 +21,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.xaymaca.sit.R
 import com.xaymaca.sit.ui.theme.Amber
 import com.xaymaca.sit.ui.theme.Cobalt
 import com.xaymaca.sit.ui.theme.NavyLight
@@ -40,13 +42,13 @@ fun SettingsScreen(
     val sendDirectly by viewModel.sendDirectly.collectAsState()
     val themeMode by viewModel.themeMode.collectAsState()
     val seedMessage by viewModel.seedMessage.collectAsState()
-    
+
     var showThemeDialog by remember { mutableStateOf(false) }
     var tempThemeMode by remember(showThemeDialog) { mutableIntStateOf(themeMode) }
-    
+
     var showResetConfirm by remember { mutableStateOf(false) }
     var showClearConfirm by remember { mutableStateOf(false) }
-    
+
     val snackbarHostState = remember { SnackbarHostState() }
 
     val versionName = remember {
@@ -57,7 +59,7 @@ fun SettingsScreen(
                 @Suppress("DEPRECATION")
                 context.packageManager.getPackageInfo(context.packageName, 0)
             }
-            packageInfo.versionName
+            packageInfo.versionName ?: "1.0"
         } catch (e: Exception) {
             "1.0"
         }
@@ -73,7 +75,7 @@ fun SettingsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Settings", fontWeight = FontWeight.Bold) },
+                title = { Text(stringResource(R.string.settings_title), fontWeight = FontWeight.Bold) },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.background,
                     titleContentColor = MaterialTheme.colorScheme.onBackground
@@ -91,17 +93,17 @@ fun SettingsScreen(
                 .padding(vertical = 8.dp)
         ) {
             // Appearance section
-            SettingsSectionHeader("Appearance")
+            SettingsSectionHeader(stringResource(R.string.settings_section_appearance))
 
             val themeLabel = when (themeMode) {
-                1 -> "Light"
-                2 -> "Dark"
-                else -> "System Default"
+                1 -> stringResource(R.string.settings_theme_light)
+                2 -> stringResource(R.string.settings_theme_dark)
+                else -> stringResource(R.string.settings_theme_system)
             }
 
             SettingsRow(
                 icon = Icons.Default.Palette,
-                title = "Theme",
+                title = stringResource(R.string.settings_theme_title),
                 subtitle = themeLabel,
                 onClick = { showThemeDialog = true }
             )
@@ -109,12 +111,12 @@ fun SettingsScreen(
             HorizontalDivider(color = NavyLight, modifier = Modifier.padding(start = 56.dp))
 
             // Data section
-            SettingsSectionHeader("Data")
+            SettingsSectionHeader(stringResource(R.string.settings_section_data))
 
             SettingsRow(
                 icon = Icons.Default.CloudUpload,
-                title = "Import Contacts",
-                subtitle = "From phone or LinkedIn CSV",
+                title = stringResource(R.string.settings_import_title),
+                subtitle = stringResource(R.string.settings_import_subtitle),
                 onClick = onImport
             )
 
@@ -122,15 +124,15 @@ fun SettingsScreen(
 
             SettingsRow(
                 icon = Icons.AutoMirrored.Filled.TextSnippet,
-                title = "Message Templates",
-                subtitle = "Create and manage reusable messages",
+                title = stringResource(R.string.settings_templates_title),
+                subtitle = stringResource(R.string.settings_templates_subtitle),
                 onClick = onTemplates
             )
 
             HorizontalDivider(color = NavyLight, modifier = Modifier.padding(start = 56.dp))
 
             // Messaging section
-            SettingsSectionHeader("Messaging")
+            SettingsSectionHeader(stringResource(R.string.settings_section_messaging))
 
             Row(
                 modifier = Modifier
@@ -147,12 +149,12 @@ fun SettingsScreen(
                 Spacer(modifier = Modifier.width(16.dp))
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        "Send SMS directly",
+                        stringResource(R.string.settings_sms_direct_title),
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.Medium
                     )
                     Text(
-                        "Uses SmsManager instead of opening Messages app.",
+                        stringResource(R.string.settings_sms_direct_subtitle),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -170,7 +172,7 @@ fun SettingsScreen(
             HorizontalDivider(color = NavyLight, modifier = Modifier.padding(start = 56.dp))
 
             // About section
-            SettingsSectionHeader("About")
+            SettingsSectionHeader(stringResource(R.string.settings_section_about))
 
             Column(
                 modifier = Modifier
@@ -178,25 +180,25 @@ fun SettingsScreen(
                     .padding(horizontal = 16.dp, vertical = 12.dp)
             ) {
                 Text(
-                    "Ticklr",
+                    stringResource(R.string.app_name),
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.SemiBold
                 )
                 Spacer(modifier = Modifier.height(2.dp))
                 Text(
-                    "Version $versionName",
+                    stringResource(R.string.settings_about_version, versionName),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Spacer(modifier = Modifier.height(2.dp))
                 Text(
-                    "Built by Xaymaca",
+                    stringResource(R.string.settings_about_built_by),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Spacer(modifier = Modifier.height(6.dp))
                 Text(
-                    "Privacy-first. No cloud, no analytics, no account required. All data is stored on-device.",
+                    stringResource(R.string.settings_about_privacy),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -205,12 +207,12 @@ fun SettingsScreen(
             HorizontalDivider(color = NavyLight, modifier = Modifier.padding(start = 56.dp))
 
             // Danger zone
-            SettingsSectionHeader("Developer")
+            SettingsSectionHeader(stringResource(R.string.settings_section_developer))
 
             SettingsRow(
                 icon = Icons.Default.Refresh,
-                title = "Reset Onboarding",
-                subtitle = "Show the welcome screen again",
+                title = stringResource(R.string.settings_reset_onboarding_title),
+                subtitle = stringResource(R.string.settings_reset_onboarding_subtitle),
                 iconTint = MaterialTheme.colorScheme.error,
                 onClick = { showResetConfirm = true }
             )
@@ -219,16 +221,16 @@ fun SettingsScreen(
                 HorizontalDivider(color = NavyLight, modifier = Modifier.padding(start = 56.dp))
                 SettingsRow(
                     icon = Icons.Default.BugReport,
-                    title = "Load Test Contacts",
-                    subtitle = "Seeds 20 fake contacts from assets (debug only)",
+                    title = stringResource(R.string.settings_debug_load_title),
+                    subtitle = stringResource(R.string.settings_debug_load_subtitle),
                     iconTint = Amber,
                     onClick = { viewModel.loadTestContacts() }
                 )
                 HorizontalDivider(color = NavyLight, modifier = Modifier.padding(start = 56.dp))
                 SettingsRow(
                     icon = Icons.Default.DeleteForever,
-                    title = "Clear All Data",
-                    subtitle = "Permanently deletes contacts, groups & tickles (debug only)",
+                    title = stringResource(R.string.settings_clear_data_title),
+                    subtitle = stringResource(R.string.settings_debug_clear_subtitle),
                     iconTint = MaterialTheme.colorScheme.error,
                     onClick = { showClearConfirm = true }
                 )
@@ -239,16 +241,16 @@ fun SettingsScreen(
     if (showThemeDialog) {
         AlertDialog(
             onDismissRequest = { showThemeDialog = false },
-            title = { Text("Choose Theme") },
+            title = { Text(stringResource(R.string.settings_choose_theme)) },
             text = {
                 Column {
-                    ThemeOption("System Default", tempThemeMode == 0) {
+                    ThemeOption(stringResource(R.string.settings_theme_system), tempThemeMode == 0) {
                         tempThemeMode = 0
                     }
-                    ThemeOption("Light", tempThemeMode == 1) {
+                    ThemeOption(stringResource(R.string.settings_theme_light), tempThemeMode == 1) {
                         tempThemeMode = 1
                     }
-                    ThemeOption("Dark", tempThemeMode == 2) {
+                    ThemeOption(stringResource(R.string.settings_theme_dark), tempThemeMode == 2) {
                         tempThemeMode = 2
                     }
                 }
@@ -260,12 +262,12 @@ fun SettingsScreen(
                         showThemeDialog = false
                     }
                 ) {
-                    Text("OK")
+                    Text(stringResource(R.string.common_ok))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showThemeDialog = false }) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.common_cancel))
                 }
             }
         )
@@ -274,8 +276,8 @@ fun SettingsScreen(
     if (showResetConfirm) {
         AlertDialog(
             onDismissRequest = { showResetConfirm = false },
-            title = { Text("Reset Onboarding") },
-            text = { Text("This will return you to the welcome screen. Your data will not be deleted.") },
+            title = { Text(stringResource(R.string.settings_reset_onboarding_title)) },
+            text = { Text(stringResource(R.string.settings_reset_confirm_message)) },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -283,11 +285,13 @@ fun SettingsScreen(
                         onResetOnboarding()
                     }
                 ) {
-                    Text("Reset", color = MaterialTheme.colorScheme.error)
+                    Text(stringResource(R.string.common_reset), color = MaterialTheme.colorScheme.error)
                 }
             },
             dismissButton = {
-                TextButton(onClick = { showResetConfirm = false }) { Text("Cancel") }
+                TextButton(onClick = { showResetConfirm = false }) {
+                    Text(stringResource(R.string.common_cancel))
+                }
             }
         )
     }
@@ -295,8 +299,8 @@ fun SettingsScreen(
     if (showClearConfirm) {
         AlertDialog(
             onDismissRequest = { showClearConfirm = false },
-            title = { Text("Clear All Data") },
-            text = { Text("This will permanently delete all contacts, groups, and tickles. This cannot be undone.") },
+            title = { Text(stringResource(R.string.settings_clear_data_title)) },
+            text = { Text(stringResource(R.string.settings_clear_data_message)) },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -304,11 +308,13 @@ fun SettingsScreen(
                         viewModel.clearAllContacts()
                     }
                 ) {
-                    Text("Clear All", color = MaterialTheme.colorScheme.error)
+                    Text(stringResource(R.string.settings_clear_data_confirm), color = MaterialTheme.colorScheme.error)
                 }
             },
             dismissButton = {
-                TextButton(onClick = { showClearConfirm = false }) { Text("Cancel") }
+                TextButton(onClick = { showClearConfirm = false }) {
+                    Text(stringResource(R.string.common_cancel))
+                }
             }
         )
     }

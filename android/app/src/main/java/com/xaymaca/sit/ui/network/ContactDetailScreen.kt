@@ -23,10 +23,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.xaymaca.sit.R
 import com.xaymaca.sit.data.model.Contact
 import com.xaymaca.sit.ui.groups.GroupViewModel
 import com.xaymaca.sit.ui.theme.Amber
@@ -63,12 +65,12 @@ fun ContactDetailScreen(
                 title = { Text(contact?.fullName ?: "") },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.common_back))
                     }
                 },
                 actions = {
                     IconButton(onClick = onEdit) {
-                        Icon(Icons.Default.Edit, contentDescription = "Edit")
+                        Icon(Icons.Default.Edit, contentDescription = stringResource(R.string.common_edit))
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -124,7 +126,7 @@ fun ContactDetailScreen(
                         }
                         Spacer(modifier = Modifier.height(12.dp))
                         Text(
-                            text = c.fullName.ifBlank { "No Name" },
+                            text = c.fullName.ifBlank { stringResource(R.string.common_no_name) },
                             style = MaterialTheme.typography.headlineSmall,
                             fontWeight = FontWeight.Bold
                         )
@@ -162,7 +164,7 @@ fun ContactDetailScreen(
                         ) {
                             Icon(Icons.Default.Notifications, contentDescription = null, modifier = Modifier.size(18.dp))
                             Spacer(modifier = Modifier.width(6.dp))
-                            Text("Add Tickle", fontWeight = FontWeight.SemiBold)
+                            Text(stringResource(R.string.contact_detail_add_tickle), fontWeight = FontWeight.SemiBold)
                         }
                         Button(
                             onClick = { showGroupSheet = true },
@@ -172,7 +174,7 @@ fun ContactDetailScreen(
                         ) {
                             Icon(Icons.Default.Group, contentDescription = null, modifier = Modifier.size(18.dp))
                             Spacer(modifier = Modifier.width(6.dp))
-                            Text("Add to Group", fontWeight = FontWeight.SemiBold)
+                            Text(stringResource(R.string.contact_detail_add_to_group), fontWeight = FontWeight.SemiBold)
                         }
                     }
                 }
@@ -190,13 +192,13 @@ fun ContactDetailScreen(
                     ) {
                         Icon(Icons.AutoMirrored.Filled.Send, contentDescription = null, modifier = Modifier.size(18.dp))
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text("Message", fontWeight = FontWeight.SemiBold)
+                        Text(stringResource(R.string.contact_detail_message), fontWeight = FontWeight.SemiBold)
                     }
                 }
 
                 // Phone numbers
                 if (phoneNumbers.isNotEmpty()) {
-                    item { SectionHeader("Phone") }
+                    item { SectionHeader(stringResource(R.string.contact_detail_section_phone)) }
                     items(phoneNumbers) { number ->
                         Text(
                             text = number,
@@ -215,7 +217,7 @@ fun ContactDetailScreen(
 
                 // Emails
                 if (emails.isNotEmpty()) {
-                    item { SectionHeader("Email") }
+                    item { SectionHeader(stringResource(R.string.contact_detail_section_email)) }
                     items(emails) { email ->
                         Text(
                             text = email,
@@ -235,7 +237,7 @@ fun ContactDetailScreen(
                 // Notes
                 if (c.notes.isNotBlank()) {
                     item {
-                        SectionHeader("Notes")
+                        SectionHeader(stringResource(R.string.contact_detail_section_notes))
                         Text(
                             text = c.notes,
                             style = MaterialTheme.typography.bodyMedium,
@@ -248,7 +250,7 @@ fun ContactDetailScreen(
                 // Tags
                 if (tags.isNotEmpty()) {
                     item {
-                        SectionHeader("Tags")
+                        SectionHeader(stringResource(R.string.contact_detail_section_tags))
                         FlowRow(
                             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                             horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -273,7 +275,7 @@ fun ContactDetailScreen(
                             .fillMaxWidth()
                             .padding(horizontal = 24.dp)
                     ) {
-                        Text("Delete Contact", color = MaterialTheme.colorScheme.error)
+                        Text(stringResource(R.string.contact_detail_delete), color = MaterialTheme.colorScheme.error)
                     }
                 }
             }
@@ -303,8 +305,8 @@ fun ContactDetailScreen(
         if (c != null) {
             AlertDialog(
                 onDismissRequest = { showDeleteDialog = false },
-                title = { Text("Delete Contact") },
-                text = { Text("Remove ${c.fullName} from your network? This cannot be undone.") },
+                title = { Text(stringResource(R.string.network_delete_title)) },
+                text = { Text(stringResource(R.string.network_delete_message, c.fullName)) },
                 confirmButton = {
                     TextButton(
                         onClick = {
@@ -313,12 +315,12 @@ fun ContactDetailScreen(
                             onBack()
                         }
                     ) {
-                        Text("Delete", color = MaterialTheme.colorScheme.error)
+                        Text(stringResource(R.string.common_delete), color = MaterialTheme.colorScheme.error)
                     }
                 },
                 dismissButton = {
                     TextButton(onClick = { showDeleteDialog = false }) {
-                        Text("Cancel")
+                        Text(stringResource(R.string.common_cancel))
                     }
                 }
             )
@@ -342,7 +344,7 @@ private fun AddToGroupSheet(
     ModalBottomSheet(onDismissRequest = onDismiss) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Text(
-                "Add to Group",
+                stringResource(R.string.contact_add_to_group_title),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
@@ -350,7 +352,7 @@ private fun AddToGroupSheet(
 
             if (allGroups.isEmpty() && !showCreateField) {
                 Text(
-                    "No groups yet.",
+                    stringResource(R.string.contact_add_to_group_empty),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
@@ -374,7 +376,7 @@ private fun AddToGroupSheet(
                     if (isMember) {
                         Icon(
                             Icons.Default.Check,
-                            contentDescription = "Member",
+                            contentDescription = stringResource(R.string.contact_group_member_check),
                             tint = Cobalt,
                             modifier = Modifier.size(20.dp)
                         )
@@ -389,7 +391,7 @@ private fun AddToGroupSheet(
                     onClick = { showCreateField = true },
                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                 ) {
-                    Text("+ Create New Group", color = Cobalt)
+                    Text(stringResource(R.string.contact_add_to_group_create_new), color = Cobalt)
                 }
             } else {
                 val isDuplicateInline = newGroupName.trim().isNotBlank() &&
@@ -404,19 +406,19 @@ private fun AddToGroupSheet(
                         value = newGroupName,
                         onValueChange = { if (it.length <= 30) newGroupName = it },
                         modifier = Modifier.weight(1f),
-                        label = { Text("Group name") },
+                        label = { Text(stringResource(R.string.contact_add_to_group_group_name)) },
                         singleLine = true,
                         isError = isDuplicateInline,
                         shape = RoundedCornerShape(10.dp),
                         supportingText = {
                             if (isDuplicateInline) {
                                 Text(
-                                    "Name already exists",
+                                    stringResource(R.string.group_dialog_name_exists),
                                     color = MaterialTheme.colorScheme.error,
                                     style = MaterialTheme.typography.bodySmall
                                 )
                             } else {
-                                Text("${newGroupName.length} / 30")
+                                Text(stringResource(R.string.group_dialog_char_count, newGroupName.length))
                             }
                         }
                     )
@@ -433,7 +435,7 @@ private fun AddToGroupSheet(
                         colors = ButtonDefaults.buttonColors(containerColor = Cobalt),
                         shape = RoundedCornerShape(10.dp)
                     ) {
-                        Text("Create")
+                        Text(stringResource(R.string.common_create))
                     }
                 }
             }

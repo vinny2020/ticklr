@@ -1,6 +1,7 @@
 package com.xaymaca.sit.ui.nav
 
 import android.content.Context
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
@@ -13,11 +14,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import androidx.navigation.navArgument
+import com.xaymaca.sit.R
 import com.xaymaca.sit.SITApp
 import com.xaymaca.sit.ui.compose.ComposeScreen
 import com.xaymaca.sit.ui.groups.GroupDetailScreen
@@ -35,16 +38,16 @@ import com.xaymaca.sit.ui.tickle.TickleListScreen
 
 private data class BottomNavItem(
     val screen: Screen,
-    val label: String,
+    @StringRes val labelResId: Int,
     val icon: ImageVector
 )
 
 private val bottomNavItems = listOf(
-    BottomNavItem(Screen.Network, "Network", Icons.Default.People),
-    BottomNavItem(Screen.Tickle, "Tickle", Icons.Default.Notifications),
-    BottomNavItem(Screen.GroupList, "Groups", Icons.Default.Group),
-    BottomNavItem(Screen.Compose, "Compose", Icons.Default.Email),
-    BottomNavItem(Screen.Settings, "Settings", Icons.Default.Settings)
+    BottomNavItem(Screen.Network, R.string.nav_network, Icons.Default.People),
+    BottomNavItem(Screen.Tickle, R.string.nav_tickle, Icons.Default.Notifications),
+    BottomNavItem(Screen.GroupList, R.string.nav_groups, Icons.Default.Group),
+    BottomNavItem(Screen.Compose, R.string.nav_compose, Icons.Default.Email),
+    BottomNavItem(Screen.Settings, R.string.nav_settings, Icons.Default.Settings)
 )
 
 private val bottomNavRoutes = setOf(
@@ -65,7 +68,9 @@ fun NavGraph() {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
-    val showBottomBar = currentDestination?.route in bottomNavRoutes
+    val showBottomBar = currentDestination?.route
+        ?.substringBefore('?')
+        ?.substringBefore('/') in bottomNavRoutes
 
     Scaffold(
         bottomBar = {
@@ -74,14 +79,15 @@ fun NavGraph() {
                     containerColor = MaterialTheme.colorScheme.surfaceVariant
                 ) {
                     bottomNavItems.forEach { item ->
+                        val label = stringResource(item.labelResId)
                         NavigationBarItem(
                             icon = {
                                 Icon(
                                     imageVector = item.icon,
-                                    contentDescription = item.label
+                                    contentDescription = label
                                 )
                             },
-                            label = { Text(item.label) },
+                            label = { Text(label) },
                             selected = currentDestination?.hierarchy?.any {
                                 it.route == item.screen.route
                             } == true,

@@ -15,11 +15,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupProperties
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.xaymaca.sit.R
 import com.xaymaca.sit.SITApp
 import com.xaymaca.sit.service.SmsService
 import com.xaymaca.sit.ui.shared.TicklrToast
@@ -48,12 +50,13 @@ fun ComposeScreen(
     var showContactDropdown by remember { mutableStateOf(false) }
     var selectedTemplateName by remember { mutableStateOf<String?>(null) }
     val messageFocusRequester = remember { FocusRequester() }
+    val messageSentStr = stringResource(R.string.compose_message_sent)
 
     Box(modifier = Modifier.fillMaxSize()) {
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text("Compose", fontWeight = FontWeight.Bold) },
+                    title = { Text(stringResource(R.string.compose_title), fontWeight = FontWeight.Bold) },
                     actions = {
                         if (selectedContact != null || messageBody.isNotBlank()) {
                             IconButton(onClick = {
@@ -63,7 +66,7 @@ fun ComposeScreen(
                             }) {
                                 Icon(
                                     Icons.Default.Close,
-                                    contentDescription = "Clear compose",
+                                    contentDescription = stringResource(R.string.compose_clear),
                                     tint = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                             }
@@ -96,8 +99,8 @@ fun ComposeScreen(
                             }
                         },
                         modifier = Modifier.fillMaxWidth(),
-                        label = { Text("To") },
-                        placeholder = { Text("Search contacts…") },
+                        label = { Text(stringResource(R.string.compose_to_label)) },
+                        placeholder = { Text(stringResource(R.string.compose_search_placeholder)) },
                         singleLine = true,
                         shape = RoundedCornerShape(10.dp),
                         enabled = selectedContact == null
@@ -111,7 +114,7 @@ fun ComposeScreen(
                             DropdownMenuItem(
                                 text = {
                                     Column {
-                                        Text(contact.fullName.ifBlank { "No Name" }, fontWeight = FontWeight.Medium)
+                                        Text(contact.fullName.ifBlank { stringResource(R.string.common_no_name) }, fontWeight = FontWeight.Medium)
                                         if (contact.company.isNotBlank()) {
                                             Text(
                                                 contact.company,
@@ -137,7 +140,7 @@ fun ComposeScreen(
                     InputChip(
                         selected = true,
                         onClick = {},
-                        label = { Text(selectedContact!!.fullName.ifBlank { "No Name" }) },
+                        label = { Text(selectedContact!!.fullName.ifBlank { stringResource(R.string.common_no_name) }) },
                         trailingIcon = {
                             IconButton(
                                 onClick = { viewModel.clearContact() },
@@ -145,7 +148,7 @@ fun ComposeScreen(
                             ) {
                                 Icon(
                                     Icons.Default.Close,
-                                    contentDescription = "Remove contact",
+                                    contentDescription = stringResource(R.string.compose_remove_contact),
                                     modifier = Modifier.size(14.dp)
                                 )
                             }
@@ -160,7 +163,7 @@ fun ComposeScreen(
                     if (phones.isEmpty()) {
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
-                            "No phone number on file",
+                            stringResource(R.string.compose_no_phone),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.error
                         )
@@ -178,7 +181,7 @@ fun ComposeScreen(
                             shape = RoundedCornerShape(10.dp)
                         ) {
                             Text(
-                                text = selectedTemplateName ?: "Select template",
+                                text = selectedTemplateName ?: stringResource(R.string.compose_select_template),
                                 modifier = Modifier.weight(1f)
                             )
                             Icon(Icons.Default.ArrowDropDown, contentDescription = null)
@@ -219,8 +222,8 @@ fun ComposeScreen(
                         .fillMaxWidth()
                         .heightIn(min = 120.dp)
                         .focusRequester(messageFocusRequester),
-                    label = { Text("Message") },
-                    placeholder = { Text("Type your message…") },
+                    label = { Text(stringResource(R.string.compose_message_label)) },
+                    placeholder = { Text(stringResource(R.string.compose_message_placeholder)) },
                     shape = RoundedCornerShape(10.dp)
                 )
 
@@ -254,7 +257,7 @@ fun ComposeScreen(
                             }
                             viewModel.clearCompose()
                             selectedTemplateName = null
-                            viewModel.showToast("Message sent \u2713")
+                            viewModel.showToast(messageSentStr)
                         },
                         enabled = canSend,
                         colors = ButtonDefaults.buttonColors(containerColor = Cobalt),
@@ -262,7 +265,7 @@ fun ComposeScreen(
                     ) {
                         Icon(Icons.AutoMirrored.Filled.Send, contentDescription = null)
                         Spacer(modifier = Modifier.width(6.dp))
-                        Text("Send")
+                        Text(stringResource(R.string.common_send))
                     }
                 }
             }

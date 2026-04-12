@@ -20,6 +20,9 @@
     <!-- WorkManager exact alarm scheduling -->
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
+    <!-- Reschedule alarms after device reboot -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <!-- Explicitly remove AD_ID permission injected by Firebase Analytics -->
     <uses-permission android:name="com.google.android.gms.permission.AD_ID"
         tools:node="remove" />
@@ -54,6 +57,16 @@
                 android:value="androidx.startup"
                 tools:node="remove" />
         </provider>
+
+        <!-- Alarm receiver — handles both tickle alarms and post-reboot rescheduling -->
+        <receiver
+            android:name=".service.TickleAlarmReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.xaymaca.sit.TICKLE_ALARM" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
     </application>
 

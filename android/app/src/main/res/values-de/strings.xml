@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App -->
+    <string name="app_name">Ticklr</string>
+
+    <!-- Common -->
+    <string name="common_save">Speichern</string>
+    <string name="common_cancel">Abbrechen</string>
+    <string name="common_delete">Löschen</string>
+    <string name="common_remove">Entfernen</string>
+    <string name="common_ok">OK</string>
+    <string name="common_reset">Zurücksetzen</string>
+    <string name="common_create">Erstellen</string>
+    <string name="common_back">Zurück</string>
+    <string name="common_no_name">Kein Name</string>
+    <string name="common_add">Hinzufügen</string>
+    <string name="common_update">Aktualisieren</string>
+    <string name="common_send">Senden</string>
+    <string name="common_edit">Bearbeiten</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Einstellungen</string>
+    <string name="settings_section_appearance">Erscheinungsbild</string>
+    <string name="settings_section_data">Daten</string>
+    <string name="settings_section_messaging">Nachrichten</string>
+    <string name="settings_section_about">Über</string>
+    <string name="settings_section_developer">Entwickler</string>
+    <string name="settings_theme_title">Design</string>
+    <string name="settings_theme_system">Systemstandard</string>
+    <string name="settings_theme_light">Hell</string>
+    <string name="settings_theme_dark">Dunkel</string>
+    <string name="settings_import_title">Kontakte importieren</string>
+    <string name="settings_import_subtitle">Vom Telefon oder LinkedIn-CSV</string>
+    <string name="settings_templates_title">Nachrichtenvorlagen</string>
+    <string name="settings_templates_subtitle">Wiederverwendbare Nachrichten erstellen und verwalten</string>
+    <string name="settings_sms_direct_title">SMS direkt senden</string>
+    <string name="settings_sms_direct_subtitle">Verwendet SmsManager statt die Nachrichten-App zu öffnen.</string>
+    <string name="settings_about_privacy">Datenschutz an erster Stelle. Kein Cloud, keine Analysen, kein Konto erforderlich. Alle Daten werden auf dem Gerät gespeichert.</string>
+    <string name="settings_about_built_by">Erstellt von Xaymaca</string>
+    <string name="settings_about_version">Version %1$s</string>
+    <string name="settings_reset_onboarding_title">Einführung zurücksetzen</string>
+    <string name="settings_reset_onboarding_subtitle">Willkommensbildschirm erneut anzeigen</string>
+    <string name="settings_reset_confirm_message">Sie werden zum Willkommensbildschirm weitergeleitet. Ihre Daten werden nicht gelöscht.</string>
+    <string name="settings_clear_data_title">Alle Daten löschen</string>
+    <string name="settings_clear_data_message">Alle Kontakte, Gruppen und Tickles werden dauerhaft gelöscht. Dies kann nicht rückgängig gemacht werden.</string>
+    <string name="settings_clear_data_confirm">Alles löschen</string>
+    <string name="settings_choose_theme">Design wählen</string>
+    <string name="settings_debug_load_title">Testkontakte laden</string>
+    <string name="settings_debug_load_subtitle">Lädt 20 Fake-Kontakte aus den Assets (nur Debug)</string>
+    <string name="settings_debug_clear_subtitle">Löscht dauerhaft Kontakte, Gruppen und Tickles (nur Debug)</string>
+
+    <!-- Tickle list -->
+    <string name="tickle_list_title">Tickle</string>
+    <string name="tickle_list_add_fab">Tickle hinzufügen</string>
+    <string name="tickle_list_section_due">Fällig</string>
+    <string name="tickle_list_section_upcoming">Bevorstehend</string>
+    <string name="tickle_list_section_snoozed">Zurückgestellt</string>
+    <string name="tickle_list_empty_title">Noch keine Tickles</string>
+    <string name="tickle_list_empty_description">Tippen Sie auf +, um eine Erinnerung zu planen</string>
+    <string name="tickle_row_action_done">Erledigt</string>
+    <string name="tickle_row_action_snooze">Zurückstellen</string>
+    <string name="tickle_row_action_delete">Löschen</string>
+    <string name="tickle_row_default_note">Tickle-Erinnerung</string>
+    <string name="tickle_row_today">Heute</string>
+    <string name="tickle_row_tomorrow">Morgen</string>
+    <string name="tickle_row_yesterday">Gestern</string>
+    <string name="tickle_row_in_days">In %1$dT</string>
+    <string name="tickle_row_days_overdue">%1$dT überfällig</string>
+
+    <!-- Tickle edit -->
+    <string name="tickle_edit_new_title">Neuer Tickle</string>
+    <string name="tickle_edit_title">Tickle bearbeiten</string>
+    <string name="tickle_edit_tab_contact">Kontakt</string>
+    <string name="tickle_edit_tab_group">Gruppe</string>
+    <string name="tickle_edit_section_contact">KONTAKT</string>
+    <string name="tickle_edit_section_group">GRUPPE</string>
+    <string name="tickle_edit_search_contacts">Kontakte suchen</string>
+    <string name="tickle_edit_section_frequency">HÄUFIGKEIT</string>
+    <string name="tickle_edit_section_custom_interval">BENUTZERDEFINIERTES INTERVALL (TAGE)</string>
+    <string name="tickle_edit_section_note">NOTIZ (OPTIONAL)</string>
+    <string name="tickle_edit_note_placeholder">Worüber reden…</string>
+    <string name="tickle_edit_custom_interval_days">%1$d Tage</string>
+    <string name="tickle_edit_no_groups_title">Noch keine Gruppen</string>
+    <string name="tickle_edit_no_groups_description">Mit Gruppen können Sie einem ganzen Team oder Kreis auf einmal einen Tickle schicken.</string>
+    <string name="tickle_edit_create_group_button">Gruppe erstellen</string>
+    <string name="tickle_edit_new_group_dialog_title">Neue Gruppe</string>
+    <string name="tickle_edit_group_name_label">Gruppenname</string>
+    <string name="tickle_saved">Tickle gespeichert</string>
+    <string name="tickle_updated">Tickle aktualisiert</string>
+    <string name="tickle_notification_contact_fallback">Ihr Kontakt</string>
+    <string name="tickle_notification_title">Zeit, %1$s zu kontaktieren</string>
+    <string name="tickle_notification_body">Ihre Kontakte sind wichtig — senden Sie heute eine kurze Nachricht.</string>
+
+    <!-- Network list -->
+    <string name="network_title">Netzwerk</string>
+    <string name="network_more_options">Weitere Optionen</string>
+    <string name="network_import_contacts">Kontakte importieren</string>
+    <string name="network_search_placeholder">Kontakte suchen…</string>
+    <string name="network_empty_title">Noch keine Kontakte</string>
+    <string name="network_empty_description">Tippen Sie auf +, um jemanden hinzuzufügen</string>
+    <string name="network_add_contact_fab">Kontakt hinzufügen</string>
+    <string name="network_delete_title">Kontakt löschen</string>
+    <string name="network_delete_message">%1$s aus Ihrem Netzwerk entfernen? Dies kann nicht rückgängig gemacht werden.</string>
+    <string name="network_contact_has_phone">Hat Telefonnummer</string>
+    <string name="network_contact_has_email">Hat E-Mail</string>
+    <string name="network_contact_import_source">Importquelle</string>
+
+    <!-- Contact detail -->
+    <string name="contact_detail_add_tickle">Tickle hinzufügen</string>
+    <string name="contact_detail_add_to_group">Zur Gruppe hinzufügen</string>
+    <string name="contact_detail_message">Nachricht</string>
+    <string name="contact_detail_section_phone">Telefon</string>
+    <string name="contact_detail_section_email">E-Mail</string>
+    <string name="contact_detail_section_notes">Notizen</string>
+    <string name="contact_detail_section_tags">Tags</string>
+    <string name="contact_detail_delete">Kontakt löschen</string>
+    <string name="contact_add_to_group_title">Zur Gruppe hinzufügen</string>
+    <string name="contact_add_to_group_empty">Noch keine Gruppen.</string>
+    <string name="contact_add_to_group_create_new">+ Neue Gruppe erstellen</string>
+    <string name="contact_add_to_group_group_name">Gruppenname</string>
+    <string name="contact_group_member_check">Mitglied</string>
+
+    <!-- Add / Edit contact -->
+    <string name="add_contact_title">Neuer Kontakt</string>
+    <string name="edit_contact_title">Kontakt bearbeiten</string>
+    <string name="add_contact_section_name">Name</string>
+    <string name="add_contact_section_work">Arbeit</string>
+    <string name="add_contact_section_phone">Telefon</string>
+    <string name="add_contact_section_email">E-Mail</string>
+    <string name="add_contact_section_notes">Notizen</string>
+    <string name="add_contact_section_tags">Tags</string>
+    <string name="add_contact_first_name">Vorname</string>
+    <string name="add_contact_last_name">Nachname</string>
+    <string name="add_contact_company">Unternehmen</string>
+    <string name="add_contact_job_title">Berufsbezeichnung</string>
+    <string name="add_contact_phone_n">Telefon %1$d</string>
+    <string name="add_contact_email_n">E-Mail %1$d</string>
+    <string name="add_contact_add_phone">Telefon hinzufügen</string>
+    <string name="add_contact_add_email">E-Mail hinzufügen</string>
+    <string name="add_contact_notes_label">Notizen</string>
+    <string name="add_contact_add_tag_label">Tag hinzufügen</string>
+    <string name="add_contact_add_tag_button">Tag hinzufügen</string>
+
+    <!-- Groups list -->
+    <string name="group_list_title">Gruppen</string>
+    <string name="group_list_empty_title">Noch keine Gruppen</string>
+    <string name="group_list_empty_description">Tippen Sie auf +, um eine Gruppe zu erstellen</string>
+    <string name="group_list_create_fab">Gruppe erstellen</string>
+    <string name="group_delete_title">Gruppe löschen</string>
+    <string name="group_delete_message">\"%1$s\" löschen? Kontakte werden nicht entfernt.</string>
+    <string name="group_new_dialog_title">Neue Gruppe</string>
+    <string name="group_dialog_emoji_label">Emoji</string>
+    <string name="group_dialog_name_label">Gruppenname</string>
+    <string name="group_dialog_name_exists">Name bereits vorhanden</string>
+    <string name="group_dialog_char_count">%1$d / 30</string>
+    <plurals name="group_list_member_count">
+        <item quantity="one">%1$d Mitglied</item>
+        <item quantity="other">%1$d Mitglieder</item>
+    </plurals>
+
+    <!-- Group detail -->
+    <string name="group_detail_empty">Noch keine Mitglieder. Tippen Sie auf +, um welche hinzuzufügen.</string>
+    <string name="group_detail_add_members_title">Mitglieder hinzufügen</string>
+    <string name="group_detail_filter_placeholder">Kontakte filtern…</string>
+    <string name="group_detail_all_in_group">Alle Kontakte sind bereits in dieser Gruppe</string>
+    <string name="group_detail_no_match">Keine passenden Kontakte</string>
+    <string name="group_detail_add_member_button">Hinzufügen</string>
+    <string name="group_detail_member_added">%1$s wurde zu %2$s hinzugefügt</string>
+    <string name="group_detail_member_added_generic">%1$s wurde zur Gruppe hinzugefügt</string>
+    <string name="group_detail_edit_group">Gruppe bearbeiten</string>
+    <string name="group_detail_add_members_fab">Mitglieder hinzufügen</string>
+    <string name="group_edit_dialog_title">Gruppe bearbeiten</string>
+
+    <!-- Compose -->
+    <string name="compose_title">Verfassen</string>
+    <string name="compose_clear">Nachricht löschen</string>
+    <string name="compose_to_label">An</string>
+    <string name="compose_search_placeholder">Kontakte suchen…</string>
+    <string name="compose_no_phone">Keine Telefonnummer hinterlegt</string>
+    <string name="compose_select_template">Vorlage auswählen</string>
+    <string name="compose_message_label">Nachricht</string>
+    <string name="compose_message_placeholder">Nachricht eingeben…</string>
+    <string name="compose_remove_contact">Kontakt entfernen</string>
+    <string name="compose_message_sent">Nachricht gesendet \u2713</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_tagline">IHRE KONTAKTE ZÄHLEN</string>
+    <string name="onboarding_description">Ihr persönliches Netzwerk, privat verwaltet.\nKein Cloud. Kein soziales Netzwerk. Nur Ihre Kontakte.</string>
+    <string name="onboarding_import_button">Kontakte importieren</string>
+    <string name="onboarding_start_empty">Mit leerem Netzwerk starten</string>
+
+    <!-- Import -->
+    <string name="import_title">Kontakte importieren</string>
+    <string name="import_success_card">%1$d Kontakte erfolgreich importiert</string>
+    <string name="import_from_phone_title">Aus Telefonkontakten importieren</string>
+    <string name="import_from_phone_subtitle">Kontakte aus dem Adressbuch des Geräts synchronisieren.</string>
+    <string name="import_from_linkedin_title">Netzwerk aus LinkedIn-CSV aufbauen</string>
+    <string name="import_from_linkedin_subtitle">LinkedIn-Exporte enthalten Namen und Unternehmen, aber keine Telefonnummern. Kontaktdaten werden nach dem Import manuell ergänzt.</string>
+    <string name="import_linkedin_instructions_title">So exportieren Sie aus LinkedIn</string>
+    <string name="import_linkedin_instructions">1. Gehen Sie zu linkedin.com\n2. Tippen Sie auf Ich → Einstellungen und Datenschutz\n3. Datenschutz → Kopie Ihrer Daten abrufen\n4. Wählen Sie „Verbindungen" und fordern Sie den Export an\n5. Laden Sie die CSV-Datei herunter und wählen Sie sie hier aus</string>
+    <string name="import_continue_button">Weiter zum Netzwerk</string>
+    <string name="import_skip_button">Jetzt überspringen</string>
+    <string name="import_snackbar_success">%1$d Kontakte importiert</string>
+    <string name="import_snackbar_linkedin">%1$d LinkedIn-Kontakte importiert</string>
+    <string name="import_snackbar_permission_denied">Zugriff auf Kontakte verweigert</string>
+    <string name="import_snackbar_failed">Import fehlgeschlagen: %1$s</string>
+    <string name="import_snackbar_could_not_open">Datei konnte nicht geöffnet werden</string>
+
+    <!-- Template list -->
+    <string name="template_list_title">Nachrichtenvorlagen</string>
+    <string name="template_list_empty">Noch keine Vorlagen. Tippen Sie auf +, um eine zu erstellen.</string>
+    <string name="template_add_fab">Vorlage hinzufügen</string>
+    <string name="template_delete_icon">Löschen</string>
+
+    <!-- Template edit -->
+    <string name="template_edit_new_title">Neue Vorlage</string>
+    <string name="template_edit_edit_title">Vorlage bearbeiten</string>
+    <string name="template_edit_title_label">Titel</string>
+    <string name="template_edit_body_label">Inhalt</string>
+
+    <!-- Bottom nav -->
+    <string name="nav_network">Netzwerk</string>
+    <string name="nav_tickle">Tickle</string>
+    <string name="nav_groups">Gruppen</string>
+    <string name="nav_compose">Verfassen</string>
+    <string name="nav_settings">Einstellungen</string>
+
+    <!-- Frequency display names -->
+    <string name="frequency_daily">Täglich</string>
+    <string name="frequency_weekly">Wöchentlich</string>
+    <string name="frequency_biweekly">Alle 2 Wochen</string>
+    <string name="frequency_monthly">Monatlich</string>
+    <string name="frequency_bimonthly">Alle 2 Monate</string>
+    <string name="frequency_quarterly">Vierteljährlich</string>
+    <string name="frequency_custom">Benutzerdefiniert</string>
+</resources>

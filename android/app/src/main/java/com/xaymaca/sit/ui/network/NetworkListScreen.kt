@@ -22,9 +22,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.xaymaca.sit.R
 import com.xaymaca.sit.data.model.Contact
 import com.xaymaca.sit.data.model.ImportSource
 import com.xaymaca.sit.ui.theme.Cobalt
@@ -48,7 +50,7 @@ fun NetworkListScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "Network",
+                        text = stringResource(R.string.network_title),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold
                     )
@@ -56,14 +58,14 @@ fun NetworkListScreen(
                 actions = {
                     Box {
                         IconButton(onClick = { showMenu = true }) {
-                            Icon(Icons.Default.MoreVert, contentDescription = "More options")
+                            Icon(Icons.Default.MoreVert, contentDescription = stringResource(R.string.network_more_options))
                         }
                         DropdownMenu(
                             expanded = showMenu,
                             onDismissRequest = { showMenu = false }
                         ) {
                             DropdownMenuItem(
-                                text = { Text("Import Contacts") },
+                                text = { Text(stringResource(R.string.network_import_contacts)) },
                                 onClick = {
                                     showMenu = false
                                     onImport()
@@ -84,7 +86,7 @@ fun NetworkListScreen(
                 containerColor = Cobalt,
                 contentColor = MaterialTheme.colorScheme.onPrimary
             ) {
-                Icon(Icons.Default.Add, contentDescription = "Add contact")
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.network_add_contact_fab))
             }
         },
         containerColor = MaterialTheme.colorScheme.background
@@ -100,7 +102,7 @@ fun NetworkListScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 8.dp),
-                placeholder = { Text("Search contacts…") },
+                placeholder = { Text(stringResource(R.string.network_search_placeholder)) },
                 leadingIcon = {
                     Icon(Icons.Default.Search, contentDescription = null)
                 },
@@ -121,13 +123,13 @@ fun NetworkListScreen(
                 ) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Text(
-                            text = "No contacts yet",
+                            text = stringResource(R.string.network_empty_title),
                             style = MaterialTheme.typography.titleMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            text = "Tap + to add someone",
+                            text = stringResource(R.string.network_empty_description),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -158,8 +160,8 @@ fun NetworkListScreen(
     contactToDelete?.let { contact ->
         AlertDialog(
             onDismissRequest = { contactToDelete = null },
-            title = { Text("Delete Contact") },
-            text = { Text("Remove ${contact.fullName} from your network? This cannot be undone.") },
+            title = { Text(stringResource(R.string.network_delete_title)) },
+            text = { Text(stringResource(R.string.network_delete_message, contact.fullName)) },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -167,12 +169,12 @@ fun NetworkListScreen(
                         contactToDelete = null
                     }
                 ) {
-                    Text("Delete", color = MaterialTheme.colorScheme.error)
+                    Text(stringResource(R.string.common_delete), color = MaterialTheme.colorScheme.error)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { contactToDelete = null }) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.common_cancel))
                 }
             }
         )
@@ -215,7 +217,7 @@ private fun ContactRow(
 
         Column(modifier = Modifier.weight(1f)) {
             Text(
-                text = contact.fullName.ifBlank { "No Name" },
+                text = contact.fullName.ifBlank { stringResource(R.string.common_no_name) },
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.SemiBold
             )
@@ -235,13 +237,13 @@ private fun ContactRow(
             Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                 if (hasPhone) Icon(
                     Icons.Default.Phone,
-                    contentDescription = "Has phone",
+                    contentDescription = stringResource(R.string.network_contact_has_phone),
                     modifier = Modifier.size(16.dp),
                     tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
                 )
                 if (hasEmail) Icon(
                     Icons.Default.Email,
-                    contentDescription = "Has email",
+                    contentDescription = stringResource(R.string.network_contact_has_email),
                     modifier = Modifier.size(16.dp),
                     tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
                 )
@@ -258,7 +260,7 @@ private fun ContactRow(
         }
         Icon(
             importIcon,
-            contentDescription = "Import source",
+            contentDescription = stringResource(R.string.network_contact_import_source),
             modifier = Modifier.size(12.dp),
             tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.35f)
         )

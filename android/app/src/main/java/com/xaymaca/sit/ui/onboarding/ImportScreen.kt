@@ -16,11 +16,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.xaymaca.sit.R
 import com.xaymaca.sit.ui.network.NetworkViewModel
 import com.xaymaca.sit.ui.theme.Cobalt
 import kotlinx.coroutines.launch
@@ -49,16 +51,16 @@ fun ImportScreen(
                 try {
                     val count = viewModel.importFromContacts()
                     importedCount = count
-                    snackbarHostState.showSnackbar("Imported $count contacts")
+                    snackbarHostState.showSnackbar(context.getString(R.string.import_snackbar_success, count))
                 } catch (e: Exception) {
-                    snackbarHostState.showSnackbar("Import failed: ${e.message}")
+                    snackbarHostState.showSnackbar(context.getString(R.string.import_snackbar_failed, e.message ?: ""))
                 } finally {
                     isImporting = false
                 }
             }
         } else {
             coroutineScope.launch {
-                snackbarHostState.showSnackbar("Contacts permission denied")
+                snackbarHostState.showSnackbar(context.getString(R.string.import_snackbar_permission_denied))
             }
         }
     }
@@ -75,12 +77,12 @@ fun ImportScreen(
                     if (inputStream != null) {
                         val count = viewModel.importFromCSV(inputStream)
                         importedCount = count
-                        snackbarHostState.showSnackbar("Imported $count LinkedIn contacts")
+                        snackbarHostState.showSnackbar(context.getString(R.string.import_snackbar_linkedin, count))
                     } else {
-                        snackbarHostState.showSnackbar("Could not open file")
+                        snackbarHostState.showSnackbar(context.getString(R.string.import_snackbar_could_not_open))
                     }
                 } catch (e: Exception) {
-                    snackbarHostState.showSnackbar("Import failed: ${e.message}")
+                    snackbarHostState.showSnackbar(context.getString(R.string.import_snackbar_failed, e.message ?: ""))
                 } finally {
                     isImporting = false
                 }
@@ -91,10 +93,10 @@ fun ImportScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Import Contacts", fontWeight = FontWeight.Bold) },
+                title = { Text(stringResource(R.string.import_title), fontWeight = FontWeight.Bold) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.common_back))
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -130,7 +132,7 @@ fun ImportScreen(
                     shape = RoundedCornerShape(12.dp)
                 ) {
                     Text(
-                        text = "Successfully imported $count contacts",
+                        text = stringResource(R.string.import_success_card, count),
                         modifier = Modifier.padding(16.dp),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurface
@@ -141,8 +143,8 @@ fun ImportScreen(
             // Import from Phone Contacts button
             ImportOptionCard(
                 icon = Icons.Default.Contacts,
-                title = "Import from Phone Contacts",
-                subtitle = "Sync your contacts from the device address book.",
+                title = stringResource(R.string.import_from_phone_title),
+                subtitle = stringResource(R.string.import_from_phone_subtitle),
                 onClick = {
                     val hasPermission = ContextCompat.checkSelfPermission(
                         context, Manifest.permission.READ_CONTACTS
@@ -154,9 +156,9 @@ fun ImportScreen(
                             try {
                                 val count = viewModel.importFromContacts()
                                 importedCount = count
-                                snackbarHostState.showSnackbar("Imported $count contacts")
+                                snackbarHostState.showSnackbar(context.getString(R.string.import_snackbar_success, count))
                             } catch (e: Exception) {
-                                snackbarHostState.showSnackbar("Import failed: ${e.message}")
+                                snackbarHostState.showSnackbar(context.getString(R.string.import_snackbar_failed, e.message ?: ""))
                             } finally {
                                 isImporting = false
                             }
@@ -171,8 +173,8 @@ fun ImportScreen(
             // Import from LinkedIn CSV button
             ImportOptionCard(
                 icon = Icons.Default.FileOpen,
-                title = "Seed your network from LinkedIn CSV",
-                subtitle = "LinkedIn exports include names and companies — no phone numbers. You'll add contact details manually after importing.",
+                title = stringResource(R.string.import_from_linkedin_title),
+                subtitle = stringResource(R.string.import_from_linkedin_subtitle),
                 onClick = {
                     csvPickerLauncher.launch("text/*")
                 },
@@ -189,18 +191,14 @@ fun ImportScreen(
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
-                        "How to export from LinkedIn",
+                        stringResource(R.string.import_linkedin_instructions_title),
                         style = MaterialTheme.typography.labelMedium,
                         fontWeight = FontWeight.SemiBold,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        "1. Go to linkedin.com\n" +
-                        "2. Tap Me → Settings & Privacy\n" +
-                        "3. Data Privacy → Get a copy of your data\n" +
-                        "4. Select \"Connections\" and request export\n" +
-                        "5. Download the CSV file and select it here",
+                        stringResource(R.string.import_linkedin_instructions),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         lineHeight = MaterialTheme.typography.bodySmall.lineHeight
@@ -220,14 +218,14 @@ fun ImportScreen(
                     colors = ButtonDefaults.buttonColors(containerColor = Cobalt),
                     shape = RoundedCornerShape(14.dp)
                 ) {
-                    Text("Continue to Network", fontWeight = FontWeight.SemiBold)
+                    Text(stringResource(R.string.import_continue_button), fontWeight = FontWeight.SemiBold)
                 }
             } else {
                 TextButton(
                     onClick = onComplete,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Skip for now", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(R.string.import_skip_button), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
         }

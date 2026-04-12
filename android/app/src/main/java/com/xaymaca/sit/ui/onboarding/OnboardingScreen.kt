@@ -12,10 +12,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.xaymaca.sit.R
 import com.xaymaca.sit.ui.theme.Amber
 import com.xaymaca.sit.ui.theme.Cobalt
 import com.xaymaca.sit.ui.theme.Navy
@@ -60,7 +62,7 @@ fun OnboardingScreen(
 
             // Wordmark
             Text(
-                text = "Ticklr",
+                text = stringResource(R.string.app_name),
                 fontSize = 52.sp,
                 fontWeight = FontWeight.ExtraBold,
                 color = Color.White,
@@ -69,7 +71,7 @@ fun OnboardingScreen(
 
             // Tagline
             Text(
-                text = "YOUR PEOPLE MATTER",
+                text = stringResource(R.string.onboarding_tagline),
                 style = MaterialTheme.typography.labelLarge,
                 color = Amber,
                 letterSpacing = 4.sp
@@ -79,7 +81,7 @@ fun OnboardingScreen(
 
             // Description
             Text(
-                text = "Your personal network, privately.\nNo cloud. No social graph. Just your people.",
+                text = stringResource(R.string.onboarding_description),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
@@ -101,7 +103,7 @@ fun OnboardingScreen(
                 shape = RoundedCornerShape(14.dp)
             ) {
                 Text(
-                    "Import Contacts",
+                    stringResource(R.string.onboarding_import_button),
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.SemiBold
                 )
@@ -120,7 +122,7 @@ fun OnboardingScreen(
                 shape = RoundedCornerShape(14.dp)
             ) {
                 Text(
-                    "Start with empty network",
+                    stringResource(R.string.onboarding_start_empty),
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.Normal
                 )

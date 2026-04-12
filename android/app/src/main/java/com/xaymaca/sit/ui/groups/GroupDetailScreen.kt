@@ -23,9 +23,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.xaymaca.sit.R
 import com.xaymaca.sit.data.model.Contact
 import com.xaymaca.sit.data.model.ContactGroup
 import com.xaymaca.sit.ui.theme.Cobalt
@@ -39,6 +42,7 @@ fun GroupDetailScreen(
     onContactClick: (Long) -> Unit,
     viewModel: GroupViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
     var group by remember { mutableStateOf<ContactGroup?>(null) }
     var members by remember { mutableStateOf(listOf<Contact>()) }
     var showAddSheet by remember { mutableStateOf(false) }
@@ -80,12 +84,12 @@ fun GroupDetailScreen(
                     },
                     navigationIcon = {
                         IconButton(onClick = onBack) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.common_back))
                         }
                     },
                     actions = {
                         IconButton(onClick = { showEditDialog = true }) {
-                            Icon(Icons.Default.Edit, contentDescription = "Edit group")
+                            Icon(Icons.Default.Edit, contentDescription = stringResource(R.string.group_detail_edit_group))
                         }
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
@@ -100,7 +104,7 @@ fun GroupDetailScreen(
                     containerColor = Cobalt,
                     contentColor = MaterialTheme.colorScheme.onPrimary
                 ) {
-                    Icon(Icons.Default.Add, contentDescription = "Add members")
+                    Icon(Icons.Default.Add, contentDescription = stringResource(R.string.group_detail_add_members_fab))
                 }
             },
             containerColor = MaterialTheme.colorScheme.background
@@ -113,7 +117,7 @@ fun GroupDetailScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        "No members yet. Tap + to add.",
+                        stringResource(R.string.group_detail_empty),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -163,8 +167,12 @@ fun GroupDetailScreen(
                 onAdd = { contact ->
                     viewModel.addMember(contact.id, groupId)
                     val groupName = group?.name ?: ""
-                    val displayName = if (groupName.length <= 20) groupName else "group"
-                    viewModel.showToast("${contact.fullName} added to $displayName")
+                    val toastStr = if (groupName.length <= 20) {
+                        context.getString(R.string.group_detail_member_added, contact.fullName, groupName)
+                    } else {
+                        context.getString(R.string.group_detail_member_added_generic, contact.fullName)
+                    }
+                    viewModel.showToast(toastStr)
                 },
                 onDismiss = { showAddSheet = false }
             )
@@ -199,7 +207,7 @@ private fun SwipeToRemoveMemberRow(
             ) {
                 Icon(
                     Icons.Default.Delete,
-                    contentDescription = "Remove",
+                    contentDescription = stringResource(R.string.common_remove),
                     tint = Color.White,
                     modifier = Modifier.padding(end = 16.dp)
                 )
@@ -231,7 +239,7 @@ private fun SwipeToRemoveMemberRow(
             Spacer(modifier = Modifier.width(12.dp))
             Column {
                 Text(
-                    text = contact.fullName.ifBlank { "No Name" },
+                    text = contact.fullName.ifBlank { stringResource(R.string.common_no_name) },
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.SemiBold
                 )
@@ -270,7 +278,7 @@ private fun AddMembersBottomSheet(
         Box(modifier = Modifier.fillMaxWidth().heightIn(min = 200.dp)) {
             Column {
                 Text(
-                    text = "Add Members",
+                    text = stringResource(R.string.group_detail_add_members_title),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
@@ -279,7 +287,7 @@ private fun AddMembersBottomSheet(
                     OutlinedTextField(
                         value = searchQuery,
                         onValueChange = { searchQuery = it },
-                        placeholder = { Text("Filter contacts…") },
+                        placeholder = { Text(stringResource(R.string.group_detail_filter_placeholder)) },
                         leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
                         singleLine = true,
                         shape = RoundedCornerShape(24.dp),
@@ -296,7 +304,7 @@ private fun AddMembersBottomSheet(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            "All contacts are already in this group",
+                            stringResource(R.string.group_detail_all_in_group),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -309,7 +317,7 @@ private fun AddMembersBottomSheet(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            "No contacts match",
+                            stringResource(R.string.group_detail_no_match),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -343,7 +351,7 @@ private fun AddMembersBottomSheet(
                                 Spacer(modifier = Modifier.width(12.dp))
                                 Column(modifier = Modifier.weight(1f)) {
                                     Text(
-                                        text = contact.fullName.ifBlank { "No Name" },
+                                        text = contact.fullName.ifBlank { stringResource(R.string.common_no_name) },
                                         style = MaterialTheme.typography.bodyLarge,
                                         fontWeight = FontWeight.Medium
                                     )
@@ -356,7 +364,7 @@ private fun AddMembersBottomSheet(
                                     }
                                 }
                                 TextButton(onClick = { onAdd(contact) }) {
-                                    Text("Add", color = Cobalt)
+                                    Text(stringResource(R.string.group_detail_add_member_button), color = Cobalt)
                                 }
                             }
                         }
@@ -391,13 +399,13 @@ private fun EditGroupDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Edit Group") },
+        title = { Text(stringResource(R.string.group_edit_dialog_title)) },
         text = {
             Column {
                 OutlinedTextField(
                     value = emoji,
                     onValueChange = { if (it.length <= 2) emoji = it },
-                    label = { Text("Emoji") },
+                    label = { Text(stringResource(R.string.group_dialog_emoji_label)) },
                     singleLine = true,
                     modifier = Modifier.width(80.dp),
                     shape = RoundedCornerShape(8.dp)
@@ -406,7 +414,7 @@ private fun EditGroupDialog(
                 OutlinedTextField(
                     value = name,
                     onValueChange = { if (it.length <= 30) name = it },
-                    label = { Text("Group Name") },
+                    label = { Text(stringResource(R.string.group_dialog_name_label)) },
                     singleLine = true,
                     isError = isDuplicate,
                     modifier = Modifier.fillMaxWidth(),
@@ -418,7 +426,7 @@ private fun EditGroupDialog(
                         ) {
                             if (isDuplicate) {
                                 Text(
-                                    "Name already exists",
+                                    stringResource(R.string.group_dialog_name_exists),
                                     color = MaterialTheme.colorScheme.error,
                                     style = MaterialTheme.typography.bodySmall
                                 )
@@ -426,7 +434,7 @@ private fun EditGroupDialog(
                                 Spacer(modifier = Modifier.weight(1f))
                             }
                             Text(
-                                text = "${name.length} / 30",
+                                text = stringResource(R.string.group_dialog_char_count, name.length),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = if (name.length >= 30) MaterialTheme.colorScheme.error
                                         else MaterialTheme.colorScheme.onSurfaceVariant
@@ -441,11 +449,11 @@ private fun EditGroupDialog(
                 onClick = { onSave(name.trim(), emoji.trim().ifBlank { "👥" }) },
                 enabled = canSave
             ) {
-                Text("Save", color = Cobalt)
+                Text(stringResource(R.string.common_save), color = Cobalt)
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
+            TextButton(onClick = onDismiss) { Text(stringResource(R.string.common_cancel)) }
         }
     )
 }

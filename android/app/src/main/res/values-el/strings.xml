@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App -->
+    <string name="app_name">Ticklr</string>
+
+    <!-- Common -->
+    <string name="common_save">Αποθήκευση</string>
+    <string name="common_cancel">Ακύρωση</string>
+    <string name="common_delete">Διαγραφή</string>
+    <string name="common_remove">Αφαίρεση</string>
+    <string name="common_ok">ΟΚ</string>
+    <string name="common_reset">Επαναφορά</string>
+    <string name="common_create">Δημιουργία</string>
+    <string name="common_back">Πίσω</string>
+    <string name="common_no_name">Χωρίς όνομα</string>
+    <string name="common_add">Προσθήκη</string>
+    <string name="common_update">Ενημέρωση</string>
+    <string name="common_send">Αποστολή</string>
+    <string name="common_edit">Επεξεργασία</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Ρυθμίσεις</string>
+    <string name="settings_section_appearance">Εμφάνιση</string>
+    <string name="settings_section_data">Δεδομένα</string>
+    <string name="settings_section_messaging">Μηνύματα</string>
+    <string name="settings_section_about">Σχετικά</string>
+    <string name="settings_section_developer">Προγραμματιστής</string>
+    <string name="settings_theme_title">Θέμα</string>
+    <string name="settings_theme_system">Προεπιλογή συστήματος</string>
+    <string name="settings_theme_light">Φωτεινό</string>
+    <string name="settings_theme_dark">Σκοτεινό</string>
+    <string name="settings_import_title">Εισαγωγή επαφών</string>
+    <string name="settings_import_subtitle">Από τηλέφωνο ή CSV LinkedIn</string>
+    <string name="settings_templates_title">Πρότυπα μηνυμάτων</string>
+    <string name="settings_templates_subtitle">Δημιουργία και διαχείριση επαναχρησιμοποιήσιμων μηνυμάτων</string>
+    <string name="settings_sms_direct_title">Απευθείας αποστολή SMS</string>
+    <string name="settings_sms_direct_subtitle">Χρησιμοποιεί SmsManager αντί να ανοίγει την εφαρμογή Μηνύματα.</string>
+    <string name="settings_about_privacy">Προστασία προσωπικών δεδομένων πρώτα. Χωρίς cloud, χωρίς αναλυτικά, χωρίς απαιτούμενο λογαριασμό. Όλα τα δεδομένα αποθηκεύονται στη συσκευή.</string>
+    <string name="settings_about_built_by">Δημιουργήθηκε από το Xaymaca</string>
+    <string name="settings_about_version">Έκδοση %1$s</string>
+    <string name="settings_reset_onboarding_title">Επαναφορά εισαγωγής</string>
+    <string name="settings_reset_onboarding_subtitle">Εμφάνιση οθόνης καλωσορίσματος ξανά</string>
+    <string name="settings_reset_confirm_message">Αυτό θα σας επαναφέρει στην οθόνη καλωσορίσματος. Τα δεδομένα σας δεν θα διαγραφούν.</string>
+    <string name="settings_clear_data_title">Εκκαθάριση όλων των δεδομένων</string>
+    <string name="settings_clear_data_message">Αυτό θα διαγράψει μόνιμα όλες τις επαφές, τις ομάδες και τα tickle. Δεν μπορεί να αναιρεθεί.</string>
+    <string name="settings_clear_data_confirm">Εκκαθάριση όλων</string>
+    <string name="settings_choose_theme">Επιλογή θέματος</string>
+    <string name="settings_debug_load_title">Φόρτωση δοκιμαστικών επαφών</string>
+    <string name="settings_debug_load_subtitle">Φορτώνει 20 ψεύτικες επαφές από τα assets (μόνο για debug)</string>
+    <string name="settings_debug_clear_subtitle">Διαγράφει μόνιμα επαφές, ομάδες και tickle (μόνο για debug)</string>
+
+    <!-- Tickle list -->
+    <string name="tickle_list_title">Tickle</string>
+    <string name="tickle_list_add_fab">Προσθήκη tickle</string>
+    <string name="tickle_list_section_due">Εκπρόθεσμα</string>
+    <string name="tickle_list_section_upcoming">Επερχόμενα</string>
+    <string name="tickle_list_section_snoozed">Αναβληθέντα</string>
+    <string name="tickle_list_empty_title">Δεν υπάρχουν tickle ακόμα</string>
+    <string name="tickle_list_empty_description">Πατήστε + για να προγραμματίσετε μια υπενθύμιση</string>
+    <string name="tickle_row_action_done">Ολοκληρώθηκε</string>
+    <string name="tickle_row_action_snooze">Αναβολή</string>
+    <string name="tickle_row_action_delete">Διαγραφή</string>
+    <string name="tickle_row_default_note">Υπενθύμιση tickle</string>
+    <string name="tickle_row_today">Σήμερα</string>
+    <string name="tickle_row_tomorrow">Αύριο</string>
+    <string name="tickle_row_yesterday">Χθες</string>
+    <string name="tickle_row_in_days">Σε %1$dη</string>
+    <string name="tickle_row_days_overdue">%1$dη εκπρόθεσμο</string>
+
+    <!-- Tickle edit -->
+    <string name="tickle_edit_new_title">Νέο Tickle</string>
+    <string name="tickle_edit_title">Επεξεργασία Tickle</string>
+    <string name="tickle_edit_tab_contact">Επαφή</string>
+    <string name="tickle_edit_tab_group">Ομάδα</string>
+    <string name="tickle_edit_section_contact">ΕΠΑΦΗ</string>
+    <string name="tickle_edit_section_group">ΟΜΑΔΑ</string>
+    <string name="tickle_edit_search_contacts">Αναζήτηση επαφών</string>
+    <string name="tickle_edit_section_frequency">ΣΥΧΝΟΤΗΤΑ</string>
+    <string name="tickle_edit_section_custom_interval">ΠΡΟΣΑΡΜΟΣΜΕΝΟ ΔΙΑΣΤΗΜΑ (ΗΜΕΡΕΣ)</string>
+    <string name="tickle_edit_section_note">ΣΗΜΕΙΩΣΗ (ΠΡΟΑΙΡΕΤΙΚΗ)</string>
+    <string name="tickle_edit_note_placeholder">Για ποιο θέμα να μιλήσω…</string>
+    <string name="tickle_edit_custom_interval_days">%1$d ημέρες</string>
+    <string name="tickle_edit_no_groups_title">Δεν υπάρχουν ομάδες ακόμα</string>
+    <string name="tickle_edit_no_groups_description">Οι ομάδες σάς επιτρέπουν να στέλνετε tickle σε ολόκληρη ομάδα ή κύκλο ταυτόχρονα.</string>
+    <string name="tickle_edit_create_group_button">Δημιουργία ομάδας</string>
+    <string name="tickle_edit_new_group_dialog_title">Νέα ομάδα</string>
+    <string name="tickle_edit_group_name_label">Όνομα ομάδας</string>
+    <string name="tickle_saved">Το tickle αποθηκεύτηκε</string>
+    <string name="tickle_updated">Το tickle ενημερώθηκε</string>
+    <string name="tickle_notification_contact_fallback">την επαφή σας</string>
+    <string name="tickle_notification_title">Ώρα να επικοινωνήσετε με %1$s</string>
+    <string name="tickle_notification_body">Οι άνθρωποί σας μετράνε — στείλτε ένα γρήγορο μήνυμα σήμερα.</string>
+
+    <!-- Network list -->
+    <string name="network_title">Δίκτυο</string>
+    <string name="network_more_options">Περισσότερες επιλογές</string>
+    <string name="network_import_contacts">Εισαγωγή επαφών</string>
+    <string name="network_search_placeholder">Αναζήτηση επαφών…</string>
+    <string name="network_empty_title">Δεν υπάρχουν επαφές ακόμα</string>
+    <string name="network_empty_description">Πατήστε + για να προσθέσετε κάποιον</string>
+    <string name="network_add_contact_fab">Προσθήκη επαφής</string>
+    <string name="network_delete_title">Διαγραφή επαφής</string>
+    <string name="network_delete_message">Αφαίρεση του %1$s από το δίκτυό σας; Δεν μπορεί να αναιρεθεί.</string>
+    <string name="network_contact_has_phone">Έχει τηλέφωνο</string>
+    <string name="network_contact_has_email">Έχει email</string>
+    <string name="network_contact_import_source">Πηγή εισαγωγής</string>
+
+    <!-- Contact detail -->
+    <string name="contact_detail_add_tickle">Προσθήκη Tickle</string>
+    <string name="contact_detail_add_to_group">Προσθήκη σε ομάδα</string>
+    <string name="contact_detail_message">Μήνυμα</string>
+    <string name="contact_detail_section_phone">Τηλέφωνο</string>
+    <string name="contact_detail_section_email">Email</string>
+    <string name="contact_detail_section_notes">Σημειώσεις</string>
+    <string name="contact_detail_section_tags">Ετικέτες</string>
+    <string name="contact_detail_delete">Διαγραφή επαφής</string>
+    <string name="contact_add_to_group_title">Προσθήκη σε ομάδα</string>
+    <string name="contact_add_to_group_empty">Δεν υπάρχουν ομάδες ακόμα.</string>
+    <string name="contact_add_to_group_create_new">+ Δημιουργία νέας ομάδας</string>
+    <string name="contact_add_to_group_group_name">Όνομα ομάδας</string>
+    <string name="contact_group_member_check">Μέλος</string>
+
+    <!-- Add / Edit contact -->
+    <string name="add_contact_title">Νέα επαφή</string>
+    <string name="edit_contact_title">Επεξεργασία επαφής</string>
+    <string name="add_contact_section_name">Όνομα</string>
+    <string name="add_contact_section_work">Εργασία</string>
+    <string name="add_contact_section_phone">Τηλέφωνο</string>
+    <string name="add_contact_section_email">Email</string>
+    <string name="add_contact_section_notes">Σημειώσεις</string>
+    <string name="add_contact_section_tags">Ετικέτες</string>
+    <string name="add_contact_first_name">Όνομα</string>
+    <string name="add_contact_last_name">Επώνυμο</string>
+    <string name="add_contact_company">Εταιρεία</string>
+    <string name="add_contact_job_title">Τίτλος θέσης</string>
+    <string name="add_contact_phone_n">Τηλέφωνο %1$d</string>
+    <string name="add_contact_email_n">Email %1$d</string>
+    <string name="add_contact_add_phone">Προσθήκη τηλεφώνου</string>
+    <string name="add_contact_add_email">Προσθήκη email</string>
+    <string name="add_contact_notes_label">Σημειώσεις</string>
+    <string name="add_contact_add_tag_label">Προσθήκη ετικέτας</string>
+    <string name="add_contact_add_tag_button">Προσθήκη ετικέτας</string>
+
+    <!-- Groups list -->
+    <string name="group_list_title">Ομάδες</string>
+    <string name="group_list_empty_title">Δεν υπάρχουν ομάδες ακόμα</string>
+    <string name="group_list_empty_description">Πατήστε + για να δημιουργήσετε μια ομάδα</string>
+    <string name="group_list_create_fab">Δημιουργία ομάδας</string>
+    <string name="group_delete_title">Διαγραφή ομάδας</string>
+    <string name="group_delete_message">Διαγραφή \"%1$s\"; Οι επαφές δεν θα αφαιρεθούν.</string>
+    <string name="group_new_dialog_title">Νέα ομάδα</string>
+    <string name="group_dialog_emoji_label">Emoji</string>
+    <string name="group_dialog_name_label">Όνομα ομάδας</string>
+    <string name="group_dialog_name_exists">Το όνομα υπάρχει ήδη</string>
+    <string name="group_dialog_char_count">%1$d / 30</string>
+    <plurals name="group_list_member_count">
+        <item quantity="one">%1$d μέλος</item>
+        <item quantity="other">%1$d μέλη</item>
+    </plurals>
+
+    <!-- Group detail -->
+    <string name="group_detail_empty">Δεν υπάρχουν μέλη ακόμα. Πατήστε + για να προσθέσετε.</string>
+    <string name="group_detail_add_members_title">Προσθήκη μελών</string>
+    <string name="group_detail_filter_placeholder">Φιλτράρισμα επαφών…</string>
+    <string name="group_detail_all_in_group">Όλες οι επαφές βρίσκονται ήδη σε αυτή την ομάδα</string>
+    <string name="group_detail_no_match">Καμία επαφή δεν αντιστοιχεί</string>
+    <string name="group_detail_add_member_button">Προσθήκη</string>
+    <string name="group_detail_member_added">Ο/Η %1$s προστέθηκε στο %2$s</string>
+    <string name="group_detail_member_added_generic">Ο/Η %1$s προστέθηκε στην ομάδα</string>
+    <string name="group_detail_edit_group">Επεξεργασία ομάδας</string>
+    <string name="group_detail_add_members_fab">Προσθήκη μελών</string>
+    <string name="group_edit_dialog_title">Επεξεργασία ομάδας</string>
+
+    <!-- Compose -->
+    <string name="compose_title">Σύνθεση</string>
+    <string name="compose_clear">Εκκαθάριση σύνθεσης</string>
+    <string name="compose_to_label">Προς</string>
+    <string name="compose_search_placeholder">Αναζήτηση επαφών…</string>
+    <string name="compose_no_phone">Δεν υπάρχει αριθμός τηλεφώνου</string>
+    <string name="compose_select_template">Επιλογή προτύπου</string>
+    <string name="compose_message_label">Μήνυμα</string>
+    <string name="compose_message_placeholder">Πληκτρολογήστε το μήνυμά σας…</string>
+    <string name="compose_remove_contact">Αφαίρεση επαφής</string>
+    <string name="compose_message_sent">Το μήνυμα εστάλη \u2713</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_tagline">ΟΙ ΑΝΘΡΩΠΟΙ ΣΑΣ ΜΕΤΡΑΝΕ</string>
+    <string name="onboarding_description">Το προσωπικό σας δίκτυο, με ιδιωτικότητα.\nΧωρίς cloud. Χωρίς κοινωνικό γράφο. Μόνο οι άνθρωποί σας.</string>
+    <string name="onboarding_import_button">Εισαγωγή επαφών</string>
+    <string name="onboarding_start_empty">Ξεκινήστε με κενό δίκτυο</string>
+
+    <!-- Import -->
+    <string name="import_title">Εισαγωγή επαφών</string>
+    <string name="import_success_card">Εισήχθησαν επιτυχώς %1$d επαφές</string>
+    <string name="import_from_phone_title">Εισαγωγή από επαφές τηλεφώνου</string>
+    <string name="import_from_phone_subtitle">Συγχρονίστε τις επαφές σας από το βιβλίο διευθύνσεων της συσκευής.</string>
+    <string name="import_from_linkedin_title">Εμπλουτίστε το δίκτυό σας από CSV του LinkedIn</string>
+    <string name="import_from_linkedin_subtitle">Οι εξαγωγές LinkedIn περιλαμβάνουν ονόματα και εταιρείες χωρίς αριθμούς τηλεφώνου. Θα προσθέσετε τα στοιχεία επικοινωνίας χειροκίνητα μετά την εισαγωγή.</string>
+    <string name="import_linkedin_instructions_title">Πώς να εξαγάγετε από το LinkedIn</string>
+    <string name="import_linkedin_instructions">1. Μεταβείτε στο linkedin.com\n2. Πατήστε Εγώ → Ρυθμίσεις και απόρρητο\n3. Απόρρητο δεδομένων → Λήψη αντιγράφου δεδομένων\n4. Επιλέξτε «Συνδέσεις» και ζητήστε εξαγωγή\n5. Κατεβάστε το αρχείο CSV και επιλέξτε το εδώ</string>
+    <string name="import_continue_button">Συνέχεια στο δίκτυο</string>
+    <string name="import_skip_button">Παράλειψη για τώρα</string>
+    <string name="import_snackbar_success">Εισήχθησαν %1$d επαφές</string>
+    <string name="import_snackbar_linkedin">Εισήχθησαν %1$d επαφές LinkedIn</string>
+    <string name="import_snackbar_permission_denied">Η άδεια πρόσβασης σε επαφές απορρίφθηκε</string>
+    <string name="import_snackbar_failed">Αποτυχία εισαγωγής: %1$s</string>
+    <string name="import_snackbar_could_not_open">Δεν ήταν δυνατό το άνοιγμα του αρχείου</string>
+
+    <!-- Template list -->
+    <string name="template_list_title">Πρότυπα μηνυμάτων</string>
+    <string name="template_list_empty">Δεν υπάρχουν πρότυπα ακόμα. Πατήστε + για να δημιουργήσετε ένα.</string>
+    <string name="template_add_fab">Προσθήκη προτύπου</string>
+    <string name="template_delete_icon">Διαγραφή</string>
+
+    <!-- Template edit -->
+    <string name="template_edit_new_title">Νέο πρότυπο</string>
+    <string name="template_edit_edit_title">Επεξεργασία προτύπου</string>
+    <string name="template_edit_title_label">Τίτλος</string>
+    <string name="template_edit_body_label">Κείμενο</string>
+
+    <!-- Bottom nav -->
+    <string name="nav_network">Δίκτυο</string>
+    <string name="nav_tickle">Tickle</string>
+    <string name="nav_groups">Ομάδες</string>
+    <string name="nav_compose">Σύνθεση</string>
+    <string name="nav_settings">Ρυθμίσεις</string>
+
+    <!-- Frequency display names -->
+    <string name="frequency_daily">Καθημερινά</string>
+    <string name="frequency_weekly">Εβδομαδιαία</string>
+    <string name="frequency_biweekly">Κάθε 2 εβδομάδες</string>
+    <string name="frequency_monthly">Μηνιαία</string>
+    <string name="frequency_bimonthly">Κάθε 2 μήνες</string>
+    <string name="frequency_quarterly">Τριμηνιαία</string>
+    <string name="frequency_custom">Προσαρμοσμένο</string>
+</resources>

@@ -3,6 +3,7 @@ package com.xaymaca.sit.ui.tickle
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.xaymaca.sit.R
 import com.xaymaca.sit.data.model.TickleFrequency
 import com.xaymaca.sit.data.model.TickleReminder
 import com.xaymaca.sit.data.model.TickleStatus
@@ -116,12 +117,12 @@ class TickleViewModel @Inject constructor(
             val finalId = if (reminder.id == 0L) id else reminder.id
             val contactName = reminder.contactId?.let { cId ->
                 contactRepository.getContactById(cId)?.fullName
-            } ?: "your contact"
+            } ?: context.getString(R.string.tickle_notification_contact_fallback)
             TickleScheduler.scheduleNotification(
                 context, finalId, contactName, reminder.note, reminder.nextDueDate
             )
             TickleScheduler.scheduleWorker(context)
-            _toastMessage.value = if (isNew) "Tickle saved" else "Tickle updated"
+            _toastMessage.value = if (isNew) context.getString(R.string.tickle_saved) else context.getString(R.string.tickle_updated)
         }
     }
 

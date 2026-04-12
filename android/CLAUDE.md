@@ -4,6 +4,760 @@
 
 ## 🛠️ Pending Tasks — Start Here
 
+### Task 0 — Phase 1 Internationalization: Extract all hardcoded strings to `strings.xml`
+
+**Goal:** Every user-visible string in the Android app must come from `strings.xml` so that
+adding a new language later is a translation-only task — no code changes required.
+
+**Approach — Use Android's standard `strings.xml` resource system**
+
+Android's native string resource system (`res/values/strings.xml`) is the standard approach.
+Jetpack Compose accesses these via `stringResource(R.string.key)`. This gives us compile-time
+key checking, pluralization via `plurals`, and compatibility with all translation tools.
+
+**Step-by-step:**
+
+1. **Populate `app/src/main/res/values/strings.xml`**
+
+   Currently this file only contains `<string name="app_name">Ticklr</string>`. Add every
+   user-visible string from the Compose UI screens. Use snake_case keys with screen prefix.
+
+   **Naming convention:** `screen_context_element`. Examples:
+   ```xml
+   <!-- Common -->
+   <string name="common_save">Save</string>
+   <string name="common_cancel">Cancel</string>
+   <string name="common_delete">Delete</string>
+   <string name="common_done">Done</string>
+   <string name="common_edit">Edit</string>
+   <string name="common_ok">OK</string>
+   <string name="common_reset">Reset</string>
+   <string name="common_create">Create</string>
+
+   <!-- Settings -->
+   <string name="settings_title">Settings</string>
+   <string name="settings_section_appearance">Appearance</string>
+   <string name="settings_section_data">Data</string>
+   <string name="settings_section_messaging">Messaging</string>
+   <string name="settings_section_about">About</string>
+   <string name="settings_section_developer">Developer</string>
+   <string name="settings_theme_title">Theme</string>
+   <string name="settings_theme_system">System Default</string>
+   <string name="settings_theme_light">Light</string>
+   <string name="settings_theme_dark">Dark</string>
+   <string name="settings_import_title">Import Contacts</string>
+   <string name="settings_import_subtitle">From phone or LinkedIn CSV</string>
+   <string name="settings_templates_title">Message Templates</string>
+   <string name="settings_templates_subtitle">Create and manage reusable messages</string>
+   <string name="settings_sms_direct_title">Send SMS directly</string>
+   <string name="settings_sms_direct_subtitle">Uses SmsManager instead of opening Messages app.</string>
+   <string name="settings_about_privacy">Privacy-first. No cloud, no analytics, no account required. All data is stored on-device.</string>
+   <string name="settings_about_built_by">Built by Xaymaca</string>
+   <string name="settings_about_version">Version %1$s</string>
+   <string name="settings_reset_onboarding_title">Reset Onboarding</string>
+   <string name="settings_reset_onboarding_subtitle">Show the welcome screen again</string>
+   <string name="settings_reset_confirm_message">This will return you to the welcome screen. Your data will not be deleted.</string>
+   <string name="settings_clear_data_title">Clear All Data</string>
+   <string name="settings_clear_data_message">This will permanently delete all contacts, groups, and tickles. This cannot be undone.</string>
+   <string name="settings_clear_data_confirm">Clear All</string>
+   <string name="settings_choose_theme">Choose Theme</string>
+
+   <!-- Tickle list -->
+   <string name="tickle_list_title">Tickle</string>
+   <string name="tickle_list_section_due">Due</string>
+   <string name="tickle_list_section_upcoming">Upcoming</string>
+   <string name="tickle_list_section_snoozed">Snoozed</string>
+   <string name="tickle_list_empty_title">No tickles yet</string>
+   <string name="tickle_list_empty_description">Add one from a contact\'s detail page, or tap +</string>
+   <!-- ... etc for all screens -->
+   ```
+
+   For strings with arguments, use positional parameters:
+   ```xml
+   <string name="tickle_row_overdue">%1$d d overdue</string>
+   <string name="tickle_row_upcoming">In %1$d d</string>
+   <string name="group_detail_member_added">%1$s added to %2$s</string>
+   <string name="group_detail_member_added_generic">%1$s added to group</string>
+   ```
+
+   For plurals:
+   ```xml
+   <plurals name="contacts_count">
+       <item quantity="one">%1$d contact</item>
+       <item quantity="other">%1$d contacts</item>
+   </plurals>
+   ```
+
+2. **Replace hardcoded strings in every Compose screen file**
+
+   **Pattern — before:**
+   ```kotlin
+   Text("Settings", fontWeight = FontWeight.Bold)
+   ```
+
+   **Pattern — after:**
+   ```kotlin
+   Text(stringResource(R.string.settings_title), fontWeight = FontWeight.Bold)
+   ```
+
+   For strings with arguments:
+   ```kotlin
+   // Before:
+   Text("Version $versionName")
+   // After:
+   Text(stringResource(R.string.settings_about_version, versionName))
+   ```
+
+   **Import needed in each file:**
+   ```kotlin
+   import androidx.compose.ui.res.stringResource
+   ```
+
+   **Files to modify (all in `app/src/main/java/com/xaymaca/sit/ui/`):**
+   - `settings/SettingsScreen.kt` (~30 strings)
+   - `settings/TemplateListScreen.kt`
+   - `settings/TemplateEditScreen.kt`
+   - `tickle/TickleListScreen.kt` (~10 strings)
+   - `tickle/TickleEditScreen.kt` (~15 strings)
+   - `network/NetworkListScreen.kt`
+   - `network/ContactDetailScreen.kt` (~20 strings)
+   - `network/AddContactScreen.kt`
+   - `groups/GroupListScreen.kt`
+   - `groups/GroupDetailScreen.kt`
+   - `compose/ComposeScreen.kt`
+   - `onboarding/OnboardingScreen.kt`
+   - `onboarding/ImportScreen.kt` (~15 strings)
+   - `launch/LaunchScreen.kt`
+   - `nav/NavGraph.kt` (bottom nav tab labels if hardcoded there)
+   - `shared/TicklrToast.kt` (if it has any hardcoded text)
+
+3. **Localize `TickleFrequency` and other enum display names**
+
+   The `TickleFrequency` enum in `data/model/Enums.kt` likely has display names used in UI.
+   Add a `@Composable` extension or a `displayNameResId` property that maps to string resources:
+   ```kotlin
+   val TickleFrequency.displayNameResId: Int
+       get() = when (this) {
+           TickleFrequency.DAILY   -> R.string.frequency_daily
+           TickleFrequency.WEEKLY  -> R.string.frequency_weekly
+           TickleFrequency.MONTHLY -> R.string.frequency_monthly
+           TickleFrequency.CUSTOM  -> R.string.frequency_custom
+       }
+   ```
+   Then in Compose UI: `Text(stringResource(frequency.displayNameResId))`
+
+   Do the same for any other enums with user-facing display names (`TickleStatus`, `ImportSource`
+   if they appear in UI).
+
+4. **Handle strings in ViewModels**
+
+   Some strings may be constructed in ViewModels (e.g., toast messages like `"Tickle saved"`,
+   `"Message sent ✓"`, seed result messages). These are tricky because ViewModels don't have
+   access to `stringResource()`.
+
+   **Preferred approach:** Pass string resource IDs (or sealed result classes) from the ViewModel
+   to the UI layer, and resolve them to strings in the `@Composable`:
+   ```kotlin
+   // In ViewModel — emit a sealed class or resource ID:
+   sealed class ToastMessage {
+       data class Res(@StringRes val resId: Int, val args: List<Any> = emptyList()) : ToastMessage()
+   }
+   _toastMessage.value = ToastMessage.Res(R.string.tickle_saved)
+
+   // In Composable — resolve:
+   val toast by viewModel.toastMessage.collectAsState()
+   toast?.let {
+       when (it) {
+           is ToastMessage.Res -> stringResource(it.resId, *it.args.toTypedArray())
+       }
+   }
+   ```
+
+   **Alternatively** (simpler but less pure): Use `context.getString(R.string.key)` in
+   ViewModels where `Application` context is available via `@HiltViewModel` + `@ApplicationContext`.
+   This is acceptable for toast messages but don't overuse it.
+
+   **Check these ViewModels for hardcoded strings:**
+   - `settings/SettingsViewModel.kt` (seed messages, clear messages)
+   - `tickle/TickleViewModel.kt` ("Tickle saved", "Tickle updated")
+   - `compose/ComposeViewModel.kt` ("Message sent ✓")
+   - `groups/GroupViewModel.kt` (toast messages)
+   - `network/NetworkViewModel.kt`
+
+5. **Do NOT localize these:**
+   - Debug-only strings gated by `BuildConfig.DEBUG` (seed messages, debug button labels) —
+     actually, DO localize debug button labels since they still show in the UI during development.
+     But seed result messages ("Loaded X test contacts") can stay hardcoded.
+   - Room entity field names, database column names, SharedPreferences keys
+   - Icon content descriptions that are `null` (decorative icons)
+   - Brand name "Ticklr" when used as the app name (use `R.string.app_name` which already exists)
+   - Navigation route strings in `Screen.kt`
+
+6. **Add `stringResource` import to `contentDescription` attributes**
+
+   Any `contentDescription` currently set to a hardcoded English string should also be extracted.
+   Any `contentDescription = null` (decorative) can stay as-is.
+
+7. **Add unit tests for string resource coverage**
+
+   Create `app/src/test/java/com/xaymaca/sit/StringResourceTest.kt`:
+   ```kotlin
+   import org.junit.Test
+   import kotlin.test.assertTrue
+
+   class StringResourceTest {
+       /**
+        * Verify that all string resource fields exist in R.string.
+        * This test catches typos in resource names at compile time via R.string references.
+        * If any key is missing from strings.xml, this file won't compile.
+        */
+       @Test
+       fun `critical string resources exist`() {
+           // These references will fail to compile if the keys don't exist in strings.xml
+           val keys = listOf(
+               R.string.settings_title,
+               R.string.common_save,
+               R.string.common_cancel,
+               R.string.tickle_list_title,
+               R.string.tickle_list_empty_title,
+               R.string.settings_about_version,
+           )
+           assertTrue(keys.all { it != 0 }, "All string resource IDs should be non-zero")
+       }
+   }
+   ```
+
+   Also add a **Compose UI test** if instrumented tests are set up, or at minimum verify the
+   app compiles cleanly with no unresolved `R.string` references (the compiler catches this).
+
+8. **Verify the app builds and all existing + new tests pass**
+
+   ```bash
+   cd android
+   ./gradlew assembleDebug 2>&1 | tail -20
+   ./gradlew testDebugUnitTest 2>&1 | tail -20
+   ```
+
+**Gotchas & constraints:**
+
+- **Do not break the running app.** Every `stringResource(R.string.xyz)` call must have a
+  matching `<string name="xyz">` entry in `strings.xml`, or the build will fail at compile time.
+  This is actually safer than iOS — if you miss a key, it won't compile. Work file-by-file anyway.
+- **`stringResource()` is a `@Composable` function.** It can only be called inside `@Composable`
+  scope. For ViewModel strings, use the sealed class pattern or `context.getString()` as described
+  in step 4.
+- **Escape apostrophes in XML.** Use `\'` or wrap in `"..."`:
+  ```xml
+  <string name="tickle_list_empty_description">Add one from a contact\'s detail page, or tap +</string>
+  ```
+- **Do NOT use `@android:string/` system strings** for app-specific text. Only use them for
+  truly generic platform strings if needed.
+- **`SettingsSectionHeader` and `SettingsRow` composables** in `SettingsScreen.kt` accept
+  `String` parameters. The callers should pass `stringResource(...)` — no changes needed to
+  the composable signatures themselves.
+- **Android lint may warn about hardcoded strings** after partial migration. Suppress with
+  `@Suppress("HardcodedText")` on any intentionally un-localized strings, or finish the full
+  migration in one pass.
+- **Proguard/R8:** No special rules needed — string resources are not affected by minification.
+- **Do NOT add any new language resource directories yet** (no `values-es/`, `values-fr/`, etc.).
+  This task is English-only string extraction. Adding languages is Phase 2.
+- **The `build.gradle.kts` does not currently specify `resourceConfigurations`.** You may want
+  to add this to `defaultConfig` to limit bundled languages once Phase 2 adds translations:
+  ```kotlin
+  resourceConfigurations += listOf("en")  // expand later: "es", "fr", etc.
+  ```
+  But this is optional for Phase 1.
+
+**Scope:** All Compose screen files + `strings.xml` + enum display name extensions + ViewModel
+toast refactoring + new test file. No Room schema changes, no navigation changes, no new
+dependencies.
+
+---
+
+### Task 0b — Phase 2: Locale-aware date/time and number formatting
+
+**Prerequisite:** Task 0 (Phase 1) must be complete — all UI strings extracted to `strings.xml`.
+
+**Goal:** Ensure all dates, times, and numbers displayed in the app respect the user's locale
+settings, so that when translations are added in Phase 3, dates render correctly (e.g.
+"11 avr. 2026" in French vs "Apr 11, 2026" in English).
+
+**What needs to change:**
+
+1. **Audit date formatting in `TickleListScreen.kt`**
+
+   The `relativeDateLabel()` function (around line 308) currently uses millisecond arithmetic
+   to compute day differences and `stringResource()` for the labels ("Today", "Tomorrow", etc.).
+   This is fine for the relative labels (already localized in Phase 1).
+
+   **However**, if there's a fallback that shows an actual formatted date (e.g. for dates more
+   than 7 days out), ensure it uses `DateTimeFormatter` with the device locale:
+   ```kotlin
+   // Good — locale-aware:
+   val formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
+       .withLocale(Locale.getDefault())
+   val formatted = Instant.ofEpochMilli(timestamp)
+       .atZone(ZoneId.systemDefault())
+       .format(formatter)
+
+   // Bad — hardcoded format:
+   SimpleDateFormat("MMM dd, yyyy", Locale.US)  // ← breaks in non-English
+   ```
+
+   **Search for `SimpleDateFormat` across the codebase.** Any instance with a hardcoded
+   `Locale.US` or `Locale.ENGLISH` must be changed to `Locale.getDefault()`, or better yet,
+   replaced with `java.time.format.DateTimeFormatter.ofLocalizedDate()`.
+
+   **Files to check:**
+   - `ui/tickle/TickleListScreen.kt`
+   - `ui/tickle/TickleEditScreen.kt`
+   - `service/TickleScheduler.kt`
+   - Any other file importing `SimpleDateFormat` or `DateTimeFormatter`
+
+2. **Replace manual relative date logic (optional improvement)**
+
+   Android provides `DateUtils.getRelativeTimeSpanString()` which auto-localizes relative
+   dates ("2 days ago", "in 3 days") and handles pluralization across locales:
+   ```kotlin
+   import android.text.format.DateUtils
+   val relativeLabel = DateUtils.getRelativeTimeSpanString(
+       timestamp,
+       System.currentTimeMillis(),
+       DateUtils.DAY_IN_MILLIS,
+       DateUtils.FORMAT_ABBREV_RELATIVE
+   ).toString()
+   ```
+
+   **Decision point (same as iOS):**
+
+   **Option A (Recommended — keep manual, it's already localized):**
+   The Phase 1 `stringResource()` calls with `plurals` resources already handle this.
+   The current approach gives more UI control ("3d overdue" vs "3 days ago"). Keep it.
+   Just make sure the `plurals` XML entries are correct:
+   ```xml
+   <plurals name="tickle_row_days_overdue">
+       <item quantity="one">%1$d d overdue</item>
+       <item quantity="other">%1$d d overdue</item>
+   </plurals>
+   <plurals name="tickle_row_in_days">
+       <item quantity="one">In %1$d d</item>
+       <item quantity="other">In %1$d d</item>
+   </plurals>
+   ```
+
+   **Option B (Use DateUtils):** Replace `relativeDateLabel()` entirely. Loses "overdue"
+   framing. Not recommended.
+
+3. **Verify number formatting**
+
+   If any screen displays contact counts or other numbers, ensure they use
+   `NumberFormat.getInstance()` or Compose's built-in formatting:
+   ```kotlin
+   // Good:
+   Text(NumberFormat.getInstance().format(contactCount))
+   // Also good (if just displaying an Int in a string resource):
+   stringResource(R.string.contacts_count, contactCount)  // %1$d handles locale-specific grouping
+   ```
+
+   **Note:** `%d` in Android string resources does NOT add thousands separators. If you want
+   "1,808" vs "1808", use `NumberFormat` explicitly.
+
+4. **Localize notification text in `TickleWorker.kt` and `TickleScheduler.kt`**
+
+   Check how notification content is built. If the notification body includes user-facing text
+   like "Time to reach out to John!", that string must use `context.getString(R.string.key)`.
+
+   `TickleWorker` has access to `applicationContext` so `getString()` works directly.
+   `TickleScheduler` may need a `Context` parameter if it builds notification strings.
+
+   **Files:**
+   - `service/TickleWorker.kt` — find all `.setContentTitle()` and `.setContentText()` calls
+   - `service/TickleScheduler.kt` — check if it builds any display strings
+
+5. **Add/update tests**
+
+   In `StringResourceTest.kt`, add a test that verifies date formatting doesn't crash:
+   ```kotlin
+   @Test
+   fun `date formatting respects locale`() {
+       val formatter = java.time.format.DateTimeFormatter.ofLocalizedDate(
+           java.time.format.FormatStyle.MEDIUM
+       )
+       val formatted = java.time.LocalDate.of(2026, 4, 11).format(formatter)
+       assertTrue(formatted.isNotEmpty(), "Formatted date should not be empty")
+   }
+   ```
+
+6. **Build and run all tests**
+
+   ```bash
+   cd android
+   ./gradlew assembleDebug 2>&1 | tail -20
+   ./gradlew testDebugUnitTest 2>&1 | tail -20
+   ```
+
+**Gotchas:**
+- **`SimpleDateFormat` is NOT thread-safe.** If you find any shared instances, either make them
+  `ThreadLocal` or replace with `java.time.format.DateTimeFormatter` (thread-safe).
+- **Min SDK 26 means `java.time` is fully available** — no need for ThreeTenABP or desugaring.
+- **Notification strings are evaluated when scheduled.** If the user changes locale between
+  scheduling and receiving, the notification will be in the old locale. Acceptable trade-off.
+- **`Locale.getDefault()` in unit tests** returns the JVM locale, which may differ from an
+  Android device. Keep tests locale-independent or set `Locale.setDefault()` in test setUp.
+
+**Scope:** `TickleListScreen.kt` (audit), `TickleWorker.kt` + `TickleScheduler.kt`
+(notification strings), `StringResourceTest.kt`. Minimal code changes expected.
+
+---
+
+### Task 0c — Phase 3: Add first non-English language (Spanish)
+
+**Prerequisite:** Task 0 (Phase 1) and Task 0b (Phase 2) must be complete.
+
+**Goal:** Add full Spanish (`es`) translation to prove the i18n pipeline works end-to-end,
+and confirm the app renders correctly in a non-English locale.
+
+**Step-by-step:**
+
+1. **Create the Spanish string resource file**
+
+   Create `app/src/main/res/values-es/strings.xml` with translations for every key in the
+   base `values/strings.xml`.
+
+   ```xml
+   <?xml version="1.0" encoding="utf-8"?>
+   <resources>
+       <string name="app_name">Ticklr</string>
+
+       <!-- Common -->
+       <string name="common_save">Guardar</string>
+       <string name="common_cancel">Cancelar</string>
+       <string name="common_delete">Eliminar</string>
+       <string name="common_done">Listo</string>
+       <string name="common_edit">Editar</string>
+       <string name="common_ok">Aceptar</string>
+       <string name="common_reset">Restablecer</string>
+       <string name="common_create">Crear</string>
+
+       <!-- Settings -->
+       <string name="settings_title">Ajustes</string>
+       <string name="settings_section_appearance">Apariencia</string>
+       <string name="settings_section_data">Datos</string>
+       <string name="settings_section_messaging">Mensajería</string>
+       <string name="settings_section_about">Acerca de</string>
+       <string name="settings_section_developer">Desarrollador</string>
+       <string name="settings_theme_title">Tema</string>
+       <string name="settings_theme_system">Predeterminado del sistema</string>
+       <string name="settings_theme_light">Claro</string>
+       <string name="settings_theme_dark">Oscuro</string>
+       <string name="settings_import_title">Importar contactos</string>
+       <string name="settings_import_subtitle">Desde teléfono o CSV de LinkedIn</string>
+       <string name="settings_templates_title">Plantillas de mensajes</string>
+       <string name="settings_templates_subtitle">Crea y administra mensajes reutilizables</string>
+       <string name="settings_sms_direct_title">Enviar SMS directamente</string>
+       <string name="settings_sms_direct_subtitle">Usa SmsManager en lugar de abrir la app de Mensajes.</string>
+       <string name="settings_about_privacy">Privacidad primero. Sin nube, sin analíticas, sin cuenta requerida. Todos los datos se almacenan en el dispositivo.</string>
+       <string name="settings_about_built_by">Hecho por Xaymaca</string>
+       <string name="settings_about_version">Versión %1$s</string>
+       <string name="settings_reset_onboarding_title">Restablecer bienvenida</string>
+       <string name="settings_reset_onboarding_subtitle">Mostrar la pantalla de bienvenida de nuevo</string>
+       <string name="settings_reset_confirm_message">Esto te llevará a la pantalla de bienvenida. Tus datos no se eliminarán.</string>
+       <string name="settings_clear_data_title">Borrar todos los datos</string>
+       <string name="settings_clear_data_message">Esto eliminará permanentemente todos los contactos, grupos y tickles. No se puede deshacer.</string>
+       <string name="settings_clear_data_confirm">Borrar todo</string>
+       <string name="settings_choose_theme">Elegir tema</string>
+
+       <!-- Frequencies -->
+       <string name="frequency_daily">Diario</string>
+       <string name="frequency_weekly">Semanal</string>
+       <string name="frequency_biweekly">Cada 2 semanas</string>
+       <string name="frequency_monthly">Mensual</string>
+       <string name="frequency_bimonthly">Cada 2 meses</string>
+       <string name="frequency_quarterly">Trimestral</string>
+       <string name="frequency_custom">Personalizado</string>
+
+       <!-- Tickle list -->
+       <string name="tickle_list_title">Tickle</string>
+       <string name="tickle_list_section_due">Vencidos</string>
+       <string name="tickle_list_section_upcoming">Próximos</string>
+       <string name="tickle_list_section_snoozed">Pospuestos</string>
+       <string name="tickle_list_empty_title">Aún no hay tickles</string>
+       <string name="tickle_list_empty_description">Agrega uno desde el detalle de un contacto, o toca +</string>
+       <string name="tickle_row_today">Hoy</string>
+       <string name="tickle_row_tomorrow">Mañana</string>
+       <string name="tickle_row_yesterday">Ayer</string>
+
+       <!-- ... translate ALL remaining keys from values/strings.xml ... -->
+   </resources>
+   ```
+
+   **Important:** Every `<string>` and `<plurals>` key in `values/strings.xml` MUST have a
+   corresponding entry in `values-es/strings.xml`. Missing keys will silently fall back to
+   English, which creates a jarring mixed-language UI.
+
+2. **Translate plural resources**
+
+   Spanish pluralization is similar to English (one/other):
+   ```xml
+   <plurals name="tickle_row_days_overdue">
+       <item quantity="one">%1$d día vencido</item>
+       <item quantity="other">%1$d días vencido</item>
+   </plurals>
+   <plurals name="tickle_row_in_days">
+       <item quantity="one">En %1$d día</item>
+       <item quantity="other">En %1$d días</item>
+   </plurals>
+   <plurals name="contacts_count">
+       <item quantity="one">%1$d contacto</item>
+       <item quantity="other">%1$d contactos</item>
+   </plurals>
+   ```
+
+3. **Do NOT translate these:**
+   - "Ticklr" (brand name — keep `app_name` as "Ticklr" in Spanish too)
+   - "Xaymaca" (company name)
+   - Navigation route strings
+   - SharedPreferences keys
+   - Debug-only seed result messages
+
+4. **Optionally add `resourceConfigurations` to `build.gradle.kts`**
+
+   To limit which languages are bundled (useful for libraries that ship with 80+ locales):
+   ```kotlin
+   defaultConfig {
+       resourceConfigurations += listOf("en", "es")
+   }
+   ```
+
+5. **Test in Spanish locale**
+
+   On emulator: `Settings → System → Languages → Español`
+   Verify every screen:
+   - [ ] Settings screen — all labels, section headers, dialogs
+   - [ ] Tickle list — section headers, empty state, swipe actions
+   - [ ] Tickle edit — all form labels, picker options, frequency names
+   - [ ] Network list — search placeholder, empty state
+   - [ ] Contact detail — all labels, button text, group bottom sheet
+   - [ ] Group list + detail — all labels, toast messages
+   - [ ] Compose — all labels, template picker, send button
+   - [ ] Onboarding + Import — all copy
+   - [ ] Launch screen — tagline (should stay English)
+
+   **Automated locale test:** Add an instrumented test or use `Locale.setDefault(Locale("es"))`
+   in a unit test setUp block to verify string resolution:
+   ```kotlin
+   @Test
+   fun `spanish translations resolve correctly`() {
+       // Note: This only works in instrumented tests (androidTest) where
+       // Resources are available. For unit tests, verify file completeness instead.
+   }
+   ```
+
+6. **Add a string completeness test**
+
+   Create `app/src/test/java/com/xaymaca/sit/TranslationCompletenessTest.kt`:
+   ```kotlin
+   import org.junit.Test
+   import java.io.File
+   import kotlin.test.assertTrue
+
+   class TranslationCompletenessTest {
+       @Test
+       fun `spanish strings xml has all keys from base strings xml`() {
+           val baseFile = File("src/main/res/values/strings.xml")
+           val esFile = File("src/main/res/values-es/strings.xml")
+           assertTrue(esFile.exists(), "Spanish strings.xml should exist")
+
+           val baseKeys = extractStringKeys(baseFile)
+           val esKeys = extractStringKeys(esFile)
+           val missing = baseKeys - esKeys
+           assertTrue(missing.isEmpty(),
+               "Spanish strings.xml is missing keys: ${missing.joinToString()}")
+       }
+
+       private fun extractStringKeys(file: File): Set<String> {
+           val regex = Regex("""<string name="([^"]+)">""")
+           return file.readLines()
+               .mapNotNull { regex.find(it)?.groupValues?.get(1) }
+               .toSet()
+       }
+   }
+   ```
+
+7. **Build and run all tests**
+
+   ```bash
+   cd android
+   ./gradlew assembleDebug 2>&1 | tail -20
+   ./gradlew testDebugUnitTest 2>&1 | tail -20
+   ```
+
+**Gotchas:**
+- **Android selects language at the system level.** There's no in-app language picker by
+  default. Android 13+ (API 33) supports per-app language preferences via
+  `android.app.LocaleManager`, but the min SDK is 26. If you want an in-app language picker
+  for older devices, use `AppCompatDelegate.setApplicationLocales()` from AndroidX AppCompat.
+  This is a nice-to-have, not required for Phase 3.
+- **String resource fallback is silent.** If `values-es/strings.xml` is missing a key, Android
+  uses the base `values/strings.xml` value without warning. The completeness test above catches
+  this at CI time.
+- **Escape apostrophes and special characters** in XML: `\'` or wrap in `"double quotes"`.
+- **Spanish strings may be ~20% longer than English.** Test for text truncation in tight layouts
+  (buttons, chips, tab labels). Jetpack Compose handles this better than XML layouts, but
+  verify visually.
+- **`TicklrToast` text** — verify toast messages aren't truncated in Spanish.
+
+**Scope:** Create `values-es/strings.xml` with all translations, optionally update
+`build.gradle.kts`, add `TranslationCompletenessTest.kt`. No Kotlin code changes needed —
+all wiring was done in Phase 1.
+
+---
+
+### Task 0d — Phase 4: RTL (Right-to-Left) language support (optional)
+
+**Prerequisite:** Tasks 0, 0b, and 0c must be complete. Only needed if targeting Arabic, Hebrew,
+Urdu, Farsi, or other RTL languages.
+
+**Goal:** Ensure the app layout mirrors correctly for RTL locales and add the first RTL language.
+
+**What needs to change:**
+
+1. **Enable RTL support in `AndroidManifest.xml`**
+
+   Add `android:supportsRtl="true"` to the `<application>` tag if not already present:
+   ```xml
+   <application
+       android:supportsRtl="true"
+       ...>
+   ```
+   This is required for any RTL rendering to work.
+
+2. **Audit Compose layouts**
+
+   Jetpack Compose handles RTL automatically for most standard components:
+   - `Row` reverses child order in RTL
+   - `padding(start = 16.dp)` maps to right side in RTL
+   - `Arrangement.Start` maps to right in RTL
+   - `Icon(Icons.AutoMirrored.Filled.Send)` already auto-mirrors (good — already in use)
+
+   **Run the app in Arabic locale** (Emulator → Settings → Arabic) and screenshot every screen.
+   Look for:
+
+   - **Icons that should mirror** (back arrows, chevrons, send icons) — check if using
+     `Icons.AutoMirrored.*` variants. If not, switch to them:
+     ```kotlin
+     // Bad — doesn't mirror:
+     Icons.Default.ChevronRight
+     // Good — mirrors in RTL:
+     Icons.AutoMirrored.Filled.ChevronRight
+     ```
+   - **Icons that should NOT mirror:** `Icons.Default.Check`, `Icons.Default.Delete`,
+     `Icons.Default.Add`, `Icons.Default.BugReport`, `Icons.Default.Palette`, the Ticklr logo
+   - **`SettingsScreen.kt`** uses `Icons.Default.ChevronRight` in `SettingsRow` — this needs to
+     become `Icons.AutoMirrored.Filled.ChevronRight` for RTL
+   - **`Modifier.padding(start = X.dp)`** — verify all usages, especially in custom layouts.
+     `start`/`end` is correct (auto-flips). Watch for `padding(left = X.dp)` — that's hardcoded
+     and won't flip.
+
+   **Search the codebase for these RTL-breaking patterns:**
+   ```
+   padding(left =
+   padding(right =
+   Arrangement.End        // usually fine, but verify context
+   offset(x =             // hardcoded offsets don't flip
+   absoluteOffset(        // explicitly non-flipping
+   ```
+
+3. **Fix `TicklrToast.kt`**
+
+   The toast overlay may use hardcoded positioning. Verify it centers correctly in RTL.
+   If it uses `Alignment.BottomCenter`, it's fine. If it uses absolute `x` offset, fix it.
+
+4. **Test the launch screen**
+
+   The animated Pulse logo should remain centered and not flip. The "YOUR PEOPLE MATTER" tagline
+   should stay English and centered.
+
+5. **Add Arabic translations**
+
+   Create `app/src/main/res/values-ar/strings.xml` with Arabic translations for all keys.
+
+   **Arabic has complex plural rules** — Android supports all six categories:
+   ```xml
+   <plurals name="tickle_row_days_overdue">
+       <item quantity="zero">لا أيام متأخرة</item>
+       <item quantity="one">يوم واحد متأخر</item>
+       <item quantity="two">يومان متأخران</item>
+       <item quantity="few">%1$d أيام متأخرة</item>
+       <item quantity="many">%1$d يومًا متأخرًا</item>
+       <item quantity="other">%1$d يوم متأخر</item>
+   </plurals>
+   ```
+
+   Add `"ar"` to `resourceConfigurations` in `build.gradle.kts`.
+
+6. **Add RTL-specific tests**
+
+   In `TranslationCompletenessTest.kt`:
+   ```kotlin
+   @Test
+   fun `arabic strings xml has all keys from base strings xml`() {
+       val baseFile = File("src/main/res/values/strings.xml")
+       val arFile = File("src/main/res/values-ar/strings.xml")
+       assertTrue(arFile.exists(), "Arabic strings.xml should exist")
+
+       val baseKeys = extractStringKeys(baseFile)
+       val arKeys = extractStringKeys(arFile)
+       val missing = baseKeys - arKeys
+       assertTrue(missing.isEmpty(),
+           "Arabic strings.xml is missing keys: ${missing.joinToString()}")
+   }
+   ```
+
+   For RTL layout testing, use Compose UI tests:
+   ```kotlin
+   @Test
+   fun settingsScreen_rendersInRTL() {
+       composeTestRule.setContent {
+           CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+               SettingsScreen(onImport = {}, onTemplates = {}, onResetOnboarding = {})
+           }
+       }
+       composeTestRule.onNodeWithText("Settings").assertIsDisplayed()
+   }
+   ```
+
+7. **Build and run all tests**
+
+   ```bash
+   cd android
+   ./gradlew assembleDebug 2>&1 | tail -20
+   ./gradlew testDebugUnitTest 2>&1 | tail -20
+   ```
+
+**Gotchas:**
+- **`android:supportsRtl="true"` must be in the manifest** or nothing mirrors. This is the
+  most common missed step.
+- **`start`/`end` vs `left`/`right`:** In Compose, `start`/`end` is the default and correct.
+  In any XML layouts (if any remain), replace `paddingLeft`/`paddingRight` with
+  `paddingStart`/`paddingEnd`.
+- **Arabic text is significantly wider** than English — test for truncation in chips, buttons,
+  and tab labels. `BottomNavigation` labels may need to be shorter in Arabic.
+- **Mixed LTR/RTL text** (e.g. a contact named "John" in an Arabic UI) is handled by Android's
+  bidirectional text algorithm. Numbers always stay LTR. Verify phone numbers display correctly.
+- **The 30-character group name limit** may need adjustment for Arabic — Arabic characters are
+  typically wider. Test visually.
+- **This is the most labor-intensive phase.** Budget extra time for visual QA on every screen.
+- **`Icons.AutoMirrored`** was added in `material-icons-extended` 1.5+ — verify the Compose
+  BOM version includes it (it should, given the current dependencies).
+
+**Scope:** `AndroidManifest.xml` (add `supportsRtl`), icon audit across all screen files,
+`SettingsScreen.kt` (chevron icon fix), `values-ar/strings.xml`, `build.gradle.kts`,
+`TranslationCompletenessTest.kt`. Most changes are config + translation — minimal Kotlin logic
+changes.
+
+---
+
 Task files contain full diagnosis, root cause, and exact code changes. Read the task file
 before making any changes.
 

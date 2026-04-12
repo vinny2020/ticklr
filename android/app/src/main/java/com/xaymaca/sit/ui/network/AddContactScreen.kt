@@ -12,12 +12,14 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.xaymaca.sit.R
 import com.xaymaca.sit.data.model.Contact
 import com.xaymaca.sit.ui.theme.Cobalt
 import kotlinx.coroutines.launch
@@ -77,13 +79,13 @@ fun AddContactScreen(
             TopAppBar(
                 title = {
                     Text(
-                        if (isEditing) "Edit Contact" else "New Contact",
+                        stringResource(if (isEditing) R.string.edit_contact_title else R.string.add_contact_title),
                         fontWeight = FontWeight.Bold
                     )
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.common_back))
                     }
                 },
                 actions = {
@@ -123,7 +125,7 @@ fun AddContactScreen(
                             }
                         }
                     ) {
-                        Text("Save", color = Cobalt, fontWeight = FontWeight.SemiBold)
+                        Text(stringResource(R.string.common_save), color = Cobalt, fontWeight = FontWeight.SemiBold)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -144,39 +146,39 @@ fun AddContactScreen(
         ) {
             // Name
             item {
-                FormSectionHeader("Name")
+                FormSectionHeader(stringResource(R.string.add_contact_section_name))
                 SITTextField(
                     value = firstName,
                     onValueChange = { firstName = it },
-                    label = "First Name"
+                    label = stringResource(R.string.add_contact_first_name)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 SITTextField(
                     value = lastName,
                     onValueChange = { lastName = it },
-                    label = "Last Name"
+                    label = stringResource(R.string.add_contact_last_name)
                 )
             }
 
             // Company / Job
             item {
-                FormSectionHeader("Work")
+                FormSectionHeader(stringResource(R.string.add_contact_section_work))
                 SITTextField(
                     value = company,
                     onValueChange = { company = it },
-                    label = "Company"
+                    label = stringResource(R.string.add_contact_company)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 SITTextField(
                     value = jobTitle,
                     onValueChange = { jobTitle = it },
-                    label = "Job Title"
+                    label = stringResource(R.string.add_contact_job_title)
                 )
             }
 
             // Phone numbers
             item {
-                FormSectionHeader("Phone")
+                FormSectionHeader(stringResource(R.string.add_contact_section_phone))
                 phoneNumbers.forEachIndexed { index, phone ->
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         SITTextField(
@@ -184,7 +186,7 @@ fun AddContactScreen(
                             onValueChange = { newVal ->
                                 phoneNumbers = phoneNumbers.toMutableList().also { it[index] = newVal }
                             },
-                            label = "Phone ${index + 1}",
+                            label = stringResource(R.string.add_contact_phone_n, index + 1),
                             keyboardType = KeyboardType.Phone,
                             modifier = Modifier.weight(1f)
                         )
@@ -194,7 +196,7 @@ fun AddContactScreen(
                                     phoneNumbers = phoneNumbers.toMutableList().also { it.removeAt(index) }
                                 }
                             ) {
-                                Icon(Icons.Default.Close, contentDescription = "Remove")
+                                Icon(Icons.Default.Close, contentDescription = stringResource(R.string.common_remove))
                             }
                         }
                     }
@@ -205,13 +207,13 @@ fun AddContactScreen(
                 ) {
                     Icon(Icons.Default.Add, contentDescription = null)
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text("Add Phone")
+                    Text(stringResource(R.string.add_contact_add_phone))
                 }
             }
 
             // Emails
             item {
-                FormSectionHeader("Email")
+                FormSectionHeader(stringResource(R.string.add_contact_section_email))
                 emails.forEachIndexed { index, email ->
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         SITTextField(
@@ -219,7 +221,7 @@ fun AddContactScreen(
                             onValueChange = { newVal ->
                                 emails = emails.toMutableList().also { it[index] = newVal }
                             },
-                            label = "Email ${index + 1}",
+                            label = stringResource(R.string.add_contact_email_n, index + 1),
                             keyboardType = KeyboardType.Email,
                             modifier = Modifier.weight(1f)
                         )
@@ -229,7 +231,7 @@ fun AddContactScreen(
                                     emails = emails.toMutableList().also { it.removeAt(index) }
                                 }
                             ) {
-                                Icon(Icons.Default.Close, contentDescription = "Remove")
+                                Icon(Icons.Default.Close, contentDescription = stringResource(R.string.common_remove))
                             }
                         }
                     }
@@ -240,17 +242,17 @@ fun AddContactScreen(
                 ) {
                     Icon(Icons.Default.Add, contentDescription = null)
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text("Add Email")
+                    Text(stringResource(R.string.add_contact_add_email))
                 }
             }
 
             // Notes
             item {
-                FormSectionHeader("Notes")
+                FormSectionHeader(stringResource(R.string.add_contact_section_notes))
                 OutlinedTextField(
                     value = notes,
                     onValueChange = { notes = it },
-                    label = { Text("Notes") },
+                    label = { Text(stringResource(R.string.add_contact_notes_label)) },
                     modifier = Modifier.fillMaxWidth(),
                     minLines = 3,
                     shape = RoundedCornerShape(10.dp)
@@ -259,12 +261,12 @@ fun AddContactScreen(
 
             // Tags
             item {
-                FormSectionHeader("Tags")
+                FormSectionHeader(stringResource(R.string.add_contact_section_tags))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     SITTextField(
                         value = tagInput,
                         onValueChange = { tagInput = it },
-                        label = "Add tag",
+                        label = stringResource(R.string.add_contact_add_tag_label),
                         modifier = Modifier.weight(1f)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
@@ -276,7 +278,7 @@ fun AddContactScreen(
                             }
                         }
                     ) {
-                        Icon(Icons.Default.Add, contentDescription = "Add tag")
+                        Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_contact_add_tag_button))
                     }
                 }
                 Spacer(modifier = Modifier.height(8.dp))

@@ -13,10 +13,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.xaymaca.sit.R
 import com.xaymaca.sit.SITApp
 import com.xaymaca.sit.ui.theme.Cobalt
 
@@ -39,10 +41,10 @@ fun TemplateListScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Message Templates", fontWeight = FontWeight.Bold) },
+                title = { Text(stringResource(R.string.template_list_title), fontWeight = FontWeight.Bold) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.common_back))
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -56,7 +58,7 @@ fun TemplateListScreen(
                 onClick = onAddTemplate,
                 containerColor = Cobalt
             ) {
-                Icon(Icons.Default.Add, contentDescription = "Add template", tint = MaterialTheme.colorScheme.onPrimary)
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.template_add_fab), tint = MaterialTheme.colorScheme.onPrimary)
             }
         },
         containerColor = MaterialTheme.colorScheme.background
@@ -69,7 +71,7 @@ fun TemplateListScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    "No templates yet. Tap + to create one.",
+                    stringResource(R.string.template_list_empty),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -102,7 +104,7 @@ fun TemplateListScreen(
                             ) {
                                 Icon(
                                     Icons.Default.Delete,
-                                    contentDescription = "Delete",
+                                    contentDescription = stringResource(R.string.template_delete_icon),
                                     tint = MaterialTheme.colorScheme.error
                                 )
                             }

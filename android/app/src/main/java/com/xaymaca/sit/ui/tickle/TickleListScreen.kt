@@ -20,15 +20,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.xaymaca.sit.R
+import com.xaymaca.sit.data.model.TickleFrequency
 import com.xaymaca.sit.data.model.TickleReminder
+import com.xaymaca.sit.ui.shared.displayNameResId
 import com.xaymaca.sit.ui.theme.Amber
 import com.xaymaca.sit.ui.theme.Cobalt
 import com.xaymaca.sit.ui.theme.NavyLight
-import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.math.abs
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -46,7 +48,7 @@ fun TickleListScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Tickle", fontWeight = FontWeight.Bold) },
+                title = { Text(stringResource(R.string.tickle_list_title), fontWeight = FontWeight.Bold) },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.background,
                     titleContentColor = MaterialTheme.colorScheme.onBackground
@@ -59,7 +61,7 @@ fun TickleListScreen(
                 containerColor = Amber,
                 contentColor = MaterialTheme.colorScheme.background
             ) {
-                Icon(Icons.Default.Add, contentDescription = "Add tickle")
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.tickle_list_add_fab))
             }
         },
         containerColor = MaterialTheme.colorScheme.background
@@ -74,13 +76,13 @@ fun TickleListScreen(
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
-                        "No tickles yet",
+                        stringResource(R.string.tickle_list_empty_title),
                         style = MaterialTheme.typography.titleMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        "Tap + to schedule a reminder",
+                        stringResource(R.string.tickle_list_empty_description),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -95,7 +97,7 @@ fun TickleListScreen(
             ) {
                 if (dueReminders.isNotEmpty()) {
                     item {
-                        TickleSectionHeader("Due", color = Amber)
+                        TickleSectionHeader(stringResource(R.string.tickle_list_section_due), color = Amber)
                     }
                     items(dueReminders, key = { it.id }) { reminder ->
                         TickleReminderRow(
@@ -113,7 +115,7 @@ fun TickleListScreen(
 
                 if (upcomingReminders.isNotEmpty()) {
                     item {
-                        TickleSectionHeader("Upcoming")
+                        TickleSectionHeader(stringResource(R.string.tickle_list_section_upcoming))
                     }
                     items(upcomingReminders, key = { it.id }) { reminder ->
                         TickleReminderRow(
@@ -131,7 +133,7 @@ fun TickleListScreen(
 
                 if (snoozedReminders.isNotEmpty()) {
                     item {
-                        TickleSectionHeader("Snoozed")
+                        TickleSectionHeader(stringResource(R.string.tickle_list_section_snoozed))
                     }
                     items(snoozedReminders, key = { it.id }) { reminder ->
                         TickleReminderRow(
@@ -222,7 +224,7 @@ private fun TickleReminderRow(
                 when (targetValue) {
                     SwipeToDismissBoxValue.StartToEnd -> Icon(
                         Icons.Default.Check,
-                        contentDescription = "Done",
+                        contentDescription = stringResource(R.string.tickle_row_action_done),
                         tint = MaterialTheme.colorScheme.background,
                         modifier = Modifier.padding(start = 16.dp)
                     )
@@ -232,12 +234,12 @@ private fun TickleReminderRow(
                     ) {
                         Icon(
                             Icons.Default.Snooze,
-                            contentDescription = "Snooze",
+                            contentDescription = stringResource(R.string.tickle_row_action_snooze),
                             tint = Color.White
                         )
                         Icon(
                             Icons.Default.Delete,
-                            contentDescription = "Delete",
+                            contentDescription = stringResource(R.string.tickle_row_action_delete),
                             tint = Color.White
                         )
                     }
@@ -246,6 +248,9 @@ private fun TickleReminderRow(
             }
         }
     ) {
+        val dateLabel = relativeDateLabel(reminder.nextDueDate)
+        val frequencyLabel = stringResource(TickleFrequency.valueOf(reminder.frequency).displayNameResId)
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -274,12 +279,12 @@ private fun TickleReminderRow(
 
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = reminder.note.ifBlank { "Tickle reminder" },
+                    text = reminder.note.ifBlank { stringResource(R.string.tickle_row_default_note) },
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.SemiBold
                 )
                 Text(
-                    text = relativeDateLabel(reminder.nextDueDate),
+                    text = dateLabel,
                     style = MaterialTheme.typography.bodySmall,
                     color = if (isDue) Amber else MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -292,10 +297,7 @@ private fun TickleReminderRow(
                                else MaterialTheme.colorScheme.onSurfaceVariant
             ) {
                 Text(
-                    text = reminder.frequency.lowercase()
-                        .replace("_", " ")
-                        .split(" ")
-                        .joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } },
+                    text = frequencyLabel,
                     modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp)
                 )
             }
@@ -303,16 +305,16 @@ private fun TickleReminderRow(
     }
 }
 
+@Composable
 private fun relativeDateLabel(timestamp: Long): String {
     val now = System.currentTimeMillis()
     val diffMs = timestamp - now
     val diffDays = (diffMs / (1000L * 60 * 60 * 24)).toInt()
-
     return when {
-        diffDays == 0 -> "Today"
-        diffDays == 1 -> "Tomorrow"
-        diffDays == -1 -> "Yesterday"
-        diffDays > 1 -> "In ${diffDays}d"
-        else -> "${abs(diffDays)}d overdue"
+        diffDays == 0 -> stringResource(R.string.tickle_row_today)
+        diffDays == 1 -> stringResource(R.string.tickle_row_tomorrow)
+        diffDays == -1 -> stringResource(R.string.tickle_row_yesterday)
+        diffDays > 1 -> stringResource(R.string.tickle_row_in_days, diffDays)
+        else -> stringResource(R.string.tickle_row_days_overdue, abs(diffDays))
     }
 }

@@ -15,9 +15,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.xaymaca.sit.R
 import com.xaymaca.sit.data.model.Contact
 import com.xaymaca.sit.data.model.ContactGroup
 import com.xaymaca.sit.data.model.TickleFrequency
@@ -26,6 +28,7 @@ import com.xaymaca.sit.service.TickleScheduler
 import com.xaymaca.sit.ui.groups.GroupViewModel
 import com.xaymaca.sit.ui.network.NetworkViewModel
 import com.xaymaca.sit.ui.shared.TicklrToast
+import com.xaymaca.sit.ui.shared.displayNameResId
 import com.xaymaca.sit.ui.theme.Amber
 import com.xaymaca.sit.ui.theme.Cobalt
 import kotlinx.coroutines.delay
@@ -106,13 +109,13 @@ fun TickleEditScreen(
             TopAppBar(
                 title = {
                     Text(
-                        if (tickleId == null) "New Tickle" else "Edit Tickle",
+                        stringResource(if (tickleId == null) R.string.tickle_edit_new_title else R.string.tickle_edit_title),
                         fontWeight = FontWeight.Bold
                     )
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.common_back))
                     }
                 },
                 actions = {
@@ -141,7 +144,7 @@ fun TickleEditScreen(
                         },
                         enabled = isLoaded && (selectedContact != null || selectedGroup != null)
                     ) {
-                        Text("Save", color = Amber, fontWeight = FontWeight.SemiBold)
+                        Text(stringResource(R.string.common_save), color = Amber, fontWeight = FontWeight.SemiBold)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -176,12 +179,12 @@ fun TickleEditScreen(
                     Tab(
                         selected = selectedTab == 0,
                         onClick = { selectedTab = 0 },
-                        text = { Text("Contact") }
+                        text = { Text(stringResource(R.string.tickle_edit_tab_contact)) }
                     )
                     Tab(
                         selected = selectedTab == 1,
                         onClick = { selectedTab = 1 },
-                        text = { Text("Group") }
+                        text = { Text(stringResource(R.string.tickle_edit_tab_group)) }
                     )
                 }
 
@@ -196,7 +199,7 @@ fun TickleEditScreen(
                     if (selectedTab == 0) {
                         item {
                             Text(
-                                "CONTACT",
+                                stringResource(R.string.tickle_edit_section_contact),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -204,7 +207,7 @@ fun TickleEditScreen(
                             OutlinedTextField(
                                 value = contactSearch,
                                 onValueChange = { contactSearch = it },
-                                label = { Text("Search contacts") },
+                                label = { Text(stringResource(R.string.tickle_edit_search_contacts)) },
                                 modifier = Modifier.fillMaxWidth(),
                                 singleLine = true,
                                 shape = RoundedCornerShape(10.dp)
@@ -250,7 +253,7 @@ fun TickleEditScreen(
                     } else {
                         item {
                             Text(
-                                "GROUP",
+                                stringResource(R.string.tickle_edit_section_group),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -274,12 +277,12 @@ fun TickleEditScreen(
                                     verticalArrangement = Arrangement.spacedBy(12.dp)
                                 ) {
                                     Text(
-                                        "No groups yet",
+                                        stringResource(R.string.tickle_edit_no_groups_title),
                                         style = MaterialTheme.typography.bodyLarge,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
                                     Text(
-                                        "Groups let you tickle everyone on a team or in a circle at once.",
+                                        stringResource(R.string.tickle_edit_no_groups_description),
                                         style = MaterialTheme.typography.bodySmall,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                                         textAlign = androidx.compose.ui.text.style.TextAlign.Center
@@ -289,7 +292,7 @@ fun TickleEditScreen(
                                         colors = ButtonDefaults.buttonColors(containerColor = Cobalt),
                                         shape = RoundedCornerShape(10.dp)
                                     ) {
-                                        Text("Create a Group")
+                                        Text(stringResource(R.string.tickle_edit_create_group_button))
                                     }
                                 }
                             }
@@ -316,7 +319,7 @@ fun TickleEditScreen(
                     // Frequency selector
                     item {
                         Text(
-                            "FREQUENCY",
+                            stringResource(R.string.tickle_edit_section_frequency),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -328,7 +331,7 @@ fun TickleEditScreen(
                                 shape = RoundedCornerShape(10.dp)
                             ) {
                                 Text(
-                                    selectedFrequency.label,
+                                    stringResource(selectedFrequency.displayNameResId),
                                     modifier = Modifier.weight(1f)
                                 )
                                 Icon(Icons.Default.ArrowDropDown, contentDescription = null)
@@ -339,7 +342,7 @@ fun TickleEditScreen(
                             ) {
                                 TickleFrequency.entries.forEach { freq ->
                                     DropdownMenuItem(
-                                        text = { Text(freq.label) },
+                                        text = { Text(stringResource(freq.displayNameResId)) },
                                         onClick = {
                                             selectedFrequency = freq
                                             showFrequencyDropdown = false
@@ -354,7 +357,7 @@ fun TickleEditScreen(
                     if (selectedFrequency == TickleFrequency.CUSTOM) {
                         item {
                             Text(
-                                "CUSTOM INTERVAL (DAYS)",
+                                stringResource(R.string.tickle_edit_section_custom_interval),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -370,7 +373,7 @@ fun TickleEditScreen(
                                     Text("−")
                                 }
                                 Text(
-                                    "$customIntervalDays days",
+                                    stringResource(R.string.tickle_edit_custom_interval_days, customIntervalDays),
                                     style = MaterialTheme.typography.titleMedium,
                                     fontWeight = FontWeight.SemiBold
                                 )
@@ -387,7 +390,7 @@ fun TickleEditScreen(
                     // Note
                     item {
                         Text(
-                            "NOTE (OPTIONAL)",
+                            stringResource(R.string.tickle_edit_section_note),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -395,7 +398,7 @@ fun TickleEditScreen(
                         OutlinedTextField(
                             value = note,
                             onValueChange = { note = it },
-                            label = { Text("What to talk about…") },
+                            label = { Text(stringResource(R.string.tickle_edit_note_placeholder)) },
                             modifier = Modifier.fillMaxWidth(),
                             minLines = 2,
                             shape = RoundedCornerShape(10.dp)
@@ -423,13 +426,13 @@ fun TickleEditScreen(
                 showCreateGroupDialog = false
                 newGroupName = ""
             },
-            title = { Text("New Group") },
+            title = { Text(stringResource(R.string.tickle_edit_new_group_dialog_title)) },
             text = {
                 Column {
                     OutlinedTextField(
                         value = newGroupName,
                         onValueChange = { if (it.length <= 30) newGroupName = it },
-                        label = { Text("Group name") },
+                        label = { Text(stringResource(R.string.tickle_edit_group_name_label)) },
                         singleLine = true,
                         isError = isDuplicate,
                         shape = RoundedCornerShape(10.dp),
@@ -440,7 +443,7 @@ fun TickleEditScreen(
                             ) {
                                 if (isDuplicate) {
                                     Text(
-                                        "Name already exists",
+                                        stringResource(R.string.group_dialog_name_exists),
                                         color = MaterialTheme.colorScheme.error,
                                         style = MaterialTheme.typography.bodySmall
                                     )
@@ -449,7 +452,7 @@ fun TickleEditScreen(
                                         modifier = Modifier.weight(1f)
                                     )
                                 }
-                                Text("${newGroupName.length}/30")
+                                Text(stringResource(R.string.group_dialog_char_count, newGroupName.length))
                             }
                         },
                         modifier = Modifier.fillMaxWidth()
@@ -469,7 +472,7 @@ fun TickleEditScreen(
                     },
                     enabled = newGroupName.isNotBlank() && !isDuplicate
                 ) {
-                    Text("Create", color = Cobalt)
+                    Text(stringResource(R.string.common_create), color = Cobalt)
                 }
             },
             dismissButton = {
@@ -477,7 +480,7 @@ fun TickleEditScreen(
                     showCreateGroupDialog = false
                     newGroupName = ""
                 }) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.common_cancel))
                 }
             }
         )

@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.xaymaca.sit.R
 import com.xaymaca.sit.SITApp
 import com.xaymaca.sit.data.repository.ContactRepository
 import com.xaymaca.sit.data.repository.TickleRepository
@@ -46,10 +47,10 @@ class TickleWorker @AssistedInject constructor(
         dueReminders.forEach { reminder ->
             val contactName = reminder.contactId?.let { id ->
                 contactRepository.getContactById(id)?.fullName
-            } ?: "your contact"
+            } ?: context.getString(R.string.tickle_notification_contact_fallback)
 
-            val title = "Time to reach out to $contactName"
-            val body = reminder.note.ifBlank { "Your people matter — send a quick message today." }
+            val title = context.getString(R.string.tickle_notification_title, contactName)
+            val body = reminder.note.ifBlank { context.getString(R.string.tickle_notification_body) }
 
             val notification = NotificationCompat.Builder(context, SITApp.TICKLE_CHANNEL_ID)
                 .setSmallIcon(android.R.drawable.ic_dialog_info)
