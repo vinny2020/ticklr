@@ -26,6 +26,10 @@ class TranslationCompletenessTest {
         "pt" to "Portuguese",
         "sv" to "Swedish",
         "cs" to "Czech",
+        "ru" to "Russian",
+        "zh" to "Chinese",
+        "ja" to "Japanese",
+        "ko" to "Korean",
     )
 
     @Test

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App -->
+    <string name="app_name">Ticklr</string>
+
+    <!-- Common -->
+    <string name="common_save">保存</string>
+    <string name="common_cancel">キャンセル</string>
+    <string name="common_delete">削除</string>
+    <string name="common_remove">外す</string>
+    <string name="common_ok">OK</string>
+    <string name="common_reset">リセット</string>
+    <string name="common_create">作成</string>
+    <string name="common_back">戻る</string>
+    <string name="common_no_name">名前なし</string>
+    <string name="common_add">追加</string>
+    <string name="common_update">更新</string>
+    <string name="common_send">送信</string>
+    <string name="common_edit">編集</string>
+
+    <!-- Settings -->
+    <string name="settings_title">設定</string>
+    <string name="settings_section_appearance">外観</string>
+    <string name="settings_section_data">データ</string>
+    <string name="settings_section_messaging">メッセージ</string>
+    <string name="settings_section_about">情報</string>
+    <string name="settings_section_developer">開発者</string>
+    <string name="settings_theme_title">テーマ</string>
+    <string name="settings_theme_system">システムのデフォルト</string>
+    <string name="settings_theme_light">ライト</string>
+    <string name="settings_theme_dark">ダーク</string>
+    <string name="settings_import_title">連絡先をインポート</string>
+    <string name="settings_import_subtitle">電話または LinkedIn CSV から</string>
+    <string name="settings_templates_title">メッセージテンプレート</string>
+    <string name="settings_templates_subtitle">再利用可能なメッセージを作成・管理する</string>
+    <string name="settings_sms_direct_title">SMS を直接送信</string>
+    <string name="settings_sms_direct_subtitle">メッセージアプリを開く代わりに SmsManager を使用します。</string>
+    <string name="settings_about_privacy">プライバシー最優先。クラウドなし、分析なし、アカウント不要。すべてのデータはデバイスに保存されます。</string>
+    <string name="settings_about_built_by">Xaymaca 作</string>
+    <string name="settings_about_version">バージョン %1$s</string>
+    <string name="settings_reset_onboarding_title">オンボーディングをリセット</string>
+    <string name="settings_reset_onboarding_subtitle">ウェルカム画面を再表示する</string>
+    <string name="settings_reset_confirm_message">ウェルカム画面に戻ります。データは削除されません。</string>
+    <string name="settings_clear_data_title">すべてのデータを消去</string>
+    <string name="settings_clear_data_message">すべての連絡先、グループ、tickle リマインダーが完全に削除されます。元に戻すことはできません。</string>
+    <string name="settings_clear_data_confirm">すべて消去</string>
+    <string name="settings_choose_theme">テーマを選択</string>
+    <string name="settings_debug_load_title">テスト連絡先を読み込む</string>
+    <string name="settings_debug_load_subtitle">アセットから 20 件の仮連絡先を読み込みます（デバッグのみ）</string>
+    <string name="settings_debug_clear_subtitle">連絡先、グループ、tickle を完全に削除します（デバッグのみ）</string>
+
+    <!-- Tickle list -->
+    <string name="tickle_list_title">Tickle</string>
+    <string name="tickle_list_add_fab">tickle を追加</string>
+    <string name="tickle_list_section_due">期限切れ</string>
+    <string name="tickle_list_section_upcoming">近日中</string>
+    <string name="tickle_list_section_snoozed">スヌーズ中</string>
+    <string name="tickle_list_empty_title">tickle はまだありません</string>
+    <string name="tickle_list_empty_description">+ をタップしてリマインダーを設定</string>
+    <string name="tickle_row_action_done">完了</string>
+    <string name="tickle_row_action_snooze">スヌーズ</string>
+    <string name="tickle_row_action_delete">削除</string>
+    <string name="tickle_row_default_note">Tickle リマインダー</string>
+    <string name="tickle_row_today">今日</string>
+    <string name="tickle_row_tomorrow">明日</string>
+    <string name="tickle_row_yesterday">昨日</string>
+    <string name="tickle_row_in_days">%1$d 日後</string>
+    <string name="tickle_row_days_overdue">%1$d 日超過</string>
+
+    <!-- Tickle edit -->
+    <string name="tickle_edit_new_title">新しい Tickle</string>
+    <string name="tickle_edit_title">Tickle を編集</string>
+    <string name="tickle_edit_tab_contact">連絡先</string>
+    <string name="tickle_edit_tab_group">グループ</string>
+    <string name="tickle_edit_section_contact">連絡先</string>
+    <string name="tickle_edit_section_group">グループ</string>
+    <string name="tickle_edit_search_contacts">連絡先を検索</string>
+    <string name="tickle_edit_section_frequency">頻度</string>
+    <string name="tickle_edit_section_custom_interval">カスタム間隔（日）</string>
+    <string name="tickle_edit_section_note">メモ（任意）</string>
+    <string name="tickle_edit_note_placeholder">話すトピック…</string>
+    <string name="tickle_edit_custom_interval_days">%1$d 日</string>
+    <string name="tickle_edit_no_groups_title">グループはまだありません</string>
+    <string name="tickle_edit_no_groups_description">グループを使えば、チームや仲間全員に一度に tickle を送れます。</string>
+    <string name="tickle_edit_create_group_button">グループを作成</string>
+    <string name="tickle_edit_new_group_dialog_title">新しいグループ</string>
+    <string name="tickle_edit_group_name_label">グループ名</string>
+    <string name="tickle_saved">Tickle を保存しました</string>
+    <string name="tickle_updated">Tickle を更新しました</string>
+    <string name="tickle_notification_contact_fallback">あなたの連絡先</string>
+    <string name="tickle_notification_title">%1$s に連絡しましょう</string>
+    <string name="tickle_notification_body">大切な人とつながりを — 今日、短いメッセージを送りましょう。</string>
+
+    <!-- Network list -->
+    <string name="network_title">ネットワーク</string>
+    <string name="network_more_options">その他のオプション</string>
+    <string name="network_import_contacts">連絡先をインポート</string>
+    <string name="network_search_placeholder">連絡先を検索…</string>
+    <string name="network_empty_title">連絡先はまだありません</string>
+    <string name="network_empty_description">+ をタップして追加</string>
+    <string name="network_add_contact_fab">連絡先を追加</string>
+    <string name="network_delete_title">連絡先を削除</string>
+    <string name="network_delete_message">%1$s をネットワークから削除しますか？元に戻すことはできません。</string>
+    <string name="network_contact_has_phone">電話あり</string>
+    <string name="network_contact_has_email">メールあり</string>
+    <string name="network_contact_import_source">インポート元</string>
+
+    <!-- Contact detail -->
+    <string name="contact_detail_add_tickle">Tickle を追加</string>
+    <string name="contact_detail_add_to_group">グループに追加</string>
+    <string name="contact_detail_message">メッセージ</string>
+    <string name="contact_detail_section_phone">電話</string>
+    <string name="contact_detail_section_email">メール</string>
+    <string name="contact_detail_section_notes">メモ</string>
+    <string name="contact_detail_section_tags">タグ</string>
+    <string name="contact_detail_delete">連絡先を削除</string>
+    <string name="contact_add_to_group_title">グループに追加</string>
+    <string name="contact_add_to_group_empty">グループはまだありません。</string>
+    <string name="contact_add_to_group_create_new">+ 新しいグループを作成</string>
+    <string name="contact_add_to_group_group_name">グループ名</string>
+    <string name="contact_group_member_check">メンバー</string>
+
+    <!-- Add / Edit contact -->
+    <string name="add_contact_title">新しい連絡先</string>
+    <string name="edit_contact_title">連絡先を編集</string>
+    <string name="add_contact_section_name">名前</string>
+    <string name="add_contact_section_work">仕事</string>
+    <string name="add_contact_section_phone">電話</string>
+    <string name="add_contact_section_email">メール</string>
+    <string name="add_contact_section_notes">メモ</string>
+    <string name="add_contact_section_tags">タグ</string>
+    <string name="add_contact_first_name">名</string>
+    <string name="add_contact_last_name">姓</string>
+    <string name="add_contact_company">会社</string>
+    <string name="add_contact_job_title">役職</string>
+    <string name="add_contact_phone_n">電話 %1$d</string>
+    <string name="add_contact_email_n">メール %1$d</string>
+    <string name="add_contact_add_phone">電話を追加</string>
+    <string name="add_contact_add_email">メールを追加</string>
+    <string name="add_contact_notes_label">メモ</string>
+    <string name="add_contact_add_tag_label">タグを追加</string>
+    <string name="add_contact_add_tag_button">タグを追加</string>
+
+    <!-- Groups list -->
+    <string name="group_list_title">グループ</string>
+    <string name="group_list_empty_title">グループはまだありません</string>
+    <string name="group_list_empty_description">+ をタップしてグループを作成</string>
+    <string name="group_list_create_fab">グループを作成</string>
+    <string name="group_delete_title">グループを削除</string>
+    <string name="group_delete_message">"%1$s" を削除しますか？連絡先は削除されません。</string>
+    <string name="group_new_dialog_title">新しいグループ</string>
+    <string name="group_dialog_emoji_label">絵文字</string>
+    <string name="group_dialog_name_label">グループ名</string>
+    <string name="group_dialog_name_exists">名前はすでに存在します</string>
+    <string name="group_dialog_char_count">%1$d / 30</string>
+    <plurals name="group_list_member_count">
+        <item quantity="other">%1$d 人のメンバー</item>
+    </plurals>
+
+    <!-- Group detail -->
+    <string name="group_detail_empty">メンバーはまだいません。+ をタップして追加。</string>
+    <string name="group_detail_add_members_title">メンバーを追加</string>
+    <string name="group_detail_filter_placeholder">連絡先をフィルター…</string>
+    <string name="group_detail_all_in_group">すべての連絡先がこのグループに含まれています</string>
+    <string name="group_detail_no_match">一致する連絡先はありません</string>
+    <string name="group_detail_add_member_button">追加</string>
+    <string name="group_detail_member_added">%1$s を %2$s に追加しました</string>
+    <string name="group_detail_member_added_generic">%1$s をグループに追加しました</string>
+    <string name="group_detail_edit_group">グループを編集</string>
+    <string name="group_detail_add_members_fab">メンバーを追加</string>
+    <string name="group_edit_dialog_title">グループを編集</string>
+
+    <!-- Compose -->
+    <string name="compose_title">作成</string>
+    <string name="compose_clear">クリア</string>
+    <string name="compose_to_label">宛先</string>
+    <string name="compose_search_placeholder">連絡先を検索…</string>
+    <string name="compose_no_phone">電話番号が登録されていません</string>
+    <string name="compose_select_template">テンプレートを選択</string>
+    <string name="compose_message_label">メッセージ</string>
+    <string name="compose_message_placeholder">メッセージを入力…</string>
+    <string name="compose_remove_contact">連絡先を外す</string>
+    <string name="compose_message_sent">メッセージを送信しました \u2713</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_tagline">あなたの人とのつながりが大切</string>
+    <string name="onboarding_description">あなたのプライベートなネットワーク。\nクラウドなし。ソーシャルグラフなし。大切な人だけ。</string>
+    <string name="onboarding_import_button">連絡先をインポート</string>
+    <string name="onboarding_start_empty">空のネットワークで始める</string>
+
+    <!-- Import -->
+    <string name="import_title">連絡先をインポート</string>
+    <string name="import_success_card">%1$d 件の連絡先をインポートしました</string>
+    <string name="import_from_phone_title">電話の連絡先からインポート</string>
+    <string name="import_from_phone_subtitle">デバイスのアドレス帳から連絡先を同期します。</string>
+    <string name="import_from_linkedin_title">LinkedIn CSV からネットワークをシード</string>
+    <string name="import_from_linkedin_subtitle">LinkedIn のエクスポートには名前と会社情報が含まれますが、電話番号は含まれません。インポート後、連絡先の詳細を手動で追加します。</string>
+    <string name="import_linkedin_instructions_title">LinkedIn からエクスポートする方法</string>
+    <string name="import_linkedin_instructions">1. linkedin.com にアクセス\n2. 「自分」→「設定とプライバシー」をタップ\n3. データのプライバシー → データのコピーを取得\n4.「コネクション」を選択してエクスポートを申請\n5. CSV ファイルをダウンロードしてここで選択</string>
+    <string name="import_continue_button">ネットワークへ進む</string>
+    <string name="import_skip_button">今はスキップ</string>
+    <string name="import_snackbar_success">%1$d 件の連絡先をインポートしました</string>
+    <string name="import_snackbar_linkedin">%1$d 件の LinkedIn 連絡先をインポートしました</string>
+    <string name="import_snackbar_permission_denied">連絡先へのアクセスが拒否されました</string>
+    <string name="import_snackbar_failed">インポートに失敗しました：%1$s</string>
+    <string name="import_snackbar_could_not_open">ファイルを開けませんでした</string>
+
+    <!-- Template list -->
+    <string name="template_list_title">メッセージテンプレート</string>
+    <string name="template_list_empty">テンプレートはまだありません。+ をタップして作成。</string>
+    <string name="template_add_fab">テンプレートを追加</string>
+    <string name="template_delete_icon">削除</string>
+
+    <!-- Template edit -->
+    <string name="template_edit_new_title">新しいテンプレート</string>
+    <string name="template_edit_edit_title">テンプレートを編集</string>
+    <string name="template_edit_title_label">タイトル</string>
+    <string name="template_edit_body_label">本文</string>
+
+    <!-- Bottom nav -->
+    <string name="nav_network">ネットワーク</string>
+    <string name="nav_tickle">Tickle</string>
+    <string name="nav_groups">グループ</string>
+    <string name="nav_compose">作成</string>
+    <string name="nav_settings">設定</string>
+
+    <!-- Frequency display names -->
+    <string name="frequency_daily">毎日</string>
+    <string name="frequency_weekly">毎週</string>
+    <string name="frequency_biweekly">2 週間ごと</string>
+    <string name="frequency_monthly">毎月</string>
+    <string name="frequency_bimonthly">2 か月ごと</string>
+    <string name="frequency_quarterly">四半期ごと</string>
+    <string name="frequency_custom">カスタム</string>
+</resources>

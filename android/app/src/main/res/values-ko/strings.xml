@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App -->
+    <string name="app_name">Ticklr</string>
+
+    <!-- Common -->
+    <string name="common_save">저장</string>
+    <string name="common_cancel">취소</string>
+    <string name="common_delete">삭제</string>
+    <string name="common_remove">제거</string>
+    <string name="common_ok">확인</string>
+    <string name="common_reset">초기화</string>
+    <string name="common_create">만들기</string>
+    <string name="common_back">뒤로</string>
+    <string name="common_no_name">이름 없음</string>
+    <string name="common_add">추가</string>
+    <string name="common_update">업데이트</string>
+    <string name="common_send">보내기</string>
+    <string name="common_edit">편집</string>
+
+    <!-- Settings -->
+    <string name="settings_title">설정</string>
+    <string name="settings_section_appearance">외관</string>
+    <string name="settings_section_data">데이터</string>
+    <string name="settings_section_messaging">메시지</string>
+    <string name="settings_section_about">정보</string>
+    <string name="settings_section_developer">개발자</string>
+    <string name="settings_theme_title">테마</string>
+    <string name="settings_theme_system">시스템 기본값</string>
+    <string name="settings_theme_light">라이트</string>
+    <string name="settings_theme_dark">다크</string>
+    <string name="settings_import_title">연락처 가져오기</string>
+    <string name="settings_import_subtitle">전화 또는 LinkedIn CSV에서</string>
+    <string name="settings_templates_title">메시지 템플릿</string>
+    <string name="settings_templates_subtitle">재사용 가능한 메시지 만들기 및 관리</string>
+    <string name="settings_sms_direct_title">SMS 직접 전송</string>
+    <string name="settings_sms_direct_subtitle">메시지 앱을 여는 대신 SmsManager를 사용합니다.</string>
+    <string name="settings_about_privacy">개인정보 최우선. 클라우드 없음, 분석 없음, 계정 불필요. 모든 데이터는 기기에 저장됩니다.</string>
+    <string name="settings_about_built_by">Xaymaca 제작</string>
+    <string name="settings_about_version">버전 %1$s</string>
+    <string name="settings_reset_onboarding_title">온보딩 초기화</string>
+    <string name="settings_reset_onboarding_subtitle">환영 화면을 다시 표시</string>
+    <string name="settings_reset_confirm_message">환영 화면으로 돌아갑니다. 데이터는 삭제되지 않습니다.</string>
+    <string name="settings_clear_data_title">모든 데이터 지우기</string>
+    <string name="settings_clear_data_message">모든 연락처, 그룹 및 tickle 알림이 영구적으로 삭제됩니다. 되돌릴 수 없습니다.</string>
+    <string name="settings_clear_data_confirm">모두 지우기</string>
+    <string name="settings_choose_theme">테마 선택</string>
+    <string name="settings_debug_load_title">테스트 연락처 불러오기</string>
+    <string name="settings_debug_load_subtitle">에셋에서 20개의 가상 연락처를 불러옵니다 (디버그 전용)</string>
+    <string name="settings_debug_clear_subtitle">연락처, 그룹 및 tickle을 영구 삭제합니다 (디버그 전용)</string>
+
+    <!-- Tickle list -->
+    <string name="tickle_list_title">Tickle</string>
+    <string name="tickle_list_add_fab">tickle 추가</string>
+    <string name="tickle_list_section_due">기한 초과</string>
+    <string name="tickle_list_section_upcoming">예정</string>
+    <string name="tickle_list_section_snoozed">다시 알림</string>
+    <string name="tickle_list_empty_title">tickle이 아직 없습니다</string>
+    <string name="tickle_list_empty_description">+ 를 눌러 알림을 설정하세요</string>
+    <string name="tickle_row_action_done">완료</string>
+    <string name="tickle_row_action_snooze">다시 알림</string>
+    <string name="tickle_row_action_delete">삭제</string>
+    <string name="tickle_row_default_note">Tickle 알림</string>
+    <string name="tickle_row_today">오늘</string>
+    <string name="tickle_row_tomorrow">내일</string>
+    <string name="tickle_row_yesterday">어제</string>
+    <string name="tickle_row_in_days">%1$d일 후</string>
+    <string name="tickle_row_days_overdue">%1$d일 초과</string>
+
+    <!-- Tickle edit -->
+    <string name="tickle_edit_new_title">새 Tickle</string>
+    <string name="tickle_edit_title">Tickle 편집</string>
+    <string name="tickle_edit_tab_contact">연락처</string>
+    <string name="tickle_edit_tab_group">그룹</string>
+    <string name="tickle_edit_section_contact">연락처</string>
+    <string name="tickle_edit_section_group">그룹</string>
+    <string name="tickle_edit_search_contacts">연락처 검색</string>
+    <string name="tickle_edit_section_frequency">빈도</string>
+    <string name="tickle_edit_section_custom_interval">사용자 지정 간격 (일)</string>
+    <string name="tickle_edit_section_note">메모 (선택 사항)</string>
+    <string name="tickle_edit_note_placeholder">이야기할 내용…</string>
+    <string name="tickle_edit_custom_interval_days">%1$d일</string>
+    <string name="tickle_edit_no_groups_title">그룹이 아직 없습니다</string>
+    <string name="tickle_edit_no_groups_description">그룹을 사용하면 팀이나 모임의 모든 사람에게 한 번에 tickle을 보낼 수 있습니다.</string>
+    <string name="tickle_edit_create_group_button">그룹 만들기</string>
+    <string name="tickle_edit_new_group_dialog_title">새 그룹</string>
+    <string name="tickle_edit_group_name_label">그룹 이름</string>
+    <string name="tickle_saved">Tickle이 저장되었습니다</string>
+    <string name="tickle_updated">Tickle이 업데이트되었습니다</string>
+    <string name="tickle_notification_contact_fallback">연락처</string>
+    <string name="tickle_notification_title">%1$s에게 연락할 시간입니다</string>
+    <string name="tickle_notification_body">소중한 사람들과 연결을 — 오늘 짧은 메시지를 보내세요.</string>
+
+    <!-- Network list -->
+    <string name="network_title">네트워크</string>
+    <string name="network_more_options">더 많은 옵션</string>
+    <string name="network_import_contacts">연락처 가져오기</string>
+    <string name="network_search_placeholder">연락처 검색…</string>
+    <string name="network_empty_title">연락처가 아직 없습니다</string>
+    <string name="network_empty_description">+ 를 눌러 추가하세요</string>
+    <string name="network_add_contact_fab">연락처 추가</string>
+    <string name="network_delete_title">연락처 삭제</string>
+    <string name="network_delete_message">%1$s을(를) 네트워크에서 제거할까요? 되돌릴 수 없습니다.</string>
+    <string name="network_contact_has_phone">전화번호 있음</string>
+    <string name="network_contact_has_email">이메일 있음</string>
+    <string name="network_contact_import_source">가져오기 출처</string>
+
+    <!-- Contact detail -->
+    <string name="contact_detail_add_tickle">Tickle 추가</string>
+    <string name="contact_detail_add_to_group">그룹에 추가</string>
+    <string name="contact_detail_message">메시지</string>
+    <string name="contact_detail_section_phone">전화</string>
+    <string name="contact_detail_section_email">이메일</string>
+    <string name="contact_detail_section_notes">메모</string>
+    <string name="contact_detail_section_tags">태그</string>
+    <string name="contact_detail_delete">연락처 삭제</string>
+    <string name="contact_add_to_group_title">그룹에 추가</string>
+    <string name="contact_add_to_group_empty">그룹이 아직 없습니다.</string>
+    <string name="contact_add_to_group_create_new">+ 새 그룹 만들기</string>
+    <string name="contact_add_to_group_group_name">그룹 이름</string>
+    <string name="contact_group_member_check">멤버</string>
+
+    <!-- Add / Edit contact -->
+    <string name="add_contact_title">새 연락처</string>
+    <string name="edit_contact_title">연락처 편집</string>
+    <string name="add_contact_section_name">이름</string>
+    <string name="add_contact_section_work">직장</string>
+    <string name="add_contact_section_phone">전화</string>
+    <string name="add_contact_section_email">이메일</string>
+    <string name="add_contact_section_notes">메모</string>
+    <string name="add_contact_section_tags">태그</string>
+    <string name="add_contact_first_name">이름</string>
+    <string name="add_contact_last_name">성</string>
+    <string name="add_contact_company">회사</string>
+    <string name="add_contact_job_title">직함</string>
+    <string name="add_contact_phone_n">전화 %1$d</string>
+    <string name="add_contact_email_n">이메일 %1$d</string>
+    <string name="add_contact_add_phone">전화 추가</string>
+    <string name="add_contact_add_email">이메일 추가</string>
+    <string name="add_contact_notes_label">메모</string>
+    <string name="add_contact_add_tag_label">태그 추가</string>
+    <string name="add_contact_add_tag_button">태그 추가</string>
+
+    <!-- Groups list -->
+    <string name="group_list_title">그룹</string>
+    <string name="group_list_empty_title">그룹이 아직 없습니다</string>
+    <string name="group_list_empty_description">+ 를 눌러 그룹을 만드세요</string>
+    <string name="group_list_create_fab">그룹 만들기</string>
+    <string name="group_delete_title">그룹 삭제</string>
+    <string name="group_delete_message">"%1$s"을(를) 삭제할까요? 연락처는 삭제되지 않습니다.</string>
+    <string name="group_new_dialog_title">새 그룹</string>
+    <string name="group_dialog_emoji_label">이모지</string>
+    <string name="group_dialog_name_label">그룹 이름</string>
+    <string name="group_dialog_name_exists">이름이 이미 존재합니다</string>
+    <string name="group_dialog_char_count">%1$d / 30</string>
+    <plurals name="group_list_member_count">
+        <item quantity="other">멤버 %1$d명</item>
+    </plurals>
+
+    <!-- Group detail -->
+    <string name="group_detail_empty">멤버가 아직 없습니다. + 를 눌러 추가하세요.</string>
+    <string name="group_detail_add_members_title">멤버 추가</string>
+    <string name="group_detail_filter_placeholder">연락처 필터…</string>
+    <string name="group_detail_all_in_group">모든 연락처가 이미 이 그룹에 있습니다</string>
+    <string name="group_detail_no_match">일치하는 연락처가 없습니다</string>
+    <string name="group_detail_add_member_button">추가</string>
+    <string name="group_detail_member_added">%1$s을(를) %2$s에 추가했습니다</string>
+    <string name="group_detail_member_added_generic">%1$s을(를) 그룹에 추가했습니다</string>
+    <string name="group_detail_edit_group">그룹 편집</string>
+    <string name="group_detail_add_members_fab">멤버 추가</string>
+    <string name="group_edit_dialog_title">그룹 편집</string>
+
+    <!-- Compose -->
+    <string name="compose_title">작성</string>
+    <string name="compose_clear">지우기</string>
+    <string name="compose_to_label">받는 사람</string>
+    <string name="compose_search_placeholder">연락처 검색…</string>
+    <string name="compose_no_phone">전화번호가 없습니다</string>
+    <string name="compose_select_template">템플릿 선택</string>
+    <string name="compose_message_label">메시지</string>
+    <string name="compose_message_placeholder">메시지를 입력하세요…</string>
+    <string name="compose_remove_contact">연락처 제거</string>
+    <string name="compose_message_sent">메시지 전송됨 \u2713</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_tagline">당신의 사람들이 중요합니다</string>
+    <string name="onboarding_description">나만의 개인 네트워크, 비공개로.\n클라우드 없음. 소셜 그래프 없음. 내 사람들만.</string>
+    <string name="onboarding_import_button">연락처 가져오기</string>
+    <string name="onboarding_start_empty">빈 네트워크로 시작</string>
+
+    <!-- Import -->
+    <string name="import_title">연락처 가져오기</string>
+    <string name="import_success_card">%1$d개의 연락처를 성공적으로 가져왔습니다</string>
+    <string name="import_from_phone_title">전화 연락처에서 가져오기</string>
+    <string name="import_from_phone_subtitle">기기 주소록에서 연락처를 동기화합니다.</string>
+    <string name="import_from_linkedin_title">LinkedIn CSV로 네트워크 구성</string>
+    <string name="import_from_linkedin_subtitle">LinkedIn 내보내기에는 이름과 회사 정보가 포함되며 전화번호는 없습니다. 가져온 후 연락처 정보를 수동으로 추가합니다.</string>
+    <string name="import_linkedin_instructions_title">LinkedIn에서 내보내는 방법</string>
+    <string name="import_linkedin_instructions">1. linkedin.com 으로 이동\n2. 나 → 설정 및 개인정보 탭\n3. 데이터 개인정보 → 내 데이터 사본 얻기\n4. "연결"을 선택하고 내보내기 요청\n5. CSV 파일을 다운로드한 후 여기서 선택</string>
+    <string name="import_continue_button">네트워크로 이동</string>
+    <string name="import_skip_button">지금은 건너뛰기</string>
+    <string name="import_snackbar_success">%1$d개의 연락처를 가져왔습니다</string>
+    <string name="import_snackbar_linkedin">%1$d개의 LinkedIn 연락처를 가져왔습니다</string>
+    <string name="import_snackbar_permission_denied">연락처 권한이 거부되었습니다</string>
+    <string name="import_snackbar_failed">가져오기 실패: %1$s</string>
+    <string name="import_snackbar_could_not_open">파일을 열 수 없습니다</string>
+
+    <!-- Template list -->
+    <string name="template_list_title">메시지 템플릿</string>
+    <string name="template_list_empty">템플릿이 아직 없습니다. + 를 눌러 만드세요.</string>
+    <string name="template_add_fab">템플릿 추가</string>
+    <string name="template_delete_icon">삭제</string>
+
+    <!-- Template edit -->
+    <string name="template_edit_new_title">새 템플릿</string>
+    <string name="template_edit_edit_title">템플릿 편집</string>
+    <string name="template_edit_title_label">제목</string>
+    <string name="template_edit_body_label">내용</string>
+
+    <!-- Bottom nav -->
+    <string name="nav_network">네트워크</string>
+    <string name="nav_tickle">Tickle</string>
+    <string name="nav_groups">그룹</string>
+    <string name="nav_compose">작성</string>
+    <string name="nav_settings">설정</string>
+
+    <!-- Frequency display names -->
+    <string name="frequency_daily">매일</string>
+    <string name="frequency_weekly">매주</string>
+    <string name="frequency_biweekly">2주마다</string>
+    <string name="frequency_monthly">매월</string>
+    <string name="frequency_bimonthly">2개월마다</string>
+    <string name="frequency_quarterly">분기마다</string>
+    <string name="frequency_custom">사용자 지정</string>
+</resources>

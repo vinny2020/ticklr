@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App -->
+    <string name="app_name">Ticklr</string>
+
+    <!-- Common -->
+    <string name="common_save">Сохранить</string>
+    <string name="common_cancel">Отмена</string>
+    <string name="common_delete">Удалить</string>
+    <string name="common_remove">Убрать</string>
+    <string name="common_ok">OK</string>
+    <string name="common_reset">Сбросить</string>
+    <string name="common_create">Создать</string>
+    <string name="common_back">Назад</string>
+    <string name="common_no_name">Без имени</string>
+    <string name="common_add">Добавить</string>
+    <string name="common_update">Обновить</string>
+    <string name="common_send">Отправить</string>
+    <string name="common_edit">Редактировать</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Настройки</string>
+    <string name="settings_section_appearance">Внешний вид</string>
+    <string name="settings_section_data">Данные</string>
+    <string name="settings_section_messaging">Сообщения</string>
+    <string name="settings_section_about">О приложении</string>
+    <string name="settings_section_developer">Разработчик</string>
+    <string name="settings_theme_title">Тема</string>
+    <string name="settings_theme_system">По умолчанию системы</string>
+    <string name="settings_theme_light">Светлая</string>
+    <string name="settings_theme_dark">Тёмная</string>
+    <string name="settings_import_title">Импорт контактов</string>
+    <string name="settings_import_subtitle">Из телефона или CSV LinkedIn</string>
+    <string name="settings_templates_title">Шаблоны сообщений</string>
+    <string name="settings_templates_subtitle">Создавайте и управляйте повторно используемыми сообщениями</string>
+    <string name="settings_sms_direct_title">Отправлять SMS напрямую</string>
+    <string name="settings_sms_direct_subtitle">Использует SmsManager вместо открытия приложения Сообщения.</string>
+    <string name="settings_about_privacy">Приватность прежде всего. Без облака, аналитики и учётной записи. Все данные хранятся на устройстве.</string>
+    <string name="settings_about_built_by">Создано Xaymaca</string>
+    <string name="settings_about_version">Версия %1$s</string>
+    <string name="settings_reset_onboarding_title">Сбросить введение</string>
+    <string name="settings_reset_onboarding_subtitle">Показать экран приветствия снова</string>
+    <string name="settings_reset_confirm_message">Это вернёт вас на экран приветствия. Ваши данные не будут удалены.</string>
+    <string name="settings_clear_data_title">Очистить все данные</string>
+    <string name="settings_clear_data_message">Это навсегда удалит все контакты, группы и tickle-напоминания. Это нельзя отменить.</string>
+    <string name="settings_clear_data_confirm">Очистить всё</string>
+    <string name="settings_choose_theme">Выбрать тему</string>
+    <string name="settings_debug_load_title">Загрузить тестовые контакты</string>
+    <string name="settings_debug_load_subtitle">Загружает 20 фиктивных контактов из ресурсов (только для отладки)</string>
+    <string name="settings_debug_clear_subtitle">Безвозвратно удаляет контакты, группы и tickle-напоминания (только для отладки)</string>
+
+    <!-- Tickle list -->
+    <string name="tickle_list_title">Tickle</string>
+    <string name="tickle_list_add_fab">Добавить tickle</string>
+    <string name="tickle_list_section_due">Просрочено</string>
+    <string name="tickle_list_section_upcoming">Предстоящие</string>
+    <string name="tickle_list_section_snoozed">Отложено</string>
+    <string name="tickle_list_empty_title">Нет tickle-напоминаний</string>
+    <string name="tickle_list_empty_description">Нажмите +, чтобы запланировать напоминание</string>
+    <string name="tickle_row_action_done">Готово</string>
+    <string name="tickle_row_action_snooze">Отложить</string>
+    <string name="tickle_row_action_delete">Удалить</string>
+    <string name="tickle_row_default_note">Напоминание tickle</string>
+    <string name="tickle_row_today">Сегодня</string>
+    <string name="tickle_row_tomorrow">Завтра</string>
+    <string name="tickle_row_yesterday">Вчера</string>
+    <string name="tickle_row_in_days">Через %1$dд</string>
+    <string name="tickle_row_days_overdue">%1$dд просрочено</string>
+
+    <!-- Tickle edit -->
+    <string name="tickle_edit_new_title">Новый Tickle</string>
+    <string name="tickle_edit_title">Редактировать Tickle</string>
+    <string name="tickle_edit_tab_contact">Контакт</string>
+    <string name="tickle_edit_tab_group">Группа</string>
+    <string name="tickle_edit_section_contact">КОНТАКТ</string>
+    <string name="tickle_edit_section_group">ГРУППА</string>
+    <string name="tickle_edit_search_contacts">Поиск контактов</string>
+    <string name="tickle_edit_section_frequency">ЧАСТОТА</string>
+    <string name="tickle_edit_section_custom_interval">ПОЛЬЗОВАТЕЛЬСКИЙ ИНТЕРВАЛ (ДНИ)</string>
+    <string name="tickle_edit_section_note">ЗАМЕТКА (НЕОБЯЗАТЕЛЬНО)</string>
+    <string name="tickle_edit_note_placeholder">О чём поговорить…</string>
+    <string name="tickle_edit_custom_interval_days">%1$d дн.</string>
+    <string name="tickle_edit_no_groups_title">Групп пока нет</string>
+    <string name="tickle_edit_no_groups_description">Группы позволяют отправлять tickle всем в команде или круге сразу.</string>
+    <string name="tickle_edit_create_group_button">Создать группу</string>
+    <string name="tickle_edit_new_group_dialog_title">Новая группа</string>
+    <string name="tickle_edit_group_name_label">Название группы</string>
+    <string name="tickle_saved">Tickle сохранён</string>
+    <string name="tickle_updated">Tickle обновлён</string>
+    <string name="tickle_notification_contact_fallback">вашим контактом</string>
+    <string name="tickle_notification_title">Пора связаться с %1$s</string>
+    <string name="tickle_notification_body">Ваши люди важны — отправьте короткое сообщение сегодня.</string>
+
+    <!-- Network list -->
+    <string name="network_title">Сеть</string>
+    <string name="network_more_options">Другие параметры</string>
+    <string name="network_import_contacts">Импорт контактов</string>
+    <string name="network_search_placeholder">Поиск контактов…</string>
+    <string name="network_empty_title">Контактов пока нет</string>
+    <string name="network_empty_description">Нажмите +, чтобы добавить кого-нибудь</string>
+    <string name="network_add_contact_fab">Добавить контакт</string>
+    <string name="network_delete_title">Удалить контакт</string>
+    <string name="network_delete_message">Убрать %1$s из вашей сети? Это нельзя отменить.</string>
+    <string name="network_contact_has_phone">Есть телефон</string>
+    <string name="network_contact_has_email">Есть эл. почта</string>
+    <string name="network_contact_import_source">Источник импорта</string>
+
+    <!-- Contact detail -->
+    <string name="contact_detail_add_tickle">Добавить Tickle</string>
+    <string name="contact_detail_add_to_group">Добавить в группу</string>
+    <string name="contact_detail_message">Сообщение</string>
+    <string name="contact_detail_section_phone">Телефон</string>
+    <string name="contact_detail_section_email">Эл. почта</string>
+    <string name="contact_detail_section_notes">Заметки</string>
+    <string name="contact_detail_section_tags">Теги</string>
+    <string name="contact_detail_delete">Удалить контакт</string>
+    <string name="contact_add_to_group_title">Добавить в группу</string>
+    <string name="contact_add_to_group_empty">Групп пока нет.</string>
+    <string name="contact_add_to_group_create_new">+ Создать новую группу</string>
+    <string name="contact_add_to_group_group_name">Название группы</string>
+    <string name="contact_group_member_check">Участник</string>
+
+    <!-- Add / Edit contact -->
+    <string name="add_contact_title">Новый контакт</string>
+    <string name="edit_contact_title">Редактировать контакт</string>
+    <string name="add_contact_section_name">Имя</string>
+    <string name="add_contact_section_work">Работа</string>
+    <string name="add_contact_section_phone">Телефон</string>
+    <string name="add_contact_section_email">Эл. почта</string>
+    <string name="add_contact_section_notes">Заметки</string>
+    <string name="add_contact_section_tags">Теги</string>
+    <string name="add_contact_first_name">Имя</string>
+    <string name="add_contact_last_name">Фамилия</string>
+    <string name="add_contact_company">Компания</string>
+    <string name="add_contact_job_title">Должность</string>
+    <string name="add_contact_phone_n">Телефон %1$d</string>
+    <string name="add_contact_email_n">Эл. почта %1$d</string>
+    <string name="add_contact_add_phone">Добавить телефон</string>
+    <string name="add_contact_add_email">Добавить эл. почту</string>
+    <string name="add_contact_notes_label">Заметки</string>
+    <string name="add_contact_add_tag_label">Добавить тег</string>
+    <string name="add_contact_add_tag_button">Добавить тег</string>
+
+    <!-- Groups list -->
+    <string name="group_list_title">Группы</string>
+    <string name="group_list_empty_title">Групп пока нет</string>
+    <string name="group_list_empty_description">Нажмите +, чтобы создать группу</string>
+    <string name="group_list_create_fab">Создать группу</string>
+    <string name="group_delete_title">Удалить группу</string>
+    <string name="group_delete_message">Удалить \"%1$s\"? Контакты удалены не будут.</string>
+    <string name="group_new_dialog_title">Новая группа</string>
+    <string name="group_dialog_emoji_label">Эмодзи</string>
+    <string name="group_dialog_name_label">Название группы</string>
+    <string name="group_dialog_name_exists">Название уже существует</string>
+    <string name="group_dialog_char_count">%1$d / 30</string>
+    <plurals name="group_list_member_count">
+        <item quantity="one">%1$d участник</item>
+        <item quantity="few">%1$d участника</item>
+        <item quantity="many">%1$d участников</item>
+        <item quantity="other">%1$d участника</item>
+    </plurals>
+
+    <!-- Group detail -->
+    <string name="group_detail_empty">Участников пока нет. Нажмите + для добавления.</string>
+    <string name="group_detail_add_members_title">Добавить участников</string>
+    <string name="group_detail_filter_placeholder">Фильтр контактов…</string>
+    <string name="group_detail_all_in_group">Все контакты уже в этой группе</string>
+    <string name="group_detail_no_match">Нет совпадающих контактов</string>
+    <string name="group_detail_add_member_button">Добавить</string>
+    <string name="group_detail_member_added">%1$s добавлен(а) в %2$s</string>
+    <string name="group_detail_member_added_generic">%1$s добавлен(а) в группу</string>
+    <string name="group_detail_edit_group">Редактировать группу</string>
+    <string name="group_detail_add_members_fab">Добавить участников</string>
+    <string name="group_edit_dialog_title">Редактировать группу</string>
+
+    <!-- Compose -->
+    <string name="compose_title">Написать</string>
+    <string name="compose_clear">Очистить</string>
+    <string name="compose_to_label">Кому</string>
+    <string name="compose_search_placeholder">Поиск контактов…</string>
+    <string name="compose_no_phone">Номер телефона не указан</string>
+    <string name="compose_select_template">Выбрать шаблон</string>
+    <string name="compose_message_label">Сообщение</string>
+    <string name="compose_message_placeholder">Напишите сообщение…</string>
+    <string name="compose_remove_contact">Убрать контакт</string>
+    <string name="compose_message_sent">Сообщение отправлено \u2713</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_tagline">ВАШИ ЛЮДИ ВАЖНЫ</string>
+    <string name="onboarding_description">Ваша личная сеть — приватно.\nБез облака. Без социального графа. Только ваши люди.</string>
+    <string name="onboarding_import_button">Импортировать контакты</string>
+    <string name="onboarding_start_empty">Начать с пустой сетью</string>
+
+    <!-- Import -->
+    <string name="import_title">Импорт контактов</string>
+    <string name="import_success_card">Успешно импортировано %1$d контактов</string>
+    <string name="import_from_phone_title">Импорт из контактов телефона</string>
+    <string name="import_from_phone_subtitle">Синхронизируйте контакты из адресной книги устройства.</string>
+    <string name="import_from_linkedin_title">Заполните сеть из CSV LinkedIn</string>
+    <string name="import_from_linkedin_subtitle">Экспорт LinkedIn включает имена и компании — без номеров телефонов. После импорта вы добавите контактные данные вручную.</string>
+    <string name="import_linkedin_instructions_title">Как экспортировать из LinkedIn</string>
+    <string name="import_linkedin_instructions">1. Перейдите на linkedin.com\n2. Нажмите Я → Настройки и конфиденциальность\n3. Конфиденциальность данных → Получить копию своих данных\n4. Выберите «Контакты» и запросите экспорт\n5. Скачайте CSV-файл и выберите его здесь</string>
+    <string name="import_continue_button">Перейти в сеть</string>
+    <string name="import_skip_button">Пропустить</string>
+    <string name="import_snackbar_success">Импортировано %1$d контактов</string>
+    <string name="import_snackbar_linkedin">Импортировано %1$d контактов LinkedIn</string>
+    <string name="import_snackbar_permission_denied">Доступ к контактам запрещён</string>
+    <string name="import_snackbar_failed">Ошибка импорта: %1$s</string>
+    <string name="import_snackbar_could_not_open">Не удалось открыть файл</string>
+
+    <!-- Template list -->
+    <string name="template_list_title">Шаблоны сообщений</string>
+    <string name="template_list_empty">Шаблонов пока нет. Нажмите + для создания.</string>
+    <string name="template_add_fab">Добавить шаблон</string>
+    <string name="template_delete_icon">Удалить</string>
+
+    <!-- Template edit -->
+    <string name="template_edit_new_title">Новый шаблон</string>
+    <string name="template_edit_edit_title">Редактировать шаблон</string>
+    <string name="template_edit_title_label">Заголовок</string>
+    <string name="template_edit_body_label">Текст</string>
+
+    <!-- Bottom nav -->
+    <string name="nav_network">Сеть</string>
+    <string name="nav_tickle">Tickle</string>
+    <string name="nav_groups">Группы</string>
+    <string name="nav_compose">Написать</string>
+    <string name="nav_settings">Настройки</string>
+
+    <!-- Frequency display names -->
+    <string name="frequency_daily">Ежедневно</string>
+    <string name="frequency_weekly">Еженедельно</string>
+    <string name="frequency_biweekly">Каждые 2 недели</string>
+    <string name="frequency_monthly">Ежемесячно</string>
+    <string name="frequency_bimonthly">Каждые 2 месяца</string>
+    <string name="frequency_quarterly">Ежеквартально</string>
+    <string name="frequency_custom">Произвольно</string>
+</resources>
