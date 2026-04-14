@@ -106,6 +106,12 @@
             "state": "translated",
             "value": "새 연락처"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "नया संपर्क"
+          }
         }
       }
     },
@@ -212,6 +218,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "모든 연락처가 이미 구성원입니다"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सभी संपर्क पहले से सदस्य हैं"
           }
         }
       }
@@ -320,6 +332,12 @@
             "state": "translated",
             "value": "모든 사람이 이 그룹에 있습니다"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सभी इस समूह में हैं"
+          }
         }
       }
     },
@@ -426,6 +444,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@에 추가"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ में जोड़ें"
           }
         }
       }
@@ -534,6 +558,12 @@
             "state": "translated",
             "value": "연락처 검색"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "संपर्क खोजें"
+          }
         }
       }
     },
@@ -640,6 +670,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@이(가) 그룹에 추가되었습니다"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ को समूह में जोड़ा गया"
           }
         }
       }
@@ -748,6 +784,12 @@
             "state": "translated",
             "value": "%1$@이(가) %2$@에 추가되었습니다"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ को %2$@ में जोड़ा गया"
+          }
         }
       }
     },
@@ -854,6 +896,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "새 그룹 만들기"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "नया समूह बनाएं"
           }
         }
       }
@@ -962,6 +1010,12 @@
             "state": "translated",
             "value": "이름이 이미 존재합니다"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "यह नाम पहले से मौजूद है"
+          }
         }
       }
     },
@@ -1068,6 +1122,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "그룹에 추가"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "समूह में जोड़ें"
           }
         }
       }
@@ -1176,6 +1236,12 @@
             "state": "translated",
             "value": "그룹 이름…"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "समूह का नाम…"
+          }
         }
       }
     },
@@ -1282,6 +1348,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "추가"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "जोड़ें"
           }
         }
       }
@@ -1390,6 +1462,12 @@
             "state": "translated",
             "value": "취소"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "रद्द करें"
+          }
         }
       }
     },
@@ -1496,6 +1574,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "이 작업은 취소할 수 없습니다."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "यह क्रिया वापस नहीं की जा सकती।"
           }
         }
       }
@@ -1604,6 +1688,12 @@
             "state": "translated",
             "value": "만들기"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "बनाएं"
+          }
         }
       }
     },
@@ -1710,6 +1800,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "삭제"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "हटाएं"
           }
         }
       }
@@ -1818,6 +1914,12 @@
             "state": "translated",
             "value": "완료"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "हो गया"
+          }
         }
       }
     },
@@ -1924,6 +2026,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "편집"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "संपादित करें"
           }
         }
       }
@@ -2032,6 +2140,12 @@
             "state": "translated",
             "value": "확인"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ठीक है"
+          }
         }
       }
     },
@@ -2138,6 +2252,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "저장"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सहेजें"
           }
         }
       }
@@ -2246,6 +2366,12 @@
             "state": "translated",
             "value": "이 기기는 SMS 메시지를 보내도록 설정되지 않았습니다."
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "यह डिवाइस SMS संदेश भेजने के लिए कॉन्फ़िगर नहीं है।"
+          }
         }
       }
     },
@@ -2352,6 +2478,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "메시지를 보낼 수 없음"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "संदेश नहीं भेजा जा सकता"
           }
         }
       }
@@ -2460,6 +2592,12 @@
             "state": "translated",
             "value": "보내기"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "भेजें"
+          }
         }
       }
     },
@@ -2566,6 +2704,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "메시지"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "संदेश"
           }
         }
       }
@@ -2674,6 +2818,12 @@
             "state": "translated",
             "value": "템플릿"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "टेम्पलेट"
+          }
         }
       }
     },
@@ -2780,6 +2930,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "받는 사람"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "प्रति"
           }
         }
       }
@@ -2888,6 +3044,12 @@
             "state": "translated",
             "value": "작성"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "लिखें"
+          }
         }
       }
     },
@@ -2994,6 +3156,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "템플릿 선택"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "टेम्पलेट चुनें"
           }
         }
       }
@@ -3102,6 +3270,12 @@
             "state": "translated",
             "value": "연락처 검색…"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "संपर्क खोजें…"
+          }
         }
       }
     },
@@ -3208,6 +3382,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "없음"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कोई नहीं"
           }
         }
       }
@@ -3316,6 +3496,12 @@
             "state": "translated",
             "value": "전화번호 없음"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "फ़ोन नंबर नहीं है"
+          }
         }
       }
     },
@@ -3422,6 +3608,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "이메일 추가"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ईमेल जोड़ें"
           }
         }
       }
@@ -3530,6 +3722,12 @@
             "state": "translated",
             "value": "전화 추가"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "फ़ोन जोड़ें"
+          }
         }
       }
     },
@@ -3636,6 +3834,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "태그 추가"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "टैग जोड़ें"
           }
         }
       }
@@ -3744,6 +3948,12 @@
             "state": "translated",
             "value": "회사"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कंपनी"
+          }
         }
       }
     },
@@ -3850,6 +4060,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "이메일 주소"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ईमेल पता"
           }
         }
       }
@@ -3958,6 +4174,12 @@
             "state": "translated",
             "value": "이름"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "पहला नाम"
+          }
         }
       }
     },
@@ -4064,6 +4286,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "직책"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "पद"
           }
         }
       }
@@ -4172,6 +4400,12 @@
             "state": "translated",
             "value": "성"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अंतिम नाम"
+          }
         }
       }
     },
@@ -4278,6 +4512,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "전화번호"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "फ़ोन नंबर"
           }
         }
       }
@@ -4386,6 +4626,12 @@
             "state": "translated",
             "value": "이메일"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ईमेल"
+          }
         }
       }
     },
@@ -4492,6 +4738,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "그룹"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "समूह"
           }
         }
       }
@@ -4600,6 +4852,12 @@
             "state": "translated",
             "value": "이름"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "नाम"
+          }
         }
       }
     },
@@ -4706,6 +4964,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "메모"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "नोट्स"
           }
         }
       }
@@ -4814,6 +5078,12 @@
             "state": "translated",
             "value": "전화"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "फ़ोन"
+          }
         }
       }
     },
@@ -4920,6 +5190,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "태그"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "टैग"
           }
         }
       }
@@ -5028,6 +5304,12 @@
             "state": "translated",
             "value": "직장"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कार्य"
+          }
         }
       }
     },
@@ -5134,6 +5416,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "알림 추가"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "रिमाइंडर जोड़ें"
           }
         }
       }
@@ -5242,6 +5530,12 @@
             "state": "translated",
             "value": "그룹에 추가"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "समूह में जोड़ें"
+          }
         }
       }
     },
@@ -5348,6 +5642,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "연락처 삭제"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "संपर्क हटाएं"
           }
         }
       }
@@ -5456,6 +5756,12 @@
             "state": "translated",
             "value": "메시지"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "संदेश"
+          }
         }
       }
     },
@@ -5562,6 +5868,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@을(를) 삭제하시겠습니까?"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ हटाएं?"
           }
         }
       }
@@ -5670,6 +5982,12 @@
             "state": "translated",
             "value": "연락처 편집"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "संपर्क संपादित करें"
+          }
         }
       }
     },
@@ -5776,6 +6094,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "먼저 네트워크 탭에서 연락처를 추가하세요"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "पहले नेटवर्क टैब से संपर्क जोड़ें"
           }
         }
       }
@@ -5884,6 +6208,12 @@
             "state": "translated",
             "value": "연락처 없음"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कोई संपर्क नहीं"
+          }
         }
       }
     },
@@ -5990,6 +6320,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "연락처 선택"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "संपर्क चुनें"
           }
         }
       }
@@ -6098,6 +6434,12 @@
             "state": "translated",
             "value": "연락처 검색"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "संपर्क खोजें"
+          }
         }
       }
     },
@@ -6204,6 +6546,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "2개월마다"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "हर 2 महीने"
           }
         }
       }
@@ -6312,6 +6660,12 @@
             "state": "translated",
             "value": "2주마다"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "हर 2 सप्ताह"
+          }
         }
       }
     },
@@ -6418,6 +6772,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "사용자 지정"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कस्टम"
           }
         }
       }
@@ -6526,6 +6886,12 @@
             "state": "translated",
             "value": "매일"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "दैनिक"
+          }
         }
       }
     },
@@ -6632,6 +6998,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "매월"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "मासिक"
           }
         }
       }
@@ -6740,6 +7112,12 @@
             "state": "translated",
             "value": "분기마다"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "त्रैमासिक"
+          }
         }
       }
     },
@@ -6846,6 +7224,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "매주"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "साप्ताहिक"
           }
         }
       }
@@ -6954,6 +7338,12 @@
             "state": "translated",
             "value": "제거"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "हटाएं"
+          }
         }
       }
     },
@@ -7060,6 +7450,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "···을 탭하여 이 그룹에 연락처 추가"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इस समूह में संपर्क जोड़ने के लिए ··· दबाएं"
           }
         }
       }
@@ -7168,6 +7564,12 @@
             "state": "translated",
             "value": "아직 구성원이 없습니다"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अभी तक कोई सदस्य नहीं"
+          }
         }
       }
     },
@@ -7274,6 +7676,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "구성원 추가"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सदस्य जोड़ें"
           }
         }
       }
@@ -7382,6 +7790,12 @@
             "state": "translated",
             "value": "그룹 편집"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "समूह संपादित करें"
+          }
         }
       }
     },
@@ -7488,6 +7902,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ 검색"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ खोजें"
           }
         }
       }
@@ -7596,6 +8016,12 @@
             "state": "translated",
             "value": "이 이름의 그룹이 이미 존재합니다"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इस नाम का समूह पहले से मौजूद है"
+          }
         }
       }
     },
@@ -7702,6 +8128,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "사용자 지정"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कस्टम"
           }
         }
       }
@@ -7810,6 +8242,12 @@
             "state": "translated",
             "value": "그룹 편집"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "समूह संपादित करें"
+          }
         }
       }
     },
@@ -7916,6 +8354,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "새 그룹"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "नया समूह"
           }
         }
       }
@@ -8024,6 +8468,12 @@
             "state": "translated",
             "value": "또는 이모지를 직접 입력"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "या कोई भी इमोजी टाइप करें"
+          }
         }
       }
     },
@@ -8130,6 +8580,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "그룹 이름"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "समूह का नाम"
           }
         }
       }
@@ -8238,6 +8694,12 @@
             "state": "translated",
             "value": "이모지"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इमोजी"
+          }
         }
       }
     },
@@ -8344,6 +8806,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "이름"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "नाम"
           }
         }
       }
@@ -8650,6 +9118,24 @@
               }
             }
           }
+        },
+        "hi": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld संपर्क"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld संपर्क"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -8756,6 +9242,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "+를 탭하여 첫 번째 그룹 만들기"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अपना पहला समूह बनाने के लिए + दबाएं"
           }
         }
       }
@@ -8864,6 +9356,12 @@
             "state": "translated",
             "value": "아직 그룹이 없습니다"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अभी तक कोई समूह नहीं"
+          }
         }
       }
     },
@@ -8970,6 +9468,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "그룹"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "समूह"
           }
         }
       }
@@ -9078,6 +9582,12 @@
             "state": "translated",
             "value": "가져오기 오류"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आयात त्रुटि"
+          }
         }
       }
     },
@@ -9184,6 +9694,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "iPhone 연락처 선택"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iPhone संपर्क चुनें"
           }
         }
       }
@@ -9292,6 +9808,12 @@
             "state": "translated",
             "value": "LinkedIn 인맥 추가"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LinkedIn कनेक्शन जोड़ें"
+          }
         }
       }
     },
@@ -9398,6 +9920,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "연락처는 기기에서 로컬로 처리됩니다. LinkedIn은 보통 10~30분 내에 다운로드 링크를 이메일로 보냅니다.\n\nLinkedIn 데이터는 '누구인지'를 알려줍니다 — 이름과 회사. 가져온 후 전화번호를 수동으로 추가합니다."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपके कनेक्शन आपके डिवाइस पर स्थानीय रूप से संसाधित होते हैं। LinkedIn आमतौर पर 10–30 मिनट में डाउनलोड लिंक ईमेल करता है।\n\nLinkedIn डेटा आपको 'कौन' बताता है — नाम और कंपनियां। फ़ोन नंबर आयात के बाद मैन्युअल रूप से जोड़ें।"
           }
         }
       }
@@ -9506,6 +10034,12 @@
             "state": "translated",
             "value": "로컬 네트워크 구축"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अपना स्थानीय नेटवर्क बनाएं"
+          }
         }
       }
     },
@@ -9612,6 +10146,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "LinkedIn CSV 가져오는 방법"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LinkedIn CSV कैसे प्राप्त करें"
           }
         }
       }
@@ -9720,6 +10260,12 @@
             "state": "translated",
             "value": "Safari에서 linkedin.com 열기 (iPhone 지원)"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Safari में linkedin.com खोलें (iPhone पर काम करता है)"
+          }
         }
       }
     },
@@ -9826,6 +10372,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "사진 탭 → 설정 및 개인정보 보호"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अपनी फ़ोटो पर टैप करें → सेटिंग और गोपनीयता"
           }
         }
       }
@@ -9934,6 +10486,12 @@
             "state": "translated",
             "value": "데이터 개인정보 보호 → 데이터 사본 받기"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "डेटा गोपनीयता → अपने डेटा की प्रति प्राप्त करें"
+          }
         }
       }
     },
@@ -10040,6 +10598,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "연결만 선택 → 아카이브 요청"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "केवल कनेक्शन चुनें → संग्रह का अनुरोध करें"
           }
         }
       }
@@ -10148,6 +10712,12 @@
             "state": "translated",
             "value": "LinkedIn 이메일 기다리기 (10~30분)"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LinkedIn के ईमेल का इंतजार करें (10–30 मिनट)"
+          }
         }
       }
     },
@@ -10254,6 +10824,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "zip 다운로드 → 파일 앱에서 열기 → 압축 해제"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "zip डाउनलोड करें → Files ऐप में खोलें → अनज़िप करें"
           }
         }
       }
@@ -10362,6 +10938,12 @@
             "state": "translated",
             "value": "여기로 돌아와서 LinkedIn 인맥 추가 탭"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "यहां वापस आएं और LinkedIn कनेक्शन जोड़ें पर टैप करें"
+          }
         }
       }
     },
@@ -10468,6 +11050,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "나의 네트워크. 나의 규칙."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपका नेटवर्क। आपके नियम।"
           }
         }
       }
@@ -10576,6 +11164,12 @@
             "state": "translated",
             "value": "+를 탭하여 iPhone 또는 LinkedIn에서 추가"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iPhone या LinkedIn से जोड़ने के लिए + दबाएं"
+          }
         }
       }
     },
@@ -10682,6 +11276,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "아직 연락처가 없습니다"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अभी तक कोई संपर्क नहीं"
           }
         }
       }
@@ -10790,6 +11390,12 @@
             "state": "translated",
             "value": "시작하기"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "शुरू करें"
+          }
         }
       }
     },
@@ -10896,6 +11502,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "새 연락처"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "नया संपर्क"
           }
         }
       }
@@ -11004,6 +11616,12 @@
             "state": "translated",
             "value": "네트워크"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "नेटवर्क"
+          }
         }
       }
     },
@@ -11110,6 +11728,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "네트워크 검색"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अपना नेटवर्क खोजें"
           }
         }
       }
@@ -11218,6 +11842,12 @@
             "state": "translated",
             "value": "%@에게 연락할 시간입니다"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ से संपर्क करने का समय है"
+          }
         }
       }
     },
@@ -11324,6 +11954,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "시작하기"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "शुरू करें"
           }
         }
       }
@@ -11432,6 +12068,12 @@
             "state": "translated",
             "value": "빈 네트워크로 시작"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "खाली नेटवर्क से शुरू करें"
+          }
         }
       }
     },
@@ -11538,6 +12180,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "개인 네트워크를 비공개로 관리하세요.\n클라우드 없음. 소셜 그래프 없음. 내 사람들만."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपका निजी नेटवर्क, गोपनीय रूप से।\nकोई क्लाउड नहीं। कोई सोशल ग्राफ नहीं। बस आपके लोग।"
           }
         }
       }
@@ -11646,6 +12294,12 @@
             "state": "translated",
             "value": "설정에서 활성화"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सेटिंग में सक्षम करें"
+          }
         }
       }
     },
@@ -11752,6 +12406,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "온보딩 재설정"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ऑनबोर्डिंग रीसेट करें"
           }
         }
       }
@@ -11860,6 +12520,12 @@
             "state": "translated",
             "value": "알림 접근이 거부되었습니다. 알림을 받으려면 iOS 설정에서 활성화하세요."
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अधिसूचना पहुंच अस्वीकृत। रिमाइंडर प्राप्त करने के लिए iOS सेटिंग में सक्षम करें।"
+          }
         }
       }
     },
@@ -11966,6 +12632,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tickle 알림이 꺼져 있습니다. 앱에서 기한이 지난 알림을 확인할 수 있습니다."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tickle अधिसूचनाएं बंद हैं। आप ऐप में देय रिमाइंडर देख सकते हैं।"
           }
         }
       }
@@ -12074,6 +12746,12 @@
             "state": "translated",
             "value": "설정"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सेटिंग"
+          }
         }
       }
     },
@@ -12180,6 +12858,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "앱"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ऐप"
           }
         }
       }
@@ -12288,6 +12972,12 @@
             "state": "translated",
             "value": "개발"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "निर्मित"
+          }
         }
       }
     },
@@ -12394,6 +13084,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "연락처"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "संपर्क"
           }
         }
       }
@@ -12502,6 +13198,12 @@
             "state": "translated",
             "value": "기본 빈도"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "डिफ़ॉल्ट आवृत्ति"
+          }
         }
       }
     },
@@ -12608,6 +13310,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "네트워크 시작하기"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अपना नेटवर्क शुरू करें"
           }
         }
       }
@@ -12716,6 +13424,12 @@
             "state": "translated",
             "value": "메시지 템플릿"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "संदेश टेम्पलेट"
+          }
         }
       }
     },
@@ -12822,6 +13536,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tickle 알림"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tickle रिमाइंडर"
           }
         }
       }
@@ -12930,6 +13650,12 @@
             "state": "translated",
             "value": "버전"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "संस्करण"
+          }
         }
       }
     },
@@ -13036,6 +13762,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "정보"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "के बारे में"
           }
         }
       }
@@ -13144,6 +13876,12 @@
             "state": "translated",
             "value": "데이터"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "डेटा"
+          }
         }
       }
     },
@@ -13250,6 +13988,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "알림"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अधिसूचनाएं"
           }
         }
       }
@@ -13358,6 +14102,12 @@
             "state": "translated",
             "value": "Tickle 기본값"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tickle डिफ़ॉल्ट"
+          }
         }
       }
     },
@@ -13464,6 +14214,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "작성"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "लिखें"
           }
         }
       }
@@ -13572,6 +14328,12 @@
             "state": "translated",
             "value": "그룹"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "समूह"
+          }
         }
       }
     },
@@ -13678,6 +14440,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "네트워크"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "नेटवर्क"
           }
         }
       }
@@ -13786,6 +14554,12 @@
             "state": "translated",
             "value": "설정"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सेटिंग"
+          }
         }
       }
     },
@@ -13889,6 +14663,12 @@
           }
         },
         "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tickle"
+          }
+        },
+        "hi": {
           "stringUnit": {
             "state": "translated",
             "value": "Tickle"
@@ -14000,6 +14780,12 @@
             "state": "translated",
             "value": "템플릿 편집"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "टेम्पलेट संपादित करें"
+          }
         }
       }
     },
@@ -14106,6 +14892,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "새 템플릿"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "नया टेम्पलेट"
           }
         }
       }
@@ -14214,6 +15006,12 @@
             "state": "translated",
             "value": "예: 안부 인사"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "जैसे: हाल-चाल"
+          }
         }
       }
     },
@@ -14320,6 +15118,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "메시지"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "संदेश"
           }
         }
       }
@@ -14428,6 +15232,12 @@
             "state": "translated",
             "value": "제목"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "शीर्षक"
+          }
         }
       }
     },
@@ -14534,6 +15344,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "템플릿이 저장되었습니다"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "टेम्पलेट सहेजा गया"
           }
         }
       }
@@ -14642,6 +15458,12 @@
             "state": "translated",
             "value": "템플릿이 업데이트되었습니다"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "टेम्पलेट अपडेट हुआ"
+          }
         }
       }
     },
@@ -14748,6 +15570,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "메시지 템플릿"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "संदेश टेम्पलेट"
           }
         }
       }
@@ -14856,6 +15684,12 @@
             "state": "translated",
             "value": "그룹 만들기"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "समूह बनाएं"
+          }
         }
       }
     },
@@ -14962,6 +15796,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tickle 편집"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tickle संपादित करें"
           }
         }
       }
@@ -15070,6 +15910,12 @@
             "state": "translated",
             "value": "새 Tickle"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "नया Tickle"
+          }
         }
       }
     },
@@ -15176,6 +16022,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "그룹을 사용하면 팀이나 서클의 모든 사람에게 한 번에 알림을 보낼 수 있습니다."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "समूह आपको एक बार में टीम या सर्कल के सभी लोगों को Tickle करने देते हैं।"
           }
         }
       }
@@ -15284,6 +16136,12 @@
             "state": "translated",
             "value": "아직 그룹이 없습니다"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अभी तक कोई समूह नहीं"
+          }
         }
       }
     },
@@ -15390,6 +16248,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "연락처 선택"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "संपर्क चुनें"
           }
         }
       }
@@ -15498,6 +16362,12 @@
             "state": "translated",
             "value": "그룹 선택"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "समूह चुनें"
+          }
         }
       }
     },
@@ -15604,6 +16474,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "예: 새 역할에 대해 물어보기"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "जैसे: नई भूमिका के बारे में पूछें"
           }
         }
       }
@@ -15712,6 +16588,12 @@
             "state": "translated",
             "value": "빈도"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आवृत्ति"
+          }
         }
       }
     },
@@ -15818,6 +16700,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "시작일"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "शुरुआत"
           }
         }
       }
@@ -15926,6 +16814,12 @@
             "state": "translated",
             "value": "메모"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "नोट"
+          }
         }
       }
     },
@@ -16033,6 +16927,12 @@
             "state": "translated",
             "value": "일정"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "शेड्यूल"
+          }
         }
       }
     },
@@ -16139,6 +17039,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "대상"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "किसे"
           }
         }
       }
@@ -16445,6 +17351,24 @@
               }
             }
           }
+        },
+        "hi": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "हर %lld दिन"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "हर %lld दिन"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -16551,6 +17475,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "연락처"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "संपर्क"
           }
         }
       }
@@ -16659,6 +17589,12 @@
             "state": "translated",
             "value": "그룹"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "समूह"
+          }
         }
       }
     },
@@ -16765,6 +17701,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tickle이 저장되었습니다"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tickle सहेजा गया"
           }
         }
       }
@@ -16873,6 +17815,12 @@
             "state": "translated",
             "value": "Tickle이 업데이트되었습니다"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tickle अपडेट हुआ"
+          }
         }
       }
     },
@@ -16979,6 +17927,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "다시 알림"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "स्नूज़"
           }
         }
       }
@@ -17087,6 +18041,12 @@
             "state": "translated",
             "value": "연락처 상세 페이지에서 추가하거나 +를 탭하세요"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "किसी संपर्क के पृष्ठ से जोड़ें, या + दबाएं"
+          }
         }
       }
     },
@@ -17194,6 +18154,12 @@
             "state": "translated",
             "value": "아직 Tickle이 없습니다"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अभी तक कोई tickle नहीं"
+          }
         }
       }
     },
@@ -17297,6 +18263,12 @@
           }
         },
         "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tickle"
+          }
+        },
+        "hi": {
           "stringUnit": {
             "state": "translated",
             "value": "Tickle"
@@ -17408,6 +18380,12 @@
             "state": "translated",
             "value": "기한"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "देय"
+          }
         }
       }
     },
@@ -17514,6 +18492,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "미루기"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "स्नूज़ किया गया"
           }
         }
       }
@@ -17622,6 +18606,12 @@
             "state": "translated",
             "value": "예정"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आगामी"
+          }
         }
       }
     },
@@ -17728,6 +18718,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld일 초과"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lldद देरी"
           }
         }
       }
@@ -17836,6 +18832,12 @@
             "state": "translated",
             "value": "오늘"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आज"
+          }
         }
       }
     },
@@ -17942,6 +18944,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld일 후"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lldद में"
           }
         }
       }
@@ -18050,6 +19058,12 @@
             "state": "translated",
             "value": "어제"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कल"
+          }
         }
       }
     },
@@ -18156,6 +19170,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "알 수 없음"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अज्ञात"
           }
         }
       }
