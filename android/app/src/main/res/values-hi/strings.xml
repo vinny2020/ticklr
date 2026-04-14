@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App -->
+    <string name="app_name">Ticklr</string>
+
+    <!-- Common -->
+    <string name="common_save">सहेजें</string>
+    <string name="common_cancel">रद्द करें</string>
+    <string name="common_delete">हटाएं</string>
+    <string name="common_remove">निकालें</string>
+    <string name="common_ok">ठीक है</string>
+    <string name="common_reset">रीसेट करें</string>
+    <string name="common_create">बनाएं</string>
+    <string name="common_back">वापस</string>
+    <string name="common_no_name">कोई नाम नहीं</string>
+    <string name="common_add">जोड़ें</string>
+    <string name="common_update">अपडेट करें</string>
+    <string name="common_send">भेजें</string>
+    <string name="common_edit">संपादित करें</string>
+
+    <!-- Settings -->
+    <string name="settings_title">सेटिंग्स</string>
+    <string name="settings_section_appearance">दिखावट</string>
+    <string name="settings_section_data">डेटा</string>
+    <string name="settings_section_messaging">संदेश</string>
+    <string name="settings_section_about">के बारे में</string>
+    <string name="settings_section_developer">डेवलपर</string>
+    <string name="settings_theme_title">थीम</string>
+    <string name="settings_theme_system">सिस्टम डिफ़ॉल्ट</string>
+    <string name="settings_theme_light">लाइट</string>
+    <string name="settings_theme_dark">डार्क</string>
+    <string name="settings_import_title">संपर्क आयात करें</string>
+    <string name="settings_import_subtitle">फ़ोन या LinkedIn CSV से</string>
+    <string name="settings_templates_title">संदेश टेम्पलेट</string>
+    <string name="settings_templates_subtitle">पुन: उपयोग योग्य संदेश बनाएं और प्रबंधित करें</string>
+    <string name="settings_sms_direct_title">SMS सीधे भेजें</string>
+    <string name="settings_sms_direct_subtitle">Messages ऐप खोलने के बजाय SmsManager का उपयोग करता है।</string>
+    <string name="settings_about_privacy">गोपनीयता सर्वप्रथम। कोई क्लाउड नहीं, कोई विश्लेषण नहीं, कोई खाता आवश्यक नहीं। सभी डेटा डिवाइस पर संग्रहीत है।</string>
+    <string name="settings_about_built_by">Xaymaca द्वारा निर्मित</string>
+    <string name="settings_about_version">संस्करण %1$s</string>
+    <string name="settings_reset_onboarding_title">ऑनबोर्डिंग रीसेट करें</string>
+    <string name="settings_reset_onboarding_subtitle">स्वागत स्क्रीन फिर से दिखाएं</string>
+    <string name="settings_reset_confirm_message">यह आपको स्वागत स्क्रीन पर वापस ले जाएगा। आपका डेटा हटाया नहीं जाएगा।</string>
+    <string name="settings_clear_data_title">सभी डेटा मिटाएं</string>
+    <string name="settings_clear_data_message">इससे सभी संपर्क, समूह और tickle रिमाइंडर स्थायी रूप से हट जाएंगे। इसे पूर्ववत नहीं किया जा सकता।</string>
+    <string name="settings_clear_data_confirm">सब मिटाएं</string>
+    <string name="settings_choose_theme">थीम चुनें</string>
+    <string name="settings_debug_load_title">टेस्ट संपर्क लोड करें</string>
+    <string name="settings_debug_load_subtitle">एसेट से 20 नकली संपर्क लोड करता है (केवल डीबग)</string>
+    <string name="settings_debug_clear_subtitle">संपर्क, समूह और tickle स्थायी रूप से हटाता है (केवल डीबग)</string>
+
+    <!-- Tickle list -->
+    <string name="tickle_list_title">Tickle</string>
+    <string name="tickle_list_add_fab">tickle जोड़ें</string>
+    <string name="tickle_list_section_due">बकाया</string>
+    <string name="tickle_list_section_upcoming">आगामी</string>
+    <string name="tickle_list_section_snoozed">स्नूज़ किया</string>
+    <string name="tickle_list_empty_title">अभी कोई tickle नहीं</string>
+    <string name="tickle_list_empty_description">रिमाइंडर सेट करने के लिए + दबाएं</string>
+    <string name="tickle_row_action_done">हो गया</string>
+    <string name="tickle_row_action_snooze">स्नूज़</string>
+    <string name="tickle_row_action_delete">हटाएं</string>
+    <string name="tickle_row_default_note">Tickle रिमाइंडर</string>
+    <string name="tickle_row_today">आज</string>
+    <string name="tickle_row_tomorrow">कल</string>
+    <string name="tickle_row_yesterday">कल (बीता)</string>
+    <string name="tickle_row_in_days">%1$d दिन में</string>
+    <string name="tickle_row_days_overdue">%1$d दिन बकाया</string>
+
+    <!-- Tickle edit -->
+    <string name="tickle_edit_new_title">नया Tickle</string>
+    <string name="tickle_edit_title">Tickle संपादित करें</string>
+    <string name="tickle_edit_tab_contact">संपर्क</string>
+    <string name="tickle_edit_tab_group">समूह</string>
+    <string name="tickle_edit_section_contact">संपर्क</string>
+    <string name="tickle_edit_section_group">समूह</string>
+    <string name="tickle_edit_search_contacts">संपर्क खोजें</string>
+    <string name="tickle_edit_section_frequency">आवृत्ति</string>
+    <string name="tickle_edit_section_custom_interval">कस्टम अंतराल (दिन)</string>
+    <string name="tickle_edit_section_note">नोट (वैकल्पिक)</string>
+    <string name="tickle_edit_note_placeholder">किस बारे में बात करें…</string>
+    <string name="tickle_edit_custom_interval_days">%1$d दिन</string>
+    <string name="tickle_edit_no_groups_title">अभी कोई समूह नहीं</string>
+    <string name="tickle_edit_no_groups_description">समूह आपको एक साथ किसी टीम या मंडली के सभी लोगों को tickle भेजने देते हैं।</string>
+    <string name="tickle_edit_create_group_button">समूह बनाएं</string>
+    <string name="tickle_edit_new_group_dialog_title">नया समूह</string>
+    <string name="tickle_edit_group_name_label">समूह का नाम</string>
+    <string name="tickle_saved">Tickle सहेजा गया</string>
+    <string name="tickle_updated">Tickle अपडेट किया गया</string>
+    <string name="tickle_notification_contact_fallback">आपके संपर्क</string>
+    <string name="tickle_notification_title">%1$s से संपर्क करने का समय है</string>
+    <string name="tickle_notification_body">आपके लोग मायने रखते हैं — आज एक छोटा संदेश भेजें।</string>
+
+    <!-- Network list -->
+    <string name="network_title">नेटवर्क</string>
+    <string name="network_more_options">अधिक विकल्प</string>
+    <string name="network_import_contacts">संपर्क आयात करें</string>
+    <string name="network_search_placeholder">संपर्क खोजें…</string>
+    <string name="network_empty_title">अभी कोई संपर्क नहीं</string>
+    <string name="network_empty_description">किसी को जोड़ने के लिए + दबाएं</string>
+    <string name="network_add_contact_fab">संपर्क जोड़ें</string>
+    <string name="network_delete_title">संपर्क हटाएं</string>
+    <string name="network_delete_message">%1$s को अपने नेटवर्क से हटाएं? इसे पूर्ववत नहीं किया जा सकता।</string>
+    <string name="network_contact_has_phone">फ़ोन है</string>
+    <string name="network_contact_has_email">ईमेल है</string>
+    <string name="network_contact_import_source">आयात स्रोत</string>
+
+    <!-- Contact detail -->
+    <string name="contact_detail_add_tickle">Tickle जोड़ें</string>
+    <string name="contact_detail_add_to_group">समूह में जोड़ें</string>
+    <string name="contact_detail_message">संदेश</string>
+    <string name="contact_detail_section_phone">फ़ोन</string>
+    <string name="contact_detail_section_email">ईमेल</string>
+    <string name="contact_detail_section_notes">नोट्स</string>
+    <string name="contact_detail_section_tags">टैग</string>
+    <string name="contact_detail_delete">संपर्क हटाएं</string>
+    <string name="contact_add_to_group_title">समूह में जोड़ें</string>
+    <string name="contact_add_to_group_empty">अभी कोई समूह नहीं।</string>
+    <string name="contact_add_to_group_create_new">+ नया समूह बनाएं</string>
+    <string name="contact_add_to_group_group_name">समूह का नाम</string>
+    <string name="contact_group_member_check">सदस्य</string>
+
+    <!-- Add / Edit contact -->
+    <string name="add_contact_title">नया संपर्क</string>
+    <string name="edit_contact_title">संपर्क संपादित करें</string>
+    <string name="add_contact_section_name">नाम</string>
+    <string name="add_contact_section_work">कार्य</string>
+    <string name="add_contact_section_phone">फ़ोन</string>
+    <string name="add_contact_section_email">ईमेल</string>
+    <string name="add_contact_section_notes">नोट्स</string>
+    <string name="add_contact_section_tags">टैग</string>
+    <string name="add_contact_first_name">पहला नाम</string>
+    <string name="add_contact_last_name">अंतिम नाम</string>
+    <string name="add_contact_company">कंपनी</string>
+    <string name="add_contact_job_title">पद</string>
+    <string name="add_contact_phone_n">फ़ोन %1$d</string>
+    <string name="add_contact_email_n">ईमेल %1$d</string>
+    <string name="add_contact_add_phone">फ़ोन जोड़ें</string>
+    <string name="add_contact_add_email">ईमेल जोड़ें</string>
+    <string name="add_contact_notes_label">नोट्स</string>
+    <string name="add_contact_add_tag_label">टैग जोड़ें</string>
+    <string name="add_contact_add_tag_button">टैग जोड़ें</string>
+
+    <!-- Groups list -->
+    <string name="group_list_title">समूह</string>
+    <string name="group_list_empty_title">अभी कोई समूह नहीं</string>
+    <string name="group_list_empty_description">समूह बनाने के लिए + दबाएं</string>
+    <string name="group_list_create_fab">समूह बनाएं</string>
+    <string name="group_delete_title">समूह हटाएं</string>
+    <string name="group_delete_message">"%1$s" हटाएं? संपर्क हटाए नहीं जाएंगे।</string>
+    <string name="group_new_dialog_title">नया समूह</string>
+    <string name="group_dialog_emoji_label">इमोजी</string>
+    <string name="group_dialog_name_label">समूह का नाम</string>
+    <string name="group_dialog_name_exists">नाम पहले से मौजूद है</string>
+    <string name="group_dialog_char_count">%1$d / 30</string>
+    <plurals name="group_list_member_count">
+        <item quantity="one">%1$d सदस्य</item>
+        <item quantity="other">%1$d सदस्य</item>
+    </plurals>
+
+    <!-- Group detail -->
+    <string name="group_detail_empty">अभी कोई सदस्य नहीं। जोड़ने के लिए + दबाएं।</string>
+    <string name="group_detail_add_members_title">सदस्य जोड़ें</string>
+    <string name="group_detail_filter_placeholder">संपर्क फ़िल्टर करें…</string>
+    <string name="group_detail_all_in_group">सभी संपर्क पहले से इस समूह में हैं</string>
+    <string name="group_detail_no_match">कोई संपर्क मेल नहीं खाता</string>
+    <string name="group_detail_add_member_button">जोड़ें</string>
+    <string name="group_detail_member_added">%1$s को %2$s में जोड़ा गया</string>
+    <string name="group_detail_member_added_generic">%1$s को समूह में जोड़ा गया</string>
+    <string name="group_detail_edit_group">समूह संपादित करें</string>
+    <string name="group_detail_add_members_fab">सदस्य जोड़ें</string>
+    <string name="group_edit_dialog_title">समूह संपादित करें</string>
+
+    <!-- Compose -->
+    <string name="compose_title">संदेश लिखें</string>
+    <string name="compose_clear">साफ़ करें</string>
+    <string name="compose_to_label">प्रति</string>
+    <string name="compose_search_placeholder">संपर्क खोजें…</string>
+    <string name="compose_no_phone">कोई फ़ोन नंबर नहीं</string>
+    <string name="compose_select_template">टेम्पलेट चुनें</string>
+    <string name="compose_message_label">संदेश</string>
+    <string name="compose_message_placeholder">अपना संदेश लिखें…</string>
+    <string name="compose_remove_contact">संपर्क हटाएं</string>
+    <string name="compose_message_sent">संदेश भेजा गया \u2713</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_tagline">आपके लोग मायने रखते हैं</string>
+    <string name="onboarding_description">आपका व्यक्तिगत नेटवर्क, निजी तौर पर।\nकोई क्लाउड नहीं। कोई सोशल ग्राफ़ नहीं। बस आपके लोग।</string>
+    <string name="onboarding_import_button">संपर्क आयात करें</string>
+    <string name="onboarding_start_empty">खाली नेटवर्क से शुरू करें</string>
+
+    <!-- Import -->
+    <string name="import_title">संपर्क आयात करें</string>
+    <string name="import_success_card">%1$d संपर्क सफलतापूर्वक आयात किए</string>
+    <string name="import_from_phone_title">फ़ोन संपर्क से आयात करें</string>
+    <string name="import_from_phone_subtitle">डिवाइस की एड्रेस बुक से संपर्क सिंक करें।</string>
+    <string name="import_from_linkedin_title">LinkedIn CSV से नेटवर्क बनाएं</string>
+    <string name="import_from_linkedin_subtitle">LinkedIn एक्सपोर्ट में नाम और कंपनियां शामिल हैं — फ़ोन नंबर नहीं। आयात के बाद संपर्क विवरण मैन्युअल रूप से जोड़ें।</string>
+    <string name="import_linkedin_instructions_title">LinkedIn से एक्सपोर्ट कैसे करें</string>
+    <string name="import_linkedin_instructions">1. linkedin.com पर जाएं\n2. मैं → सेटिंग्स और गोपनीयता टैप करें\n3. डेटा गोपनीयता → अपने डेटा की एक प्रति प्राप्त करें\n4. "कनेक्शन" चुनें और एक्सपोर्ट का अनुरोध करें\n5. CSV फ़ाइल डाउनलोड करें और यहां चुनें</string>
+    <string name="import_continue_button">नेटवर्क पर जाएं</string>
+    <string name="import_skip_button">अभी छोड़ें</string>
+    <string name="import_snackbar_success">%1$d संपर्क आयात किए</string>
+    <string name="import_snackbar_linkedin">%1$d LinkedIn संपर्क आयात किए</string>
+    <string name="import_snackbar_permission_denied">संपर्क अनुमति अस्वीकृत</string>
+    <string name="import_snackbar_failed">आयात विफल: %1$s</string>
+    <string name="import_snackbar_could_not_open">फ़ाइल नहीं खोली जा सकी</string>
+
+    <!-- Template list -->
+    <string name="template_list_title">संदेश टेम्पलेट</string>
+    <string name="template_list_empty">अभी कोई टेम्पलेट नहीं। बनाने के लिए + दबाएं।</string>
+    <string name="template_add_fab">टेम्पलेट जोड़ें</string>
+    <string name="template_delete_icon">हटाएं</string>
+
+    <!-- Template edit -->
+    <string name="template_edit_new_title">नया टेम्पलेट</string>
+    <string name="template_edit_edit_title">टेम्पलेट संपादित करें</string>
+    <string name="template_edit_title_label">शीर्षक</string>
+    <string name="template_edit_body_label">मुख्य भाग</string>
+
+    <!-- Bottom nav -->
+    <string name="nav_network">नेटवर्क</string>
+    <string name="nav_tickle">Tickle</string>
+    <string name="nav_groups">समूह</string>
+    <string name="nav_compose">लिखें</string>
+    <string name="nav_settings">सेटिंग्स</string>
+
+    <!-- Frequency display names -->
+    <string name="frequency_daily">प्रतिदिन</string>
+    <string name="frequency_weekly">साप्ताहिक</string>
+    <string name="frequency_biweekly">हर 2 सप्ताह</string>
+    <string name="frequency_monthly">मासिक</string>
+    <string name="frequency_bimonthly">हर 2 महीने</string>
+    <string name="frequency_quarterly">त्रैमासिक</string>
+    <string name="frequency_custom">कस्टम</string>
+</resources>
