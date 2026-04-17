@@ -4,6 +4,32 @@
 
 ## ✅ Completed Tasks
 
+### ~~Closed-testing bug fixes — RTL layout mirroring + Save button invisible disabled state~~ ✅ DONE (2026-04-17)
+
+**Context:** Tester feedback from alpha closed-testing cycle reported three issues.
+
+**Issue 1 — RTL layout on Compose / Settings / Network Add screens:**
+Root cause: `android:supportsRtl="true"` in `AndroidManifest.xml`. On any device with system layout direction forced to RTL (Arabic locale, or the "Force RTL layout direction" developer option on Samsung/Pixel), Compose mirrors all layouts. The project ships zero RTL translations (no `values-ar/-iw/-ur/-fa` directories), so RTL serves no purpose.
+
+**Fix:** `android:supportsRtl="false"` in `AndroidManifest.xml` — one-line change.
+Note: If an RTL language is added in future, flip this back to `true` and run the full icon/padding audit described in the Task 0d section below.
+
+**Issue 2 — Network tab sitting on right edge of bottom nav, uneven spacing:**
+Same root cause as Issue 1. Network is the *first* (leftmost) item in `bottomNavItems` — RTL mirroring moved it to the right. Resolved automatically by the manifest fix.
+
+**Issue 3 — Save button on Add-Tickle screen does nothing, no feedback:**
+Root cause: The button's enabled condition (`isLoaded && selectedContact != null || selectedGroup != null`) worked correctly, but the hardcoded `color = Amber` on the `Text` composable overrode Material 3's automatic disabled-state alpha. So the button appeared identically bright whether enabled or disabled — testers typed in the search field, didn't tap a contact row to select it, hit a visually-active "Save", and got silent non-response.
+
+**Fix:** Lifted the condition to `val canSave = isLoaded && (selectedContact != null || selectedGroup != null)`, passed it to `enabled = canSave`, and changed the Text color to `if (canSave) Amber else Amber.copy(alpha = 0.38f)`. Disabled state is now visibly faded.
+
+**Files changed:**
+- `app/src/main/AndroidManifest.xml` — `supportsRtl` false
+- `app/src/main/java/com/xaymaca/sit/ui/tickle/TickleEditScreen.kt` — `canSave` val + conditional Text alpha
+
+**No string resources added.** No translation files touched. All existing tests continue to pass.
+
+---
+
 ### ~~Task 0 — Phase 1 Internationalization: Extract all hardcoded strings to `strings.xml`~~ ✅ DONE (2026-04-12)
 
 **Summary of what was done:**

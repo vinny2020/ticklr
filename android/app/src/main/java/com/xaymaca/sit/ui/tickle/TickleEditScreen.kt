@@ -119,6 +119,7 @@ fun TickleEditScreen(
                     }
                 },
                 actions = {
+                    val canSave = isLoaded && (selectedContact != null || selectedGroup != null)
                     TextButton(
                         onClick = {
                             coroutineScope.launch {
@@ -142,9 +143,13 @@ fun TickleEditScreen(
                                 onSaved()
                             }
                         },
-                        enabled = isLoaded && (selectedContact != null || selectedGroup != null)
+                        enabled = canSave
                     ) {
-                        Text(stringResource(R.string.common_save), color = Amber, fontWeight = FontWeight.SemiBold)
+                        Text(
+                            stringResource(R.string.common_save),
+                            color = if (canSave) Amber else Amber.copy(alpha = 0.38f),
+                            fontWeight = FontWeight.SemiBold
+                        )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(

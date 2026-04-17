@@ -1,1 +1,4 @@
-Bug Fixes and Improvements
+Bug fixes from closed-testing feedback:
+• Fixed layouts appearing mirrored (RTL) on Compose, Settings, and Add Contact screens
+• Fixed bottom nav bar spacing — Network tab is now correctly on the left
+• Save button on Add Tickle now shows visibly disabled until a contact or group is selected
