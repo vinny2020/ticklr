@@ -5,7 +5,7 @@
 ln -sf "$CI_WORKSPACE/ios/SIT.xcodeproj" "$CI_WORKSPACE/SIT.xcodeproj"
 
 # Extract version from ios/v* tag (e.g. ios/v1.4.12 → 1.4.12)
-GIT_TAG=$(git describe --tags --abbrev=0 2>/dev/null)
+GIT_TAG=$(git describe --tags --match "ios/v*" --abbrev=0 2>/dev/null)
 if [[ $GIT_TAG == ios/v* ]]; then
   VERSION=${GIT_TAG#ios/v}
   echo "Setting MARKETING_VERSION to $VERSION from tag $GIT_TAG"
