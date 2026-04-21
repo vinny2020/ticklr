@@ -1,0 +1,3 @@
+[submodule "assets/design-system"]
+	path = assets/design-system
+	url = https://github.com/vinny2020/ticklr-design-system.git

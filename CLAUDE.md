@@ -28,8 +28,11 @@ ticklr/ (local folder: SIT-monorepo)
 | Navy | `#0A1628` | App background, icon bg |
 | Cobalt | `#2563EB` | Speech bubble, primary action |
 | Amber | `#F5C842` | EKG wave, accent, tickle due state |
-| Wordmark | Syne 800 | "Ticklr" logotype |
-| Tagline | Syne 400 | "YOUR PEOPLE MATTER" |
+| Wordmark | Bebas Neue 400 | "Ticklr" logotype (canonical — do not substitute) |
+| Tagline | Inter 400, 10px, 0.16em tracking, amber @ 50% opacity | "YOUR PEOPLE MATTER" — always uppercase |
+| Body | Inter 400/500/600/700 | All web/marketing body copy |
+
+> Full token reference, preview HTMLs, UI kits, and brand assets live in `assets/design-system/`. Read `assets/design-system/project/README.md` for the complete spec.
 
 ## App Identity
 
