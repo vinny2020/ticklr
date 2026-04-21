@@ -172,6 +172,9 @@ dependencies {
     // Gson (JSON serialization for Room list fields)
     implementation(libs.gson)
 
+    // SplashScreen API (backport to API 23+)
+    implementation(libs.core.splashscreen)
+
     // Firebase (crash reporting only — Analytics intentionally excluded)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.crashlytics)

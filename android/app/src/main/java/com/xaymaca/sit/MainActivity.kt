@@ -8,6 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.*
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.xaymaca.sit.ui.nav.NavGraph
 import com.xaymaca.sit.ui.theme.SITTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -16,6 +17,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Must be called before super.onCreate — the system-level splash draws from
+        // the moment the launcher icon is tapped, eliminating the blank-window flash.
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {

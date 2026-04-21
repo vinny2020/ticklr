@@ -174,6 +174,7 @@ fun TickleEditScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues)
+                    .imePadding()
             ) {
                 // Tab row: Contact vs Group
                 TabRow(

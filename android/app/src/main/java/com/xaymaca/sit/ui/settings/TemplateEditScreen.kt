@@ -78,6 +78,7 @@ fun TemplateEditScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
+                .imePadding()
                 .padding(horizontal = 16.dp, vertical = 8.dp)
         ) {
             OutlinedTextField(

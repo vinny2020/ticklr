@@ -84,6 +84,7 @@ fun ComposeScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues)
+                    .imePadding()
                     .padding(horizontal = 16.dp)
             ) {
                 Spacer(modifier = Modifier.height(8.dp))

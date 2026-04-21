@@ -89,7 +89,7 @@ fun NavGraph() {
                             },
                             label = { Text(label) },
                             selected = currentDestination?.hierarchy?.any {
-                                it.route == item.screen.route
+                                it.route?.substringBefore('?')?.substringBefore('/') == item.screen.route
                             } == true,
                             onClick = {
                                 navController.navigate(item.screen.route) {

@@ -4,6 +4,52 @@
 
 ## ✅ Completed Tasks
 
+### ~~Closed-testing bug fixes — keyboard IME padding, Compose tab selection, system splash screen~~ ✅ DONE (2026-04-21)
+
+**Context:** Second round of tester feedback from alpha closed-testing cycle.
+
+**Issue 1 — Tags and Notes fields covered by keyboard on Add Contact screen:**
+Root cause: `enableEdgeToEdge()` in MainActivity disables the system's automatic window-resize-for-IME behavior. The scrollable containers in the form screens weren't reading IME insets, so the soft keyboard floated over the bottom fields.
+
+**Fix:** Added `Modifier.imePadding()` to the top-level scrollable container in:
+- `ui/network/AddContactScreen.kt` — the one testers reported
+- `ui/tickle/TickleEditScreen.kt` — same root-cause bug on the Note field
+- `ui/compose/ComposeScreen.kt` — same bug on the Message body
+- `ui/settings/TemplateEditScreen.kt` — same bug on the Body field
+
+All four edits are one-liners — `androidx.compose.foundation.layout.*` is already wildcard-imported in each file, so no new import lines were needed.
+
+**Issue 2 — Compose tab never appears highlighted in the bottom nav:**
+Root cause: in `NavGraph.kt`, the Compose destination is registered with a query parameter suffix `"compose?contactId={contactId}"`, but `Screen.Compose.route` is just `"compose"`. The `selected` predicate on `NavigationBarItem` compared full routes with `it.route == item.screen.route`, which never matched for Compose.
+
+**Fix:** Normalized the `selected` predicate with the same `substringBefore('?')` + `substringBefore('/')` logic already used by `showBottomBar`:
+```kotlin
+selected = currentDestination?.hierarchy?.any {
+    it.route?.substringBefore('?')?.substringBefore('/') == item.screen.route
+} == true,
+```
+Now Compose highlights correctly like the other four tabs, including when arriving from ContactDetail's "Message" deep-link that passes a `contactId` query param.
+
+**Issue 3 — Blank flash on cold launch:**
+Root cause: there was no system-level splash screen. The existing `ui/launch/LaunchScreen.kt` Compose view (animated Ticklr logo) was dead code — never referenced anywhere. Users saw a blank window between launcher-icon tap and first Compose frame.
+
+**Fix:** Adopted the AndroidX SplashScreen API (backport, works on API 23+):
+- `libs.versions.toml` — added `core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version = "1.0.1" }`
+- `app/build.gradle.kts` — `implementation(libs.core.splashscreen)` added next to Gson
+- `res/values/colors.xml` — new file with `<color name="ticklr_navy">#1C3A62</color>` (matches LaunchScreen BG_COLOR and the launcher icon background exactly)
+- `res/values/themes.xml` — new `Theme.SIT.Splash` parented to `Theme.SplashScreen`, with:
+  - `windowSplashScreenBackground` = `@color/ticklr_navy`
+  - `windowSplashScreenAnimatedIcon` = `@mipmap/ic_launcher_foreground`
+  - `postSplashScreenTheme` = `@style/Theme.SIT` (post-splash handoff)
+- `AndroidManifest.xml` — `<application android:theme="@style/Theme.SIT.Splash">`
+- `MainActivity.onCreate` — `installSplashScreen()` called **before** `super.onCreate(...)`
+
+The dead `ui/launch/LaunchScreen.kt` Compose view is still in the tree; it can be deleted later if wanted, or repurposed as a secondary post-splash animation.
+
+**No string resources added** — no translation drift. All 35 Gradle unit-test tasks pass (`TranslationCompletenessTest` + `StringResourceTest` both green).
+
+---
+
 ### ~~Closed-testing bug fixes — RTL layout mirroring + Save button invisible disabled state~~ ✅ DONE (2026-04-17)
 
 **Context:** Tester feedback from alpha closed-testing cycle reported three issues.

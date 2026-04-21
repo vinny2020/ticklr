@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Theme.SIT" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <!--
+      Splash theme. Uses AndroidX SplashScreen API (Theme.SplashScreen parent).
+      The system draws this theme from the moment the launcher icon is tapped until
+      the first Compose frame is ready, which eliminates the blank-window flash on
+      cold start. `postSplashScreenTheme` is the theme the Activity switches to
+      after installSplashScreen() + super.onCreate() run.
+    -->
+    <style name="Theme.SIT.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/ticklr_navy</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/Theme.SIT</item>
+    </style>
 </resources>

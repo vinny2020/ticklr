@@ -1,4 +1,4 @@
 Bug fixes from closed-testing feedback:
-• Fixed layouts appearing mirrored (RTL) on Compose, Settings, and Add Contact screens
-• Fixed bottom nav bar spacing — Network tab is now correctly on the left
-• Save button on Add Tickle now shows visibly disabled until a contact or group is selected
+• Keyboard no longer covers Tags and Notes fields on the Add Contact screen (also fixed on Tickle, Compose, and Template screens)
+• Compose tab now stays highlighted in the bottom nav when selected
+• Added a proper splash screen — no more blank flash when opening the app
