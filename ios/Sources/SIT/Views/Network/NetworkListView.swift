@@ -25,7 +25,7 @@ struct NetworkListView: View {
                 }
             }
             .listStyle(.plain)
-            .searchable(text: $searchText, prompt: String(localized: "networkList.search"))
+            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: String(localized: "networkList.search"))
             .navigationTitle(String(localized: "networkList.navTitle"))
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {

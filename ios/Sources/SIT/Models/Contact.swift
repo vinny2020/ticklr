@@ -62,8 +62,8 @@ final class Contact {
     }
 
     var initials: String {
-        let f = firstName.prefix(1).uppercased()
-        let l = lastName.prefix(1).uppercased()
-        return "\(f)\(l)"
+        let words = fullName.split(separator: " ", omittingEmptySubsequences: true)
+        let chars = words.prefix(2).compactMap { $0.first?.uppercased() }
+        return chars.isEmpty ? "?" : chars.joined()
     }
 }

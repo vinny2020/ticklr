@@ -14,45 +14,37 @@ struct ContactRowView: View {
                         .foregroundStyle(.indigo)
                 )
 
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: 1) {
                 Text(contact.fullName)
-                    .font(.body)
-                    .fontWeight(.medium)
+                    .font(.system(size: 17, weight: .semibold))
+                    .foregroundStyle(.primary)
                 if !contact.company.isEmpty {
                     Text(contact.company)
-                        .font(.caption)
+                        .font(.system(size: 13))
                         .foregroundStyle(.secondary)
                 }
             }
 
-            Spacer()
+            Spacer(minLength: 8)
 
-            // Reachability icons — muted, trailing
-            HStack(spacing: 4) {
+            HStack(spacing: 6) {
                 if !contact.phoneNumbers.isEmpty {
                     Image(systemName: "phone.fill")
-                        .font(.caption)
+                        .font(.system(size: 16))
                         .foregroundStyle(.secondary.opacity(0.6))
                 }
                 if !contact.emails.isEmpty {
                     Image(systemName: "envelope.fill")
-                        .font(.caption)
+                        .font(.system(size: 16))
+                        .foregroundStyle(.secondary.opacity(0.6))
+                }
+                if !contact.company.isEmpty {
+                    Image(systemName: "briefcase.fill")
+                        .font(.system(size: 16))
                         .foregroundStyle(.secondary.opacity(0.6))
                 }
             }
-
-            Image(systemName: importIcon(for: contact.importSource))
-                .font(.caption2)
-                .foregroundStyle(.tertiary)
         }
-        .padding(.vertical, 2)
-    }
-
-    private func importIcon(for source: ImportSource) -> String {
-        switch source {
-        case .ios: return "apple.logo"
-        case .linkedin: return "briefcase.fill"
-        case .manual: return "pencil"
-        }
+        .padding(.vertical, 4)
     }
 }

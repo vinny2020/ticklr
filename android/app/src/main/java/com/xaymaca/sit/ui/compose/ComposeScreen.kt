@@ -24,6 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.xaymaca.sit.R
 import com.xaymaca.sit.SITApp
 import com.xaymaca.sit.service.SmsService
+import com.xaymaca.sit.ui.settings.TemplateViewModel
 import com.xaymaca.sit.ui.shared.TicklrToast
 import com.xaymaca.sit.ui.theme.Cobalt
 
@@ -32,12 +33,17 @@ import com.xaymaca.sit.ui.theme.Cobalt
 fun ComposeScreen(
     onNavigateToNetwork: () -> Unit = {},
     initialContactId: Long? = null,
-    viewModel: ComposeViewModel = hiltViewModel()
+    viewModel: ComposeViewModel = hiltViewModel(),
+    templateViewModel: TemplateViewModel = hiltViewModel()
 ) {
     LaunchedEffect(initialContactId) {
         if (initialContactId != null) viewModel.preSelectContact(initialContactId)
     }
     val context = LocalContext.current
+    LaunchedEffect(Unit) {
+        val prefs = context.getSharedPreferences(SITApp.PREFS_NAME, Context.MODE_PRIVATE)
+        templateViewModel.seedDefaultIfNeeded(prefs)
+    }
     val contacts by viewModel.contacts.collectAsState()
     val templates by viewModel.templates.collectAsState()
     val selectedContact by viewModel.selectedContact.collectAsState()

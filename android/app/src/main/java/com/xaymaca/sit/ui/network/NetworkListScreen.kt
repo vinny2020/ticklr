@@ -10,10 +10,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Work
@@ -28,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.xaymaca.sit.R
 import com.xaymaca.sit.data.model.Contact
-import com.xaymaca.sit.data.model.ImportSource
 import com.xaymaca.sit.ui.theme.Cobalt
 import com.xaymaca.sit.ui.theme.NavyLight
 
@@ -230,11 +227,12 @@ private fun ContactRow(
             }
         }
 
-        // Reachability icons — muted, 16dp, trailing
+        // Reachability + work icons — muted, 16dp, trailing
         val hasPhone = contact.phoneNumbers.length > 2
         val hasEmail = contact.emails.length > 2
-        if (hasPhone || hasEmail) {
-            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+        val hasCompany = contact.company.isNotBlank()
+        if (hasPhone || hasEmail || hasCompany) {
+            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                 if (hasPhone) Icon(
                     Icons.Default.Phone,
                     contentDescription = stringResource(R.string.network_contact_has_phone),
@@ -247,22 +245,13 @@ private fun ContactRow(
                     modifier = Modifier.size(16.dp),
                     tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
                 )
+                if (hasCompany) Icon(
+                    Icons.Default.Work,
+                    contentDescription = null,
+                    modifier = Modifier.size(16.dp),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
+                )
             }
         }
-
-        Spacer(modifier = Modifier.width(4.dp))
-
-        // Import source icon
-        val importIcon = when (contact.importSource) {
-            ImportSource.LINKEDIN.name -> Icons.Default.Work
-            ImportSource.IOS_CONTACTS.name -> Icons.Default.Person
-            else -> Icons.Default.Edit
-        }
-        Icon(
-            importIcon,
-            contentDescription = stringResource(R.string.network_contact_import_source),
-            modifier = Modifier.size(12.dp),
-            tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.35f)
-        )
     }
 }

@@ -4,6 +4,38 @@
 
 ## 🛠️ Pending Tasks — Start Here
 
+### Task — Move default-template seeding to app launch
+
+**Bug:** The default "Checking in" `MessageTemplate` is only seeded when the user opens
+**Settings → Message Templates** (`TemplateListView.swift:51` — `.onAppear(perform: seedDefaultIfNeeded)`).
+If a user never visits that screen, no template ever exists, and the template picker on
+`ComposeView` stays unusable. Same latent bug exists on Android — see `android/CLAUDE.md`.
+
+**Real fix:** Seed once at app launch.
+
+1. In `SITApp.swift` (`@main` `App` struct), add a one-time seeding step. Two reasonable
+   places:
+   - Inside `init()` of the `App` struct, immediately after the `ModelContainer` is
+     constructed. Open a `ModelContext` against the container, run the seed, save.
+   - Or via `.task` on the root `WindowGroup` view, gated by an `@AppStorage` flag.
+2. Use the existing `@AppStorage("hasSeededDefaultTemplates")` flag — if `false`, insert the
+   default `MessageTemplate(title: "Checking in", body: "Hey! Just checking in — hope you're
+   doing well. Let's catch up soon!")` and flip the flag to `true`.
+3. **Remove** the `.onAppear(perform: seedDefaultIfNeeded)` from `TemplateListView.swift`
+   (and the function itself) once the launch-time seed is in place. Or keep it as a
+   defensive safety net — both are defensible.
+4. Bonus: extract the seed title + body into a `MessageTemplateSeed` enum or static so the
+   launch path and any future defensive paths share one source of truth.
+
+**Why launch-time:** the picker should work on first install regardless of which tab the
+user opens first. The current pattern requires the user to incidentally visit Templates
+before Compose's template picker becomes useful.
+
+**Scope:** `SITApp.swift` (~10 lines), `TemplateListView.swift` (remove seed function),
+optionally a new `MessageTemplateSeed.swift` (new helper).
+
+---
+
 ### Task 0 ✅ COMPLETE — Phase 1 Internationalization: Extract all hardcoded strings to String Catalog
 
 **Goal:** Every user-visible string in the iOS app must come from a localized source so that

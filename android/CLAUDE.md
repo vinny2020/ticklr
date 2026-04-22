@@ -111,6 +111,46 @@ Root cause: The button's enabled condition (`isLoaded && selectedContact != null
 
 ## 🛠️ Pending Tasks — Start Here
 
+### Task — Move default-template seeding to app launch
+
+**Bug:** The default "Checking in" `MessageTemplate` is only seeded when the user opens
+**Settings → Message Templates** (`TemplateListScreen.kt` `LaunchedEffect` calls
+`TemplateViewModel.seedDefaultIfNeeded`). If a user never visits that screen, the template
+dropdown in `ComposeScreen` — gated by `if (templates.isNotEmpty())` — stays hidden forever.
+
+**Current band-aid:** `ComposeScreen` ALSO calls `templateViewModel.seedDefaultIfNeeded(prefs)`
+in a `LaunchedEffect`. Idempotent (guarded by `hasSeededDefaultTemplates` SharedPrefs flag),
+but every screen that depends on templates would need to repeat this pattern. Same latent
+bug exists on iOS — see `ios/CLAUDE.md`.
+
+**Real fix:** Seed once at app launch from `SITApp.onCreate()`.
+
+1. Inject `MessageTemplateRepository` and `@ApplicationContext context: Context` into
+   `SITApp` via Hilt (it's already `@HiltAndroidApp`).
+2. In `onCreate()`, after `super.onCreate()`, kick off a one-time coroutine on
+   `Dispatchers.IO` (or use a `WorkManager` `OneTimeWorkRequest`) that:
+   - Reads the `hasSeededDefaultTemplates` flag from `getSharedPreferences(PREFS_NAME, MODE_PRIVATE)`
+   - If unset, inserts the default template (`title = "Checking in"`,
+     `body = "Hey! Just checking in — hope you're doing well. Let's catch up soon!"`)
+   - Sets the flag
+3. **Remove** the band-aid `LaunchedEffect` from `ComposeScreen.kt` (lines that call
+   `templateViewModel.seedDefaultIfNeeded`) and the `TemplateViewModel` parameter on
+   `ComposeScreen`.
+4. **Keep** the `LaunchedEffect` in `TemplateListScreen.kt` for now — it's still idempotent
+   and provides a safety net if the launch-time seed ever fails. Or remove it for purity;
+   either is defensible.
+5. Bonus: extract the seed string + body into `MessageTemplateSeed.kt` so the launch path
+   and any defensive paths share one source of truth.
+
+**Why launch-time:** the dropdown should work on first install regardless of which tab the
+user opens first. The current per-screen pattern is fragile to copy-paste mistakes — every
+new screen that consumes templates needs to remember to seed.
+
+**Scope:** `SITApp.kt` (~10 lines), `ComposeScreen.kt` (revert band-aid, ~5 lines),
+optionally `MessageTemplateSeed.kt` (new helper).
+
+---
+
 ### Task 0 — Phase 1 Internationalization: Extract all hardcoded strings to `strings.xml`
 
 **Goal:** Every user-visible string in the Android app must come from `strings.xml` so that
