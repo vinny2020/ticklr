@@ -34,6 +34,35 @@ ticklr/ (local folder: SIT-monorepo)
 
 > Full token reference, preview HTMLs, UI kits, and brand assets live in `assets/design-system/`. Read `assets/design-system/project/README.md` for the complete spec.
 
+## Working with the Design System
+
+The design system lives in its own repo (`github.com/vinny2020/ticklr-design-system`, private)
+and is consumed here as a **git submodule** at `assets/design-system/`. Fresh clones need
+`git clone --recurse-submodules ...` (or `git submodule update --init` after a regular clone).
+
+**Before any UI change**, read these in order:
+1. `assets/design-system/project/README.md` — voice, color, type, motion, iconography rules.
+2. `assets/design-system/project/colors_and_type.css` — the canonical token values.
+3. The most relevant `assets/design-system/project/preview/*.html` card OR `ui_kits/ticklr-{ios,android}/components.jsx` snippet for the surface you're touching.
+
+The HTML/JSX is a **reference**, not source of truth — recreate visually in SwiftUI / Jetpack
+Compose. The screenshots in `assets/design-system/project/assets/` (e.g.
+`network-screen-reference.png`) are pixel ground truth.
+
+**Platform divergence is intentional**, not drift. The system explicitly specs different
+treatments per platform — most notably the contact-row avatar (iOS: lavender bg + indigo
+text, Android: solid Cobalt + white text). Don't unify without checking the spec first.
+
+**Bundled fonts**: Bebas Neue is bundled in both apps for the wordmark. Use
+`Font.custom("BebasNeue-Regular", size:)` on iOS, `FontFamily(Font(R.font.bebas_neue))` on
+Android. The shared `WordmarkLockup` component on each platform is the canonical render.
+
+**Updating the pinned design-system version**:
+```
+cd assets/design-system && git pull origin main && cd -
+git add assets/design-system && git commit -m "Bump design-system pin"
+```
+
 ## App Identity
 
 - **App name**: Ticklr
