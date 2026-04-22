@@ -2,12 +2,14 @@ package com.xaymaca.sit.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.xaymaca.sit.R
 
-// Using system font (equivalent to Syne on Android — closest built-in is the default sans-serif)
-// Removing hardcoded colors to let MaterialTheme handle light/dark mode switching automatically
+val BebasNeue = FontFamily(Font(R.font.bebas_neue, FontWeight.Normal))
+
 val SITTypography = Typography(
     displayLarge = TextStyle(
         fontFamily = FontFamily.SansSerif,

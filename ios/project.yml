@@ -62,6 +62,8 @@ targets:
         UILaunchScreen:
           UIColorName: ""
           UIImageName: ""
+        UIAppFonts:
+          - BebasNeue-Regular.ttf
     dependencies: []
     scheme:
       testTargets:

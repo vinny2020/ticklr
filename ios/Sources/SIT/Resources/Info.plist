@@ -43,6 +43,10 @@
 	<false/>
 	<key>NSContactsUsageDescription</key>
 	<string>Ticklr needs access to your contacts to help you build your personal network.</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>BebasNeue-Regular.ttf</string>
+	</array>
 	<key>UILaunchScreen</key>
 	<dict>
 		<key>UIColorName</key>

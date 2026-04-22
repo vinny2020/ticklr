@@ -22,6 +22,7 @@
 		568B2F7E2C0A37B9505FFDE4 /* ContactGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC789856C13EA9BCE0A6EC /* ContactGroup.swift */; };
 		5A2E74BD7F7B979AE5B1C4F3 /* TickleReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB38137353FDCD5606A5A8FF /* TickleReminder.swift */; };
 		5C6F6974D1ED58434BB9CFDF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C7E0EBE485C198DCF9669E /* SettingsView.swift */; };
+		656FADADA38339BCFBD815D5 /* WordmarkLockup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EFBEBE9D718FAA0B157914 /* WordmarkLockup.swift */; };
 		6A89CDD6B79D3E4E9E4BDBCE /* TickleEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4BF582AFC377CF7A29ADC9 /* TickleEditView.swift */; };
 		7116F3F3FE61E7C0FDF86F7E /* MessageComposerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADEFE7A1ADA2B9E3DDBBD81 /* MessageComposerService.swift */; };
 		840D3C6377E1F347573EAE19 /* TemplateEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F765EEB318998C9E229F0F /* TemplateEditView.swift */; };
@@ -33,6 +34,7 @@
 		949EFAA2F52FC214F6E65F95 /* TickleRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2BE0559EF55B0E2A1DDE54 /* TickleRowView.swift */; };
 		984F8919395A52436BA23ECC /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 52B2D827FDB5FDABB740E34A /* Localizable.xcstrings */; };
 		9CA0D612EF182E101FDE37A4 /* LinkedInCSVParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D196741B99B788C9E325C3 /* LinkedInCSVParserTests.swift */; };
+		AA02325BB0CA65EB315DF2F1 /* BebasNeue-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D3DCE02125449F9E013629EF /* BebasNeue-Regular.ttf */; };
 		AF7B9499DE3B99B9194191B5 /* GroupDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033862D2DB3D8A467AAFFA5D /* GroupDetailView.swift */; };
 		CCCCA1639CE5316D17A6AE7E /* LinkedInCSVParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFE5D9B2591E4B4A53F5EEC /* LinkedInCSVParser.swift */; };
 		D2644F8AB791907856A6E389 /* ComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07B4E4B1B6C11A40612610C /* ComposeView.swift */; };
@@ -58,6 +60,7 @@
 		00F298878BB7FB2F2C63DC2B /* TickleScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleScheduler.swift; sourceTree = "<group>"; };
 		02B1CFCC3988DCAF2034813A /* NetworkListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkListView.swift; sourceTree = "<group>"; };
 		033862D2DB3D8A467AAFFA5D /* GroupDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailView.swift; sourceTree = "<group>"; };
+		09EFBEBE9D718FAA0B157914 /* WordmarkLockup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordmarkLockup.swift; sourceTree = "<group>"; };
 		0A9EDE946F2D00EC70ED4A84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0B8316646A179885792C4004 /* TickleSchedulerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleSchedulerTests.swift; sourceTree = "<group>"; };
 		0EFE5D9B2591E4B4A53F5EEC /* LinkedInCSVParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedInCSVParser.swift; sourceTree = "<group>"; };
@@ -66,7 +69,7 @@
 		1D98A08F7576CDC556F9440C /* ContactFingerprint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactFingerprint.swift; sourceTree = "<group>"; };
 		209311518915490C7F72039B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		30D196741B99B788C9E325C3 /* LinkedInCSVParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedInCSVParserTests.swift; sourceTree = "<group>"; };
-		45775744E6927B98A73B2CAC /* Ticklr.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Ticklr.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		45775744E6927B98A73B2CAC /* Ticklr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ticklr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49E849839D5DE00393F1F990 /* TicklrTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = TicklrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50AD38DE9F1FCCBD8B82DEED /* ContactImportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactImportService.swift; sourceTree = "<group>"; };
 		52B2D827FDB5FDABB740E34A /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -87,9 +90,10 @@
 		B1887449FF664ADCCCB1BFC3 /* SITApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SITApp.swift; sourceTree = "<group>"; };
 		B5CC789856C13EA9BCE0A6EC /* ContactGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactGroup.swift; sourceTree = "<group>"; };
 		BB38137353FDCD5606A5A8FF /* TickleReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleReminder.swift; sourceTree = "<group>"; };
-		C3BA80FD4DE962EB1F107E78 /* test_contacts.csv */ = {isa = PBXFileReference; path = test_contacts.csv; sourceTree = "<group>"; };
+		C3BA80FD4DE962EB1F107E78 /* test_contacts.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = test_contacts.csv; sourceTree = "<group>"; };
 		CA4BF582AFC377CF7A29ADC9 /* TickleEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleEditView.swift; sourceTree = "<group>"; };
 		CADEFE7A1ADA2B9E3DDBBD81 /* MessageComposerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageComposerService.swift; sourceTree = "<group>"; };
+		D3DCE02125449F9E013629EF /* BebasNeue-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BebasNeue-Regular.ttf"; sourceTree = "<group>"; };
 		E07B4E4B1B6C11A40612610C /* ComposeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeView.swift; sourceTree = "<group>"; };
 		E5F765EEB318998C9E229F0F /* TemplateEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateEditView.swift; sourceTree = "<group>"; };
 		E77347A9F53BFBE3E1672671 /* AddContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactView.swift; sourceTree = "<group>"; };
@@ -116,6 +120,7 @@
 				0A9EDE946F2D00EC70ED4A84 /* Info.plist */,
 				52B2D827FDB5FDABB740E34A /* Localizable.xcstrings */,
 				C3BA80FD4DE962EB1F107E78 /* test_contacts.csv */,
+				246A6BE6253EB732E2F4A838 /* Fonts */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -137,6 +142,14 @@
 			);
 			sourceTree = "<group>";
 		};
+		246A6BE6253EB732E2F4A838 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				D3DCE02125449F9E013629EF /* BebasNeue-Regular.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		2E2FF0E4EF31EA346F503C6F /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -144,6 +157,7 @@
 				04D0E0B997D54CDC9E47B531 /* Network */,
 				38AE8D59BE6A7951737BF4A1 /* Onboarding */,
 				64A945003494BD80EC9A3181 /* Settings */,
+				CE212FAC96E6037A2548E540 /* Shared */,
 				79DA010937C896B33F1B0252 /* Tickle */,
 			);
 			path = Views;
@@ -233,6 +247,14 @@
 			path = Sources/SIT;
 			sourceTree = "<group>";
 		};
+		CE212FAC96E6037A2548E540 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				09EFBEBE9D718FAA0B157914 /* WordmarkLockup.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
 		E7BA9F90FAAE44CD99FEE7EC /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -294,9 +316,6 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
-					1CADC66CDEC975B92B6E11C1 = {
-						DevelopmentTeam = "";
-					};
 					659D71ADC995ABBCE6F3FA86 = {
 						DevelopmentTeam = "";
 					};
@@ -345,6 +364,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				353AA993FFB1A862D307ED9F /* Assets.xcassets in Resources */,
+				AA02325BB0CA65EB315DF2F1 /* BebasNeue-Regular.ttf in Resources */,
 				984F8919395A52436BA23ECC /* Localizable.xcstrings in Resources */,
 				34A284E142196787F146D1B3 /* test_contacts.csv in Resources */,
 			);
@@ -385,6 +405,7 @@
 				5A2E74BD7F7B979AE5B1C4F3 /* TickleReminder.swift in Sources */,
 				949EFAA2F52FC214F6E65F95 /* TickleRowView.swift in Sources */,
 				16BE362388D0211580E586D0 /* TickleScheduler.swift in Sources */,
+				656FADADA38339BCFBD815D5 /* WordmarkLockup.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

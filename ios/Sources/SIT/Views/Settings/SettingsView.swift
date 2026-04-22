@@ -78,10 +78,14 @@ struct SettingsView: View {
                 }
 
                 // MARK: — About
-                Section(String(localized: "settings.section.about")) {
-                    LabeledContent(String(localized: "settings.row.app"), value: "Ticklr")
+                Section {
+                    WordmarkLockup()
+                        .listRowBackground(Color.clear)
+                        .listRowInsets(EdgeInsets())
                     LabeledContent(String(localized: "settings.row.version"), value: appVersion)
                     LabeledContent(String(localized: "settings.row.builtBy"), value: "Xaymaca")
+                } header: {
+                    Text(String(localized: "settings.section.about"))
                 }
 
                 // MARK: — Reset

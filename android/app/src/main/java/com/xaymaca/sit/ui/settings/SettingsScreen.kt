@@ -26,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.xaymaca.sit.R
+import com.xaymaca.sit.ui.shared.WordmarkLockup
 import com.xaymaca.sit.ui.theme.Amber
 import com.xaymaca.sit.ui.theme.Cobalt
 import com.xaymaca.sit.ui.theme.NavyLight
@@ -174,17 +175,13 @@ fun SettingsScreen(
             // About section
             SettingsSectionHeader(stringResource(R.string.settings_section_about))
 
+            WordmarkLockup()
+
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 12.dp)
             ) {
-                Text(
-                    stringResource(R.string.app_name),
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.SemiBold
-                )
-                Spacer(modifier = Modifier.height(2.dp))
                 Text(
                     stringResource(R.string.settings_about_version, versionName),
                     style = MaterialTheme.typography.bodyMedium,
