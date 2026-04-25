@@ -69,7 +69,7 @@
 
     <!-- Tickle edit -->
     <string name="tickle_edit_new_title">New Tickle</string>
-    <string name="tickle_edit_title">Edit Tickle</string>
+    <string name="tickle_edit_title">Edit Tickle Details</string>
     <string name="tickle_edit_tab_contact">Contact</string>
     <string name="tickle_edit_tab_group">Group</string>
     <string name="tickle_edit_section_contact">CONTACT</string>

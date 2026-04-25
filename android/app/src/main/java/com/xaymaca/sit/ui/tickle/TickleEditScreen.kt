@@ -21,11 +21,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.xaymaca.sit.R
 import com.xaymaca.sit.data.model.Contact
-import com.xaymaca.sit.data.model.ContactGroup
 import com.xaymaca.sit.data.model.TickleFrequency
 import com.xaymaca.sit.data.model.TickleReminder
 import com.xaymaca.sit.service.TickleScheduler
-import com.xaymaca.sit.ui.groups.GroupViewModel
 import com.xaymaca.sit.ui.network.NetworkViewModel
 import com.xaymaca.sit.ui.shared.TicklrToast
 import com.xaymaca.sit.ui.shared.displayNameResId
@@ -42,21 +40,15 @@ fun TickleEditScreen(
     onSaved: () -> Unit,
     onBack: () -> Unit,
     tickleViewModel: TickleViewModel = hiltViewModel(),
-    networkViewModel: NetworkViewModel = hiltViewModel(),
-    groupViewModel: GroupViewModel = hiltViewModel()
+    networkViewModel: NetworkViewModel = hiltViewModel()
 ) {
     val coroutineScope = rememberCoroutineScope()
     val contacts by networkViewModel.filteredContacts.collectAsState()
-    val groups by groupViewModel.groups.collectAsState()
     val toastMessage by tickleViewModel.toastMessage.collectAsState()
 
-    var showCreateGroupDialog by remember { mutableStateOf(false) }
-    var newGroupName by remember { mutableStateOf("") }
-
-    // Form state
-    var selectedTab by remember { mutableIntStateOf(0) } // 0 = Contact, 1 = Group
+    // Form state — contact only. Group-based tickles were removed; legacy ones
+    // load with selectedContact == null so the user picks a contact before saving.
     var selectedContact by remember { mutableStateOf<Contact?>(null) }
-    var selectedGroup by remember { mutableStateOf<ContactGroup?>(null) }
     var contactSearch by remember { mutableStateOf("") }
     var selectedFrequency by remember { mutableStateOf(TickleFrequency.MONTHLY) }
     var customIntervalDays by remember { mutableIntStateOf(14) }
@@ -72,7 +64,10 @@ fun TickleEditScreen(
         }
     }
 
-    // Load existing reminder for edit mode
+    // Load existing reminder for edit mode. Legacy group-based tickles are
+    // auto-converted: their frequency / note / startDate carry over, but the
+    // group association is dropped and selectedContact stays null until the
+    // user picks one (Save remains disabled until they do).
     LaunchedEffect(tickleId) {
         if (tickleId != null) {
             val reminder = tickleViewModel.getReminderById(tickleId)
@@ -84,11 +79,7 @@ fun TickleEditScreen(
                 note = reminder.note
                 startDate = reminder.startDate
                 if (reminder.contactId != null) {
-                    selectedTab = 0
                     selectedContact = networkViewModel.getContactById(reminder.contactId)
-                } else if (reminder.groupId != null) {
-                    selectedTab = 1
-                    selectedGroup = groupViewModel.getGroupById(reminder.groupId)
                 }
             }
             isLoaded = true
@@ -104,101 +95,80 @@ fun TickleEditScreen(
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        stringResource(if (tickleId == null) R.string.tickle_edit_new_title else R.string.tickle_edit_title),
-                        fontWeight = FontWeight.Bold
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.common_back))
-                    }
-                },
-                actions = {
-                    val canSave = isLoaded && (selectedContact != null || selectedGroup != null)
-                    TextButton(
-                        onClick = {
-                            coroutineScope.launch {
-                                val nextDue = TickleScheduler.nextDueDate(
-                                    from = startDate,
-                                    frequency = selectedFrequency.name,
-                                    customDays = if (selectedFrequency == TickleFrequency.CUSTOM) customIntervalDays else null
-                                )
-                                val reminder = TickleReminder(
-                                    id = tickleId ?: 0L,
-                                    contactId = if (selectedTab == 0) selectedContact?.id else null,
-                                    groupId = if (selectedTab == 1) selectedGroup?.id else null,
-                                    note = note.trim(),
-                                    frequency = selectedFrequency.name,
-                                    customIntervalDays = if (selectedFrequency == TickleFrequency.CUSTOM) customIntervalDays else null,
-                                    startDate = startDate,
-                                    nextDueDate = nextDue
-                                )
-                                tickleViewModel.upsert(reminder, isNew = tickleId == null)
-                                delay(2000)
-                                onSaved()
-                            }
-                        },
-                        enabled = canSave
-                    ) {
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = {
                         Text(
-                            stringResource(R.string.common_save),
-                            color = if (canSave) Amber else Amber.copy(alpha = 0.38f),
-                            fontWeight = FontWeight.SemiBold
+                            stringResource(if (tickleId == null) R.string.tickle_edit_new_title else R.string.tickle_edit_title),
+                            fontWeight = FontWeight.Bold
                         )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background,
-                    titleContentColor = MaterialTheme.colorScheme.onBackground
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = onBack) {
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.common_back))
+                        }
+                    },
+                    actions = {
+                        val canSave = isLoaded && selectedContact != null
+                        TextButton(
+                            onClick = {
+                                coroutineScope.launch {
+                                    val nextDue = TickleScheduler.nextDueDate(
+                                        from = startDate,
+                                        frequency = selectedFrequency.name,
+                                        customDays = if (selectedFrequency == TickleFrequency.CUSTOM) customIntervalDays else null
+                                    )
+                                    val reminder = TickleReminder(
+                                        id = tickleId ?: 0L,
+                                        contactId = selectedContact?.id,
+                                        groupId = null,
+                                        note = note.trim(),
+                                        frequency = selectedFrequency.name,
+                                        customIntervalDays = if (selectedFrequency == TickleFrequency.CUSTOM) customIntervalDays else null,
+                                        startDate = startDate,
+                                        nextDueDate = nextDue
+                                    )
+                                    tickleViewModel.upsert(reminder, isNew = tickleId == null)
+                                    delay(2000)
+                                    onSaved()
+                                }
+                            },
+                            enabled = canSave
+                        ) {
+                            Text(
+                                stringResource(R.string.common_save),
+                                color = if (canSave) Amber else Amber.copy(alpha = 0.38f),
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.background,
+                        titleContentColor = MaterialTheme.colorScheme.onBackground
+                    )
                 )
-            )
-        },
-        containerColor = MaterialTheme.colorScheme.background
-    ) { paddingValues ->
-        if (!isLoaded) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator(color = Cobalt)
-            }
-        } else {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-            ) {
-                // Tab row: Contact vs Group
-                TabRow(
-                    selectedTabIndex = selectedTab,
-                    containerColor = MaterialTheme.colorScheme.surfaceVariant,
-                    contentColor = Cobalt
+            },
+            containerColor = MaterialTheme.colorScheme.background
+        ) { paddingValues ->
+            if (!isLoaded) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Tab(
-                        selected = selectedTab == 0,
-                        onClick = { selectedTab = 0 },
-                        text = { Text(stringResource(R.string.tickle_edit_tab_contact)) }
-                    )
-                    Tab(
-                        selected = selectedTab == 1,
-                        onClick = { selectedTab = 1 },
-                        text = { Text(stringResource(R.string.tickle_edit_tab_group)) }
-                    )
+                    CircularProgressIndicator(color = Cobalt)
                 }
-
-                // Pinned contact-search header on the Contact tab. Keeping the search
-                // field outside the LazyColumn ensures it (and the result rows below it)
-                // stay visible when the keyboard is up — otherwise the LazyColumn's
-                // auto-scroll places the focused field at the bottom of the viewport,
-                // pushing the search results behind the keyboard.
-                if (selectedTab == 0) {
+            } else {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues)
+                ) {
+                    // Pinned contact-search header. Keeping the search field outside
+                    // the LazyColumn ensures it (and the result rows below it) stay
+                    // visible when the keyboard is up.
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -219,23 +189,15 @@ fun TickleEditScreen(
                             shape = RoundedCornerShape(10.dp)
                         )
                     }
-                }
 
-                LazyColumn(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxWidth()
-                        .imePadding(),
-                    contentPadding = if (selectedTab == 0) {
-                        PaddingValues(start = 16.dp, end = 16.dp, top = 0.dp, bottom = 16.dp)
-                    } else {
-                        PaddingValues(16.dp)
-                    },
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    // Contact or Group picker
-                    if (selectedTab == 0) {
-                        // Search field is pinned above the LazyColumn (see Column above).
+                    LazyColumn(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth()
+                            .imePadding(),
+                        contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 0.dp, bottom = 16.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
                         if (selectedContact != null) {
                             item {
                                 SelectedContactChip(
@@ -244,21 +206,21 @@ fun TickleEditScreen(
                                 )
                             }
                         }
-                        // Hide the list once a contact is picked. For a NEW tickle, the list
-                        // reappears when the user clears the chip; for an EDIT it only appears
-                        // while the user is typing in the search field.
+                        // Hide the list once a contact is picked. For a NEW tickle, the
+                        // list reappears when the user clears the chip; for an EDIT it
+                        // only appears while the user is typing in the search field.
                         val showContactList = contactSearch.isNotBlank() ||
                             (tickleId == null && selectedContact == null)
                         if (showContactList) {
-                        items(filteredContacts.take(8)) { contact ->
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .clickable {
-                                        selectedContact = contact
-                                        contactSearch = ""
-                                    }
-                                    .padding(vertical = 8.dp),
+                            items(filteredContacts.take(8)) { contact ->
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .clickable {
+                                            selectedContact = contact
+                                            contactSearch = ""
+                                        }
+                                        .padding(vertical = 8.dp),
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Box(
@@ -280,164 +242,99 @@ fun TickleEditScreen(
                                 }
                             }
                         }
-                    } else {
+
+                        // Frequency selector
                         item {
                             Text(
-                                stringResource(R.string.tickle_edit_section_group),
+                                stringResource(R.string.tickle_edit_section_frequency),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                             Spacer(modifier = Modifier.height(8.dp))
-                        }
-                        if (selectedGroup != null) {
-                            item {
-                                AssistChip(
-                                    onClick = { selectedGroup = null },
-                                    label = { Text("${selectedGroup!!.emoji} ${selectedGroup!!.name}") },
-                                    trailingIcon = null
-                                )
-                            }
-                        } else if (groups.isEmpty()) {
-                            item {
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(vertical = 24.dp),
-                                    horizontalAlignment = Alignment.CenterHorizontally,
-                                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                            Box {
+                                OutlinedButton(
+                                    onClick = { showFrequencyDropdown = true },
+                                    modifier = Modifier.fillMaxWidth(),
+                                    shape = RoundedCornerShape(10.dp)
                                 ) {
                                     Text(
-                                        stringResource(R.string.tickle_edit_no_groups_title),
-                                        style = MaterialTheme.typography.bodyLarge,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                        stringResource(selectedFrequency.displayNameResId),
+                                        modifier = Modifier.weight(1f)
                                     )
-                                    Text(
-                                        stringResource(R.string.tickle_edit_no_groups_description),
-                                        style = MaterialTheme.typography.bodySmall,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                        textAlign = androidx.compose.ui.text.style.TextAlign.Center
-                                    )
-                                    Button(
-                                        onClick = { showCreateGroupDialog = true },
-                                        colors = ButtonDefaults.buttonColors(containerColor = Cobalt),
-                                        shape = RoundedCornerShape(10.dp)
-                                    ) {
-                                        Text(stringResource(R.string.tickle_edit_create_group_button))
+                                    Icon(Icons.Default.ArrowDropDown, contentDescription = null)
+                                }
+                                DropdownMenu(
+                                    expanded = showFrequencyDropdown,
+                                    onDismissRequest = { showFrequencyDropdown = false }
+                                ) {
+                                    TickleFrequency.entries.forEach { freq ->
+                                        DropdownMenuItem(
+                                            text = { Text(stringResource(freq.displayNameResId)) },
+                                            onClick = {
+                                                selectedFrequency = freq
+                                                showFrequencyDropdown = false
+                                            }
+                                        )
                                     }
                                 }
                             }
-                        } else {
-                            items(groups) { group ->
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .clickable { selectedGroup = group }
-                                        .padding(vertical = 10.dp),
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Text(
-                                        text = group.emoji,
-                                        style = MaterialTheme.typography.bodyLarge
-                                    )
-                                    Spacer(modifier = Modifier.width(12.dp))
-                                    Text(group.name, style = MaterialTheme.typography.bodyLarge)
-                                }
-                            }
                         }
-                    }
 
-                    // Frequency selector
-                    item {
-                        Text(
-                            stringResource(R.string.tickle_edit_section_frequency),
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Box {
-                            OutlinedButton(
-                                onClick = { showFrequencyDropdown = true },
-                                modifier = Modifier.fillMaxWidth(),
-                                shape = RoundedCornerShape(10.dp)
-                            ) {
+                        // Custom interval stepper
+                        if (selectedFrequency == TickleFrequency.CUSTOM) {
+                            item {
                                 Text(
-                                    stringResource(selectedFrequency.displayNameResId),
-                                    modifier = Modifier.weight(1f)
+                                    stringResource(R.string.tickle_edit_section_custom_interval),
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
-                                Icon(Icons.Default.ArrowDropDown, contentDescription = null)
-                            }
-                            DropdownMenu(
-                                expanded = showFrequencyDropdown,
-                                onDismissRequest = { showFrequencyDropdown = false }
-                            ) {
-                                TickleFrequency.entries.forEach { freq ->
-                                    DropdownMenuItem(
-                                        text = { Text(stringResource(freq.displayNameResId)) },
-                                        onClick = {
-                                            selectedFrequency = freq
-                                            showFrequencyDropdown = false
-                                        }
+                                Spacer(modifier = Modifier.height(8.dp))
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                                ) {
+                                    OutlinedButton(
+                                        onClick = { if (customIntervalDays > 1) customIntervalDays-- },
+                                        shape = CircleShape
+                                    ) {
+                                        Text("−")
+                                    }
+                                    Text(
+                                        stringResource(R.string.tickle_edit_custom_interval_days, customIntervalDays),
+                                        style = MaterialTheme.typography.titleMedium,
+                                        fontWeight = FontWeight.SemiBold
                                     )
+                                    OutlinedButton(
+                                        onClick = { customIntervalDays++ },
+                                        shape = CircleShape
+                                    ) {
+                                        Text("+")
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    // Custom interval stepper
-                    if (selectedFrequency == TickleFrequency.CUSTOM) {
+                        // Note
                         item {
                             Text(
-                                stringResource(R.string.tickle_edit_section_custom_interval),
+                                stringResource(R.string.tickle_edit_section_note),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                             Spacer(modifier = Modifier.height(8.dp))
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(16.dp)
-                            ) {
-                                OutlinedButton(
-                                    onClick = { if (customIntervalDays > 1) customIntervalDays-- },
-                                    shape = CircleShape
-                                ) {
-                                    Text("−")
-                                }
-                                Text(
-                                    stringResource(R.string.tickle_edit_custom_interval_days, customIntervalDays),
-                                    style = MaterialTheme.typography.titleMedium,
-                                    fontWeight = FontWeight.SemiBold
-                                )
-                                OutlinedButton(
-                                    onClick = { customIntervalDays++ },
-                                    shape = CircleShape
-                                ) {
-                                    Text("+")
-                                }
-                            }
+                            OutlinedTextField(
+                                value = note,
+                                onValueChange = { note = it },
+                                label = { Text(stringResource(R.string.tickle_edit_note_placeholder)) },
+                                modifier = Modifier.fillMaxWidth(),
+                                minLines = 2,
+                                shape = RoundedCornerShape(10.dp)
+                            )
                         }
-                    }
-
-                    // Note
-                    item {
-                        Text(
-                            stringResource(R.string.tickle_edit_section_note),
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        OutlinedTextField(
-                            value = note,
-                            onValueChange = { note = it },
-                            label = { Text(stringResource(R.string.tickle_edit_note_placeholder)) },
-                            modifier = Modifier.fillMaxWidth(),
-                            minLines = 2,
-                            shape = RoundedCornerShape(10.dp)
-                        )
                     }
                 }
             }
         }
-    }
 
         TicklrToast(
             message = toastMessage,
@@ -445,74 +342,6 @@ fun TickleEditScreen(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 24.dp)
-        )
-    } // end Box
-
-    if (showCreateGroupDialog) {
-        val isDuplicate = newGroupName.trim().isNotBlank() &&
-            groupViewModel.isGroupNameTaken(newGroupName)
-        AlertDialog(
-            onDismissRequest = {
-                showCreateGroupDialog = false
-                newGroupName = ""
-            },
-            title = { Text(stringResource(R.string.tickle_edit_new_group_dialog_title)) },
-            text = {
-                Column {
-                    OutlinedTextField(
-                        value = newGroupName,
-                        onValueChange = { if (it.length <= 30) newGroupName = it },
-                        label = { Text(stringResource(R.string.tickle_edit_group_name_label)) },
-                        singleLine = true,
-                        isError = isDuplicate,
-                        shape = RoundedCornerShape(10.dp),
-                        supportingText = {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween
-                            ) {
-                                if (isDuplicate) {
-                                    Text(
-                                        stringResource(R.string.group_dialog_name_exists),
-                                        color = MaterialTheme.colorScheme.error,
-                                        style = MaterialTheme.typography.bodySmall
-                                    )
-                                } else {
-                                    androidx.compose.foundation.layout.Spacer(
-                                        modifier = Modifier.weight(1f)
-                                    )
-                                }
-                                Text(stringResource(R.string.group_dialog_char_count, newGroupName.length))
-                            }
-                        },
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-            },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        val name = newGroupName.trim()
-                        if (name.isNotBlank() && !isDuplicate) {
-                            groupViewModel.createGroup(name, "👥")
-                            showCreateGroupDialog = false
-                            newGroupName = ""
-                            selectedTab = 1
-                        }
-                    },
-                    enabled = newGroupName.isNotBlank() && !isDuplicate
-                ) {
-                    Text(stringResource(R.string.common_create), color = Cobalt)
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = {
-                    showCreateGroupDialog = false
-                    newGroupName = ""
-                }) {
-                    Text(stringResource(R.string.common_cancel))
-                }
-            }
         )
     }
 }
