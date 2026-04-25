@@ -194,31 +194,48 @@ fun TickleEditScreen(
                     )
                 }
 
+                // Pinned contact-search header on the Contact tab. Keeping the search
+                // field outside the LazyColumn ensures it (and the result rows below it)
+                // stay visible when the keyboard is up — otherwise the LazyColumn's
+                // auto-scroll places the focused field at the bottom of the viewport,
+                // pushing the search results behind the keyboard.
+                if (selectedTab == 0) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 12.dp)
+                    ) {
+                        Text(
+                            stringResource(R.string.tickle_edit_section_contact),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        OutlinedTextField(
+                            value = contactSearch,
+                            onValueChange = { contactSearch = it },
+                            label = { Text(stringResource(R.string.tickle_edit_search_contacts)) },
+                            modifier = Modifier.fillMaxWidth(),
+                            singleLine = true,
+                            shape = RoundedCornerShape(10.dp)
+                        )
+                    }
+                }
+
                 LazyColumn(
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxWidth(),
-                    contentPadding = PaddingValues(16.dp),
+                    contentPadding = if (selectedTab == 0) {
+                        PaddingValues(start = 16.dp, end = 16.dp, top = 0.dp, bottom = 16.dp)
+                    } else {
+                        PaddingValues(16.dp)
+                    },
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     // Contact or Group picker
                     if (selectedTab == 0) {
-                        item {
-                            Text(
-                                stringResource(R.string.tickle_edit_section_contact),
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            OutlinedTextField(
-                                value = contactSearch,
-                                onValueChange = { contactSearch = it },
-                                label = { Text(stringResource(R.string.tickle_edit_search_contacts)) },
-                                modifier = Modifier.fillMaxWidth(),
-                                singleLine = true,
-                                shape = RoundedCornerShape(10.dp)
-                            )
-                        }
+                        // Search field is pinned above the LazyColumn (see Column above).
                         if (selectedContact != null) {
                             item {
                                 SelectedContactChip(
