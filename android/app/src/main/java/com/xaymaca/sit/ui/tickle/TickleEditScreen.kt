@@ -174,7 +174,6 @@ fun TickleEditScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues)
-                    .imePadding()
             ) {
                 // Tab row: Contact vs Group
                 TabRow(
@@ -225,7 +224,8 @@ fun TickleEditScreen(
                 LazyColumn(
                     modifier = Modifier
                         .weight(1f)
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .imePadding(),
                     contentPadding = if (selectedTab == 0) {
                         PaddingValues(start = 16.dp, end = 16.dp, top = 0.dp, bottom = 16.dp)
                     } else {
