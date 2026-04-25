@@ -227,6 +227,12 @@ fun TickleEditScreen(
                                 )
                             }
                         }
+                        // Hide the list once a contact is picked. For a NEW tickle, the list
+                        // reappears when the user clears the chip; for an EDIT it only appears
+                        // while the user is typing in the search field.
+                        val showContactList = contactSearch.isNotBlank() ||
+                            (tickleId == null && selectedContact == null)
+                        if (showContactList) {
                         items(filteredContacts.take(8)) { contact ->
                             Row(
                                 modifier = Modifier
@@ -256,6 +262,7 @@ fun TickleEditScreen(
                                     Text(contact.fullName, style = MaterialTheme.typography.bodyLarge)
                                 }
                             }
+                        }
                     } else {
                         item {
                             Text(
