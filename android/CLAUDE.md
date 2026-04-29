@@ -99,7 +99,11 @@ The Compose launch screen view is no longer referenced anywhere — replaced by 
 
 ---
 
-### Task — RTL (right-to-left) language support (optional / future)
+## 🔮 Future Considerations
+
+> Not on the runway. Reference notes for if these ever come up.
+
+### RTL (right-to-left) language support
 
 Only needed if Arabic, Hebrew, Urdu, Farsi, or other RTL languages are added to `strings.xml`.
 Currently `android:supportsRtl="false"` in `AndroidManifest.xml` since no RTL translations

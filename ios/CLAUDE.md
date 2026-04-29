@@ -88,7 +88,11 @@ no schema change.
 
 ---
 
-### Task — RTL (right-to-left) language support (optional / future)
+## 🔮 Future Considerations
+
+> Not on the runway. Reference notes for if these ever come up.
+
+### RTL (right-to-left) language support
 
 Only needed if Arabic, Hebrew, Urdu, Farsi, or other RTL languages are added to the String
 Catalog. SwiftUI handles RTL automatically for most components (`HStack` reverses,
