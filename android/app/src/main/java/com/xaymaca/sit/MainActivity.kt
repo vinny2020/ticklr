@@ -20,8 +20,11 @@ class MainActivity : ComponentActivity() {
         // Must be called before super.onCreate — the system-level splash draws from
         // the moment the launcher icon is tapped, eliminating the blank-window flash.
         installSplashScreen()
-        super.onCreate(savedInstanceState)
+        // Call enableEdgeToEdge before super.onCreate so the system-bar configuration
+        // is in place for the very first frame and Android 15+ doesn't briefly render
+        // with the deprecated bar-color defaults.
         enableEdgeToEdge()
+        super.onCreate(savedInstanceState)
         setContent {
             val context = applicationContext
             val prefs = remember { context.getSharedPreferences(SITApp.PREFS_NAME, Context.MODE_PRIVATE) }
