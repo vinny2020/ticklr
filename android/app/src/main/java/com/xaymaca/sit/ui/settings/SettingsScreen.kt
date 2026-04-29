@@ -40,7 +40,6 @@ fun SettingsScreen(
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
-    val sendDirectly by viewModel.sendDirectly.collectAsState()
     val themeMode by viewModel.themeMode.collectAsState()
     val seedMessage by viewModel.seedMessage.collectAsState()
 
@@ -129,46 +128,6 @@ fun SettingsScreen(
                 subtitle = stringResource(R.string.settings_templates_subtitle),
                 onClick = onTemplates
             )
-
-            HorizontalDivider(color = NavyLight, modifier = Modifier.padding(start = 56.dp))
-
-            // Messaging section
-            SettingsSectionHeader(stringResource(R.string.settings_section_messaging))
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    Icons.AutoMirrored.Filled.Message,
-                    contentDescription = null,
-                    tint = Cobalt,
-                    modifier = Modifier.size(24.dp)
-                )
-                Spacer(modifier = Modifier.width(16.dp))
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        stringResource(R.string.settings_sms_direct_title),
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.Medium
-                    )
-                    Text(
-                        stringResource(R.string.settings_sms_direct_subtitle),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-                Switch(
-                    checked = sendDirectly,
-                    onCheckedChange = { viewModel.toggleSendDirectly() },
-                    colors = SwitchDefaults.colors(
-                        checkedThumbColor = MaterialTheme.colorScheme.onPrimary,
-                        checkedTrackColor = Cobalt
-                    )
-                )
-            }
 
             HorizontalDivider(color = NavyLight, modifier = Modifier.padding(start = 56.dp))
 

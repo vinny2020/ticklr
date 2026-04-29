@@ -1,7 +1,6 @@
 package com.xaymaca.sit.ui.compose
 
 import android.content.Context
-import android.content.pm.PackageManager
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -19,7 +18,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupProperties
-import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.xaymaca.sit.R
 import com.xaymaca.sit.SITApp
@@ -246,22 +244,8 @@ fun ComposeScreen(
                             val contact = selectedContact ?: return@Button
                             val phones = parseJsonStringArray(contact.phoneNumbers)
                             val phone = phones.firstOrNull() ?: return@Button
-                            val smsService = SmsService()
-                            val hasSmsPermission = ContextCompat.checkSelfPermission(
-                                context, android.Manifest.permission.SEND_SMS
-                            ) == PackageManager.PERMISSION_GRANTED
-
-                            // Read pref fresh at send time — not from a stale ViewModel StateFlow
-                            val sendDirectly = context
-                                .getSharedPreferences(SITApp.PREFS_NAME, Context.MODE_PRIVATE)
-                                .getBoolean(SITApp.KEY_SEND_SMS_DIRECTLY, false)
-
-                            if (sendDirectly && hasSmsPermission) {
-                                smsService.sendSms(context, phone, messageBody)
-                            } else {
-                                val intent = smsService.sendSmsIntent(context, listOf(phone), messageBody)
-                                context.startActivity(intent)
-                            }
+                            val intent = SmsService().sendSmsIntent(context, listOf(phone), messageBody)
+                            context.startActivity(intent)
                             viewModel.clearCompose()
                             selectedTemplateName = null
                             viewModel.showToast(messageSentStr)

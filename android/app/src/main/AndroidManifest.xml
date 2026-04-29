@@ -5,9 +5,6 @@
     <!-- Contact import -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
-    <!-- SMS sending — direct send with SmsManager -->
-    <uses-permission android:name="android.permission.SEND_SMS" />
-
     <!-- Force remove RECEIVE_SMS if added by dependencies -->
     <uses-permission android:name="android.permission.RECEIVE_SMS" tools:node="remove" />
 

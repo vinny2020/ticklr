@@ -45,7 +45,6 @@ class SITApp : Application(), Configuration.Provider {
     companion object {
         const val TICKLE_CHANNEL_ID = "tickle_channel"
         const val PREFS_NAME = "sit_prefs"
-        const val KEY_SEND_SMS_DIRECTLY = "send_sms_directly"
         const val KEY_ONBOARDING_COMPLETE = "onboarding_complete"
         const val KEY_THEME_MODE = "theme_mode" // 0: System, 1: Light, 2: Dark
         const val TICKLE_WORK_TAG = "tickle_daily_check"

@@ -26,11 +26,6 @@ class SettingsViewModel @Inject constructor(
 
     private val prefs = context.getSharedPreferences(SITApp.PREFS_NAME, Context.MODE_PRIVATE)
 
-    private val _sendDirectly = MutableStateFlow(
-        prefs.getBoolean(SITApp.KEY_SEND_SMS_DIRECTLY, false)
-    )
-    val sendDirectly: StateFlow<Boolean> = _sendDirectly
-
     private val _themeMode = MutableStateFlow(
         prefs.getInt(SITApp.KEY_THEME_MODE, 0)
     )
@@ -40,12 +35,6 @@ class SettingsViewModel @Inject constructor(
     val seedMessage: StateFlow<String?> = _seedMessage
 
     val isDebug: Boolean = BuildConfig.DEBUG
-
-    fun toggleSendDirectly() {
-        val newValue = !_sendDirectly.value
-        _sendDirectly.value = newValue
-        prefs.edit().putBoolean(SITApp.KEY_SEND_SMS_DIRECTLY, newValue).apply()
-    }
 
     fun setThemeMode(mode: Int) {
         _themeMode.value = mode
