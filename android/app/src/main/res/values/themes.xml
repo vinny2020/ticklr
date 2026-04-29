@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name="Theme.SIT" parent="android:Theme.Material.Light.NoActionBar" />
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!--
+      Post-splash theme. Edge-to-edge friendly:
+      - Transparent system bars so Compose draws under them (enableEdgeToEdge handles
+        scrim/contrast at runtime).
+      - Navy windowBackground matches the splash so the splash → app transition has
+        no color flash.
+      - enforce*Contrast=false disables the auto-scrim Android 15+ overlays on
+        translucent bars; Compose owns the bar appearance.
+      Dark/light mode is driven by the Compose SITTheme, not the framework theme.
+    -->
+    <style name="Theme.SIT" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/ticklr_navy</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:enforceStatusBarContrast" tools:targetApi="29">false</item>
+        <item name="android:enforceNavigationBarContrast" tools:targetApi="29">false</item>
+    </style>
 
     <!--
       Splash theme. Uses AndroidX SplashScreen API (Theme.SplashScreen parent).

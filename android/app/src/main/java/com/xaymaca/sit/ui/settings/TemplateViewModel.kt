@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.xaymaca.sit.data.model.MessageTemplate
 import com.xaymaca.sit.data.repository.MessageTemplateRepository
+import com.xaymaca.sit.data.repository.MessageTemplateSeed
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -40,13 +41,8 @@ class TemplateViewModel @Inject constructor(
     }
 
     fun seedDefaultIfNeeded(prefs: SharedPreferences) {
-        val key = "hasSeededDefaultTemplates"
-        if (!prefs.getBoolean(key, false)) {
-            saveTemplate(
-                title = "Checking in",
-                body = "Hey! Just checking in — hope you're doing well. Let's catch up soon!"
-            )
-            prefs.edit().putBoolean(key, true).apply()
+        viewModelScope.launch {
+            MessageTemplateSeed.seedDefaultIfNeeded(repo, prefs)
         }
     }
 }
