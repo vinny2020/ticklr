@@ -72,6 +72,6 @@ Or open `android/` in Android Studio.
 - [x] iOS contacts import (CNContactStore + LinkedIn CSV)
 - [x] Android contacts import (ContactsContract + LinkedIn CSV)
 - [x] App Store submission
-- [ ] Google Play submission
+- [x] Google Play submission
 
 Built by [Xaymaca](https://xaymaca.com) — Build Smarter with AI.
