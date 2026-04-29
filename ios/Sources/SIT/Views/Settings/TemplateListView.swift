@@ -4,7 +4,6 @@ import SwiftData
 struct TemplateListView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \MessageTemplate.title) private var templates: [MessageTemplate]
-    @AppStorage("hasSeededDefaultTemplates") private var hasSeededDefaultTemplates = false
 
     @State private var showingAdd = false
     @State private var editingTemplate: MessageTemplate?
@@ -48,22 +47,11 @@ struct TemplateListView: View {
         .sheet(item: $editingTemplate) { template in
             TemplateEditView(template: template)
         }
-        .onAppear(perform: seedDefaultIfNeeded)
     }
 
     private func deleteTemplates(at offsets: IndexSet) {
         for index in offsets {
             modelContext.delete(templates[index])
         }
-    }
-
-    private func seedDefaultIfNeeded() {
-        guard !hasSeededDefaultTemplates else { return }
-        let starter = MessageTemplate(
-            title: "Checking in",
-            body: "Hey, just wanted to check in! Hope you're doing well 😊"
-        )
-        modelContext.insert(starter)
-        hasSeededDefaultTemplates = true
     }
 }

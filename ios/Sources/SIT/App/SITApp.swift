@@ -21,6 +21,10 @@ struct SITApp: App {
         }
     }()
 
+    init() {
+        MessageTemplateSeed.seedIfNeeded(container: modelContainer)
+    }
+
     var body: some Scene {
         WindowGroup {
             ZStack {

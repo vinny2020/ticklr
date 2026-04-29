@@ -6,85 +6,7 @@
 
 ## 🛠️ Pending Tasks — Start Here
 
-### Task — Move default-template seeding to app launch
-
-**Bug:** The default "Checking in" `MessageTemplate` is only seeded when the user opens
-**Settings → Message Templates** (`TemplateListView.swift` — `.onAppear(perform: seedDefaultIfNeeded)`).
-If a user never visits that screen, no template ever exists, and the template picker on
-`ComposeView` stays unusable. Same latent bug on Android — see `android/CLAUDE.md`.
-
-**Real fix:** Seed once at app launch.
-1. In `SITApp.swift` (`@main` `App` struct), add a one-time seeding step. Two reasonable
-   places: inside `init()` after the `ModelContainer` is constructed (open a `ModelContext`,
-   run the seed, save), or via `.task` on the root `WindowGroup` view, gated by an
-   `@AppStorage` flag.
-2. Use the existing `@AppStorage("hasSeededDefaultTemplates")` flag — if `false`, insert the
-   default `MessageTemplate(title: "Checking in", body: "Hey! Just checking in — hope you're
-   doing well. Let's catch up soon!")` and flip the flag to `true`.
-3. **Remove** the `.onAppear(perform: seedDefaultIfNeeded)` from `TemplateListView.swift`
-   (and the function itself) once the launch-time seed is in place. Or keep it as a
-   defensive safety net — both are defensible.
-4. Bonus: extract the seed title + body into a `MessageTemplateSeed` enum or static so the
-   launch path and any future defensive paths share one source of truth.
-
-**Why launch-time:** the picker should work on first install regardless of which tab the
-user opens first.
-
-**Scope:** `SITApp.swift` (~10 lines), `TemplateListView.swift` (remove seed function),
-optionally a new `MessageTemplateSeed.swift` (new helper).
-
----
-
-### Task — Remove group tickles (parity with Android)
-
-**Why:** Group tickles are conceptually awkward in the relationship-management framing.
-A "tickle" is a gentle nudge to reach out to *one person*. When the reminder fires for a
-group of 8, the user isn't reaching out to "the group" as a unit — they're reaching out
-to 8 individuals on the same cadence, which collapses to either a mass message (rude) or
-8 individual nudges (which the user can already do by setting individual tickles). Android
-removed this feature already; iOS should match.
-
-**Reference implementation:** Android stripped this out cleanly. See:
-- `android/app/src/main/java/com/xaymaca/sit/ui/tickle/TickleEditScreen.kt` — comments at
-  lines 49 and 67–69 document the removal; `groupId = null` hardcoded in `TickleReminder`
-  construction at line 125.
-- `android/app/src/main/java/com/xaymaca/sit/ui/tickle/TickleViewModel.kt:67–68` — read
-  path defensively renders legacy group tickles' avatars (first letter of group name) so
-  pre-removal user data doesn't crash or render blank.
-- `android/app/src/main/java/com/xaymaca/sit/data/model/TickleReminder.kt:10` — schema
-  field `groupId: Long?` retained for backward compatibility.
-
-**Apply the same pattern on iOS in `Views/Tickle/TickleEditView.swift`:**
-1. Remove the segmented `Picker(targetType)` with `.contact`/`.group` cases (around line 59).
-2. Remove the entire group branch — the empty state with "Create Group" button, the
-   `Picker` listing all groups, and any related conditional rendering (lines ~83–105).
-3. Remove `@State private var selectedGroup: ContactGroup?`, `showingCreateGroupSheet`,
-   and the `TargetType` enum.
-4. Drop the `.sheet(isPresented: $showingCreateGroupSheet) { GroupEditSheet(group: nil) }`
-   presentation (lines ~142–143). `GroupEditSheet` itself stays — `GroupListView` still uses it.
-5. Drop the `@Query(sort: \ContactGroup.name) private var allGroups` if not used elsewhere
-   in the file.
-6. **Lock save logic to contact-only** (lines ~170 and ~181): always set `r.group = nil`
-   and remove the `targetType == .group ? selectedGroup : nil` branches.
-
-**Keep these — backward compatibility:**
-1. **`TickleReminder.group` SwiftData relationship** — leave the field on the model. Users
-   with legacy group tickles in their on-device store shouldn't crash on upgrade.
-2. **Read path in `TickleListView` / `TickleRowView`** — audit whether they read
-   `reminder.group` for avatar/label rendering. If they do, keep that defensive code so
-   legacy group tickles still render. (Mirror the Android `reminderInitials` pattern that
-   shows the group name's first letter when `groupId != null`.)
-
-**Leave untouched:**
-- `Views/Network/GroupListView.swift`, `GroupDetailView.swift`, `GroupEditSheet`
-- `ContactDetailView`'s "Add to Group" button and modal sheet
-- Group membership data model (`ContactGroup`, `Contact.groups` relationship)
-
-These are about contact-to-group **membership**, which is a different feature and stays.
-
-**Scope:** `Views/Tickle/TickleEditView.swift` (most of the change), audit
-`TickleListView.swift` / `TickleRowView.swift` for legacy display path. No model migration,
-no schema change.
+> No pending iOS tasks. See the archive for shipped work.
 
 ---
 
@@ -154,6 +76,7 @@ Sources/SIT/
 │   ├── ContactImportService.swift   # CNContactStore bulk import
 │   ├── LinkedInCSVParser.swift      # CSV parsing — handles metadata lines, all fields
 │   ├── MessageComposerService.swift # MFMessageComposeViewController wrapper
+│   ├── MessageTemplateSeed.swift    # one-time default-template seed run from SITApp.init()
 │   └── TickleScheduler.swift        # nextDueDate logic + UNUserNotificationCenter
 ├── Resources/
 │   ├── Info.plist
@@ -172,7 +95,7 @@ Sources/SIT/
 - Never call network APIs — fully offline
 - `MFMessageComposeViewController` only works on real device — not Simulator
 - Optimize all lists for 1,800+ contacts — use `@Query` with sort descriptors
-- `@AppStorage("hasSeededDefaultTemplates")` guards one-time default template seeding (see Pending Task above)
+- `UserDefaults["hasSeededDefaultTemplates"]` guards one-time default-template seeding, run from `SITApp.init()` via `MessageTemplateSeed.seedIfNeeded(container:)`
 - `@AppStorage("tickleNotificationsEnabled")` + `@AppStorage("defaultTickleFrequency")` persist user prefs
 - Notification permission is requested lazily on first tickle creation or when toggled in Settings
 - Every user-visible string goes through `String(localized:)` keys, never hardcoded
