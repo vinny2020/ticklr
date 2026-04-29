@@ -4,17 +4,15 @@ A privacy-first personal network manager for iOS and Android. Build your contact
 
 ## Screenshots
 
-### iOS (Swift 6 · SwiftUI · SwiftData)
+_iOS shown — Android UI mirrors with platform-native treatments._
 
-| Network | Tickle | Compose |
-|:-------:|:------:|:-------:|
-| <img src="ios/assets/screenshots/network.svg" width="200"/> | <img src="ios/assets/screenshots/tickle.svg" width="200"/> | <img src="ios/assets/screenshots/compose.svg" width="200"/> |
+| Onboarding | Network | Import |
+|:----------:|:-------:|:------:|
+| <img src="docs/screenshots/05-compose.png" width="220"/> | <img src="docs/screenshots/01-network-list.png" width="220"/> | <img src="docs/screenshots/02-contact-detail.png" width="220"/> |
 
-### Android (Kotlin · Jetpack Compose · Room)
-
-| Network | Tickle | Compose |
-|:-------:|:------:|:-------:|
-| <img src="android/assets/screenshots/network.svg" width="200"/> | <img src="android/assets/screenshots/tickle.svg" width="200"/> | <img src="android/assets/screenshots/compose.svg" width="200"/> |
+| New Tickle | New Group | Groups |
+|:----------:|:---------:|:------:|
+| <img src="docs/screenshots/04-tickle-edit.png" width="220"/> | <img src="docs/screenshots/06-launch-screen.png" width="220"/> | <img src="docs/screenshots/07-settings.png" width="220"/> |
 
 ## Repository Structure
 
@@ -44,8 +42,10 @@ sit/
 ## Brand
 
 **Pulse identity** — Navy `#0A1628` · Cobalt `#2563EB` · Amber `#F5C842`
-Wordmark: Syne 800 — "SIT" + "STAY IN TOUCH"
-See `assets/brand/` for logo sources.
+Wordmark: Bebas Neue 400 — "Ticklr"
+Tagline: Inter 400, 10px, 0.16em tracking, amber @ 50% — "YOUR PEOPLE MATTER"
+Body: Inter 400/500/600/700
+See `assets/design-system/` for the full token reference and brand assets.
 
 ## Getting Started
 
@@ -71,8 +71,6 @@ Or open `android/` in Android Studio.
 - [x] Android scaffold + full feature parity
 - [x] iOS contacts import (CNContactStore + LinkedIn CSV)
 - [x] Android contacts import (ContactsContract + LinkedIn CSV)
-- [ ] iCloud backup (iOS)
-- [ ] Android backup
 - [x] App Store submission
 - [ ] Google Play submission
 
