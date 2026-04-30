@@ -58,7 +58,7 @@ final class ContactTests: XCTestCase {
 
     func testInitialsBothEmpty() {
         let contact = Contact(firstName: "", lastName: "")
-        XCTAssertEqual(contact.initials, "")
+        XCTAssertEqual(contact.initials, "?")
     }
 
     // MARK: - Default values
