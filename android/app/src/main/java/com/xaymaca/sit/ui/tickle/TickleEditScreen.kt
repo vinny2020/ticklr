@@ -58,6 +58,7 @@ fun TickleEditScreen(
     var startDate by remember { mutableLongStateOf(System.currentTimeMillis()) }
     var showFrequencyDropdown by remember { mutableStateOf(false) }
     var isLoaded by remember { mutableStateOf(tickleId == null) }
+    var isSaving by remember { mutableStateOf(false) }
 
     // Pre-populate contact when navigating from ContactDetail
     LaunchedEffect(preselectedContactId) {
@@ -112,33 +113,46 @@ fun TickleEditScreen(
                         }
                     },
                     actions = {
-                        val canSave = isLoaded && selectedContact != null
+                        val canSave = isLoaded && selectedContact != null && !isSaving
                         TextButton(
                             onClick = {
+                                // Flip OUTSIDE coroutineScope.launch so the next tap
+                                // sees canSave == false on the next recomposition. If
+                                // set inside the coroutine, recomposition lags and rapid
+                                // taps each launch a fresh insert.
+                                isSaving = true
                                 coroutineScope.launch {
-                                    val newCustomDays = if (selectedFrequency == TickleFrequency.CUSTOM) customIntervalDays else null
-                                    val original = if (tickleId != null) tickleViewModel.getReminderById(tickleId) else null
-                                    val nextDue = TickleScheduler.nextDueDateForSave(
-                                        original = original,
-                                        frequency = selectedFrequency.name,
-                                        customDays = newCustomDays
-                                    )
-                                    val reminder = TickleReminder(
-                                        id = tickleId ?: 0L,
-                                        contactId = selectedContact?.id,
-                                        groupId = null,
-                                        // Empty (not whitespace-only) defaults to the localized
-                                        // "Stay in touch" — saves users from blank-noted reminders
-                                        // without overriding intentional whitespace edits.
-                                        note = if (note.isEmpty()) context.getString(R.string.tickle_edit_default_note) else note.trim(),
-                                        frequency = selectedFrequency.name,
-                                        customIntervalDays = newCustomDays,
-                                        startDate = startDate,
-                                        nextDueDate = nextDue
-                                    )
-                                    tickleViewModel.upsert(reminder, isNew = tickleId == null)
-                                    delay(2000)
-                                    onSaved()
+                                    try {
+                                        val newCustomDays = if (selectedFrequency == TickleFrequency.CUSTOM) customIntervalDays else null
+                                        val original = if (tickleId != null) tickleViewModel.getReminderById(tickleId) else null
+                                        val nextDue = TickleScheduler.nextDueDateForSave(
+                                            original = original,
+                                            frequency = selectedFrequency.name,
+                                            customDays = newCustomDays
+                                        )
+                                        val reminder = TickleReminder(
+                                            id = tickleId ?: 0L,
+                                            contactId = selectedContact?.id,
+                                            groupId = null,
+                                            // Empty (not whitespace-only) defaults to the localized
+                                            // "Stay in touch" — saves users from blank-noted reminders
+                                            // without overriding intentional whitespace edits.
+                                            note = if (note.isEmpty()) context.getString(R.string.tickle_edit_default_note) else note.trim(),
+                                            frequency = selectedFrequency.name,
+                                            customIntervalDays = newCustomDays,
+                                            startDate = startDate,
+                                            nextDueDate = nextDue
+                                        )
+                                        tickleViewModel.upsert(reminder, isNew = tickleId == null)
+                                        delay(2000)
+                                        onSaved()
+                                    } finally {
+                                        // Runs on success, failure, AND CancellationException
+                                        // (which fires when popBackStack tears down the
+                                        // composable's coroutineScope). Belt-and-suspenders
+                                        // — re-enables the button if onSaved doesn't pop.
+                                        isSaving = false
+                                    }
                                 }
                             },
                             enabled = canSave

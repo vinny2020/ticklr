@@ -15,10 +15,11 @@ struct TickleEditView: View {
     @State private var showingContactPicker = false
     @State private var showToast = false
     @State private var toastMessage = ""
+    @State private var isSaving = false
 
     private var isEditing: Bool { existing != nil }
 
-    private var canSave: Bool { selectedContact != nil }
+    private var canSave: Bool { selectedContact != nil && !isSaving }
 
     init(contact: Contact? = nil, existing: TickleReminder? = nil) {
         self.existing = existing
@@ -109,6 +110,10 @@ struct TickleEditView: View {
     }
 
     private func save() {
+        // Flip BEFORE any async work so the next tap sees canSave == false.
+        // Reset happens via `defer` inside the dismiss Task so it survives
+        // success, failure, and Task cancellation alike.
+        isSaving = true
         TickleScheduler.requestPermissionIfNeeded()
         // Empty (not whitespace-only) defaults to the localized "Stay in touch"
         // so users never end up with a blank-noted reminder. A typed space is
@@ -152,7 +157,11 @@ struct TickleEditView: View {
             ? String(localized: "tickleEdit.toast.updated")
             : String(localized: "tickleEdit.toast.saved")
         showToast = true
-        Task {
+        Task { @MainActor in
+            // `defer` here (NOT at function scope) — save() returns before the
+            // sleep completes, so a function-level defer would re-enable the
+            // button instantly and reintroduce the duplicate-tap bug.
+            defer { isSaving = false }
             try? await Task.sleep(for: .seconds(2))
             dismiss()
         }
