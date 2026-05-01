@@ -13,6 +13,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # Needed so `git for-each-ref refs/tags/<tag>` can read the tag's
+          # annotation message. Without this the tag object isn't fetched.
+          fetch-tags: true
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -52,6 +56,42 @@ jobs:
           echo "version_name=$VERSION_NAME" >> $GITHUB_OUTPUT
           echo "version_code=$VCODE" >> $GITHUB_OUTPUT
           echo "▸ Version: $VERSION_NAME | Track: $TRACK | Code: $VCODE"
+
+      - name: Write release notes from tag annotation
+        # Annotated tags (`git tag -a android/vX.Y.Z -m "..."`) carry a message;
+        # we extract it and overwrite app/src/main/play/release-notes/en-US/<track>.txt
+        # so the Triplet play-publisher uploads the per-release notes the tagger
+        # wrote, instead of the static file checked into the repo.
+        #
+        # Lightweight tags (no -m / no -a) leave the existing file untouched.
+        run: |
+          TAG="${GITHUB_REF#refs/tags/}"
+          NOTES=$(git for-each-ref --format='%(contents)' "refs/tags/$TAG")
+          NOTES_TRIMMED=$(printf '%s' "$NOTES" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+
+          if [ -z "$NOTES_TRIMMED" ]; then
+            echo "▸ Tag '$TAG' has no annotation; falling back to checked-in release-notes file."
+            exit 0
+          fi
+
+          TRACK="${{ steps.version.outputs.track }}"
+          DEST_DIR="android/app/src/main/play/release-notes/en-US"
+          DEST_FILE="$DEST_DIR/${TRACK}.txt"
+          mkdir -p "$DEST_DIR"
+          printf '%s\n' "$NOTES_TRIMMED" > "$DEST_FILE"
+
+          BYTES=$(wc -c < "$DEST_FILE")
+          echo "▸ Wrote $BYTES bytes to $DEST_FILE"
+          # Google Play caps release notes at 500 chars per locale per release.
+          # Don't truncate — let publishReleaseBundle fail loudly so the tagger
+          # knows to shorten the message and re-tag, rather than silently
+          # publishing a half-sentence.
+          if [ "$BYTES" -gt 500 ]; then
+            echo "::warning::Release notes exceed Play's 500-char limit ($BYTES bytes). publishReleaseBundle will likely reject this — re-tag with a shorter message."
+          fi
+          echo "─── preview ───"
+          cat "$DEST_FILE"
+          echo "─── end ───"
 
       - name: Decode keystore
         run: |
