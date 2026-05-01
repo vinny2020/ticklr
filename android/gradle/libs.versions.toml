@@ -14,6 +14,7 @@ work = "2.9.0"
 gson = "2.10.1"
 play-publisher = "3.12.2"
 robolectric = "4.14.1"
+mockk = "1.13.13"
 
 [libraries]
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
@@ -47,6 +48,7 @@ robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "
 compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

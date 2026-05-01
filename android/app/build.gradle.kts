@@ -201,6 +201,7 @@ dependencies {
     debugImplementation(libs.compose.ui.test.manifest)
     testImplementation(libs.hilt.android.testing)
     kspTest(libs.hilt.compiler)
+    testImplementation(libs.mockk)
 }
 
 // ---------------------------------------------------------------------------
