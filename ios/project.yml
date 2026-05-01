@@ -5,6 +5,14 @@ options:
     iOS: "17.0"
   xcodeVersion: "16.0"
 
+# SwiftUI view-tree introspection for SwiftUI unit tests. Test-only — scoped
+# below to TicklrTests, NOT the Ticklr app target. Must not appear in the
+# shipped .ipa per ios/CLAUDE.md.
+packages:
+  ViewInspector:
+    url: https://github.com/nalexn/ViewInspector
+    from: "0.10.0"
+
 settings:
   base:
     PRODUCT_NAME: Ticklr
@@ -82,3 +90,4 @@ targets:
         GENERATE_INFOPLIST_FILE: YES
     dependencies:
       - target: Ticklr
+      - package: ViewInspector

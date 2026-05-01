@@ -27,6 +27,7 @@
 		7116F3F3FE61E7C0FDF86F7E /* MessageComposerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADEFE7A1ADA2B9E3DDBBD81 /* MessageComposerService.swift */; };
 		840D3C6377E1F347573EAE19 /* TemplateEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F765EEB318998C9E229F0F /* TemplateEditView.swift */; };
 		87572A827C3A4DED6D5E968C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA413473ADA828136F21753 /* ContentView.swift */; };
+		88E71DC550A3AD608EED67D9 /* ViewInspector in Frameworks */ = {isa = PBXBuildFile; productRef = 5431DFC1DE96B906E8C999C4 /* ViewInspector */; };
 		8BB34E5F91AFE802C9B16626 /* ImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBD25432AF93E7B78C501EE /* ImportView.swift */; };
 		8CF13461108C2CC7E64EB847 /* SeedDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9413278558DA1F8BBE00FF96 /* SeedDataService.swift */; };
 		919527C153F058BE1EDA72A3 /* LocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A27D41F38F9FB5871748B89 /* LocalizationTests.swift */; };
@@ -37,6 +38,7 @@
 		A8C96FD3F045625AE3DDF1DB /* MessageTemplateSeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40663A4021DF41A99C3F4585 /* MessageTemplateSeed.swift */; };
 		AA02325BB0CA65EB315DF2F1 /* BebasNeue-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D3DCE02125449F9E013629EF /* BebasNeue-Regular.ttf */; };
 		AF7B9499DE3B99B9194191B5 /* GroupDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033862D2DB3D8A467AAFFA5D /* GroupDetailView.swift */; };
+		BD81ED295562938D457E136B /* TickleEditViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C371A80FA068A7BCAF4918 /* TickleEditViewTests.swift */; };
 		C5DD09913350E877AE4008CF /* TickleReminderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBC29B891A9D2602E4C6122 /* TickleReminderTests.swift */; };
 		CCCCA1639CE5316D17A6AE7E /* LinkedInCSVParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFE5D9B2591E4B4A53F5EEC /* LinkedInCSVParser.swift */; };
 		D2644F8AB791907856A6E389 /* ComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07B4E4B1B6C11A40612610C /* ComposeView.swift */; };
@@ -79,6 +81,7 @@
 		53C7E0EBE485C198DCF9669E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		5CA413473ADA828136F21753 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		63EBB61C7877871E721045C7 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		70C371A80FA068A7BCAF4918 /* TickleEditViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleEditViewTests.swift; sourceTree = "<group>"; };
 		72098A45B6ACBC527F5DF0B9 /* MessageTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTemplate.swift; sourceTree = "<group>"; };
 		7A27D41F38F9FB5871748B89 /* LocalizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationTests.swift; sourceTree = "<group>"; };
 		8ACA061EE9A732D89FD3E0F3 /* GroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListView.swift; sourceTree = "<group>"; };
@@ -102,6 +105,17 @@
 		E77347A9F53BFBE3E1672671 /* AddContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactView.swift; sourceTree = "<group>"; };
 		EDBC29B891A9D2602E4C6122 /* TickleReminderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleReminderTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		68C829900276EF60A6D2816C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88E71DC550A3AD608EED67D9 /* ViewInspector in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		04D0E0B997D54CDC9E47B531 /* Network */ = {
@@ -192,6 +206,7 @@
 				10D31DBFE56E32631DD7B650 /* ContactTests.swift */,
 				30D196741B99B788C9E325C3 /* LinkedInCSVParserTests.swift */,
 				7A27D41F38F9FB5871748B89 /* LocalizationTests.swift */,
+				70C371A80FA068A7BCAF4918 /* TickleEditViewTests.swift */,
 				EDBC29B891A9D2602E4C6122 /* TickleReminderTests.swift */,
 				0B8316646A179885792C4004 /* TickleSchedulerTests.swift */,
 			);
@@ -300,6 +315,7 @@
 			buildConfigurationList = 9B5A7C0CB687F086F447159A /* Build configuration list for PBXNativeTarget "TicklrTests" */;
 			buildPhases = (
 				CE51D64CBBEE230A290345F1 /* Sources */,
+				68C829900276EF60A6D2816C /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -308,6 +324,7 @@
 			);
 			name = TicklrTests;
 			packageProductDependencies = (
+				5431DFC1DE96B906E8C999C4 /* ViewInspector */,
 			);
 			productName = TicklrTests;
 			productReference = 49E849839D5DE00393F1F990 /* TicklrTests.xctest */;
@@ -356,6 +373,9 @@
 			);
 			mainGroup = 19FBD3B5DE9B723F24932E42;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				01931FC77FB6EB448EFD925D /* XCRemoteSwiftPackageReference "ViewInspector" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B9E711472E0A67C680D625C7 /* Products */;
 			projectDirPath = "";
@@ -426,6 +446,7 @@
 				9283E70E0707CC70CFA0AD0F /* ContactTests.swift in Sources */,
 				9CA0D612EF182E101FDE37A4 /* LinkedInCSVParserTests.swift in Sources */,
 				919527C153F058BE1EDA72A3 /* LocalizationTests.swift in Sources */,
+				BD81ED295562938D457E136B /* TickleEditViewTests.swift in Sources */,
 				C5DD09913350E877AE4008CF /* TickleReminderTests.swift in Sources */,
 				43434A6ACC0CD3146036A11C /* TickleSchedulerTests.swift in Sources */,
 			);
@@ -668,6 +689,25 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		01931FC77FB6EB448EFD925D /* XCRemoteSwiftPackageReference "ViewInspector" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nalexn/ViewInspector";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.10.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5431DFC1DE96B906E8C999C4 /* ViewInspector */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 01931FC77FB6EB448EFD925D /* XCRemoteSwiftPackageReference "ViewInspector" */;
+			productName = ViewInspector;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A5D2D54CCBEE20463A2C48F7 /* Project object */;
 }
