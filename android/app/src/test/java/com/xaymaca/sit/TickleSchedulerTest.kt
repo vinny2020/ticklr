@@ -1,9 +1,11 @@
 package com.xaymaca.sit
 
 import com.xaymaca.sit.data.model.TickleFrequency
+import com.xaymaca.sit.data.model.TickleReminder
 import com.xaymaca.sit.service.TickleScheduler
 import org.junit.Test
 import java.util.Calendar
+import java.util.concurrent.TimeUnit
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -117,5 +119,106 @@ class TickleSchedulerTest {
         assertEquals(2026, result.get(Calendar.YEAR))
         assertEquals(2, result.get(Calendar.MONTH) + 1)
         assertEquals(15, result.get(Calendar.DAY_OF_MONTH))
+    }
+
+    // -- nextDueDateForSave -----------------------------------------------------
+
+    @Test
+    fun `nextDueDateForSave on new tickle recomputes from now`() {
+        val now = calAt(2026, 3, 15)
+        val result = TickleScheduler.nextDueDateForSave(
+            original = null,
+            frequency = TickleFrequency.WEEKLY.name,
+            customDays = null,
+            now = now
+        )
+        assertEquals(now + TimeUnit.DAYS.toMillis(7), result)
+    }
+
+    @Test
+    fun `nextDueDateForSave on note-only edit preserves existing nextDueDate`() {
+        // The user changed only the note. We must NOT recompute — that would
+        // wipe out any prior markComplete advancement and could fire the alarm
+        // immediately if the original's `startDate + interval` is in the past.
+        val now = calAt(2026, 3, 15)
+        val futureDue = calAt(2026, 4, 30)
+        val original = TickleReminder(
+            id = 1L,
+            frequency = TickleFrequency.MONTHLY.name,
+            customIntervalDays = null,
+            startDate = calAt(2025, 12, 1),
+            nextDueDate = futureDue
+        )
+        val result = TickleScheduler.nextDueDateForSave(
+            original = original,
+            frequency = TickleFrequency.MONTHLY.name,
+            customDays = null,
+            now = now
+        )
+        assertEquals(futureDue, result)
+    }
+
+    @Test
+    fun `nextDueDateForSave when frequency changed recomputes from now`() {
+        val now = calAt(2026, 3, 15)
+        val original = TickleReminder(
+            id = 1L,
+            frequency = TickleFrequency.WEEKLY.name,
+            customIntervalDays = null,
+            startDate = calAt(2025, 12, 1),
+            nextDueDate = calAt(2026, 4, 30)
+        )
+        val result = TickleScheduler.nextDueDateForSave(
+            original = original,
+            frequency = TickleFrequency.MONTHLY.name,
+            customDays = null,
+            now = now
+        )
+        // Weekly → Monthly: should now be ~1 month from `now`, not from the old startDate
+        val cal = calFrom(result)
+        assertEquals(2026, cal.get(Calendar.YEAR))
+        assertEquals(4, cal.get(Calendar.MONTH) + 1)
+        assertEquals(15, cal.get(Calendar.DAY_OF_MONTH))
+    }
+
+    @Test
+    fun `nextDueDateForSave when custom days changed recomputes from now`() {
+        val now = calAt(2026, 3, 15)
+        val original = TickleReminder(
+            id = 1L,
+            frequency = TickleFrequency.CUSTOM.name,
+            customIntervalDays = 14,
+            startDate = calAt(2025, 12, 1),
+            nextDueDate = calAt(2026, 4, 30)
+        )
+        val result = TickleScheduler.nextDueDateForSave(
+            original = original,
+            frequency = TickleFrequency.CUSTOM.name,
+            customDays = 21,
+            now = now
+        )
+        assertEquals(now + TimeUnit.DAYS.toMillis(21), result)
+    }
+
+    @Test
+    fun `nextDueDateForSave when custom days went from null to a value recomputes`() {
+        // Switching from MONTHLY (no custom days) to CUSTOM with 30 days is a
+        // schedule change even though both come out to ~30 days — explicitness
+        // matters because the user changed the frequency type.
+        val now = calAt(2026, 3, 15)
+        val original = TickleReminder(
+            id = 1L,
+            frequency = TickleFrequency.CUSTOM.name,
+            customIntervalDays = null,
+            startDate = calAt(2025, 12, 1),
+            nextDueDate = calAt(2026, 4, 30)
+        )
+        val result = TickleScheduler.nextDueDateForSave(
+            original = original,
+            frequency = TickleFrequency.CUSTOM.name,
+            customDays = 30,
+            now = now
+        )
+        assertEquals(now + TimeUnit.DAYS.toMillis(30), result)
     }
 }

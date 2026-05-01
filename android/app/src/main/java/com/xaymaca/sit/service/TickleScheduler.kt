@@ -8,6 +8,7 @@ import android.content.Intent
 import androidx.work.*
 import com.xaymaca.sit.SITApp
 import com.xaymaca.sit.data.model.TickleFrequency
+import com.xaymaca.sit.data.model.TickleReminder
 import java.util.Calendar
 import java.util.concurrent.TimeUnit
 
@@ -41,6 +42,28 @@ object TickleScheduler {
      */
     fun cancelWorker(context: Context) {
         WorkManager.getInstance(context).cancelUniqueWork(SITApp.TICKLE_WORK_TAG)
+    }
+
+    /**
+     * Decides the `nextDueDate` to persist when saving a tickle.
+     *
+     * - New tickle (`original == null`): one interval from `now`.
+     * - Edit where frequency or custom interval changed: one interval from `now`.
+     *   "Next" should mean "one interval from now," not from the original
+     *   `startDate` (which is in the past).
+     * - Pure note/contact edit: preserves the existing `nextDueDate` so prior
+     *   `markComplete` advancement isn't wiped out by a typo fix.
+     */
+    fun nextDueDateForSave(
+        original: TickleReminder?,
+        frequency: String,
+        customDays: Int?,
+        now: Long = System.currentTimeMillis()
+    ): Long {
+        if (original == null) return nextDueDate(now, frequency, customDays)
+        val scheduleChanged =
+            original.frequency != frequency || original.customIntervalDays != customDays
+        return if (scheduleChanged) nextDueDate(now, frequency, customDays) else original.nextDueDate
     }
 
     /**

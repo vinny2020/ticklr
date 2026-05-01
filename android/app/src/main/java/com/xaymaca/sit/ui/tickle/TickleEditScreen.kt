@@ -114,10 +114,12 @@ fun TickleEditScreen(
                         TextButton(
                             onClick = {
                                 coroutineScope.launch {
-                                    val nextDue = TickleScheduler.nextDueDate(
-                                        from = startDate,
+                                    val newCustomDays = if (selectedFrequency == TickleFrequency.CUSTOM) customIntervalDays else null
+                                    val original = if (tickleId != null) tickleViewModel.getReminderById(tickleId) else null
+                                    val nextDue = TickleScheduler.nextDueDateForSave(
+                                        original = original,
                                         frequency = selectedFrequency.name,
-                                        customDays = if (selectedFrequency == TickleFrequency.CUSTOM) customIntervalDays else null
+                                        customDays = newCustomDays
                                     )
                                     val reminder = TickleReminder(
                                         id = tickleId ?: 0L,
@@ -125,7 +127,7 @@ fun TickleEditScreen(
                                         groupId = null,
                                         note = note.trim(),
                                         frequency = selectedFrequency.name,
-                                        customIntervalDays = if (selectedFrequency == TickleFrequency.CUSTOM) customIntervalDays else null,
+                                        customIntervalDays = newCustomDays,
                                         startDate = startDate,
                                         nextDueDate = nextDue
                                     )
