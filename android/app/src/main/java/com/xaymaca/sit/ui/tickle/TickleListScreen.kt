@@ -33,6 +33,9 @@ import com.xaymaca.sit.ui.shared.displayNameResId
 import com.xaymaca.sit.ui.theme.Amber
 import com.xaymaca.sit.ui.theme.Cobalt
 import com.xaymaca.sit.ui.theme.NavyLight
+import java.time.Instant
+import java.time.ZoneId
+import java.time.temporal.ChronoUnit
 import kotlin.math.abs
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -332,9 +335,7 @@ private fun TickleReminderRow(
 
 @Composable
 private fun relativeDateLabel(timestamp: Long): String {
-    val now = System.currentTimeMillis()
-    val diffMs = timestamp - now
-    val diffDays = (diffMs / (1000L * 60 * 60 * 24)).toInt()
+    val diffDays = calendarDayDelta(System.currentTimeMillis(), timestamp)
     return when {
         diffDays == 0 -> stringResource(R.string.tickle_row_today)
         diffDays == 1 -> stringResource(R.string.tickle_row_tomorrow)
@@ -342,4 +343,21 @@ private fun relativeDateLabel(timestamp: Long): String {
         diffDays > 1 -> stringResource(R.string.tickle_row_in_days, diffDays)
         else -> stringResource(R.string.tickle_row_days_overdue, abs(diffDays))
     }
+}
+
+/**
+ * Whole-calendar-day delta between two epoch-millis timestamps in the device's
+ * local time zone. Returns positive when [target] is later than [now].
+ *
+ * Uses LocalDate boundaries — NOT 24-hour windows — so a tickle scheduled for
+ * tomorrow at the same wall-clock time reads as "+1 day" the moment it's
+ * created, instead of "+0 days" until the millisecond clock crosses 24h.
+ * Mirrors iOS's `Calendar.dateComponents([.day], from:to:)`.
+ *
+ * Internal so unit tests can reach it without going through Compose.
+ */
+internal fun calendarDayDelta(now: Long, target: Long, zone: ZoneId = ZoneId.systemDefault()): Int {
+    val today = Instant.ofEpochMilli(now).atZone(zone).toLocalDate()
+    val targetDate = Instant.ofEpochMilli(target).atZone(zone).toLocalDate()
+    return ChronoUnit.DAYS.between(today, targetDate).toInt()
 }
