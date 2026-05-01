@@ -24,6 +24,7 @@
 		5C6F6974D1ED58434BB9CFDF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C7E0EBE485C198DCF9669E /* SettingsView.swift */; };
 		656FADADA38339BCFBD815D5 /* WordmarkLockup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EFBEBE9D718FAA0B157914 /* WordmarkLockup.swift */; };
 		6A89CDD6B79D3E4E9E4BDBCE /* TickleEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4BF582AFC377CF7A29ADC9 /* TickleEditView.swift */; };
+		707528D3264086FB42BDD51E /* ComposeViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205CDD9B8C3402B672E5E739 /* ComposeViewTests.swift */; };
 		7116F3F3FE61E7C0FDF86F7E /* MessageComposerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADEFE7A1ADA2B9E3DDBBD81 /* MessageComposerService.swift */; };
 		840D3C6377E1F347573EAE19 /* TemplateEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F765EEB318998C9E229F0F /* TemplateEditView.swift */; };
 		87572A827C3A4DED6D5E968C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA413473ADA828136F21753 /* ContentView.swift */; };
@@ -71,6 +72,7 @@
 		0F033D809DFE50DA44209A95 /* LaunchScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenView.swift; sourceTree = "<group>"; };
 		10D31DBFE56E32631DD7B650 /* ContactTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTests.swift; sourceTree = "<group>"; };
 		1D98A08F7576CDC556F9440C /* ContactFingerprint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactFingerprint.swift; sourceTree = "<group>"; };
+		205CDD9B8C3402B672E5E739 /* ComposeViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeViewTests.swift; sourceTree = "<group>"; };
 		209311518915490C7F72039B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		30D196741B99B788C9E325C3 /* LinkedInCSVParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedInCSVParserTests.swift; sourceTree = "<group>"; };
 		40663A4021DF41A99C3F4585 /* MessageTemplateSeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTemplateSeed.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 		60300655470A93BADC68B71C /* SITTests */ = {
 			isa = PBXGroup;
 			children = (
+				205CDD9B8C3402B672E5E739 /* ComposeViewTests.swift */,
 				10D31DBFE56E32631DD7B650 /* ContactTests.swift */,
 				30D196741B99B788C9E325C3 /* LinkedInCSVParserTests.swift */,
 				7A27D41F38F9FB5871748B89 /* LocalizationTests.swift */,
@@ -443,6 +446,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				707528D3264086FB42BDD51E /* ComposeViewTests.swift in Sources */,
 				9283E70E0707CC70CFA0AD0F /* ContactTests.swift in Sources */,
 				9CA0D612EF182E101FDE37A4 /* LinkedInCSVParserTests.swift in Sources */,
 				919527C153F058BE1EDA72A3 /* LocalizationTests.swift in Sources */,
