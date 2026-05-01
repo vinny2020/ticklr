@@ -79,6 +79,7 @@
     <string name="tickle_edit_section_custom_interval">INTERVALLE PERSONNALISÉ (JOURS)</string>
     <string name="tickle_edit_section_note">NOTE (FACULTATIF)</string>
     <string name="tickle_edit_note_placeholder">De quoi parler…</string>
+    <string name="tickle_edit_default_note">Rester en contact</string>
     <string name="tickle_edit_custom_interval_days">%1$d jours</string>
     <string name="tickle_edit_no_groups_title">Aucun groupe pour l\'instant</string>
     <string name="tickle_edit_no_groups_description">Les groupes vous permettent d\'envoyer un tickle à toute une équipe ou un cercle en même temps.</string>

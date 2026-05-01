@@ -215,13 +215,15 @@ struct ComposeView: View {
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    if selectedContact != nil || !messageBody.isEmpty {
-                        Button(String(localized: "common.cancel")) {
-                            clearCompose()
-                            onCancel?()
-                        }
-                        .foregroundStyle(.secondary)
+                    // Always shown so the user can leave the Compose tab and
+                    // return to Tickle (the new home) without having to tap
+                    // another tab. clearCompose() is a no-op when the form
+                    // is already empty.
+                    Button(String(localized: "common.cancel")) {
+                        clearCompose()
+                        onCancel?()
                     }
+                    .foregroundStyle(.secondary)
                 }
             }
             .sheet(isPresented: $showingComposer, onDismiss: clearCompose) {

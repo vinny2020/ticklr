@@ -10,8 +10,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Snooze
+import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material3.*
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.runtime.*
@@ -43,7 +45,8 @@ fun TickleListScreen(
     val dueReminders by viewModel.dueReminders.collectAsState()
     val upcomingReminders by viewModel.upcomingReminders.collectAsState()
     val snoozedReminders by viewModel.snoozedReminders.collectAsState()
-    val reminderInitials by viewModel.reminderInitials.collectAsState()
+    val reminderDisplays by viewModel.reminderDisplays.collectAsState()
+    val fallbackDisplay = TickleViewModel.RowDisplay(initials = "T", name = "Tickle")
 
     Scaffold(
         topBar = {
@@ -102,7 +105,7 @@ fun TickleListScreen(
                     items(dueReminders, key = { it.id }) { reminder ->
                         TickleReminderRow(
                             reminder = reminder,
-                            initial = reminderInitials[reminder.id] ?: "T",
+                            display = reminderDisplays[reminder.id] ?: fallbackDisplay,
                             isDue = true,
                             onClick = { onEditTickle(reminder.id) },
                             onComplete = { viewModel.markComplete(reminder) },
@@ -120,7 +123,7 @@ fun TickleListScreen(
                     items(upcomingReminders, key = { it.id }) { reminder ->
                         TickleReminderRow(
                             reminder = reminder,
-                            initial = reminderInitials[reminder.id] ?: "T",
+                            display = reminderDisplays[reminder.id] ?: fallbackDisplay,
                             isDue = false,
                             onClick = { onEditTickle(reminder.id) },
                             onComplete = { viewModel.markComplete(reminder) },
@@ -138,7 +141,7 @@ fun TickleListScreen(
                     items(snoozedReminders, key = { it.id }) { reminder ->
                         TickleReminderRow(
                             reminder = reminder,
-                            initial = reminderInitials[reminder.id] ?: "T",
+                            display = reminderDisplays[reminder.id] ?: fallbackDisplay,
                             isDue = false,
                             onClick = { onEditTickle(reminder.id) },
                             onComplete = { viewModel.markComplete(reminder) },
@@ -171,7 +174,7 @@ private fun TickleSectionHeader(title: String, color: Color = MaterialTheme.colo
 @Composable
 private fun TickleReminderRow(
     reminder: TickleReminder,
-    initial: String,
+    display: TickleViewModel.RowDisplay,
     isDue: Boolean,
     onClick: () -> Unit,
     onComplete: () -> Unit,
@@ -267,7 +270,7 @@ private fun TickleReminderRow(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = initial,
+                    text = display.initials,
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.Bold,
                     color = if (isDue) MaterialTheme.colorScheme.background
@@ -277,28 +280,50 @@ private fun TickleReminderRow(
 
             Spacer(modifier = Modifier.width(12.dp))
 
+            // Layout mirrors iOS TickleRowView: bold contact/group name on top,
+            // frequency badge + due-date label inline below, optional note last.
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = reminder.note.ifBlank { stringResource(R.string.tickle_row_default_note) },
+                    text = display.name,
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.SemiBold
                 )
-                Text(
-                    text = dateLabel,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = if (isDue) Amber else MaterialTheme.colorScheme.onSurfaceVariant
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    Badge(
+                        containerColor = if (isDue) Amber else MaterialTheme.colorScheme.surfaceVariant,
+                        contentColor = if (isDue) MaterialTheme.colorScheme.background
+                                       else MaterialTheme.colorScheme.onSurfaceVariant
+                    ) {
+                        Text(
+                            text = frequencyLabel,
+                            modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp)
+                        )
+                    }
+                    Text(
+                        text = dateLabel,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = if (isDue) Amber else MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+                if (reminder.note.isNotBlank()) {
+                    Text(
+                        text = reminder.note,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1
+                    )
+                }
             }
 
-            // Frequency badge
-            Badge(
-                containerColor = if (isDue) Amber else MaterialTheme.colorScheme.surfaceVariant,
-                contentColor = if (isDue) MaterialTheme.colorScheme.background
-                               else MaterialTheme.colorScheme.onSurfaceVariant
-            ) {
-                Text(
-                    text = frequencyLabel,
-                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp)
+            // Check button — quick complete without swipe. Matches iOS row.
+            IconButton(onClick = onComplete) {
+                Icon(
+                    imageVector = if (isDue) Icons.Default.CheckCircle else Icons.Outlined.CheckCircle,
+                    contentDescription = stringResource(R.string.tickle_row_action_done),
+                    tint = if (isDue) Amber else MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }

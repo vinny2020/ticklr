@@ -101,6 +101,7 @@ final class LocalizationTests: XCTestCase {
             "tickleEdit.row.starting",
             "tickleEdit.section.note",
             "tickleEdit.placeholder.note",
+            "tickleEdit.default.note",
             "tickleEdit.navTitle.edit",
             "tickleEdit.navTitle.new",
             "tickleEdit.toast.saved",

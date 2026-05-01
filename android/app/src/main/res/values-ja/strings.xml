@@ -79,6 +79,7 @@
     <string name="tickle_edit_section_custom_interval">カスタム間隔（日）</string>
     <string name="tickle_edit_section_note">メモ（任意）</string>
     <string name="tickle_edit_note_placeholder">話すトピック…</string>
+    <string name="tickle_edit_default_note">連絡を取り合う</string>
     <string name="tickle_edit_custom_interval_days">%1$d 日</string>
     <string name="tickle_edit_no_groups_title">グループはまだありません</string>
     <string name="tickle_edit_no_groups_description">グループを使えば、チームや仲間全員に一度に tickle を送れます。</string>

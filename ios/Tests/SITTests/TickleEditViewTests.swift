@@ -76,4 +76,62 @@ final class TickleEditViewTests: XCTestCase {
             "Editing an overdue tickle must roll its nextDueDate forward by one interval"
         )
     }
+
+    func testEditingWithEmptyNoteSubstitutesLocalizedDefault() throws {
+        // Regression guard for the "Stay in touch" default. Empty (not
+        // whitespace) note must be replaced with the localized default;
+        // anything else is preserved as-is (with whitespace trimmed).
+        let contact = makeContact()
+        let reminder = TickleReminder(
+            contact: contact,
+            note: "",
+            frequency: .monthly,
+            startDate: Date().addingTimeInterval(7 * 24 * 60 * 60)
+        )
+
+        let view = TickleEditView(existing: reminder)
+        let sut = try view.inspect()
+        try sut.find(button: String(localized: "common.save")).tap()
+
+        let expected = String(localized: "tickleEdit.default.note")
+        XCTAssertEqual(reminder.note, expected)
+        // Sanity-check the en source so a translation drift in the catalog
+        // can't silently make the assertion meaningless.
+        XCTAssertEqual(expected, "Stay in touch")
+    }
+
+    func testEditingWithWhitespaceOnlyNoteIsTrimmedNotDefaulted() throws {
+        // Behavior contract: only literally empty triggers the default.
+        // A typed space is intentional input — trim it instead of replacing.
+        // (Trimmed result IS empty, but that's the user's choice, not ours.)
+        let contact = makeContact()
+        let reminder = TickleReminder(
+            contact: contact,
+            note: "   ",
+            frequency: .monthly,
+            startDate: Date().addingTimeInterval(7 * 24 * 60 * 60)
+        )
+
+        let view = TickleEditView(existing: reminder)
+        let sut = try view.inspect()
+        try sut.find(button: String(localized: "common.save")).tap()
+
+        XCTAssertEqual(reminder.note, "", "Whitespace-only must be trimmed, not defaulted")
+    }
+
+    // NOTE on rapid-tap regression: a true end-to-end test on iOS would need
+    // the ViewInspector inspection-callback pattern (adding a
+    // `didAppear: ((Self) -> Void)?` to TickleEditView), because
+    // @Environment(\.modelContext) only resolves under ViewHosting + the
+    // callback path — direct `view.inspect()` bypasses the runtime
+    // environment, so modelContext.insert(...) silently no-ops in the test
+    // and the assertion sees zero reminders even on the first tap.
+    //
+    // We accept this gap because:
+    // 1. The Android equivalent (TickleEditScreenTest, in the same change
+    //    set) exercises the same bug class via Compose UI test, which has
+    //    full state-driven recomposition and respects the `enabled` flag.
+    // 2. The save-debounce code itself (`isSaving` + canSave + defer-inside-
+    //    Task) is small and local enough to reason about by inspection.
+    // 3. The spec doc gates the change on a manual rapid-tap smoke test.
 }
