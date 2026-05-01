@@ -86,4 +86,18 @@ struct TickleScheduler {
         case .custom:     return cal.date(byAdding: .day,   value: customDays ?? 30, to: date) ?? date
         }
     }
+
+    /// Decides the initial `nextDueDate` for a tickle being created or edited.
+    /// A future `startDate` is honored as the literal first occurrence; a
+    /// `startDate` of today or in the past collapses to "one interval from
+    /// `startDate`" so a tickle created today doesn't fire today.
+    static func initialNextDueDate(
+        from startDate: Date,
+        frequency: TickleFrequency,
+        customDays: Int? = nil,
+        now: Date = Date()
+    ) -> Date {
+        if startDate > now { return startDate }
+        return nextDueDate(from: startDate, frequency: frequency, customDays: customDays)
+    }
 }

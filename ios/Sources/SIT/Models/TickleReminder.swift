@@ -61,7 +61,11 @@ final class TickleReminder {
         self.frequency = frequency
         self.customIntervalDays = customIntervalDays
         self.startDate = startDate
-        self.nextDueDate = startDate
+        self.nextDueDate = TickleScheduler.initialNextDueDate(
+            from: startDate,
+            frequency: frequency,
+            customDays: customIntervalDays
+        )
         self.status = .active
         self.createdAt = Date()
     }

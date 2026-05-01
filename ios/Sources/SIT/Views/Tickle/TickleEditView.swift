@@ -118,7 +118,11 @@ struct TickleEditView: View {
             r.group            = nil
             r.frequency        = frequency
             r.customIntervalDays = intervalDays
-            r.nextDueDate      = startDate
+            r.nextDueDate = TickleScheduler.initialNextDueDate(
+                from: startDate,
+                frequency: frequency,
+                customDays: intervalDays
+            )
             r.note             = trimmedNote
             r.status           = .active
             TickleScheduler.cancelNotification(for: r)

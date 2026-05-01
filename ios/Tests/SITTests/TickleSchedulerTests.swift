@@ -76,4 +76,44 @@ final class TickleSchedulerTests: XCTestCase {
         let weekly = TickleScheduler.nextDueDate(from: baseDate, frequency: .weekly)
         XCTAssertGreaterThan(result, weekly)
     }
+
+    // MARK: - initialNextDueDate
+
+    func testInitialNextDueDateWithFutureStartDateReturnsStartDate() {
+        let now = Date()
+        let future = now.addingTimeInterval(7 * 24 * 60 * 60)
+        let result = TickleScheduler.initialNextDueDate(from: future, frequency: .weekly, now: now)
+        XCTAssertEqual(result, future)
+    }
+
+    func testInitialNextDueDateWithPastStartDateAddsOneInterval() {
+        let now = Date()
+        let past = now.addingTimeInterval(-86400)
+        let result = TickleScheduler.initialNextDueDate(from: past, frequency: .weekly, now: now)
+        let expected = calendar.date(byAdding: .day, value: 7, to: past)!
+        XCTAssertEqual(result, expected)
+    }
+
+    func testInitialNextDueDateWithStartDateEqualToNowAddsOneInterval() {
+        // Edge case: startDate == now must NOT fire today; it should advance.
+        let now = Date()
+        let result = TickleScheduler.initialNextDueDate(from: now, frequency: .weekly, now: now)
+        let expected = calendar.date(byAdding: .day, value: 7, to: now)!
+        XCTAssertEqual(result, expected)
+    }
+
+    func testInitialNextDueDateMonthlyHonorsFutureStartDate() {
+        let now = Date()
+        let future = now.addingTimeInterval(30 * 24 * 60 * 60)
+        let result = TickleScheduler.initialNextDueDate(from: future, frequency: .monthly, now: now)
+        XCTAssertEqual(result, future)
+    }
+
+    func testInitialNextDueDateCustomFromPastUsesProvidedDays() {
+        let now = Date()
+        let past = now.addingTimeInterval(-86400)
+        let result = TickleScheduler.initialNextDueDate(from: past, frequency: .custom, customDays: 21, now: now)
+        let expected = calendar.date(byAdding: .day, value: 21, to: past)!
+        XCTAssertEqual(result, expected)
+    }
 }

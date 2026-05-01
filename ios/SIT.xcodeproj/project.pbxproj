@@ -37,6 +37,7 @@
 		A8C96FD3F045625AE3DDF1DB /* MessageTemplateSeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40663A4021DF41A99C3F4585 /* MessageTemplateSeed.swift */; };
 		AA02325BB0CA65EB315DF2F1 /* BebasNeue-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D3DCE02125449F9E013629EF /* BebasNeue-Regular.ttf */; };
 		AF7B9499DE3B99B9194191B5 /* GroupDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033862D2DB3D8A467AAFFA5D /* GroupDetailView.swift */; };
+		C5DD09913350E877AE4008CF /* TickleReminderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBC29B891A9D2602E4C6122 /* TickleReminderTests.swift */; };
 		CCCCA1639CE5316D17A6AE7E /* LinkedInCSVParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFE5D9B2591E4B4A53F5EEC /* LinkedInCSVParser.swift */; };
 		D2644F8AB791907856A6E389 /* ComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07B4E4B1B6C11A40612610C /* ComposeView.swift */; };
 		D85DBFDBA2D0DACA843EA1A9 /* ContactDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60220490DD5F5ED7374E537 /* ContactDetailView.swift */; };
@@ -99,6 +100,7 @@
 		E07B4E4B1B6C11A40612610C /* ComposeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeView.swift; sourceTree = "<group>"; };
 		E5F765EEB318998C9E229F0F /* TemplateEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateEditView.swift; sourceTree = "<group>"; };
 		E77347A9F53BFBE3E1672671 /* AddContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactView.swift; sourceTree = "<group>"; };
+		EDBC29B891A9D2602E4C6122 /* TickleReminderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleReminderTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -190,6 +192,7 @@
 				10D31DBFE56E32631DD7B650 /* ContactTests.swift */,
 				30D196741B99B788C9E325C3 /* LinkedInCSVParserTests.swift */,
 				7A27D41F38F9FB5871748B89 /* LocalizationTests.swift */,
+				EDBC29B891A9D2602E4C6122 /* TickleReminderTests.swift */,
 				0B8316646A179885792C4004 /* TickleSchedulerTests.swift */,
 			);
 			name = SITTests;
@@ -423,6 +426,7 @@
 				9283E70E0707CC70CFA0AD0F /* ContactTests.swift in Sources */,
 				9CA0D612EF182E101FDE37A4 /* LinkedInCSVParserTests.swift in Sources */,
 				919527C153F058BE1EDA72A3 /* LocalizationTests.swift in Sources */,
+				C5DD09913350E877AE4008CF /* TickleReminderTests.swift in Sources */,
 				43434A6ACC0CD3146036A11C /* TickleSchedulerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
