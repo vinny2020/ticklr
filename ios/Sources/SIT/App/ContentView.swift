@@ -6,7 +6,7 @@ enum AppTab {
 
 struct ContentView: View {
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
-    @State private var selectedTab: AppTab = .network
+    @State private var selectedTab: AppTab = .tickle
 
     var body: some View {
         if hasCompletedOnboarding {
@@ -14,13 +14,13 @@ struct ContentView: View {
                 NetworkListView()
                     .tabItem { Label(String(localized: "tab.network"), systemImage: "person.2.fill") }
                     .tag(AppTab.network)
-                TickleListView()
-                    .tabItem { Label(String(localized: "tab.tickle"), systemImage: "bell.badge.fill") }
-                    .tag(AppTab.tickle)
                 GroupListView()
                     .tabItem { Label(String(localized: "tab.groups"), systemImage: "person.3.fill") }
                     .tag(AppTab.groups)
-                ComposeView(onCancel: { selectedTab = .network })
+                TickleListView()
+                    .tabItem { Label(String(localized: "tab.tickle"), systemImage: "bell.badge.fill") }
+                    .tag(AppTab.tickle)
+                ComposeView(onCancel: { selectedTab = .tickle })
                     .tabItem { Label(String(localized: "tab.compose"), systemImage: "square.and.pencil") }
                     .tag(AppTab.compose)
                 SettingsView()

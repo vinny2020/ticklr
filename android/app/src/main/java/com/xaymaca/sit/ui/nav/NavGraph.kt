@@ -44,8 +44,8 @@ private data class BottomNavItem(
 
 private val bottomNavItems = listOf(
     BottomNavItem(Screen.Network, R.string.nav_network, Icons.Default.People),
-    BottomNavItem(Screen.Tickle, R.string.nav_tickle, Icons.Default.Notifications),
     BottomNavItem(Screen.GroupList, R.string.nav_groups, Icons.Default.Group),
+    BottomNavItem(Screen.Tickle, R.string.nav_tickle, Icons.Default.Notifications),
     BottomNavItem(Screen.Compose, R.string.nav_compose, Icons.Default.Email),
     BottomNavItem(Screen.Settings, R.string.nav_settings, Icons.Default.Settings)
 )
@@ -113,7 +113,7 @@ fun NavGraph() {
             }
         }
     ) { innerPadding ->
-        val startDestination = if (onboardingComplete) Screen.Network.route else Screen.Onboarding.route
+        val startDestination = if (onboardingComplete) Screen.Tickle.route else Screen.Onboarding.route
 
         NavHost(
             navController = navController,
@@ -126,7 +126,7 @@ fun NavGraph() {
                     onImportContacts = { navController.navigate(Screen.Import.route) },
                     onStartEmpty = {
                         prefs.edit().putBoolean(SITApp.KEY_ONBOARDING_COMPLETE, true).apply()
-                        navController.navigate(Screen.Network.route) {
+                        navController.navigate(Screen.Tickle.route) {
                             popUpTo(Screen.Onboarding.route) { inclusive = true }
                         }
                     }
@@ -138,7 +138,7 @@ fun NavGraph() {
                 ImportScreen(
                     onComplete = {
                         prefs.edit().putBoolean(SITApp.KEY_ONBOARDING_COMPLETE, true).apply()
-                        navController.navigate(Screen.Network.route) {
+                        navController.navigate(Screen.Tickle.route) {
                             popUpTo(0) { inclusive = true }
                         }
                     },
@@ -258,7 +258,7 @@ fun NavGraph() {
                 ComposeScreen(
                     initialContactId = contactId,
                     onNavigateToNetwork = {
-                        navController.navigate(Screen.Network.route) {
+                        navController.navigate(Screen.Tickle.route) {
                             popUpTo(navController.graph.findStartDestination().id) {
                                 saveState = true
                             }
