@@ -49,7 +49,7 @@ no analytics, no account required.
 - **Persistence**: SwiftData (`@Model` classes in `Models/`)
 - **Min target**: iOS 17.0
 - **Localization**: String Catalog (`Localizable.xcstrings`); shipped languages: English, Spanish
-- **No third-party dependencies** — only Apple frameworks
+- **No third-party dependencies in shipping code** — only Apple frameworks in the `Ticklr` app target. Test-only deps scoped to `TicklrTests` are fine since they don't ship to the App Store (verify by inspecting the `.ipa` — the dep should not appear under `Payload/Ticklr.app/Frameworks/`).
 - **Real-world dataset**: 1,808 contacts imported — optimize for large lists
 
 ## Project Structure
