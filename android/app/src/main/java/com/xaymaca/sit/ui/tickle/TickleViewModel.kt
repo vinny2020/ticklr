@@ -54,8 +54,11 @@ class TickleViewModel @Inject constructor(
         .map { list -> list.filter { it.status == TickleStatus.SNOOZED.name } }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    /** Maps reminder.id → display initial derived from its linked contact or group name. */
-    val reminderInitials: StateFlow<Map<Long, String>> = combine(
+    /** Display data for each reminder row — avatar text + headline name. */
+    data class RowDisplay(val initials: String, val name: String)
+
+    /** Maps reminder.id → row display derived from its linked contact or group. */
+    val reminderDisplays: StateFlow<Map<Long, RowDisplay>> = combine(
         allReminders,
         contactRepository.getAllContacts(),
         contactRepository.getAllGroups()
@@ -63,15 +66,25 @@ class TickleViewModel @Inject constructor(
         val contactMap = contacts.associateBy { it.id }
         val groupMap = groups.associateBy { it.id }
         reminders.associate { reminder ->
-            val initial = when {
-                reminder.groupId != null ->
-                    groupMap[reminder.groupId]?.name?.firstOrNull()?.uppercaseChar()?.toString() ?: "G"
-                reminder.contactId != null -> {
-                    contactMap[reminder.contactId]?.initials?.firstOrNull()?.toString() ?: "?"
+            val display = when {
+                reminder.groupId != null -> {
+                    val g = groupMap[reminder.groupId]
+                    RowDisplay(
+                        initials = g?.name?.firstOrNull()?.uppercaseChar()?.toString() ?: "G",
+                        name = g?.name ?: "Group"
+                    )
                 }
-                else -> "T"
+                reminder.contactId != null -> {
+                    val c = contactMap[reminder.contactId]
+                    // Contact.initials already produces 2 chars (first of firstName + lastName).
+                    RowDisplay(
+                        initials = c?.initials ?: "?",
+                        name = c?.fullName?.takeIf { it.isNotBlank() } ?: "?"
+                    )
+                }
+                else -> RowDisplay(initials = "T", name = "Tickle")
             }
-            reminder.id to initial
+            reminder.id to display
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
 
