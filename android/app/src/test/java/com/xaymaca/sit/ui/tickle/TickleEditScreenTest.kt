@@ -3,6 +3,9 @@ package com.xaymaca.sit.ui.tickle
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.test.core.app.ApplicationProvider
+import android.content.Context
+import com.xaymaca.sit.R
 import com.xaymaca.sit.data.model.Contact
 import com.xaymaca.sit.data.model.TickleFrequency
 import com.xaymaca.sit.data.model.TickleReminder
@@ -202,5 +205,63 @@ class TickleEditScreenTest {
             "Expected nextDueDate ≈ now + 7d, was off by ${delta}ms",
             delta < TimeUnit.SECONDS.toMillis(5)
         )
+    }
+
+    @Test
+    fun creatingWithEmptyNote_substitutesLocalizedDefault() {
+        // Empty note → save → reminder.note must be the localized "Stay in
+        // touch" default. Resolved via getString so the assertion stays
+        // locale-independent in CI.
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val expectedDefault = context.getString(R.string.tickle_edit_default_note)
+
+        composeRule.setContent {
+            TickleEditScreen(
+                tickleId = null,
+                onSaved = {},
+                onBack = {},
+                tickleViewModel = tickleVM,
+                networkViewModel = networkVM
+            )
+        }
+
+        composeRule.waitForIdle()
+        composeRule.onNodeWithText(contact.fullName).performClick()
+        composeRule.waitForIdle()
+        composeRule.onNodeWithText("Save").performClick()
+        composeRule.waitForIdle()
+
+        val saved = slot<TickleReminder>()
+        coVerify { tickleVM.upsert(capture(saved), isNew = true) }
+        assertEquals(expectedDefault, saved.captured.note)
+    }
+
+    @Test
+    fun rapidSaveTaps_invokeUpsertExactlyOnce() {
+        // Regression for the duplicate-tickle bug. Without the isSaving guard,
+        // three rapid taps each launch a fresh insert. With the guard, the
+        // first tap flips canSave = false synchronously; subsequent taps land
+        // on a disabled button and don't fire. Compose UI test's clock
+        // advances synchronously, so this is deterministic.
+        composeRule.setContent {
+            TickleEditScreen(
+                tickleId = null,
+                onSaved = {},
+                onBack = {},
+                tickleViewModel = tickleVM,
+                networkViewModel = networkVM
+            )
+        }
+
+        composeRule.waitForIdle()
+        composeRule.onNodeWithText(contact.fullName).performClick()
+        composeRule.waitForIdle()
+
+        composeRule.onNodeWithText("Save").performClick()
+        composeRule.onNodeWithText("Save").performClick()
+        composeRule.onNodeWithText("Save").performClick()
+        composeRule.waitForIdle()
+
+        coVerify(exactly = 1) { tickleVM.upsert(any(), any()) }
     }
 }
