@@ -15,6 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -42,6 +43,7 @@ fun TickleEditScreen(
     tickleViewModel: TickleViewModel = hiltViewModel(),
     networkViewModel: NetworkViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val contacts by networkViewModel.filteredContacts.collectAsState()
     val toastMessage by tickleViewModel.toastMessage.collectAsState()
@@ -125,7 +127,10 @@ fun TickleEditScreen(
                                         id = tickleId ?: 0L,
                                         contactId = selectedContact?.id,
                                         groupId = null,
-                                        note = note.trim(),
+                                        // Empty (not whitespace-only) defaults to the localized
+                                        // "Stay in touch" — saves users from blank-noted reminders
+                                        // without overriding intentional whitespace edits.
+                                        note = if (note.isEmpty()) context.getString(R.string.tickle_edit_default_note) else note.trim(),
                                         frequency = selectedFrequency.name,
                                         customIntervalDays = newCustomDays,
                                         startDate = startDate,

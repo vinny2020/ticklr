@@ -79,6 +79,7 @@
     <string name="tickle_edit_section_custom_interval">AANGEPAST INTERVAL (DAGEN)</string>
     <string name="tickle_edit_section_note">NOTITIE (OPTIONEEL)</string>
     <string name="tickle_edit_note_placeholder">Waarover praten…</string>
+    <string name="tickle_edit_default_note">Blijf in contact</string>
     <string name="tickle_edit_custom_interval_days">%1$d dagen</string>
     <string name="tickle_edit_no_groups_title">Nog geen groepen</string>
     <string name="tickle_edit_no_groups_description">Met groepen kunt u een heel team of kring tegelijk een tickle sturen.</string>

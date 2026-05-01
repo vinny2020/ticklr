@@ -79,6 +79,7 @@
     <string name="tickle_edit_section_custom_interval">ΠΡΟΣΑΡΜΟΣΜΕΝΟ ΔΙΑΣΤΗΜΑ (ΗΜΕΡΕΣ)</string>
     <string name="tickle_edit_section_note">ΣΗΜΕΙΩΣΗ (ΠΡΟΑΙΡΕΤΙΚΗ)</string>
     <string name="tickle_edit_note_placeholder">Για ποιο θέμα να μιλήσω…</string>
+    <string name="tickle_edit_default_note">Μείνετε σε επαφή</string>
     <string name="tickle_edit_custom_interval_days">%1$d ημέρες</string>
     <string name="tickle_edit_no_groups_title">Δεν υπάρχουν ομάδες ακόμα</string>
     <string name="tickle_edit_no_groups_description">Οι ομάδες σάς επιτρέπουν να στέλνετε tickle σε ολόκληρη ομάδα ή κύκλο ταυτόχρονα.</string>

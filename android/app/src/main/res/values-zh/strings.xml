@@ -79,6 +79,7 @@
     <string name="tickle_edit_section_custom_interval">自定义间隔（天）</string>
     <string name="tickle_edit_section_note">备注（可选）</string>
     <string name="tickle_edit_note_placeholder">聊什么话题…</string>
+    <string name="tickle_edit_default_note">保持联系</string>
     <string name="tickle_edit_custom_interval_days">%1$d 天</string>
     <string name="tickle_edit_no_groups_title">暂无群组</string>
     <string name="tickle_edit_no_groups_description">群组让您一次向团队或圈子中的所有人发送 tickle。</string>

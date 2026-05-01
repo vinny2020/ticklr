@@ -79,6 +79,7 @@
     <string name="tickle_edit_section_custom_interval">사용자 지정 간격 (일)</string>
     <string name="tickle_edit_section_note">메모 (선택 사항)</string>
     <string name="tickle_edit_note_placeholder">이야기할 내용…</string>
+    <string name="tickle_edit_default_note">연락하고 지내기</string>
     <string name="tickle_edit_custom_interval_days">%1$d일</string>
     <string name="tickle_edit_no_groups_title">그룹이 아직 없습니다</string>
     <string name="tickle_edit_no_groups_description">그룹을 사용하면 팀이나 모임의 모든 사람에게 한 번에 tickle을 보낼 수 있습니다.</string>

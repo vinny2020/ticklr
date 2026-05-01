@@ -79,6 +79,7 @@
     <string name="tickle_edit_section_custom_interval">ANPASSAT INTERVALL (DAGAR)</string>
     <string name="tickle_edit_section_note">ANTECKNING (VALFRITT)</string>
     <string name="tickle_edit_note_placeholder">Vad att prata om…</string>
+    <string name="tickle_edit_default_note">Håll kontakten</string>
     <string name="tickle_edit_custom_interval_days">%1$d dagar</string>
     <string name="tickle_edit_no_groups_title">Inga grupper ännu</string>
     <string name="tickle_edit_no_groups_description">Med grupper kan du skicka en tickle till hela ett team eller en krets på en gång.</string>

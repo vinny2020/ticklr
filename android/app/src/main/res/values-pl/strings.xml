@@ -79,6 +79,7 @@
     <string name="tickle_edit_section_custom_interval">NIESTANDARDOWY INTERWAŁ (DNI)</string>
     <string name="tickle_edit_section_note">NOTATKA (OPCJONALNA)</string>
     <string name="tickle_edit_note_placeholder">O czym rozmawiać…</string>
+    <string name="tickle_edit_default_note">Pozostań w kontakcie</string>
     <string name="tickle_edit_custom_interval_days">%1$d dni</string>
     <string name="tickle_edit_no_groups_title">Brak grup</string>
     <string name="tickle_edit_no_groups_description">Grupy pozwalają wysyłać tickle do całego zespołu lub kręgu naraz.</string>

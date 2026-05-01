@@ -79,6 +79,7 @@
     <string name="tickle_edit_section_custom_interval">ПОЛЬЗОВАТЕЛЬСКИЙ ИНТЕРВАЛ (ДНИ)</string>
     <string name="tickle_edit_section_note">ЗАМЕТКА (НЕОБЯЗАТЕЛЬНО)</string>
     <string name="tickle_edit_note_placeholder">О чём поговорить…</string>
+    <string name="tickle_edit_default_note">Оставайтесь на связи</string>
     <string name="tickle_edit_custom_interval_days">%1$d дн.</string>
     <string name="tickle_edit_no_groups_title">Групп пока нет</string>
     <string name="tickle_edit_no_groups_description">Группы позволяют отправлять tickle всем в команде или круге сразу.</string>

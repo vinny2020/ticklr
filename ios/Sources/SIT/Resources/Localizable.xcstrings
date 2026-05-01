@@ -2,6 +2,8 @@
   "sourceLanguage": "en",
   "strings": {
     "%@ / 30": {},
+    "Ticklr": {},
+    "YOUR PEOPLE MATTER": {},
     "addContact.navTitle": {
       "extractionState": "stale",
       "localizations": {
@@ -15693,6 +15695,119 @@
         }
       }
     },
+    "tickleEdit.default.note": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stay in touch"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mantente en contacto"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rester en contact"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In Kontakt bleiben"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resta in contatto"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blijf in contact"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mantenha-se em contacto"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pozostań w kontakcie"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zůstaňte v kontaktu"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Păstrați legătura"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maradjunk kapcsolatban"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Μείνετε σε επαφή"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Håll kontakten"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Оставайтесь на связи"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "संपर्क में रहें"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "連絡を取り合う"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "연락하고 지내기"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保持联系"
+          }
+        }
+      }
+    },
     "tickleEdit.navTitle.edit": {
       "extractionState": "stale",
       "localizations": {
@@ -19179,9 +19294,7 @@
           }
         }
       }
-    },
-    "Ticklr": {},
-    "YOUR PEOPLE MATTER": {}
+    }
   },
   "version": "1.0"
 }

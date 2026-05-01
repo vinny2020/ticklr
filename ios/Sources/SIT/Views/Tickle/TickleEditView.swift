@@ -110,7 +110,15 @@ struct TickleEditView: View {
 
     private func save() {
         TickleScheduler.requestPermissionIfNeeded()
-        let trimmedNote = note.trimmingCharacters(in: .whitespaces)
+        // Empty (not whitespace-only) defaults to the localized "Stay in touch"
+        // so users never end up with a blank-noted reminder. A typed space is
+        // intentional input — trim it instead of substituting.
+        let finalNote: String
+        if note.isEmpty {
+            finalNote = String(localized: "tickleEdit.default.note")
+        } else {
+            finalNote = note.trimmingCharacters(in: .whitespaces)
+        }
         let intervalDays = frequency == .custom ? customIntervalDays : nil
 
         if let r = existing {
@@ -123,7 +131,7 @@ struct TickleEditView: View {
                 frequency: frequency,
                 customDays: intervalDays
             )
-            r.note             = trimmedNote
+            r.note             = finalNote
             r.status           = .active
             TickleScheduler.cancelNotification(for: r)
             TickleScheduler.scheduleNotification(for: r)
@@ -131,7 +139,7 @@ struct TickleEditView: View {
             let reminder = TickleReminder(
                 contact:            selectedContact,
                 group:              nil,
-                note:               trimmedNote,
+                note:               finalNote,
                 frequency:          frequency,
                 customIntervalDays: intervalDays,
                 startDate:          startDate

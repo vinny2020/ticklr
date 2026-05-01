@@ -79,6 +79,7 @@
     <string name="tickle_edit_section_custom_interval">EGYÉNI IDŐKÖZ (NAP)</string>
     <string name="tickle_edit_section_note">MEGJEGYZÉS (OPCIONÁLIS)</string>
     <string name="tickle_edit_note_placeholder">Miről beszéljünk…</string>
+    <string name="tickle_edit_default_note">Maradjunk kapcsolatban</string>
     <string name="tickle_edit_custom_interval_days">%1$d nap</string>
     <string name="tickle_edit_no_groups_title">Még nincs csoport</string>
     <string name="tickle_edit_no_groups_description">A csoportokkal egyszerre küldhet tickle-t egy egész csapatnak vagy körnek.</string>

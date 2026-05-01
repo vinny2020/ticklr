@@ -79,6 +79,7 @@
     <string name="tickle_edit_section_custom_interval">INTERVAL PERSONALIZAT (ZILE)</string>
     <string name="tickle_edit_section_note">NOTĂ (OPȚIONAL)</string>
     <string name="tickle_edit_note_placeholder">Despre ce să vorbești…</string>
+    <string name="tickle_edit_default_note">Păstrați legătura</string>
     <string name="tickle_edit_custom_interval_days">%1$d zile</string>
     <string name="tickle_edit_no_groups_title">Niciun grup încă</string>
     <string name="tickle_edit_no_groups_description">Grupurile îți permit să trimiți un tickle întregii echipe sau cercuri deodată.</string>

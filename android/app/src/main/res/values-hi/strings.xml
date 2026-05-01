@@ -79,6 +79,7 @@
     <string name="tickle_edit_section_custom_interval">कस्टम अंतराल (दिन)</string>
     <string name="tickle_edit_section_note">नोट (वैकल्पिक)</string>
     <string name="tickle_edit_note_placeholder">किस बारे में बात करें…</string>
+    <string name="tickle_edit_default_note">संपर्क में रहें</string>
     <string name="tickle_edit_custom_interval_days">%1$d दिन</string>
     <string name="tickle_edit_no_groups_title">अभी कोई समूह नहीं</string>
     <string name="tickle_edit_no_groups_description">समूह आपको एक साथ किसी टीम या मंडली के सभी लोगों को tickle भेजने देते हैं।</string>
