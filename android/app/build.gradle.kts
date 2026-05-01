@@ -72,6 +72,8 @@ android {
     }
 
     testOptions {
+        // Robolectric + Compose UI tests need Android resources from the unit-test classpath.
+        unitTests.isIncludeAndroidResources = true
         unitTests.all {
             it.extensions.configure(JacocoTaskExtension::class) {
                 isIncludeNoLocationClasses = true
@@ -186,6 +188,19 @@ dependencies {
     testImplementation(libs.kotlin.test)
     testImplementation(libs.gson)
     testImplementation(libs.kotlinx.coroutines.test)
+
+    // Compose UI + Robolectric + Hilt: enables screen-level tests that render
+    // Composables on a JVM-side Android sandbox without an emulator. Use:
+    //   @RunWith(RobolectricTestRunner::class)
+    //   @Config(application = HiltTestApplication::class, sdk = [33])
+    //   @HiltAndroidTest  // if injecting fakes via Hilt
+    // and `createComposeRule()` from compose-ui-test-junit4.
+    testImplementation(libs.robolectric)
+    testImplementation(platform(libs.compose.bom))
+    testImplementation(libs.compose.ui.test.junit4)
+    debugImplementation(libs.compose.ui.test.manifest)
+    testImplementation(libs.hilt.android.testing)
+    kspTest(libs.hilt.compiler)
 }
 
 // ---------------------------------------------------------------------------
