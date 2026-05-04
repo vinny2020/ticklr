@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App -->
+    <string name="app_name">Ticklr</string>
+
+    <!-- Common -->
+    <string name="common_save">حفظ</string>
+    <string name="common_cancel">إلغاء</string>
+    <string name="common_delete">حذف</string>
+    <string name="common_remove">إزالة</string>
+    <string name="common_ok">موافق</string>
+    <string name="common_reset">إعادة تعيين</string>
+    <string name="common_create">إنشاء</string>
+    <string name="common_back">رجوع</string>
+    <string name="common_no_name">بلا اسم</string>
+    <string name="common_add">إضافة</string>
+    <string name="common_update">تحديث</string>
+    <string name="common_send">إرسال</string>
+    <string name="common_edit">تعديل</string>
+
+    <!-- Settings -->
+    <string name="settings_title">الإعدادات</string>
+    <string name="settings_section_appearance">المظهر</string>
+    <string name="settings_section_data">البيانات</string>
+    <string name="settings_section_messaging">المراسلة</string>
+    <string name="settings_section_about">حول</string>
+    <string name="settings_section_developer">المطوّر</string>
+    <string name="settings_theme_title">السمة</string>
+    <string name="settings_theme_system">إعداد النظام الافتراضي</string>
+    <string name="settings_theme_light">فاتح</string>
+    <string name="settings_theme_dark">داكن</string>
+    <string name="settings_import_title">استيراد جهات الاتصال</string>
+    <string name="settings_import_subtitle">من الهاتف أو ملف LinkedIn CSV</string>
+    <string name="settings_templates_title">قوالب الرسائل</string>
+    <string name="settings_templates_subtitle">أنشئ رسائل قابلة لإعادة الاستخدام وأدِرها</string>
+    <string name="settings_sms_direct_title">إرسال SMS مباشرة</string>
+    <string name="settings_sms_direct_subtitle">يستخدم SmsManager بدلاً من فتح تطبيق الرسائل.</string>
+    <string name="settings_about_privacy">الخصوصية أولاً. بلا سحابة، بلا تتبّع، بلا حساب. جميع البيانات محفوظة على جهازك.</string>
+    <string name="settings_about_built_by">من تصميم Xaymaca</string>
+    <string name="settings_about_version">الإصدار %1$s</string>
+    <string name="settings_reset_onboarding_title">إعادة عرض شاشة الترحيب</string>
+    <string name="settings_reset_onboarding_subtitle">عرض شاشة الترحيب مرة أخرى</string>
+    <string name="settings_reset_confirm_message">سيؤدي هذا إلى إعادتك إلى شاشة الترحيب. لن يتم حذف بياناتك.</string>
+    <string name="settings_clear_data_title">محو جميع البيانات</string>
+    <string name="settings_clear_data_message">سيؤدي هذا إلى حذف جميع جهات الاتصال والمجموعات والتذكيرات نهائياً. لا يمكن التراجع عن هذا الإجراء.</string>
+    <string name="settings_clear_data_confirm">محو الكل</string>
+    <string name="settings_choose_theme">اختر السمة</string>
+    <string name="settings_debug_load_title">تحميل جهات اتصال تجريبية</string>
+    <string name="settings_debug_load_subtitle">يضيف 20 جهة اتصال وهمية من الموارد (وضع التصحيح فقط)</string>
+    <string name="settings_debug_clear_subtitle">يحذف جهات الاتصال والمجموعات والتذكيرات نهائياً (وضع التصحيح فقط)</string>
+
+    <!-- Tickle list -->
+    <string name="tickle_list_title">التذكيرات</string>
+    <string name="tickle_list_add_fab">إضافة تذكير</string>
+    <string name="tickle_list_section_due">المستحقة</string>
+    <string name="tickle_list_section_upcoming">القادمة</string>
+    <string name="tickle_list_section_snoozed">المؤجّلة</string>
+    <string name="tickle_list_empty_title">لا توجد تذكيرات بعد</string>
+    <string name="tickle_list_empty_description">اضغط + لجدولة تذكير</string>
+    <string name="tickle_row_action_done">تم</string>
+    <string name="tickle_row_action_snooze">تأجيل</string>
+    <string name="tickle_row_action_delete">حذف</string>
+    <string name="tickle_row_default_note">تذكير</string>
+    <string name="tickle_row_today">اليوم</string>
+    <string name="tickle_row_tomorrow">غداً</string>
+    <string name="tickle_row_yesterday">أمس</string>
+    <string name="tickle_row_in_days">خلال %1$d يوماً</string>
+    <string name="tickle_row_days_overdue">متأخّرة بـ %1$d يوماً</string>
+
+    <!-- Tickle edit -->
+    <string name="tickle_edit_new_title">تذكير جديد</string>
+    <string name="tickle_edit_title">تعديل التذكير</string>
+    <string name="tickle_edit_tab_contact">جهة اتصال</string>
+    <string name="tickle_edit_tab_group">مجموعة</string>
+    <string name="tickle_edit_section_contact">جهة الاتصال</string>
+    <string name="tickle_edit_section_group">المجموعة</string>
+    <string name="tickle_edit_search_contacts">بحث في جهات الاتصال</string>
+    <string name="tickle_edit_section_frequency">التكرار</string>
+    <string name="tickle_edit_section_custom_interval">فاصل مخصّص (بالأيام)</string>
+    <string name="tickle_edit_section_note">ملاحظة (اختياري)</string>
+    <string name="tickle_edit_note_placeholder">عمّ تريد التحدث…</string>
+    <string name="tickle_edit_default_note">ابقَ على تواصل</string>
+    <string name="tickle_edit_custom_interval_days">%1$d يوم</string>
+    <string name="tickle_edit_no_groups_title">لا توجد مجموعات بعد</string>
+    <string name="tickle_edit_no_groups_description">تتيح لك المجموعات تذكير كل أفراد الفريق أو الدائرة دفعة واحدة.</string>
+    <string name="tickle_edit_create_group_button">إنشاء مجموعة</string>
+    <string name="tickle_edit_new_group_dialog_title">مجموعة جديدة</string>
+    <string name="tickle_edit_group_name_label">اسم المجموعة</string>
+    <string name="tickle_saved">تم حفظ التذكير</string>
+    <string name="tickle_updated">تم تحديث التذكير</string>
+    <string name="tickle_notification_contact_fallback">جهة الاتصال</string>
+    <string name="tickle_notification_title">حان وقت التواصل مع %1$s</string>
+    <string name="tickle_notification_body">أحبّاؤك يهمّون — أرسل رسالة سريعة اليوم.</string>
+
+    <!-- Network list -->
+    <string name="network_title">الشبكة</string>
+    <string name="network_more_options">خيارات إضافية</string>
+    <string name="network_import_contacts">استيراد جهات الاتصال</string>
+    <string name="network_search_placeholder">بحث في جهات الاتصال…</string>
+    <string name="network_empty_title">لا توجد جهات اتصال بعد</string>
+    <string name="network_empty_description">اضغط + لإضافة شخص</string>
+    <string name="network_add_contact_fab">إضافة جهة اتصال</string>
+    <string name="network_delete_title">حذف جهة اتصال</string>
+    <string name="network_delete_message">إزالة %1$s من شبكتك؟ لا يمكن التراجع عن هذا الإجراء.</string>
+    <string name="network_contact_has_phone">يوجد رقم هاتف</string>
+    <string name="network_contact_has_email">يوجد بريد إلكتروني</string>
+    <string name="network_contact_import_source">مصدر الاستيراد</string>
+
+    <!-- Contact detail -->
+    <string name="contact_detail_add_tickle">إضافة تذكير</string>
+    <string name="contact_detail_add_to_group">إضافة إلى مجموعة</string>
+    <string name="contact_detail_message">رسالة</string>
+    <string name="contact_detail_section_phone">الهاتف</string>
+    <string name="contact_detail_section_email">البريد الإلكتروني</string>
+    <string name="contact_detail_section_notes">ملاحظات</string>
+    <string name="contact_detail_section_tags">الوسوم</string>
+    <string name="contact_detail_delete">حذف جهة الاتصال</string>
+    <string name="contact_add_to_group_title">إضافة إلى مجموعة</string>
+    <string name="contact_add_to_group_empty">لا توجد مجموعات بعد.</string>
+    <string name="contact_add_to_group_create_new">+ إنشاء مجموعة جديدة</string>
+    <string name="contact_add_to_group_group_name">اسم المجموعة</string>
+    <string name="contact_group_member_check">عضو</string>
+
+    <!-- Add / Edit contact -->
+    <string name="add_contact_title">جهة اتصال جديدة</string>
+    <string name="edit_contact_title">تعديل جهة الاتصال</string>
+    <string name="add_contact_section_name">الاسم</string>
+    <string name="add_contact_section_work">العمل</string>
+    <string name="add_contact_section_phone">الهاتف</string>
+    <string name="add_contact_section_email">البريد الإلكتروني</string>
+    <string name="add_contact_section_notes">الملاحظات</string>
+    <string name="add_contact_section_tags">الوسوم</string>
+    <string name="add_contact_first_name">الاسم الأول</string>
+    <string name="add_contact_last_name">اسم العائلة</string>
+    <string name="add_contact_company">الشركة</string>
+    <string name="add_contact_job_title">المسمى الوظيفي</string>
+    <string name="add_contact_phone_n">هاتف %1$d</string>
+    <string name="add_contact_email_n">بريد إلكتروني %1$d</string>
+    <string name="add_contact_add_phone">إضافة هاتف</string>
+    <string name="add_contact_add_email">إضافة بريد إلكتروني</string>
+    <string name="add_contact_notes_label">ملاحظات</string>
+    <string name="add_contact_add_tag_label">إضافة وسم</string>
+    <string name="add_contact_add_tag_button">إضافة وسم</string>
+
+    <!-- Groups list -->
+    <string name="group_list_title">المجموعات</string>
+    <string name="group_list_empty_title">لا توجد مجموعات بعد</string>
+    <string name="group_list_empty_description">اضغط + لإنشاء مجموعة</string>
+    <string name="group_list_create_fab">إنشاء مجموعة</string>
+    <string name="group_delete_title">حذف المجموعة</string>
+    <string name="group_delete_message">حذف \"%1$s\"؟ لن تُحذف جهات الاتصال.</string>
+    <string name="group_new_dialog_title">مجموعة جديدة</string>
+    <string name="group_dialog_emoji_label">إيموجي</string>
+    <string name="group_dialog_name_label">اسم المجموعة</string>
+    <string name="group_dialog_name_exists">الاسم موجود بالفعل</string>
+    <string name="group_dialog_char_count">%1$d / 30</string>
+    <plurals name="group_list_member_count">
+        <item quantity="zero">لا أعضاء</item>
+        <item quantity="one">عضو واحد</item>
+        <item quantity="two">عضوان</item>
+        <item quantity="few">%1$d أعضاء</item>
+        <item quantity="many">%1$d عضواً</item>
+        <item quantity="other">%1$d عضو</item>
+    </plurals>
+
+    <!-- Group detail -->
+    <string name="group_detail_empty">لا يوجد أعضاء بعد. اضغط + للإضافة.</string>
+    <string name="group_detail_add_members_title">إضافة أعضاء</string>
+    <string name="group_detail_filter_placeholder">تصفية جهات الاتصال…</string>
+    <string name="group_detail_all_in_group">جميع جهات الاتصال موجودة بالفعل في هذه المجموعة</string>
+    <string name="group_detail_no_match">لا توجد جهات اتصال مطابقة</string>
+    <string name="group_detail_add_member_button">إضافة</string>
+    <string name="group_detail_member_added">تمت إضافة %1$s إلى %2$s</string>
+    <string name="group_detail_member_added_generic">تمت إضافة %1$s إلى المجموعة</string>
+    <string name="group_detail_edit_group">تعديل المجموعة</string>
+    <string name="group_detail_add_members_fab">إضافة أعضاء</string>
+    <string name="group_edit_dialog_title">تعديل المجموعة</string>
+
+    <!-- Compose -->
+    <string name="compose_title">إنشاء رسالة</string>
+    <string name="compose_clear">مسح المحتوى</string>
+    <string name="compose_to_label">إلى</string>
+    <string name="compose_search_placeholder">بحث في جهات الاتصال…</string>
+    <string name="compose_no_phone">لا يوجد رقم هاتف مسجَّل</string>
+    <string name="compose_select_template">اختيار قالب</string>
+    <string name="compose_message_label">الرسالة</string>
+    <string name="compose_message_placeholder">اكتب رسالتك…</string>
+    <string name="compose_remove_contact">إزالة جهة الاتصال</string>
+    <string name="compose_message_sent">تم إرسال الرسالة ✓</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_tagline">أحبّاؤك يهمّون</string>
+    <string name="onboarding_description">شبكتك الشخصية، بخصوصية تامّة.\nبلا سحابة. بلا رسم اجتماعي. أصدقاؤك فقط.</string>
+    <string name="onboarding_import_button">استيراد جهات الاتصال</string>
+    <string name="onboarding_start_empty">ابدأ بشبكة فارغة</string>
+
+    <!-- Import -->
+    <string name="import_title">استيراد جهات الاتصال</string>
+    <string name="import_success_card">تم استيراد %1$d جهة اتصال بنجاح</string>
+    <string name="import_from_phone_title">الاستيراد من جهات اتصال الهاتف</string>
+    <string name="import_from_phone_subtitle">زامِن جهات الاتصال من دفتر العناوين على جهازك.</string>
+    <string name="import_from_linkedin_title">أنشئ شبكتك من ملف LinkedIn CSV</string>
+    <string name="import_from_linkedin_subtitle">تتضمن صادرات LinkedIn الأسماء والشركات فقط — بلا أرقام هواتف. ستُضيف التفاصيل يدوياً بعد الاستيراد.</string>
+    <string name="import_linkedin_instructions_title">كيفية التصدير من LinkedIn</string>
+    <string name="import_linkedin_instructions">1. افتح linkedin.com\n2. اضغط Me ← Settings &amp; Privacy\n3. Data Privacy ← Get a copy of your data\n4. اختر \"Connections\" واطلب التصدير\n5. حمِّل ملف CSV واختره هنا</string>
+    <string name="import_continue_button">المتابعة إلى الشبكة</string>
+    <string name="import_skip_button">تخطٍّ الآن</string>
+    <string name="import_snackbar_success">تم استيراد %1$d جهة اتصال</string>
+    <string name="import_snackbar_linkedin">تم استيراد %1$d جهة اتصال من LinkedIn</string>
+    <string name="import_snackbar_permission_denied">تم رفض إذن الوصول إلى جهات الاتصال</string>
+    <string name="import_snackbar_failed">فشل الاستيراد: %1$s</string>
+    <string name="import_snackbar_could_not_open">تعذّر فتح الملف</string>
+
+    <!-- Template list -->
+    <string name="template_list_title">قوالب الرسائل</string>
+    <string name="template_list_empty">لا توجد قوالب بعد. اضغط + لإنشاء قالب.</string>
+    <string name="template_add_fab">إضافة قالب</string>
+    <string name="template_delete_icon">حذف</string>
+
+    <!-- Template edit -->
+    <string name="template_edit_new_title">قالب جديد</string>
+    <string name="template_edit_edit_title">تعديل القالب</string>
+    <string name="template_edit_title_label">العنوان</string>
+    <string name="template_edit_body_label">النص</string>
+
+    <!-- Bottom nav -->
+    <string name="nav_network">الشبكة</string>
+    <string name="nav_tickle">التذكير</string>
+    <string name="nav_groups">المجموعات</string>
+    <string name="nav_compose">إنشاء</string>
+    <string name="nav_settings">الإعدادات</string>
+
+    <!-- Frequency display names -->
+    <string name="frequency_daily">يومي</string>
+    <string name="frequency_weekly">أسبوعي</string>
+    <string name="frequency_biweekly">كل أسبوعين</string>
+    <string name="frequency_monthly">شهري</string>
+    <string name="frequency_bimonthly">كل شهرين</string>
+    <string name="frequency_quarterly">ربع سنوي</string>
+    <string name="frequency_custom">مخصّص</string>
+</resources>
