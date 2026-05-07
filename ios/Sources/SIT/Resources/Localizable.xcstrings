@@ -12189,6 +12189,12 @@
             "state": "translated",
             "value": "आपका निजी नेटवर्क, गोपनीय रूप से।\nकोई क्लाउड नहीं। कोई सोशल ग्राफ नहीं। बस आपके लोग।"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "شبكتك الشخصية، بخصوصية تامّة.\nبلا سحابة. بلا رسم اجتماعي. الأشخاص المهمون لك فقط."
+          }
         }
       }
     },
@@ -18840,6 +18846,48 @@
             "state": "translated",
             "value": "%lldद देरी"
           }
+        },
+        "ar": {
+          "variations": {
+            "plural": {
+              "zero": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "متأخر اليوم"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "متأخر منذ يوم واحد"
+                }
+              },
+              "two": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "متأخر منذ يومين"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "متأخر منذ %lld أيام"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "متأخر منذ %lld يوماً"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "متأخر منذ %lld يوم"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -19065,6 +19113,48 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lldद में"
+          }
+        },
+        "ar": {
+          "variations": {
+            "plural": {
+              "zero": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "اليوم"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "بعد يوم واحد"
+                }
+              },
+              "two": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "بعد يومين"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "بعد %lld أيام"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "بعد %lld يوماً"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "بعد %lld يوم"
+                }
+              }
+            }
           }
         }
       }

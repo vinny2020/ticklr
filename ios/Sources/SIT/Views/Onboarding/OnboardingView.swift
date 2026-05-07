@@ -30,7 +30,12 @@ struct OnboardingView: View {
                 Button {
                     showingImport = true
                 } label: {
-                    Label(String(localized: "onboarding.button.getStarted"), systemImage: "arrow.right.circle.fill")
+                    Label {
+                        Text(String(localized: "onboarding.button.getStarted"))
+                    } icon: {
+                        Image(systemName: "arrow.right.circle.fill")
+                            .flipsForRightToLeftLayoutDirection(true)
+                    }
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(Color.indigo)
