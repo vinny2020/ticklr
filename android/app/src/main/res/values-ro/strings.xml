@@ -8,6 +8,7 @@
     <string name="common_cancel">Anulează</string>
     <string name="common_delete">Șterge</string>
     <string name="common_remove">Elimină</string>
+    <string name="tag_remove_content_description">Elimină %1$s</string>
     <string name="common_ok">OK</string>
     <string name="common_reset">Resetează</string>
     <string name="common_create">Creează</string>

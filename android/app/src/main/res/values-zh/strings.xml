@@ -8,6 +8,7 @@
     <string name="common_cancel">取消</string>
     <string name="common_delete">删除</string>
     <string name="common_remove">移除</string>
+    <string name="tag_remove_content_description">移除 %1$s</string>
     <string name="common_ok">确定</string>
     <string name="common_reset">重置</string>
     <string name="common_create">创建</string>

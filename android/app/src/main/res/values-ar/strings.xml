@@ -8,6 +8,7 @@
     <string name="common_cancel">إلغاء</string>
     <string name="common_delete">حذف</string>
     <string name="common_remove">إزالة</string>
+    <string name="tag_remove_content_description">إزالة %1$s</string>
     <string name="common_ok">موافق</string>
     <string name="common_reset">إعادة تعيين</string>
     <string name="common_create">إنشاء</string>
@@ -64,8 +65,8 @@
     <string name="tickle_row_today">اليوم</string>
     <string name="tickle_row_tomorrow">غداً</string>
     <string name="tickle_row_yesterday">أمس</string>
-    <string name="tickle_row_in_days">خلال %1$d يوماً</string>
-    <string name="tickle_row_days_overdue">متأخّرة بـ %1$d يوماً</string>
+    <string name="tickle_row_in_days">بعد %1$d يوم</string>
+    <string name="tickle_row_days_overdue">متأخر منذ %1$d يوم</string>
 
     <!-- Tickle edit -->
     <string name="tickle_edit_new_title">تذكير جديد</string>
@@ -189,8 +190,8 @@
     <string name="compose_message_sent">تم إرسال الرسالة ✓</string>
 
     <!-- Onboarding -->
-    <string name="onboarding_tagline">أحبّاؤك يهمّون</string>
-    <string name="onboarding_description">شبكتك الشخصية، بخصوصية تامّة.\nبلا سحابة. بلا رسم اجتماعي. أصدقاؤك فقط.</string>
+    <string name="onboarding_tagline">الأشخاص المهمون لك</string>
+    <string name="onboarding_description">شبكتك الشخصية، بخصوصية تامّة.\nبلا سحابة. بلا رسم اجتماعي. جهات اتصالك فقط.</string>
     <string name="onboarding_import_button">استيراد جهات الاتصال</string>
     <string name="onboarding_start_empty">ابدأ بشبكة فارغة</string>
 

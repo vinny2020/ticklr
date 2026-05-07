@@ -8,6 +8,7 @@
     <string name="common_cancel">Annuleren</string>
     <string name="common_delete">Verwijderen</string>
     <string name="common_remove">Verwijderen</string>
+    <string name="tag_remove_content_description">%1$s verwijderen</string>
     <string name="common_ok">OK</string>
     <string name="common_reset">Opnieuw instellen</string>
     <string name="common_create">Aanmaken</string>
