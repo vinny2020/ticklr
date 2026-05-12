@@ -33,7 +33,7 @@ fun TagChipRow(
                     IconButton(onClick = { onRemove(tag) }) {
                         Icon(
                             imageVector = Icons.Default.Close,
-                            contentDescription = "${stringResource(R.string.common_remove)} $tag"
+                            contentDescription = stringResource(R.string.tag_remove_content_description, tag)
                         )
                     }
                 }

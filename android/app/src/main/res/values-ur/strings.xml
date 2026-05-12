@@ -8,6 +8,7 @@
     <string name="common_cancel">منسوخ کریں</string>
     <string name="common_delete">حذف کریں</string>
     <string name="common_remove">ہٹائیں</string>
+    <string name="tag_remove_content_description">%1$s ہٹائیں</string>
     <string name="common_ok">ٹھیک ہے</string>
     <string name="common_reset">ری سیٹ کریں</string>
     <string name="common_create">بنائیں</string>

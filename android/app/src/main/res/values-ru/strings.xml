@@ -8,6 +8,7 @@
     <string name="common_cancel">Отмена</string>
     <string name="common_delete">Удалить</string>
     <string name="common_remove">Убрать</string>
+    <string name="tag_remove_content_description">Убрать %1$s</string>
     <string name="common_ok">OK</string>
     <string name="common_reset">Сбросить</string>
     <string name="common_create">Создать</string>

@@ -8,6 +8,7 @@
     <string name="common_cancel">취소</string>
     <string name="common_delete">삭제</string>
     <string name="common_remove">제거</string>
+    <string name="tag_remove_content_description">%1$s 제거</string>
     <string name="common_ok">확인</string>
     <string name="common_reset">초기화</string>
     <string name="common_create">만들기</string>

@@ -8,6 +8,7 @@
     <string name="common_cancel">Cancelar</string>
     <string name="common_delete">Eliminar</string>
     <string name="common_remove">Quitar</string>
+    <string name="tag_remove_content_description">Quitar %1$s</string>
     <string name="common_ok">Aceptar</string>
     <string name="common_reset">Restablecer</string>
     <string name="common_create">Crear</string>
@@ -195,7 +196,7 @@
     <string name="import_success_card">Se importaron %1$d contactos exitosamente</string>
     <string name="import_from_phone_title">Importar desde contactos del teléfono</string>
     <string name="import_from_phone_subtitle">Sincroniza tus contactos desde la libreta de direcciones del dispositivo.</string>
-    <string name="import_from_linkedin_title">Siembra tu red desde CSV de LinkedIn</string>
+    <string name="import_from_linkedin_title">Crea tu red desde un CSV de LinkedIn</string>
     <string name="import_from_linkedin_subtitle">Las exportaciones de LinkedIn incluyen nombres y empresas, sin números de teléfono. Agregarás los detalles de contacto manualmente después de importar.</string>
     <string name="import_linkedin_instructions_title">Cómo exportar desde LinkedIn</string>
     <string name="import_linkedin_instructions">1. Ve a linkedin.com\n2. Toca Yo → Configuración y privacidad\n3. Privacidad de datos → Obtener una copia de tus datos\n4. Selecciona \"Conexiones\" y solicita la exportación\n5. Descarga el archivo CSV y selecciónalo aquí</string>
