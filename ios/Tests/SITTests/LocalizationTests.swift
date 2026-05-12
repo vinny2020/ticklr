@@ -315,6 +315,35 @@ final class LocalizationTests: XCTestCase {
         XCTAssertEqual(TickleFrequency.custom.localizedName, "Custom")
     }
 
+    // MARK: - Arabic (RTL)
+
+    /// xcstrings compiles each locale into `<lang>.lproj/Localizable.strings` at build time.
+    /// If `ar.lproj` is missing the catalog never got the Arabic entries, or the build dropped them.
+    func testArabicLocalizationCompiledIntoBundle() throws {
+        let appBundle = Bundle(for: Contact.self)
+        let arPath = appBundle.path(forResource: "ar", ofType: "lproj")
+        XCTAssertNotNil(arPath, "ar.lproj not found in app bundle — Arabic entries may be missing from the String Catalog")
+    }
+
+    /// Loads ar.lproj directly and confirms a sample key resolves to the injected Arabic text.
+    /// Catches both "Arabic missing" and "Arabic falling back to English" regressions.
+    func testArabicSampleKeysResolveToArabicText() throws {
+        let appBundle = Bundle(for: Contact.self)
+        let arPath = try XCTUnwrap(appBundle.path(forResource: "ar", ofType: "lproj"))
+        let arBundle = try XCTUnwrap(Bundle(path: arPath))
+
+        let cases: [(key: String, expected: String)] = [
+            ("settings.navTitle", "الإعدادات"),
+            ("tab.network", "الشبكة"),
+            ("common.save", "حفظ"),
+            ("tickleEdit.navTitle.new", "تذكير جديد"),
+        ]
+        for (key, expected) in cases {
+            let value = arBundle.localizedString(forKey: key, value: "", table: nil)
+            XCTAssertEqual(value, expected, "Arabic value for \(key) should be \(expected), got \(value)")
+        }
+    }
+
     // MARK: - Helper
 
     private func assertKeysAreLocalized(_ keys: [String]) {

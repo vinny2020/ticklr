@@ -54,6 +54,7 @@ struct TickleEditView: View {
                             Spacer()
                             Image(systemName: "chevron.right")
                                 .font(.caption).foregroundStyle(.tertiary)
+                                .flipsForRightToLeftLayoutDirection(true)
                         }
                     }
                     .tint(.primary)

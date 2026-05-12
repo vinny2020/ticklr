@@ -114,6 +114,12 @@
             "state": "translated",
             "value": "नया संपर्क"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "جهة اتصال جديدة"
+          }
         }
       }
     },
@@ -226,6 +232,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "सभी संपर्क पहले से सदस्य हैं"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "جميع جهات الاتصال أعضاء بالفعل"
           }
         }
       }
@@ -340,6 +352,12 @@
             "state": "translated",
             "value": "सभी इस समूह में हैं"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الجميع موجودون في هذه المجموعة"
+          }
         }
       }
     },
@@ -452,6 +470,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ में जोड़ें"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إضافة إلى %@"
           }
         }
       }
@@ -566,6 +590,12 @@
             "state": "translated",
             "value": "संपर्क खोजें"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بحث في جهات الاتصال"
+          }
         }
       }
     },
@@ -678,6 +708,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ को समूह में जोड़ा गया"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تمت إضافة %@ إلى المجموعة"
           }
         }
       }
@@ -792,6 +828,12 @@
             "state": "translated",
             "value": "%1$@ को %2$@ में जोड़ा गया"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تمت إضافة %1$@ إلى %2$@"
+          }
         }
       }
     },
@@ -904,6 +946,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "नया समूह बनाएं"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إنشاء مجموعة جديدة"
           }
         }
       }
@@ -1018,6 +1066,12 @@
             "state": "translated",
             "value": "यह नाम पहले से मौजूद है"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الاسم موجود بالفعل"
+          }
         }
       }
     },
@@ -1130,6 +1184,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "समूह में जोड़ें"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إضافة إلى مجموعة"
           }
         }
       }
@@ -1244,6 +1304,12 @@
             "state": "translated",
             "value": "समूह का नाम…"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اسم المجموعة…"
+          }
         }
       }
     },
@@ -1356,6 +1422,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "जोड़ें"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إضافة"
           }
         }
       }
@@ -1470,6 +1542,12 @@
             "state": "translated",
             "value": "रद्द करें"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إلغاء"
+          }
         }
       }
     },
@@ -1582,6 +1660,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "यह क्रिया वापस नहीं की जा सकती।"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا يمكن التراجع عن هذا الإجراء."
           }
         }
       }
@@ -1696,6 +1780,12 @@
             "state": "translated",
             "value": "बनाएं"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إنشاء"
+          }
         }
       }
     },
@@ -1808,6 +1898,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "हटाएं"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حذف"
           }
         }
       }
@@ -1922,6 +2018,12 @@
             "state": "translated",
             "value": "हो गया"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تم"
+          }
         }
       }
     },
@@ -2034,6 +2136,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "संपादित करें"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعديل"
           }
         }
       }
@@ -2148,6 +2256,12 @@
             "state": "translated",
             "value": "ठीक है"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "موافق"
+          }
         }
       }
     },
@@ -2260,6 +2374,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "सहेजें"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حفظ"
           }
         }
       }
@@ -2374,6 +2494,12 @@
             "state": "translated",
             "value": "यह डिवाइस SMS संदेश भेजने के लिए कॉन्फ़िगर नहीं है।"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هذا الجهاز غير مهيّأ لإرسال رسائل SMS."
+          }
         }
       }
     },
@@ -2486,6 +2612,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "संदेश नहीं भेजा जा सकता"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعذّر إرسال الرسائل"
           }
         }
       }
@@ -2600,6 +2732,12 @@
             "state": "translated",
             "value": "भेजें"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إرسال"
+          }
         }
       }
     },
@@ -2712,6 +2850,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "संदेश"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الرسالة"
           }
         }
       }
@@ -2826,6 +2970,12 @@
             "state": "translated",
             "value": "टेम्पलेट"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "القالب"
+          }
         }
       }
     },
@@ -2938,6 +3088,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "प्रति"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إلى"
           }
         }
       }
@@ -3052,6 +3208,12 @@
             "state": "translated",
             "value": "लिखें"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إنشاء رسالة"
+          }
         }
       }
     },
@@ -3164,6 +3326,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "टेम्पलेट चुनें"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختيار قالب"
           }
         }
       }
@@ -3278,6 +3446,12 @@
             "state": "translated",
             "value": "संपर्क खोजें…"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بحث في جهات الاتصال…"
+          }
         }
       }
     },
@@ -3390,6 +3564,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "कोई नहीं"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بلا قالب"
           }
         }
       }
@@ -3504,6 +3684,12 @@
             "state": "translated",
             "value": "फ़ोन नंबर नहीं है"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا يوجد رقم هاتف مسجَّل"
+          }
         }
       }
     },
@@ -3616,6 +3802,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "ईमेल जोड़ें"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إضافة بريد إلكتروني"
           }
         }
       }
@@ -3730,6 +3922,12 @@
             "state": "translated",
             "value": "फ़ोन जोड़ें"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إضافة هاتف"
+          }
         }
       }
     },
@@ -3842,6 +4040,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "टैग जोड़ें"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إضافة وسم"
           }
         }
       }
@@ -3956,6 +4160,12 @@
             "state": "translated",
             "value": "कंपनी"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الشركة"
+          }
         }
       }
     },
@@ -4068,6 +4278,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "ईमेल पता"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عنوان البريد الإلكتروني"
           }
         }
       }
@@ -4182,6 +4398,12 @@
             "state": "translated",
             "value": "पहला नाम"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الاسم الأول"
+          }
         }
       }
     },
@@ -4294,6 +4516,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "पद"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المسمى الوظيفي"
           }
         }
       }
@@ -4408,6 +4636,12 @@
             "state": "translated",
             "value": "अंतिम नाम"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اسم العائلة"
+          }
         }
       }
     },
@@ -4520,6 +4754,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "फ़ोन नंबर"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "رقم الهاتف"
           }
         }
       }
@@ -4634,6 +4874,12 @@
             "state": "translated",
             "value": "ईमेल"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "البريد الإلكتروني"
+          }
         }
       }
     },
@@ -4746,6 +4992,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "समूह"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المجموعات"
           }
         }
       }
@@ -4860,6 +5112,12 @@
             "state": "translated",
             "value": "नाम"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الاسم"
+          }
         }
       }
     },
@@ -4972,6 +5230,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "नोट्स"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ملاحظات"
           }
         }
       }
@@ -5086,6 +5350,12 @@
             "state": "translated",
             "value": "फ़ोन"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الهاتف"
+          }
         }
       }
     },
@@ -5198,6 +5468,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "टैग"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الوسوم"
           }
         }
       }
@@ -5312,6 +5588,12 @@
             "state": "translated",
             "value": "कार्य"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "العمل"
+          }
         }
       }
     },
@@ -5424,6 +5706,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "रिमाइंडर जोड़ें"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إضافة تذكير"
           }
         }
       }
@@ -5538,6 +5826,12 @@
             "state": "translated",
             "value": "समूह में जोड़ें"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إضافة إلى مجموعة"
+          }
         }
       }
     },
@@ -5650,6 +5944,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "संपर्क हटाएं"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حذف جهة الاتصال"
           }
         }
       }
@@ -5764,6 +6064,12 @@
             "state": "translated",
             "value": "संदेश"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "رسالة"
+          }
         }
       }
     },
@@ -5876,6 +6182,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ हटाएं?"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حذف %@؟"
           }
         }
       }
@@ -5990,6 +6302,12 @@
             "state": "translated",
             "value": "संपर्क संपादित करें"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعديل جهة الاتصال"
+          }
         }
       }
     },
@@ -6102,6 +6420,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "पहले नेटवर्क टैब से संपर्क जोड़ें"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أضف جهات الاتصال أولاً من تبويب الشبكة"
           }
         }
       }
@@ -6216,6 +6540,12 @@
             "state": "translated",
             "value": "कोई संपर्क नहीं"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا توجد جهات اتصال"
+          }
         }
       }
     },
@@ -6328,6 +6658,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "संपर्क चुनें"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختيار جهة اتصال"
           }
         }
       }
@@ -6442,6 +6778,12 @@
             "state": "translated",
             "value": "संपर्क खोजें"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بحث في جهات الاتصال"
+          }
         }
       }
     },
@@ -6554,6 +6896,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "हर 2 महीने"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "كل شهرين"
           }
         }
       }
@@ -6668,6 +7016,12 @@
             "state": "translated",
             "value": "हर 2 सप्ताह"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "كل أسبوعين"
+          }
         }
       }
     },
@@ -6780,6 +7134,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "कस्टम"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مخصّص"
           }
         }
       }
@@ -6894,6 +7254,12 @@
             "state": "translated",
             "value": "दैनिक"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يومي"
+          }
         }
       }
     },
@@ -7006,6 +7372,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "मासिक"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "شهري"
           }
         }
       }
@@ -7120,6 +7492,12 @@
             "state": "translated",
             "value": "त्रैमासिक"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ربع سنوي"
+          }
         }
       }
     },
@@ -7232,6 +7610,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "साप्ताहिक"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أسبوعي"
           }
         }
       }
@@ -7346,6 +7730,12 @@
             "state": "translated",
             "value": "हटाएं"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إزالة"
+          }
         }
       }
     },
@@ -7458,6 +7848,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "इस समूह में संपर्क जोड़ने के लिए ··· दबाएं"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اضغط ··· لإضافة جهات اتصال إلى هذه المجموعة"
           }
         }
       }
@@ -7572,6 +7968,12 @@
             "state": "translated",
             "value": "अभी तक कोई सदस्य नहीं"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا يوجد أعضاء بعد"
+          }
         }
       }
     },
@@ -7684,6 +8086,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "सदस्य जोड़ें"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إضافة أعضاء"
           }
         }
       }
@@ -7798,6 +8206,12 @@
             "state": "translated",
             "value": "समूह संपादित करें"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعديل المجموعة"
+          }
         }
       }
     },
@@ -7910,6 +8324,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ खोजें"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بحث في %@"
           }
         }
       }
@@ -8024,6 +8444,12 @@
             "state": "translated",
             "value": "इस नाम का समूह पहले से मौजूद है"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "توجد مجموعة بهذا الاسم بالفعل"
+          }
         }
       }
     },
@@ -8136,6 +8562,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "कस्टम"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مخصّص"
           }
         }
       }
@@ -8250,6 +8682,12 @@
             "state": "translated",
             "value": "समूह संपादित करें"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعديل المجموعة"
+          }
         }
       }
     },
@@ -8362,6 +8800,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "नया समूह"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مجموعة جديدة"
           }
         }
       }
@@ -8476,6 +8920,12 @@
             "state": "translated",
             "value": "या कोई भी इमोजी टाइप करें"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أو اكتب أي إيموجي"
+          }
         }
       }
     },
@@ -8588,6 +9038,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "समूह का नाम"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اسم المجموعة"
           }
         }
       }
@@ -8702,6 +9158,12 @@
             "state": "translated",
             "value": "इमोजी"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إيموجي"
+          }
         }
       }
     },
@@ -8814,6 +9276,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "नाम"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الاسم"
           }
         }
       }
@@ -9138,6 +9606,48 @@
               }
             }
           }
+        },
+        "ar": {
+          "variations": {
+            "plural": {
+              "zero": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "لا جهات اتصال"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "جهة اتصال واحدة"
+                }
+              },
+              "two": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "جهتا اتصال"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld جهات اتصال"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld جهة اتصال"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld جهة اتصال"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -9250,6 +9760,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "अपना पहला समूह बनाने के लिए + दबाएं"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اضغط + لإنشاء أول مجموعة"
           }
         }
       }
@@ -9364,6 +9880,12 @@
             "state": "translated",
             "value": "अभी तक कोई समूह नहीं"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا توجد مجموعات بعد"
+          }
         }
       }
     },
@@ -9476,6 +9998,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "समूह"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المجموعات"
           }
         }
       }
@@ -9590,6 +10118,12 @@
             "state": "translated",
             "value": "आयात त्रुटि"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خطأ في الاستيراد"
+          }
         }
       }
     },
@@ -9702,6 +10236,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "iPhone संपर्क चुनें"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختيار جهات اتصال iPhone"
           }
         }
       }
@@ -9816,6 +10356,12 @@
             "state": "translated",
             "value": "LinkedIn कनेक्शन जोड़ें"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إضافة معارف LinkedIn"
+          }
         }
       }
     },
@@ -9928,6 +10474,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "आपके कनेक्शन आपके डिवाइस पर स्थानीय रूप से संसाधित होते हैं। LinkedIn आमतौर पर 10–30 मिनट में डाउनलोड लिंक ईमेल करता है।\n\nLinkedIn डेटा आपको 'कौन' बताता है — नाम और कंपनियां। फ़ोन नंबर आयात के बाद मैन्युअल रूप से जोड़ें।"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تتم معالجة معارفك محلياً على جهازك. ترسل LinkedIn رابط التحميل عادةً خلال 10 إلى 30 دقيقة.\n\nتمنحك بيانات LinkedIn الأسماء والشركات. ستضيف أرقام الهواتف يدوياً بعد الاستيراد."
           }
         }
       }
@@ -10042,6 +10594,12 @@
             "state": "translated",
             "value": "अपना स्थानीय नेटवर्क बनाएं"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ابنِ شبكتك المحلية"
+          }
         }
       }
     },
@@ -10154,6 +10712,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "LinkedIn CSV कैसे प्राप्त करें"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "كيفية الحصول على ملف LinkedIn CSV"
           }
         }
       }
@@ -10268,6 +10832,12 @@
             "state": "translated",
             "value": "Safari में linkedin.com खोलें (iPhone पर काम करता है)"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "افتح linkedin.com في Safari (يعمل على iPhone)"
+          }
         }
       }
     },
@@ -10380,6 +10950,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "अपनी फ़ोटो पर टैप करें → सेटिंग और गोपनीयता"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اضغط على صورتك ← الإعدادات والخصوصية"
           }
         }
       }
@@ -10494,6 +11070,12 @@
             "state": "translated",
             "value": "डेटा गोपनीयता → अपने डेटा की प्रति प्राप्त करें"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خصوصية البيانات ← احصل على نسخة من بياناتك"
+          }
         }
       }
     },
@@ -10606,6 +11188,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "केवल कनेक्शन चुनें → संग्रह का अनुरोध करें"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختر Connections فقط ← اطلب الأرشيف"
           }
         }
       }
@@ -10720,6 +11308,12 @@
             "state": "translated",
             "value": "LinkedIn के ईमेल का इंतजार करें (10–30 मिनट)"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "انتظر بريد LinkedIn (10 إلى 30 دقيقة)"
+          }
         }
       }
     },
@@ -10832,6 +11426,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "zip डाउनलोड करें → Files ऐप में खोलें → अनज़िप करें"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حمِّل الملف المضغوط ← افتحه في تطبيق الملفات ← اضغط لفك الضغط"
           }
         }
       }
@@ -10946,6 +11546,12 @@
             "state": "translated",
             "value": "यहां वापस आएं और LinkedIn कनेक्शन जोड़ें पर टैप करें"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عُد إلى هنا واضغط على إضافة معارف LinkedIn"
+          }
         }
       }
     },
@@ -11058,6 +11664,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "आपका नेटवर्क। आपके नियम।"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "شبكتك. قواعدك."
           }
         }
       }
@@ -11172,6 +11784,12 @@
             "state": "translated",
             "value": "iPhone या LinkedIn से जोड़ने के लिए + दबाएं"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اضغط + لإضافة من iPhone أو LinkedIn"
+          }
         }
       }
     },
@@ -11284,6 +11902,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "अभी तक कोई संपर्क नहीं"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا توجد جهات اتصال بعد"
           }
         }
       }
@@ -11398,6 +12022,12 @@
             "state": "translated",
             "value": "शुरू करें"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ابدأ الآن"
+          }
         }
       }
     },
@@ -11510,6 +12140,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "नया संपर्क"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "جهة اتصال جديدة"
           }
         }
       }
@@ -11624,6 +12260,12 @@
             "state": "translated",
             "value": "नेटवर्क"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الشبكة"
+          }
         }
       }
     },
@@ -11736,6 +12378,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "अपना नेटवर्क खोजें"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بحث في شبكتك"
           }
         }
       }
@@ -11850,6 +12498,12 @@
             "state": "translated",
             "value": "%@ से संपर्क करने का समय है"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حان وقت التواصل مع %@"
+          }
         }
       }
     },
@@ -11963,6 +12617,12 @@
             "state": "translated",
             "value": "शुरू करें"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ابدأ الآن"
+          }
         }
       }
     },
@@ -12075,6 +12735,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "खाली नेटवर्क से शुरू करें"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ابدأ بشبكة فارغة"
           }
         }
       }
@@ -12308,6 +12974,12 @@
             "state": "translated",
             "value": "सेटिंग में सक्षम करें"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تفعيل في الإعدادات"
+          }
         }
       }
     },
@@ -12420,6 +13092,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "ऑनबोर्डिंग रीसेट करें"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إعادة عرض شاشة الترحيب"
           }
         }
       }
@@ -12534,6 +13212,12 @@
             "state": "translated",
             "value": "अधिसूचना पहुंच अस्वीकृत। रिमाइंडर प्राप्त करने के लिए iOS सेटिंग में सक्षम करें।"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تم رفض إذن الإشعارات. فعِّله في إعدادات iOS لتلقّي تذكيرات Tickle."
+          }
         }
       }
     },
@@ -12646,6 +13330,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tickle अधिसूचनाएं बंद हैं। आप ऐप में देय रिमाइंडर देख सकते हैं।"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تذكيرات Tickle معطّلة. لا يزال بإمكانك عرض التذكيرات المستحقة داخل التطبيق."
           }
         }
       }
@@ -12760,6 +13450,12 @@
             "state": "translated",
             "value": "सेटिंग"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الإعدادات"
+          }
         }
       }
     },
@@ -12872,6 +13568,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "ऐप"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "التطبيق"
           }
         }
       }
@@ -12986,6 +13688,12 @@
             "state": "translated",
             "value": "निर्मित"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "من تصميم"
+          }
         }
       }
     },
@@ -13098,6 +13806,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "संपर्क"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "جهات الاتصال"
           }
         }
       }
@@ -13212,6 +13926,12 @@
             "state": "translated",
             "value": "डिफ़ॉल्ट आवृत्ति"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "التكرار الافتراضي"
+          }
         }
       }
     },
@@ -13324,6 +14044,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "अपना नेटवर्क शुरू करें"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ابدأ شبكتك"
           }
         }
       }
@@ -13438,6 +14164,12 @@
             "state": "translated",
             "value": "संदेश टेम्पलेट"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قوالب الرسائل"
+          }
         }
       }
     },
@@ -13550,6 +14282,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tickle रिमाइंडर"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تذكيرات Tickle"
           }
         }
       }
@@ -13664,6 +14402,12 @@
             "state": "translated",
             "value": "संस्करण"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الإصدار"
+          }
         }
       }
     },
@@ -13776,6 +14520,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "के बारे में"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حول"
           }
         }
       }
@@ -13890,6 +14640,12 @@
             "state": "translated",
             "value": "डेटा"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "البيانات"
+          }
         }
       }
     },
@@ -14002,6 +14758,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "अधिसूचनाएं"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الإشعارات"
           }
         }
       }
@@ -14116,6 +14878,12 @@
             "state": "translated",
             "value": "Tickle डिफ़ॉल्ट"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إعدادات Tickle الافتراضية"
+          }
         }
       }
     },
@@ -14228,6 +14996,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "लिखें"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إنشاء"
           }
         }
       }
@@ -14342,6 +15116,12 @@
             "state": "translated",
             "value": "समूह"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المجموعات"
+          }
         }
       }
     },
@@ -14454,6 +15234,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "नेटवर्क"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الشبكة"
           }
         }
       }
@@ -14568,6 +15354,12 @@
             "state": "translated",
             "value": "सेटिंग"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الإعدادات"
+          }
         }
       }
     },
@@ -14677,6 +15469,12 @@
           }
         },
         "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tickle"
+          }
+        },
+        "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "Tickle"
@@ -14794,6 +15592,12 @@
             "state": "translated",
             "value": "टेम्पलेट संपादित करें"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعديل القالب"
+          }
         }
       }
     },
@@ -14906,6 +15710,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "नया टेम्पलेट"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قالب جديد"
           }
         }
       }
@@ -15020,6 +15830,12 @@
             "state": "translated",
             "value": "जैसे: हाल-चाल"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مثلاً: اطمئنان"
+          }
         }
       }
     },
@@ -15132,6 +15948,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "संदेश"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الرسالة"
           }
         }
       }
@@ -15246,6 +16068,12 @@
             "state": "translated",
             "value": "शीर्षक"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "العنوان"
+          }
         }
       }
     },
@@ -15358,6 +16186,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "टेम्पलेट सहेजा गया"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تم حفظ القالب"
           }
         }
       }
@@ -15472,6 +16306,12 @@
             "state": "translated",
             "value": "टेम्पलेट अपडेट हुआ"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تم تحديث القالب"
+          }
         }
       }
     },
@@ -15584,6 +16424,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "संदेश टेम्पलेट"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قوالب الرسائل"
           }
         }
       }
@@ -15698,6 +16544,12 @@
             "state": "translated",
             "value": "समूह बनाएं"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إنشاء مجموعة"
+          }
         }
       }
     },
@@ -15810,6 +16662,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "保持联系"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ابقَ على تواصل"
           }
         }
       }
@@ -15924,6 +16782,12 @@
             "state": "translated",
             "value": "Tickle संपादित करें"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعديل التذكير"
+          }
         }
       }
     },
@@ -16036,6 +16900,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "नया Tickle"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تذكير جديد"
           }
         }
       }
@@ -16150,6 +17020,12 @@
             "state": "translated",
             "value": "समूह आपको एक बार में टीम या सर्कल के सभी लोगों को Tickle करने देते हैं।"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تتيح لك المجموعات تذكير كل أفراد الفريق أو الدائرة دفعة واحدة."
+          }
         }
       }
     },
@@ -16262,6 +17138,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "अभी तक कोई समूह नहीं"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا توجد مجموعات بعد"
           }
         }
       }
@@ -16376,6 +17258,12 @@
             "state": "translated",
             "value": "संपर्क चुनें"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختر جهة اتصال"
+          }
         }
       }
     },
@@ -16488,6 +17376,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "समूह चुनें"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختر مجموعة"
           }
         }
       }
@@ -16602,6 +17496,12 @@
             "state": "translated",
             "value": "जैसे: नई भूमिका के बारे में पूछें"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مثلاً: اسأل عن الدور الجديد"
+          }
         }
       }
     },
@@ -16714,6 +17614,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "आवृत्ति"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "التكرار"
           }
         }
       }
@@ -16828,6 +17734,12 @@
             "state": "translated",
             "value": "शुरुआत"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يبدأ في"
+          }
         }
       }
     },
@@ -16940,6 +17852,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "नोट"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ملاحظة"
           }
         }
       }
@@ -17054,6 +17972,12 @@
             "state": "translated",
             "value": "शेड्यूल"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الجدولة"
+          }
         }
       }
     },
@@ -17166,6 +18090,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "किसे"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مَن"
           }
         }
       }
@@ -17490,6 +18420,48 @@
               }
             }
           }
+        },
+        "ar": {
+          "variations": {
+            "plural": {
+              "zero": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "بلا أيام"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "يوم واحد"
+                }
+              },
+              "two": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "يومان"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld أيام"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld يوماً"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld يوم"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -17602,6 +18574,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "संपर्क"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "جهة اتصال"
           }
         }
       }
@@ -17716,6 +18694,12 @@
             "state": "translated",
             "value": "समूह"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مجموعة"
+          }
         }
       }
     },
@@ -17828,6 +18812,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tickle सहेजा गया"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تم حفظ التذكير"
           }
         }
       }
@@ -17942,6 +18932,12 @@
             "state": "translated",
             "value": "Tickle अपडेट हुआ"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تم تحديث التذكير"
+          }
         }
       }
     },
@@ -18054,6 +19050,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "स्नूज़"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تأجيل"
           }
         }
       }
@@ -18168,6 +19170,12 @@
             "state": "translated",
             "value": "किसी संपर्क के पृष्ठ से जोड़ें, या + दबाएं"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أضف تذكيراً من صفحة جهة الاتصال أو اضغط +"
+          }
         }
       }
     },
@@ -18281,6 +19289,12 @@
             "state": "translated",
             "value": "अभी तक कोई tickle नहीं"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا توجد تذكيرات بعد"
+          }
         }
       }
     },
@@ -18390,6 +19404,12 @@
           }
         },
         "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tickle"
+          }
+        },
+        "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "Tickle"
@@ -18507,6 +19527,12 @@
             "state": "translated",
             "value": "देय"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المستحقة"
+          }
         }
       }
     },
@@ -18620,6 +19646,12 @@
             "state": "translated",
             "value": "स्नूज़ किया गया"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المؤجّلة"
+          }
         }
       }
     },
@@ -18732,6 +19764,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "आगामी"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "القادمة"
           }
         }
       }
@@ -19001,6 +20039,12 @@
             "state": "translated",
             "value": "आज"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اليوم"
+          }
         }
       }
     },
@@ -19269,6 +20313,12 @@
             "state": "translated",
             "value": "कल"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أمس"
+          }
         }
       }
     },
@@ -19381,6 +20431,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "अज्ञात"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "غير معروف"
           }
         }
       }
