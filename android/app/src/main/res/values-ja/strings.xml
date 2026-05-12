@@ -8,6 +8,7 @@
     <string name="common_cancel">キャンセル</string>
     <string name="common_delete">削除</string>
     <string name="common_remove">外す</string>
+    <string name="tag_remove_content_description">%1$s を削除</string>
     <string name="common_ok">OK</string>
     <string name="common_reset">リセット</string>
     <string name="common_create">作成</string>

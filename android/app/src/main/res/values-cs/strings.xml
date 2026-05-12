@@ -8,6 +8,7 @@
     <string name="common_cancel">Zrušit</string>
     <string name="common_delete">Smazat</string>
     <string name="common_remove">Odebrat</string>
+    <string name="tag_remove_content_description">Odebrat %1$s</string>
     <string name="common_ok">OK</string>
     <string name="common_reset">Obnovit</string>
     <string name="common_create">Vytvořit</string>

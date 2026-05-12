@@ -8,6 +8,7 @@
     <string name="common_cancel">Avbryt</string>
     <string name="common_delete">Ta bort</string>
     <string name="common_remove">Ta bort</string>
+    <string name="tag_remove_content_description">Ta bort %1$s</string>
     <string name="common_ok">OK</string>
     <string name="common_reset">Återställ</string>
     <string name="common_create">Skapa</string>

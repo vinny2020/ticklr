@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App -->
+    <string name="app_name">Ticklr</string>
+
+    <!-- Common -->
+    <string name="common_save">محفوظ کریں</string>
+    <string name="common_cancel">منسوخ کریں</string>
+    <string name="common_delete">حذف کریں</string>
+    <string name="common_remove">ہٹائیں</string>
+    <string name="tag_remove_content_description">%1$s ہٹائیں</string>
+    <string name="common_ok">ٹھیک ہے</string>
+    <string name="common_reset">ری سیٹ کریں</string>
+    <string name="common_create">بنائیں</string>
+    <string name="common_back">واپس</string>
+    <string name="common_no_name">کوئی نام نہیں</string>
+    <string name="common_add">شامل کریں</string>
+    <string name="common_update">اپ ڈیٹ کریں</string>
+    <string name="common_send">بھیجیں</string>
+    <string name="common_edit">ترمیم کریں</string>
+
+    <!-- Settings -->
+    <string name="settings_title">ترتیبات</string>
+    <string name="settings_section_appearance">ظاہری شکل</string>
+    <string name="settings_section_data">ڈیٹا</string>
+    <string name="settings_section_messaging">پیغام رسانی</string>
+    <string name="settings_section_about">متعلق</string>
+    <string name="settings_section_developer">ڈویلپر</string>
+    <string name="settings_theme_title">تھیم</string>
+    <string name="settings_theme_system">سسٹم ڈیفالٹ</string>
+    <string name="settings_theme_light">لائٹ</string>
+    <string name="settings_theme_dark">ڈارک</string>
+    <string name="settings_import_title">رابطے درآمد کریں</string>
+    <string name="settings_import_subtitle">فون یا LinkedIn CSV سے</string>
+    <string name="settings_templates_title">پیغام ٹیمپلیٹس</string>
+    <string name="settings_templates_subtitle">دوبارہ استعمال ہونے والے پیغامات بنائیں اور منظم کریں</string>
+    <string name="settings_sms_direct_title">SMS براہِ راست بھیجیں</string>
+    <string name="settings_sms_direct_subtitle">Messages ایپ کھولنے کے بجائے SmsManager استعمال کرتا ہے۔</string>
+    <string name="settings_about_privacy">پرائیویسی پہلے۔ کوئی کلاؤڈ نہیں، کوئی اینالیٹکس نہیں، اکاؤنٹ درکار نہیں۔ تمام ڈیٹا ڈیوائس پر محفوظ رہتا ہے۔</string>
+    <string name="settings_about_built_by">Xaymaca نے بنایا</string>
+    <string name="settings_about_version">ورژن %1$s</string>
+    <string name="settings_reset_onboarding_title">آن بورڈنگ ری سیٹ کریں</string>
+    <string name="settings_reset_onboarding_subtitle">خوش آمدید اسکرین دوبارہ دکھائیں</string>
+    <string name="settings_reset_confirm_message">یہ آپ کو خوش آمدید اسکرین پر واپس لے جائے گا۔ آپ کا ڈیٹا حذف نہیں ہوگا۔</string>
+    <string name="settings_clear_data_title">تمام ڈیٹا صاف کریں</string>
+    <string name="settings_clear_data_message">یہ تمام رابطے، گروپس اور یاددہانیاں مستقل طور پر حذف کر دے گا۔ اسے واپس نہیں کیا جا سکتا۔</string>
+    <string name="settings_clear_data_confirm">سب صاف کریں</string>
+    <string name="settings_choose_theme">تھیم منتخب کریں</string>
+    <string name="settings_debug_load_title">ٹیسٹ رابطے لوڈ کریں</string>
+    <string name="settings_debug_load_subtitle">اثاثوں سے 20 جعلی رابطے شامل کرتا ہے (صرف ڈیبگ)</string>
+    <string name="settings_debug_clear_subtitle">رابطے، گروپس اور یاددہانیاں مستقل طور پر حذف کرتا ہے (صرف ڈیبگ)</string>
+
+    <!-- Tickle list -->
+    <string name="tickle_list_title">یاددہانیاں</string>
+    <string name="tickle_list_add_fab">یاددہانی شامل کریں</string>
+    <string name="tickle_list_section_due">واجب</string>
+    <string name="tickle_list_section_upcoming">آنے والی</string>
+    <string name="tickle_list_section_snoozed">ملتوی</string>
+    <string name="tickle_list_empty_title">ابھی کوئی یاددہانی نہیں</string>
+    <string name="tickle_list_empty_description">+ پر ٹیپ کر کے یاددہانی شیڈول کریں</string>
+    <string name="tickle_row_action_done">مکمل</string>
+    <string name="tickle_row_action_snooze">ملتوی کریں</string>
+    <string name="tickle_row_action_delete">حذف کریں</string>
+    <string name="tickle_row_default_note">رابطے کی یاددہانی</string>
+    <string name="tickle_row_today">آج</string>
+    <string name="tickle_row_tomorrow">کل</string>
+    <string name="tickle_row_yesterday">گزشتہ کل</string>
+    <string name="tickle_row_in_days">%1$d دن بعد</string>
+    <string name="tickle_row_days_overdue">%1$d دن تاخیر سے</string>
+
+    <!-- Tickle edit -->
+    <string name="tickle_edit_new_title">نئی یاددہانی</string>
+    <string name="tickle_edit_title">یاددہانی میں ترمیم</string>
+    <string name="tickle_edit_tab_contact">رابطہ</string>
+    <string name="tickle_edit_tab_group">گروپ</string>
+    <string name="tickle_edit_section_contact">رابطہ</string>
+    <string name="tickle_edit_section_group">گروپ</string>
+    <string name="tickle_edit_search_contacts">رابطے تلاش کریں</string>
+    <string name="tickle_edit_section_frequency">تعدد</string>
+    <string name="tickle_edit_section_custom_interval">حسب ضرورت وقفہ (دن)</string>
+    <string name="tickle_edit_section_note">نوٹ (اختیاری)</string>
+    <string name="tickle_edit_note_placeholder">کس بارے میں بات کرنی ہے…</string>
+    <string name="tickle_edit_default_note">رابطے میں رہیں</string>
+    <string name="tickle_edit_custom_interval_days">%1$d دن</string>
+    <string name="tickle_edit_no_groups_title">ابھی کوئی گروپ نہیں</string>
+    <string name="tickle_edit_no_groups_description">گروپس آپ کو کسی ٹیم یا حلقے میں سب کو ایک ساتھ یاد دلانے دیتے ہیں۔</string>
+    <string name="tickle_edit_create_group_button">گروپ بنائیں</string>
+    <string name="tickle_edit_new_group_dialog_title">نیا گروپ</string>
+    <string name="tickle_edit_group_name_label">گروپ کا نام</string>
+    <string name="tickle_saved">یاددہانی محفوظ ہو گئی</string>
+    <string name="tickle_updated">یاددہانی اپ ڈیٹ ہو گئی</string>
+    <string name="tickle_notification_contact_fallback">آپ کا رابطہ</string>
+    <string name="tickle_notification_title">%1$s سے رابطہ کرنے کا وقت ہے</string>
+    <string name="tickle_notification_body">آپ کے لوگ اہم ہیں — آج ایک مختصر پیغام بھیجیں۔</string>
+
+    <!-- Network list -->
+    <string name="network_title">نیٹ ورک</string>
+    <string name="network_more_options">مزید اختیارات</string>
+    <string name="network_import_contacts">رابطے درآمد کریں</string>
+    <string name="network_search_placeholder">رابطے تلاش کریں…</string>
+    <string name="network_empty_title">ابھی کوئی رابطہ نہیں</string>
+    <string name="network_empty_description">+ پر ٹیپ کر کے کسی کو شامل کریں</string>
+    <string name="network_add_contact_fab">رابطہ شامل کریں</string>
+    <string name="network_delete_title">رابطہ حذف کریں</string>
+    <string name="network_delete_message">%1$s کو اپنے نیٹ ورک سے ہٹائیں؟ اسے واپس نہیں کیا جا سکتا۔</string>
+    <string name="network_contact_has_phone">فون موجود ہے</string>
+    <string name="network_contact_has_email">ای میل موجود ہے</string>
+    <string name="network_contact_import_source">درآمد کا ذریعہ</string>
+
+    <!-- Contact detail -->
+    <string name="contact_detail_add_tickle">یاددہانی شامل کریں</string>
+    <string name="contact_detail_add_to_group">گروپ میں شامل کریں</string>
+    <string name="contact_detail_message">پیغام</string>
+    <string name="contact_detail_section_phone">فون</string>
+    <string name="contact_detail_section_email">ای میل</string>
+    <string name="contact_detail_section_notes">نوٹس</string>
+    <string name="contact_detail_section_tags">ٹیگز</string>
+    <string name="contact_detail_delete">رابطہ حذف کریں</string>
+    <string name="contact_add_to_group_title">گروپ میں شامل کریں</string>
+    <string name="contact_add_to_group_empty">ابھی کوئی گروپ نہیں۔</string>
+    <string name="contact_add_to_group_create_new">+ نیا گروپ بنائیں</string>
+    <string name="contact_add_to_group_group_name">گروپ کا نام</string>
+    <string name="contact_group_member_check">رکن</string>
+
+    <!-- Add / Edit contact -->
+    <string name="add_contact_title">نیا رابطہ</string>
+    <string name="edit_contact_title">رابطے میں ترمیم</string>
+    <string name="add_contact_section_name">نام</string>
+    <string name="add_contact_section_work">کام</string>
+    <string name="add_contact_section_phone">فون</string>
+    <string name="add_contact_section_email">ای میل</string>
+    <string name="add_contact_section_notes">نوٹس</string>
+    <string name="add_contact_section_tags">ٹیگز</string>
+    <string name="add_contact_first_name">پہلا نام</string>
+    <string name="add_contact_last_name">آخری نام</string>
+    <string name="add_contact_company">کمپنی</string>
+    <string name="add_contact_job_title">عہدہ</string>
+    <string name="add_contact_phone_n">فون %1$d</string>
+    <string name="add_contact_email_n">ای میل %1$d</string>
+    <string name="add_contact_add_phone">فون شامل کریں</string>
+    <string name="add_contact_add_email">ای میل شامل کریں</string>
+    <string name="add_contact_notes_label">نوٹس</string>
+    <string name="add_contact_add_tag_label">ٹیگ شامل کریں</string>
+    <string name="add_contact_add_tag_button">ٹیگ شامل کریں</string>
+
+    <!-- Groups list -->
+    <string name="group_list_title">گروپس</string>
+    <string name="group_list_empty_title">ابھی کوئی گروپ نہیں</string>
+    <string name="group_list_empty_description">+ پر ٹیپ کر کے گروپ بنائیں</string>
+    <string name="group_list_create_fab">گروپ بنائیں</string>
+    <string name="group_delete_title">گروپ حذف کریں</string>
+    <string name="group_delete_message">"%1$s" حذف کریں؟ رابطے نہیں ہٹائے جائیں گے۔</string>
+    <string name="group_new_dialog_title">نیا گروپ</string>
+    <string name="group_dialog_emoji_label">ایموجی</string>
+    <string name="group_dialog_name_label">گروپ کا نام</string>
+    <string name="group_dialog_name_exists">نام پہلے سے موجود ہے</string>
+    <string name="group_dialog_char_count">%1$d / 30</string>
+    <plurals name="group_list_member_count">
+        <item quantity="one">%1$d رکن</item>
+        <item quantity="other">%1$d اراکین</item>
+    </plurals>
+
+    <!-- Group detail -->
+    <string name="group_detail_empty">ابھی کوئی رکن نہیں۔ شامل کرنے کے لیے + پر ٹیپ کریں۔</string>
+    <string name="group_detail_add_members_title">اراکین شامل کریں</string>
+    <string name="group_detail_filter_placeholder">رابطے فلٹر کریں…</string>
+    <string name="group_detail_all_in_group">تمام رابطے پہلے ہی اس گروپ میں ہیں</string>
+    <string name="group_detail_no_match">کوئی رابطہ نہیں ملا</string>
+    <string name="group_detail_add_member_button">شامل کریں</string>
+    <string name="group_detail_member_added">%1$s کو %2$s میں شامل کیا گیا</string>
+    <string name="group_detail_member_added_generic">%1$s کو گروپ میں شامل کیا گیا</string>
+    <string name="group_detail_edit_group">گروپ میں ترمیم</string>
+    <string name="group_detail_add_members_fab">اراکین شامل کریں</string>
+    <string name="group_edit_dialog_title">گروپ میں ترمیم</string>
+
+    <!-- Compose -->
+    <string name="compose_title">پیغام لکھیں</string>
+    <string name="compose_clear">پیغام صاف کریں</string>
+    <string name="compose_to_label">کو</string>
+    <string name="compose_search_placeholder">رابطے تلاش کریں…</string>
+    <string name="compose_no_phone">فون نمبر موجود نہیں</string>
+    <string name="compose_select_template">ٹیمپلیٹ منتخب کریں</string>
+    <string name="compose_message_label">پیغام</string>
+    <string name="compose_message_placeholder">اپنا پیغام لکھیں…</string>
+    <string name="compose_remove_contact">رابطہ ہٹائیں</string>
+    <string name="compose_message_sent">پیغام بھیج دیا گیا ✓</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_tagline">آپ کے لوگ اہم ہیں</string>
+    <string name="onboarding_description">آپ کا ذاتی نیٹ ورک، نجی طور پر۔
+کوئی کلاؤڈ نہیں۔ کوئی سوشل گراف نہیں۔ صرف آپ کے لوگ۔</string>
+    <string name="onboarding_import_button">رابطے درآمد کریں</string>
+    <string name="onboarding_start_empty">خالی نیٹ ورک سے شروع کریں</string>
+
+    <!-- Import -->
+    <string name="import_title">رابطے درآمد کریں</string>
+    <string name="import_success_card">%1$d رابطے کامیابی سے درآمد ہوئے</string>
+    <string name="import_from_phone_title">فون رابطوں سے درآمد کریں</string>
+    <string name="import_from_phone_subtitle">اپنے رابطے ڈیوائس ایڈریس بک سے سنک کریں۔</string>
+    <string name="import_from_linkedin_title">LinkedIn CSV سے اپنا نیٹ ورک بنائیں</string>
+    <string name="import_from_linkedin_subtitle">LinkedIn برآمدات میں نام اور کمپنیاں شامل ہوتی ہیں — فون نمبر نہیں۔ درآمد کے بعد آپ رابطے کی تفصیلات دستی طور پر شامل کریں گے۔</string>
+    <string name="import_linkedin_instructions_title">LinkedIn سے برآمد کرنے کا طریقہ</string>
+    <string name="import_linkedin_instructions">1. linkedin.com پر جائیں
+2. Me → Settings &amp; Privacy پر ٹیپ کریں
+3. Data Privacy → Get a copy of your data
+4. "Connections" منتخب کریں اور برآمد کی درخواست کریں
+5. CSV فائل ڈاؤن لوڈ کریں اور اسے یہاں منتخب کریں</string>
+    <string name="import_continue_button">نیٹ ورک پر جاری رکھیں</string>
+    <string name="import_skip_button">ابھی چھوڑ دیں</string>
+    <string name="import_snackbar_success">%1$d رابطے درآمد ہوئے</string>
+    <string name="import_snackbar_linkedin">%1$d LinkedIn رابطے درآمد ہوئے</string>
+    <string name="import_snackbar_permission_denied">رابطوں کی اجازت رد کر دی گئی</string>
+    <string name="import_snackbar_failed">درآمد ناکام: %1$s</string>
+    <string name="import_snackbar_could_not_open">فائل نہیں کھل سکی</string>
+
+    <!-- Template list -->
+    <string name="template_list_title">پیغام ٹیمپلیٹس</string>
+    <string name="template_list_empty">ابھی کوئی ٹیمپلیٹ نہیں۔ ایک بنانے کے لیے + پر ٹیپ کریں۔</string>
+    <string name="template_add_fab">ٹیمپلیٹ شامل کریں</string>
+    <string name="template_delete_icon">حذف کریں</string>
+
+    <!-- Template edit -->
+    <string name="template_edit_new_title">نیا ٹیمپلیٹ</string>
+    <string name="template_edit_edit_title">ٹیمپلیٹ میں ترمیم</string>
+    <string name="template_edit_title_label">عنوان</string>
+    <string name="template_edit_body_label">متن</string>
+
+    <!-- Bottom nav -->
+    <string name="nav_network">نیٹ ورک</string>
+    <string name="nav_tickle">یاددہانیاں</string>
+    <string name="nav_groups">گروپس</string>
+    <string name="nav_compose">تحریر</string>
+    <string name="nav_settings">ترتیبات</string>
+
+    <!-- Frequency display names -->
+    <string name="frequency_daily">روزانہ</string>
+    <string name="frequency_weekly">ہفتہ وار</string>
+    <string name="frequency_biweekly">ہر 2 ہفتے</string>
+    <string name="frequency_monthly">ماہانہ</string>
+    <string name="frequency_bimonthly">ہر 2 ماہ</string>
+    <string name="frequency_quarterly">سہ ماہی</string>
+    <string name="frequency_custom">حسب ضرورت</string>
+</resources>

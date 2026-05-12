@@ -190,6 +190,7 @@ struct ComposeView: View {
                         } label: {
                             HStack(spacing: 6) {
                                 Image(systemName: "paperplane.fill")
+                                    .flipsForRightToLeftLayoutDirection(true)
                                 Text(String(localized: "compose.button.send"))
                                     .fontWeight(.semibold)
                             }

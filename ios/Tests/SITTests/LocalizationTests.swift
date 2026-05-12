@@ -315,6 +315,54 @@ final class LocalizationTests: XCTestCase {
         XCTAssertEqual(TickleFrequency.custom.localizedName, "Custom")
     }
 
+    // MARK: - RTL Localizations
+
+    /// xcstrings compiles each locale into `<lang>.lproj/Localizable.strings` at build time.
+    /// Missing RTL locale bundles usually mean the catalog entries were dropped during build.
+    func testRTLLocalizationsCompiledIntoBundle() throws {
+        let appBundle = Bundle(for: Contact.self)
+        for code in ["ar", "he", "ur"] {
+            let path = appBundle.path(forResource: code, ofType: "lproj")
+            XCTAssertNotNil(path, "\(code).lproj not found in app bundle — entries may be missing from the String Catalog")
+        }
+    }
+
+    /// Loads each RTL lproj directly and confirms sample keys resolve to the injected text.
+    /// Catches both "locale missing" and "locale falling back to English" regressions.
+    func testRTLSampleKeysResolveToLocalizedText() throws {
+        let appBundle = Bundle(for: Contact.self)
+
+        let localeCases: [(code: String, samples: [(key: String, expected: String)])] = [
+            ("ar", [
+                ("settings.navTitle", "الإعدادات"),
+                ("tab.network", "الشبكة"),
+                ("common.save", "حفظ"),
+                ("tickleEdit.navTitle.new", "تذكير جديد"),
+            ]),
+            ("he", [
+                ("settings.navTitle", "הגדרות"),
+                ("tab.network", "רשת"),
+                ("common.save", "שמירה"),
+                ("tickleEdit.navTitle.new", "תזכורת חדשה"),
+            ]),
+            ("ur", [
+                ("settings.navTitle", "ترتیبات"),
+                ("tab.network", "نیٹ ورک"),
+                ("common.save", "محفوظ کریں"),
+                ("tickleEdit.navTitle.new", "نئی یاددہانی"),
+            ]),
+        ]
+
+        for (code, samples) in localeCases {
+            let path = try XCTUnwrap(appBundle.path(forResource: code, ofType: "lproj"))
+            let bundle = try XCTUnwrap(Bundle(path: path))
+            for (key, expected) in samples {
+                let value = bundle.localizedString(forKey: key, value: "", table: nil)
+                XCTAssertEqual(value, expected, "\(code) value for \(key) should be \(expected), got \(value)")
+            }
+        }
+    }
+
     // MARK: - Helper
 
     private func assertKeysAreLocalized(_ keys: [String]) {

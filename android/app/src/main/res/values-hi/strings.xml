@@ -8,6 +8,7 @@
     <string name="common_cancel">रद्द करें</string>
     <string name="common_delete">हटाएं</string>
     <string name="common_remove">निकालें</string>
+    <string name="tag_remove_content_description">%1$s हटाएं</string>
     <string name="common_ok">ठीक है</string>
     <string name="common_reset">रीसेट करें</string>
     <string name="common_create">बनाएं</string>

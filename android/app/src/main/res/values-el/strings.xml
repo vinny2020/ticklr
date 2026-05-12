@@ -8,6 +8,7 @@
     <string name="common_cancel">Ακύρωση</string>
     <string name="common_delete">Διαγραφή</string>
     <string name="common_remove">Αφαίρεση</string>
+    <string name="tag_remove_content_description">Αφαίρεση %1$s</string>
     <string name="common_ok">ΟΚ</string>
     <string name="common_reset">Επαναφορά</string>
     <string name="common_create">Δημιουργία</string>

@@ -8,6 +8,7 @@
     <string name="common_cancel">Mégse</string>
     <string name="common_delete">Törlés</string>
     <string name="common_remove">Eltávolítás</string>
+    <string name="tag_remove_content_description">%1$s eltávolítása</string>
     <string name="common_ok">OK</string>
     <string name="common_reset">Visszaállítás</string>
     <string name="common_create">Létrehozás</string>
