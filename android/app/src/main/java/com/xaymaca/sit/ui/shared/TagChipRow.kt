@@ -10,7 +10,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.InputChip
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.xaymaca.sit.R
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -31,7 +33,7 @@ fun TagChipRow(
                     IconButton(onClick = { onRemove(tag) }) {
                         Icon(
                             imageVector = Icons.Default.Close,
-                            contentDescription = "Remove $tag"
+                            contentDescription = "${stringResource(R.string.common_remove)} $tag"
                         )
                     }
                 }

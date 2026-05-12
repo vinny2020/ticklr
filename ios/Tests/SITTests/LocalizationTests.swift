@@ -315,32 +315,51 @@ final class LocalizationTests: XCTestCase {
         XCTAssertEqual(TickleFrequency.custom.localizedName, "Custom")
     }
 
-    // MARK: - Arabic (RTL)
+    // MARK: - RTL Localizations
 
     /// xcstrings compiles each locale into `<lang>.lproj/Localizable.strings` at build time.
-    /// If `ar.lproj` is missing the catalog never got the Arabic entries, or the build dropped them.
-    func testArabicLocalizationCompiledIntoBundle() throws {
+    /// Missing RTL locale bundles usually mean the catalog entries were dropped during build.
+    func testRTLLocalizationsCompiledIntoBundle() throws {
         let appBundle = Bundle(for: Contact.self)
-        let arPath = appBundle.path(forResource: "ar", ofType: "lproj")
-        XCTAssertNotNil(arPath, "ar.lproj not found in app bundle — Arabic entries may be missing from the String Catalog")
+        for code in ["ar", "he", "ur"] {
+            let path = appBundle.path(forResource: code, ofType: "lproj")
+            XCTAssertNotNil(path, "\(code).lproj not found in app bundle — entries may be missing from the String Catalog")
+        }
     }
 
-    /// Loads ar.lproj directly and confirms a sample key resolves to the injected Arabic text.
-    /// Catches both "Arabic missing" and "Arabic falling back to English" regressions.
-    func testArabicSampleKeysResolveToArabicText() throws {
+    /// Loads each RTL lproj directly and confirms sample keys resolve to the injected text.
+    /// Catches both "locale missing" and "locale falling back to English" regressions.
+    func testRTLSampleKeysResolveToLocalizedText() throws {
         let appBundle = Bundle(for: Contact.self)
-        let arPath = try XCTUnwrap(appBundle.path(forResource: "ar", ofType: "lproj"))
-        let arBundle = try XCTUnwrap(Bundle(path: arPath))
 
-        let cases: [(key: String, expected: String)] = [
-            ("settings.navTitle", "الإعدادات"),
-            ("tab.network", "الشبكة"),
-            ("common.save", "حفظ"),
-            ("tickleEdit.navTitle.new", "تذكير جديد"),
+        let localeCases: [(code: String, samples: [(key: String, expected: String)])] = [
+            ("ar", [
+                ("settings.navTitle", "الإعدادات"),
+                ("tab.network", "الشبكة"),
+                ("common.save", "حفظ"),
+                ("tickleEdit.navTitle.new", "تذكير جديد"),
+            ]),
+            ("he", [
+                ("settings.navTitle", "הגדרות"),
+                ("tab.network", "רשת"),
+                ("common.save", "שמירה"),
+                ("tickleEdit.navTitle.new", "תזכורת חדשה"),
+            ]),
+            ("ur", [
+                ("settings.navTitle", "ترتیبات"),
+                ("tab.network", "نیٹ ورک"),
+                ("common.save", "محفوظ کریں"),
+                ("tickleEdit.navTitle.new", "نئی یاددہانی"),
+            ]),
         ]
-        for (key, expected) in cases {
-            let value = arBundle.localizedString(forKey: key, value: "", table: nil)
-            XCTAssertEqual(value, expected, "Arabic value for \(key) should be \(expected), got \(value)")
+
+        for (code, samples) in localeCases {
+            let path = try XCTUnwrap(appBundle.path(forResource: code, ofType: "lproj"))
+            let bundle = try XCTUnwrap(Bundle(path: path))
+            for (key, expected) in samples {
+                let value = bundle.localizedString(forKey: key, value: "", table: nil)
+                XCTAssertEqual(value, expected, "\(code) value for \(key) should be \(expected), got \(value)")
+            }
         }
     }
 

@@ -30,6 +30,9 @@
 		<string>ja</string>
 		<string>ko</string>
 		<string>hi</string>
+		<string>ar</string>
+		<string>he</string>
+		<string>ur</string>
 	</array>
 	<key>CFBundleName</key>
 	<string>$(PRODUCT_NAME)</string>

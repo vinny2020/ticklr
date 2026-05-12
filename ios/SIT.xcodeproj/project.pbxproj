@@ -87,6 +87,8 @@
 		F10000000000000000000012 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F10000000000000000000013 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F10000000000000000000014 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		F10000000000000000000015 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F10000000000000000000016 /* ur */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ur; path = ur.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0B8316646A179885792C4004 /* TickleSchedulerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleSchedulerTests.swift; sourceTree = "<group>"; };
 		0EFE5D9B2591E4B4A53F5EEC /* LinkedInCSVParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedInCSVParser.swift; sourceTree = "<group>"; };
 		0F033D809DFE50DA44209A95 /* LaunchScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenView.swift; sourceTree = "<group>"; };
@@ -383,6 +385,7 @@
 				en,
 				es,
 				fr,
+				he,
 				hi,
 				hu,
 				it,
@@ -394,6 +397,7 @@
 				ro,
 				ru,
 				sv,
+				ur,
 				"zh-Hans",
 			);
 			mainGroup = 19FBD3B5DE9B723F24932E42;
@@ -500,6 +504,7 @@
 				F10000000000000000000006 /* en */,
 				F10000000000000000000007 /* es */,
 				F10000000000000000000008 /* fr */,
+				F10000000000000000000015 /* he */,
 				F10000000000000000000009 /* hi */,
 				F1000000000000000000000A /* hu */,
 				F1000000000000000000000B /* it */,
@@ -511,6 +516,7 @@
 				F10000000000000000000011 /* ro */,
 				F10000000000000000000012 /* ru */,
 				F10000000000000000000013 /* sv */,
+				F10000000000000000000016 /* ur */,
 				F10000000000000000000014 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;

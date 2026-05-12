@@ -31,6 +31,8 @@ class TranslationCompletenessTest {
         "ja" to "Japanese",
         "ko" to "Korean",
         "hi" to "Hindi",
+        "he" to "Hebrew",
+        "ur" to "Urdu",
     )
 
     @Test
