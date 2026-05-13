@@ -15,8 +15,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           # Needed so `git for-each-ref refs/tags/<tag>` can read the tag's
-          # annotation message. Without this the tag object isn't fetched.
-          fetch-tags: true
+          # annotation message. Shallow tag checkouts can create duplicate
+          # tag refspecs when actions/checkout also fetches tags.
+          fetch-depth: 0
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
