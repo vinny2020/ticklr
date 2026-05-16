@@ -108,15 +108,6 @@ struct TickleListView: View {
                     }
                 }
             }
-            .overlay {
-                if allReminders.isEmpty {
-                    ContentUnavailableView(
-                        String(localized: "tickleList.empty.title"),
-                        systemImage: "bell.badge",
-                        description: Text(String(localized: "tickleList.empty.description"))
-                    )
-                }
-            }
             .sheet(isPresented: $showingAdd) {
                 TickleEditView()
             }

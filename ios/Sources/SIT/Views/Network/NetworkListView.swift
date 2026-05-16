@@ -99,23 +99,6 @@ struct NetworkListView: View {
                     }
                 }
             }
-            .overlay {
-                if contacts.isEmpty {
-                    ContentUnavailableView(
-                        String(localized: "networkList.empty.title"),
-                        systemImage: "person.2.slash",
-                        description: Text(String(localized: "networkList.empty.description"))
-                    )
-                } else if !searchText.isEmpty && filtered.isEmpty {
-                    ContentUnavailableView.search
-                } else if filtered.isEmpty {
-                    ContentUnavailableView(
-                        String(localized: "warm.network.empty.filtered",
-                               defaultValue: "No contacts in this group yet"),
-                        systemImage: "person.2"
-                    )
-                }
-            }
             .sheet(isPresented: $showingImport) { ImportView() }
             .sheet(isPresented: $showingAddContact) { AddContactView() }
         }
