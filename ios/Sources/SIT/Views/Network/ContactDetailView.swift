@@ -17,7 +17,6 @@ struct ContactDetailView: View {
     @State private var pickerSelection: PhotosPickerItem? = nil
     @State private var photoVersion = UUID()
     @State private var photoSaveError: String? = nil
-    @State private var prefilledMessage: String = ""
 
     private let warmth: Warmth = .subtle
     private var palette: WarmPalette { WarmTheme.palette(for: warmth) }
@@ -63,8 +62,7 @@ struct ContactDetailView: View {
             case .addToGroup:  AddToGroupSheet(contact: contact)
             case .compose:
                 ComposeView(onCancel: { activeSheet = nil },
-                            initialContact: contact,
-                            initialMessage: prefilledMessage)
+                            initialContact: contact)
             }
         }
         .confirmationDialog(
@@ -147,10 +145,7 @@ struct ContactDetailView: View {
                 systemImage: "message.fill",
                 style: .filled,
                 isEnabled: canText
-            ) {
-                prefilledMessage = ""
-                activeSheet = .compose
-            }
+            ) { activeSheet = .compose }
 
             actionChip(
                 title: String(localized: "warm.contact.createTickle", defaultValue: "Create a tickle"),
@@ -368,18 +363,9 @@ struct ContactDetailView: View {
     // MARK: - Featured host card
 
     private func hostCard(category: WarmCategory) -> some View {
-        WarmCard(
-            category: category,
-            variant: .hero,
-            warmth: warmth,
-            showPrompt: true,
-            onPromptTap: {
-                prefilledMessage = category.localizedPrompt
-                activeSheet = .compose
-            }
-        )
-        .padding(.horizontal, WarmSpacing.lg)
-        .padding(.top, 6)
+        WarmCard(category: category, variant: .hero, warmth: warmth, showPrompt: true)
+            .padding(.horizontal, WarmSpacing.lg)
+            .padding(.top, 6)
     }
 
     private var deleteButton: some View {

@@ -11,15 +11,7 @@ struct ComposeView: View {
 
     @State private var selectedContact: Contact?
     @State private var selectedTemplate: MessageTemplate?
-    @State private var messageBody: String
-
-    init(onCancel: (() -> Void)? = nil,
-         initialContact: Contact? = nil,
-         initialMessage: String = "") {
-        self.onCancel = onCancel
-        self.initialContact = initialContact
-        _messageBody = State(initialValue: initialMessage)
-    }
+    @State private var messageBody = ""
 
     @State private var searchText = ""
     @State private var showingComposer = false

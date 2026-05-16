@@ -1,25 +1,13 @@
 import SwiftUI
 
-/// Bottom strip on a warm card. Reads "Tickle idea: {prompt}".
-/// Mirrors `TicklePrompt` in system.jsx (lines 273-298).
+/// Bottom decorative strip on a warm card. Reads "Tickle idea: {prompt}".
+/// Mirrors `TicklePrompt` in system.jsx (lines 273-298). Non-interactive —
+/// the prompt is a gentle suggestion, not an action target.
 struct TicklePrompt: View {
     let category: WarmCategory
     var warmth: Warmth = .subtle
-    var onTap: (() -> Void)? = nil
 
     var body: some View {
-        if let onTap {
-            Button(action: onTap) { content(showChevron: true) }
-                .buttonStyle(.plain)
-        } else {
-            // No action wired — render as a decorative strip so it
-            // doesn't look like a dead tap target.
-            content(showChevron: false)
-        }
-    }
-
-    @ViewBuilder
-    private func content(showChevron: Bool) -> some View {
         let palette = category.palette
         HStack(spacing: 10) {
             Circle()
@@ -33,11 +21,6 @@ struct TicklePrompt: View {
                 .foregroundStyle(WarmTheme.palette(for: warmth).ink2)
                 .lineLimit(1)
             Spacer(minLength: 0)
-            if showChevron {
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 10, weight: .semibold))
-                    .foregroundStyle(palette.accent)
-            }
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 10)
