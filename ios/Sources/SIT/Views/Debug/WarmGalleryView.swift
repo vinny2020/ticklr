@@ -301,14 +301,16 @@ struct WarmGalleryView: View {
 
     @ViewBuilder
     private func scrollableChipRow<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+        // No negative-padding bleed — that pushes the row wider than its
+        // siblings, and SwiftUI's VStack then re-aligns all sibling
+        // content to the wider child's leading edge, shifting everything
+        // visibly leftward. The real Network screen will get an
+        // edge-to-edge sticky chip row in commit 11; this gallery just
+        // shows the scroll behavior inside the existing content inset.
         ScrollView(.horizontal, showsIndicators: false) {
             content()
                 .padding(.horizontal, 1)  // keeps capsule borders from clipping
         }
-        // Cancel the parent's horizontal padding so the row bleeds full-width
-        // and feels truly sticky-style when scrolled.
-        .padding(.horizontal, -20)
-        .safeAreaPadding(.horizontal, 20)
     }
 }
 
