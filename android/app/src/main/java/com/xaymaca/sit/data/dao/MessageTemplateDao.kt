@@ -13,6 +13,11 @@ interface MessageTemplateDao {
     @Query("SELECT * FROM message_templates WHERE id = :id")
     suspend fun getById(id: Long): MessageTemplate?
 
+    /** Snapshot count, used by the seed to decide whether to insert
+     *  the default template even when the SharedPrefs flag is set. */
+    @Query("SELECT COUNT(*) FROM message_templates")
+    suspend fun count(): Int
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(template: MessageTemplate): Long
 

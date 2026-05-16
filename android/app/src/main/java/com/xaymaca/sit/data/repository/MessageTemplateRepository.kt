@@ -14,6 +14,8 @@ class MessageTemplateRepository @Inject constructor(
 
     suspend fun getTemplateById(id: Long): MessageTemplate? = messageTemplateDao.getById(id)
 
+    suspend fun count(): Int = messageTemplateDao.count()
+
     suspend fun insertTemplate(template: MessageTemplate): Long =
         messageTemplateDao.insert(template)
 
