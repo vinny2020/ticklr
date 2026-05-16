@@ -40,6 +40,9 @@ class GroupViewModelTest {
         override suspend fun deleteAll() {}
         override fun search(query: String): Flow<List<Contact>> = flowOf(emptyList())
         override fun getContactsForGroup(groupId: Long): Flow<List<Contact>> = flowOf(emptyList())
+        override fun getContactsInCategory(categoryId: String): Flow<List<Contact>> = flowOf(emptyList())
+        override fun searchContactsInCategory(categoryId: String, query: String): Flow<List<Contact>> = flowOf(emptyList())
+        override fun countContactsInCategory(categoryId: String): Flow<Int> = flowOf(0)
     }
 
     private class StubContactGroupDao : ContactGroupDao {

@@ -49,4 +49,37 @@ interface ContactDao {
         "ORDER BY c.lastName ASC, c.firstName ASC"
     )
     fun getContactsForGroup(groupId: Long): Flow<List<Contact>>
+
+    /** Warm-redesign category filter: returns contacts who are in ANY
+     *  group whose canonical categoryId matches the argument. */
+    @Query(
+        "SELECT DISTINCT c.* FROM contacts c " +
+        "INNER JOIN contact_group_cross_ref r ON c.id = r.contactId " +
+        "INNER JOIN contact_groups g ON r.groupId = g.id " +
+        "WHERE g.categoryId = :categoryId " +
+        "ORDER BY c.lastName ASC, c.firstName ASC"
+    )
+    fun getContactsInCategory(categoryId: String): Flow<List<Contact>>
+
+    /** Same shape as getContactsInCategory but filtered by search query. */
+    @Query(
+        "SELECT DISTINCT c.* FROM contacts c " +
+        "INNER JOIN contact_group_cross_ref r ON c.id = r.contactId " +
+        "INNER JOIN contact_groups g ON r.groupId = g.id " +
+        "WHERE g.categoryId = :categoryId AND " +
+        "(c.firstName LIKE '%' || :query || '%' OR " +
+        "c.lastName LIKE '%' || :query || '%' OR " +
+        "c.company LIKE '%' || :query || '%') " +
+        "ORDER BY c.lastName ASC, c.firstName ASC"
+    )
+    fun searchContactsInCategory(categoryId: String, query: String): Flow<List<Contact>>
+
+    /** Count of contacts in a canonical category — drives chip badges. */
+    @Query(
+        "SELECT COUNT(DISTINCT c.id) FROM contacts c " +
+        "INNER JOIN contact_group_cross_ref r ON c.id = r.contactId " +
+        "INNER JOIN contact_groups g ON r.groupId = g.id " +
+        "WHERE g.categoryId = :categoryId"
+    )
+    fun countContactsInCategory(categoryId: String): Flow<Int>
 }

@@ -43,6 +43,9 @@ class ContactRepositoryTest {
         override fun search(query: String): Flow<List<Contact>> =
             flowOf(contacts.filter { it.fullName.contains(query, ignoreCase = true) })
         override fun getContactsForGroup(groupId: Long): Flow<List<Contact>> = flowOf(emptyList())
+        override fun getContactsInCategory(categoryId: String): Flow<List<Contact>> = flowOf(emptyList())
+        override fun searchContactsInCategory(categoryId: String, query: String): Flow<List<Contact>> = flowOf(emptyList())
+        override fun countContactsInCategory(categoryId: String): Flow<Int> = flowOf(0)
     }
 
     // Minimal stub — ContactGroupDao is not under test here
