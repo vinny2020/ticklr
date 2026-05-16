@@ -23879,127 +23879,127 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "الأصدقاء والعائلة"
+            "value": "العائلة"
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Přátelé a rodina"
+            "value": "Rodina"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Freunde und Familie"
+            "value": "Familie"
           }
         },
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Φίλοι και οικογένεια"
+            "value": "Οικογένεια"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Friends and Family"
+            "value": "Family"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Amigos y familia"
+            "value": "Familia"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Amis et famille"
+            "value": "Famille"
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "חברים ומשפחה"
+            "value": "משפחה"
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "दोस्त और परिवार"
+            "value": "परिवार"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Barátok és család"
+            "value": "Család"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Amici e famiglia"
+            "value": "Famiglia"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "友と家族が"
+            "value": "家族"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "친구와 가족"
+            "value": "가족"
           }
         },
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Vrienden en familie"
+            "value": "Familie"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Przyjaciele i rodzina"
+            "value": "Rodzina"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Amigos e família"
+            "value": "Família"
           }
         },
         "ro": {
           "stringUnit": {
             "state": "translated",
-            "value": "Prieteni și familie"
+            "value": "Familie"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Друзья и семья"
+            "value": "Семья"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Vänner och familj"
+            "value": "Familj"
           }
         },
         "ur": {
           "stringUnit": {
             "state": "translated",
-            "value": "دوست اور خاندان"
+            "value": "خاندان"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "朋友与家人"
+            "value": "家人"
           }
         }
       }

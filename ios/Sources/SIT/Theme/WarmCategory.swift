@@ -150,7 +150,7 @@ extension WarmCategory {
 
     var localizedHeadlineLine1: String {
         switch self {
-        case .family:     String(localized: "warm.category.family.headline.line1", defaultValue: "Friends and Family")
+        case .family:     String(localized: "warm.category.family.headline.line1", defaultValue: "Family")
         case .friends:    String(localized: "warm.category.friends.headline.line1", defaultValue: "Friends Stay")
         case .work:       String(localized: "warm.category.work.headline.line1", defaultValue: "Stronger")
         case .milestones: String(localized: "warm.category.milestones.headline.line1", defaultValue: "Remember")
