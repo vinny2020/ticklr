@@ -6,7 +6,37 @@
 
 ## 🛠️ Pending Tasks — Start Here
 
-> No pending iOS tasks. See the archive for shipped work.
+### Warm redesign — in flight on `feat/warm-redesign-ios`
+
+Major UI redesign for the next App Store release. Branch is feature-complete
+and pushed; not yet merged. See `~/.claude/projects/-Users-xaymaca-Projects-ticklr/memory/project_warm_redesign.md` for the full design decisions log.
+
+**What's done on the branch:**
+- Warm theme tokens (3 tiers × light + derived dark) in `Theme/WarmTheme.swift`
+- 5 canonical relationship categories (Family / Close Friends / Work / Milestones /
+  Neighbors & Community) with stable UUIDs — seeded as `ContactGroup`s on first launch
+  by `Services/CanonicalGroupSeed.swift`
+- Bundled Noto SemiBold for ar/hi/ja headings + Bebas Neue for Latin Subtle
+- Warm primitives in `Views/Shared/Warm/`: WarmCard, CategoryBadge, TicklePrompt
+  (decorative), MonogramAvatar + MonogramPhotoAffordance, WarmFilterChip,
+  WarmListContainer + WarmRowDivider, WarmEyebrow, WarmIllustration (Canvas-drawn)
+- ContactPhotoView (3-state resolver), PhotoStore (local-only JPEG, excluded from
+  iCloud backup), ContactPhotoFetcher (read-only CN match by phone/email)
+- All 5 main tabs warmed: Network, Tickle, Groups, Compose, Settings + Onboarding +
+  Contact Detail. Unified 32pt warm heading across tabs.
+- Localization: 52 new `warm.*` keys in all 21 shipped locales
+- Debug-only `WarmGalleryView` reachable from Settings → Debug
+
+**What's left:**
+- Open the PR, merge, ship.
+- Translation review of LLM-generated locales (cs/de/el/es/fr/he/hu/it/ko/nl/pl/pt/ro/ru/sv/ur/zh-Hans)
+- Optional: warm sub-screens (TemplateListView, ImportView, TickleEditView,
+  AddContactView, GroupEditSheet) still on system chrome.
+
+### Android parity
+
+`feat/warm-redesign-android` not yet cut. Planning notes in
+`project_warm_redesign` memory. ~11 commits per plan agent's punch list.
 
 ---
 
@@ -48,7 +78,7 @@ no analytics, no account required.
 - **UI**: SwiftUI throughout — no UIKit views except MessageUI wrapper
 - **Persistence**: SwiftData (`@Model` classes in `Models/`)
 - **Min target**: iOS 17.0
-- **Localization**: String Catalog (`Localizable.xcstrings`); shipped languages: English, Spanish
+- **Localization**: String Catalog (`Localizable.xcstrings`); shipped languages: 21 (en + ar, cs, de, el, es, fr, he, hi, hu, it, ja, ko, nl, pl, pt, ro, ru, sv, ur, zh-Hans)
 - **No third-party dependencies in shipping code** — only Apple frameworks in the `Ticklr` app target. Test-only deps scoped to `TicklrTests` are fine since they don't ship to the App Store (verify by inspecting the `.ipa` — the dep should not appear under `Payload/Ticklr.app/Frameworks/`).
 - **Real-world dataset**: 1,808 contacts imported — optimize for large lists
 
