@@ -6,6 +6,50 @@
 
 ## 🛠️ Pending Tasks — Start Here
 
+### Warm redesign — in flight on `feat/warm-redesign-android`
+
+Major UI redesign for the next Play Store release. Branch is
+feature-complete and pushed; not yet merged. See
+`~/.claude/projects/-Users-xaymaca-Projects-ticklr/memory/project_warm_redesign.md`
+for the full design decisions log shared with iOS.
+
+**What's done on the branch:**
+- Warm theme tokens (3 tiers × light + derived dark) in
+  `ui/theme/WarmTheme.kt`, plus LocalWarmth + LocalWarmPalette
+  composition locals.
+- 5 canonical relationship categories (Family / Close Friends /
+  Work / Milestones / Neighbors & Community) with stable string
+  ids in `ui/theme/WarmCategory.kt`. Seeded as `ContactGroup`s on
+  first launch by `data/repository/CanonicalGroupSeed.kt` via
+  Room migration v3→v4 that added the `categoryId: String?` column.
+- Material Icons Extended dep added (for Briefcase / CalendarMonth
+  / Groups icons used by category badges).
+- Bundled Noto SemiBold for ar/hi/ja headings + the existing
+  Bebas Neue for Latin Subtle in `ui/theme/WarmType.kt`. OFL-1.1
+  licenses under `android/licenses/`.
+- Warm primitives in `ui/warm/`: WarmCard (Hero/Compact/Row),
+  CategoryBadge, TicklePrompt (decorative), MonogramAvatar +
+  MonogramPhotoAffordance, WarmFilterChip, WarmListContainer +
+  WarmRowDivider, WarmEyebrow, WarmIllustration (Canvas-drawn).
+- ContactPhotoView (3-state resolver), LocalPhotoStore (local-only
+  JPEG cropped to 512px under filesDir/photos/), ContactPhotoService
+  (read-only ContactsContract match by phone via PhoneLookup or
+  email via Email.CONTENT_LOOKUP_URI).
+- 55 new `warm_*` string resources in all 21 shipped locales —
+  `TranslationCompletenessTest` stays green.
+- All 5 main tabs warmed (Network / Tickle / Groups / Compose /
+  Settings) + Onboarding + Contact Detail. Unified 32sp warm
+  heading across tabs.
+- WarmCategoryTest covers stable-id contract + palette + string
+  bindings.
+
+**What's left:**
+- Open the PR, merge, ship.
+- Translation review of LLM-generated locales (cs/de/el/es/fr/he/
+  hu/it/ko/nl/pl/pt/ro/ru/sv/ur/zh-Hans).
+- Optional: warm sub-screens (TemplateListScreen, ImportScreen,
+  TickleEditScreen, AddContactScreen) still on system chrome.
+
 ### Task — Move default-template seeding to app launch
 
 **Bug:** The default "Checking in" `MessageTemplate` is only seeded when the user opens
@@ -129,7 +173,7 @@ This is the most labor-intensive phase if undertaken. Treat as a project unto it
 - **DI**: Hilt
 - **Navigation**: Navigation Compose (`NavGraph.kt`)
 - **Background work**: WorkManager (`TickleWorker`) + `AlarmManager` via `TickleAlarmReceiver`
-- **Localization**: `res/values/strings.xml` + 12 translated locales (es, fr, de, it, nl, el, pl, ro, hu, pt, sv, cs); `resourceConfigurations` restricts bundled to these 13.
+- **Localization**: `res/values/strings.xml` + 20 translated locales (ar, cs, de, el, es, fr, he, hi, hu, it, ja, ko, nl, pl, pt, ro, ru, sv, ur, zh); `resourceConfigurations` restricts bundled to these 21.
 - **Min SDK**: 26 (Android 8.0) · **Target SDK**: 35
 - **SMS**: intent-only handoff via `Intent.ACTION_SENDTO` (`smsto:` URI). No `SEND_SMS` permission. (Removed in v1.5.5-production for Google Play SMS/Call Log policy compliance — see archive.)
 
