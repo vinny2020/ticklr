@@ -108,6 +108,18 @@ extension WarmCategory {
         case .community:  "person.3.fill"
         }
     }
+
+    /// Default emoji used as a `ContactGroup.emoji` fallback for the
+    /// seeded canonical groups. Users can change this in Group edit.
+    var defaultEmoji: String {
+        switch self {
+        case .family:     "👨\u{200D}👩\u{200D}👧"
+        case .friends:    "💛"
+        case .work:       "💼"
+        case .milestones: "🎂"
+        case .community:  "🏘️"
+        }
+    }
 }
 
 // MARK: - Localization

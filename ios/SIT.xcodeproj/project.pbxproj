@@ -45,6 +45,7 @@
 		984F8919395A52436BA23ECC /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 52B2D827FDB5FDABB740E34A /* Localizable.xcstrings */; };
 		9CA0D612EF182E101FDE37A4 /* LinkedInCSVParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D196741B99B788C9E325C3 /* LinkedInCSVParserTests.swift */; };
 		A12D6BFE761485462744D2F9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FE39C5E32CF68501239897AF /* InfoPlist.strings */; };
+		A47CF298C3FF9F43615F03D1 /* CanonicalGroupSeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71E34F441267292176C85B0 /* CanonicalGroupSeed.swift */; };
 		A8C96FD3F045625AE3DDF1DB /* MessageTemplateSeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40663A4021DF41A99C3F4585 /* MessageTemplateSeed.swift */; };
 		AA02325BB0CA65EB315DF2F1 /* BebasNeue-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D3DCE02125449F9E013629EF /* BebasNeue-Regular.ttf */; };
 		AF7B9499DE3B99B9194191B5 /* GroupDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033862D2DB3D8A467AAFFA5D /* GroupDetailView.swift */; };
@@ -142,6 +143,7 @@
 		B272BCB8206F59754B5D0D3D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B2A9372A30F13F2165F2EF8F /* WarmIllustration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmIllustration.swift; sourceTree = "<group>"; };
 		B5CC789856C13EA9BCE0A6EC /* ContactGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactGroup.swift; sourceTree = "<group>"; };
+		B71E34F441267292176C85B0 /* CanonicalGroupSeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanonicalGroupSeed.swift; sourceTree = "<group>"; };
 		BAE539205850900E86911453 /* WarmTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmTheme.swift; sourceTree = "<group>"; };
 		BB38137353FDCD5606A5A8FF /* TickleReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleReminder.swift; sourceTree = "<group>"; };
 		C3936B5E7A48687C98F2843D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 		E7BA9F90FAAE44CD99FEE7EC /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				B71E34F441267292176C85B0 /* CanonicalGroupSeed.swift */,
 				1D98A08F7576CDC556F9440C /* ContactFingerprint.swift */,
 				50AD38DE9F1FCCBD8B82DEED /* ContactImportService.swift */,
 				0245F8A1C0C8EF0E794507B1 /* ContactPhotoFetcher.swift */,
@@ -506,6 +509,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C41C7D26198E0DC2C958072 /* AddContactView.swift in Sources */,
+				A47CF298C3FF9F43615F03D1 /* CanonicalGroupSeed.swift in Sources */,
 				D7093B43ACD10588484F4A32 /* CategoryBadge.swift in Sources */,
 				D2644F8AB791907856A6E389 /* ComposeView.swift in Sources */,
 				4C98B38D7EF3EE65F2FD1A58 /* Contact.swift in Sources */,
