@@ -1,11 +1,14 @@
 package com.xaymaca.sit.service
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.ContactsContract
 import androidx.collection.LruCache
+import androidx.core.content.ContextCompat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -36,6 +39,18 @@ object ContactPhotoService {
         emails: List<String>,
     ): Bitmap? = withContext(Dispatchers.IO) {
         cache.get(contactId)?.let { return@withContext it }
+
+        // Silently bail when READ_CONTACTS isn't granted — mirrors iOS
+        // ContactPhotoFetcher's CNContactStore.authorizationStatus check.
+        // Without this, calling ContentResolver.query against
+        // ContactsContract crashes with SecurityException on Samsung
+        // and any other device where the user hasn't (or hasn't yet)
+        // granted contacts access.
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED
+        ) {
+            return@withContext null
+        }
 
         val normalisedPhones = phoneNumbers.map { normalisePhone(it) }.filter { it.isNotEmpty() }
         val normalisedEmails = emails.map { it.trim().lowercase() }.filter { it.isNotEmpty() }
