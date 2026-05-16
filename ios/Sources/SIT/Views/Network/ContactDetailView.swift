@@ -34,9 +34,7 @@ struct ContactDetailView: View {
 
                 detailCards
 
-                if !contact.groups.isEmpty {
-                    groupsSection
-                }
+                groupsSection
 
                 hostCard
 
@@ -312,23 +310,25 @@ struct ContactDetailView: View {
     private var groupsSection: some View {
         VStack(alignment: .leading, spacing: 6) {
             WarmEyebrow(text: String(localized: "contact.section.groups"), warmth: warmth)
-            WarmListContainer(warmth: warmth) {
-                ForEach(Array(contact.groups.enumerated()), id: \.element.persistentModelID) { idx, group in
-                    HStack(spacing: 12) {
-                        Text(group.emoji)
-                            .font(.system(size: 18))
-                            .frame(width: 36, height: 36)
-                            .background(palette.paperSurface)
-                            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                        Text(group.name)
-                            .font(.system(size: 15, weight: .medium))
-                            .foregroundStyle(palette.ink)
-                        Spacer()
-                    }
-                    .padding(.horizontal, WarmSpacing.lg)
-                    .padding(.vertical, WarmSpacing.md)
-                    if idx < contact.groups.count - 1 {
-                        WarmRowDivider(warmth: warmth)
+            if !contact.groups.isEmpty {
+                WarmListContainer(warmth: warmth) {
+                    ForEach(Array(contact.groups.enumerated()), id: \.element.persistentModelID) { idx, group in
+                        HStack(spacing: 12) {
+                            Text(group.emoji)
+                                .font(.system(size: 18))
+                                .frame(width: 36, height: 36)
+                                .background(palette.paperSurface)
+                                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                            Text(group.name)
+                                .font(.system(size: 15, weight: .medium))
+                                .foregroundStyle(palette.ink)
+                            Spacer()
+                        }
+                        .padding(.horizontal, WarmSpacing.lg)
+                        .padding(.vertical, WarmSpacing.md)
+                        if idx < contact.groups.count - 1 {
+                            WarmRowDivider(warmth: warmth)
+                        }
                     }
                 }
             }
@@ -336,13 +336,24 @@ struct ContactDetailView: View {
             Button {
                 activeSheet = .addToGroup
             } label: {
-                Label(String(localized: "contactDetail.button.addToGroup"),
-                      systemImage: "person.3.fill")
-                    .font(.system(size: 13, weight: .semibold))
-                    .foregroundStyle(category.palette.accent)
-                    .padding(.top, 4)
+                HStack(spacing: 8) {
+                    Image(systemName: "person.3.fill")
+                        .font(.system(size: 13, weight: .semibold))
+                    Text(String(localized: "contactDetail.button.addToGroup"))
+                        .font(.system(size: 14, weight: .semibold))
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
+                .background(palette.cardBg)
+                .foregroundStyle(category.palette.accent)
+                .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 14, style: .continuous)
+                        .stroke(palette.cardBorder, lineWidth: 1)
+                )
             }
             .buttonStyle(.plain)
+            .padding(.top, contact.groups.isEmpty ? 0 : 4)
         }
         .padding(.horizontal, WarmSpacing.lg)
     }
