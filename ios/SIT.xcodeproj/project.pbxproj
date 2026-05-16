@@ -19,6 +19,7 @@
 		353AA993FFB1A862D307ED9F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 209311518915490C7F72039B /* Assets.xcassets */; };
 		43434A6ACC0CD3146036A11C /* TickleSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8316646A179885792C4004 /* TickleSchedulerTests.swift */; };
 		4BE808CBAA4EA9D55409DD82 /* ContactImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AD38DE9F1FCCBD8B82DEED /* ContactImportService.swift */; };
+		4C29624DE74EE0486B690D76 /* WarmIllustration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A9372A30F13F2165F2EF8F /* WarmIllustration.swift */; };
 		4C98B38D7EF3EE65F2FD1A58 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EBB61C7877871E721045C7 /* Contact.swift */; };
 		5188A4195E2A5CA01730175F /* MessageTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72098A45B6ACBC527F5DF0B9 /* MessageTemplate.swift */; };
 		568B2F7E2C0A37B9505FFDE4 /* ContactGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC789856C13EA9BCE0A6EC /* ContactGroup.swift */; };
@@ -133,6 +134,7 @@
 		ADD9D6C1CDD05CD88E281BAD /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B1887449FF664ADCCCB1BFC3 /* SITApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SITApp.swift; sourceTree = "<group>"; };
 		B272BCB8206F59754B5D0D3D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B2A9372A30F13F2165F2EF8F /* WarmIllustration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmIllustration.swift; sourceTree = "<group>"; };
 		B5CC789856C13EA9BCE0A6EC /* ContactGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactGroup.swift; sourceTree = "<group>"; };
 		BAE539205850900E86911453 /* WarmTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmTheme.swift; sourceTree = "<group>"; };
 		BB38137353FDCD5606A5A8FF /* TickleReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleReminder.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 				A6A494ADD27B9C55B5B86A4D /* WarmCard.swift */,
 				8B1914E51A7708868BB45255 /* WarmEyebrow.swift */,
 				A1D79AFAFDF53D4ACDAE74AF /* WarmFilterChip.swift */,
+				B2A9372A30F13F2165F2EF8F /* WarmIllustration.swift */,
 				8C5907E434D833533D8A7EBC /* WarmListContainer.swift */,
 			);
 			path = Warm;
@@ -531,6 +534,7 @@
 				7BDB0ED4DF1D16C8F54EE670 /* WarmFilterChip.swift in Sources */,
 				177120F253ADFB379BD6A007 /* WarmGalleryView.swift in Sources */,
 				7D2E16C11970003125067AF0 /* WarmHeadingFont.swift in Sources */,
+				4C29624DE74EE0486B690D76 /* WarmIllustration.swift in Sources */,
 				D4C1A48DAA2D66E88EFC5692 /* WarmListContainer.swift in Sources */,
 				DAC6E39278733054D630C412 /* WarmTheme.swift in Sources */,
 				656FADADA38339BCFBD815D5 /* WordmarkLockup.swift in Sources */,

@@ -165,23 +165,9 @@ struct WarmCard: View {
             .foregroundStyle(WarmTheme.palette(for: warmth).ink2)
     }
 
-    /// Placeholder illustration. Replaced by `WarmIllustrationView` in
-    /// commit 3 — for now it's a tinted gradient swatch keyed by category.
     private func illustrationFrame(aspect: CGFloat) -> some View {
-        let palette = category.palette
-        return GeometryReader { geo in
-            ZStack {
-                LinearGradient(
-                    colors: [palette.accentTint, palette.accentBadge],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-                Image(systemName: category.systemImageName)
-                    .font(.system(size: min(geo.size.width, geo.size.height) * 0.32))
-                    .foregroundStyle(palette.accent.opacity(0.65))
-            }
-        }
-        .aspectRatio(aspect, contentMode: .fit)
+        WarmIllustration(category: category)
+            .aspectRatio(aspect, contentMode: .fit)
     }
 }
 

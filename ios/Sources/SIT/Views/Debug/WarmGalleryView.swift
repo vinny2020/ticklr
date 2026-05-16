@@ -86,6 +86,26 @@ struct WarmGalleryView: View {
                     }
                 }
 
+                section("Illustrations (16:9)") {
+                    VStack(spacing: 10) {
+                        ForEach(WarmCategory.allCases) { cat in
+                            WarmIllustration(category: cat)
+                                .aspectRatio(16.0 / 9.0, contentMode: .fit)
+                                .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                                .overlay(alignment: .topLeading) {
+                                    Text(cat.localizedLabel.uppercased())
+                                        .font(.system(size: 9, weight: .semibold))
+                                        .tracking(1.2)
+                                        .padding(.horizontal, 6)
+                                        .padding(.vertical, 3)
+                                        .background(.thinMaterial)
+                                        .clipShape(Capsule())
+                                        .padding(8)
+                                }
+                        }
+                    }
+                }
+
                 section("Hero card (Family)") {
                     WarmCard(category: .family, variant: .hero, warmth: warmth)
                 }
