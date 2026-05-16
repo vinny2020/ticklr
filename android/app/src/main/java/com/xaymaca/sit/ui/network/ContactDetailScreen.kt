@@ -69,6 +69,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -525,7 +527,15 @@ private fun ActionChip(
         Text(
             text = title,
             style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = foreground),
-            maxLines = 1,
+            // Allow up to 2 lines so labels like "Create a tickle" wrap
+            // instead of truncating to "Create a". `minLines = 2`
+            // reserves the same vertical space on every chip even when
+            // its label is one line ("Call" / "Email"), keeping chip
+            // heights even across the row.
+            maxLines = 2,
+            minLines = 2,
+            textAlign = TextAlign.Center,
+            overflow = TextOverflow.Ellipsis,
         )
     }
 }
