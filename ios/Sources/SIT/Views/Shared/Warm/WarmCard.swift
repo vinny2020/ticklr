@@ -19,6 +19,10 @@ struct WarmCard: View {
     /// the Groups list — "12 contacts").
     var contactsCount: Int? = nil
     var onTap: (() -> Void)? = nil
+    /// When set, taps on the inner TicklePrompt strip fire this instead
+    /// of being swallowed by the outer card button. Lets a card open
+    /// one destination on body tap and another on prompt tap.
+    var onPromptTap: (() -> Void)? = nil
 
     var body: some View {
         Button(action: { onTap?() }) {
@@ -62,7 +66,7 @@ struct WarmCard: View {
                 }
 
                 if showPrompt {
-                    TicklePrompt(category: category, warmth: warmth)
+                    TicklePrompt(category: category, warmth: warmth, onTap: onPromptTap)
                         .padding(.top, 4)
                 }
             }
