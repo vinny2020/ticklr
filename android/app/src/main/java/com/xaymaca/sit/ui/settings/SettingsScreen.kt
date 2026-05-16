@@ -2,6 +2,7 @@ package com.xaymaca.sit.ui.settings
 
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.ui.unit.sp
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.compose.foundation.clickable
@@ -72,18 +73,21 @@ fun SettingsScreen(
         }
     }
 
+    val warmth = com.xaymaca.sit.ui.theme.Warmth.Subtle
+    val warmPalette = com.xaymaca.sit.ui.theme.WarmTheme.palette(warmth)
+
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.settings_title), fontWeight = FontWeight.Bold) },
+                title = { },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background,
-                    titleContentColor = MaterialTheme.colorScheme.onBackground
-                )
+                    containerColor = warmPalette.paper,
+                    titleContentColor = warmPalette.ink,
+                ),
             )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
-        containerColor = MaterialTheme.colorScheme.background
+        containerColor = warmPalette.paper,
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -92,6 +96,16 @@ fun SettingsScreen(
                 .padding(paddingValues)
                 .padding(vertical = 8.dp)
         ) {
+            // Inline warm 32sp title (parity with Network / Tickle /
+            // Groups / Compose).
+            Text(
+                text = stringResource(R.string.settings_title),
+                style = com.xaymaca.sit.ui.theme.WarmHeadingFont.style(
+                    size = 32.sp,
+                    warmth = warmth,
+                ).copy(color = warmPalette.ink),
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+            )
             // Appearance section
             SettingsSectionHeader(stringResource(R.string.settings_section_appearance))
 

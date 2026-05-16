@@ -2,6 +2,7 @@ package com.xaymaca.sit.ui.compose
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.unit.sp
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -47,12 +48,14 @@ fun ComposeScreen(
     var selectedTemplateName by remember { mutableStateOf<String?>(null) }
     val messageFocusRequester = remember { FocusRequester() }
     val messageSentStr = stringResource(R.string.compose_message_sent)
+    val warmth = com.xaymaca.sit.ui.theme.Warmth.Subtle
+    val warmPalette = com.xaymaca.sit.ui.theme.WarmTheme.palette(warmth)
 
     Box(modifier = Modifier.fillMaxSize()) {
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text(stringResource(R.string.compose_title), fontWeight = FontWeight.Bold) },
+                    title = { },
                     actions = {
                         if (selectedContact != null || messageBody.isNotBlank()) {
                             IconButton(onClick = {
@@ -63,18 +66,18 @@ fun ComposeScreen(
                                 Icon(
                                     Icons.Default.Close,
                                     contentDescription = stringResource(R.string.compose_clear),
-                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                    tint = warmPalette.ink2,
                                 )
                             }
                         }
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.background,
-                        titleContentColor = MaterialTheme.colorScheme.onBackground
-                    )
+                        containerColor = warmPalette.paper,
+                        titleContentColor = warmPalette.ink,
+                    ),
                 )
             },
-            containerColor = MaterialTheme.colorScheme.background
+            containerColor = warmPalette.paper,
         ) { paddingValues ->
             Column(
                 modifier = Modifier
@@ -83,6 +86,16 @@ fun ComposeScreen(
                     .imePadding()
                     .padding(horizontal = 16.dp)
             ) {
+                // Inline warm 32sp title — parity with Network / Tickle /
+                // Groups headers.
+                Text(
+                    text = stringResource(R.string.compose_title),
+                    style = com.xaymaca.sit.ui.theme.WarmHeadingFont.style(
+                        size = 32.sp,
+                        warmth = warmth,
+                    ).copy(color = warmPalette.ink),
+                    modifier = Modifier.padding(top = 8.dp),
+                )
                 Spacer(modifier = Modifier.height(8.dp))
 
                 // To: contact search field
