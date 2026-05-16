@@ -35,8 +35,8 @@ struct WarmFilterChip: View {
                         .clipShape(Capsule())
                 }
             }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 7)
+            .padding(.horizontal, 14)
+            .padding(.vertical, 10)
             .foregroundStyle(foreground)
             .background(background)
             .clipShape(Capsule())
