@@ -93,7 +93,7 @@ struct OnboardingView: View {
             Button {
                 presented = .importContacts
             } label: {
-                Text(String(localized: "warm.onboarding.cta.import", defaultValue: "Import contacts"))
+                Text(String(localized: "warm.onboarding.cta.import", defaultValue: "Build my network"))
                     .font(.system(size: 16, weight: .semibold))
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 14)
