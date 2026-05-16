@@ -45,6 +45,8 @@ class GroupViewModelTest {
     private class StubContactGroupDao : ContactGroupDao {
         override fun getAll(): Flow<List<ContactGroup>> = flowOf(emptyList())
         override suspend fun getById(id: Long): ContactGroup? = null
+        override suspend fun getByCategoryId(categoryId: String): ContactGroup? = null
+        override suspend fun findByNameCaseInsensitive(name: String): ContactGroup? = null
         override suspend fun getGroupWithContacts(id: Long): GroupWithContacts? = null
         override fun getAllGroupsWithContacts(): Flow<List<GroupWithContacts>> = flowOf(emptyList())
         override suspend fun insert(group: ContactGroup): Long = 0L

@@ -7,6 +7,8 @@ import android.content.Context
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.xaymaca.sit.data.dao.ContactGroupDao
+import com.xaymaca.sit.data.repository.CanonicalGroupSeed
 import com.xaymaca.sit.data.repository.MessageTemplateRepository
 import com.xaymaca.sit.data.repository.MessageTemplateSeed
 import dagger.hilt.android.HiltAndroidApp
@@ -25,6 +27,9 @@ class SITApp : Application(), Configuration.Provider {
     @Inject
     lateinit var messageTemplateRepository: MessageTemplateRepository
 
+    @Inject
+    lateinit var contactGroupDao: ContactGroupDao
+
     private val appScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     override val workManagerConfiguration: Configuration
@@ -39,12 +44,19 @@ class SITApp : Application(), Configuration.Provider {
         // Set to false to suppress debug noise if needed
         FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
         seedDefaultTemplate()
+        seedCanonicalGroups()
     }
 
     private fun seedDefaultTemplate() {
         val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         appScope.launch {
             MessageTemplateSeed.seedDefaultIfNeeded(messageTemplateRepository, prefs)
+        }
+    }
+
+    private fun seedCanonicalGroups() {
+        appScope.launch {
+            CanonicalGroupSeed.seedIfNeeded(contactGroupDao, this@SITApp)
         }
     }
 

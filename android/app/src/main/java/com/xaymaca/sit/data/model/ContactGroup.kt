@@ -8,5 +8,11 @@ data class ContactGroup(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val name: String = "",
     val emoji: String = "👥",
-    val createdAt: Long = System.currentTimeMillis()
+    val createdAt: Long = System.currentTimeMillis(),
+    /**
+     * Stable identifier for one of the canonical warm-redesign categories
+     * (`family`, `friends`, `work`, `milestones`, `community`). Null for
+     * user-created groups. See WarmCategory.id.
+     */
+    val categoryId: String? = null,
 )
