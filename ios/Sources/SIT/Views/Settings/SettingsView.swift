@@ -98,6 +98,10 @@ struct SettingsView: View {
                 // MARK: — Debug (compiled out in Release)
                 #if DEBUG
                 Section {
+                    NavigationLink("Warm Gallery") {
+                        WarmGalleryView()
+                    }
+
                     Button("Load Test Contacts") {
                         Task { @MainActor in
                             do {
