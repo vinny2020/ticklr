@@ -102,6 +102,11 @@ struct SettingsView: View {
                         WarmGalleryView()
                     }
 
+                    Button("Reset Onboarding") {
+                        hasCompletedOnboarding = false
+                        seedMessage = "Onboarding reset — relaunch app"
+                    }
+
                     Button("Load Test Contacts") {
                         Task { @MainActor in
                             do {
