@@ -291,7 +291,6 @@
     <string name="warm_contact_sendTickle">Отправить сообщение</string>
     <string name="warm_contact_createTickle">Создать tickle</string>
     <string name="warm_contact_call">Позвонить</string>
-    <string name="warm_contact_email">Почта</string>
     <string name="warm_contact_lastConnected">Последний контакт</string>
     <string name="warm_contact_notes_placeholder">Заметки о том, чем для тебя важен этот человек…</string>
 

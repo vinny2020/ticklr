@@ -289,7 +289,6 @@
     <string name="warm_contact_sendTickle">Stuur een sms</string>
     <string name="warm_contact_createTickle">Tickle maken</string>
     <string name="warm_contact_call">Bellen</string>
-    <string name="warm_contact_email">E-mail</string>
     <string name="warm_contact_lastConnected">Laatste contact</string>
     <string name="warm_contact_notes_placeholder">Notities over wat deze persoon voor je betekent…</string>
 

@@ -289,7 +289,6 @@
     <string name="warm_contact_sendTickle">Skicka sms</string>
     <string name="warm_contact_createTickle">Skapa ett tickle</string>
     <string name="warm_contact_call">Ring</string>
-    <string name="warm_contact_email">Mejl</string>
     <string name="warm_contact_lastConnected">Senast kontaktad</string>
     <string name="warm_contact_notes_placeholder">Anteckningar om vad den här personen betyder för dig…</string>
 

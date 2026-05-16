@@ -293,7 +293,6 @@
     <string name="warm_contact_sendTickle">أرسل رسالة</string>
     <string name="warm_contact_createTickle">أنشئ تذكيرًا</string>
     <string name="warm_contact_call">اتصال</string>
-    <string name="warm_contact_email">بريد</string>
     <string name="warm_contact_lastConnected">آخر تواصل</string>
     <string name="warm_contact_notes_placeholder">ملاحظات عمّا يجعل هذا الشخص يهمّك…</string>
 

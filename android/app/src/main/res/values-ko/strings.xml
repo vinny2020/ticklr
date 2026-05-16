@@ -288,7 +288,6 @@
     <string name="warm_contact_sendTickle">메시지 보내기</string>
     <string name="warm_contact_createTickle">Tickle 만들기</string>
     <string name="warm_contact_call">전화</string>
-    <string name="warm_contact_email">이메일</string>
     <string name="warm_contact_lastConnected">마지막 연락</string>
     <string name="warm_contact_notes_placeholder">이 사람이 왜 소중한지 기록해 두세요…</string>
 

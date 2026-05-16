@@ -288,7 +288,6 @@
     <string name="warm_contact_sendTickle">メッセージを送る</string>
     <string name="warm_contact_createTickle">リマインドを作る</string>
     <string name="warm_contact_call">通話</string>
-    <string name="warm_contact_email">メール</string>
     <string name="warm_contact_lastConnected">最後に連絡</string>
     <string name="warm_contact_notes_placeholder">この人があなたにとってどんな存在かを書き留めて…</string>
 

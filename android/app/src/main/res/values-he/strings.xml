@@ -294,7 +294,6 @@
     <string name="warm_contact_sendTickle">שלח הודעה</string>
     <string name="warm_contact_createTickle">צור tickle</string>
     <string name="warm_contact_call">התקשר</string>
-    <string name="warm_contact_email">אימייל</string>
     <string name="warm_contact_lastConnected">קשר אחרון</string>
     <string name="warm_contact_notes_placeholder">הערות על מה שהאדם הזה משמעותי עבורך…</string>
 

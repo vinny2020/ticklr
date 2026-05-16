@@ -289,7 +289,6 @@
     <string name="warm_contact_sendTickle">Üzenet küldése</string>
     <string name="warm_contact_createTickle">Tickle létrehozása</string>
     <string name="warm_contact_call">Hívás</string>
-    <string name="warm_contact_email">E-mail</string>
     <string name="warm_contact_lastConnected">Utolsó kapcsolat</string>
     <string name="warm_contact_notes_placeholder">Jegyzetek arról, miért fontos ez az ember…</string>
 

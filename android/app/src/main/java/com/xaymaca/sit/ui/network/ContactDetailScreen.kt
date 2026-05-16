@@ -30,7 +30,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Message
 import androidx.compose.material.icons.filled.Notifications
@@ -218,18 +217,11 @@ fun ContactDetailScreen(
                         palette = palette,
                         canText = phoneNumbers.isNotEmpty(),
                         canCall = phoneNumbers.isNotEmpty(),
-                        canEmail = emails.isNotEmpty(),
                         onSendText = { onCompose(contactId) },
                         onCreateTickle = onAddTickle,
                         onCall = {
                             phoneNumbers.firstOrNull()?.let { number ->
                                 val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$number"))
-                                context.startActivity(intent)
-                            }
-                        },
-                        onEmail = {
-                            emails.firstOrNull()?.let { email ->
-                                val intent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:$email"))
                                 context.startActivity(intent)
                             }
                         },
@@ -445,11 +437,9 @@ private fun ActionChipRow(
     palette: WarmPalette,
     canText: Boolean,
     canCall: Boolean,
-    canEmail: Boolean,
     onSendText: () -> Unit,
     onCreateTickle: () -> Unit,
     onCall: () -> Unit,
-    onEmail: () -> Unit,
 ) {
     Row(
         modifier = Modifier.fillMaxWidth().padding(horizontal = WarmSpacing.Lg),
@@ -483,16 +473,6 @@ private fun ActionChipRow(
             category = category,
             palette = palette,
             onClick = onCall,
-            modifier = Modifier.weight(1f),
-        )
-        ActionChip(
-            title = stringResource(R.string.warm_contact_email),
-            icon = Icons.Filled.Email,
-            filled = false,
-            enabled = canEmail,
-            category = category,
-            palette = palette,
-            onClick = onEmail,
             modifier = Modifier.weight(1f),
         )
     }

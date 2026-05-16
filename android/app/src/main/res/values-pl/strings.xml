@@ -291,7 +291,6 @@
     <string name="warm_contact_sendTickle">Wyślij SMS</string>
     <string name="warm_contact_createTickle">Utwórz tickle</string>
     <string name="warm_contact_call">Zadzwoń</string>
-    <string name="warm_contact_email">Email</string>
     <string name="warm_contact_lastConnected">Ostatni kontakt</string>
     <string name="warm_contact_notes_placeholder">Notatki o tym, co znaczy dla ciebie ta osoba…</string>
 

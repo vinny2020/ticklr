@@ -289,7 +289,6 @@
     <string name="warm_contact_sendTickle">Nachricht senden</string>
     <string name="warm_contact_createTickle">Tickle erstellen</string>
     <string name="warm_contact_call">Anrufen</string>
-    <string name="warm_contact_email">E-Mail</string>
     <string name="warm_contact_lastConnected">Zuletzt erreicht</string>
     <string name="warm_contact_notes_placeholder">Notizen darüber, was diese Person dir bedeutet…</string>
 

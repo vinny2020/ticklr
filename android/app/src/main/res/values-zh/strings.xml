@@ -288,7 +288,6 @@
     <string name="warm_contact_sendTickle">发短信</string>
     <string name="warm_contact_createTickle">创建 tickle</string>
     <string name="warm_contact_call">通话</string>
-    <string name="warm_contact_email">邮件</string>
     <string name="warm_contact_lastConnected">上次联系</string>
     <string name="warm_contact_notes_placeholder">记下这个人对你的意义…</string>
 
