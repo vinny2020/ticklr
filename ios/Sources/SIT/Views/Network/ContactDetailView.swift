@@ -136,15 +136,23 @@ struct ContactDetailView: View {
     // MARK: - Action chips
 
     private var actionChipRow: some View {
+        let canText = !contact.phoneNumbers.isEmpty
         let canCall = !contact.phoneNumbers.isEmpty
         let canEmail = !contact.emails.isEmpty
-        return HStack(spacing: 10) {
+        return HStack(spacing: 8) {
             actionChip(
-                title: String(localized: "warm.contact.sendTickle", defaultValue: "Send a tickle"),
-                systemImage: "bell.fill",
+                title: String(localized: "warm.contact.sendTickle", defaultValue: "Send a text"),
+                systemImage: "message.fill",
                 style: .filled,
-                isEnabled: true
+                isEnabled: canText
             ) { activeSheet = .compose }
+
+            actionChip(
+                title: String(localized: "warm.contact.createTickle", defaultValue: "Create a tickle"),
+                systemImage: "bell.fill",
+                style: .outline,
+                isEnabled: true
+            ) { activeSheet = .addTickle }
 
             actionChip(
                 title: String(localized: "warm.contact.call", defaultValue: "Call"),

@@ -27541,6 +27541,137 @@
         }
       }
     },
+    "warm.contact.createTickle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create a tickle"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أنشئ تذكيرًا"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "टिकल बनाएँ"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "リマインドを作る"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crear un tickle"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Créer un tickle"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tickle erstellen"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crea un tickle"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tickle maken"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Δημιούργησε tickle"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utwórz tickle"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Creează un tickle"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tickle létrehozása"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Criar um tickle"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skapa ett tickle"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vytvořit tickle"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Создать tickle"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "创建 tickle"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tickle 만들기"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "צור tickle"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ٹِکل بنائیں"
+          }
+        }
+      }
+    },
     "warm.contact.email": {
       "extractionState": "manual",
       "localizations": {
@@ -27940,127 +28071,127 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "أرسل تذكيرًا"
+            "value": "أرسل رسالة"
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Odeslat tickle"
+            "value": "Poslat zprávu"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tickle senden"
+            "value": "Nachricht senden"
           }
         },
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Στείλε ένα tickle"
+            "value": "Στείλε μήνυμα"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Send a tickle"
+            "value": "Send a text"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Enviar un tickle"
+            "value": "Enviar un texto"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Envoyer un tickle"
+            "value": "Envoyer un texto"
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "שלח tickle"
+            "value": "שלח הודעה"
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "टिकल भेजें"
+            "value": "टेक्स्ट भेजें"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tickle küldése"
+            "value": "Üzenet küldése"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Invia un tickle"
+            "value": "Invia un messaggio"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "リマインドを送る"
+            "value": "メッセージを送る"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tickle 보내기"
+            "value": "메시지 보내기"
           }
         },
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Verstuur een tickle"
+            "value": "Stuur een sms"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Wyślij tickle"
+            "value": "Wyślij SMS"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Enviar um tickle"
+            "value": "Enviar uma mensagem"
           }
         },
         "ro": {
           "stringUnit": {
             "state": "translated",
-            "value": "Trimite un tickle"
+            "value": "Trimite un mesaj"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Отправить tickle"
+            "value": "Отправить сообщение"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Skicka ett tickle"
+            "value": "Skicka sms"
           }
         },
         "ur": {
           "stringUnit": {
             "state": "translated",
-            "value": "ٹِکل بھیجیں"
+            "value": "میسج بھیجیں"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "发送 tickle"
+            "value": "发短信"
           }
         }
       }
