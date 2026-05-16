@@ -293,4 +293,5 @@
     <string name="warm_contact_lastConnected">Utolsó kapcsolat</string>
     <string name="warm_contact_notes_placeholder">Jegyzetek arról, miért fontos ez az ember…</string>
 
+    <string name="warm_contact_accessBanner">Engedélyezd a névjegyekhez való hozzáférést, hogy a címjegyzék fotója használható legyen.</string>
 </resources>

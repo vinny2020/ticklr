@@ -297,4 +297,5 @@
     <string name="warm_contact_lastConnected">آخر تواصل</string>
     <string name="warm_contact_notes_placeholder">ملاحظات عمّا يجعل هذا الشخص يهمّك…</string>
 
+    <string name="warm_contact_accessBanner">اسمح بالوصول إلى جهات الاتصال لاستخدام الصورة من دفتر العناوين.</string>
 </resources>

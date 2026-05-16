@@ -87,6 +87,7 @@ import com.xaymaca.sit.ui.theme.WarmTheme
 import com.xaymaca.sit.ui.theme.Warmth
 import com.xaymaca.sit.ui.warm.ContactPhotoStyle
 import com.xaymaca.sit.ui.warm.ContactPhotoView
+import com.xaymaca.sit.ui.warm.ContactsAccessBanner
 import com.xaymaca.sit.ui.warm.WarmCard
 import com.xaymaca.sit.ui.warm.WarmCardVariant
 import com.xaymaca.sit.ui.warm.WarmEyebrow
@@ -194,6 +195,19 @@ fun ContactDetailScreen(
                             )
                         },
                     )
+                }
+
+                item {
+                    ContactsAccessBanner(
+                        contact = c,
+                        category = categoryForTint,
+                        modifier = Modifier.padding(horizontal = WarmSpacing.Lg),
+                    ) {
+                        // Permission just landed — invalidate the
+                        // system-Contacts cache and re-resolve.
+                        ContactPhotoService.clearCache()
+                        photoRefreshKey = UUID.randomUUID()
+                    }
                 }
 
                 item {

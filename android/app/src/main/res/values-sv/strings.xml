@@ -293,4 +293,5 @@
     <string name="warm_contact_lastConnected">Senast kontaktad</string>
     <string name="warm_contact_notes_placeholder">Anteckningar om vad den här personen betyder för dig…</string>
 
+    <string name="warm_contact_accessBanner">Tillåt åtkomst till kontakter för att använda fotot från din adressbok.</string>
 </resources>

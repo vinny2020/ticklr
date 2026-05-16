@@ -298,4 +298,5 @@
     <string name="warm_contact_lastConnected">קשר אחרון</string>
     <string name="warm_contact_notes_placeholder">הערות על מה שהאדם הזה משמעותי עבורך…</string>
 
+    <string name="warm_contact_accessBanner">אפשר גישה לאנשי הקשר כדי להשתמש בתמונה מספר הטלפונים.</string>
 </resources>

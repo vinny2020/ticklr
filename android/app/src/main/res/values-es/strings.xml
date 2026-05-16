@@ -293,4 +293,5 @@
     <string name="warm_contact_lastConnected">Último contacto</string>
     <string name="warm_contact_notes_placeholder">Notas sobre por qué esta persona te importa…</string>
 
+    <string name="warm_contact_accessBanner">Permite el acceso a contactos para usar la foto de tu agenda.</string>
 </resources>

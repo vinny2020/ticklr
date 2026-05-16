@@ -295,4 +295,5 @@
     <string name="warm_contact_lastConnected">Последний контакт</string>
     <string name="warm_contact_notes_placeholder">Заметки о том, чем для тебя важен этот человек…</string>
 
+    <string name="warm_contact_accessBanner">Разреши доступ к контактам, чтобы использовать фото из адресной книги.</string>
 </resources>

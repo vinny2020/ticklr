@@ -293,4 +293,5 @@
     <string name="warm_contact_lastConnected">Τελευταία επαφή</string>
     <string name="warm_contact_notes_placeholder">Σημειώσεις για το γιατί σε νοιάζει αυτό το άτομο…</string>
 
+    <string name="warm_contact_accessBanner">Επίτρεψε την πρόσβαση στις επαφές για να χρησιμοποιηθεί η φωτογραφία από το ευρετήριο.</string>
 </resources>

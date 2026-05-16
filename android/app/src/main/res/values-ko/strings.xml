@@ -292,4 +292,5 @@
     <string name="warm_contact_lastConnected">마지막 연락</string>
     <string name="warm_contact_notes_placeholder">이 사람이 왜 소중한지 기록해 두세요…</string>
 
+    <string name="warm_contact_accessBanner">주소록의 사진을 사용하려면 연락처 접근을 허용해 주세요.</string>
 </resources>

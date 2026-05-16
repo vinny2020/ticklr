@@ -293,4 +293,5 @@
     <string name="warm_contact_lastConnected">Dernier contact</string>
     <string name="warm_contact_notes_placeholder">Notes sur ce qui te lie à cette personne…</string>
 
+    <string name="warm_contact_accessBanner">Autorise l’accès aux contacts pour utiliser la photo de ton carnet d’adresses.</string>
 </resources>
