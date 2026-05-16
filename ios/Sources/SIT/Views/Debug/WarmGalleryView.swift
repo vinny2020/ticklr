@@ -52,28 +52,30 @@ struct WarmGalleryView: View {
                 }
 
                 section("Filter chips — inactive") {
-                    chipRow(active: false)
+                    scrollableChipRow { chipRow(active: false) }
                 }
 
                 section("Filter chips — active") {
-                    chipRow(active: true)
+                    scrollableChipRow { chipRow(active: true) }
                 }
 
                 section("Filter chips — interactive") {
-                    HStack(spacing: 8) {
-                        WarmFilterChip(
-                            kind: .all,
-                            label: "All",
-                            count: 142,
-                            isActive: activeFilter == nil
-                        ) { activeFilter = nil }
-                        ForEach([WarmCategory.family, .friends, .work, .community]) { cat in
+                    scrollableChipRow {
+                        HStack(spacing: 8) {
                             WarmFilterChip(
-                                kind: .category(cat),
-                                label: cat.localizedLabel,
-                                count: 12,
-                                isActive: activeFilter == cat
-                            ) { activeFilter = cat }
+                                kind: .all,
+                                label: "All",
+                                count: 142,
+                                isActive: activeFilter == nil
+                            ) { activeFilter = nil }
+                            ForEach([WarmCategory.family, .friends, .work, .community]) { cat in
+                                WarmFilterChip(
+                                    kind: .category(cat),
+                                    label: cat.localizedLabel,
+                                    count: 12,
+                                    isActive: activeFilter == cat
+                                ) { activeFilter = cat }
+                            }
                         }
                     }
                 }
@@ -192,10 +194,27 @@ struct WarmGalleryView: View {
     private func chipRow(active: Bool) -> some View {
         HStack(spacing: 8) {
             WarmFilterChip(kind: .all, label: "All", count: 142, isActive: active) {}
-            WarmFilterChip(kind: .category(.family), label: "Family", count: 12, isActive: active) {}
-            WarmFilterChip(kind: .category(.work), label: "Work", count: 8, isActive: active) {}
-            WarmFilterChip(kind: .category(.community), label: "Community", count: 24, isActive: active) {}
+            ForEach([WarmCategory.family, .friends, .work, .community]) { cat in
+                WarmFilterChip(
+                    kind: .category(cat),
+                    label: cat.localizedLabel,
+                    count: 12,
+                    isActive: active
+                ) {}
+            }
         }
+    }
+
+    @ViewBuilder
+    private func scrollableChipRow<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            content()
+                .padding(.horizontal, 1)  // keeps capsule borders from clipping
+        }
+        // Cancel the parent's horizontal padding so the row bleeds full-width
+        // and feels truly sticky-style when scrolled.
+        .padding(.horizontal, -20)
+        .safeAreaPadding(.horizontal, 20)
     }
 }
 

@@ -25,6 +25,8 @@ struct WarmFilterChip: View {
                 }
                 Text(label)
                     .font(.system(size: 13, weight: .semibold))
+                    .lineLimit(1)
+                    .fixedSize(horizontal: true, vertical: false)
                 if let count {
                     Text("\(count)")
                         .font(.system(size: 11, weight: .semibold))
