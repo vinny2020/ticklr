@@ -46,6 +46,18 @@ enum WarmCategory: String, CaseIterable, Identifiable {
     static func from(groupId: UUID) -> WarmCategory? {
         allCases.first { $0.groupUUID == groupId }
     }
+
+    /// Resolve a category for a contact based on their first canonical
+    /// group membership. Falls back to `.community` so every contact
+    /// has a tint to use.
+    static func resolve(for contact: Contact) -> WarmCategory {
+        for group in contact.groups {
+            if let cat = from(groupId: group.id) {
+                return cat
+            }
+        }
+        return .community
+    }
 }
 
 // MARK: - Palette
