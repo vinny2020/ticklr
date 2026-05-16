@@ -282,7 +282,7 @@ final class LocalizationTests: XCTestCase {
         "warm.onboarding.cta.import", "warm.onboarding.cta.add", "warm.onboarding.footer",
         // contact detail
         "warm.contact.addPhoto", "warm.contact.tickleEvery", "warm.contact.sendTickle",
-        "warm.contact.createTickle", "warm.contact.call", "warm.contact.email",
+        "warm.contact.createTickle", "warm.contact.call",
         "warm.contact.lastConnected", "warm.contact.notes.placeholder",
         "warm.contact.accessBanner",
     ]

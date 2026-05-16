@@ -145,7 +145,6 @@ struct ContactDetailView: View {
     private var actionChipRow: some View {
         let canText = !contact.phoneNumbers.isEmpty
         let canCall = !contact.phoneNumbers.isEmpty
-        let canEmail = !contact.emails.isEmpty
         return HStack(spacing: 8) {
             actionChip(
                 title: String(localized: "warm.contact.sendTickle", defaultValue: "Send a text"),
@@ -169,18 +168,6 @@ struct ContactDetailView: View {
             ) {
                 if let phone = contact.phoneNumbers.first,
                    let url = URL(string: "tel:\(phone.filter { $0.isNumber || $0 == "+" })") {
-                    UIApplication.shared.open(url)
-                }
-            }
-
-            actionChip(
-                title: String(localized: "warm.contact.email", defaultValue: "Email"),
-                systemImage: "envelope.fill",
-                style: .outline,
-                isEnabled: canEmail
-            ) {
-                if let email = contact.emails.first,
-                   let url = URL(string: "mailto:\(email)") {
                     UIApplication.shared.open(url)
                 }
             }
