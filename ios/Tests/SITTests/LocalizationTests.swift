@@ -284,6 +284,7 @@ final class LocalizationTests: XCTestCase {
         "warm.contact.addPhoto", "warm.contact.tickleEvery", "warm.contact.sendTickle",
         "warm.contact.createTickle", "warm.contact.call", "warm.contact.email",
         "warm.contact.lastConnected", "warm.contact.notes.placeholder",
+        "warm.contact.accessBanner",
     ]
 
     /// Every warm key resolves to a non-empty value in the default (English) bundle.

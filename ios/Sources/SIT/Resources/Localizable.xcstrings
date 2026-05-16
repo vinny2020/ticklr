@@ -27279,6 +27279,137 @@
         }
       }
     },
+    "warm.contact.accessBanner": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow contacts access to use the photo from your address book."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اسمح بالوصول إلى جهات الاتصال لاستخدام الصورة من دفتر العناوين."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "एड्रेस बुक से तस्वीर इस्तेमाल करने के लिए संपर्क-एक्सेस की अनुमति दें।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アドレス帳の写真を使うには、連絡先へのアクセスを許可してください。"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Permite el acceso a contactos para usar la foto de tu agenda."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Autorise l'accès aux contacts pour utiliser la photo de ton carnet d'adresses."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erlaube Kontaktezugriff, um das Foto aus deinem Adressbuch zu verwenden."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Consenti l'accesso ai contatti per usare la foto dalla rubrica."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geef contactentoegang om de foto uit je adresboek te gebruiken."
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Επίτρεψε την πρόσβαση στις επαφές για να χρησιμοποιηθεί η φωτογραφία από το ευρετήριο."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zezwól na dostęp do kontaktów, aby użyć zdjęcia z książki adresowej."
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Permite accesul la contacte pentru a folosi poza din agenda telefonică."
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Engedélyezd a névjegyekhez való hozzáférést, hogy a címjegyzék fotója használható legyen."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Permite o acesso aos contactos para usar a foto da tua agenda."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tillåt åtkomst till kontakter för att använda fotot från din adressbok."
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Povol přístup ke kontaktům, aby šla použít fotka z tvého adresáře."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Разреши доступ к контактам, чтобы использовать фото из адресной книги."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "允许访问通讯录，以便使用通讯录中的照片。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "주소록의 사진을 사용하려면 연락처 접근을 허용해 주세요."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אפשר גישה לאנשי הקשר כדי להשתמש בתמונה מספר הטלפונים."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ایڈریس بُک سے تصویر استعمال کرنے کے لیے رابطوں تک رسائی کی اجازت دیں۔"
+          }
+        }
+      }
+    },
     "warm.contact.addPhoto": {
       "extractionState": "manual",
       "localizations": {

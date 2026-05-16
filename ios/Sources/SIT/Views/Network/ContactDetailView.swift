@@ -111,6 +111,13 @@ struct ContactDetailView: View {
                     .foregroundStyle(.red)
             }
 
+            ContactsAccessBanner(contact: contact, category: category, warmth: warmth) {
+                // Permission just landed — clear the system-Contacts cache
+                // and re-resolve the photo for this contact.
+                ContactPhotoFetcher.clearCache()
+                photoVersion = UUID()
+            }
+
             VStack(spacing: 4) {
                 Text(contact.fullName)
                     .font(WarmHeadingFont.font(size: 28, warmth: warmth))
