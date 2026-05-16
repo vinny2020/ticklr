@@ -30,6 +30,17 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             List {
+                // MARK: Inline warm title (matches Groups / Tickle / Network / Compose)
+                Section {
+                    Text(String(localized: "settings.navTitle"))
+                        .font(WarmHeadingFont.font(size: 32, warmth: .subtle))
+                        .tracking(WarmHeadingFont.tracking(warmth: .subtle))
+                        .foregroundStyle(WarmTheme.subtle.ink)
+                        .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 4, trailing: 16))
+                }
+
                 // MARK: — Data
                 Section(String(localized: "settings.section.data")) {
                     LabeledContent(String(localized: "settings.row.contacts"), value: contacts.count.formatted())
@@ -164,7 +175,8 @@ struct SettingsView: View {
                 }
                 #endif
             }
-            .navigationTitle(String(localized: "settings.navTitle"))
+            .navigationTitle("")
+            .navigationBarTitleDisplayMode(.inline)
             .task { await fetchNotificationStatus() }
         }
     }

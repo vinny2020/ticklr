@@ -26,15 +26,21 @@ struct NetworkListView: View {
     var body: some View {
         NavigationStack {
             List {
-                // MARK: Subtitle (scrolls away)
+                // MARK: Inline title + subtitle (scrolls away)
                 Section {
-                    Text(String(localized: "warm.network.subtitle",
-                                defaultValue: "The people you keep in your circle."))
-                        .font(.system(size: 14))
-                        .foregroundStyle(palette.ink2)
-                        .listRowBackground(Color.clear)
-                        .listRowSeparator(.hidden)
-                        .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 4, trailing: 16))
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(String(localized: "networkList.navTitle"))
+                            .font(WarmHeadingFont.font(size: 32, warmth: warmth))
+                            .tracking(WarmHeadingFont.tracking(warmth: warmth))
+                            .foregroundStyle(palette.ink)
+                        Text(String(localized: "warm.network.subtitle",
+                                    defaultValue: "The people you keep in your circle."))
+                            .font(.system(size: 14))
+                            .foregroundStyle(palette.ink2)
+                    }
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
+                    .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 4, trailing: 16))
                 }
 
                 // MARK: Filter chips (scroll with content)
@@ -70,7 +76,8 @@ struct NetworkListView: View {
             .searchable(text: $searchText,
                         placement: .navigationBarDrawer(displayMode: .always),
                         prompt: String(localized: "networkList.search"))
-            .navigationTitle(String(localized: "networkList.navTitle"))
+            .navigationTitle("")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Menu {

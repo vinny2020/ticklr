@@ -43,6 +43,14 @@ struct ComposeView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
 
+                    // MARK: Inline warm title (matches Groups / Tickle / Network)
+                    Text(String(localized: "compose.navTitle"))
+                        .font(WarmHeadingFont.font(size: 32, warmth: .subtle))
+                        .tracking(WarmHeadingFont.tracking(warmth: .subtle))
+                        .foregroundStyle(WarmTheme.subtle.ink)
+                        .padding(.horizontal)
+                        .padding(.top, 8)
+
                     // MARK: To field
                     VStack(alignment: .leading, spacing: 6) {
                         Text(String(localized: "compose.label.to"))
@@ -213,8 +221,8 @@ struct ComposeView: View {
                     selectedContact = c
                 }
             }
-            .navigationTitle(String(localized: "compose.navTitle"))
-            .navigationBarTitleDisplayMode(.large)
+            .navigationTitle("")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     // Always shown so the user can leave the Compose tab and
