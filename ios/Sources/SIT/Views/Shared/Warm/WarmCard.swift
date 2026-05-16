@@ -110,7 +110,7 @@ struct WarmCard: View {
         let palette = WarmTheme.palette(for: warmth)
         return HStack(spacing: 14) {
             illustrationFrame(aspect: 1)
-                .frame(width: 132, height: 132)
+                .frame(width: 100, height: 100)
                 .clipShape(
                     UnevenRoundedRectangle(
                         topLeadingRadius: WarmRadius.card,

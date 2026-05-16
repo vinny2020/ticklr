@@ -118,17 +118,17 @@ struct GroupListView: View {
         } label: {
             HStack(spacing: 14) {
                 Text(group.emoji)
-                    .font(.system(size: 22))
-                    .frame(width: 44, height: 44)
+                    .font(.system(size: 28))
+                    .frame(width: 64, height: 64)
                     .background(palette.paperSurface)
-                    .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                VStack(alignment: .leading, spacing: 2) {
+                    .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                VStack(alignment: .leading, spacing: 4) {
                     Text(group.name)
-                        .font(.system(size: 16, weight: .semibold))
+                        .font(.system(size: 17, weight: .semibold))
                         .foregroundStyle(palette.ink)
                         .lineLimit(1)
                     Text(String(localized: "groupList.contactCount \(group.contacts.count)"))
-                        .font(.caption)
+                        .font(.system(size: 13))
                         .foregroundStyle(palette.ink2)
                 }
                 Spacer(minLength: 0)
@@ -137,7 +137,7 @@ struct GroupListView: View {
                     .foregroundStyle(palette.ink3)
             }
             .padding(.horizontal, WarmSpacing.lg)
-            .padding(.vertical, WarmSpacing.md)
+            .padding(.vertical, 16)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
