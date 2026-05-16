@@ -124,9 +124,12 @@ fun NavGraph() {
             composable(Screen.Onboarding.route) {
                 OnboardingScreen(
                     onImportContacts = { navController.navigate(Screen.Import.route) },
-                    onStartEmpty = {
+                    onAddContact = {
+                        // Warm-redesign: second CTA replaces "Start Empty"
+                        // with "Add my first contact" — mark complete
+                        // and open AddContact directly.
                         prefs.edit().putBoolean(SITApp.KEY_ONBOARDING_COMPLETE, true).apply()
-                        navController.navigate(Screen.Tickle.route) {
+                        navController.navigate(Screen.AddContact.route) {
                             popUpTo(Screen.Onboarding.route) { inclusive = true }
                         }
                     }
