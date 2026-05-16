@@ -16,6 +16,30 @@ struct WarmGalleryView: View {
     @State private var pickerSelection: PhotosPickerItem? = nil
     @State private var pickerError: String? = nil
     @State private var photoRefreshKey = UUID()
+    @State private var headingLocale: HeadingLocale = .device
+
+    private enum HeadingLocale: String, CaseIterable, Identifiable {
+        case device, en, ar, hi, ja
+        var id: String { rawValue }
+        var locale: Locale {
+            switch self {
+            case .device: .current
+            case .en: Locale(identifier: "en")
+            case .ar: Locale(identifier: "ar")
+            case .hi: Locale(identifier: "hi")
+            case .ja: Locale(identifier: "ja")
+            }
+        }
+        var label: String {
+            switch self {
+            case .device: "Device"
+            case .en: "English"
+            case .ar: "العربية"
+            case .hi: "हिन्दी"
+            case .ja: "日本語"
+            }
+        }
+    }
 
     var body: some View {
         let palette = WarmTheme.palette(for: warmth)
@@ -121,6 +145,10 @@ struct WarmGalleryView: View {
                     }
                 }
 
+                section("Heading font (locale + warmth)") {
+                    headingFontDemo
+                }
+
                 section("Hero card (Family)") {
                     WarmCard(category: .family, variant: .hero, warmth: warmth)
                 }
@@ -215,6 +243,41 @@ struct WarmGalleryView: View {
                     isActive: active
                 ) {}
             }
+        }
+    }
+
+    // MARK: - Heading font demo
+
+    @ViewBuilder
+    private var headingFontDemo: some View {
+        let palette = WarmTheme.palette(for: warmth)
+        VStack(alignment: .leading, spacing: 12) {
+            Picker("Locale", selection: $headingLocale) {
+                ForEach(HeadingLocale.allCases) { l in
+                    Text(l.label).tag(l)
+                }
+            }
+            .pickerStyle(.segmented)
+
+            VStack(alignment: .leading, spacing: 4) {
+                let sample = sampleHeadline(for: headingLocale)
+                Text(sample)
+                    .font(WarmHeadingFont.font(size: 32, locale: headingLocale.locale, warmth: warmth))
+                    .tracking(WarmHeadingFont.tracking(locale: headingLocale.locale, warmth: warmth))
+                    .foregroundStyle(WarmCategory.family.palette.accent)
+                Text("Warmth: \(warmth.rawValue.capitalized) · Locale: \(headingLocale.locale.identifier)")
+                    .font(.caption2)
+                    .foregroundStyle(palette.ink2)
+            }
+        }
+    }
+
+    private func sampleHeadline(for hl: HeadingLocale) -> String {
+        switch hl {
+        case .device, .en: "Friends and Family — first, always"
+        case .ar:          "الأصدقاء والعائلة — أوّلًا، دائمًا"
+        case .hi:          "दोस्त और परिवार — पहले, हमेशा"
+        case .ja:          "友と家族が — 最優先、いつも"
         }
     }
 

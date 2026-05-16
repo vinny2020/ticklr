@@ -12,12 +12,15 @@
 		0A15CDA437196AAA901C1371 /* ContactPhotoFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0245F8A1C0C8EF0E794507B1 /* ContactPhotoFetcher.swift */; };
 		0C03E3E93AEAAEAB358CF5C3 /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACA061EE9A732D89FD3E0F3 /* GroupListView.swift */; };
 		0C41C7D26198E0DC2C958072 /* AddContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77347A9F53BFBE3E1672671 /* AddContactView.swift */; };
+		0EA9C2254CEDC3F5A8E9033B /* OFL-NotoNaskhArabic.txt in Resources */ = {isa = PBXBuildFile; fileRef = D0E4D04216FC720E233AA609 /* OFL-NotoNaskhArabic.txt */; };
 		12FCF35AA80528F2EF325924 /* ContactRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9125614ECAB9E4D8E5428E51 /* ContactRowView.swift */; };
+		1423BBA388EC43ABC386281F /* OFL-NotoSerifDevanagari.txt in Resources */ = {isa = PBXBuildFile; fileRef = 89A8592D7BE1A77F3A839568 /* OFL-NotoSerifDevanagari.txt */; };
 		16BE362388D0211580E586D0 /* TickleScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F298878BB7FB2F2C63DC2B /* TickleScheduler.swift */; };
 		177120F253ADFB379BD6A007 /* WarmGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AB7ED7B5278EEB477C1E9F /* WarmGalleryView.swift */; };
 		184D3DD687352B351AB7A501 /* NetworkListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B1CFCC3988DCAF2034813A /* NetworkListView.swift */; };
 		20030189F6FC7FC341A0510D /* LaunchScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F033D809DFE50DA44209A95 /* LaunchScreenView.swift */; };
 		2085C634C34E1699E983C564 /* PhotoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD57FB9BA4F1EF1E2F57E1F /* PhotoStore.swift */; };
+		265A935CA61F3A729B86AF7A /* NotoNaskhArabic-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D17BF625C611E15E9751DE74 /* NotoNaskhArabic-SemiBold.ttf */; };
 		34A284E142196787F146D1B3 /* test_contacts.csv in Resources */ = {isa = PBXBuildFile; fileRef = C3BA80FD4DE962EB1F107E78 /* test_contacts.csv */; };
 		353AA993FFB1A862D307ED9F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 209311518915490C7F72039B /* Assets.xcassets */; };
 		43434A6ACC0CD3146036A11C /* TickleSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8316646A179885792C4004 /* TickleSchedulerTests.swift */; };
@@ -44,6 +47,7 @@
 		949EFAA2F52FC214F6E65F95 /* TickleRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2BE0559EF55B0E2A1DDE54 /* TickleRowView.swift */; };
 		984F8919395A52436BA23ECC /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 52B2D827FDB5FDABB740E34A /* Localizable.xcstrings */; };
 		9CA0D612EF182E101FDE37A4 /* LinkedInCSVParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D196741B99B788C9E325C3 /* LinkedInCSVParserTests.swift */; };
+		9CC3A189563F711043FF4F77 /* OFL-NotoSerifJP.txt in Resources */ = {isa = PBXBuildFile; fileRef = B202F00A260D45CDA07CAB8E /* OFL-NotoSerifJP.txt */; };
 		A12D6BFE761485462744D2F9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FE39C5E32CF68501239897AF /* InfoPlist.strings */; };
 		A47CF298C3FF9F43615F03D1 /* CanonicalGroupSeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71E34F441267292176C85B0 /* CanonicalGroupSeed.swift */; };
 		A8C96FD3F045625AE3DDF1DB /* MessageTemplateSeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40663A4021DF41A99C3F4585 /* MessageTemplateSeed.swift */; };
@@ -62,8 +66,10 @@
 		DAC6E39278733054D630C412 /* WarmTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE539205850900E86911453 /* WarmTheme.swift */; };
 		DB552985EAEB5E7CFE713185 /* WarmCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A494ADD27B9C55B5B86A4D /* WarmCard.swift */; };
 		E01711F3B9475DEFFD7DDDD4 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977BE8990F41F718C2693EFD /* OnboardingView.swift */; };
+		E8ABCD9154ECD0765D2F3A4F /* NotoSerifJP-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6E699C45534C87D7AE9D916 /* NotoSerifJP-SemiBold.ttf */; };
 		EB7DAC0AD2F9B1BEF8BED719 /* ContactFingerprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D98A08F7576CDC556F9440C /* ContactFingerprint.swift */; };
 		F01FB1D28CE1BD691A9DD989 /* TemplateListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA698C2842FF3F307B474724 /* TemplateListView.swift */; };
+		F23284FE6EFA2F4A8A6A1F89 /* NotoSerifDevanagari-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE5F28CBE2FCC020F374E286 /* NotoSerifDevanagari-SemiBold.ttf */; };
 		F48BE3B2B06B47E783EAAC70 /* SITApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1887449FF664ADCCCB1BFC3 /* SITApp.swift */; };
 		FCEBEAFB511E04C6C968B5BA /* TickleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A933C06096E53F2DAD773D26 /* TickleListView.swift */; };
 /* End PBXBuildFile section */
@@ -123,6 +129,7 @@
 		72098A45B6ACBC527F5DF0B9 /* MessageTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTemplate.swift; sourceTree = "<group>"; };
 		7A27D41F38F9FB5871748B89 /* LocalizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationTests.swift; sourceTree = "<group>"; };
 		87AED7CFC7935978FFBCCCE3 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		89A8592D7BE1A77F3A839568 /* OFL-NotoSerifDevanagari.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "OFL-NotoSerifDevanagari.txt"; sourceTree = "<group>"; };
 		8ACA061EE9A732D89FD3E0F3 /* GroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListView.swift; sourceTree = "<group>"; };
 		8B1914E51A7708868BB45255 /* WarmEyebrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmEyebrow.swift; sourceTree = "<group>"; };
 		8C5907E434D833533D8A7EBC /* WarmListContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmListContainer.swift; sourceTree = "<group>"; };
@@ -140,18 +147,23 @@
 		AD4A16B8256F7BC174E03DED /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		ADD9D6C1CDD05CD88E281BAD /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B1887449FF664ADCCCB1BFC3 /* SITApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SITApp.swift; sourceTree = "<group>"; };
+		B202F00A260D45CDA07CAB8E /* OFL-NotoSerifJP.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "OFL-NotoSerifJP.txt"; sourceTree = "<group>"; };
 		B272BCB8206F59754B5D0D3D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B2A9372A30F13F2165F2EF8F /* WarmIllustration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmIllustration.swift; sourceTree = "<group>"; };
 		B5CC789856C13EA9BCE0A6EC /* ContactGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactGroup.swift; sourceTree = "<group>"; };
 		B71E34F441267292176C85B0 /* CanonicalGroupSeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanonicalGroupSeed.swift; sourceTree = "<group>"; };
 		BAE539205850900E86911453 /* WarmTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmTheme.swift; sourceTree = "<group>"; };
 		BB38137353FDCD5606A5A8FF /* TickleReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleReminder.swift; sourceTree = "<group>"; };
+		BE5F28CBE2FCC020F374E286 /* NotoSerifDevanagari-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSerifDevanagari-SemiBold.ttf"; sourceTree = "<group>"; };
 		C3936B5E7A48687C98F2843D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C3BA80FD4DE962EB1F107E78 /* test_contacts.csv */ = {isa = PBXFileReference; path = test_contacts.csv; sourceTree = "<group>"; };
 		C9AAF458A6C9EBA96236F28F /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CA4BF582AFC377CF7A29ADC9 /* TickleEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleEditView.swift; sourceTree = "<group>"; };
 		CADEFE7A1ADA2B9E3DDBBD81 /* MessageComposerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageComposerService.swift; sourceTree = "<group>"; };
+		D0E4D04216FC720E233AA609 /* OFL-NotoNaskhArabic.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "OFL-NotoNaskhArabic.txt"; sourceTree = "<group>"; };
+		D17BF625C611E15E9751DE74 /* NotoNaskhArabic-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoNaskhArabic-SemiBold.ttf"; sourceTree = "<group>"; };
 		D3DCE02125449F9E013629EF /* BebasNeue-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BebasNeue-Regular.ttf"; sourceTree = "<group>"; };
+		D6E699C45534C87D7AE9D916 /* NotoSerifJP-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSerifJP-SemiBold.ttf"; sourceTree = "<group>"; };
 		D9AF1474FC4894325F2747AA /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E07B4E4B1B6C11A40612610C /* ComposeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeView.swift; sourceTree = "<group>"; };
 		E0C8A1F9EAC9226E7D717720 /* WarmCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmCategory.swift; sourceTree = "<group>"; };
@@ -221,6 +233,12 @@
 			isa = PBXGroup;
 			children = (
 				D3DCE02125449F9E013629EF /* BebasNeue-Regular.ttf */,
+				D17BF625C611E15E9751DE74 /* NotoNaskhArabic-SemiBold.ttf */,
+				BE5F28CBE2FCC020F374E286 /* NotoSerifDevanagari-SemiBold.ttf */,
+				D6E699C45534C87D7AE9D916 /* NotoSerifJP-SemiBold.ttf */,
+				D0E4D04216FC720E233AA609 /* OFL-NotoNaskhArabic.txt */,
+				89A8592D7BE1A77F3A839568 /* OFL-NotoSerifDevanagari.txt */,
+				B202F00A260D45CDA07CAB8E /* OFL-NotoSerifJP.txt */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -497,6 +515,12 @@
 				AA02325BB0CA65EB315DF2F1 /* BebasNeue-Regular.ttf in Resources */,
 				A12D6BFE761485462744D2F9 /* InfoPlist.strings in Resources */,
 				984F8919395A52436BA23ECC /* Localizable.xcstrings in Resources */,
+				265A935CA61F3A729B86AF7A /* NotoNaskhArabic-SemiBold.ttf in Resources */,
+				F23284FE6EFA2F4A8A6A1F89 /* NotoSerifDevanagari-SemiBold.ttf in Resources */,
+				E8ABCD9154ECD0765D2F3A4F /* NotoSerifJP-SemiBold.ttf in Resources */,
+				0EA9C2254CEDC3F5A8E9033B /* OFL-NotoNaskhArabic.txt in Resources */,
+				1423BBA388EC43ABC386281F /* OFL-NotoSerifDevanagari.txt in Resources */,
+				9CC3A189563F711043FF4F77 /* OFL-NotoSerifJP.txt in Resources */,
 				34A284E142196787F146D1B3 /* test_contacts.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
