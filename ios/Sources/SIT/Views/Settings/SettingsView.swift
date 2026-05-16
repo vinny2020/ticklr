@@ -16,6 +16,9 @@ struct SettingsView: View {
     @State private var showClearConfirm = false
     #endif
 
+    private let warmth: Warmth = .subtle
+    private var palette: WarmPalette { WarmTheme.palette(for: warmth) }
+
     private var appVersion: String {
         Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
     }
@@ -33,16 +36,16 @@ struct SettingsView: View {
                 // MARK: Inline warm title (matches Groups / Tickle / Network / Compose)
                 Section {
                     Text(String(localized: "settings.navTitle"))
-                        .font(WarmHeadingFont.font(size: 32, warmth: .subtle))
-                        .tracking(WarmHeadingFont.tracking(warmth: .subtle))
-                        .foregroundStyle(WarmTheme.subtle.ink)
+                        .font(WarmHeadingFont.font(size: 32, warmth: warmth))
+                        .tracking(WarmHeadingFont.tracking(warmth: warmth))
+                        .foregroundStyle(palette.ink)
                         .listRowBackground(Color.clear)
                         .listRowSeparator(.hidden)
                         .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 4, trailing: 16))
                 }
 
                 // MARK: — Data
-                Section(String(localized: "settings.section.data")) {
+                Section {
                     LabeledContent(String(localized: "settings.row.contacts"), value: contacts.count.formatted())
                     NavigationLink(String(localized: "settings.row.importContacts")) {
                         ImportView()
@@ -50,6 +53,8 @@ struct SettingsView: View {
                     NavigationLink(String(localized: "settings.row.messageTemplates")) {
                         TemplateListView()
                     }
+                } header: {
+                    warmHeader(String(localized: "settings.section.data"))
                 }
 
                 // MARK: — Notifications
@@ -70,22 +75,26 @@ struct SettingsView: View {
                             }
                     }
                 } header: {
-                    Text(String(localized: "settings.section.notifications"))
+                    warmHeader(String(localized: "settings.section.notifications"))
                 } footer: {
                     if systemAuthStatus == .denied {
                         Text(String(localized: "settings.footer.notificationsDenied"))
+                            .foregroundStyle(palette.ink3)
                     } else if !notificationsEnabled {
                         Text(String(localized: "settings.footer.notificationsOff"))
+                            .foregroundStyle(palette.ink3)
                     }
                 }
 
                 // MARK: — Tickle Defaults
-                Section(String(localized: "settings.section.tickleDefaults")) {
+                Section {
                     Picker(String(localized: "settings.row.defaultFrequency"), selection: defaultFrequency) {
                         ForEach(TickleFrequency.allCases.filter { $0 != .custom }, id: \.self) { freq in
                             Text(freq.localizedName).tag(freq)
                         }
                     }
+                } header: {
+                    warmHeader(String(localized: "settings.section.tickleDefaults"))
                 }
 
                 // MARK: — About
@@ -96,7 +105,7 @@ struct SettingsView: View {
                     LabeledContent(String(localized: "settings.row.version"), value: appVersion)
                     LabeledContent(String(localized: "settings.row.builtBy"), value: "Xaymaca")
                 } header: {
-                    Text(String(localized: "settings.section.about"))
+                    warmHeader(String(localized: "settings.section.about"))
                 }
 
                 // MARK: — Reset
@@ -135,7 +144,7 @@ struct SettingsView: View {
                             }
                         }
                     }
-                    .foregroundColor(.yellow)
+                    .foregroundColor(WarmCategory.milestones.palette.accent)
 
                     Button("Clear All Data", role: .destructive) {
                         showClearConfirm = true
@@ -144,12 +153,13 @@ struct SettingsView: View {
                     if let msg = seedMessage {
                         Text(msg)
                             .font(.caption)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(palette.ink2)
                     }
                 } header: {
-                    Text("Debug")
+                    warmHeader("Debug")
                 } footer: {
                     Text("Debug only — not visible in release builds.")
+                        .foregroundStyle(palette.ink3)
                 }
                 .confirmationDialog(
                     "Clear all data?",
@@ -175,6 +185,9 @@ struct SettingsView: View {
                 }
                 #endif
             }
+            .listStyle(.insetGrouped)
+            .scrollContentBackground(.hidden)
+            .background(palette.paper.ignoresSafeArea())
             .navigationTitle("")
             .navigationBarTitleDisplayMode(.inline)
             .task { await fetchNotificationStatus() }
@@ -182,6 +195,13 @@ struct SettingsView: View {
     }
 
     // MARK: — Helpers
+
+    @ViewBuilder
+    private func warmHeader(_ text: String) -> some View {
+        WarmEyebrow(text: text, warmth: warmth)
+            .textCase(nil)
+            .padding(.bottom, 4)
+    }
 
     private func fetchNotificationStatus() async {
         let settings = await UNUserNotificationCenter.current().notificationSettings()
