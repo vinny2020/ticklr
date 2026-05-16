@@ -1,7 +1,9 @@
 package com.xaymaca.sit.ui.compose
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.unit.sp
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
@@ -84,6 +86,13 @@ fun ComposeScreen(
                     .fillMaxSize()
                     .padding(paddingValues)
                     .imePadding()
+                    // Allow vertical scroll so the message field + send
+                    // button stay reachable when the IME pushes content
+                    // up. Without this, Column tries to fit everything
+                    // into the cramped height and the message field's
+                    // heightIn(min = 120.dp) gets overridden — it
+                    // collapses to a single-line strip.
+                    .verticalScroll(rememberScrollState())
                     .padding(horizontal = 16.dp)
             ) {
                 // Inline warm 32sp title — parity with Network / Tickle /
