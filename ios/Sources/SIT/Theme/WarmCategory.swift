@@ -49,14 +49,25 @@ enum WarmCategory: String, CaseIterable, Identifiable {
 
     /// Resolve a category for a contact based on their first canonical
     /// group membership. Falls back to `.community` so every contact
-    /// has a tint to use.
+    /// has a tint to use (used for monograms, photo affordance, etc.
+    /// where SOME tint is always needed).
     static func resolve(for contact: Contact) -> WarmCategory {
-        for group in contact.groups {
+        resolveOptional(for: contact) ?? .community
+    }
+
+    /// Resolve a category for the contact's MOST RECENT canonical group
+    /// membership, or nil if they aren't in any canonical group. SwiftData
+    /// preserves append order on the relationship array; walking in
+    /// reverse gives the last-added canonical group, which approximates
+    /// "most recently added to". Used for the Contact Detail bottom hero
+    /// card, which should hide entirely for uncategorized contacts.
+    static func resolveOptional(for contact: Contact) -> WarmCategory? {
+        for group in contact.groups.reversed() {
             if let cat = from(groupId: group.id) {
                 return cat
             }
         }
-        return .community
+        return nil
     }
 }
 

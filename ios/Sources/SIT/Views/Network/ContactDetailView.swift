@@ -36,7 +36,9 @@ struct ContactDetailView: View {
 
                 groupsSection
 
-                hostCard
+                if let mostRecentCategory = WarmCategory.resolveOptional(for: contact) {
+                    hostCard(category: mostRecentCategory)
+                }
 
                 deleteButton
                     .padding(.horizontal, WarmSpacing.lg)
@@ -360,7 +362,7 @@ struct ContactDetailView: View {
 
     // MARK: - Featured host card
 
-    private var hostCard: some View {
+    private func hostCard(category: WarmCategory) -> some View {
         WarmCard(category: category, variant: .hero, warmth: warmth, showPrompt: true)
             .padding(.horizontal, WarmSpacing.lg)
             .padding(.top, 6)
