@@ -7,11 +7,13 @@ import com.xaymaca.sit.data.model.Contact
 import com.xaymaca.sit.data.repository.ContactRepository
 import com.xaymaca.sit.service.ContactImportService
 import com.xaymaca.sit.service.LinkedInCSVParser
+import com.xaymaca.sit.ui.theme.WarmCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
@@ -53,10 +55,22 @@ class NetworkViewModel @Inject constructor(
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    /** Per-category counts driving the chip badges. */
-    fun countFor(categoryId: String): StateFlow<Int> = contactDao
-        .countContactsInCategory(categoryId)
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
+    /**
+     * Per-category counts driving the chip badges. Built once during
+     * ViewModel construction so the StateFlows persist across screen
+     * recompositions — if we re-call .stateIn() on each chip render
+     * the resulting fresh StateFlow starts at 0 every time, causing
+     * the chip's `count > 0` visibility predicate to flicker
+     * false→true→false until the DB query resolves.
+     */
+    private val categoryCounts: Map<String, StateFlow<Int>> =
+        WarmCategory.values().associate { cat ->
+            cat.id to contactDao.countContactsInCategory(cat.id)
+                .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
+        }
+
+    fun countFor(categoryId: String): StateFlow<Int> =
+        categoryCounts[categoryId] ?: MutableStateFlow(0).asStateFlow()
 
     fun setSearchQuery(query: String) {
         searchQuery.value = query
