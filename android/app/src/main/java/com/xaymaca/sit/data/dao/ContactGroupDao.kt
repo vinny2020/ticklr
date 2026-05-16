@@ -63,4 +63,9 @@ interface ContactGroupDao {
 
     @Query("SELECT COUNT(*) FROM contact_group_cross_ref WHERE groupId = :groupId")
     fun getMemberCount(groupId: Long): Flow<Int>
+
+    /** All membership rows as a flow, used by the warm Tickle screen to
+     *  resolve each contact-based reminder to a category accent. */
+    @Query("SELECT * FROM contact_group_cross_ref")
+    fun getAllCrossRefs(): Flow<List<ContactGroupCrossRef>>
 }

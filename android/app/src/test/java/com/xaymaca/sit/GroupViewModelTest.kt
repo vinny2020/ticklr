@@ -61,6 +61,7 @@ class GroupViewModelTest {
         override suspend fun deleteCrossRef(crossRef: ContactGroupCrossRef) {}
         override fun getGroupsForContact(contactId: Long): Flow<List<ContactGroup>> = flowOf(emptyList())
         override fun getMemberCount(groupId: Long): Flow<Int> = flowOf(0)
+        override fun getAllCrossRefs(): Flow<List<ContactGroupCrossRef>> = flowOf(emptyList())
     }
 
     private lateinit var viewModel: GroupViewModel

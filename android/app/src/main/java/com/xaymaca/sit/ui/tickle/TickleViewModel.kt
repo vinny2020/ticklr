@@ -7,6 +7,7 @@ import com.xaymaca.sit.R
 import com.xaymaca.sit.data.model.TickleFrequency
 import com.xaymaca.sit.data.model.TickleReminder
 import com.xaymaca.sit.data.model.TickleStatus
+import com.xaymaca.sit.data.dao.ContactGroupDao
 import com.xaymaca.sit.data.repository.ContactRepository
 import com.xaymaca.sit.data.repository.TickleRepository
 import com.xaymaca.sit.service.TickleScheduler
@@ -26,7 +27,8 @@ import javax.inject.Inject
 class TickleViewModel @Inject constructor(
     private val tickleRepository: TickleRepository,
     private val contactRepository: ContactRepository,
-    @ApplicationContext private val context: Context
+    private val contactGroupDao: ContactGroupDao,
+    @ApplicationContext private val context: Context,
 ) : ViewModel() {
 
     private val _toastMessage = MutableStateFlow<String?>(null)
@@ -54,32 +56,48 @@ class TickleViewModel @Inject constructor(
         .map { list -> list.filter { it.status == TickleStatus.SNOOZED.name } }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    /** Display data for each reminder row — avatar text + headline name. */
-    data class RowDisplay(val initials: String, val name: String)
+    /** Display data for each reminder row — avatar text, headline name,
+     *  and resolved canonical category id (or null for none). */
+    data class RowDisplay(
+        val initials: String,
+        val name: String,
+        val categoryId: String? = null,
+    )
 
     /** Maps reminder.id → row display derived from its linked contact or group. */
     val reminderDisplays: StateFlow<Map<Long, RowDisplay>> = combine(
         allReminders,
         contactRepository.getAllContacts(),
-        contactRepository.getAllGroups()
-    ) { reminders, contacts, groups ->
+        contactRepository.getAllGroups(),
+        contactGroupDao.getAllCrossRefs(),
+    ) { reminders, contacts, groups, crossRefs ->
         val contactMap = contacts.associateBy { it.id }
         val groupMap = groups.associateBy { it.id }
+        // Build contactId → list<groupId> ordered by cross-ref order (insertion).
+        val contactToGroupIds: Map<Long, List<Long>> = crossRefs
+            .groupBy { it.contactId }
+            .mapValues { (_, refs) -> refs.map { it.groupId } }
         reminders.associate { reminder ->
             val display = when {
                 reminder.groupId != null -> {
                     val g = groupMap[reminder.groupId]
                     RowDisplay(
                         initials = g?.name?.firstOrNull()?.uppercaseChar()?.toString() ?: "G",
-                        name = g?.name ?: "Group"
+                        name = g?.name ?: "Group",
+                        categoryId = g?.categoryId,
                     )
                 }
                 reminder.contactId != null -> {
                     val c = contactMap[reminder.contactId]
-                    // Contact.initials already produces 2 chars (first of firstName + lastName).
+                    // Walk groups in reverse (most-recently-added first) and
+                    // take the first canonical one — mirrors iOS resolver.
+                    val canonical = contactToGroupIds[reminder.contactId]
+                        ?.asReversed()
+                        ?.firstNotNullOfOrNull { gid -> groupMap[gid]?.categoryId }
                     RowDisplay(
                         initials = c?.initials ?: "?",
-                        name = c?.fullName?.takeIf { it.isNotBlank() } ?: "?"
+                        name = c?.fullName?.takeIf { it.isNotBlank() } ?: "?",
+                        categoryId = canonical,
                     )
                 }
                 else -> RowDisplay(initials = "T", name = "Tickle")
