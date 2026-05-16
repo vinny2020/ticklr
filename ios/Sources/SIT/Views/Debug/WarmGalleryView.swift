@@ -1,12 +1,21 @@
 #if DEBUG
 import SwiftUI
+import SwiftData
+import PhotosUI
 
 /// Debug-only visual gallery of every warm primitive in isolation.
 /// Wired into Settings → Debug → "Warm Gallery". Helps eyeball component
 /// changes without rewriting full screens. NOT in release builds.
 struct WarmGalleryView: View {
+    @Environment(\.modelContext) private var modelContext
+    @Query(sort: \Contact.firstName) private var contacts: [Contact]
+
     @State private var warmth: Warmth = .subtle
     @State private var activeFilter: WarmCategory? = nil
+    @State private var photoDemoCategory: WarmCategory = .family
+    @State private var pickerSelection: PhotosPickerItem? = nil
+    @State private var pickerError: String? = nil
+    @State private var photoRefreshKey = UUID()
 
     var body: some View {
         let palette = WarmTheme.palette(for: warmth)
@@ -49,6 +58,10 @@ struct WarmGalleryView: View {
                             }
                         }
                     }
+                }
+
+                section("Photo resolver (live)") {
+                    photoResolverDemo
                 }
 
                 section("Filter chips — inactive") {
@@ -202,6 +215,87 @@ struct WarmGalleryView: View {
                     isActive: active
                 ) {}
             }
+        }
+    }
+
+    // MARK: - Photo resolver demo
+
+    @ViewBuilder
+    private var photoResolverDemo: some View {
+        let palette = WarmTheme.palette(for: warmth)
+        if let contact = contacts.first {
+            VStack(alignment: .leading, spacing: 14) {
+                Text("Resolving for: \(contact.fullName.isEmpty ? "(unnamed)" : contact.fullName)")
+                    .font(.system(size: 13, weight: .medium))
+                    .foregroundStyle(palette.ink)
+                Text("Priority: local photo → system Contacts photo → monogram fallback")
+                    .font(.caption2)
+                    .foregroundStyle(palette.ink2)
+
+                HStack(alignment: .top, spacing: 24) {
+                    VStack(spacing: 6) {
+                        ContactPhotoView(contact: contact, category: photoDemoCategory, style: .list)
+                            .id(photoRefreshKey)
+                        Text("List (36)").font(.caption2).foregroundStyle(palette.ink2)
+                    }
+                    VStack(spacing: 6) {
+                        ContactPhotoView(contact: contact, category: photoDemoCategory, style: .detail)
+                            .id(photoRefreshKey)
+                        Text("Detail (132)").font(.caption2).foregroundStyle(palette.ink2)
+                    }
+                }
+
+                Picker("Category accent", selection: $photoDemoCategory) {
+                    ForEach(WarmCategory.allCases) { cat in
+                        Text(cat.localizedLabel).tag(cat)
+                    }
+                }
+                .pickerStyle(.menu)
+
+                HStack(spacing: 12) {
+                    PhotosPicker(selection: $pickerSelection,
+                                 matching: .images,
+                                 photoLibrary: .shared()) {
+                        Label("Attach local photo", systemImage: "photo.badge.plus")
+                            .font(.system(size: 13, weight: .semibold))
+                    }
+                    Button(role: .destructive) {
+                        PhotoStore.delete(for: contact.id)
+                        ContactPhotoFetcher.clearCache()
+                        photoRefreshKey = UUID()
+                    } label: {
+                        Label("Remove local photo", systemImage: "trash")
+                            .font(.system(size: 13, weight: .semibold))
+                    }
+                }
+                if let err = pickerError {
+                    Text(err).font(.caption2).foregroundStyle(.red)
+                }
+            }
+            .onChange(of: pickerSelection) { _, newItem in
+                guard let newItem else { return }
+                Task {
+                    do {
+                        guard let data = try await newItem.loadTransferable(type: Data.self),
+                              let img = UIImage(data: data) else {
+                            pickerError = "Couldn't decode the selected image."
+                            return
+                        }
+                        try PhotoStore.save(img, for: contact.id)
+                        ContactPhotoFetcher.clearCache()
+                        await MainActor.run {
+                            photoRefreshKey = UUID()
+                            pickerError = nil
+                        }
+                    } catch {
+                        pickerError = "Save failed: \(error.localizedDescription)"
+                    }
+                }
+            }
+        } else {
+            Text("No contacts to resolve. Use Debug → Load Test Contacts.")
+                .font(.caption)
+                .foregroundStyle(palette.ink2)
         }
     }
 
