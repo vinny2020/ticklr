@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
@@ -83,11 +84,13 @@ fun WarmFilterChip(
         horizontalArrangement = Arrangement.spacedBy(6.dp),
     ) {
         if (kind is FilterChipKind.CategoryKind) {
+            // Size matches the 13sp label glyph height so CategoryKind
+            // chips don't render taller than the icon-less All chip.
             Icon(
                 imageVector = kind.category.icon,
                 contentDescription = null,
                 tint = foreground,
-                modifier = Modifier.padding(end = 0.dp).clip(CircleShape).background(Color.Transparent),
+                modifier = Modifier.size(16.dp),
             )
         }
         Text(
