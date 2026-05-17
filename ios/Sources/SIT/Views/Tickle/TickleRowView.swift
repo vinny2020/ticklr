@@ -3,23 +3,28 @@ import SwiftUI
 struct TickleRowView: View {
     let reminder: TickleReminder
     let onComplete: () -> Void
+    var warmth: Warmth = .subtle
 
-    private let amber = Color(red: 0.96, green: 0.78, blue: 0.25)
+    private var palette: WarmPalette { WarmTheme.palette(for: warmth) }
 
     private var isDue: Bool {
         reminder.nextDueDate <= Date() && reminder.status == .active
+    }
+
+    private var category: WarmCategory {
+        if let contact = reminder.contact {
+            return WarmCategory.resolve(for: contact)
+        }
+        if let group = reminder.group, let cat = WarmCategory.from(groupId: group.id) {
+            return cat
+        }
+        return .community
     }
 
     private var displayName: String {
         if let contact = reminder.contact { return contact.fullName }
         if let group = reminder.group { return group.name }
         return String(localized: "tickleRow.unknown")
-    }
-
-    private var avatarText: String {
-        if let contact = reminder.contact { return contact.initials }
-        if let group = reminder.group { return group.emoji }
-        return "?"
     }
 
     private var isGroupAvatar: Bool { reminder.contact == nil && reminder.group != nil }
@@ -41,33 +46,28 @@ struct TickleRowView: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            Circle()
-                .fill(isDue ? amber.opacity(0.15) : Color.indigo.opacity(0.12))
-                .frame(width: 44, height: 44)
-                .overlay(
-                    Text(avatarText)
-                        .font(.system(size: isGroupAvatar ? 22 : 16, weight: .semibold))
-                        .foregroundStyle(isDue ? amber : .indigo)
-                )
+            avatar
 
             VStack(alignment: .leading, spacing: 3) {
                 Text(displayName)
-                    .font(.body).fontWeight(.medium)
+                    .font(.system(size: 15, weight: .semibold))
+                    .foregroundStyle(palette.ink)
+                    .lineLimit(1)
                 HStack(spacing: 6) {
                     Text(reminder.frequency.localizedName)
-                        .font(.caption2).fontWeight(.medium)
-                        .padding(.horizontal, 6).padding(.vertical, 2)
-                        .background(isDue ? amber.opacity(0.15) : Color(.systemGray5))
-                        .foregroundStyle(isDue ? amber : .secondary)
+                        .font(.system(size: 11, weight: .semibold))
+                        .padding(.horizontal, 7).padding(.vertical, 2)
+                        .background(isDue ? category.palette.accent : category.palette.accentTint)
+                        .foregroundStyle(isDue ? Color(red: 0.98, green: 0.96, blue: 0.89) : category.palette.accent)
                         .clipShape(Capsule())
                     Text(verbatim: dueDateLabel)
-                        .font(.caption)
-                        .foregroundStyle(isDue ? amber : .secondary)
+                        .font(.system(size: 12))
+                        .foregroundStyle(isDue ? category.palette.accent : palette.ink2)
                 }
                 if !reminder.note.isEmpty {
                     Text(reminder.note)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .font(.system(size: 12))
+                        .foregroundStyle(palette.ink3)
                         .lineLimit(1)
                 }
             }
@@ -76,11 +76,37 @@ struct TickleRowView: View {
 
             Button(action: onComplete) {
                 Image(systemName: isDue ? "checkmark.circle.fill" : "checkmark.circle")
-                    .font(.title2)
-                    .foregroundStyle(isDue ? amber : Color(.systemGray3))
+                    .font(.system(size: 24))
+                    .foregroundStyle(isDue ? category.palette.accent : palette.ink3)
             }
             .buttonStyle(.plain)
         }
-        .padding(.vertical, 2)
+        .padding(.horizontal, WarmSpacing.lg)
+        .padding(.vertical, WarmSpacing.md)
+    }
+
+    @ViewBuilder
+    private var avatar: some View {
+        if let contact = reminder.contact {
+            ContactPhotoView(contact: contact, category: category, style: .list)
+        } else {
+            ZStack {
+                Circle()
+                    .fill(category.palette.accent)
+                    .frame(width: 36, height: 36)
+                if isGroupAvatar {
+                    Text(reminder.group?.emoji ?? "👥")
+                        .font(.system(size: 18))
+                } else {
+                    Image(systemName: "bell.fill")
+                        .foregroundStyle(Color(red: 0.98, green: 0.96, blue: 0.89))
+                }
+            }
+            .overlay(
+                Circle()
+                    .stroke(isDue ? category.palette.accent : Color.clear, lineWidth: 2)
+                    .padding(-3)
+            )
+        }
     }
 }

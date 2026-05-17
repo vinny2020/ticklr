@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import PhotosUI
 
 private enum ActiveSheet: Identifiable {
     case edit, addTickle, addToGroup, compose
@@ -10,152 +11,58 @@ struct ContactDetailView: View {
     @Bindable var contact: Contact
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
+
     @State private var activeSheet: ActiveSheet?
     @State private var showingDeleteConfirm = false
+    @State private var pickerSelection: PhotosPickerItem? = nil
+    @State private var photoVersion = UUID()
+    @State private var photoSaveError: String? = nil
 
-    private let amber = Color(red: 0.96, green: 0.78, blue: 0.25)
-    private let cobalt = Color(red: 0.145, green: 0.388, blue: 0.922)
+    private let warmth: Warmth = .subtle
+    private var palette: WarmPalette { WarmTheme.palette(for: warmth) }
+    private var category: WarmCategory { WarmCategory.resolve(for: contact) }
 
     var body: some View {
-        List {
-            Section {
-                HStack {
-                    Spacer()
-                    VStack(spacing: 8) {
-                        Circle()
-                            .fill(Color.indigo.opacity(0.15))
-                            .frame(width: 72, height: 72)
-                            .overlay(
-                                Text(contact.initials)
-                                    .font(.system(size: 28, weight: .semibold))
-                                    .foregroundStyle(.indigo)
-                            )
-                        Text(contact.fullName)
-                            .font(.title3).fontWeight(.semibold)
-                        if !contact.company.isEmpty {
-                            Text(contact.company)
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
-                        }
-                        if !contact.jobTitle.isEmpty {
-                            Text(contact.jobTitle)
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
-                    }
-                    Spacer()
-                }
-                .listRowBackground(Color.clear)
-            }
+        ScrollView {
+            VStack(alignment: .leading, spacing: 22) {
+                photoHeader
+                    .frame(maxWidth: .infinity)
+                    .padding(.top, 8)
 
-            if !contact.phoneNumbers.isEmpty {
-                Section(String(localized: "contact.section.phone")) {
-                    ForEach(contact.phoneNumbers, id: \.self) { phone in
-                        let cleaned = phone.filter { $0.isNumber || $0 == "+" }
-                        if let url = URL(string: "tel:\(cleaned)"), !cleaned.isEmpty {
-                            Link(phone, destination: url)
-                        } else {
-                            Text(phone)
-                        }
-                    }
-                }
-            }
+                actionChipRow
+                    .padding(.horizontal, WarmSpacing.lg)
 
-            if !contact.emails.isEmpty {
-                Section(String(localized: "contact.section.email")) {
-                    ForEach(contact.emails, id: \.self) { email in
-                        if let url = URL(string: "mailto:\(email)") {
-                            Link(email, destination: url)
-                        } else {
-                            Text(email)
-                        }
-                    }
-                }
-            }
+                detailCards
 
-            if !contact.notes.isEmpty {
-                Section(String(localized: "contact.section.notes")) {
-                    Text(contact.notes).foregroundStyle(.secondary)
-                }
-            }
+                groupsSection
 
-            if !contact.tags.isEmpty {
-                Section(String(localized: "contact.section.tags")) {
-                    Text(contact.tags.joined(separator: " · "))
-                        .foregroundStyle(.secondary)
+                if let mostRecentCategory = WarmCategory.resolveOptional(for: contact) {
+                    hostCard(category: mostRecentCategory)
                 }
-            }
 
-            if !contact.groups.isEmpty {
-                Section(String(localized: "contact.section.groups")) {
-                    ForEach(contact.groups) { group in
-                        HStack {
-                            Text(group.emoji)
-                            Text(group.name)
-                        }
-                    }
-                }
+                deleteButton
+                    .padding(.horizontal, WarmSpacing.lg)
+                    .padding(.top, 12)
             }
-
-            Section {
-                HStack(spacing: 12) {
-                    Button {
-                        activeSheet = .addTickle
-                    } label: {
-                        Label(String(localized: "contactDetail.button.addTickle"), systemImage: "bell.badge")
-                            .foregroundStyle(amber)
-                            .frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(.plain)
-                    Button {
-                        activeSheet = .addToGroup
-                    } label: {
-                        Label(String(localized: "contactDetail.button.addToGroup"), systemImage: "person.3.fill")
-                            .foregroundStyle(cobalt)
-                            .frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(.plain)
-                }
-                Button {
-                    activeSheet = .compose
-                } label: {
-                    Label(String(localized: "contactDetail.button.message"), systemImage: "message.fill")
-                        .foregroundStyle(contact.phoneNumbers.isEmpty ? Color.secondary : cobalt)
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.plain)
-                .disabled(contact.phoneNumbers.isEmpty)
-            }
-
-            Section {
-                Button(role: .destructive) {
-                    showingDeleteConfirm = true
-                } label: {
-                    Label(String(localized: "contactDetail.button.deleteContact"), systemImage: "trash")
-                        .frame(maxWidth: .infinity)
-                }
-            }
+            .padding(.bottom, 32)
         }
-        .navigationTitle(contact.fullName)
+        .background(palette.paper.ignoresSafeArea())
+        .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(String(localized: "common.edit")) { activeSheet = .edit }
+                    .foregroundStyle(palette.ink)
             }
         }
         .sheet(item: $activeSheet) { sheet in
             switch sheet {
-            case .edit:
-                ContactEditSheet(contact: contact)
-            case .addTickle:
-                TickleEditView(contact: contact)
-            case .addToGroup:
-                AddToGroupSheet(contact: contact)
+            case .edit:        ContactEditSheet(contact: contact)
+            case .addTickle:   TickleEditView(contact: contact)
+            case .addToGroup:  AddToGroupSheet(contact: contact)
             case .compose:
-                ComposeView(
-                    onCancel: { activeSheet = nil },
-                    initialContact: contact
-                )
+                ComposeView(onCancel: { activeSheet = nil },
+                            initialContact: contact)
             }
         }
         .confirmationDialog(
@@ -164,12 +71,327 @@ struct ContactDetailView: View {
             titleVisibility: .visible
         ) {
             Button(String(localized: "contactDetail.button.deleteContact"), role: .destructive) {
+                PhotoStore.delete(for: contact.id)
                 modelContext.delete(contact)
                 try? modelContext.save()
                 dismiss()
             }
         } message: {
             Text(String(localized: "common.cannotUndo"))
+        }
+        .onChange(of: pickerSelection) { _, item in
+            guard let item else { return }
+            Task { await attachPhoto(item) }
+        }
+    }
+
+    // MARK: - Photo header
+
+    private var photoHeader: some View {
+        VStack(spacing: 14) {
+            ContactPhotoView(contact: contact, category: category, style: .detail)
+                .id(photoVersion)
+
+            PhotosPicker(selection: $pickerSelection,
+                         matching: .images,
+                         photoLibrary: .shared()) {
+                HStack(spacing: 6) {
+                    Image(systemName: "plus")
+                    Text(String(localized: "warm.contact.addPhoto",
+                                defaultValue: "Add a photo"))
+                }
+                .font(.system(size: 13, weight: .semibold))
+                .foregroundStyle(category.palette.accent)
+            }
+            .buttonStyle(.plain)
+
+            if let err = photoSaveError {
+                Text(err)
+                    .font(.caption2)
+                    .foregroundStyle(.red)
+            }
+
+            ContactsAccessBanner(contact: contact, category: category, warmth: warmth) {
+                // Permission just landed — clear the system-Contacts cache
+                // and re-resolve the photo for this contact.
+                ContactPhotoFetcher.clearCache()
+                photoVersion = UUID()
+            }
+
+            VStack(spacing: 4) {
+                Text(contact.fullName)
+                    .font(WarmHeadingFont.font(size: 28, warmth: warmth))
+                    .tracking(WarmHeadingFont.tracking(warmth: warmth))
+                    .foregroundStyle(palette.ink)
+                    .multilineTextAlignment(.center)
+                if !contact.company.isEmpty {
+                    Text(contact.company)
+                        .font(.system(size: 14))
+                        .foregroundStyle(palette.ink2)
+                }
+                if !contact.jobTitle.isEmpty {
+                    Text(contact.jobTitle)
+                        .font(.system(size: 12))
+                        .foregroundStyle(palette.ink3)
+                }
+            }
+            .padding(.top, 6)
+            .padding(.horizontal, WarmSpacing.lg)
+        }
+    }
+
+    // MARK: - Action chips
+
+    private var actionChipRow: some View {
+        let canText = !contact.phoneNumbers.isEmpty
+        let canCall = !contact.phoneNumbers.isEmpty
+        return HStack(spacing: 8) {
+            actionChip(
+                title: String(localized: "warm.contact.sendTickle", defaultValue: "Send a text"),
+                systemImage: "message.fill",
+                style: .filled,
+                isEnabled: canText
+            ) { activeSheet = .compose }
+
+            actionChip(
+                title: String(localized: "warm.contact.createTickle", defaultValue: "Create a tickle"),
+                systemImage: "bell.fill",
+                style: .outline,
+                isEnabled: true
+            ) { activeSheet = .addTickle }
+
+            actionChip(
+                title: String(localized: "warm.contact.call", defaultValue: "Call"),
+                systemImage: "phone.fill",
+                style: .outline,
+                isEnabled: canCall
+            ) {
+                if let phone = contact.phoneNumbers.first,
+                   let url = URL(string: "tel:\(phone.filter { $0.isNumber || $0 == "+" })") {
+                    UIApplication.shared.open(url)
+                }
+            }
+        }
+    }
+
+    private enum ActionChipStyle { case filled, outline }
+
+    private func actionChip(
+        title: String,
+        systemImage: String,
+        style: ActionChipStyle,
+        isEnabled: Bool,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button(action: action) {
+            VStack(spacing: 6) {
+                Image(systemName: systemImage)
+                    .font(.system(size: 16, weight: .semibold))
+                Text(title)
+                    .font(.system(size: 12, weight: .semibold))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 14)
+            .background(background(for: style, enabled: isEnabled))
+            .foregroundStyle(foreground(for: style, enabled: isEnabled))
+            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    .stroke(border(for: style, enabled: isEnabled), lineWidth: 1)
+            )
+        }
+        .buttonStyle(.plain)
+        .disabled(!isEnabled)
+        .opacity(isEnabled ? 1 : 0.5)
+    }
+
+    private func background(for style: ActionChipStyle, enabled: Bool) -> Color {
+        switch style {
+        case .filled:  category.palette.accent
+        case .outline: palette.cardBg
+        }
+    }
+    private func foreground(for style: ActionChipStyle, enabled: Bool) -> Color {
+        switch style {
+        case .filled:  Color(red: 0.98, green: 0.96, blue: 0.89)
+        case .outline: category.palette.accent
+        }
+    }
+    private func border(for style: ActionChipStyle, enabled: Bool) -> Color {
+        switch style {
+        case .filled:  Color.clear
+        case .outline: palette.cardBorder
+        }
+    }
+
+    // MARK: - Detail cards
+
+    @ViewBuilder
+    private var detailCards: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            if !contact.phoneNumbers.isEmpty {
+                detailSection(title: String(localized: "contact.section.phone")) {
+                    ForEach(contact.phoneNumbers, id: \.self) { phone in
+                        let cleaned = phone.filter { $0.isNumber || $0 == "+" }
+                        if let url = URL(string: "tel:\(cleaned)"), !cleaned.isEmpty {
+                            Link(phone, destination: url)
+                                .foregroundStyle(category.palette.accent)
+                        } else {
+                            Text(phone).foregroundStyle(palette.ink)
+                        }
+                    }
+                }
+            }
+
+            if !contact.emails.isEmpty {
+                detailSection(title: String(localized: "contact.section.email")) {
+                    ForEach(contact.emails, id: \.self) { email in
+                        if let url = URL(string: "mailto:\(email)") {
+                            Link(email, destination: url)
+                                .foregroundStyle(category.palette.accent)
+                        } else {
+                            Text(email).foregroundStyle(palette.ink)
+                        }
+                    }
+                }
+            }
+
+            if let lastConnected = contact.lastContactedAt {
+                detailSection(title: String(localized: "warm.contact.lastConnected",
+                                            defaultValue: "Last connected")) {
+                    Text(lastConnected.formatted(.relative(presentation: .named)))
+                        .foregroundStyle(palette.ink2)
+                }
+            }
+
+            if !contact.notes.isEmpty {
+                detailSection(title: String(localized: "contact.section.notes")) {
+                    Text(contact.notes).foregroundStyle(palette.ink2)
+                }
+            }
+
+            if !contact.tags.isEmpty {
+                detailSection(title: String(localized: "contact.section.tags")) {
+                    Text(contact.tags.joined(separator: " · "))
+                        .foregroundStyle(palette.ink2)
+                }
+            }
+        }
+        .padding(.horizontal, WarmSpacing.lg)
+    }
+
+    @ViewBuilder
+    private func detailSection<Content: View>(title: String,
+                                              @ViewBuilder content: () -> Content) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            WarmEyebrow(text: title, warmth: warmth)
+            VStack(alignment: .leading, spacing: 4) {
+                content()
+            }
+            .padding(WarmSpacing.md)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(palette.cardBg)
+            .clipShape(RoundedRectangle(cornerRadius: WarmRadius.surface, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: WarmRadius.surface, style: .continuous)
+                    .stroke(palette.cardBorder, lineWidth: 1)
+            )
+        }
+    }
+
+    // MARK: - Groups section
+
+    private var groupsSection: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            WarmEyebrow(text: String(localized: "contact.section.groups"), warmth: warmth)
+            if !contact.groups.isEmpty {
+                WarmListContainer(warmth: warmth) {
+                    ForEach(Array(contact.groups.enumerated()), id: \.element.persistentModelID) { idx, group in
+                        HStack(spacing: 12) {
+                            Text(group.emoji)
+                                .font(.system(size: 18))
+                                .frame(width: 36, height: 36)
+                                .background(palette.paperSurface)
+                                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                            Text(group.name)
+                                .font(.system(size: 15, weight: .medium))
+                                .foregroundStyle(palette.ink)
+                            Spacer()
+                        }
+                        .padding(.horizontal, WarmSpacing.lg)
+                        .padding(.vertical, WarmSpacing.md)
+                        if idx < contact.groups.count - 1 {
+                            WarmRowDivider(warmth: warmth)
+                        }
+                    }
+                }
+            }
+
+            Button {
+                activeSheet = .addToGroup
+            } label: {
+                HStack(spacing: 8) {
+                    Image(systemName: "person.3.fill")
+                        .font(.system(size: 13, weight: .semibold))
+                    Text(String(localized: "contactDetail.button.addToGroup"))
+                        .font(.system(size: 14, weight: .semibold))
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
+                .background(palette.cardBg)
+                .foregroundStyle(category.palette.accent)
+                .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 14, style: .continuous)
+                        .stroke(palette.cardBorder, lineWidth: 1)
+                )
+            }
+            .buttonStyle(.plain)
+            .padding(.top, contact.groups.isEmpty ? 0 : 4)
+        }
+        .padding(.horizontal, WarmSpacing.lg)
+    }
+
+    // MARK: - Featured host card
+
+    private func hostCard(category: WarmCategory) -> some View {
+        WarmCard(category: category, variant: .hero, warmth: warmth, showPrompt: true)
+            .padding(.horizontal, WarmSpacing.lg)
+            .padding(.top, 6)
+    }
+
+    private var deleteButton: some View {
+        Button(role: .destructive) {
+            showingDeleteConfirm = true
+        } label: {
+            Label(String(localized: "contactDetail.button.deleteContact"),
+                  systemImage: "trash")
+                .font(.system(size: 14, weight: .semibold))
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
+        }
+        .foregroundStyle(.red)
+    }
+
+    // MARK: - Photo save
+
+    @MainActor
+    private func attachPhoto(_ item: PhotosPickerItem) async {
+        do {
+            guard let data = try await item.loadTransferable(type: Data.self),
+                  let image = UIImage(data: data) else {
+                photoSaveError = "Couldn't decode the selected image."
+                return
+            }
+            try PhotoStore.save(image, for: contact.id)
+            ContactPhotoFetcher.clearCache()
+            photoVersion = UUID()
+            photoSaveError = nil
+            pickerSelection = nil
+        } catch {
+            photoSaveError = "Save failed: \(error.localizedDescription)"
         }
     }
 }

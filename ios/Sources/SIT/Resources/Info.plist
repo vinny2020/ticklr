@@ -49,6 +49,9 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>BebasNeue-Regular.ttf</string>
+		<string>NotoNaskhArabic-SemiBold.ttf</string>
+		<string>NotoSerifDevanagari-SemiBold.ttf</string>
+		<string>NotoSerifJP-SemiBold.ttf</string>
 	</array>
 	<key>UILaunchScreen</key>
 	<dict>

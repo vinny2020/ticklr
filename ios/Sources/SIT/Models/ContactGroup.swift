@@ -10,8 +10,8 @@ final class ContactGroup {
     var contacts: [Contact]
     var tickles: [TickleReminder] = []
 
-    init(name: String, emoji: String = "👥") {
-        self.id = UUID()
+    init(name: String, emoji: String = "👥", id: UUID = UUID()) {
+        self.id = id
         self.name = name
         self.emoji = emoji
         self.createdAt = Date()

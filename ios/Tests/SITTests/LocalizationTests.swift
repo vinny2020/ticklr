@@ -249,6 +249,73 @@ final class LocalizationTests: XCTestCase {
         assertKeysAreLocalized(keys)
     }
 
+    // MARK: - Warm redesign
+
+    /// All 52 warm-redesign keys, grouped by surface.
+    private static let warmKeys: [String] = [
+        // category × 7 fields
+        "warm.category.family.label", "warm.category.friends.label", "warm.category.work.label",
+        "warm.category.milestones.label", "warm.category.community.label",
+        "warm.category.family.groupName", "warm.category.friends.groupName", "warm.category.work.groupName",
+        "warm.category.milestones.groupName", "warm.category.community.groupName",
+        "warm.category.family.headline.line1", "warm.category.friends.headline.line1",
+        "warm.category.work.headline.line1", "warm.category.milestones.headline.line1",
+        "warm.category.community.headline.line1",
+        "warm.category.family.headline.line2", "warm.category.friends.headline.line2",
+        "warm.category.work.headline.line2", "warm.category.milestones.headline.line2",
+        "warm.category.community.headline.line2",
+        "warm.category.family.body", "warm.category.friends.body", "warm.category.work.body",
+        "warm.category.milestones.body", "warm.category.community.body",
+        "warm.category.family.prompt", "warm.category.friends.prompt", "warm.category.work.prompt",
+        "warm.category.milestones.prompt", "warm.category.community.prompt",
+        "warm.category.family.promptShort", "warm.category.friends.promptShort",
+        "warm.category.work.promptShort", "warm.category.milestones.promptShort",
+        "warm.category.community.promptShort",
+        // card chrome
+        "warm.card.tickleIdea",
+        // screen subtitles + chrome
+        "warm.network.subtitle", "warm.network.filter.all", "warm.network.empty.filtered",
+        "warm.tickle.subtitle.empty",
+        "warm.groups.subtitle", "warm.groups.yourGroups",
+        // onboarding
+        "warm.onboarding.title", "warm.onboarding.subtitle",
+        "warm.onboarding.cta.import", "warm.onboarding.cta.add", "warm.onboarding.footer",
+        // contact detail
+        "warm.contact.addPhoto", "warm.contact.tickleEvery", "warm.contact.sendTickle",
+        "warm.contact.createTickle", "warm.contact.call",
+        "warm.contact.lastConnected", "warm.contact.notes.placeholder",
+        "warm.contact.accessBanner",
+    ]
+
+    /// Every warm key resolves to a non-empty value in the default (English) bundle.
+    func testWarmKeysResolveInDefaultLocale() {
+        assertKeysAreLocalized(Self.warmKeys)
+    }
+
+    /// Every warm key has a non-empty translation in every shipped locale.
+    /// Catches keys we forgot to add to a locale during translation passes.
+    func testWarmKeysCoveredAcrossAllLocales() throws {
+        let appBundle = Bundle(for: Contact.self)
+        let shippedLocales = ["en", "ar", "cs", "de", "el", "es", "fr", "he", "hi", "hu",
+                              "it", "ja", "ko", "nl", "pl", "pt", "ro", "ru", "sv", "ur", "zh-Hans"]
+        var missing: [String] = []
+        for code in shippedLocales {
+            guard let lpath = appBundle.path(forResource: code, ofType: "lproj"),
+                  let lbundle = Bundle(path: lpath) else {
+                XCTFail("\(code).lproj missing from app bundle")
+                continue
+            }
+            for key in Self.warmKeys {
+                let value = lbundle.localizedString(forKey: key, value: "__MISSING__", table: nil)
+                if value == "__MISSING__" || value.isEmpty {
+                    missing.append("\(code) ← \(key)")
+                }
+            }
+        }
+        XCTAssert(missing.isEmpty,
+                  "warm keys missing from compiled bundles:\n  " + missing.joined(separator: "\n  "))
+    }
+
     // MARK: - Interpolation
 
     func testInterpolatedOverdueLabel() {

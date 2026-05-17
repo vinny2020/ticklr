@@ -7,52 +7,62 @@ struct GroupListView: View {
 
     @State private var showingAddGroup = false
     @State private var editingGroup: ContactGroup?
+    @State private var selectedGroup: ContactGroup?
+
+    private let warmth: Warmth = .subtle
+    private var palette: WarmPalette { WarmTheme.palette(for: warmth) }
 
     var body: some View {
         NavigationStack {
-            List {
-                ForEach(groups) { group in
-                    NavigationLink(destination: GroupDetailView(group: group)) {
-                        HStack(spacing: 12) {
-                            Text(group.emoji)
-                                .font(.title3)
-                                .frame(width: 40, height: 40)
-                                .background(Color(.systemGray6))
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text(group.name)
-                                Text(String(localized: "groupList.contactCount \(group.contacts.count)"))
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
+            ScrollView {
+                LazyVStack(alignment: .leading, spacing: 14) {
+                    header
+                        .padding(.horizontal, WarmSpacing.lg)
+                        .padding(.top, 8)
+
+                    ForEach(canonicalGroups, id: \.persistentModelID) { group in
+                        canonicalRow(group)
+                            .padding(.horizontal, WarmSpacing.lg)
+                    }
+
+                    if !userGroups.isEmpty {
+                        WarmEyebrow(text: yourGroupsLabel, warmth: warmth)
+                            .padding(.horizontal, WarmSpacing.lg)
+                            .padding(.top, 12)
+                        WarmListContainer(warmth: warmth) {
+                            ForEach(Array(userGroups.enumerated()), id: \.element.persistentModelID) { idx, group in
+                                userGroupRow(group)
+                                if idx < userGroups.count - 1 {
+                                    WarmRowDivider(warmth: warmth)
+                                }
                             }
                         }
-                        .padding(.vertical, 2)
-                    }
-                    .swipeActions(edge: .trailing) {
-                        Button(role: .destructive) {
-                            modelContext.delete(group)
-                            try? modelContext.save()
-                        } label: {
-                            Label(String(localized: "common.delete"), systemImage: "trash")
-                        }
-                        Button {
-                            editingGroup = group
-                        } label: {
-                            Label(String(localized: "common.edit"), systemImage: "pencil")
-                        }
-                        .tint(.indigo)
+                        .padding(.horizontal, WarmSpacing.lg)
                     }
                 }
+                .padding(.bottom, 24)
             }
-            .navigationTitle(String(localized: "groupList.navTitle"))
+            .background(palette.paper.ignoresSafeArea())
+            .navigationTitle("")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         showingAddGroup = true
                     } label: {
                         Image(systemName: "plus")
+                            .foregroundStyle(palette.ink)
                     }
                 }
+            }
+            .navigationDestination(item: $selectedGroup) { group in
+                GroupDetailView(group: group)
+            }
+            .sheet(isPresented: $showingAddGroup) {
+                GroupEditSheet(group: nil)
+            }
+            .sheet(item: $editingGroup) { group in
+                GroupEditSheet(group: group)
             }
             .overlay {
                 if groups.isEmpty {
@@ -63,13 +73,106 @@ struct GroupListView: View {
                     )
                 }
             }
-            .sheet(isPresented: $showingAddGroup) {
-                GroupEditSheet(group: nil)
-            }
-            .sheet(item: $editingGroup) { group in
-                GroupEditSheet(group: group)
+        }
+    }
+
+    // MARK: - Pieces
+
+    private var header: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(String(localized: "groupList.navTitle"))
+                .font(WarmHeadingFont.font(size: 32, warmth: warmth))
+                .tracking(WarmHeadingFont.tracking(warmth: warmth))
+                .foregroundStyle(palette.ink)
+            Text(String(localized: "warm.groups.subtitle",
+                        defaultValue: "Circles that shape your world."))
+                .font(.system(size: 14))
+                .foregroundStyle(palette.ink2)
+        }
+    }
+
+    @ViewBuilder
+    private func canonicalRow(_ group: ContactGroup) -> some View {
+        if let category = WarmCategory.from(groupId: group.id) {
+            WarmCard(
+                category: category,
+                variant: .row,
+                warmth: warmth,
+                showPrompt: true,
+                contactsCount: group.contacts.count,
+                onTap: { selectedGroup = group }
+            )
+            .contextMenu {
+                Button(String(localized: "common.edit"), systemImage: "pencil") {
+                    editingGroup = group
+                }
+                // Canonical groups intentionally not deletable —
+                // CanonicalGroupSeed would re-add them on next launch.
             }
         }
+    }
+
+    private func userGroupRow(_ group: ContactGroup) -> some View {
+        Button {
+            selectedGroup = group
+        } label: {
+            HStack(spacing: 14) {
+                Text(group.emoji)
+                    .font(.system(size: 28))
+                    .frame(width: 64, height: 64)
+                    .background(palette.paperSurface)
+                    .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(group.name)
+                        .font(.system(size: 17, weight: .semibold))
+                        .foregroundStyle(palette.ink)
+                        .lineLimit(1)
+                    Text(String(localized: "groupList.contactCount \(group.contacts.count)"))
+                        .font(.system(size: 13))
+                        .foregroundStyle(palette.ink2)
+                }
+                Spacer(minLength: 0)
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(palette.ink3)
+            }
+            .padding(.horizontal, WarmSpacing.lg)
+            .padding(.vertical, 16)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .contextMenu {
+            Button(String(localized: "common.edit"), systemImage: "pencil") {
+                editingGroup = group
+            }
+            Button(String(localized: "common.delete"), systemImage: "trash", role: .destructive) {
+                modelContext.delete(group)
+                try? modelContext.save()
+            }
+        }
+    }
+
+    // MARK: - Sorting
+
+    private var canonicalGroups: [ContactGroup] {
+        let canonicalIds = Set(WarmCategory.allCases.map { $0.groupUUID })
+        let canonical = groups.filter { canonicalIds.contains($0.id) }
+        return canonical.sorted { lhs, rhs in
+            let l = WarmCategory.from(groupId: lhs.id)?.sortOrder ?? Int.max
+            let r = WarmCategory.from(groupId: rhs.id)?.sortOrder ?? Int.max
+            return l < r
+        }
+    }
+
+    private var userGroups: [ContactGroup] {
+        let canonicalIds = Set(WarmCategory.allCases.map { $0.groupUUID })
+        return groups
+            .filter { !canonicalIds.contains($0.id) }
+            .sorted { $0.createdAt < $1.createdAt }
+    }
+
+    private var yourGroupsLabel: String {
+        String(localized: "warm.groups.yourGroups", defaultValue: "Your Groups")
     }
 }
 

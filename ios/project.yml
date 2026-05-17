@@ -75,6 +75,9 @@ targets:
           UIImageName: ""
         UIAppFonts:
           - BebasNeue-Regular.ttf
+          - NotoNaskhArabic-SemiBold.ttf
+          - NotoSerifDevanagari-SemiBold.ttf
+          - NotoSerifJP-SemiBold.ttf
     dependencies: []
     scheme:
       testTargets:

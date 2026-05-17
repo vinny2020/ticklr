@@ -7,8 +7,10 @@ struct TickleListView: View {
 
     @State private var showingAdd = false
     @State private var editingReminder: TickleReminder?
+    @State private var prefilledCategory: WarmCategory? = nil
 
-    private let amber = Color(red: 0.96, green: 0.78, blue: 0.25)
+    private let warmth: Warmth = .subtle
+    private var palette: WarmPalette { WarmTheme.palette(for: warmth) }
 
     private var dueAndOverdue: [TickleReminder] {
         allReminders
@@ -31,52 +33,79 @@ struct TickleListView: View {
     var body: some View {
         NavigationStack {
             List {
+                // MARK: Inline title + subtitle
+                Section {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(String(localized: "tickleList.navTitle"))
+                            .font(WarmHeadingFont.font(size: 32, warmth: warmth))
+                            .tracking(WarmHeadingFont.tracking(warmth: warmth))
+                            .foregroundStyle(palette.ink)
+                        if !dueAndOverdue.isEmpty {
+                            Text(String(localized: "warm.tickle.subtitle",
+                                        defaultValue: "\(dueAndOverdue.count) to reach out to today."))
+                                .font(.system(size: 14))
+                                .foregroundStyle(palette.ink2)
+                        } else {
+                            Text(String(localized: "warm.tickle.subtitle.empty",
+                                        defaultValue: "All caught up — no tickles due today."))
+                                .font(.system(size: 14))
+                                .foregroundStyle(palette.ink2)
+                        }
+                    }
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
+                    .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 4, trailing: 16))
+                }
+
+                // MARK: Pinned Milestones hero
+                Section {
+                    WarmCard(
+                        category: .milestones,
+                        variant: .hero,
+                        warmth: warmth,
+                        showPrompt: true,
+                        onTap: {
+                            prefilledCategory = .milestones
+                            showingAdd = true
+                        }
+                    )
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
+                    .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 12, trailing: 16))
+                }
+
+                // MARK: Due / overdue
                 if !dueAndOverdue.isEmpty {
-                    Section {
-                        ForEach(dueAndOverdue) { reminder in
-                            row(for: reminder)
-                        }
-                    } header: {
-                        Label(String(localized: "tickleList.section.due"), systemImage: "clock.badge.exclamationmark")
-                            .foregroundStyle(amber)
-                            .font(.subheadline.weight(.semibold))
-                            .textCase(nil)
-                    }
+                    sectionBlock(title: String(localized: "tickleList.section.due"),
+                                 rows: dueAndOverdue)
                 }
 
+                // MARK: Upcoming
                 if !upcoming.isEmpty {
-                    Section(String(localized: "tickleList.section.upcoming")) {
-                        ForEach(upcoming) { reminder in
-                            row(for: reminder)
-                        }
-                    }
+                    sectionBlock(title: String(localized: "tickleList.section.upcoming"),
+                                 rows: upcoming)
                 }
 
+                // MARK: Snoozed
                 if !snoozed.isEmpty {
-                    Section(String(localized: "tickleList.section.snoozed")) {
-                        ForEach(snoozed) { reminder in
-                            row(for: reminder)
-                                .opacity(0.55)
-                        }
-                    }
+                    sectionBlock(title: String(localized: "tickleList.section.snoozed"),
+                                 rows: snoozed, dimmed: true)
                 }
             }
-            .listStyle(.insetGrouped)
-            .navigationTitle(String(localized: "tickleList.navTitle"))
+            .listStyle(.plain)
+            .scrollContentBackground(.hidden)
+            .background(palette.paper.ignoresSafeArea())
+            .navigationTitle("")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button { showingAdd = true } label: {
+                    Button {
+                        prefilledCategory = nil
+                        showingAdd = true
+                    } label: {
                         Image(systemName: "plus")
+                            .foregroundStyle(palette.ink)
                     }
-                }
-            }
-            .overlay {
-                if allReminders.isEmpty {
-                    ContentUnavailableView(
-                        String(localized: "tickleList.empty.title"),
-                        systemImage: "bell.badge",
-                        description: Text(String(localized: "tickleList.empty.description"))
-                    )
                 }
             }
             .sheet(isPresented: $showingAdd) {
@@ -89,17 +118,38 @@ struct TickleListView: View {
     }
 
     @ViewBuilder
-    private func row(for reminder: TickleReminder) -> some View {
-        TickleRowView(reminder: reminder) {
-            TickleScheduler.markComplete(reminder: reminder, context: modelContext)
+    private func sectionBlock(title: String,
+                              rows: [TickleReminder],
+                              dimmed: Bool = false) -> some View {
+        Section {
+            ForEach(Array(rows.enumerated()), id: \.element.persistentModelID) { idx, reminder in
+                row(for: reminder)
+                    .opacity(dimmed ? 0.55 : 1)
+                    .listRowBackground(palette.cardBg)
+                    .listRowSeparatorTint(palette.cardBorder)
+                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+            }
+        } header: {
+            WarmEyebrow(text: title, warmth: warmth)
+                .textCase(nil)
+                .padding(.bottom, 4)
+                .padding(.top, 8)
+                .padding(.horizontal, 4)
         }
+    }
+
+    @ViewBuilder
+    private func row(for reminder: TickleReminder) -> some View {
+        TickleRowView(reminder: reminder, onComplete: {
+            TickleScheduler.markComplete(reminder: reminder, context: modelContext)
+        }, warmth: warmth)
         .swipeActions(edge: .leading, allowsFullSwipe: true) {
             Button {
                 TickleScheduler.markComplete(reminder: reminder, context: modelContext)
             } label: {
                 Label(String(localized: "common.done"), systemImage: "checkmark")
             }
-            .tint(amber)
+            .tint(WarmCategory.resolve(for: reminder).palette.accent)
         }
         .swipeActions(edge: .trailing) {
             Button(role: .destructive) {
@@ -114,7 +164,7 @@ struct TickleListView: View {
             } label: {
                 Label(String(localized: "common.edit"), systemImage: "pencil")
             }
-            .tint(.indigo)
+            .tint(palette.ink2)
             Button {
                 TickleScheduler.snooze(reminder: reminder, days: 7, context: modelContext)
             } label: {
@@ -122,5 +172,15 @@ struct TickleListView: View {
             }
             .tint(.orange)
         }
+    }
+}
+
+// MARK: - Helpers
+
+private extension WarmCategory {
+    static func resolve(for reminder: TickleReminder) -> WarmCategory {
+        if let contact = reminder.contact { return resolve(for: contact) }
+        if let group = reminder.group, let cat = from(groupId: group.id) { return cat }
+        return .community
     }
 }

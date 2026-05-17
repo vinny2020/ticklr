@@ -12,10 +12,22 @@ struct ComposeView: View {
     @State private var selectedContact: Contact?
     @State private var selectedTemplate: MessageTemplate?
     @State private var messageBody = ""
+
     @State private var searchText = ""
     @State private var showingComposer = false
     @State private var showingCannotSendAlert = false
     @FocusState private var searchFocused: Bool
+
+    private let warmth: Warmth = .subtle
+    private var palette: WarmPalette { WarmTheme.palette(for: warmth) }
+    /// Send button accent follows the selected contact's resolved
+    /// category when one is picked; otherwise falls back to community.
+    private var accent: Color {
+        if let c = selectedContact {
+            return WarmCategory.resolve(for: c).palette.accent
+        }
+        return WarmCategory.community.palette.accent
+    }
 
     // MARK: — Derived
 
@@ -42,19 +54,25 @@ struct ComposeView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
 
+                    // MARK: Inline warm title (matches Groups / Tickle / Network)
+                    Text(String(localized: "compose.navTitle"))
+                        .font(WarmHeadingFont.font(size: 32, warmth: warmth))
+                        .tracking(WarmHeadingFont.tracking(warmth: warmth))
+                        .foregroundStyle(palette.ink)
+                        .padding(.horizontal)
+                        .padding(.top, 8)
+
                     // MARK: To field
                     VStack(alignment: .leading, spacing: 6) {
-                        Text(String(localized: "compose.label.to"))
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
+                        WarmEyebrow(text: String(localized: "compose.label.to"), warmth: warmth)
                             .padding(.horizontal)
 
                         if let contact = selectedContact {
-                            // Selected contact chip
                             HStack {
                                 Text(contact.fullName)
                                     .font(.body)
                                     .fontWeight(.medium)
+                                    .foregroundStyle(palette.ink)
                                 Spacer()
                                 Button {
                                     selectedContact = nil
@@ -62,13 +80,17 @@ struct ComposeView: View {
                                     searchFocused = true
                                 } label: {
                                     Image(systemName: "xmark.circle.fill")
-                                        .foregroundStyle(.secondary)
+                                        .foregroundStyle(palette.ink2)
                                 }
                             }
                             .padding(.horizontal, 14)
                             .padding(.vertical, 10)
-                            .background(Color(.secondarySystemBackground))
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .background(palette.cardBg)
+                            .clipShape(RoundedRectangle(cornerRadius: WarmRadius.surface, style: .continuous))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: WarmRadius.surface, style: .continuous)
+                                    .stroke(palette.cardBorder, lineWidth: 1)
+                            )
                             .padding(.horizontal)
 
                             if contact.phoneNumbers.isEmpty {
@@ -78,14 +100,20 @@ struct ComposeView: View {
                                     .padding(.horizontal)
                             }
                         } else {
-                            // Search field
                             TextField(String(localized: "compose.search"), text: $searchText)
-                                .textFieldStyle(.roundedBorder)
+                                .textFieldStyle(.plain)
                                 .focused($searchFocused)
-                                .padding(.horizontal)
                                 .autocorrectionDisabled()
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 10)
+                                .background(palette.cardBg)
+                                .clipShape(RoundedRectangle(cornerRadius: WarmRadius.surface, style: .continuous))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: WarmRadius.surface, style: .continuous)
+                                        .stroke(palette.cardBorder, lineWidth: 1)
+                                )
+                                .padding(.horizontal)
 
-                            // Dropdown results
                             if !filteredContacts.isEmpty {
                                 VStack(spacing: 0) {
                                     ForEach(filteredContacts) { contact in
@@ -98,11 +126,11 @@ struct ComposeView: View {
                                                 VStack(alignment: .leading, spacing: 2) {
                                                     Text(contact.fullName)
                                                         .font(.body)
-                                                        .foregroundStyle(.primary)
+                                                        .foregroundStyle(palette.ink)
                                                     if !contact.company.isEmpty {
                                                         Text(contact.company)
                                                             .font(.caption)
-                                                            .foregroundStyle(.secondary)
+                                                            .foregroundStyle(palette.ink2)
                                                     }
                                                 }
                                                 Spacer()
@@ -115,24 +143,29 @@ struct ComposeView: View {
                                             .padding(.horizontal, 14)
                                             .padding(.vertical, 10)
                                         }
+                                        .buttonStyle(.plain)
                                         if contact.id != filteredContacts.last?.id {
-                                            Divider().padding(.leading, 14)
+                                            Rectangle()
+                                                .fill(palette.cardBorder)
+                                                .frame(height: 1)
+                                                .padding(.leading, 14)
                                         }
                                     }
                                 }
-                                .background(Color(.secondarySystemBackground))
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .background(palette.cardBg)
+                                .clipShape(RoundedRectangle(cornerRadius: WarmRadius.surface, style: .continuous))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: WarmRadius.surface, style: .continuous)
+                                        .stroke(palette.cardBorder, lineWidth: 1)
+                                )
                                 .padding(.horizontal)
                             }
                         }
                     }
 
-                    // MARK: Template dropdown (only if templates exist)
                     if !templates.isEmpty {
                         VStack(alignment: .leading, spacing: 6) {
-                            Text(String(localized: "compose.label.template"))
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
+                            WarmEyebrow(text: String(localized: "compose.label.template"), warmth: warmth)
                                 .padding(.horizontal)
 
                             Menu {
@@ -148,37 +181,42 @@ struct ComposeView: View {
                             } label: {
                                 HStack {
                                     Text(verbatim: selectedTemplate?.title ?? String(localized: "compose.placeholder.template"))
-                                        .foregroundStyle(selectedTemplate == nil ? .secondary : .primary)
+                                        .foregroundStyle(selectedTemplate == nil ? palette.ink2 : palette.ink)
                                     Spacer()
                                     Image(systemName: "chevron.up.chevron.down")
                                         .font(.caption)
-                                        .foregroundStyle(.secondary)
+                                        .foregroundStyle(palette.ink2)
                                 }
                                 .padding(.horizontal, 14)
                                 .padding(.vertical, 10)
-                                .background(Color(.secondarySystemBackground))
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .background(palette.cardBg)
+                                .clipShape(RoundedRectangle(cornerRadius: WarmRadius.surface, style: .continuous))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: WarmRadius.surface, style: .continuous)
+                                        .stroke(palette.cardBorder, lineWidth: 1)
+                                )
                             }
                             .padding(.horizontal)
                         }
                     }
 
-                    // MARK: Message body
                     VStack(alignment: .leading, spacing: 6) {
-                        Text(String(localized: "compose.label.message"))
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
+                        WarmEyebrow(text: String(localized: "compose.label.message"), warmth: warmth)
                             .padding(.horizontal)
 
                         TextEditor(text: $messageBody)
                             .frame(minHeight: 120)
                             .padding(8)
-                            .background(Color(.secondarySystemBackground))
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .scrollContentBackground(.hidden)
+                            .background(palette.cardBg)
+                            .clipShape(RoundedRectangle(cornerRadius: WarmRadius.surface, style: .continuous))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: WarmRadius.surface, style: .continuous)
+                                    .stroke(palette.cardBorder, lineWidth: 1)
+                            )
                             .padding(.horizontal)
                     }
 
-                    // MARK: Send button
                     HStack {
                         Spacer()
                         Button {
@@ -196,8 +234,8 @@ struct ComposeView: View {
                             }
                             .padding(.horizontal, 24)
                             .padding(.vertical, 12)
-                            .background(canSend ? Color.indigo : Color(.systemGray5))
-                            .foregroundStyle(canSend ? .white : Color(.systemGray2))
+                            .background(canSend ? accent : palette.paperSurfaceAlt)
+                            .foregroundStyle(canSend ? Color(red: 0.98, green: 0.96, blue: 0.89) : palette.ink3)
                             .clipShape(Capsule())
                         }
                         .disabled(!canSend)
@@ -207,13 +245,15 @@ struct ComposeView: View {
                 }
                 .padding(.top, 16)
             }
+            .scrollContentBackground(.hidden)
+            .background(palette.paper.ignoresSafeArea())
             .onAppear {
                 if let c = initialContact, selectedContact == nil {
                     selectedContact = c
                 }
             }
-            .navigationTitle(String(localized: "compose.navTitle"))
-            .navigationBarTitleDisplayMode(.large)
+            .navigationTitle("")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     // Always shown so the user can leave the Compose tab and
@@ -224,7 +264,7 @@ struct ComposeView: View {
                         clearCompose()
                         onCancel?()
                     }
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(palette.ink2)
                 }
             }
             .sheet(isPresented: $showingComposer, onDismiss: clearCompose) {

@@ -23,6 +23,7 @@ struct SITApp: App {
 
     init() {
         MessageTemplateSeed.seedIfNeeded(container: modelContainer)
+        CanonicalGroupSeed.seedIfNeeded(container: modelContainer)
     }
 
     var body: some Scene {
