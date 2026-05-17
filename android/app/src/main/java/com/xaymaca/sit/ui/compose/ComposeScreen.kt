@@ -1,5 +1,6 @@
 package com.xaymaca.sit.ui.compose
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -155,7 +156,8 @@ fun ComposeScreen(
                     DropdownMenu(
                         expanded = showContactDropdown && contacts.isNotEmpty() && selectedContact == null,
                         onDismissRequest = { showContactDropdown = false },
-                        properties = PopupProperties(focusable = false)
+                        properties = PopupProperties(focusable = false),
+                        modifier = Modifier.background(warmPalette.cardBg),
                     ) {
                         contacts.take(8).forEach { contact ->
                             DropdownMenuItem(
@@ -250,7 +252,8 @@ fun ComposeScreen(
                         }
                         DropdownMenu(
                             expanded = showTemplateDropdown,
-                            onDismissRequest = { showTemplateDropdown = false }
+                            onDismissRequest = { showTemplateDropdown = false },
+                            modifier = Modifier.background(warmPalette.cardBg),
                         ) {
                             templates.forEach { template ->
                                 DropdownMenuItem(

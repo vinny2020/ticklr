@@ -1,6 +1,5 @@
 package com.xaymaca.sit.ui.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.compositionLocalOf
@@ -32,7 +31,7 @@ object WarmTheme {
     @Composable
     @ReadOnlyComposable
     fun palette(warmth: Warmth = Warmth.Subtle): WarmPalette =
-        if (isSystemInDarkTheme()) darkPalette(warmth) else lightPalette(warmth)
+        if (LocalIsAppDark.current) darkPalette(warmth) else lightPalette(warmth)
 
     fun lightPalette(warmth: Warmth): WarmPalette = when (warmth) {
         Warmth.Subtle -> WarmPalette(
@@ -109,6 +108,9 @@ object WarmTheme {
 
 val LocalWarmth = compositionLocalOf { Warmth.Subtle }
 val LocalWarmPalette = compositionLocalOf { WarmTheme.lightPalette(Warmth.Subtle) }
+/** SITTheme provides this so WarmTheme.palette() respects the user's
+ *  in-app theme override, not just the system setting. */
+val LocalIsAppDark = compositionLocalOf { false }
 
 object WarmRadius {
     val CardHero: Dp = 22.dp
