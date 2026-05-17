@@ -53,13 +53,15 @@ fun ComposeScreen(
     val warmth = com.xaymaca.sit.ui.theme.Warmth.Subtle
     val warmPalette = com.xaymaca.sit.ui.theme.WarmTheme.palette(warmth)
     // Send button + input focus accents follow the selected contact's
-    // category (Community fallback when none selected) — same logic as
-    // iOS ComposeView.
-    val accent = remember(selectedContact?.id) {
-        com.xaymaca.sit.ui.theme.WarmCategory.Community.palette.accent
-        // Note: contact-driven accent resolution requires the same
-        // ContactGroupCrossRef lookup the Tickle row uses. For v1 we
-        // keep the community fallback; can be extended later if needed.
+    // resolved canonical category — same logic as iOS ComposeView.
+    // selectedContactCategoryId is a StateFlow combining the selected
+    // contact + all groups-with-contacts; community fallback when
+    // none resolves.
+    val selectedCategoryId by viewModel.selectedContactCategoryId.collectAsState()
+    val accent = remember(selectedCategoryId) {
+        com.xaymaca.sit.ui.theme.WarmCategory.from(selectedCategoryId)
+            ?.palette?.accent
+            ?: com.xaymaca.sit.ui.theme.WarmCategory.Community.palette.accent
     }
     val warmFieldColors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
         unfocusedContainerColor = warmPalette.cardBg,
