@@ -295,4 +295,5 @@
     <string name="warm_contact_notes_placeholder">Poznámky o tom, čím je pro tebe tento člověk důležitý…</string>
 
     <string name="warm_contact_accessBanner">Povol přístup ke kontaktům, aby šla použít fotka z tvého adresáře.</string>
+    <string name="compose_template_label">Šablona</string>
 </resources>

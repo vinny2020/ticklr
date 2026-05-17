@@ -293,4 +293,5 @@
     <string name="warm_contact_notes_placeholder">इस इंसान का आपके लिए क्या मतलब है — कुछ नोट्स…</string>
 
     <string name="warm_contact_accessBanner">एड्रेस बुक से तस्वीर इस्तेमाल करने के लिए संपर्क-एक्सेस की अनुमति दें।</string>
+    <string name="compose_template_label">टेम्पलेट</string>
 </resources>
