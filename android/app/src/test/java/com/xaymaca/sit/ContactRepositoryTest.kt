@@ -43,12 +43,17 @@ class ContactRepositoryTest {
         override fun search(query: String): Flow<List<Contact>> =
             flowOf(contacts.filter { it.fullName.contains(query, ignoreCase = true) })
         override fun getContactsForGroup(groupId: Long): Flow<List<Contact>> = flowOf(emptyList())
+        override fun getContactsInCategory(categoryId: String): Flow<List<Contact>> = flowOf(emptyList())
+        override fun searchContactsInCategory(categoryId: String, query: String): Flow<List<Contact>> = flowOf(emptyList())
+        override fun countContactsInCategory(categoryId: String): Flow<Int> = flowOf(0)
     }
 
     // Minimal stub — ContactGroupDao is not under test here
     private class StubContactGroupDao : ContactGroupDao {
         override fun getAll(): Flow<List<ContactGroup>> = flowOf(emptyList())
         override suspend fun getById(id: Long): ContactGroup? = null
+        override suspend fun getByCategoryId(categoryId: String): ContactGroup? = null
+        override suspend fun findByNameCaseInsensitive(name: String): ContactGroup? = null
         override suspend fun getGroupWithContacts(id: Long): GroupWithContacts? = null
         override fun getAllGroupsWithContacts(): Flow<List<GroupWithContacts>> = flowOf(emptyList())
         override suspend fun insert(group: ContactGroup): Long = 0L
@@ -60,6 +65,7 @@ class ContactRepositoryTest {
         override suspend fun deleteCrossRef(crossRef: ContactGroupCrossRef) {}
         override fun getGroupsForContact(contactId: Long): Flow<List<ContactGroup>> = flowOf(emptyList())
         override fun getMemberCount(groupId: Long): Flow<Int> = flowOf(0)
+        override fun getAllCrossRefs(): Flow<List<ContactGroupCrossRef>> = flowOf(emptyList())
     }
 
     private lateinit var contactDao: FakeContactDao

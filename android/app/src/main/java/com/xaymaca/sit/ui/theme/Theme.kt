@@ -5,6 +5,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
 
 private val SITDarkColorScheme = darkColorScheme(
@@ -68,9 +69,14 @@ fun SITTheme(
 ) {
     val colorScheme = if (darkTheme) SITDarkColorScheme else SITLightColorScheme
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = SITTypography,
-        content = content
-    )
+    // Make the in-app dark/light decision available to WarmTheme.palette()
+    // so the warm chrome respects the user's theme override (not just
+    // the system setting).
+    CompositionLocalProvider(LocalIsAppDark provides darkTheme) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography = SITTypography,
+            content = content,
+        )
+    }
 }

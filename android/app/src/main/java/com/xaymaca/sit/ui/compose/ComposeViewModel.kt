@@ -2,6 +2,7 @@ package com.xaymaca.sit.ui.compose
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.xaymaca.sit.data.dao.ContactGroupDao
 import com.xaymaca.sit.data.model.Contact
 import com.xaymaca.sit.data.model.MessageTemplate
 import com.xaymaca.sit.data.repository.ContactRepository
@@ -19,7 +20,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ComposeViewModel @Inject constructor(
     private val contactRepository: ContactRepository,
-    private val messageTemplateRepository: MessageTemplateRepository
+    private val messageTemplateRepository: MessageTemplateRepository,
+    private val contactGroupDao: ContactGroupDao,
 ) : ViewModel() {
 
     private val allContacts: StateFlow<List<Contact>> = contactRepository
@@ -43,6 +45,30 @@ class ComposeViewModel @Inject constructor(
 
     private val _selectedContact = MutableStateFlow<Contact?>(null)
     val selectedContact: StateFlow<Contact?> = _selectedContact.asStateFlow()
+
+    /**
+     * Resolved canonical categoryId for the currently selected contact
+     * (most-recently-added canonical group via reverse-order walk),
+     * or null when no contact is selected or the contact isn't in any
+     * canonical group. Mirrors the iOS `WarmCategory.resolve(for:)`
+     * helper. The Compose screen's Send button + focus accent reads
+     * this so it follows the contact's category (Family burgundy,
+     * Friends blue, Work forest, etc.) — community fallback handled
+     * in the composable.
+     */
+    val selectedContactCategoryId: StateFlow<String?> = combine(
+        _selectedContact,
+        contactGroupDao.getAllGroupsWithContacts(),
+    ) { contact, groupsWithContacts ->
+        val cId = contact?.id ?: return@combine null
+        // Walk all groups, build (groupId, categoryId) for canonical
+        // ones, then find the LAST canonical group this contact is in.
+        groupsWithContacts.asReversed().firstNotNullOfOrNull { gwc ->
+            if (gwc.group.categoryId != null && gwc.contacts.any { it.id == cId }) {
+                gwc.group.categoryId
+            } else null
+        }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val messageBody = MutableStateFlow("")
 

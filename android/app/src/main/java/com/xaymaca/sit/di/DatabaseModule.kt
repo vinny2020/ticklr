@@ -35,6 +35,19 @@ object DatabaseModule {
         }
     }
 
+    /**
+     * v3 → v4: Add `categoryId` column to contact_groups so the warm-
+     * redesign canonical groups (Family / Close Friends / Work /
+     * Milestones / Neighbors & Community) can be identified stably.
+     * Existing rows get NULL (treated as user-created groups in the
+     * warm UI).
+     */
+    private val MIGRATION_3_4 = object : Migration(3, 4) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE contact_groups ADD COLUMN categoryId TEXT DEFAULT NULL")
+        }
+    }
+
     @Provides
     @Singleton
     fun provideSITDatabase(@ApplicationContext context: Context): SITDatabase {
@@ -43,7 +56,7 @@ object DatabaseModule {
             SITDatabase::class.java,
             "sit_database"
         )
-            .addMigrations(MIGRATION_2_3)
+            .addMigrations(MIGRATION_2_3, MIGRATION_3_4)
             .fallbackToDestructiveMigration(dropAllTables = true)
             .build()
     }

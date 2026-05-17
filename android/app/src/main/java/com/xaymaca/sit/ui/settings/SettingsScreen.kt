@@ -2,6 +2,7 @@ package com.xaymaca.sit.ui.settings
 
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.ui.unit.sp
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.compose.foundation.clickable
@@ -72,18 +73,21 @@ fun SettingsScreen(
         }
     }
 
+    val warmth = com.xaymaca.sit.ui.theme.Warmth.Subtle
+    val warmPalette = com.xaymaca.sit.ui.theme.WarmTheme.palette(warmth)
+
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.settings_title), fontWeight = FontWeight.Bold) },
+                title = { },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background,
-                    titleContentColor = MaterialTheme.colorScheme.onBackground
-                )
+                    containerColor = warmPalette.paper,
+                    titleContentColor = warmPalette.ink,
+                ),
             )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
-        containerColor = MaterialTheme.colorScheme.background
+        containerColor = warmPalette.paper,
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -92,6 +96,16 @@ fun SettingsScreen(
                 .padding(paddingValues)
                 .padding(vertical = 8.dp)
         ) {
+            // Inline warm 32sp title (parity with Network / Tickle /
+            // Groups / Compose).
+            Text(
+                text = stringResource(R.string.settings_title),
+                style = com.xaymaca.sit.ui.theme.WarmHeadingFont.style(
+                    size = 32.sp,
+                    warmth = warmth,
+                ).copy(color = warmPalette.ink),
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+            )
             // Appearance section
             SettingsSectionHeader(stringResource(R.string.settings_section_appearance))
 
@@ -108,7 +122,7 @@ fun SettingsScreen(
                 onClick = { showThemeDialog = true }
             )
 
-            HorizontalDivider(color = NavyLight, modifier = Modifier.padding(start = 56.dp))
+            HorizontalDivider(color = warmPalette.cardBorder, modifier = Modifier.padding(start = 56.dp))
 
             // Data section
             SettingsSectionHeader(stringResource(R.string.settings_section_data))
@@ -120,7 +134,7 @@ fun SettingsScreen(
                 onClick = onImport
             )
 
-            HorizontalDivider(color = NavyLight, modifier = Modifier.padding(start = 56.dp))
+            HorizontalDivider(color = warmPalette.cardBorder, modifier = Modifier.padding(start = 56.dp))
 
             SettingsRow(
                 icon = Icons.AutoMirrored.Filled.TextSnippet,
@@ -129,7 +143,7 @@ fun SettingsScreen(
                 onClick = onTemplates
             )
 
-            HorizontalDivider(color = NavyLight, modifier = Modifier.padding(start = 56.dp))
+            HorizontalDivider(color = warmPalette.cardBorder, modifier = Modifier.padding(start = 56.dp))
 
             // About section
             SettingsSectionHeader(stringResource(R.string.settings_section_about))
@@ -144,23 +158,23 @@ fun SettingsScreen(
                 Text(
                     stringResource(R.string.settings_about_version, versionName),
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = warmPalette.ink2,
                 )
                 Spacer(modifier = Modifier.height(2.dp))
                 Text(
                     stringResource(R.string.settings_about_built_by),
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = warmPalette.ink2,
                 )
                 Spacer(modifier = Modifier.height(6.dp))
                 Text(
                     stringResource(R.string.settings_about_privacy),
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = warmPalette.ink3,
                 )
             }
 
-            HorizontalDivider(color = NavyLight, modifier = Modifier.padding(start = 56.dp))
+            HorizontalDivider(color = warmPalette.cardBorder, modifier = Modifier.padding(start = 56.dp))
 
             // Danger zone
             SettingsSectionHeader(stringResource(R.string.settings_section_developer))
@@ -174,15 +188,17 @@ fun SettingsScreen(
             )
 
             if (viewModel.isDebug) {
-                HorizontalDivider(color = NavyLight, modifier = Modifier.padding(start = 56.dp))
+                HorizontalDivider(color = warmPalette.cardBorder, modifier = Modifier.padding(start = 56.dp))
                 SettingsRow(
                     icon = Icons.Default.BugReport,
                     title = stringResource(R.string.settings_debug_load_title),
                     subtitle = stringResource(R.string.settings_debug_load_subtitle),
-                    iconTint = Amber,
+                    // iOS Debug section uses Milestones mustard for this
+                    // accent — match here for cross-platform parity.
+                    iconTint = com.xaymaca.sit.ui.theme.WarmCategory.Milestones.palette.accent,
                     onClick = { viewModel.loadTestContacts() }
                 )
-                HorizontalDivider(color = NavyLight, modifier = Modifier.padding(start = 56.dp))
+                HorizontalDivider(color = warmPalette.cardBorder, modifier = Modifier.padding(start = 56.dp))
                 SettingsRow(
                     icon = Icons.Default.DeleteForever,
                     title = stringResource(R.string.settings_clear_data_title),
@@ -297,11 +313,11 @@ private fun ThemeOption(
 
 @Composable
 private fun SettingsSectionHeader(title: String) {
-    Text(
-        text = title.uppercase(),
-        style = MaterialTheme.typography.labelSmall,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
-        modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 4.dp, end = 16.dp)
+    // Warm eyebrow: mixed-case, tracked, ink3 — matches the iOS pass
+    // that swapped system uppercase header style for warm tokens.
+    com.xaymaca.sit.ui.warm.WarmEyebrow(
+        text = title,
+        modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 4.dp, end = 16.dp),
     )
 }
 
@@ -310,41 +326,42 @@ private fun SettingsRow(
     icon: ImageVector,
     title: String,
     subtitle: String? = null,
-    iconTint: androidx.compose.ui.graphics.Color = Cobalt,
-    onClick: () -> Unit
+    iconTint: androidx.compose.ui.graphics.Color =
+        com.xaymaca.sit.ui.theme.WarmCategory.Community.palette.accent,
+    onClick: () -> Unit,
 ) {
+    val palette = com.xaymaca.sit.ui.theme.WarmTheme.palette()
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onClick)
             .padding(horizontal = 16.dp, vertical = 12.dp),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
             icon,
             contentDescription = null,
             tint = iconTint,
-            modifier = Modifier.size(24.dp)
+            modifier = Modifier.size(24.dp),
         )
         Spacer(modifier = Modifier.width(16.dp))
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 title,
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Medium
+                style = MaterialTheme.typography.bodyLarge.copy(color = palette.ink),
+                fontWeight = FontWeight.Medium,
             )
             if (subtitle != null) {
                 Text(
                     subtitle,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    style = MaterialTheme.typography.bodySmall.copy(color = palette.ink2),
                 )
             }
         }
         Icon(
             Icons.AutoMirrored.Filled.KeyboardArrowRight,
             contentDescription = null,
-            tint = MaterialTheme.colorScheme.onSurfaceVariant
+            tint = palette.ink3,
         )
     }
 }

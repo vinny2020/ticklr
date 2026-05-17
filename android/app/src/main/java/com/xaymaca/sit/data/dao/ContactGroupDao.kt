@@ -15,6 +15,15 @@ interface ContactGroupDao {
     @Query("SELECT * FROM contact_groups WHERE id = :id")
     suspend fun getById(id: Long): ContactGroup?
 
+    /** Look up the seeded canonical group by its stable categoryId. */
+    @Query("SELECT * FROM contact_groups WHERE categoryId = :categoryId LIMIT 1")
+    suspend fun getByCategoryId(categoryId: String): ContactGroup?
+
+    /** Case-insensitive name lookup, used by CanonicalGroupSeed to
+     *  adopt user-created groups that already match a canonical name. */
+    @Query("SELECT * FROM contact_groups WHERE LOWER(TRIM(name)) = LOWER(TRIM(:name)) LIMIT 1")
+    suspend fun findByNameCaseInsensitive(name: String): ContactGroup?
+
     @Transaction
     @Query("SELECT * FROM contact_groups WHERE id = :id")
     suspend fun getGroupWithContacts(id: Long): GroupWithContacts?
@@ -54,4 +63,9 @@ interface ContactGroupDao {
 
     @Query("SELECT COUNT(*) FROM contact_group_cross_ref WHERE groupId = :groupId")
     fun getMemberCount(groupId: Long): Flow<Int>
+
+    /** All membership rows as a flow, used by the warm Tickle screen to
+     *  resolve each contact-based reminder to a category accent. */
+    @Query("SELECT * FROM contact_group_cross_ref")
+    fun getAllCrossRefs(): Flow<List<ContactGroupCrossRef>>
 }

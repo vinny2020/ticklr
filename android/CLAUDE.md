@@ -6,38 +6,74 @@
 
 ## 🛠️ Pending Tasks — Start Here
 
-### Task — Move default-template seeding to app launch
+### Warm redesign — in flight on `feat/warm-redesign-android`
 
-**Bug:** The default "Checking in" `MessageTemplate` is only seeded when the user opens
-**Settings → Message Templates** (`TemplateListScreen.kt` `LaunchedEffect` calls
-`TemplateViewModel.seedDefaultIfNeeded`). If a user never visits that screen, the template
-dropdown in `ComposeScreen` — gated by `if (templates.isNotEmpty())` — stays hidden forever.
+Major UI redesign for the next Play Store release. Branch is
+feature-complete and pushed; not yet merged. See
+`~/.claude/projects/-Users-xaymaca-Projects-ticklr/memory/project_warm_redesign.md`
+for the full design decisions log shared with iOS.
 
-**Current band-aid:** `ComposeScreen` ALSO calls `templateViewModel.seedDefaultIfNeeded(prefs)`
-in a `LaunchedEffect`. Idempotent (guarded by `hasSeededDefaultTemplates` SharedPrefs flag),
-but every screen that depends on templates would need to repeat this pattern. Same latent
-bug exists on iOS — see `ios/CLAUDE.md`.
+**What's done on the branch:**
+- Warm theme tokens (3 tiers × light + derived dark) in
+  `ui/theme/WarmTheme.kt`, plus LocalWarmth + LocalWarmPalette
+  composition locals.
+- 5 canonical relationship categories (Family / Close Friends /
+  Work / Milestones / Neighbors & Community) with stable string
+  ids in `ui/theme/WarmCategory.kt`. Seeded as `ContactGroup`s on
+  first launch by `data/repository/CanonicalGroupSeed.kt` via
+  Room migration v3→v4 that added the `categoryId: String?` column.
+- Material Icons Extended dep added (for Briefcase / CalendarMonth
+  / Groups icons used by category badges).
+- Bundled Noto SemiBold for ar/hi/ja headings + the existing
+  Bebas Neue for Latin Subtle in `ui/theme/WarmType.kt`. OFL-1.1
+  licenses under `android/licenses/`.
+- Warm primitives in `ui/warm/`: WarmCard (Hero/Compact/Row),
+  CategoryBadge, TicklePrompt (decorative), MonogramAvatar +
+  MonogramPhotoAffordance, WarmFilterChip, WarmListContainer +
+  WarmRowDivider, WarmEyebrow, WarmIllustration (Canvas-drawn).
+- ContactPhotoView (3-state resolver), LocalPhotoStore (local-only
+  JPEG cropped to 512px under filesDir/photos/), ContactPhotoService
+  (read-only ContactsContract match by phone via PhoneLookup or
+  email via Email.CONTENT_LOOKUP_URI; guards on READ_CONTACTS so
+  it silently returns null on Samsung devices where the user
+  hasn't granted access).
+- ContactsAccessBanner on Contact Detail (TIC-32) — re-prompts or
+  deep-links to Settings depending on the current permission state;
+  re-checks on `ON_RESUME` so returning from Settings invalidates
+  the photo cache automatically.
+- 55 new `warm_*` string resources in all 21 shipped locales —
+  `TranslationCompletenessTest` stays green.
+- All 5 main tabs warmed (Network / Tickle / Groups / Compose /
+  Settings) + Onboarding + Contact Detail. Unified 32sp warm
+  heading across tabs.
+- WarmCategoryTest covers stable-id contract + palette + string
+  bindings.
 
-**Real fix:** Seed once at app launch from `SITApp.onCreate()`.
-1. Inject `MessageTemplateRepository` and `@ApplicationContext context: Context` into
-   `SITApp` via Hilt (it's already `@HiltAndroidApp`).
-2. In `onCreate()`, after `super.onCreate()`, kick off a one-time coroutine on
-   `Dispatchers.IO` (or use a `WorkManager` `OneTimeWorkRequest`) that:
-   - Reads the `hasSeededDefaultTemplates` flag from `getSharedPreferences(PREFS_NAME, MODE_PRIVATE)`
-   - If unset, inserts the default template (`title = "Checking in"`,
-     `body = "Hey! Just checking in — hope you're doing well. Let's catch up soon!"`)
-   - Sets the flag
-3. **Remove** the band-aid `LaunchedEffect` from `ComposeScreen.kt` that calls
-   `templateViewModel.seedDefaultIfNeeded`, and the `TemplateViewModel` parameter on
-   `ComposeScreen`.
-4. **Keep** the `LaunchedEffect` in `TemplateListScreen.kt` for now — it's still idempotent
-   and provides a safety net if the launch-time seed ever fails. Or remove it for purity;
-   either is defensible.
-5. Bonus: extract the seed string + body into `MessageTemplateSeed.kt` so the launch path
-   and any defensive paths share one source of truth.
+**Post-device-test fixes shipped on the branch:**
+- Network filter chip flicker eliminated — chip-count StateFlows
+  are pre-built in NetworkViewModel instead of being recreated on
+  every recomposition.
+- Contact Detail action chips: drop Email (handled by user's mail
+  app anyway), and let "Create a tickle" wrap to 2 lines so it
+  stops truncating to "Create a".
+- Compose screen wraps in `verticalScroll(rememberScrollState())`
+  so the message field keeps its 120dp min height with the IME
+  visible (was collapsing to a single-line strip; template
+  dropdown + Send button were getting pushed off-screen too).
+- `MessageTemplateSeed` is now DB-aware: re-inserts the default
+  "Checking in" template when the templates table is empty
+  regardless of the `hasSeededDefaultTemplates` prefs flag. Closes
+  the previously-noted "default template never seeds" pending
+  task — that bug bit users whose flag was set but row was wiped
+  (Clear All Data, prior bug, etc.).
 
-**Scope:** `SITApp.kt` (~10 lines), `ComposeScreen.kt` (revert band-aid, ~5 lines),
-optionally `MessageTemplateSeed.kt` (new helper).
+**What's left:**
+- Open the PR, merge, ship.
+- Translation review of LLM-generated locales (cs/de/el/es/fr/he/
+  hu/it/ko/nl/pl/pt/ro/ru/sv/ur/zh-Hans). Tracked separately in
+  Linear TIC-33.
+- Optional: warm sub-screens (TemplateListScreen, ImportScreen,
+  TickleEditScreen, AddContactScreen) still on system chrome.
 
 ---
 
@@ -129,7 +165,7 @@ This is the most labor-intensive phase if undertaken. Treat as a project unto it
 - **DI**: Hilt
 - **Navigation**: Navigation Compose (`NavGraph.kt`)
 - **Background work**: WorkManager (`TickleWorker`) + `AlarmManager` via `TickleAlarmReceiver`
-- **Localization**: `res/values/strings.xml` + 12 translated locales (es, fr, de, it, nl, el, pl, ro, hu, pt, sv, cs); `resourceConfigurations` restricts bundled to these 13.
+- **Localization**: `res/values/strings.xml` + 20 translated locales (ar, cs, de, el, es, fr, he, hi, hu, it, ja, ko, nl, pl, pt, ro, ru, sv, ur, zh); `resourceConfigurations` restricts bundled to these 21.
 - **Min SDK**: 26 (Android 8.0) · **Target SDK**: 35
 - **SMS**: intent-only handoff via `Intent.ACTION_SENDTO` (`smsto:` URI). No `SEND_SMS` permission. (Removed in v1.5.5-production for Google Play SMS/Call Log policy compliance — see archive.)
 
