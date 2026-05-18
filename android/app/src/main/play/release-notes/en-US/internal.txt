@@ -1,4 +1,4 @@
-Bug fixes from closed-testing feedback:
-• Keyboard no longer covers Tags and Notes fields on the Add Contact screen (also fixed on Tickle, Compose, and Template screens)
-• Compose tab now stays highlighted in the bottom nav when selected
-• Added a proper splash screen — no more blank flash when opening the app
+Privacy improvements:
+• Contacts, tickles, and attached photos are now excluded from Google Drive auto-backup and device-to-device transfer
+• Clearing all data now also wipes any contact photos you've attached
+• Removed the crash-reporting SDK — no analytics or telemetry of any kind, matching our "no cloud, no data collected" promise
