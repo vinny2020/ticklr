@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Android 11 and below (API 30-) backup rules.
+  See docs/Privacy-Fix-Handoff-May-2026.md Task 1.
+-->
+<full-backup-content>
+    <exclude domain="database" />
+    <exclude domain="file" path="photos/" />
+    <exclude domain="sharedpref" path="sit_prefs.xml" />
+</full-backup-content>
