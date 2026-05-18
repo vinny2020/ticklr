@@ -15,6 +15,7 @@
 		0EA9C2254CEDC3F5A8E9033B /* OFL-NotoNaskhArabic.txt in Resources */ = {isa = PBXBuildFile; fileRef = D0E4D04216FC720E233AA609 /* OFL-NotoNaskhArabic.txt */; };
 		12FCF35AA80528F2EF325924 /* ContactRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9125614ECAB9E4D8E5428E51 /* ContactRowView.swift */; };
 		1423BBA388EC43ABC386281F /* OFL-NotoSerifDevanagari.txt in Resources */ = {isa = PBXBuildFile; fileRef = 89A8592D7BE1A77F3A839568 /* OFL-NotoSerifDevanagari.txt */; };
+		1538B4A01D22876B74D30A26 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 69286CB7AAC699E4A7076063 /* PrivacyInfo.xcprivacy */; };
 		16BE362388D0211580E586D0 /* TickleScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F298878BB7FB2F2C63DC2B /* TickleScheduler.swift */; };
 		177120F253ADFB379BD6A007 /* WarmGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AB7ED7B5278EEB477C1E9F /* WarmGalleryView.swift */; };
 		184D3DD687352B351AB7A501 /* NetworkListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B1CFCC3988DCAF2034813A /* NetworkListView.swift */; };
@@ -125,6 +126,7 @@
 		53C7E0EBE485C198DCF9669E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		5CA413473ADA828136F21753 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		63EBB61C7877871E721045C7 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		69286CB7AAC699E4A7076063 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		6986C02DC105E08528D7DA6C /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6E1BCE2A47ECF0711BF683C2 /* WarmHeadingFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmHeadingFont.swift; sourceTree = "<group>"; };
 		70C371A80FA068A7BCAF4918 /* TickleEditViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleEditViewTests.swift; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				209311518915490C7F72039B /* Assets.xcassets */,
 				0A9EDE946F2D00EC70ED4A84 /* Info.plist */,
 				52B2D827FDB5FDABB740E34A /* Localizable.xcstrings */,
+				69286CB7AAC699E4A7076063 /* PrivacyInfo.xcprivacy */,
 				C3BA80FD4DE962EB1F107E78 /* test_contacts.csv */,
 				246A6BE6253EB732E2F4A838 /* Fonts */,
 				FE39C5E32CF68501239897AF /* InfoPlist.strings */,
@@ -527,6 +530,7 @@
 				0EA9C2254CEDC3F5A8E9033B /* OFL-NotoNaskhArabic.txt in Resources */,
 				1423BBA388EC43ABC386281F /* OFL-NotoSerifDevanagari.txt in Resources */,
 				9CC3A189563F711043FF4F77 /* OFL-NotoSerifJP.txt in Resources */,
+				1538B4A01D22876B74D30A26 /* PrivacyInfo.xcprivacy in Resources */,
 				34A284E142196787F146D1B3 /* test_contacts.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

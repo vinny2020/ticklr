@@ -34,6 +34,12 @@ enum PhotoStore {
         try? FileManager.default.removeItem(at: url(for: contactId))
     }
 
+    /// Wipes every user-attached photo. Used by Settings → Clear All Data;
+    /// single-contact deletion already calls `delete(for:)`.
+    static func deleteAll() {
+        try? FileManager.default.removeItem(at: folderURL)
+    }
+
     // MARK: - Internals
 
     private static var folderURL: URL {

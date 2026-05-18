@@ -174,6 +174,8 @@ struct SettingsView: View {
                             for group in groups { modelContext.delete(group) }
                             let tickles = (try? modelContext.fetch(FetchDescriptor<TickleReminder>())) ?? []
                             for tickle in tickles { modelContext.delete(tickle) }
+                            PhotoStore.deleteAll()
+                            ContactPhotoFetcher.clearCache()
                             UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
                             try? modelContext.save()
                             seedMessage = "All data cleared ✓"
