@@ -46,3 +46,5 @@ ios/Package.resolved
 
 # Xcode Cloud monorepo symlink (created at CI time by ci_scripts/ci_post_clone.sh)
 SIT.xcodeproj
+.claude/worktrees/
+.claude/rtl-screenshots/
