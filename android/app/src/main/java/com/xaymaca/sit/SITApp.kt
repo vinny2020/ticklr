@@ -6,7 +6,6 @@ import android.app.NotificationManager
 import android.content.Context
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.xaymaca.sit.data.dao.ContactGroupDao
 import com.xaymaca.sit.data.repository.CanonicalGroupSeed
 import com.xaymaca.sit.data.repository.MessageTemplateRepository
@@ -40,9 +39,6 @@ class SITApp : Application(), Configuration.Provider {
     override fun onCreate() {
         super.onCreate()
         createNotificationChannel()
-        // Enable Crashlytics in debug so local crashes appear in Firebase Console
-        // Set to false to suppress debug noise if needed
-        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
         seedDefaultTemplate()
         seedCanonicalGroups()
     }

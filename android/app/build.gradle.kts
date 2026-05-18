@@ -13,7 +13,6 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     id("com.google.gms.google-services")
-    alias(libs.plugins.firebase.crashlytics.plugin)
     jacoco
     alias(libs.plugins.play.publisher)
 }
@@ -176,10 +175,6 @@ dependencies {
 
     // SplashScreen API (backport to API 23+)
     implementation(libs.core.splashscreen)
-
-    // Firebase (crash reporting only — Analytics intentionally excluded)
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.crashlytics)
 
     debugImplementation(libs.compose.ui.tooling)
 
