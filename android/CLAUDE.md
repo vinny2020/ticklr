@@ -1,81 +1,10 @@
 # CLAUDE.md — Ticklr Android
 
-> **Status:** Live on Google Play (April 29, 2026 as `android/v1.5.5-production`). The historical record of completed work — i18n phases (12 languages), ComposeScreen redesign, store submission cycle, closed-testing bug fixes, SEND_SMS removal — lives in `~/Documents/SecondBrain/Projects/Ticklr/CLAUDE Archive — Shipped Work.md`. This file tracks reference material and ongoing work only.
+> **Status:** Live on Google Play (April 29, 2026 as `android/v1.5.5-production`). The historical record of completed work — i18n phases (12 languages), ComposeScreen redesign, store submission cycle, closed-testing bug fixes, SEND_SMS removal, warm redesign, May 2026 privacy hardening (auto-backup exclusion + Clear All Data wipes photo files), Firebase Crashlytics removal (TIC-34) — lives in `~/Documents/SecondBrain/Projects/Ticklr/CLAUDE Archive — Shipped Work.md`. This file tracks reference material and ongoing work only.
 
 ---
 
 ## 🛠️ Pending Tasks — Start Here
-
-### Warm redesign — in flight on `feat/warm-redesign-android`
-
-Major UI redesign for the next Play Store release. Branch is
-feature-complete and pushed; not yet merged. See
-`~/.claude/projects/-Users-xaymaca-Projects-ticklr/memory/project_warm_redesign.md`
-for the full design decisions log shared with iOS.
-
-**What's done on the branch:**
-- Warm theme tokens (3 tiers × light + derived dark) in
-  `ui/theme/WarmTheme.kt`, plus LocalWarmth + LocalWarmPalette
-  composition locals.
-- 5 canonical relationship categories (Family / Close Friends /
-  Work / Milestones / Neighbors & Community) with stable string
-  ids in `ui/theme/WarmCategory.kt`. Seeded as `ContactGroup`s on
-  first launch by `data/repository/CanonicalGroupSeed.kt` via
-  Room migration v3→v4 that added the `categoryId: String?` column.
-- Material Icons Extended dep added (for Briefcase / CalendarMonth
-  / Groups icons used by category badges).
-- Bundled Noto SemiBold for ar/hi/ja headings + the existing
-  Bebas Neue for Latin Subtle in `ui/theme/WarmType.kt`. OFL-1.1
-  licenses under `android/licenses/`.
-- Warm primitives in `ui/warm/`: WarmCard (Hero/Compact/Row),
-  CategoryBadge, TicklePrompt (decorative), MonogramAvatar +
-  MonogramPhotoAffordance, WarmFilterChip, WarmListContainer +
-  WarmRowDivider, WarmEyebrow, WarmIllustration (Canvas-drawn).
-- ContactPhotoView (3-state resolver), LocalPhotoStore (local-only
-  JPEG cropped to 512px under filesDir/photos/), ContactPhotoService
-  (read-only ContactsContract match by phone via PhoneLookup or
-  email via Email.CONTENT_LOOKUP_URI; guards on READ_CONTACTS so
-  it silently returns null on Samsung devices where the user
-  hasn't granted access).
-- ContactsAccessBanner on Contact Detail (TIC-32) — re-prompts or
-  deep-links to Settings depending on the current permission state;
-  re-checks on `ON_RESUME` so returning from Settings invalidates
-  the photo cache automatically.
-- 55 new `warm_*` string resources in all 21 shipped locales —
-  `TranslationCompletenessTest` stays green.
-- All 5 main tabs warmed (Network / Tickle / Groups / Compose /
-  Settings) + Onboarding + Contact Detail. Unified 32sp warm
-  heading across tabs.
-- WarmCategoryTest covers stable-id contract + palette + string
-  bindings.
-
-**Post-device-test fixes shipped on the branch:**
-- Network filter chip flicker eliminated — chip-count StateFlows
-  are pre-built in NetworkViewModel instead of being recreated on
-  every recomposition.
-- Contact Detail action chips: drop Email (handled by user's mail
-  app anyway), and let "Create a tickle" wrap to 2 lines so it
-  stops truncating to "Create a".
-- Compose screen wraps in `verticalScroll(rememberScrollState())`
-  so the message field keeps its 120dp min height with the IME
-  visible (was collapsing to a single-line strip; template
-  dropdown + Send button were getting pushed off-screen too).
-- `MessageTemplateSeed` is now DB-aware: re-inserts the default
-  "Checking in" template when the templates table is empty
-  regardless of the `hasSeededDefaultTemplates` prefs flag. Closes
-  the previously-noted "default template never seeds" pending
-  task — that bug bit users whose flag was set but row was wiped
-  (Clear All Data, prior bug, etc.).
-
-**What's left:**
-- Open the PR, merge, ship.
-- Translation review of LLM-generated locales (cs/de/el/es/fr/he/
-  hu/it/ko/nl/pl/pt/ro/ru/sv/ur/zh-Hans). Tracked separately in
-  Linear TIC-33.
-- Optional: warm sub-screens (TemplateListScreen, ImportScreen,
-  TickleEditScreen, AddContactScreen) still on system chrome.
-
----
 
 ### Task — Edge-to-edge cleanup for v1.5.6
 
@@ -240,7 +169,7 @@ val Amber  = Color(0xFFF5C842)   // accent, tickle due state
 - `POST_NOTIFICATIONS` — tickle reminders (Android 13+)
 - `RECEIVE_BOOT_COMPLETED` — re-register alarms after device reboot
 - `SCHEDULE_EXACT_ALARM` — exact-time tickle alarms
-- `RECEIVE_SMS` is defensively *removed* via `tools:node="remove"` in case any dependency tries to merge it in (same pattern as `AD_ID`)
+- `RECEIVE_SMS` is defensively *removed* via `tools:node="remove"` in case any dependency tries to merge it in
 - ⚠️ **Do NOT add `SEND_SMS` back.** Google Play categorically prohibits it for non-default-SMS-handler apps. SMS goes through `Intent.ACTION_SENDTO` only.
 
 ## Build & Run
