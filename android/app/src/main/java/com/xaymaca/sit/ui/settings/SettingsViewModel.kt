@@ -8,12 +8,16 @@ import com.xaymaca.sit.BuildConfig
 import com.xaymaca.sit.SITApp
 import com.xaymaca.sit.data.repository.ContactRepository
 import com.xaymaca.sit.data.repository.TickleRepository
+import com.xaymaca.sit.service.ContactPhotoService
 import com.xaymaca.sit.service.SeedDataService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
@@ -63,6 +67,16 @@ class SettingsViewModel @Inject constructor(
                 contactRepository.deleteAllGroups()
                 tickleRepository.deleteAllReminders()
                 WorkManager.getInstance(context).cancelAllWork()
+
+                // Bulk equivalent of LocalPhotoStore.delete() — single-contact
+                // deletion already wipes the per-row .jpg in ContactDetailScreen.
+                withContext(Dispatchers.IO) {
+                    File(context.filesDir, "photos").deleteRecursively()
+                }
+                // Drop the system-photo bitmap cache so a reused contact ID
+                // can't surface a stale image.
+                ContactPhotoService.clearCache()
+
                 _seedMessage.value = "All data cleared ✓"
             } catch (e: Exception) {
                 _seedMessage.value = "Clear failed: ${e.message}"
