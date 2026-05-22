@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0416C761CFE00886D364C29D /* ContactPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F5DAC52A66CB6C37894078 /* ContactPhotoView.swift */; };
 		048D506A93074FACAA1865EC /* WarmCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0C8A1F9EAC9226E7D717720 /* WarmCategory.swift */; };
+		06F4EDA1D1049DE0D9691453 /* TickleActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F93D464D33962932C5C942 /* TickleActionSheet.swift */; };
 		0A15CDA437196AAA901C1371 /* ContactPhotoFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0245F8A1C0C8EF0E794507B1 /* ContactPhotoFetcher.swift */; };
 		0C03E3E93AEAAEAB358CF5C3 /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACA061EE9A732D89FD3E0F3 /* GroupListView.swift */; };
 		0C41C7D26198E0DC2C958072 /* AddContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77347A9F53BFBE3E1672671 /* AddContactView.swift */; };
@@ -118,7 +119,7 @@
 		40663A4021DF41A99C3F4585 /* MessageTemplateSeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTemplateSeed.swift; sourceTree = "<group>"; };
 		420A93FB5239884112A3FF47 /* TicklePrompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicklePrompt.swift; sourceTree = "<group>"; };
 		455DDB76B445C37831B67137 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		45775744E6927B98A73B2CAC /* Ticklr.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Ticklr.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		45775744E6927B98A73B2CAC /* Ticklr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ticklr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49E849839D5DE00393F1F990 /* TicklrTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = TicklrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50AD38DE9F1FCCBD8B82DEED /* ContactImportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactImportService.swift; sourceTree = "<group>"; };
 		52B2D827FDB5FDABB740E34A /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -126,7 +127,7 @@
 		53C7E0EBE485C198DCF9669E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		5CA413473ADA828136F21753 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		63EBB61C7877871E721045C7 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
-		69286CB7AAC699E4A7076063 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		69286CB7AAC699E4A7076063 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		6986C02DC105E08528D7DA6C /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6E1BCE2A47ECF0711BF683C2 /* WarmHeadingFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmHeadingFont.swift; sourceTree = "<group>"; };
 		70C371A80FA068A7BCAF4918 /* TickleEditViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleEditViewTests.swift; sourceTree = "<group>"; };
@@ -162,7 +163,7 @@
 		BE5F28CBE2FCC020F374E286 /* NotoSerifDevanagari-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSerifDevanagari-SemiBold.ttf"; sourceTree = "<group>"; };
 		C203898862FA7D9FC0D26AB9 /* ContactsAccessBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsAccessBanner.swift; sourceTree = "<group>"; };
 		C3936B5E7A48687C98F2843D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		C3BA80FD4DE962EB1F107E78 /* test_contacts.csv */ = {isa = PBXFileReference; path = test_contacts.csv; sourceTree = "<group>"; };
+		C3BA80FD4DE962EB1F107E78 /* test_contacts.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = test_contacts.csv; sourceTree = "<group>"; };
 		C9AAF458A6C9EBA96236F28F /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CA4BF582AFC377CF7A29ADC9 /* TickleEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleEditView.swift; sourceTree = "<group>"; };
 		CADEFE7A1ADA2B9E3DDBBD81 /* MessageComposerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageComposerService.swift; sourceTree = "<group>"; };
@@ -177,6 +178,7 @@
 		E41F74FBB6970BCE328664AF /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E5F765EEB318998C9E229F0F /* TemplateEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateEditView.swift; sourceTree = "<group>"; };
 		E77347A9F53BFBE3E1672671 /* AddContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactView.swift; sourceTree = "<group>"; };
+		E7F93D464D33962932C5C942 /* TickleActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleActionSheet.swift; sourceTree = "<group>"; };
 		EDBC29B891A9D2602E4C6122 /* TickleReminderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleReminderTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -347,6 +349,7 @@
 		79DA010937C896B33F1B0252 /* Tickle */ = {
 			isa = PBXGroup;
 			children = (
+				E7F93D464D33962932C5C942 /* TickleActionSheet.swift */,
 				CA4BF582AFC377CF7A29ADC9 /* TickleEditView.swift */,
 				A933C06096E53F2DAD773D26 /* TickleListView.swift */,
 				AB2BE0559EF55B0E2A1DDE54 /* TickleRowView.swift */,
@@ -464,9 +467,6 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
-					1CADC66CDEC975B92B6E11C1 = {
-						DevelopmentTeam = "";
-					};
 					659D71ADC995ABBCE6F3FA86 = {
 						DevelopmentTeam = "";
 					};
@@ -573,6 +573,7 @@
 				5C6F6974D1ED58434BB9CFDF /* SettingsView.swift in Sources */,
 				840D3C6377E1F347573EAE19 /* TemplateEditView.swift in Sources */,
 				F01FB1D28CE1BD691A9DD989 /* TemplateListView.swift in Sources */,
+				06F4EDA1D1049DE0D9691453 /* TickleActionSheet.swift in Sources */,
 				6A89CDD6B79D3E4E9E4BDBCE /* TickleEditView.swift in Sources */,
 				FCEBEAFB511E04C6C968B5BA /* TickleListView.swift in Sources */,
 				C7BDC5C1B15460DAF7B84796 /* TicklePrompt.swift in Sources */,
@@ -670,6 +671,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Sources/SIT/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

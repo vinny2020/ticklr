@@ -295,4 +295,5 @@
 
     <string name="warm_contact_accessBanner">Permite accesul la contacte pentru a folosi poza din agenda telefonică.</string>
     <string name="compose_template_label">Șablon</string>
+    <string name="tickle_action_compose">Compune mesaj</string>
 </resources>

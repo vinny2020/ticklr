@@ -294,4 +294,5 @@
 
     <string name="warm_contact_accessBanner">Engedélyezd a névjegyekhez való hozzáférést, hogy a címjegyzék fotója használható legyen.</string>
     <string name="compose_template_label">Sablon</string>
+    <string name="tickle_action_compose">Üzenet írása</string>
 </resources>

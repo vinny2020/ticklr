@@ -293,4 +293,5 @@
 
     <string name="warm_contact_accessBanner">允许访问通讯录，以便使用通讯录中的照片。</string>
     <string name="compose_template_label">模板</string>
+    <string name="tickle_action_compose">撰写消息</string>
 </resources>

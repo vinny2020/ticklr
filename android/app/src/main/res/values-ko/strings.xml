@@ -293,4 +293,5 @@
 
     <string name="warm_contact_accessBanner">주소록의 사진을 사용하려면 연락처 접근을 허용해 주세요.</string>
     <string name="compose_template_label">템플릿</string>
+    <string name="tickle_action_compose">메시지 작성</string>
 </resources>

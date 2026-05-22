@@ -10,6 +10,7 @@ import com.xaymaca.sit.data.model.TickleStatus
 import com.xaymaca.sit.data.dao.ContactGroupDao
 import com.xaymaca.sit.data.repository.ContactRepository
 import com.xaymaca.sit.data.repository.TickleRepository
+import com.xaymaca.sit.service.StringListConverter
 import com.xaymaca.sit.service.TickleScheduler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -33,6 +34,42 @@ class TickleViewModel @Inject constructor(
 
     private val _toastMessage = MutableStateFlow<String?>(null)
     val toastMessage: StateFlow<String?> = _toastMessage.asStateFlow()
+
+    private val stringListConverter = StringListConverter()
+
+    /** Resolved target for the connect-action sheet shown on tickle tap (TIC-36).
+     *  `phones`/`emails` are empty for group tickles (or contacts with no channel). */
+    data class TickleActionTarget(
+        val reminder: TickleReminder,
+        val displayName: String,
+        val initials: String,
+        val categoryId: String?,
+        val phones: List<String>,
+        val emails: List<String>,
+    )
+
+    private val _actionTarget = MutableStateFlow<TickleActionTarget?>(null)
+    val actionTarget: StateFlow<TickleActionTarget?> = _actionTarget.asStateFlow()
+
+    /** Resolves the tapped reminder's contact channels and opens the action sheet. */
+    fun onTickleTapped(reminder: TickleReminder) {
+        viewModelScope.launch {
+            val contact = reminder.contactId?.let { contactRepository.getContactById(it) }
+            val display = reminderDisplays.value[reminder.id]
+            _actionTarget.value = TickleActionTarget(
+                reminder = reminder,
+                displayName = display?.name ?: contact?.fullName?.takeIf { it.isNotBlank() } ?: "",
+                initials = display?.initials ?: contact?.initials ?: "?",
+                categoryId = display?.categoryId,
+                phones = contact?.let { stringListConverter.fromString(it.phoneNumbers) } ?: emptyList(),
+                emails = contact?.let { stringListConverter.fromString(it.emails) } ?: emptyList(),
+            )
+        }
+    }
+
+    fun dismissActionSheet() {
+        _actionTarget.value = null
+    }
 
     val allReminders: StateFlow<List<TickleReminder>> = tickleRepository
         .getAllReminders()
