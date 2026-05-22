@@ -1,5 +1,7 @@
 package com.xaymaca.sit.ui.tickle
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -46,6 +48,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -76,6 +79,7 @@ import kotlinx.coroutines.launch
 fun TickleListScreen(
     onAddTickle: () -> Unit,
     onEditTickle: (Long) -> Unit,
+    onCompose: (Long) -> Unit,
     viewModel: TickleViewModel = hiltViewModel(),
 ) {
     val warmth = Warmth.Subtle
@@ -84,7 +88,9 @@ fun TickleListScreen(
     val upcomingReminders by viewModel.upcomingReminders.collectAsState()
     val snoozedReminders by viewModel.snoozedReminders.collectAsState()
     val reminderDisplays by viewModel.reminderDisplays.collectAsState()
+    val actionTarget by viewModel.actionTarget.collectAsState()
     val fallbackDisplay = TickleViewModel.RowDisplay(initials = "T", name = "Tickle")
+    val context = LocalContext.current
 
     Scaffold(
         containerColor = palette.paper,
@@ -134,7 +140,7 @@ fun TickleListScreen(
                         display = display,
                         isDue = true,
                         palette = palette,
-                        onClick = { onEditTickle(reminder.id) },
+                        onClick = { viewModel.onTickleTapped(reminder) },
                         onComplete = { viewModel.markComplete(reminder) },
                         onSnooze = { viewModel.snooze(reminder) },
                         onDelete = { viewModel.delete(reminder) },
@@ -157,7 +163,7 @@ fun TickleListScreen(
                         display = display,
                         isDue = false,
                         palette = palette,
-                        onClick = { onEditTickle(reminder.id) },
+                        onClick = { viewModel.onTickleTapped(reminder) },
                         onComplete = { viewModel.markComplete(reminder) },
                         onSnooze = { viewModel.snooze(reminder) },
                         onDelete = { viewModel.delete(reminder) },
@@ -181,7 +187,7 @@ fun TickleListScreen(
                             display = display,
                             isDue = false,
                             palette = palette,
-                            onClick = { onEditTickle(reminder.id) },
+                            onClick = { viewModel.onTickleTapped(reminder) },
                             onComplete = { viewModel.markComplete(reminder) },
                             onSnooze = { viewModel.snooze(reminder) },
                             onDelete = { viewModel.delete(reminder) },
@@ -189,6 +195,33 @@ fun TickleListScreen(
                     }
                 }
             }
+        }
+
+        actionTarget?.let { target ->
+            TickleActionSheet(
+                target = target,
+                onCompose = {
+                    val contactId = target.reminder.contactId
+                    viewModel.dismissActionSheet()
+                    if (contactId != null) onCompose(contactId)
+                },
+                onCall = {
+                    target.phones.firstOrNull()?.let { number ->
+                        context.startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:$number")))
+                    }
+                    viewModel.dismissActionSheet()
+                },
+                onEmail = {
+                    target.emails.firstOrNull()?.let { email ->
+                        context.startActivity(Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:$email")))
+                    }
+                    viewModel.dismissActionSheet()
+                },
+                onMarkDone = { viewModel.markComplete(target.reminder); viewModel.dismissActionSheet() },
+                onSnooze = { viewModel.snooze(target.reminder); viewModel.dismissActionSheet() },
+                onEdit = { onEditTickle(target.reminder.id); viewModel.dismissActionSheet() },
+                onDismiss = { viewModel.dismissActionSheet() },
+            )
         }
     }
 }

@@ -7,7 +7,17 @@ struct TickleListView: View {
 
     @State private var showingAdd = false
     @State private var editingReminder: TickleReminder?
+    @State private var actionSheetReminder: TickleReminder?
+    @State private var pendingAction: PendingAction?
+    @State private var composeContact: Contact?
     @State private var prefilledCategory: WarmCategory? = nil
+
+    /// Deferred follow-up presentation, run from the action sheet's `onDismiss`
+    /// so we never present a new sheet while the action sheet is still dismissing.
+    private enum PendingAction {
+        case compose(Contact)
+        case edit(TickleReminder)
+    }
 
     private let warmth: Warmth = .subtle
     private var palette: WarmPalette { WarmTheme.palette(for: warmth) }
@@ -114,7 +124,33 @@ struct TickleListView: View {
             .sheet(item: $editingReminder) { reminder in
                 TickleEditView(existing: reminder)
             }
+            .sheet(item: $actionSheetReminder, onDismiss: runPendingAction) { reminder in
+                TickleActionSheet(
+                    reminder: reminder,
+                    warmth: warmth,
+                    onCompose: { if let contact = reminder.contact { pendingAction = .compose(contact) } },
+                    onMarkDone: { TickleScheduler.markComplete(reminder: reminder, context: modelContext) },
+                    onSnooze: { TickleScheduler.snooze(reminder: reminder, days: 7, context: modelContext) },
+                    onEdit: { pendingAction = .edit(reminder) }
+                )
+                .presentationDetents([.height(TickleActionSheet.estimatedHeight(for: reminder))])
+                .presentationDragIndicator(.visible)
+            }
+            .sheet(item: $composeContact) { contact in
+                ComposeView(onCancel: { composeContact = nil }, initialContact: contact)
+            }
         }
+    }
+
+    /// Runs after the action sheet has fully dismissed, presenting whichever
+    /// follow-up surface the user requested.
+    private func runPendingAction() {
+        switch pendingAction {
+        case .compose(let contact): composeContact = contact
+        case .edit(let reminder):   editingReminder = reminder
+        case .none:                 break
+        }
+        pendingAction = nil
     }
 
     @ViewBuilder
@@ -143,6 +179,8 @@ struct TickleListView: View {
         TickleRowView(reminder: reminder, onComplete: {
             TickleScheduler.markComplete(reminder: reminder, context: modelContext)
         }, warmth: warmth)
+        .contentShape(Rectangle())
+        .onTapGesture { actionSheetReminder = reminder }
         .swipeActions(edge: .leading, allowsFullSwipe: true) {
             Button {
                 TickleScheduler.markComplete(reminder: reminder, context: modelContext)

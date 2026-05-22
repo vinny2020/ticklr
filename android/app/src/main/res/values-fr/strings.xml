@@ -294,4 +294,5 @@
 
     <string name="warm_contact_accessBanner">Autorise l’accès aux contacts pour utiliser la photo de ton carnet d’adresses.</string>
     <string name="compose_template_label">Modèle</string>
+    <string name="tickle_action_compose">Rédiger un message</string>
 </resources>

@@ -228,7 +228,16 @@ fun NavGraph() {
             composable(Screen.Tickle.route) {
                 TickleListScreen(
                     onAddTickle = { navController.navigate(Screen.TickleEdit.createRoute(-1L)) },
-                    onEditTickle = { id -> navController.navigate(Screen.TickleEdit.createRoute(id)) }
+                    onEditTickle = { id -> navController.navigate(Screen.TickleEdit.createRoute(id)) },
+                    onCompose = { id ->
+                        navController.navigate("compose?contactId=$id") {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = false
+                        }
+                    }
                 )
             }
 
