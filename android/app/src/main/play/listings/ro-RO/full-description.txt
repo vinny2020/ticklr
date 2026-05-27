@@ -1,0 +1,17 @@
+Oamenii tăi contează. Păstrează legătura în ritmul tău.
+
+Ticklr este un manager de contacte axat pe confidențialitate, care te ajută să întreții relații importante fără algoritmi, fluxuri sociale sau cont cloud. Totul rămâne pe dispozitivul tău.
+
+Setează mementouri recurente pentru a lua legătura. Sună-ți tatăl în fiecare duminică. Verifică ce mai face un coleg o dată pe trimestru. Ticklr te anunță discret când este timpul, apoi programează automat următorul memento.
+
+FUNCȚII
+
+- Calendar tickle: mementouri zilnice, săptămânale, lunare sau personalizate pentru fiecare contact
+- Importă contacte din telefon sau dintr-un export CSV LinkedIn
+- Organizează în grupuri: Familie, Muncă, Consiliu, Prieteni sau orice etichetă dorești
+- Compune SMS și MMS către mai multe contacte simultan folosind șabloane de mesaje salvate
+- 100% pe dispozitiv: fără cont, fără sincronizare cloud, fără analize, fără urmărire
+
+DATELE TALE RĂMÂN PE TELEFON
+
+Ticklr nu are servere și nu colectează date. Contactele, mementourile și mesajele tale sunt stocate exclusiv în baza de date locală securizată a dispozitivului. Nu avem cum să îți vedem datele, pentru că nu le primim niciodată.

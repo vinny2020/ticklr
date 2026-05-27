@@ -1,0 +1,17 @@
+Na vašich lidech záleží. Zůstávejte v kontaktu po svém.
+
+Ticklr je správce kontaktní sítě zaměřený na soukromí, který vám pomáhá udržovat smysluplné vztahy bez algoritmů, sociálních feedů nebo cloudového účtu. Všechno zůstává ve vašem zařízení.
+
+Nastavte si opakovaná připomenutí, abyste se ozvali. Zavolejte tátovi každou neděli. Ozvěte se kolegovi každé čtvrtletí. Ticklr vás tiše upozorní, když je čas, a potom automaticky naplánuje další připomenutí.
+
+FUNKCE
+
+- Tickle kalendář: denní, týdenní, měsíční nebo vlastní opakovaná připomenutí pro každý kontakt
+- Import kontaktů z telefonu nebo z exportu LinkedIn CSV
+- Organizace do skupin: Rodina, Práce, Rada, Přátelé nebo libovolný vlastní štítek
+- Psaní SMS a MMS pro více kontaktů najednou pomocí uložených šablon zpráv
+- 100% v zařízení: žádný účet, žádná cloudová synchronizace, žádné analytiky, žádné sledování
+
+VAŠE DATA ZŮSTÁVAJÍ V TELEFONU
+
+Ticklr nemá servery a neshromažďuje data. Vaše kontakty, připomenutí a zprávy jsou uložené výhradně v bezpečné místní databázi vašeho zařízení. Nemáme jak vaše data vidět, protože je nikdy nedostáváme.
