@@ -1,0 +1,4 @@
+Privacy improvements:
+• Contacts, tickles, and attached photos are now excluded from Google Drive auto-backup and device-to-device transfer
+• Clearing all data now also wipes any contact photos you've attached
+• Removed the crash-reporting SDK — no analytics or telemetry of any kind
