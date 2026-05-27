@@ -13,11 +13,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          # Needed so `git for-each-ref refs/tags/<tag>` can read the tag's
-          # annotation message. Shallow tag checkouts can create duplicate
-          # tag refspecs when actions/checkout also fetches tags.
-          fetch-depth: 0
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -58,41 +53,33 @@ jobs:
           echo "version_code=$VCODE" >> $GITHUB_OUTPUT
           echo "▸ Version: $VERSION_NAME | Track: $TRACK | Code: $VCODE"
 
-      - name: Write release notes from tag annotation
-        # Annotated tags (`git tag -a android/vX.Y.Z -m "..."`) carry a message;
-        # we extract it and overwrite app/src/main/play/release-notes/en-US/<track>.txt
-        # so the Triplet play-publisher uploads the per-release notes the tagger
-        # wrote, instead of the static file checked into the repo.
-        #
-        # Lightweight tags (no -m / no -a) leave the existing file untouched.
+      - name: Validate checked-in release notes
+        # Release notes are sourced from checked-in files:
+        # android/app/src/main/play/release-notes/<locale>/<track>.txt
+        # Tags select the version and track only; tag annotations are ignored.
         run: |
-          TAG="${GITHUB_REF#refs/tags/}"
-          NOTES=$(git for-each-ref --format='%(contents)' "refs/tags/$TAG")
-          NOTES_TRIMMED=$(printf '%s' "$NOTES" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+          TRACK="${{ steps.version.outputs.track }}"
+          shopt -s nullglob
+          FILES=(android/app/src/main/play/release-notes/*/"$TRACK".txt)
 
-          if [ -z "$NOTES_TRIMMED" ]; then
-            echo "▸ Tag '$TAG' has no annotation; falling back to checked-in release-notes file."
+          if [ "${#FILES[@]}" -eq 0 ]; then
+            echo "▸ No checked-in release notes found for track '$TRACK'."
             exit 0
           fi
 
-          TRACK="${{ steps.version.outputs.track }}"
-          DEST_DIR="android/app/src/main/play/release-notes/en-US"
-          DEST_FILE="$DEST_DIR/${TRACK}.txt"
-          mkdir -p "$DEST_DIR"
-          printf '%s\n' "$NOTES_TRIMMED" > "$DEST_FILE"
-
-          BYTES=$(wc -c < "$DEST_FILE")
-          echo "▸ Wrote $BYTES bytes to $DEST_FILE"
-          # Google Play caps release notes at 500 chars per locale per release.
-          # Don't truncate — let publishReleaseBundle fail loudly so the tagger
-          # knows to shorten the message and re-tag, rather than silently
-          # publishing a half-sentence.
-          if [ "$BYTES" -gt 500 ]; then
-            echo "::warning::Release notes exceed Play's 500-char limit ($BYTES bytes). publishReleaseBundle will likely reject this — re-tag with a shorter message."
-          fi
-          echo "─── preview ───"
-          cat "$DEST_FILE"
-          echo "─── end ───"
+          for FILE in "${FILES[@]}"; do
+            BYTES=$(wc -c < "$FILE")
+            echo "▸ $FILE ($BYTES bytes)"
+            # Google Play caps release notes at 500 chars per locale per release.
+            # Fail before uploading so we do not publish an invalid release edit.
+            if [ "$BYTES" -gt 500 ]; then
+              echo "::error::$FILE exceeds Play's 500-char release notes limit ($BYTES bytes)."
+              exit 1
+            fi
+            echo "─── preview: $FILE ───"
+            cat "$FILE"
+            echo "─── end ───"
+          done
 
       - name: Decode keystore
         run: |

@@ -178,6 +178,10 @@ Open `android/` in Android Studio (Hedgehog or newer).
 Run on API 26+ emulator or physical Android device.
 
 CI builds signed AABs via GitHub Actions on tags matching `android/v*-{alpha|beta|production}`.
+Tags select the version and Play track only; release notes come from checked-in files under
+`app/src/main/play/release-notes/<locale>/<track>.txt` and tag annotations are ignored.
+Edit `app/src/main/play/release-notes/en-US/production.txt` before a production tag, add
+localized sibling files when needed, then commit those files before tagging.
 See `~/Documents/SecondBrain/Projects/Ticklr/Release Tagging Guide.md` for tag conventions.
 `versionCode` is auto-computed as `100 + GITHUB_RUN_NUMBER`.
 
