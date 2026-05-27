@@ -1,0 +1,17 @@
+Jouw mensen doen ertoe. Houd contact op jouw voorwaarden.
+
+Ticklr is een privacygerichte contact- en netwerkmanager die je helpt betekenisvolle relaties te onderhouden zonder algoritmen, sociale feeds of een cloudaccount. Alles blijft op je apparaat.
+
+Stel terugkerende herinneringen in om contact op te nemen. Bel je vader elke zondag. Check elk kwartaal in bij een collega. Ticklr laat je rustig weten wanneer het tijd is en plant daarna automatisch de volgende herinnering.
+
+FUNCTIES
+
+- Tickle-agenda: stel dagelijkse, wekelijkse, maandelijkse of aangepaste herinneringen per contact in
+- Importeer contacten vanaf je telefoon of een LinkedIn CSV-export
+- Organiseer in groepen: Familie, Werk, Bestuur, Vrienden of elk label dat je wilt
+- Stel SMS- en MMS-berichten op voor meerdere contacten tegelijk met opgeslagen berichtsjablonen
+- 100% op je apparaat: geen account, geen cloudsynchronisatie, geen analytics, geen tracking
+
+JE GEGEVENS BLIJVEN OP JE TELEFOON
+
+Ticklr heeft geen servers en verzamelt geen gegevens. Je contacten, herinneringen en berichten worden uitsluitend opgeslagen in de beveiligde lokale database van je apparaat. Wij kunnen je gegevens niet zien, omdat we ze nooit ontvangen.

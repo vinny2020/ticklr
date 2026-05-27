@@ -1,0 +1,17 @@
+Vos proches comptent. Gardez le contact à votre rythme.
+
+Ticklr est un gestionnaire de réseau de contacts axé sur la confidentialité qui vous aide à entretenir des relations importantes sans algorithmes, fils sociaux ni compte cloud. Tout reste sur votre appareil.
+
+Planifiez des rappels récurrents pour reprendre contact. Appelez votre père chaque dimanche. Prenez des nouvelles d'un collègue chaque trimestre. Ticklr vous prévient discrètement au bon moment, puis programme automatiquement le rappel suivant.
+
+FONCTIONNALITÉS
+
+- Calendrier tickle : créez des rappels quotidiens, hebdomadaires, mensuels ou personnalisés pour chaque contact
+- Importez vos contacts depuis votre téléphone ou une exportation CSV LinkedIn
+- Organisez-les en groupes : Famille, Travail, Conseil, Amis, ou tout libellé de votre choix
+- Rédigez des SMS et MMS pour plusieurs contacts à la fois avec des modèles de messages enregistrés
+- 100 % sur l'appareil : pas de compte, pas de synchronisation cloud, pas d'analytics, pas de suivi
+
+VOS DONNÉES RESTENT SUR VOTRE TÉLÉPHONE
+
+Ticklr n'a pas de serveurs et ne collecte aucune donnée. Vos contacts, rappels et messages sont stockés uniquement dans la base de données locale sécurisée de votre appareil. Nous ne pouvons pas voir vos données, car nous ne les recevons jamais.

@@ -1,0 +1,17 @@
+Az embereid fontosak. Maradj kapcsolatban a saját feltételeid szerint.
+
+A Ticklr adatvédelem-központú kapcsolatháló-kezelő, amely segít ápolni a fontos kapcsolatokat algoritmusok, közösségi hírfolyamok és felhőfiók nélkül. Minden az eszközödön marad.
+
+Állíts be ismétlődő emlékeztetőket a kapcsolattartáshoz. Hívd fel apukádat minden vasárnap. Jelentkezz be egy kollégánál negyedévente. A Ticklr diszkréten szól, amikor eljön az idő, majd automatikusan ütemezi a következő emlékeztetőt.
+
+FUNKCIÓK
+
+- Tickle-naptár: napi, heti, havi vagy egyéni ismétlődő emlékeztetők kapcsolatonként
+- Névjegyek importálása telefonról vagy LinkedIn CSV-exportból
+- Csoportokba rendezés: Család, Munka, Testület, Barátok vagy bármilyen saját címke
+- SMS-ek és MMS-ek írása egyszerre több kapcsolatnak mentett üzenetsablonokkal
+- 100% az eszközön: nincs fiók, nincs felhőszinkron, nincs analitika, nincs követés
+
+AZ ADATAID A TELEFONODON MARADNAK
+
+A Ticklrnek nincsenek szerverei, és nem gyűjt adatokat. A névjegyeid, emlékeztetőid és üzeneteid kizárólag az eszközöd biztonságos helyi adatbázisában tárolódnak. Nem láthatjuk az adataidat, mert soha nem kapjuk meg őket.
