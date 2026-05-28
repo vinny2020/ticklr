@@ -3,7 +3,8 @@ agp = "8.13.2"
 kotlin = "2.0.0"
 ksp = "2.0.0-1.0.24"
 hilt = "2.51"
-compose-bom = "2024.06.00"
+compose-bom = "2024.09.03"
+material3-adaptive = "1.0.0"
 room = "2.7.0-alpha11"
 lifecycle = "2.8.2"
 navigation = "2.7.7"
@@ -21,6 +22,10 @@ compose-ui = { group = "androidx.compose.ui", name = "ui" }
 compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+compose-material3-windowsizeclass = { group = "androidx.compose.material3", name = "material3-window-size-class" }
+compose-material3-adaptive = { group = "androidx.compose.material3.adaptive", name = "adaptive", version.ref = "material3-adaptive" }
+compose-material3-adaptive-layout = { group = "androidx.compose.material3.adaptive", name = "adaptive-layout", version.ref = "material3-adaptive" }
+compose-material3-adaptive-navigation = { group = "androidx.compose.material3.adaptive", name = "adaptive-navigation", version.ref = "material3-adaptive" }
 compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
 compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity" }

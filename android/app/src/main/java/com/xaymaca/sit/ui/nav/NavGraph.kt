@@ -2,6 +2,9 @@ package com.xaymaca.sit.ui.nav
 
 import android.content.Context
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
@@ -10,11 +13,14 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavType
@@ -59,7 +65,7 @@ private val bottomNavRoutes = setOf(
 )
 
 @Composable
-fun NavGraph() {
+fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
     val context = LocalContext.current
     val prefs = context.getSharedPreferences(SITApp.PREFS_NAME, Context.MODE_PRIVATE)
     val onboardingComplete = prefs.getBoolean(SITApp.KEY_ONBOARDING_COMPLETE, false)
@@ -68,58 +74,39 @@ fun NavGraph() {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
-    val showBottomBar = currentDestination?.route
+    // Primary navigation chrome (rail or bottom bar) shows only on the five
+    // top-level destinations, not on detail/edit screens.
+    val showNavChrome = currentDestination?.route
         ?.substringBefore('?')
         ?.substringBefore('/') in bottomNavRoutes
 
+    // Medium/expanded widths (tablets, unfolded foldables, ChromeOS/desktop windows)
+    // get a side NavigationRail; compact (phones) keeps the bottom NavigationBar.
+    val useRail = widthSizeClass != WindowWidthSizeClass.Compact
+
+    // Only the widest layouts get side-by-side list-detail. At compact/medium the
+    // master-detail flows keep navigating to full-screen detail routes, preserving
+    // the immersive (chrome-free) phone detail experience.
+    val useTwoPane = widthSizeClass == WindowWidthSizeClass.Expanded
+
     Scaffold(
         bottomBar = {
-            if (showBottomBar) {
-                NavigationBar(
-                    containerColor = MaterialTheme.colorScheme.surfaceVariant
-                ) {
-                    bottomNavItems.forEach { item ->
-                        val label = stringResource(item.labelResId)
-                        NavigationBarItem(
-                            icon = {
-                                Icon(
-                                    imageVector = item.icon,
-                                    contentDescription = label
-                                )
-                            },
-                            label = { Text(label) },
-                            selected = currentDestination?.hierarchy?.any {
-                                it.route?.substringBefore('?')?.substringBefore('/') == item.screen.route
-                            } == true,
-                            onClick = {
-                                navController.navigate(item.screen.route) {
-                                    popUpTo(navController.graph.findStartDestination().id) {
-                                        saveState = true
-                                    }
-                                    launchSingleTop = true
-                                    restoreState = true
-                                }
-                            },
-                            colors = NavigationBarItemDefaults.colors(
-                                selectedIconColor = MaterialTheme.colorScheme.primary,
-                                selectedTextColor = MaterialTheme.colorScheme.primary,
-                                indicatorColor = MaterialTheme.colorScheme.primaryContainer,
-                                unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                                unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        )
-                    }
-                }
+            if (showNavChrome && !useRail) {
+                AppBottomNavBar(currentDestination, navController)
             }
         }
     ) { innerPadding ->
         val startDestination = if (onboardingComplete) Screen.Tickle.route else Screen.Onboarding.route
 
-        NavHost(
-            navController = navController,
-            startDestination = startDestination,
-            modifier = Modifier.padding(innerPadding)
-        ) {
+        Row(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
+            if (showNavChrome && useRail) {
+                AppNavigationRail(currentDestination, navController)
+            }
+            NavHost(
+                navController = navController,
+                startDestination = startDestination,
+                modifier = Modifier.weight(1f).fillMaxHeight()
+            ) {
             // Onboarding
             composable(Screen.Onboarding.route) {
                 OnboardingScreen(
@@ -151,13 +138,33 @@ fun NavGraph() {
 
             // Network
             composable(Screen.Network.route) {
-                NetworkListScreen(
-                    onContactClick = { id ->
-                        navController.navigate(Screen.ContactDetail.createRoute(id))
-                    },
-                    onAddContact = { navController.navigate(Screen.AddContact.route) },
-                    onImport = { navController.navigate(Screen.Import.route) }
-                )
+                if (useTwoPane) {
+                    NetworkPane(
+                        onAddContact = { navController.navigate(Screen.AddContact.route) },
+                        onImport = { navController.navigate(Screen.Import.route) },
+                        onEditContact = { id -> navController.navigate("edit_contact/$id") },
+                        onAddTickleForContact = { id ->
+                            navController.navigate(Screen.TickleEdit.createRouteWithContact(id))
+                        },
+                        onCompose = { id ->
+                            navController.navigate("compose?contactId=$id") {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = false
+                            }
+                        },
+                    )
+                } else {
+                    NetworkListScreen(
+                        onContactClick = { id ->
+                            navController.navigate(Screen.ContactDetail.createRoute(id))
+                        },
+                        onAddContact = { navController.navigate(Screen.AddContact.route) },
+                        onImport = { navController.navigate(Screen.Import.route) }
+                    )
+                }
             }
 
             composable(Screen.AddContact.route) {
@@ -205,9 +212,17 @@ fun NavGraph() {
 
             // Groups
             composable(Screen.GroupList.route) {
-                GroupListScreen(
-                    onGroupClick = { id -> navController.navigate(Screen.GroupDetail.createRoute(id)) }
-                )
+                if (useTwoPane) {
+                    GroupsPane(
+                        onContactClick = { id ->
+                            navController.navigate(Screen.ContactDetail.createRoute(id))
+                        },
+                    )
+                } else {
+                    GroupListScreen(
+                        onGroupClick = { id -> navController.navigate(Screen.GroupDetail.createRoute(id)) }
+                    )
+                }
             }
 
             composable(
@@ -226,19 +241,33 @@ fun NavGraph() {
 
             // Tickle
             composable(Screen.Tickle.route) {
-                TickleListScreen(
-                    onAddTickle = { navController.navigate(Screen.TickleEdit.createRoute(-1L)) },
-                    onEditTickle = { id -> navController.navigate(Screen.TickleEdit.createRoute(id)) },
-                    onCompose = { id ->
-                        navController.navigate("compose?contactId=$id") {
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
+                if (useTwoPane) {
+                    TicklePane(
+                        onCompose = { id ->
+                            navController.navigate("compose?contactId=$id") {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = false
                             }
-                            launchSingleTop = true
-                            restoreState = false
+                        },
+                    )
+                } else {
+                    TickleListScreen(
+                        onAddTickle = { navController.navigate(Screen.TickleEdit.createRoute(-1L)) },
+                        onEditTickle = { id -> navController.navigate(Screen.TickleEdit.createRoute(id)) },
+                        onCompose = { id ->
+                            navController.navigate("compose?contactId=$id") {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = false
+                            }
                         }
-                    }
-                )
+                    )
+                }
             }
 
             composable(
@@ -314,6 +343,91 @@ fun NavGraph() {
                     onBack = { navController.popBackStack() }
                 )
             }
+            }
+        }
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Primary navigation chrome — bottom bar (compact) and side rail (medium/expanded).
+// Both drive the same top-level destinations and share selection/navigation logic.
+// ---------------------------------------------------------------------------
+
+private fun isTabSelected(currentDestination: NavDestination?, screen: Screen): Boolean =
+    currentDestination?.hierarchy?.any {
+        it.route?.substringBefore('?')?.substringBefore('/') == screen.route
+    } == true
+
+private fun navigateToTab(navController: NavController, screen: Screen) {
+    navController.navigate(screen.route) {
+        popUpTo(navController.graph.findStartDestination().id) {
+            saveState = true
+        }
+        launchSingleTop = true
+        restoreState = true
+    }
+}
+
+@Composable
+private fun AppBottomNavBar(
+    currentDestination: NavDestination?,
+    navController: NavController
+) {
+    NavigationBar(
+        containerColor = MaterialTheme.colorScheme.surfaceVariant
+    ) {
+        bottomNavItems.forEach { item ->
+            val label = stringResource(item.labelResId)
+            NavigationBarItem(
+                icon = {
+                    Icon(
+                        imageVector = item.icon,
+                        contentDescription = label
+                    )
+                },
+                label = { Text(label) },
+                selected = isTabSelected(currentDestination, item.screen),
+                onClick = { navigateToTab(navController, item.screen) },
+                colors = NavigationBarItemDefaults.colors(
+                    selectedIconColor = MaterialTheme.colorScheme.primary,
+                    selectedTextColor = MaterialTheme.colorScheme.primary,
+                    indicatorColor = MaterialTheme.colorScheme.primaryContainer,
+                    unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            )
+        }
+    }
+}
+
+@Composable
+private fun AppNavigationRail(
+    currentDestination: NavDestination?,
+    navController: NavController
+) {
+    NavigationRail(
+        containerColor = MaterialTheme.colorScheme.surfaceVariant
+    ) {
+        bottomNavItems.forEach { item ->
+            val label = stringResource(item.labelResId)
+            NavigationRailItem(
+                icon = {
+                    Icon(
+                        imageVector = item.icon,
+                        contentDescription = label
+                    )
+                },
+                label = { Text(label) },
+                selected = isTabSelected(currentDestination, item.screen),
+                onClick = { navigateToTab(navController, item.screen) },
+                colors = NavigationRailItemDefaults.colors(
+                    selectedIconColor = MaterialTheme.colorScheme.primary,
+                    selectedTextColor = MaterialTheme.colorScheme.primary,
+                    indicatorColor = MaterialTheme.colorScheme.primaryContainer,
+                    unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            )
         }
     }
 }

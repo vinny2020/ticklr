@@ -80,6 +80,10 @@ fun TickleListScreen(
     onAddTickle: () -> Unit,
     onEditTickle: (Long) -> Unit,
     onCompose: (Long) -> Unit,
+    // When true (tablet two-pane), the host renders the connect actions in the
+    // detail pane instead of this modal bottom sheet. Tap still resolves the same
+    // `actionTarget` on the shared ViewModel; only the presentation differs.
+    twoPane: Boolean = false,
     viewModel: TickleViewModel = hiltViewModel(),
 ) {
     val warmth = Warmth.Subtle
@@ -197,7 +201,7 @@ fun TickleListScreen(
             }
         }
 
-        actionTarget?.let { target ->
+        actionTarget?.takeIf { !twoPane }?.let { target ->
             TickleActionSheet(
                 target = target,
                 onCompose = {

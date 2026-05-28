@@ -7,6 +7,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.*
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.xaymaca.sit.ui.nav.NavGraph
@@ -16,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         // Must be called before super.onCreate — the system-level splash draws from
         // the moment the launcher icon is tapped, eliminating the blank-window flash.
@@ -49,8 +52,12 @@ class MainActivity : ComponentActivity() {
                 else -> isSystemInDarkTheme() // System (0)
             }
 
+            // Drives adaptive navigation: NavigationRail at medium/expanded widths
+            // (tablets, unfolded foldables, ChromeOS windows), bottom bar on compact.
+            val windowSizeClass = calculateWindowSizeClass(this)
+
             SITTheme(darkTheme = useDarkTheme) {
-                NavGraph()
+                NavGraph(widthSizeClass = windowSizeClass.widthSizeClass)
             }
         }
     }
