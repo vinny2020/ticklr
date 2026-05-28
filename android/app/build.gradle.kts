@@ -26,7 +26,7 @@ android {
         targetSdk = 35
         // Allow GitHub Actions to override version code and name from the tag/run number
         versionCode = project.findProperty("versionCode")?.toString()?.toInt() ?: 27
-        versionName = project.findProperty("versionName")?.toString() ?: "1.4.12"
+        versionName = project.findProperty("versionName")?.toString() ?: "1.7.2"
         resourceConfigurations += listOf("en", "es", "fr", "de", "it", "nl", "el", "pl", "ro", "hu", "pt", "sv", "cs", "ru", "zh", "ja", "ko", "hi", "ar", "he", "ur")
     }
 
