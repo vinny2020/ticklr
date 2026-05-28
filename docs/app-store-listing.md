@@ -58,6 +58,29 @@ Tips:
 - Status bar should show 9:41, full signal, 100% battery — use iOS Simulator or Demo Mode
 - iPhone 17 Pro Max screenshots (6.9") are accepted for the primary size class
 
+## App Store Screenshot Notes *(13" iPad Pro required for universal builds — up to 10)*
+
+Universal binary (TIC-43): once `TARGETED_DEVICE_FAMILY = "1,2"`, App Store Connect requires 13" iPad Pro screenshots (2064×2752 portrait or 2752×2064 landscape).
+
+Recommended iPad screenshot set — capture in landscape to showcase the two-pane split view that's unique to the iPad build:
+1. Network — sidebar (contacts list) + detail pane (open contact)
+2. Groups — sidebar (5 canonical groups) + detail pane (open group's members)
+3. Tickle — list view with Due section + Milestones hero card visible
+4. Compose — recipient picker + template + draft body
+5. Settings — full settings panel
+
+Capture commands (iPad Pro 13-inch M5 simulator):
+```
+# Boot and seed
+xcrun simctl boot "iPad Pro 13-inch (M5)"
+# In Settings > Debug, run Load Test Contacts
+xcrun simctl io booted screenshot ~/Desktop/ipad-01-network.png
+```
+
+Tips:
+- Landscape is the recommended orientation — it shows the split view's value (sidebar + detail).
+- Portrait is also accepted; the sidebar collapses into the detail pane automatically.
+
 ## Version Notes (first submission)
 - Version: 1.0
 - What's New: Initial release

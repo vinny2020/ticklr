@@ -37,6 +37,8 @@ struct OnboardingView: View {
                         .padding(.horizontal, WarmSpacing.lg)
                         .padding(.bottom, max(geo.safeAreaInsets.bottom, 16))
                 }
+                .frame(maxWidth: 560)
+                .frame(maxWidth: .infinity)
                 .frame(minHeight: geo.size.height - geo.safeAreaInsets.top - geo.safeAreaInsets.bottom,
                        alignment: .top)
             }

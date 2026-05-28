@@ -19,8 +19,16 @@ struct TickleListView: View {
         case edit(TickleReminder)
     }
 
+    @Environment(\.horizontalSizeClass) private var hSize
+
     private let warmth: Warmth = .subtle
     private var palette: WarmPalette { WarmTheme.palette(for: warmth) }
+
+    /// On regular size class (iPad), pad the scroll content inward so the
+    /// list doesn't stretch across the full iPad width.
+    private var readableSidePadding: CGFloat {
+        hSize == .regular ? 156 : 0
+    }
 
     private var dueAndOverdue: [TickleReminder] {
         allReminders
@@ -105,6 +113,7 @@ struct TickleListView: View {
             .listStyle(.plain)
             .scrollContentBackground(.hidden)
             .background(palette.paper.ignoresSafeArea())
+            .contentMargins(.horizontal, readableSidePadding, for: .scrollContent)
             .navigationTitle("")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

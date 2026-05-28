@@ -13,7 +13,7 @@ struct GroupListView: View {
     private var palette: WarmPalette { WarmTheme.palette(for: warmth) }
 
     var body: some View {
-        NavigationStack {
+        NavigationSplitView {
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: 14) {
                     header
@@ -55,9 +55,6 @@ struct GroupListView: View {
                     }
                 }
             }
-            .navigationDestination(item: $selectedGroup) { group in
-                GroupDetailView(group: group)
-            }
             .sheet(isPresented: $showingAddGroup) {
                 GroupEditSheet(group: nil)
             }
@@ -72,6 +69,21 @@ struct GroupListView: View {
                         description: Text(String(localized: "groupList.empty.description"))
                     )
                 }
+            }
+        } detail: {
+            if let selectedGroup {
+                NavigationStack {
+                    GroupDetailView(group: selectedGroup)
+                }
+            } else {
+                ContentUnavailableView(
+                    String(localized: "warm.groups.detail.empty.title",
+                           defaultValue: "Pick a circle"),
+                    systemImage: "person.3.sequence",
+                    description: Text(String(localized: "warm.groups.detail.empty.description",
+                                              defaultValue: "Choose a group to see its members."))
+                )
+                .background(palette.paper.ignoresSafeArea())
             }
         }
     }

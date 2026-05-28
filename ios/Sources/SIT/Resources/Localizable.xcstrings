@@ -28458,6 +28458,64 @@
         }
       }
     },
+    "warm.groups.detail.empty.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختر مجموعة لرؤية أعضائها."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a group to see its members."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בחר קבוצה כדי לראות את חבריה."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اس کے اراکین دیکھنے کے لیے گروپ منتخب کریں۔"
+          }
+        }
+      }
+    },
+    "warm.groups.detail.empty.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختر دائرة"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pick a circle"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בחר מעגל"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ایک حلقہ منتخب کریں"
+          }
+        }
+      }
+    },
     "warm.groups.subtitle": {
       "extractionState": "manual",
       "localizations": {
@@ -28716,6 +28774,64 @@
           "stringUnit": {
             "state": "translated",
             "value": "آپ کے گروپ"
+          }
+        }
+      }
+    },
+    "warm.network.detail.empty.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختر جهة اتصال من القائمة لرؤية تفاصيلها."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a contact from the list to see their details."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בחר איש קשר מהרשימה כדי לראות את פרטיו."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تفصیلات دیکھنے کے لیے فہرست سے رابطہ منتخب کریں۔"
+          }
+        }
+      }
+    },
+    "warm.network.detail.empty.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختر شخصًا للتواصل معه"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pick someone to connect with"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בחר אדם ליצור איתו קשר"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "رابطے کے لیے کسی کو منتخب کریں"
           }
         }
       }
