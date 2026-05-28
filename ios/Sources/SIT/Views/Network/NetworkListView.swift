@@ -9,6 +9,7 @@ struct NetworkListView: View {
     @State private var filter: Filter = .all
     @State private var showingImport = false
     @State private var showingAddContact = false
+    @State private var selectedContact: Contact?
 
     private let warmth: Warmth = .subtle
     private var palette: WarmPalette { WarmTheme.palette(for: warmth) }
@@ -24,8 +25,8 @@ struct NetworkListView: View {
         [.family, .friends, .work, .community]
 
     var body: some View {
-        NavigationStack {
-            List {
+        NavigationSplitView {
+            List(selection: $selectedContact) {
                 // MARK: Inline title + subtitle (scrolls away)
                 Section {
                     VStack(alignment: .leading, spacing: 4) {
@@ -54,19 +55,11 @@ struct NetworkListView: View {
                 // MARK: Contacts
                 Section {
                     ForEach(filtered) { contact in
-                        ZStack {
-                            NavigationLink {
-                                ContactDetailView(contact: contact)
-                            } label: {
-                                EmptyView()
-                            }
-                            .opacity(0)
-
-                            ContactRowView(contact: contact, warmth: warmth)
-                        }
-                        .listRowBackground(palette.cardBg)
-                        .listRowSeparatorTint(palette.cardBorder)
-                        .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                        ContactRowView(contact: contact, warmth: warmth)
+                            .tag(contact)
+                            .listRowBackground(palette.cardBg)
+                            .listRowSeparatorTint(palette.cardBorder)
+                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                     }
                 }
             }
@@ -101,6 +94,19 @@ struct NetworkListView: View {
             }
             .sheet(isPresented: $showingImport) { ImportView() }
             .sheet(isPresented: $showingAddContact) { AddContactView() }
+        } detail: {
+            if let selectedContact {
+                ContactDetailView(contact: selectedContact)
+            } else {
+                ContentUnavailableView(
+                    String(localized: "warm.network.detail.empty.title",
+                           defaultValue: "Pick someone to connect with"),
+                    systemImage: "person.crop.circle",
+                    description: Text(String(localized: "warm.network.detail.empty.description",
+                                              defaultValue: "Choose a contact from the list to see their details."))
+                )
+                .background(palette.paper.ignoresSafeArea())
+            }
         }
     }
 

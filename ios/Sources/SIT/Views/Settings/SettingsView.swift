@@ -16,8 +16,14 @@ struct SettingsView: View {
     @State private var showClearConfirm = false
     #endif
 
+    @Environment(\.horizontalSizeClass) private var hSize
+
     private let warmth: Warmth = .subtle
     private var palette: WarmPalette { WarmTheme.palette(for: warmth) }
+
+    private var readableSidePadding: CGFloat {
+        hSize == .regular ? 156 : 0
+    }
 
     private var appVersion: String {
         Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
@@ -190,6 +196,7 @@ struct SettingsView: View {
             .listStyle(.insetGrouped)
             .scrollContentBackground(.hidden)
             .background(palette.paper.ignoresSafeArea())
+            .contentMargins(.horizontal, readableSidePadding, for: .scrollContent)
             .navigationTitle("")
             .navigationBarTitleDisplayMode(.inline)
             .task { await fetchNotificationStatus() }

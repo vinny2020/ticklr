@@ -6,6 +6,7 @@ struct ComposeView: View {
     var initialContact: Contact? = nil
 
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.horizontalSizeClass) private var hSize
     @Query(sort: \Contact.lastName) private var contacts: [Contact]
     @Query(sort: \MessageTemplate.title) private var templates: [MessageTemplate]
 
@@ -247,6 +248,7 @@ struct ComposeView: View {
             }
             .scrollContentBackground(.hidden)
             .background(palette.paper.ignoresSafeArea())
+            .contentMargins(.horizontal, hSize == .regular ? 196 : 0, for: .scrollContent)
             .onAppear {
                 if let c = initialContact, selectedContact == nil {
                     selectedContact = c
