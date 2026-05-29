@@ -32,7 +32,6 @@ import com.xaymaca.sit.R
 import com.xaymaca.sit.data.model.Contact
 import com.xaymaca.sit.data.model.ContactGroup
 import com.xaymaca.sit.ui.theme.Cobalt
-import com.xaymaca.sit.ui.theme.NavyLight
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -101,7 +100,7 @@ fun GroupDetailScreen(
             floatingActionButton = {
                 FloatingActionButton(
                     onClick = { showAddSheet = true },
-                    containerColor = Cobalt,
+                    containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = MaterialTheme.colorScheme.onPrimary
                 ) {
                     Icon(Icons.Default.Add, contentDescription = stringResource(R.string.group_detail_add_members_fab))
@@ -138,7 +137,7 @@ fun GroupDetailScreen(
                             }
                         )
                         HorizontalDivider(
-                            color = NavyLight,
+                            color = MaterialTheme.colorScheme.outlineVariant,
                             thickness = 0.5.dp,
                             modifier = Modifier.padding(start = 72.dp)
                         )
@@ -364,7 +363,7 @@ private fun AddMembersBottomSheet(
                                     }
                                 }
                                 TextButton(onClick = { onAdd(contact) }) {
-                                    Text(stringResource(R.string.group_detail_add_member_button), color = Cobalt)
+                                    Text(stringResource(R.string.group_detail_add_member_button), color = MaterialTheme.colorScheme.primary)
                                 }
                             }
                         }
@@ -449,7 +448,7 @@ private fun EditGroupDialog(
                 onClick = { onSave(name.trim(), emoji.trim().ifBlank { "👥" }) },
                 enabled = canSave
             ) {
-                Text(stringResource(R.string.common_save), color = Cobalt)
+                Text(stringResource(R.string.common_save), color = MaterialTheme.colorScheme.primary)
             }
         },
         dismissButton = {

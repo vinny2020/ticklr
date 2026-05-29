@@ -28,7 +28,6 @@ import com.xaymaca.sit.service.TickleScheduler
 import com.xaymaca.sit.ui.network.NetworkViewModel
 import com.xaymaca.sit.ui.shared.TicklrToast
 import com.xaymaca.sit.ui.shared.displayNameResId
-import com.xaymaca.sit.ui.theme.Amber
 import com.xaymaca.sit.ui.theme.Cobalt
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -159,7 +158,7 @@ fun TickleEditScreen(
                         ) {
                             Text(
                                 stringResource(R.string.common_save),
-                                color = if (canSave) Amber else Amber.copy(alpha = 0.38f),
+                                color = if (canSave) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.primary.copy(alpha = 0.38f),
                                 fontWeight = FontWeight.SemiBold
                             )
                         }
@@ -179,7 +178,7 @@ fun TickleEditScreen(
                         .padding(paddingValues),
                     contentAlignment = Alignment.Center
                 ) {
-                    CircularProgressIndicator(color = Cobalt)
+                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
                 }
             } else {
                 Column(

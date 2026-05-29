@@ -25,7 +25,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.xaymaca.sit.R
 import com.xaymaca.sit.service.SmsService
 import com.xaymaca.sit.ui.shared.TicklrToast
-import com.xaymaca.sit.ui.theme.Cobalt
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

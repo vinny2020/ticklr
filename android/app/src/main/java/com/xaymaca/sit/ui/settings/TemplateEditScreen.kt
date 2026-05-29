@@ -12,7 +12,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.xaymaca.sit.R
-import com.xaymaca.sit.ui.theme.Cobalt
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,7 +61,7 @@ fun TemplateEditScreen(
                     ) {
                         Text(
                             stringResource(if (isEditing) R.string.common_update else R.string.common_save),
-                            color = if (canSave) Cobalt else MaterialTheme.colorScheme.onSurfaceVariant
+                            color = if (canSave) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 },

@@ -24,7 +24,6 @@ import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.xaymaca.sit.R
 import com.xaymaca.sit.ui.network.NetworkViewModel
-import com.xaymaca.sit.ui.theme.Cobalt
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -120,7 +119,7 @@ fun ImportScreen(
                     modifier = Modifier.fillMaxWidth(),
                     contentAlignment = Alignment.Center
                 ) {
-                    CircularProgressIndicator(color = Cobalt)
+                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
                 }
             }
 
@@ -215,7 +214,7 @@ fun ImportScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(52.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Cobalt),
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                     shape = RoundedCornerShape(14.dp)
                 ) {
                     Text(stringResource(R.string.import_continue_button), fontWeight = FontWeight.SemiBold)
@@ -258,7 +257,7 @@ private fun ImportOptionCard(
             Icon(
                 imageVector = icon,
                 contentDescription = null,
-                tint = Cobalt,
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(32.dp)
             )
             Spacer(modifier = Modifier.width(16.dp))

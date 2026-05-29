@@ -28,9 +28,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.xaymaca.sit.R
 import com.xaymaca.sit.ui.shared.WordmarkLockup
-import com.xaymaca.sit.ui.theme.Amber
-import com.xaymaca.sit.ui.theme.Cobalt
-import com.xaymaca.sit.ui.theme.NavyLight
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
