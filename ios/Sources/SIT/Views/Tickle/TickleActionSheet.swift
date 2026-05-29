@@ -10,9 +10,17 @@ import SwiftData
 /// All actions dismiss the sheet; Compose and Edit additionally signal the parent
 /// (via `onCompose` / `onEdit`) to present a follow-up sheet once this one is gone,
 /// which avoids the "present while dismissing" race.
+///
+/// On iPad (TIC-46) the same content renders in a `NavigationSplitView` detail pane
+/// rather than a modal sheet. Pass `dismissesOnAction: false` there so taps don't try
+/// to dismiss a pane that was never presented — the parent drives the pane via the
+/// callbacks and its own selection state instead.
 struct TickleActionSheet: View {
     let reminder: TickleReminder
     var warmth: Warmth = .subtle
+    /// When false (iPad detail pane), actions run their callback/URL but never call
+    /// `dismiss()` — there's no sheet to dismiss. Defaults to true (phone bottom sheet).
+    var dismissesOnAction: Bool = true
     let onCompose: () -> Void
     let onMarkDone: () -> Void
     let onSnooze: () -> Void
@@ -20,6 +28,9 @@ struct TickleActionSheet: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
+
+    /// Dismiss only when presented as a sheet; a no-op in the iPad detail pane.
+    private func dismissIfNeeded() { if dismissesOnAction { dismiss() } }
 
     private var palette: WarmPalette { WarmTheme.palette(for: warmth) }
 
@@ -65,7 +76,7 @@ struct TickleActionSheet: View {
                           title: String(localized: "tickleAction.compose", defaultValue: "Compose message"),
                           tint: category.palette.accent) {
                     onCompose()
-                    dismiss()
+                    dismissIfNeeded()
                 }
             }
 
@@ -77,7 +88,7 @@ struct TickleActionSheet: View {
                        let url = URL(string: "tel:\(phone.filter { $0.isNumber || $0 == "+" })") {
                         openURL(url)
                     }
-                    dismiss()
+                    dismissIfNeeded()
                 }
             }
 
@@ -88,7 +99,7 @@ struct TickleActionSheet: View {
                     if let email = emails.first, let url = URL(string: "mailto:\(email)") {
                         openURL(url)
                     }
-                    dismiss()
+                    dismissIfNeeded()
                 }
             }
 
@@ -99,21 +110,21 @@ struct TickleActionSheet: View {
                       title: String(localized: "common.done", defaultValue: "Done"),
                       tint: palette.ink2) {
                 onMarkDone()
-                dismiss()
+                dismissIfNeeded()
             }
 
             actionRow(icon: "zzz",
                       title: String(localized: "tickleList.action.snooze", defaultValue: "Snooze"),
                       tint: palette.ink2) {
                 onSnooze()
-                dismiss()
+                dismissIfNeeded()
             }
 
             actionRow(icon: "pencil",
                       title: String(localized: "common.edit", defaultValue: "Edit"),
                       tint: palette.ink2) {
                 onEdit()
-                dismiss()
+                dismissIfNeeded()
             }
 
             Spacer(minLength: 0)
