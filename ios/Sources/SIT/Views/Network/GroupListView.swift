@@ -135,7 +135,7 @@ struct GroupListView: View {
                     .background(palette.paperSurface)
                     .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(group.name)
+                    Text(group.displayName)
                         .font(.system(size: 17, weight: .semibold))
                         .foregroundStyle(palette.ink)
                         .lineLimit(1)
@@ -207,11 +207,14 @@ struct GroupEditSheet: View {
 
     init(group: ContactGroup?) {
         self.group = group
-        _name = State(initialValue: group?.name ?? "")
+        _name = State(initialValue: group?.displayName ?? "")
         _emoji = State(initialValue: group?.emoji ?? "👥")
     }
 
     private var isEditing: Bool { group != nil }
+    /// Canonical category groups derive their name from the device language,
+    /// so the name field is read-only — only the emoji is editable.
+    private var isCanonical: Bool { group?.isCanonicalCategory ?? false }
     private var isDuplicate: Bool {
         let trimmed = name.trimmingCharacters(in: .whitespaces)
         guard !trimmed.isEmpty else { return false }
@@ -221,7 +224,8 @@ struct GroupEditSheet: View {
         }
     }
     private var canSave: Bool {
-        !name.trimmingCharacters(in: .whitespaces).isEmpty &&
+        if isCanonical { return true }   // only emoji is editable; always valid
+        return !name.trimmingCharacters(in: .whitespaces).isEmpty &&
         name.count <= 30 &&
         !isDuplicate
     }
@@ -261,18 +265,27 @@ struct GroupEditSheet: View {
                 }
 
                 Section(String(localized: "groupEdit.section.name")) {
-                    TextField(String(localized: "groupEdit.placeholder.name"), text: $name)
-                    HStack {
-                        if isDuplicate {
-                            Text(String(localized: "groupEdit.error.duplicate"))
-                                .font(.caption)
-                                .foregroundStyle(.red)
-                        } else {
-                            Spacer()
-                        }
-                        Text("\(name.count) / 30")
+                    if isCanonical {
+                        Text(group?.displayName ?? name)
+                            .foregroundStyle(.secondary)
+                        Text(String(localized: "groupEdit.canonicalName.note",
+                                    defaultValue: "This name follows your device language and can’t be changed."))
                             .font(.caption)
-                            .foregroundStyle(name.count > 30 ? .red : .secondary)
+                            .foregroundStyle(.secondary)
+                    } else {
+                        TextField(String(localized: "groupEdit.placeholder.name"), text: $name)
+                        HStack {
+                            if isDuplicate {
+                                Text(String(localized: "groupEdit.error.duplicate"))
+                                    .font(.caption)
+                                    .foregroundStyle(.red)
+                            } else {
+                                Spacer()
+                            }
+                            Text("\(name.count) / 30")
+                                .font(.caption)
+                                .foregroundStyle(name.count > 30 ? .red : .secondary)
+                        }
                     }
                 }
             }
@@ -295,7 +308,7 @@ struct GroupEditSheet: View {
         let trimmedName = name.trimmingCharacters(in: .whitespaces)
         let trimmedEmoji = emoji.trimmingCharacters(in: .whitespaces).isEmpty ? "👥" : emoji
         if let group {
-            group.name = trimmedName
+            if !isCanonical { group.name = trimmedName }   // canonical name is derived
             group.emoji = trimmedEmoji
         } else {
             let newGroup = ContactGroup(name: trimmedName, emoji: trimmedEmoji)

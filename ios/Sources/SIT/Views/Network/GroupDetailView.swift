@@ -33,8 +33,8 @@ struct GroupDetailView: View {
                 }
             }
         }
-        .searchable(text: $searchText, prompt: String(localized: "groupDetail.search.prompt \(group.name)"))
-        .navigationTitle("\(group.emoji) \(group.name)")
+        .searchable(text: $searchText, prompt: String(localized: "groupDetail.search.prompt \(group.displayName)"))
+        .navigationTitle("\(group.emoji) \(group.displayName)")
         .navigationBarTitleDisplayMode(.large)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
@@ -102,8 +102,8 @@ private struct AddMembersSheet: View {
                 Button {
                     group.contacts.append(contact)
                     try? modelContext.save()
-                    if group.name.count <= 20 {
-                        toastMessage = String(localized: "addMembers.toast.addedToNamedGroup \(contact.fullName) \(group.name)")
+                    if group.displayName.count <= 20 {
+                        toastMessage = String(localized: "addMembers.toast.addedToNamedGroup \(contact.fullName) \(group.displayName)")
                     } else {
                         toastMessage = String(localized: "addMembers.toast.addedToGroup \(contact.fullName)")
                     }
@@ -123,7 +123,7 @@ private struct AddMembersSheet: View {
                 .tint(.primary)
             }
             .searchable(text: $searchText, prompt: String(localized: "addMembers.search"))
-            .navigationTitle(String(localized: "addMembers.navTitle \(group.name)"))
+            .navigationTitle(String(localized: "addMembers.navTitle \(group.displayName)"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {

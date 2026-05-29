@@ -9196,6 +9196,35 @@
         }
       }
     },
+    "groupEdit.canonicalName.note": {
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يتبع هذا الاسم لغة جهازك ولا يمكن تغييره."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This name follows your device language and can’t be changed."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "השם הזה עוקב אחר שפת המכשיר שלך ולא ניתן לשנות אותו."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "یہ نام آپ کے آلے کی زبان کے مطابق ہوتا ہے اور اسے تبدیل نہیں کیا جا سکتا۔"
+          }
+        }
+      }
+    },
     "groupEdit.error.duplicate": {
       "extractionState": "stale",
       "localizations": {

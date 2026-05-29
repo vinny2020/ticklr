@@ -315,7 +315,7 @@ struct ContactDetailView: View {
                                 .frame(width: 36, height: 36)
                                 .background(palette.paperSurface)
                                 .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                            Text(group.name)
+                            Text(group.displayName)
                                 .font(.system(size: 15, weight: .medium))
                                 .foregroundStyle(palette.ink)
                             Spacer()
@@ -422,7 +422,7 @@ private struct AddToGroupSheet: View {
                     } label: {
                         HStack {
                             Text(group.emoji)
-                            Text(group.name)
+                            Text(group.displayName)
                             Spacer()
                             if isMember {
                                 Image(systemName: "checkmark")
@@ -612,7 +612,7 @@ private struct ContactEditSheet: View {
                             } label: {
                                 HStack {
                                     Text(group.emoji)
-                                    Text(group.name)
+                                    Text(group.displayName)
                                     Spacer()
                                     if selectedGroupIDs.contains(group.id) {
                                         Image(systemName: "checkmark").foregroundStyle(.indigo)
