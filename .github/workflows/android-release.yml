@@ -68,12 +68,14 @@ jobs:
           fi
 
           for FILE in "${FILES[@]}"; do
-            BYTES=$(wc -c < "$FILE")
-            echo "▸ $FILE ($BYTES bytes)"
-            # Google Play caps release notes at 500 chars per locale per release.
+            # Google Play caps release notes at 500 CHARACTERS per locale (not bytes).
+            # Count characters in a UTF-8 locale so non-Latin scripts (Hindi, Arabic,
+            # Hebrew, ...) — where one char is several bytes — aren't falsely rejected.
+            CHARS=$(LC_ALL=C.UTF-8 wc -m < "$FILE" | tr -d ' ')
+            echo "▸ $FILE ($CHARS chars)"
             # Fail before uploading so we do not publish an invalid release edit.
-            if [ "$BYTES" -gt 500 ]; then
-              echo "::error::$FILE exceeds Play's 500-char release notes limit ($BYTES bytes)."
+            if [ "$CHARS" -gt 500 ]; then
+              echo "::error::$FILE exceeds Play's 500-character release notes limit ($CHARS chars)."
               exit 1
             fi
             echo "─── preview: $FILE ───"
