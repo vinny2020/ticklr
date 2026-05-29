@@ -1,0 +1,4 @@
+Podpora tabletů:
+• Na velkých obrazovkách nahrazuje spodní lištu boční navigační panel
+• Síť, Skupiny a Tickle se otevírají ve dvou panelech – seznam a podrobnosti vedle sebe
+• Klepnutím na tickle zobrazíte jeho akce hned vedle seznamu

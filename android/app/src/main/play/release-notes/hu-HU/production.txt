@@ -1,0 +1,4 @@
+Táblagép-támogatás:
+• Nagy képernyőkön oldalsó navigációs sáv váltja fel az alsó sávot
+• A Hálózat, a Csoportok és a Tickle-ök két panelen nyílnak meg – a lista és a részletek egymás mellett
+• Koppints egy tickle-re, hogy a műveletei a lista mellett jelenjenek meg

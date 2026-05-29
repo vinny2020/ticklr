@@ -1,0 +1,4 @@
+Tablet-Unterstützung:
+• Auf großen Bildschirmen ersetzt eine seitliche Navigationsleiste die untere Leiste
+• Netzwerk, Gruppen und Tickles öffnen sich in zwei Bereichen – Liste und Details nebeneinander
+• Tippe auf einen Tickle, um seine Aktionen direkt neben der Liste zu sehen
