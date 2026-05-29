@@ -1,0 +1,4 @@
+Supporto per tablet:
+• Sugli schermi grandi una barra di navigazione laterale sostituisce quella inferiore
+• Rete, Gruppi e Tickle si aprono in due riquadri: elenco e dettagli affiancati
+• Tocca un tickle per vederne le azioni accanto all'elenco

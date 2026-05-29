@@ -1,0 +1,4 @@
+Obsługa tabletów:
+• Na dużych ekranach boczny pasek nawigacji zastępuje dolny pasek
+• Sieć, Grupy i Tickle otwierają się w dwóch panelach — lista i szczegóły obok siebie
+• Dotknij tickle, aby zobaczyć jego akcje obok listy

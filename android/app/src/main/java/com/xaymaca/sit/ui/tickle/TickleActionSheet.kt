@@ -64,56 +64,85 @@ fun TickleActionSheet(
     onDismiss: () -> Unit,
 ) {
     val palette = WarmTheme.palette()
-    val category = WarmCategory.from(target.categoryId) ?: WarmCategory.Community
 
     ModalBottomSheet(onDismissRequest = onDismiss, containerColor = palette.paper) {
-        Column(modifier = Modifier.fillMaxWidth()) {
-            // Header: avatar + name + frequency
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = WarmSpacing.Lg, vertical = 4.dp),
-                verticalAlignment = Alignment.CenterVertically,
+        TickleActionContent(
+            target = target,
+            onCompose = onCompose,
+            onCall = onCall,
+            onEmail = onEmail,
+            onMarkDone = onMarkDone,
+            onSnooze = onSnooze,
+            onEdit = onEdit,
+        )
+    }
+}
+
+/**
+ * The connect-action body — header + channel/secondary action rows. Shared by the
+ * phone bottom sheet ([TickleActionSheet]) and the tablet detail pane, so both
+ * present identical actions; only the container (modal vs. pane) differs.
+ */
+@Composable
+fun TickleActionContent(
+    target: TickleViewModel.TickleActionTarget,
+    onCompose: () -> Unit,
+    onCall: () -> Unit,
+    onEmail: () -> Unit,
+    onMarkDone: () -> Unit,
+    onSnooze: () -> Unit,
+    onEdit: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val palette = WarmTheme.palette()
+    val category = WarmCategory.from(target.categoryId) ?: WarmCategory.Community
+
+    Column(modifier = modifier.fillMaxWidth()) {
+        // Header: avatar + name + frequency
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = WarmSpacing.Lg, vertical = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Box(
+                modifier = Modifier.size(40.dp).clip(CircleShape).background(category.palette.accent),
+                contentAlignment = Alignment.Center,
             ) {
-                Box(
-                    modifier = Modifier.size(40.dp).clip(CircleShape).background(category.palette.accent),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Text(
-                        text = target.initials,
-                        style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = Color(0xFFFAF4E2)),
-                    )
-                }
-                Spacer(modifier = Modifier.width(12.dp))
-                Column {
-                    Text(
-                        text = target.displayName,
-                        style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.SemiBold, color = palette.ink),
-                        maxLines = 1,
-                    )
-                    Text(
-                        text = stringResource(TickleFrequency.valueOf(target.reminder.frequency).displayNameResId),
-                        style = TextStyle(fontSize = 13.sp, color = palette.ink2),
-                    )
-                }
+                Text(
+                    text = target.initials,
+                    style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = Color(0xFFFAF4E2)),
+                )
             }
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            if (target.phones.isNotEmpty()) {
-                ActionRow(Icons.AutoMirrored.Filled.Message, stringResource(R.string.tickle_action_compose), category.palette.accent, onCompose)
-                ActionRow(Icons.Default.Phone, stringResource(R.string.warm_contact_call), category.palette.accent, onCall)
+            Spacer(modifier = Modifier.width(12.dp))
+            Column {
+                Text(
+                    text = target.displayName,
+                    style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.SemiBold, color = palette.ink),
+                    maxLines = 1,
+                )
+                Text(
+                    text = stringResource(TickleFrequency.valueOf(target.reminder.frequency).displayNameResId),
+                    style = TextStyle(fontSize = 13.sp, color = palette.ink2),
+                )
             }
-            if (target.emails.isNotEmpty()) {
-                ActionRow(Icons.Default.Email, stringResource(R.string.contact_detail_section_email), category.palette.accent, onEmail)
-            }
-
-            Box(modifier = Modifier.fillMaxWidth().padding(start = 64.dp).height(1.dp).background(palette.cardBorder))
-
-            ActionRow(Icons.Default.CheckCircle, stringResource(R.string.tickle_row_action_done), palette.ink2, onMarkDone)
-            ActionRow(Icons.Default.Snooze, stringResource(R.string.tickle_row_action_snooze), palette.ink2, onSnooze)
-            ActionRow(Icons.Default.Edit, stringResource(R.string.common_edit), palette.ink2, onEdit)
-
-            Spacer(modifier = Modifier.height(24.dp))
         }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        if (target.phones.isNotEmpty()) {
+            ActionRow(Icons.AutoMirrored.Filled.Message, stringResource(R.string.tickle_action_compose), category.palette.accent, onCompose)
+            ActionRow(Icons.Default.Phone, stringResource(R.string.warm_contact_call), category.palette.accent, onCall)
+        }
+        if (target.emails.isNotEmpty()) {
+            ActionRow(Icons.Default.Email, stringResource(R.string.contact_detail_section_email), category.palette.accent, onEmail)
+        }
+
+        Box(modifier = Modifier.fillMaxWidth().padding(start = 64.dp).height(1.dp).background(palette.cardBorder))
+
+        ActionRow(Icons.Default.CheckCircle, stringResource(R.string.tickle_row_action_done), palette.ink2, onMarkDone)
+        ActionRow(Icons.Default.Snooze, stringResource(R.string.tickle_row_action_snooze), palette.ink2, onSnooze)
+        ActionRow(Icons.Default.Edit, stringResource(R.string.common_edit), palette.ink2, onEdit)
+
+        Spacer(modifier = Modifier.height(24.dp))
     }
 }
 

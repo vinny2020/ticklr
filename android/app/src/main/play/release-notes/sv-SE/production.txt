@@ -1,0 +1,4 @@
+Stöd för surfplattor:
+• På stora skärmar ersätter en sidonavigeringslist den nedre listen
+• Nätverk, Grupper och Tickles öppnas i två paneler – lista och detaljer sida vid sida
+• Tryck på en tickle för att se dess åtgärder bredvid listan

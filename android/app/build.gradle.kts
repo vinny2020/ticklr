@@ -27,7 +27,10 @@ android {
         // Allow GitHub Actions to override version code and name from the tag/run number
         versionCode = project.findProperty("versionCode")?.toString()?.toInt() ?: 27
         versionName = project.findProperty("versionName")?.toString() ?: "1.7.2"
-        resourceConfigurations += listOf("en", "es", "fr", "de", "it", "nl", "el", "pl", "ro", "hu", "pt", "sv", "cs", "ru", "zh", "ja", "ko", "hi", "ar", "he", "ur")
+        // "iw" is the legacy ISO code for Hebrew. java.util.Locale normalizes
+        // "he" -> "iw", so the runtime resolves Hebrew under iw and won't match the
+        // he-tagged resources — values-iw mirrors values-he to cover it. Keep both.
+        resourceConfigurations += listOf("en", "es", "fr", "de", "it", "nl", "el", "pl", "ro", "hu", "pt", "sv", "cs", "ru", "zh", "ja", "ko", "hi", "ar", "he", "iw", "ur")
     }
 
     signingConfigs {
@@ -143,6 +146,10 @@ dependencies {
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
+    implementation(libs.compose.material3.windowsizeclass)
+    implementation(libs.compose.material3.adaptive)
+    implementation(libs.compose.material3.adaptive.layout)
+    implementation(libs.compose.material3.adaptive.navigation)
     implementation(libs.compose.material.icons.extended)
     implementation(libs.compose.navigation)
     implementation(libs.activity.compose)

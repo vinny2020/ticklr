@@ -1,0 +1,4 @@
+Ondersteuning voor tablets:
+• Op grote schermen vervangt een zijbalk de onderste navigatiebalk
+• Netwerk, Groepen en Tickles openen in twee panelen: lijst en details naast elkaar
+• Tik op een tickle om de acties naast de lijst te zien

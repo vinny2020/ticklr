@@ -1,0 +1,4 @@
+Compatibilidade com tablets:
+• Em ecrãs grandes, uma barra de navegação lateral substitui a barra inferior
+• Rede, Grupos e Tickles abrem em dois painéis: lista e detalhes lado a lado
+• Toque num tickle para ver as suas ações junto à lista

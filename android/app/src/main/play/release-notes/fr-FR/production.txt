@@ -1,0 +1,4 @@
+Prise en charge des tablettes :
+• Sur les grands écrans, un rail de navigation latéral remplace la barre inférieure
+• Réseau, Groupes et Tickles s'ouvrent en deux volets : la liste et les détails côte à côte
+• Touchez un tickle pour voir ses actions juste à côté de la liste

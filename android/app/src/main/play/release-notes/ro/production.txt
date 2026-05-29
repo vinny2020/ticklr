@@ -1,0 +1,4 @@
+Compatibilitate cu tablete:
+• Pe ecranele mari, o bară laterală de navigare înlocuiește bara de jos
+• Rețea, Grupuri și Tickles se deschid pe două panouri – lista și detaliile alăturate
+• Atinge un tickle pentru a-i vedea acțiunile chiar lângă listă
