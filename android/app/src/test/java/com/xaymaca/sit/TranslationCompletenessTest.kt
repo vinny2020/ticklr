@@ -2,6 +2,7 @@ package com.xaymaca.sit
 
 import org.junit.Test
 import java.io.File
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 /**
@@ -69,6 +70,32 @@ class TranslationCompletenessTest {
 
         assertTrue(failures.isEmpty(), failures.joinToString("\n"))
     }
+
+    @Test
+    fun `hebrew iw alias mirrors values-he`() {
+        // java.util.Locale normalizes "he" -> "iw", so Android resolves Hebrew under
+        // the legacy iw code and won't match the he-tagged resources. values-iw must
+        // exist and mirror values-he so Hebrew renders. Comments are ignored so the
+        // alias may carry an explanatory header.
+        val heFile = File("src/main/res/values-he/strings.xml")
+        val iwFile = File("src/main/res/values-iw/strings.xml")
+        assertTrue(
+            iwFile.exists(),
+            "values-iw/strings.xml must exist (legacy Hebrew alias). Copy values-he/strings.xml to values-iw/strings.xml.",
+        )
+        assertEquals(
+            meaningfulLines(heFile),
+            meaningfulLines(iwFile),
+            "values-iw must mirror values-he (ignoring comments). Re-copy values-he/strings.xml to values-iw/strings.xml after editing Hebrew.",
+        )
+    }
+
+    // File content minus the XML prologue, comments, and blank lines — used to
+    // compare two strings.xml files for identical string/plurals content.
+    private fun meaningfulLines(file: File): List<String> =
+        file.readLines()
+            .map { it.trim() }
+            .filter { it.isNotEmpty() && !it.startsWith("<!--") && !it.startsWith("<?xml") }
 
     // Extracts all <string name="..."> and <plurals name="..."> keys from a strings.xml file.
     private fun extractStringKeys(file: File): Set<String> {
