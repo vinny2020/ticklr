@@ -91,10 +91,6 @@ jobs:
         run: |
           echo '${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}' > android/app/play-service-account.json
 
-      - name: Write Google Services JSON
-        run: |
-          echo '${{ secrets.GOOGLE_SERVICES_JSON }}' > android/app/google-services.json
-
       - name: Build & publish AAB
         working-directory: android
         env:
@@ -116,7 +112,6 @@ jobs:
         run: |
           rm -f android/app/release.keystore
           rm -f android/app/play-service-account.json
-          rm -f android/app/google-services.json
 
       - name: Summary
         run: |
