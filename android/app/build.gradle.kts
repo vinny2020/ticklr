@@ -26,7 +26,7 @@ android {
         targetSdk = 35
         // Allow GitHub Actions to override version code and name from the tag/run number
         versionCode = project.findProperty("versionCode")?.toString()?.toInt() ?: 27
-        versionName = project.findProperty("versionName")?.toString() ?: "1.7.2"
+        versionName = project.findProperty("versionName")?.toString() ?: "1.8.0"
         // "iw" is the legacy ISO code for Hebrew. java.util.Locale normalizes
         // "he" -> "iw", so the runtime resolves Hebrew under iw and won't match the
         // he-tagged resources — values-iw mirrors values-he to cover it. Keep both.
