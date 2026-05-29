@@ -5,10 +5,21 @@ struct TickleListView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var allReminders: [TickleReminder]
 
+    // MARK: Compact (iPhone) — modal sheet flow
     @State private var showingAdd = false
     @State private var editingReminder: TickleReminder?
     @State private var actionSheetReminder: TickleReminder?
     @State private var pendingAction: PendingAction?
+
+    // MARK: Regular (iPad) — two-pane flow (TIC-46)
+    /// List selection drives the detail pane's connect actions.
+    @State private var selectedReminder: TickleReminder?
+    /// Non-nil while editing an existing reminder in the detail pane.
+    @State private var paneEditTarget: TickleReminder?
+    /// True while a new tickle is being created in the detail pane.
+    @State private var paneAddingNew = false
+
+    // MARK: Shared
     @State private var composeContact: Contact?
     @State private var prefilledCategory: WarmCategory? = nil
 
@@ -24,11 +35,7 @@ struct TickleListView: View {
     private let warmth: Warmth = .subtle
     private var palette: WarmPalette { WarmTheme.palette(for: warmth) }
 
-    /// On regular size class (iPad), pad the scroll content inward so the
-    /// list doesn't stretch across the full iPad width.
-    private var readableSidePadding: CGFloat {
-        hSize == .regular ? 156 : 0
-    }
+    private var isRegular: Bool { hSize == .regular }
 
     private var dueAndOverdue: [TickleReminder] {
         allReminders
@@ -49,84 +56,26 @@ struct TickleListView: View {
     }
 
     var body: some View {
+        if isRegular {
+            regularBody    // iPad: NavigationSplitView, two-pane
+        } else {
+            compactBody    // iPhone: NavigationStack + modal sheets
+        }
+    }
+
+    // MARK: - Compact (iPhone)
+
+    private var compactBody: some View {
         NavigationStack {
             List {
-                // MARK: Inline title + subtitle
-                Section {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(String(localized: "tickleList.navTitle"))
-                            .font(WarmHeadingFont.font(size: 32, warmth: warmth))
-                            .tracking(WarmHeadingFont.tracking(warmth: warmth))
-                            .foregroundStyle(palette.ink)
-                        if !dueAndOverdue.isEmpty {
-                            Text(String(localized: "warm.tickle.subtitle",
-                                        defaultValue: "\(dueAndOverdue.count) to reach out to today."))
-                                .font(.system(size: 14))
-                                .foregroundStyle(palette.ink2)
-                        } else {
-                            Text(String(localized: "warm.tickle.subtitle.empty",
-                                        defaultValue: "All caught up — no tickles due today."))
-                                .font(.system(size: 14))
-                                .foregroundStyle(palette.ink2)
-                        }
-                    }
-                    .listRowBackground(Color.clear)
-                    .listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 4, trailing: 16))
-                }
-
-                // MARK: Pinned Milestones hero
-                Section {
-                    WarmCard(
-                        category: .milestones,
-                        variant: .hero,
-                        warmth: warmth,
-                        showPrompt: true,
-                        onTap: {
-                            prefilledCategory = .milestones
-                            showingAdd = true
-                        }
-                    )
-                    .listRowBackground(Color.clear)
-                    .listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 12, trailing: 16))
-                }
-
-                // MARK: Due / overdue
-                if !dueAndOverdue.isEmpty {
-                    sectionBlock(title: String(localized: "tickleList.section.due"),
-                                 rows: dueAndOverdue)
-                }
-
-                // MARK: Upcoming
-                if !upcoming.isEmpty {
-                    sectionBlock(title: String(localized: "tickleList.section.upcoming"),
-                                 rows: upcoming)
-                }
-
-                // MARK: Snoozed
-                if !snoozed.isEmpty {
-                    sectionBlock(title: String(localized: "tickleList.section.snoozed"),
-                                 rows: snoozed, dimmed: true)
-                }
+                listSections
             }
             .listStyle(.plain)
             .scrollContentBackground(.hidden)
             .background(palette.paper.ignoresSafeArea())
-            .contentMargins(.horizontal, readableSidePadding, for: .scrollContent)
             .navigationTitle("")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        prefilledCategory = nil
-                        showingAdd = true
-                    } label: {
-                        Image(systemName: "plus")
-                            .foregroundStyle(palette.ink)
-                    }
-                }
-            }
+            .toolbar { addToolbarItem }
             .sheet(isPresented: $showingAdd) {
                 TickleEditView()
             }
@@ -162,6 +111,150 @@ struct TickleListView: View {
         pendingAction = nil
     }
 
+    // MARK: - Regular (iPad) — two-pane
+
+    private var regularBody: some View {
+        NavigationSplitView {
+            List(selection: $selectedReminder) {
+                listSections
+            }
+            .listStyle(.plain)
+            .scrollContentBackground(.hidden)
+            .background(palette.paper.ignoresSafeArea())
+            .navigationTitle("")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar { addToolbarItem }
+            .sheet(item: $composeContact) { contact in
+                ComposeView(onCancel: { composeContact = nil }, initialContact: contact)
+            }
+        } detail: {
+            detailPane
+        }
+    }
+
+    @ViewBuilder
+    private var detailPane: some View {
+        if paneAddingNew {
+            TickleEditView(onClose: { paneAddingNew = false })
+                .id("new-tickle")
+        } else if let target = paneEditTarget {
+            TickleEditView(existing: target, onClose: { paneEditTarget = nil })
+                .id(target.persistentModelID)
+        } else if let reminder = selectedReminder {
+            TickleActionSheet(
+                reminder: reminder,
+                warmth: warmth,
+                dismissesOnAction: false,
+                onCompose: { if let contact = reminder.contact { composeContact = contact } },
+                onMarkDone: {
+                    TickleScheduler.markComplete(reminder: reminder, context: modelContext)
+                    selectedReminder = nil
+                },
+                onSnooze: {
+                    TickleScheduler.snooze(reminder: reminder, days: 7, context: modelContext)
+                    selectedReminder = nil
+                },
+                onEdit: { paneEditTarget = reminder }
+            )
+            .id(reminder.persistentModelID)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .background(palette.paper.ignoresSafeArea())
+        } else {
+            ContentUnavailableView(
+                String(localized: "warm.tickle.detail.empty.title",
+                       defaultValue: "Pick a tickle"),
+                systemImage: "bell",
+                description: Text(String(localized: "warm.tickle.detail.empty.description",
+                                         defaultValue: "Choose a reminder to see ways to reach out."))
+            )
+            .background(palette.paper.ignoresSafeArea())
+        }
+    }
+
+    // MARK: - Shared list content
+
+    private var addToolbarItem: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            Button {
+                startNewTickle(category: nil)
+            } label: {
+                Image(systemName: "plus")
+                    .foregroundStyle(palette.ink)
+            }
+        }
+    }
+
+    /// Open a new-tickle editor — in the detail pane on iPad, as a sheet on iPhone.
+    private func startNewTickle(category: WarmCategory?) {
+        prefilledCategory = category
+        if isRegular {
+            paneEditTarget = nil
+            selectedReminder = nil
+            paneAddingNew = true
+        } else {
+            showingAdd = true
+        }
+    }
+
+    @ViewBuilder
+    private var listSections: some View {
+        // MARK: Inline title + subtitle
+        Section {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(String(localized: "tickleList.navTitle"))
+                    .font(WarmHeadingFont.font(size: 32, warmth: warmth))
+                    .tracking(WarmHeadingFont.tracking(warmth: warmth))
+                    .foregroundStyle(palette.ink)
+                if !dueAndOverdue.isEmpty {
+                    Text(String(localized: "warm.tickle.subtitle",
+                                defaultValue: "\(dueAndOverdue.count) to reach out to today."))
+                        .font(.system(size: 14))
+                        .foregroundStyle(palette.ink2)
+                } else {
+                    Text(String(localized: "warm.tickle.subtitle.empty",
+                                defaultValue: "All caught up — no tickles due today."))
+                        .font(.system(size: 14))
+                        .foregroundStyle(palette.ink2)
+                }
+            }
+            .listRowBackground(Color.clear)
+            .listRowSeparator(.hidden)
+            .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 4, trailing: 16))
+        }
+
+        // MARK: Pinned Milestones hero
+        Section {
+            WarmCard(
+                category: .milestones,
+                variant: .hero,
+                warmth: warmth,
+                showPrompt: true,
+                onTap: { startNewTickle(category: .milestones) }
+            )
+            .listRowBackground(Color.clear)
+            .listRowSeparator(.hidden)
+            .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 12, trailing: 16))
+        }
+
+        // MARK: Due / overdue
+        if !dueAndOverdue.isEmpty {
+            sectionBlock(title: String(localized: "tickleList.section.due"),
+                         rows: dueAndOverdue)
+        }
+
+        // MARK: Upcoming
+        if !upcoming.isEmpty {
+            sectionBlock(title: String(localized: "tickleList.section.upcoming"),
+                         rows: upcoming)
+        }
+
+        // MARK: Snoozed
+        if !snoozed.isEmpty {
+            sectionBlock(title: String(localized: "tickleList.section.snoozed"),
+                         rows: snoozed, dimmed: true)
+        }
+    }
+
     @ViewBuilder
     private func sectionBlock(title: String,
                               rows: [TickleReminder],
@@ -185,11 +278,11 @@ struct TickleListView: View {
 
     @ViewBuilder
     private func row(for reminder: TickleReminder) -> some View {
-        TickleRowView(reminder: reminder, onComplete: {
+        let content = TickleRowView(reminder: reminder, onComplete: {
             TickleScheduler.markComplete(reminder: reminder, context: modelContext)
         }, warmth: warmth)
         .contentShape(Rectangle())
-        .onTapGesture { actionSheetReminder = reminder }
+        .tag(reminder)
         .swipeActions(edge: .leading, allowsFullSwipe: true) {
             Button {
                 TickleScheduler.markComplete(reminder: reminder, context: modelContext)
@@ -201,13 +294,20 @@ struct TickleListView: View {
         .swipeActions(edge: .trailing) {
             Button(role: .destructive) {
                 TickleScheduler.cancelNotification(for: reminder)
+                if selectedReminder == reminder { selectedReminder = nil }
+                if paneEditTarget == reminder { paneEditTarget = nil }
                 modelContext.delete(reminder)
                 try? modelContext.save()
             } label: {
                 Label(String(localized: "common.delete"), systemImage: "trash")
             }
             Button {
-                editingReminder = reminder
+                if isRegular {
+                    selectedReminder = reminder
+                    paneEditTarget = reminder
+                } else {
+                    editingReminder = reminder
+                }
             } label: {
                 Label(String(localized: "common.edit"), systemImage: "pencil")
             }
@@ -218,6 +318,14 @@ struct TickleListView: View {
                 Label(String(localized: "tickleList.action.snooze"), systemImage: "zzz")
             }
             .tint(.orange)
+        }
+
+        // iPad uses List selection to drive the detail pane; iPhone taps open the
+        // modal action sheet. (A tap gesture here would swallow List selection.)
+        if isRegular {
+            content
+        } else {
+            content.onTapGesture { actionSheetReminder = reminder }
         }
     }
 }

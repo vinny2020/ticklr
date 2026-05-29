@@ -6,6 +6,9 @@ struct TickleEditView: View {
     @Environment(\.dismiss) private var dismiss
 
     let existing: TickleReminder?
+    /// When set (iPad detail pane, TIC-46), close via this callback instead of the
+    /// sheet `dismiss()` — the pane is hosted in a `NavigationSplitView`, not presented.
+    var onClose: (() -> Void)? = nil
 
     @State private var selectedContact: Contact?
     @State private var frequency: TickleFrequency
@@ -17,12 +20,18 @@ struct TickleEditView: View {
     @State private var toastMessage = ""
     @State private var isSaving = false
 
+    /// Close the editor — via the pane callback on iPad, else the sheet dismiss.
+    private func close() {
+        if let onClose { onClose() } else { dismiss() }
+    }
+
     private var isEditing: Bool { existing != nil }
 
     private var canSave: Bool { selectedContact != nil && !isSaving }
 
-    init(contact: Contact? = nil, existing: TickleReminder? = nil) {
+    init(contact: Contact? = nil, existing: TickleReminder? = nil, onClose: (() -> Void)? = nil) {
         self.existing = existing
+        self.onClose = onClose
         if let r = existing {
             _selectedContact     = State(initialValue: r.contact)
             _frequency           = State(initialValue: r.frequency)
@@ -81,7 +90,7 @@ struct TickleEditView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button(String(localized: "common.cancel")) { dismiss() }
+                    Button(String(localized: "common.cancel")) { close() }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(String(localized: "common.save")) { save() }
@@ -164,7 +173,7 @@ struct TickleEditView: View {
             // button instantly and reintroduce the duplicate-tap bug.
             defer { isSaving = false }
             try? await Task.sleep(for: .seconds(2))
-            dismiss()
+            close()
         }
     }
 }

@@ -29884,6 +29884,64 @@
         }
       }
     },
+    "warm.tickle.detail.empty.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختر تذكيرًا لرؤية طرق التواصل."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a reminder to see ways to reach out."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בחר תזכורת כדי לראות דרכים ליצור קשר."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "رابطے کے طریقے دیکھنے کے لیے یاد دہانی منتخب کریں۔"
+          }
+        }
+      }
+    },
+    "warm.tickle.detail.empty.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختر تذكيرًا"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pick a tickle"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בחר תזכורת"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ایک یاد دہانی منتخب کریں"
+          }
+        }
+      }
+    },
     "warm.tickle.subtitle": {
       "extractionState": "manual",
       "localizations": {
