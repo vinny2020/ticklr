@@ -222,6 +222,27 @@ extension WarmCategory {
     }
 }
 
+// MARK: - Group display name
+
+extension ContactGroup {
+    /// Name to show in the UI. The 5 canonical (seeded) groups resolve to the
+    /// current-locale category name so they follow the device language —
+    /// their stored `name` is just a first-launch seed artifact and is NOT
+    /// authoritative. User-created groups use their stored `name` as typed.
+    ///
+    /// Use this everywhere a group name is *displayed*; keep `name` for
+    /// editing, sorting, and duplicate checks.
+    var displayName: String {
+        WarmCategory.from(groupId: id)?.localizedGroupName ?? name
+    }
+
+    /// True for the 5 seeded canonical category groups (whose name is derived,
+    /// not user-editable).
+    var isCanonicalCategory: Bool {
+        WarmCategory.from(groupId: id) != nil
+    }
+}
+
 // MARK: - hex helper
 
 private func hex(_ value: String) -> Color {

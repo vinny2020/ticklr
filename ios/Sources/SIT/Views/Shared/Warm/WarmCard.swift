@@ -159,8 +159,8 @@ struct WarmCard: View {
     }
 
     private func countLine(_ n: Int) -> some View {
-        // Plural-aware key wired up in the localization commit.
-        Text("\(n) contacts")
+        // Reuse the plural-aware key shared with the Groups list.
+        Text(String(localized: "groupList.contactCount \(n)"))
             .font(.system(size: 12, weight: .semibold))
             .foregroundStyle(WarmTheme.palette(for: warmth).ink2)
     }

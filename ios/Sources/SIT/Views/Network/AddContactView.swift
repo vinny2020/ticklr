@@ -109,7 +109,7 @@ struct AddContactView: View {
                             } label: {
                                 HStack {
                                     Text(group.emoji)
-                                    Text(group.name)
+                                    Text(group.displayName)
                                     Spacer()
                                     if selectedGroupIDs.contains(group.id) {
                                         Image(systemName: "checkmark").foregroundStyle(.indigo)

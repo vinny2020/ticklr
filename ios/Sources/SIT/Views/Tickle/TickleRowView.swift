@@ -23,7 +23,7 @@ struct TickleRowView: View {
 
     private var displayName: String {
         if let contact = reminder.contact { return contact.fullName }
-        if let group = reminder.group { return group.name }
+        if let group = reminder.group { return group.displayName }
         return String(localized: "tickleRow.unknown")
     }
 
