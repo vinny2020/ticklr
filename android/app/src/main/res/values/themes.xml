@@ -4,14 +4,15 @@
       Post-splash theme. Edge-to-edge friendly:
       - Transparent system bars so Compose draws under them (enableEdgeToEdge handles
         scrim/contrast at runtime).
-      - Navy windowBackground matches the splash so the splash → app transition has
-        no color flash.
+      - Warm, theme-aware windowBackground (@color/ticklr_splash: cream in light,
+        espresso in dark via values-night) matches the splash so the splash → app
+        transition has no color flash for system-theme users.
       - enforce*Contrast=false disables the auto-scrim Android 15+ overlays on
         translucent bars; Compose owns the bar appearance.
       Dark/light mode is driven by the Compose SITTheme, not the framework theme.
     -->
     <style name="Theme.SIT" parent="android:Theme.Material.NoActionBar">
-        <item name="android:windowBackground">@color/ticklr_navy</item>
+        <item name="android:windowBackground">@color/ticklr_splash</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:enforceStatusBarContrast" tools:targetApi="29">false</item>
@@ -26,7 +27,7 @@
       after installSplashScreen() + super.onCreate() run.
     -->
     <style name="Theme.SIT.Splash" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/ticklr_navy</item>
+        <item name="windowSplashScreenBackground">@color/ticklr_splash</item>
         <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_foreground</item>
         <item name="postSplashScreenTheme">@style/Theme.SIT</item>
     </style>

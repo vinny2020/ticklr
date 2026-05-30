@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dark-mode splash + window background (TIC-51): warm espresso, the warm
+         counterpart of the retired navy. Pairs with the warm dark app theme so the
+         splash → app transition has no flash for dark (system) users. -->
+    <color name="ticklr_splash">#241E16</color>
+</resources>

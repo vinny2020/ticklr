@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Ticklr brand navy — matches LaunchScreen.kt BG_COLOR (0xFF1C3A62) and the launcher icon background -->
+    <!-- Ticklr brand navy — still used as the launcher adaptive-icon background. -->
     <color name="ticklr_navy">#1C3A62</color>
+    <!-- Warm, theme-aware splash + window background (TIC-51). Cream paper in light;
+         the night variant in values-night/colors.xml swaps to warm espresso. -->
+    <color name="ticklr_splash">#FBF7EE</color>
 </resources>
