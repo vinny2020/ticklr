@@ -21,7 +21,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.xaymaca.sit.R
 import com.xaymaca.sit.data.model.Contact
-import com.xaymaca.sit.ui.theme.Cobalt
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -125,7 +124,7 @@ fun AddContactScreen(
                             }
                         }
                     ) {
-                        Text(stringResource(R.string.common_save), color = Cobalt, fontWeight = FontWeight.SemiBold)
+                        Text(stringResource(R.string.common_save), color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.SemiBold)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(

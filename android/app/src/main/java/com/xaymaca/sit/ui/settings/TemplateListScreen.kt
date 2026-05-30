@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.xaymaca.sit.R
 import com.xaymaca.sit.SITApp
-import com.xaymaca.sit.ui.theme.Cobalt
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -56,7 +55,7 @@ fun TemplateListScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = onAddTemplate,
-                containerColor = Cobalt
+                containerColor = MaterialTheme.colorScheme.primary
             ) {
                 Icon(Icons.Default.Add, contentDescription = stringResource(R.string.template_add_fab), tint = MaterialTheme.colorScheme.onPrimary)
             }
