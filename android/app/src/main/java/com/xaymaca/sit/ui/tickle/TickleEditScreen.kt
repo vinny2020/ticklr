@@ -28,7 +28,7 @@ import com.xaymaca.sit.service.TickleScheduler
 import com.xaymaca.sit.ui.network.NetworkViewModel
 import com.xaymaca.sit.ui.shared.TicklrToast
 import com.xaymaca.sit.ui.shared.displayNameResId
-import com.xaymaca.sit.ui.theme.Cobalt
+import com.xaymaca.sit.ui.theme.WarmCategory
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -247,7 +247,7 @@ fun TickleEditScreen(
                                         modifier = Modifier
                                             .size(36.dp)
                                             .clip(CircleShape)
-                                            .background(Cobalt),
+                                            .background(WarmCategory.Community.palette.accent),
                                         contentAlignment = Alignment.Center
                                     ) {
                                         Text(
@@ -381,7 +381,7 @@ private fun SelectedContactChip(contact: Contact, onClear: () -> Unit) {
             modifier = Modifier
                 .size(28.dp)
                 .clip(CircleShape)
-                .background(Cobalt),
+                .background(WarmCategory.Community.palette.accent),
             contentAlignment = Alignment.Center
         ) {
             Text(
