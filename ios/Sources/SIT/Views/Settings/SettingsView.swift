@@ -106,6 +106,7 @@ struct SettingsView: View {
                 // MARK: — About
                 Section {
                     WordmarkLockup()
+                        .frame(maxWidth: .infinity)
                         .listRowBackground(Color.clear)
                         .listRowInsets(EdgeInsets())
                     LabeledContent(String(localized: "settings.row.version"), value: appVersion)
