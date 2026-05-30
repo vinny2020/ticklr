@@ -145,7 +145,7 @@ fun SettingsScreen(
             // About section
             SettingsSectionHeader(stringResource(R.string.settings_section_about))
 
-            WordmarkLockup()
+            WordmarkLockup(modifier = Modifier.fillMaxWidth())
 
             Column(
                 modifier = Modifier
