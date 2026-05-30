@@ -32,6 +32,7 @@ import com.xaymaca.sit.R
 import com.xaymaca.sit.data.model.Contact
 import com.xaymaca.sit.data.model.ContactGroup
 import com.xaymaca.sit.ui.theme.Cobalt
+import com.xaymaca.sit.ui.theme.WarmCategory
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -225,7 +226,7 @@ private fun SwipeToRemoveMemberRow(
                 modifier = Modifier
                     .size(44.dp)
                     .clip(CircleShape)
-                    .background(Cobalt),
+                    .background(WarmCategory.Community.palette.accent),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
@@ -337,7 +338,7 @@ private fun AddMembersBottomSheet(
                                     modifier = Modifier
                                         .size(40.dp)
                                         .clip(CircleShape)
-                                        .background(Cobalt),
+                                        .background(WarmCategory.Community.palette.accent),
                                     contentAlignment = Alignment.Center
                                 ) {
                                     Text(
