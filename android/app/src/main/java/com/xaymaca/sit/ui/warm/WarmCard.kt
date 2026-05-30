@@ -15,12 +15,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -76,12 +78,23 @@ private fun HeroCard(
             .background(palette.cardBg)
             .border(1.dp, palette.cardBorder, shape),
     ) {
+        // Center-crop the 16:9 illustration into a shorter 16:7 band so the hero
+        // takes less vertical space (reminders sit higher on tablets). The Canvas
+        // cover-scales + centers, so this only trims empty top/bottom padding —
+        // no distortion, no element clipped (TIC-54).
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .aspectRatio(16f / 9f),
+                .aspectRatio(16f / 7f)
+                .clipToBounds(),
+            contentAlignment = Alignment.Center,
         ) {
-            WarmIllustration(category = category, modifier = Modifier.fillMaxWidth())
+            WarmIllustration(
+                category = category,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight(unbounded = true),
+            )
         }
         Column(
             modifier = Modifier.padding(WarmSpacing.Lg),
