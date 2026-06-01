@@ -84,9 +84,11 @@ Watch the run: `gh run watch` (or the Actions tab). The job validates notes
   TIC-42) need a separate run:
   `./gradlew :app:publishReleaseListing` (validate-only first with
   `-PplayCommit=false` — see below). Run it when you intend to update listings.
-- **Hebrew tags:** the listing publish carries both `he-IL` and `iw-IL`. After a
-  real production publish, check Play Console's language list to see which renders
-  and retire the redundant one (Linear TIC-42).
+- **Hebrew = `iw-IL` only.** Never ship both `he-IL` and `iw-IL` — the Play API
+  normalizes them to the same locale and the edit **commit** fails with
+  `400 "Release notes are badly constructed or have duplicates."` This is not
+  caught by any local/CI check; it broke the v1.9.0 cut. Applies to release notes
+  AND listings (Linear TIC-42).
 - **Update Linear:** move shipped issues to Done; note the released version.
 
 ### Validate-only Play publish (no go-live)
@@ -99,5 +101,5 @@ go straight to the live listing.
 - Tag drives everything; `versionCode = 100 + run#`, never manual.
 - 500-char release-note limit per locale (chars, not bytes) — CI fails the build otherwise.
 - `publishReleaseBundle` = bundle + notes; **listings are separate**.
-- Hebrew ships under both `he-IL` and `iw-IL` until confirmed.
+- Hebrew uses `iw-IL` ONLY — shipping `he-IL` too fails the commit as a duplicate locale.
 - Never commit signing keys / `play-service-account.json` (CI injects via secrets).
