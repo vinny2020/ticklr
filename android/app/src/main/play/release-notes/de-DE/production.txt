@@ -1,4 +1,5 @@
-Tablet-Unterstützung:
-• Auf großen Bildschirmen ersetzt eine seitliche Navigationsleiste die untere Leiste
-• Netzwerk, Gruppen und Tickles öffnen sich in zwei Bereichen – Liste und Details nebeneinander
-• Tippe auf einen Tickle, um seine Aktionen direkt neben der Liste zu sehen
+Ein wärmeres Ticklr ist da.
+• Ein frisches, warmes Redesign auf allen Bildschirmen – sanftere Töne, freundlichere Schrift und eine Akzentfarbe pro Kreis
+• Aktualisierter Schriftzug und themenbewusster Startbildschirm
+• Tippe auf eine Erinnerung, um eine bereits adressierte Nachricht zu öffnen
+• Edge-to-Edge-, Einstellungs- und Benachrichtigungs-Feinschliff

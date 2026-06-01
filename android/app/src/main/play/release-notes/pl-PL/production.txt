@@ -1,4 +1,5 @@
-Obsługa tabletów:
-• Na dużych ekranach boczny pasek nawigacji zastępuje dolny pasek
-• Sieć, Grupy i Tickle otwierają się w dwóch panelach — lista i szczegóły obok siebie
-• Dotknij tickle, aby zobaczyć jego akcje obok listy
+Nadszedł cieplejszy Ticklr.
+• Świeży, ciepły redesign na każdym ekranie: łagodniejsze tony, przyjaźniejsza typografia i kolor dla każdego kręgu
+• Odświeżony logotyp i ekran startowy dopasowany do motywu
+• Dotknij przypomnienia, aby otworzyć wiadomość już zaadresowaną do tej osoby
+• Poprawki edge-to-edge, Ustawień i powiadomień

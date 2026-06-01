@@ -1,4 +1,5 @@
-Compatibilidade com tablets:
-• Em ecrãs grandes, uma barra de navegação lateral substitui a barra inferior
-• Rede, Grupos e Tickles abrem em dois painéis: lista e detalhes lado a lado
-• Toque num tickle para ver as suas ações junto à lista
+Chega um Ticklr mais caloroso.
+• Um novo design caloroso em todos os ecrãs: tons suaves, tipografia mais amigável e uma cor para cada círculo
+• Logótipo atualizado e ecrã inicial adaptado ao tema
+• Toque num lembrete para abrir uma mensagem já endereçada a essa pessoa
+• Melhorias de bordo a bordo, Definições e notificações

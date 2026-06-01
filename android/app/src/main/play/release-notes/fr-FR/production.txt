@@ -1,4 +1,5 @@
-Prise en charge des tablettes :
-• Sur les grands écrans, un rail de navigation latéral remplace la barre inférieure
-• Réseau, Groupes et Tickles s'ouvrent en deux volets : la liste et les détails côte à côte
-• Touchez un tickle pour voir ses actions juste à côté de la liste
+Un Ticklr plus chaleureux arrive.
+• Une refonte chaleureuse sur tous les écrans : tons doux, typographie plus amicale et une couleur par cercle
+• Logo actualisé et écran de démarrage adapté au thème
+• Touchez un rappel pour ouvrir un message déjà adressé à cette personne
+• Améliorations bord à bord, Réglages et notifications

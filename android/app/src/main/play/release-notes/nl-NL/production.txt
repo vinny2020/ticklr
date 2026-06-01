@@ -1,4 +1,5 @@
-Ondersteuning voor tablets:
-• Op grote schermen vervangt een zijbalk de onderste navigatiebalk
-• Netwerk, Groepen en Tickles openen in twee panelen: lijst en details naast elkaar
-• Tik op een tickle om de acties naast de lijst te zien
+Een warmer Ticklr is er.
+• Een fris, warm nieuw ontwerp op elk scherm: zachtere tinten, vriendelijker lettertype en een accentkleur per kring
+• Vernieuwd woordmerk en een themabewust startscherm
+• Tik op een herinnering om een bericht te openen dat al aan die persoon is gericht
+• Edge-to-edge-, Instellingen- en meldingverbeteringen
