@@ -103,6 +103,11 @@ play {
     // Support dynamic track selection via command line property -PplayTrack
     track.set(project.findProperty("playTrack")?.toString() ?: "internal")
     defaultToAppBundles.set(true)
+
+    // -PplayCommit=false uploads changes to a draft edit without committing them
+    // live — useful for validating listing metadata (e.g. locale tags) without
+    // going to production. Defaults to true so the normal release flow is unchanged.
+    commit.set((project.findProperty("playCommit")?.toString() ?: "true").toBoolean())
 }
 
 // JaCoCo coverage report task
