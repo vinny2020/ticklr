@@ -96,9 +96,11 @@ struct SeedDataService {
         tickle(nil, group: milestones, note: "🎂 Birthday this week", frequency: .quarterly, dueInDays: 1)
 
         try context.save()
+        // Use displayName (live-localized) not the stored name, which for canonical
+        // groups is frozen at the first-launch locale and would mislead here.
         return "Demo data ready: \(contacts.count) contacts across "
-            + "\(family.name)/\(friends.name)/\(work.name)/\(community.name)/\(milestones.name), "
-            + "\(createdTickles) new tickles ✓"
+            + "\(family.displayName)/\(friends.displayName)/\(work.displayName)/"
+            + "\(community.displayName)/\(milestones.displayName), \(createdTickles) new tickles ✓"
     }
 
     enum SeedError: LocalizedError {
