@@ -1,4 +1,5 @@
-Stöd för surfplattor:
-• På stora skärmar ersätter en sidonavigeringslist den nedre listen
-• Nätverk, Grupper och Tickles öppnas i två paneler – lista och detaljer sida vid sida
-• Tryck på en tickle för att se dess åtgärder bredvid listan
+Ett varmare Ticklr är här.
+• En fräsch, varm omdesign på varje skärm: mjukare toner, vänligare typsnitt och en accentfärg för varje krets
+• Uppdaterad ordbild och en temaanpassad startskärm
+• Tryck på en påminnelse för att öppna ett meddelande som redan är adresserat till personen
+• Förbättringar för kant-till-kant, Inställningar och aviseringar

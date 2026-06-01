@@ -1,4 +1,5 @@
-Compatibilitate cu tablete:
-• Pe ecranele mari, o bară laterală de navigare înlocuiește bara de jos
-• Rețea, Grupuri și Tickles se deschid pe două panouri – lista și detaliile alăturate
-• Atinge un tickle pentru a-i vedea acțiunile chiar lângă listă
+A sosit un Ticklr mai cald.
+• Un design cald și reîmprospătat pe fiecare ecran: tonuri mai blânde, scris mai prietenos și o culoare pentru fiecare cerc
+• Logotip actualizat și ecran de pornire adaptat la temă
+• Atinge o notificare pentru a deschide un mesaj deja adresat acelei persoane
+• Îmbunătățiri edge-to-edge, Setări și notificări

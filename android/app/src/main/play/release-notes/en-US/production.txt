@@ -1,4 +1,5 @@
-Tablet support:
-• On larger screens, a side navigation rail replaces the bottom bar
-• Network, Groups, and Tickles open in a two-pane layout — list and details side by side
-• Tap a tickle to see its actions right next to the list
+A warmer Ticklr is here.
+• A fresh, warm redesign across every screen — softer tones, friendlier type, and a color accent for each circle
+• Updated wordmark and a theme-aware splash
+• Tap a reminder to open a message already addressed to that person
+• Edge-to-edge, Settings, and notification polish

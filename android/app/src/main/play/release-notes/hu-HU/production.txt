@@ -1,4 +1,5 @@
-Táblagép-támogatás:
-• Nagy képernyőkön oldalsó navigációs sáv váltja fel az alsó sávot
-• A Hálózat, a Csoportok és a Tickle-ök két panelen nyílnak meg – a lista és a részletek egymás mellett
-• Koppints egy tickle-re, hogy a műveletei a lista mellett jelenjenek meg
+Megérkezett egy melegebb Ticklr.
+• Friss, meleg külső minden képernyőn: lágyabb tónusok, barátságosabb betűtípus és egy szín minden körhöz
+• Megújult logó és témaérzékeny indítóképernyő
+• Koppints egy emlékeztetőre, hogy megnyiss egy már az adott személynek címzett üzenetet
+• Edge-to-edge, Beállítások és értesítések finomítása

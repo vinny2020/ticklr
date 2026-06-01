@@ -1,4 +1,5 @@
-Supporto per tablet:
-• Sugli schermi grandi una barra di navigazione laterale sostituisce quella inferiore
-• Rete, Gruppi e Tickle si aprono in due riquadri: elenco e dettagli affiancati
-• Tocca un tickle per vederne le azioni accanto all'elenco
+Arriva un Ticklr più caldo.
+• Un nuovo design caldo in ogni schermata: tonalità morbide, caratteri più amichevoli e un colore per ogni cerchia
+• Logo aggiornato e schermata di avvio in base al tema
+• Tocca un promemoria per aprire un messaggio già indirizzato a quella persona
+• Migliorie edge-to-edge, Impostazioni e notifiche
