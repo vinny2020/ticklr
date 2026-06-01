@@ -153,6 +153,17 @@ struct SettingsView: View {
                     }
                     .foregroundColor(WarmCategory.milestones.palette.accent)
 
+                    Button("Load Demo Data") {
+                        Task { @MainActor in
+                            do {
+                                seedMessage = try SeedDataService.seedDemoData(context: modelContext)
+                            } catch {
+                                seedMessage = "Demo seed failed: \(error.localizedDescription)"
+                            }
+                        }
+                    }
+                    .foregroundColor(WarmCategory.family.palette.accent)
+
                     Button("Clear All Data", role: .destructive) {
                         showClearConfirm = true
                     }
