@@ -97,6 +97,15 @@ check listing metadata / locale tags against the Play API without touching
 production. Listing publishes are **not** track-isolated; without this flag they
 go straight to the live listing.
 
+> ⚠️ The dry-run path can intermittently fail with
+> `FAILED_PRECONDITION — "This Edit has been deleted"` on the `:validate` call.
+> That's a GPP edit-lifecycle quirk (seen right after a release was in review),
+> **not** a content rejection — distinguish it from `INVALID_ARGUMENT` content
+> errors like the duplicate-locale one. The real `publishReleaseListing` commit
+> is authoritative and atomic; if the content is sound it succeeds (and if not,
+> it rejects at commit with nothing going live). Don't treat a validate-only
+> "Edit has been deleted" as a blocker for the real publish.
+
 ## Quick reference — gotchas
 - Tag drives everything; `versionCode = 100 + run#`, never manual.
 - 500-char release-note limit per locale (chars, not bytes) — CI fails the build otherwise.
