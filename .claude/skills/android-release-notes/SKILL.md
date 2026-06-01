@@ -42,8 +42,8 @@ translated from it.
 
 Translate the en-US note into every locale below. **Prefer doing this natively**
 (translate directly — no API key or dependency) and back-translate any RTL/CJK
-locale to English to sanity-check meaning before writing. The locales (21 languages,
-**22 directories** — Hebrew ships under both tags, identical content):
+locale to English to sanity-check meaning before writing. The locales (21 locales,
+**one directory each**):
 
 | Dir | Language | | Dir | Language |
 |---|---|---|---|---|
@@ -54,19 +54,20 @@ locale to English to sanity-check meaning before writing. The locales (21 langua
 | `nl-NL` | Dutch | | `ko-KR` | Korean |
 | `el-GR` | Greek | | `hi-IN` | Hindi |
 | `pl-PL` | Polish | | `ar` | Arabic (unqualified) |
-| `ro` | Romanian (unqualified) | | `he-IL` | Hebrew |
-| `hu-HU` | Hungarian | | `iw-IL` | Hebrew (legacy tag — **same content as he-IL**) |
-| `pt-PT` | European Portuguese | | `ur` | Urdu (unqualified) |
-| `sv-SE` | Swedish | | `en-US` | English (the source) |
+| `ro` | Romanian (unqualified) | | `iw-IL` | Hebrew (legacy tag — **the only Hebrew dir**) |
+| `hu-HU` | Hungarian | | `ur` | Urdu (unqualified) |
+| `pt-PT` | European Portuguese | | `en-US` | English (the source) |
+| `sv-SE` | Swedish | | | |
 
 Per-locale rules: same bullet structure, brand names untranslated, locale-natural
-punctuation (full-width for zh/ja, RTL-appropriate for ar/he/ur), result < 500 chars.
-`he-IL` and `iw-IL` must be byte-identical.
+punctuation (full-width for zh/ja, RTL-appropriate for ar/iw/ur), result < 500 chars.
 
-> **Why both `he-IL` and `iw-IL`:** Google's supported-languages table uses the
-> legacy `iw-IL` for Hebrew, but the Play API also accepts `he-IL`. We ship both
-> (safety over precision) until a production publish confirms which one renders;
-> then retire the redundant one. See Linear TIC-42.
+> **Hebrew uses `iw-IL` ONLY — never also add `he-IL`.** Google's supported-languages
+> table uses the legacy `iw-IL`, and the Play API normalizes both `he-IL` and `iw-IL`
+> to the same Hebrew locale. Shipping both makes the edit **commit** fail with
+> `400 — "Release notes are badly constructed or have duplicates."` (the per-file
+> char check passes, so only the Play API catches it, at the very end of a release).
+> We dropped `he-IL` after it broke the v1.9.0 production cut. See Linear TIC-42.
 
 ### Batch fallback
 `scripts/prep-release-notes.py <track>` translates en-US → all locales via the
@@ -84,7 +85,7 @@ for f in */<track>.txt; do
 done
 # Count chars, NOT bytes — non-Latin scripts are multi-byte; byte counts falsely fail.
 grep -il "tablet\|<stale feature>" */<track>.txt   # sanity: nothing from the last release
-ls */<track>.txt | wc -l                            # expect 22 for production
+ls */<track>.txt | wc -l                            # expect 21 for production (one Hebrew dir: iw-IL)
 ```
 
 Every locale must be ≤ 500 chars and free of prior-release content. If a locale is
