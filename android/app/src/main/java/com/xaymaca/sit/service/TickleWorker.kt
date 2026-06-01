@@ -57,6 +57,7 @@ class TickleWorker @AssistedInject constructor(
                 .setContentTitle(title)
                 .setContentText(body)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(TickleScheduler.contentPendingIntent(context, reminder.id, reminder.contactId))
                 .setAutoCancel(true)
                 .build()
 

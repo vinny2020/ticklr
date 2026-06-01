@@ -24,7 +24,16 @@ sealed class Screen(val route: String) {
             fun createRouteWithContact(contactId: Long) = "tickle_edit/-1?contactId=$contactId"
         }
     }
-    object Compose : Screen("compose")
+    object Compose : Screen("compose") {
+        /**
+         * Deep-link target for tickle reminder notifications (TIC-35). Tapping a
+         * reminder opens Compose pre-addressed to the contact. The `contactId`
+         * query param is optional — a reminder with no contact opens plain Compose.
+         */
+        const val DEEP_LINK_PATTERN = "ticklr://compose?contactId={contactId}"
+        fun deepLinkUri(contactId: Long?): String =
+            if (contactId != null) "ticklr://compose?contactId=$contactId" else "ticklr://compose"
+    }
     object Settings : Screen("settings")
     object Onboarding : Screen("onboarding")
     object Import : Screen("import")

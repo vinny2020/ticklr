@@ -23,6 +23,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.navDeepLink
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import androidx.navigation.navArgument
@@ -293,7 +294,8 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
                 arguments = listOf(navArgument("contactId") {
                     type = NavType.LongType
                     defaultValue = -1L
-                })
+                }),
+                deepLinks = listOf(navDeepLink { uriPattern = Screen.Compose.DEEP_LINK_PATTERN })
             ) { backStackEntry ->
                 val contactId = backStackEntry.arguments?.getLong("contactId")?.takeIf { it != -1L }
                 ComposeScreen(
