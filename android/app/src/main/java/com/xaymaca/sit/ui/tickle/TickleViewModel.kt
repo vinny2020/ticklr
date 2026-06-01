@@ -187,7 +187,7 @@ class TickleViewModel @Inject constructor(
                 contactRepository.getContactById(cId)?.fullName
             } ?: context.getString(R.string.tickle_notification_contact_fallback)
             TickleScheduler.scheduleNotification(
-                context, finalId, contactName, reminder.note, reminder.nextDueDate
+                context, finalId, reminder.contactId, contactName, reminder.note, reminder.nextDueDate
             )
             TickleScheduler.scheduleWorker(context)
             _toastMessage.value = if (isNew) context.getString(R.string.tickle_saved) else context.getString(R.string.tickle_updated)

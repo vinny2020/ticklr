@@ -41,6 +41,7 @@ class TickleAlarmReceiver : BroadcastReceiver() {
         }
 
         val reminderId  = intent.getLongExtra("reminder_id", -1L)
+        val contactId   = intent.getLongExtra("contact_id", -1L).takeIf { it != -1L }
         val contactName = intent.getStringExtra("contact_name")
             ?: context.getString(R.string.tickle_notification_contact_fallback)
         val note        = intent.getStringExtra("note") ?: ""
@@ -55,6 +56,7 @@ class TickleAlarmReceiver : BroadcastReceiver() {
             .setContentTitle(title)
             .setContentText(body)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(TickleScheduler.contentPendingIntent(context, reminderId, contactId))
             .setAutoCancel(true)
             .build()
 

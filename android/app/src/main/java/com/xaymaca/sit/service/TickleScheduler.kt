@@ -5,10 +5,14 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
+import androidx.core.app.TaskStackBuilder
 import androidx.work.*
+import com.xaymaca.sit.MainActivity
 import com.xaymaca.sit.SITApp
 import com.xaymaca.sit.data.model.TickleFrequency
 import com.xaymaca.sit.data.model.TickleReminder
+import com.xaymaca.sit.ui.nav.Screen
 import java.util.Calendar
 import java.util.concurrent.TimeUnit
 
@@ -90,12 +94,13 @@ object TickleScheduler {
     fun scheduleNotification(
         context: Context,
         reminderId: Long,
+        contactId: Long?,
         contactName: String,
         note: String,
         nextDueDate: Long
     ) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val intent = buildNotificationIntent(context, reminderId, contactName, note)
+        val intent = buildNotificationIntent(context, reminderId, contactId, contactName, note)
         val pendingIntent = PendingIntent.getBroadcast(
             context,
             reminderId.toInt(),
@@ -119,7 +124,7 @@ object TickleScheduler {
      */
     fun cancelNotification(context: Context, reminderId: Long) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val intent = buildNotificationIntent(context, reminderId, "", "")
+        val intent = buildNotificationIntent(context, reminderId, null, "", "")
         val pendingIntent = PendingIntent.getBroadcast(
             context,
             reminderId.toInt(),
@@ -152,14 +157,38 @@ object TickleScheduler {
     private fun buildNotificationIntent(
         context: Context,
         reminderId: Long,
+        contactId: Long?,
         contactName: String,
         note: String
     ): Intent {
         return Intent("com.xaymaca.sit.TICKLE_ALARM").apply {
             setPackage(context.packageName)
             putExtra("reminder_id", reminderId)
+            putExtra("contact_id", contactId ?: -1L)
             putExtra("contact_name", contactName)
             putExtra("note", note)
+        }
+    }
+
+    /**
+     * Builds the tap action for a tickle notification (TIC-35): a deep link into
+     * Compose, pre-addressed to the contact when one is attached. Used as the
+     * notification's content intent on both the alarm and WorkManager paths.
+     * The synthetic back stack returns to the Tickle start destination.
+     */
+    fun contentPendingIntent(context: Context, reminderId: Long, contactId: Long?): PendingIntent {
+        val deepLink = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse(Screen.Compose.deepLinkUri(contactId)),
+            context,
+            MainActivity::class.java
+        )
+        return TaskStackBuilder.create(context).run {
+            addNextIntentWithParentStack(deepLink)
+            getPendingIntent(
+                reminderId.toInt(),
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )!!
         }
     }
 }
