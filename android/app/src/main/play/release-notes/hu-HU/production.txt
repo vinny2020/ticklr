@@ -1,5 +1,5 @@
-Megérkezett egy melegebb Ticklr.
-• Friss, meleg külső minden képernyőn: lágyabb tónusok, barátságosabb betűtípus és egy szín minden körhöz
-• Megújult logó és témaérzékeny indítóképernyő
-• Koppints egy emlékeztetőre, hogy megnyiss egy már az adott személynek címzett üzenetet
-• Edge-to-edge, Beállítások és értesítések finomítása
+Friss megjelenés és gördülékenyebb folyamatok.
+• Új, meleg krém-eszpresszó alkalmazásikon
+• Megújult kártyaillusztrációk, minden nyelven otthonosak
+• Üzenetküldés után oda térsz vissza, ahol voltál
+• A névjegy mutatja, mikor beszéltetek utoljára

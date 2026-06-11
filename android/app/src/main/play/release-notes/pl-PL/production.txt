@@ -1,5 +1,5 @@
-Nadszedł cieplejszy Ticklr.
-• Świeży, ciepły redesign na każdym ekranie: łagodniejsze tony, przyjaźniejsza typografia i kolor dla każdego kręgu
-• Odświeżony logotyp i ekran startowy dopasowany do motywu
-• Dotknij przypomnienia, aby otworzyć wiadomość już zaadresowaną do tej osoby
-• Poprawki edge-to-edge, Ustawień i powiadomień
+Świeży wygląd i płynniejsze przepływy.
+• Nowa ciepła ikona aplikacji w kremie i espresso
+• Odświeżone ilustracje kart, które pasują do każdego języka
+• Po wysłaniu wiadomości wracasz dokładnie tam, gdzie byłeś
+• Szczegóły kontaktu pokazują, kiedy ostatnio się kontaktowaliście

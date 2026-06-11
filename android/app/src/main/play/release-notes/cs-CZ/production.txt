@@ -1,5 +1,5 @@
-Přichází vřelejší Ticklr.
-• Svěží, vřelý redesign na každé obrazovce: jemnější tóny, přívětivější písmo a barva pro každý okruh
-• Aktualizované logo a úvodní obrazovka přizpůsobená motivu
-• Klepnutím na připomenutí otevřete zprávu už adresovanou té osobě
-• Vylepšení edge-to-edge, Nastavení a oznámení
+Svěží vzhled a plynulejší ovládání.
+• Nová hřejivá ikona aplikace v krémové a espresso
+• Obnovené ilustrace karet, které sednou každému jazyku
+• Po odeslání zprávy se vrátíš přesně tam, kde jsi byl
+• Detail kontaktu ukazuje, kdy jste byli naposledy v kontaktu
