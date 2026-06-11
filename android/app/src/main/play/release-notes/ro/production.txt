@@ -1,5 +1,5 @@
-A sosit un Ticklr mai cald.
-• Un design cald și reîmprospătat pe fiecare ecran: tonuri mai blânde, scris mai prietenos și o culoare pentru fiecare cerc
-• Logotip actualizat și ecran de pornire adaptat la temă
-• Atinge o notificare pentru a deschide un mesaj deja adresat acelei persoane
-• Îmbunătățiri edge-to-edge, Setări și notificări
+Un aspect nou și fluxuri mai fluide.
+• Pictogramă nouă, caldă, în crem și espresso
+• Ilustrații reîmprospătate, potrivite în orice limbă
+• După trimiterea unui mesaj revii exact unde erai
+• Detaliile contactului arată când ați vorbit ultima dată

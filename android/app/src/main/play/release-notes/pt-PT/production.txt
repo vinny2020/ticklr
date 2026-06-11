@@ -1,5 +1,5 @@
-Chega um Ticklr mais caloroso.
-• Um novo design caloroso em todos os ecrãs: tons suaves, tipografia mais amigável e uma cor para cada círculo
-• Logótipo atualizado e ecrã inicial adaptado ao tema
-• Toque num lembrete para abrir uma mensagem já endereçada a essa pessoa
-• Melhorias de bordo a bordo, Definições e notificações
+Um visual novo e fluxos mais fluidos.
+• Novo ícone acolhedor em creme e espresso
+• Ilustrações dos cartões renovadas, adequadas a todos os idiomas
+• Depois de enviar uma mensagem, volta exatamente onde estava
+• Os detalhes do contacto mostram quando falaram pela última vez
