@@ -29,7 +29,9 @@ import com.xaymaca.sit.ui.shared.TicklrToast
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ComposeScreen(
-    onNavigateToNetwork: () -> Unit = {},
+    /** Called when the user is finished here — message handed off to the SMS
+     *  app, or compose dismissed. The caller routes back to the previous screen. */
+    onDone: () -> Unit = {},
     initialContactId: Long? = null,
     viewModel: ComposeViewModel = hiltViewModel()
 ) {
@@ -49,7 +51,6 @@ fun ComposeScreen(
     var showContactDropdown by remember { mutableStateOf(false) }
     var selectedTemplateName by remember { mutableStateOf<String?>(null) }
     val messageFocusRequester = remember { FocusRequester() }
-    val messageSentStr = stringResource(R.string.compose_message_sent)
     val warmth = com.xaymaca.sit.ui.theme.Warmth.Subtle
     val warmPalette = com.xaymaca.sit.ui.theme.WarmTheme.palette(warmth)
     // Send button + input focus accents follow the selected contact's
@@ -86,7 +87,7 @@ fun ComposeScreen(
                             IconButton(onClick = {
                                 viewModel.clearCompose()
                                 selectedTemplateName = null
-                                onNavigateToNetwork()
+                                onDone()
                             }) {
                                 Icon(
                                     Icons.Default.Close,
@@ -310,9 +311,13 @@ fun ComposeScreen(
                             val phone = phones.firstOrNull() ?: return@Button
                             val intent = SmsService().sendSmsIntent(context, listOf(phone), messageBody)
                             context.startActivity(intent)
+                            viewModel.recordHandoff(contact)
                             viewModel.clearCompose()
                             selectedTemplateName = null
-                            viewModel.showToast(messageSentStr)
+                            // Leave Compose underneath the SMS app so the user
+                            // returns to the screen they came from, not an
+                            // empty compose form.
+                            onDone()
                         },
                         enabled = canSend,
                         colors = ButtonDefaults.buttonColors(

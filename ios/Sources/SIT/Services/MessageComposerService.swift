@@ -6,10 +6,13 @@ import MessageUI
 struct MessageComposerView: UIViewControllerRepresentable {
     let recipients: [String]
     let body: String
+    /// Called after the composer dismisses, with the user's outcome
+    /// (.sent / .cancelled / .failed) so the presenter can route accordingly.
+    var onFinish: ((MessageComposeResult) -> Void)? = nil
     @Environment(\.dismiss) private var dismiss
 
     func makeCoordinator() -> Coordinator {
-        Coordinator(dismiss: dismiss)
+        Coordinator(dismiss: dismiss, onFinish: onFinish)
     }
 
     func makeUIViewController(context: Context) -> MFMessageComposeViewController {
@@ -37,9 +40,11 @@ struct MessageComposerView: UIViewControllerRepresentable {
     // MARK: - Coordinator
     class Coordinator: NSObject, @preconcurrency MFMessageComposeViewControllerDelegate {
         let dismiss: DismissAction
+        let onFinish: ((MessageComposeResult) -> Void)?
 
-        init(dismiss: DismissAction) {
+        init(dismiss: DismissAction, onFinish: ((MessageComposeResult) -> Void)?) {
             self.dismiss = dismiss
+            self.onFinish = onFinish
         }
 
         @MainActor
@@ -47,6 +52,7 @@ struct MessageComposerView: UIViewControllerRepresentable {
             _ controller: MFMessageComposeViewController,
             didFinishWith result: MessageComposeResult
         ) {
+            onFinish?(result)
             dismiss()
         }
     }

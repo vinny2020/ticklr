@@ -61,7 +61,7 @@ struct ContactDetailView: View {
             case .addTickle:   TickleEditView(contact: contact)
             case .addToGroup:  AddToGroupSheet(contact: contact)
             case .compose:
-                ComposeView(onCancel: { activeSheet = nil },
+                ComposeView(onClose: { activeSheet = nil },
                             initialContact: contact)
             }
         }

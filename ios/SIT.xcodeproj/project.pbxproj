@@ -14,6 +14,7 @@
 		0C03E3E93AEAAEAB358CF5C3 /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACA061EE9A732D89FD3E0F3 /* GroupListView.swift */; };
 		0C41C7D26198E0DC2C958072 /* AddContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77347A9F53BFBE3E1672671 /* AddContactView.swift */; };
 		0EA9C2254CEDC3F5A8E9033B /* OFL-NotoNaskhArabic.txt in Resources */ = {isa = PBXBuildFile; fileRef = D0E4D04216FC720E233AA609 /* OFL-NotoNaskhArabic.txt */; };
+		121B201A777B373F894B4D35 /* GroupsScreenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C85FA1377676F93CC23F9 /* GroupsScreenUITests.swift */; };
 		12FCF35AA80528F2EF325924 /* ContactRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9125614ECAB9E4D8E5428E51 /* ContactRowView.swift */; };
 		1423BBA388EC43ABC386281F /* OFL-NotoSerifDevanagari.txt in Resources */ = {isa = PBXBuildFile; fileRef = 89A8592D7BE1A77F3A839568 /* OFL-NotoSerifDevanagari.txt */; };
 		1538B4A01D22876B74D30A26 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 69286CB7AAC699E4A7076063 /* PrivacyInfo.xcprivacy */; };
@@ -65,6 +66,7 @@
 		D2644F8AB791907856A6E389 /* ComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07B4E4B1B6C11A40612610C /* ComposeView.swift */; };
 		D4C1A48DAA2D66E88EFC5692 /* WarmListContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5907E434D833533D8A7EBC /* WarmListContainer.swift */; };
 		D7093B43ACD10588484F4A32 /* CategoryBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06BB941D9F261F754634A26D /* CategoryBadge.swift */; };
+		D7662319C587D3965757B1B7 /* ComposeFlowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8175776A2DEBC88B756C24E /* ComposeFlowUITests.swift */; };
 		D85DBFDBA2D0DACA843EA1A9 /* ContactDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60220490DD5F5ED7374E537 /* ContactDetailView.swift */; };
 		D97E7DA6F424B3BBF191D702 /* WarmEyebrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1914E51A7708868BB45255 /* WarmEyebrow.swift */; };
 		DAC6E39278733054D630C412 /* WarmTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE539205850900E86911453 /* WarmTheme.swift */; };
@@ -79,6 +81,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		3F1418322A3051A87B4EA178 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A5D2D54CCBEE20463A2C48F7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1CADC66CDEC975B92B6E11C1;
+			remoteInfo = Ticklr;
+		};
 		A5DC26CDE387B33113AF29A7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A5D2D54CCBEE20463A2C48F7 /* Project object */;
@@ -121,11 +130,13 @@
 		455DDB76B445C37831B67137 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		45775744E6927B98A73B2CAC /* Ticklr.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Ticklr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49E849839D5DE00393F1F990 /* TicklrTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = TicklrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4EEF74492B5B4A7268A80E2D /* TicklrUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = TicklrUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50AD38DE9F1FCCBD8B82DEED /* ContactImportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactImportService.swift; sourceTree = "<group>"; };
 		52B2D827FDB5FDABB740E34A /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		537A021C4C432ABFB13A3219 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		53C7E0EBE485C198DCF9669E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		5CA413473ADA828136F21753 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		5D5C85FA1377676F93CC23F9 /* GroupsScreenUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsScreenUITests.swift; sourceTree = "<group>"; };
 		63EBB61C7877871E721045C7 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		69286CB7AAC699E4A7076063 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		6986C02DC105E08528D7DA6C /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -179,6 +190,7 @@
 		E5F765EEB318998C9E229F0F /* TemplateEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateEditView.swift; sourceTree = "<group>"; };
 		E77347A9F53BFBE3E1672671 /* AddContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactView.swift; sourceTree = "<group>"; };
 		E7F93D464D33962932C5C942 /* TickleActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleActionSheet.swift; sourceTree = "<group>"; };
+		E8175776A2DEBC88B756C24E /* ComposeFlowUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeFlowUITests.swift; sourceTree = "<group>"; };
 		EDBC29B891A9D2602E4C6122 /* TickleReminderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleReminderTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -234,6 +246,7 @@
 			children = (
 				C532A26F70A9D247411068B0 /* SIT */,
 				60300655470A93BADC68B71C /* SITTests */,
+				A69DC64A7B6BA5F86467E1A7 /* SITUITests */,
 				B9E711472E0A67C680D625C7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -368,11 +381,22 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		A69DC64A7B6BA5F86467E1A7 /* SITUITests */ = {
+			isa = PBXGroup;
+			children = (
+				E8175776A2DEBC88B756C24E /* ComposeFlowUITests.swift */,
+				5D5C85FA1377676F93CC23F9 /* GroupsScreenUITests.swift */,
+			);
+			name = SITUITests;
+			path = Tests/SITUITests;
+			sourceTree = "<group>";
+		};
 		B9E711472E0A67C680D625C7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				45775744E6927B98A73B2CAC /* Ticklr.app */,
 				49E849839D5DE00393F1F990 /* TicklrTests.xctest */,
+				4EEF74492B5B4A7268A80E2D /* TicklrUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -438,6 +462,24 @@
 			productReference = 45775744E6927B98A73B2CAC /* Ticklr.app */;
 			productType = "com.apple.product-type.application";
 		};
+		4E85D7CEF12DEA4864381C10 /* TicklrUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A5EA50C7F5BC070705AD4B61 /* Build configuration list for PBXNativeTarget "TicklrUITests" */;
+			buildPhases = (
+				F534C1FC7CA5181B03888334 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				47102B83800101B3E55D725A /* PBXTargetDependency */,
+			);
+			name = TicklrUITests;
+			packageProductDependencies = (
+			);
+			productName = TicklrUITests;
+			productReference = 4EEF74492B5B4A7268A80E2D /* TicklrUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		659D71ADC995ABBCE6F3FA86 /* TicklrTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9B5A7C0CB687F086F447159A /* Build configuration list for PBXNativeTarget "TicklrTests" */;
@@ -469,6 +511,10 @@
 				TargetAttributes = {
 					1CADC66CDEC975B92B6E11C1 = {
 						DevelopmentTeam = "";
+					};
+					4E85D7CEF12DEA4864381C10 = {
+						DevelopmentTeam = "";
+						TestTargetID = 1CADC66CDEC975B92B6E11C1;
 					};
 					659D71ADC995ABBCE6F3FA86 = {
 						DevelopmentTeam = "";
@@ -514,6 +560,7 @@
 			targets = (
 				1CADC66CDEC975B92B6E11C1 /* Ticklr */,
 				659D71ADC995ABBCE6F3FA86 /* TicklrTests */,
+				4E85D7CEF12DEA4864381C10 /* TicklrUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -611,9 +658,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F534C1FC7CA5181B03888334 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7662319C587D3965757B1B7 /* ComposeFlowUITests.swift in Sources */,
+				121B201A777B373F894B4D35 /* GroupsScreenUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		47102B83800101B3E55D725A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1CADC66CDEC975B92B6E11C1 /* Ticklr */;
+			targetProxy = 3F1418322A3051A87B4EA178 /* PBXContainerItemProxy */;
+		};
 		571D3599E26F7E2453C5373C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 1CADC66CDEC975B92B6E11C1 /* Ticklr */;
@@ -653,6 +714,25 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		08CE7AA94D26B42C014FE26B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.xaymaca.sit.uitests;
+				PRODUCT_NAME = TicklrUITests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Ticklr;
+			};
+			name = Debug;
+		};
 		1E7C63571427392CD9A5A9DA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -763,6 +843,25 @@
 			};
 			name = Release;
 		};
+		C83921041176C14D35EC0881 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.xaymaca.sit.uitests;
+				PRODUCT_NAME = TicklrUITests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Ticklr;
+			};
+			name = Release;
+		};
 		D2A51B52D05DC79BE5C14C79 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -856,6 +955,15 @@
 			buildConfigurations = (
 				D2A51B52D05DC79BE5C14C79 /* Debug */,
 				502DF3D2408C68B532D4EE51 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		A5EA50C7F5BC070705AD4B61 /* Build configuration list for PBXNativeTarget "TicklrUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				08CE7AA94D26B42C014FE26B /* Debug */,
+				C83921041176C14D35EC0881 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

@@ -6,6 +6,12 @@ import SwiftUI
 /// intentionally omitted — noted fidelity gap from the implementation
 /// plan. Each illustration draws into a 320×180 reference space, scaled
 /// by the parent's `.aspectRatio(_:contentMode:)` modifier.
+///
+/// Text-free rule (June 2026): the artwork contains no drawn strings —
+/// the app ships in 21 locales and baked-in English read as unfinished
+/// in ar/he/ja/…. Former labels are abstract marks (faux-script bars,
+/// dash·diamond·dash, star-on-the-day, check ring), matching the updated
+/// design-system source.
 struct WarmIllustration: View {
     let category: WarmCategory
 
@@ -71,6 +77,18 @@ private func drawFamily(in ctx: inout GraphicsContext) {
                    with: .color(hex(fig.color)))
     }
 
+    // dash · diamond · dash keepsake mark under the photo
+    var caption = Path()
+    caption.move(to: CGPoint(x: 52, y: 99)); caption.addLine(to: CGPoint(x: 66, y: 99))
+    caption.move(to: CGPoint(x: 84, y: 99)); caption.addLine(to: CGPoint(x: 98, y: 99))
+    frame.stroke(caption, with: .color(hex("#6E3030").opacity(0.8)),
+                 style: StrokeStyle(lineWidth: 1.2, lineCap: .round))
+    var diamond = frame
+    diamond.translateBy(x: 75, y: 99)
+    diamond.rotate(by: .degrees(45))
+    diamond.fill(RoundedRectangle(cornerRadius: 1).path(in: CGRect(x: -3, y: -3, width: 6, height: 6)),
+                 with: .color(hex("#6E3030").opacity(0.8)))
+
     // heart pin (top right)
     var pin = ctx
     pin.translateBy(x: 220, y: 40)
@@ -111,94 +129,118 @@ private func drawFriends(in ctx: inout GraphicsContext) {
     ctx.fill(Rectangle().path(in: CGRect(x: 0, y: 0, width: 320, height: 180)),
              with: .color(hex("#DDE7F0")))
 
-    // postcard
+    // postcard — faux-script bars, no literal copy
     var pc = ctx
-    pc.translateBy(x: 34, y: 28)
+    pc.translateBy(x: 26, y: 30)
     pc.rotate(by: .degrees(-7))
-    pc.fill(RoundedRectangle(cornerRadius: 5).path(in: CGRect(x: 0, y: 0, width: 140, height: 96)),
+    pc.fill(RoundedRectangle(cornerRadius: 5).path(in: CGRect(x: 0, y: 0, width: 124, height: 86)),
             with: .color(hex("#F4EAD7")))
     // dividing line
     var dl = Path()
-    dl.move(to: CGPoint(x: 70, y: 14))
-    dl.addLine(to: CGPoint(x: 70, y: 82))
+    dl.move(to: CGPoint(x: 62, y: 12))
+    dl.addLine(to: CGPoint(x: 62, y: 74))
     pc.stroke(dl, with: .color(hex("#3F5C7A").opacity(0.45)), lineWidth: 0.8)
     // text lines (faux script)
-    let postcardLines: [CGFloat] = [56, 60, 68, 60]
-    for (i, w) in postcardLines.enumerated() {
-        let y: CGFloat = 28 + CGFloat(i) * 14
-        pc.fill(RoundedRectangle(cornerRadius: 1).path(in: CGRect(x: 14, y: y, width: w, height: i == 0 ? 5 : 3)),
-                with: .color(hex(i == 0 ? "#3F5C7A" : "#6B5F4F").opacity(i == 0 ? 0.85 : 0.55)))
+    pc.fill(RoundedRectangle(cornerRadius: 1).path(in: CGRect(x: 12, y: 22, width: 44, height: 5)),
+            with: .color(hex("#3F5C7A").opacity(0.85)))
+    for (y, w) in [(38.0, 46.0), (50.0, 50.0), (62.0, 44.0)] {
+        pc.fill(RoundedRectangle(cornerRadius: 1).path(in: CGRect(x: 12, y: y, width: w, height: 3)),
+                with: .color(hex("#6B5F4F").opacity(0.55)))
     }
     // stamp
-    pc.fill(Rectangle().path(in: CGRect(x: 84, y: 14, width: 40, height: 26)),
+    pc.fill(Rectangle().path(in: CGRect(x: 74, y: 12, width: 36, height: 24)),
             with: .color(hex("#C7D4E0")))
-    pc.stroke(Rectangle().path(in: CGRect(x: 84, y: 14, width: 40, height: 26)),
+    pc.stroke(Rectangle().path(in: CGRect(x: 74, y: 12, width: 36, height: 24)),
               with: .color(hex("#3F5C7A")),
               style: StrokeStyle(lineWidth: 0.6, dash: [2, 1.4]))
-    pc.fill(Circle().path(in: CGRect(x: 98, y: 21, width: 12, height: 12)),
+    pc.fill(Circle().path(in: CGRect(x: 86.5, y: 18.5, width: 11, height: 11)),
             with: .color(hex("#3F5C7A")))
 
-    // mug A
-    var mugA = ctx
-    mugA.translateBy(x: 176, y: 50)
-    var mAPath = Path()
-    mAPath.move(to: .zero)
-    mAPath.addLine(to: CGPoint(x: 36, y: 0))
-    mAPath.addLine(to: CGPoint(x: 36, y: 34))
-    mAPath.addQuadCurve(to: CGPoint(x: 28, y: 42), control: CGPoint(x: 36, y: 42))
-    mAPath.addLine(to: CGPoint(x: 8, y: 42))
-    mAPath.addQuadCurve(to: CGPoint(x: 0, y: 34), control: CGPoint(x: 0, y: 42))
-    mAPath.closeSubpath()
-    mugA.fill(mAPath, with: .color(hex("#F4EAD7")))
-    // handle
-    var mAHandle = Path()
-    mAHandle.move(to: CGPoint(x: 36, y: 8))
-    mAHandle.addQuadCurve(to: CGPoint(x: 36, y: 26), control: CGPoint(x: 48, y: 17))
-    mugA.stroke(mAHandle, with: .color(hex("#F4EAD7")), lineWidth: 4)
-    // coffee top
-    mugA.fill(Ellipse().path(in: CGRect(x: 0, y: -1, width: 36, height: 6)),
-              with: .color(hex("#A2693C")))
+    // two friends catching up over coffee (faceless; cream heads,
+    // identity carried by category blues — never skin tone)
+    ctx.fill(Circle().path(in: CGRect(x: 183, y: 65, width: 26, height: 26)),
+             with: .color(hex("#F4D9CC")))
+    var bodyL = Path()
+    bodyL.move(to: CGPoint(x: 178, y: 124))
+    bodyL.addLine(to: CGPoint(x: 178, y: 106))
+    bodyL.addCurve(to: CGPoint(x: 214, y: 106),
+                   control1: CGPoint(x: 178, y: 87),
+                   control2: CGPoint(x: 214, y: 87))
+    bodyL.addLine(to: CGPoint(x: 214, y: 124))
+    bodyL.closeSubpath()
+    ctx.fill(bodyL, with: .color(hex("#3F5C7A")))
 
-    // mug B
-    var mugB = ctx
-    mugB.translateBy(x: 232, y: 58)
-    var mBPath = Path()
-    mBPath.move(to: .zero)
-    mBPath.addLine(to: CGPoint(x: 30, y: 0))
-    mBPath.addLine(to: CGPoint(x: 30, y: 28))
-    mBPath.addQuadCurve(to: CGPoint(x: 23, y: 35), control: CGPoint(x: 30, y: 35))
-    mBPath.addLine(to: CGPoint(x: 7, y: 35))
-    mBPath.addQuadCurve(to: CGPoint(x: 0, y: 28), control: CGPoint(x: 0, y: 35))
-    mBPath.closeSubpath()
-    mugB.fill(mBPath, with: .color(hex("#3F5C7A")))
-    var mBHandle = Path()
-    mBHandle.move(to: CGPoint(x: 30, y: 6))
-    mBHandle.addQuadCurve(to: CGPoint(x: 30, y: 22), control: CGPoint(x: 40, y: 14))
-    mugB.stroke(mBHandle, with: .color(hex("#3F5C7A")), lineWidth: 3.5)
-    mugB.fill(Ellipse().path(in: CGRect(x: 0, y: -1, width: 30, height: 5)),
-              with: .color(hex("#9D7A52")))
+    ctx.fill(Circle().path(in: CGRect(x: 254, y: 70, width: 24, height: 24)),
+             with: .color(hex("#F4D9CC")))
+    var bodyR = Path()
+    bodyR.move(to: CGPoint(x: 250, y: 124))
+    bodyR.addLine(to: CGPoint(x: 250, y: 109))
+    bodyR.addCurve(to: CGPoint(x: 282, y: 109),
+                   control1: CGPoint(x: 250, y: 92),
+                   control2: CGPoint(x: 282, y: 92))
+    bodyR.addLine(to: CGPoint(x: 282, y: 124))
+    bodyR.closeSubpath()
+    ctx.fill(bodyR, with: .color(hex("#7E97B8")))
 
-    // speech bubble
+    // table
+    ctx.fill(RoundedRectangle(cornerRadius: 3.5).path(in: CGRect(x: 170, y: 122, width: 124, height: 7)),
+             with: .color(hex("#F4EAD7")))
+
+    // mugs on the table (one per friend)
+    func mugPath() -> Path {
+        var p = Path()
+        p.move(to: .zero)
+        p.addLine(to: CGPoint(x: 14, y: 0))
+        p.addLine(to: CGPoint(x: 14, y: 12))
+        p.addQuadCurve(to: CGPoint(x: 10, y: 16), control: CGPoint(x: 14, y: 16))
+        p.addLine(to: CGPoint(x: 4, y: 16))
+        p.addQuadCurve(to: CGPoint(x: 0, y: 12), control: CGPoint(x: 0, y: 16))
+        p.closeSubpath()
+        return p
+    }
+    func handlePath() -> Path {
+        var p = Path()
+        p.move(to: CGPoint(x: 14, y: 3))
+        p.addQuadCurve(to: CGPoint(x: 14, y: 11), control: CGPoint(x: 19, y: 7))
+        return p
+    }
+    var mugL = ctx
+    mugL.translateBy(x: 212, y: 106)
+    mugL.fill(mugPath(), with: .color(hex("#FAF4E2")))
+    mugL.stroke(handlePath(), with: .color(hex("#FAF4E2")), lineWidth: 2.2)
+    var steam = Path()
+    steam.move(to: CGPoint(x: 4, y: -4))
+    steam.addQuadCurve(to: CGPoint(x: 4, y: -10), control: CGPoint(x: 6, y: -7))
+    steam.move(to: CGPoint(x: 10, y: -4))
+    steam.addQuadCurve(to: CGPoint(x: 10, y: -10), control: CGPoint(x: 8, y: -7))
+    mugL.stroke(steam, with: .color(hex("#6B5F4F").opacity(0.5)),
+                style: StrokeStyle(lineWidth: 1, lineCap: .round))
+    var mugR = ctx
+    mugR.translateBy(x: 240, y: 106)
+    mugR.scaleBy(x: -1, y: 1)
+    mugR.fill(mugPath(), with: .color(hex("#A2693C")))
+    mugR.stroke(handlePath(), with: .color(hex("#A2693C")), lineWidth: 2.2)
+
+    // speech bubble between them
     var sb = ctx
-    sb.translateBy(x: 212, y: 12)
-    sb.rotate(by: .degrees(8))
+    sb.translateBy(x: 204, y: 18)
+    sb.rotate(by: .degrees(4))
     var bubble = Path()
     bubble.move(to: .zero)
-    bubble.addLine(to: CGPoint(x: 66, y: 0))
-    bubble.addQuadCurve(to: CGPoint(x: 74, y: 8), control: CGPoint(x: 74, y: 0))
-    bubble.addLine(to: CGPoint(x: 74, y: 28))
-    bubble.addQuadCurve(to: CGPoint(x: 66, y: 36), control: CGPoint(x: 74, y: 36))
-    bubble.addLine(to: CGPoint(x: 16, y: 36))
-    bubble.addLine(to: CGPoint(x: 6, y: 44))
-    bubble.addLine(to: CGPoint(x: 6, y: 36))
-    bubble.addQuadCurve(to: CGPoint(x: 0, y: 28), control: CGPoint(x: 0, y: 36))
+    bubble.addLine(to: CGPoint(x: 62, y: 0))
+    bubble.addQuadCurve(to: CGPoint(x: 70, y: 8), control: CGPoint(x: 70, y: 0))
+    bubble.addLine(to: CGPoint(x: 70, y: 26))
+    bubble.addQuadCurve(to: CGPoint(x: 62, y: 34), control: CGPoint(x: 70, y: 34))
+    bubble.addLine(to: CGPoint(x: 18, y: 34))
+    bubble.addLine(to: CGPoint(x: 8, y: 42))
+    bubble.addLine(to: CGPoint(x: 8, y: 34))
+    bubble.addQuadCurve(to: CGPoint(x: 0, y: 26), control: CGPoint(x: 0, y: 34))
     bubble.addLine(to: CGPoint(x: 0, y: 8))
-    bubble.addQuadCurve(to: CGPoint(x: 6, y: 0), control: CGPoint(x: 0, y: 0))
+    bubble.addQuadCurve(to: CGPoint(x: 8, y: 0), control: CGPoint(x: 0, y: 0))
     bubble.closeSubpath()
     sb.fill(bubble, with: .color(hex("#FAF4E2")))
-    // 3 dots
-    for x in [18.0, 32.0, 46.0] {
-        sb.fill(Circle().path(in: CGRect(x: x - 2.2, y: 15.8, width: 4.4, height: 4.4)),
+    for x in [20.0, 33.0, 46.0] {
+        sb.fill(Circle().path(in: CGRect(x: x - 2.2, y: 14.8, width: 4.4, height: 4.4)),
                 with: .color(hex("#3F5C7A")))
     }
 }
@@ -251,7 +293,7 @@ private func drawWork(in ctx: inout GraphicsContext) {
         letter.stroke(line, with: .color(hex("#A8B19A")), lineWidth: 0.8)
     }
 
-    // calendar tile (Q3)
+    // check-in tile — check ring instead of EN-only "Q3 / REMINDER"
     var cal = ctx
     cal.translateBy(x: 216, y: 32)
     cal.rotate(by: .degrees(4))
@@ -259,13 +301,18 @@ private func drawWork(in ctx: inout GraphicsContext) {
              with: .color(hex("#FAF4E2")))
     cal.fill(RoundedRectangle(cornerRadius: 6).path(in: CGRect(x: 0, y: 0, width: 74, height: 22)),
              with: .color(hex("#4F6B47")))
-    // "Q3" text — use Text resolution
-    let q3 = Text("Q3").font(.system(size: 28, weight: .medium, design: .serif))
-        .foregroundColor(hex("#4F6B47"))
-    cal.draw(q3, at: CGPoint(x: 37, y: 50), anchor: .center)
-    let cap = Text("REMINDER").font(.system(size: 6, weight: .semibold))
-        .foregroundColor(hex("#6B5F4F"))
-    cal.draw(cap, at: CGPoint(x: 37, y: 70), anchor: .center)
+    cal.fill(RoundedRectangle(cornerRadius: 1.5).path(in: CGRect(x: 22, y: 9, width: 30, height: 5)),
+             with: .color(hex("#FAF4E2").opacity(0.9)))
+    cal.stroke(Circle().path(in: CGRect(x: 24, y: 35, width: 26, height: 26)),
+               with: .color(hex("#4F6B47")), lineWidth: 2.4)
+    var check = Path()
+    check.move(to: CGPoint(x: 31, y: 48))
+    check.addLine(to: CGPoint(x: 35, y: 52))
+    check.addLine(to: CGPoint(x: 43, y: 43))
+    cal.stroke(check, with: .color(hex("#4F6B47")),
+               style: StrokeStyle(lineWidth: 2.4, lineCap: .round, lineJoin: .round))
+    cal.fill(RoundedRectangle(cornerRadius: 1.5).path(in: CGRect(x: 22, y: 66, width: 30, height: 3)),
+             with: .color(hex("#6B5F4F").opacity(0.55)))
 
     // pencil
     var pencil = ctx
@@ -298,7 +345,7 @@ private func drawMilestones(in ctx: inout GraphicsContext) {
     ctx.fill(Rectangle().path(in: CGRect(x: 0, y: 0, width: 320, height: 180)),
              with: .color(hex("#EDDEB6")))
 
-    // big calendar
+    // big calendar — abstract header marks + star on the day, no numerals
     var cal = ctx
     cal.translateBy(x: 28, y: 24)
     cal.rotate(by: .degrees(-4))
@@ -306,10 +353,12 @@ private func drawMilestones(in ctx: inout GraphicsContext) {
              with: .color(hex("#FAF4E2")))
     cal.fill(RoundedRectangle(cornerRadius: 6).path(in: CGRect(x: 0, y: 0, width: 160, height: 24)),
              with: .color(hex("#A7791C")))
-    let header = Text("AUGUST · 2026").font(.system(size: 7, weight: .bold))
-        .tracking(7 * 0.18)
-        .foregroundColor(hex("#FAF4E2"))
-    cal.draw(header, at: CGPoint(x: 80, y: 12), anchor: .center)
+    cal.fill(RoundedRectangle(cornerRadius: 2).path(in: CGRect(x: 48, y: 9, width: 42, height: 6)),
+             with: .color(hex("#FAF4E2").opacity(0.9)))
+    cal.fill(Circle().path(in: CGRect(x: 97.4, y: 9.4, width: 5.2, height: 5.2)),
+             with: .color(hex("#FAF4E2").opacity(0.9)))
+    cal.fill(RoundedRectangle(cornerRadius: 2).path(in: CGRect(x: 108, y: 9, width: 18, height: 6)),
+             with: .color(hex("#FAF4E2").opacity(0.9)))
     // grid: 4 rows × 7 cols, highlight the (1,3) cell
     for r in 0..<4 {
         for c in 0..<7 {
@@ -320,10 +369,20 @@ private func drawMilestones(in ctx: inout GraphicsContext) {
                      with: .color(hex(isHi ? "#A7791C" : "#F2E7C7")))
         }
     }
-    // big "22" on the highlighted cell
-    let hi = Text("22").font(.system(size: 14, weight: .semibold, design: .serif))
-        .foregroundColor(hex("#FAF4E2"))
-    cal.draw(hi, at: CGPoint(x: 86, y: 65), anchor: .center)
+    // star on the big day
+    var star = Path()
+    star.move(to: CGPoint(x: 80.5, y: 58))
+    for (dx, dy) in [(2.2, 4.4), (4.9, 0.7), (-3.5, 3.5), (0.8, 4.9),
+                     (-4.4, -2.3), (-4.4, 2.3), (0.8, -4.9), (-3.5, -3.5), (4.9, -0.7)] {
+        star.addLine(to: CGPoint(x: star.currentPoint!.x + dx, y: star.currentPoint!.y + dy))
+    }
+    star.closeSubpath()
+    cal.fill(star, with: .color(hex("#FAF4E2")))
+    // dash marks on a few busy days
+    for (x, y) in [(31.0, 40.0), (117.0, 62.0), (52.5, 84.0), (9.5, 106.0)] {
+        cal.fill(RoundedRectangle(cornerRadius: 1).path(in: CGRect(x: x, y: y, width: 13, height: 2.5)),
+                 with: .color(hex("#6B5F4F").opacity(0.5)))
+    }
 
     // candle
     var candle = ctx
@@ -361,6 +420,24 @@ private func drawMilestones(in ctx: inout GraphicsContext) {
     bow.move(to: CGPoint(x: 34, y: 0))
     bow.addQuadCurve(to: CGPoint(x: 22, y: -14), control: CGPoint(x: 46, y: -14))
     gift.stroke(bow, with: .color(hex("#F5C842")), lineWidth: 2.5)
+
+    // confetti
+    let confettiRects: [(x: CGFloat, y: CGFloat, s: CGFloat, deg: Double, color: String, alpha: Double)] = [
+        (225, 27, 6, 20, "#9C3F3C", 0.8),
+        (264, 40, 5, -15, "#4F6B47", 0.7),
+        (290, 28, 5, 30, "#3F5C7A", 0.6),
+    ]
+    for cf in confettiRects {
+        var piece = ctx
+        piece.translateBy(x: cf.x, y: cf.y)
+        piece.rotate(by: .degrees(cf.deg))
+        piece.fill(RoundedRectangle(cornerRadius: 1).path(in: CGRect(x: -cf.s / 2, y: -cf.s / 2, width: cf.s, height: cf.s)),
+                   with: .color(hex(cf.color).opacity(cf.alpha)))
+    }
+    ctx.fill(Circle().path(in: CGRect(x: 243, y: 17, width: 6, height: 6)),
+             with: .color(hex("#F5C842").opacity(0.9)))
+    ctx.fill(Circle().path(in: CGRect(x: 293.4, y: 57.4, width: 5.2, height: 5.2)),
+             with: .color(hex("#B26342").opacity(0.8)))
 }
 
 // MARK: - Community

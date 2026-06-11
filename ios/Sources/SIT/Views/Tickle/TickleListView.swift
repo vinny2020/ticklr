@@ -95,7 +95,7 @@ struct TickleListView: View {
                 .presentationDragIndicator(.visible)
             }
             .sheet(item: $composeContact) { contact in
-                ComposeView(onCancel: { composeContact = nil }, initialContact: contact)
+                ComposeView(onClose: { composeContact = nil }, initialContact: contact)
             }
         }
     }
@@ -125,7 +125,7 @@ struct TickleListView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { addToolbarItem }
             .sheet(item: $composeContact) { contact in
-                ComposeView(onCancel: { composeContact = nil }, initialContact: contact)
+                ComposeView(onClose: { composeContact = nil }, initialContact: contact)
             }
         } detail: {
             detailPane

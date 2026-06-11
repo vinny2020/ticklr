@@ -148,12 +148,10 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
                             navController.navigate(Screen.TickleEdit.createRouteWithContact(id))
                         },
                         onCompose = { id ->
+                            // Keep the current screen on the back stack so
+                            // finishing (or backing out of) Compose returns here.
                             navController.navigate("compose?contactId=$id") {
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
-                                }
                                 launchSingleTop = true
-                                restoreState = false
                             }
                         },
                     )
@@ -188,11 +186,7 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
                     onEdit = { navController.navigate("edit_contact/$contactId") },
                     onCompose = { id ->
                         navController.navigate("compose?contactId=$id") {
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
-                            }
                             launchSingleTop = true
-                            restoreState = false
                         }
                     }
                 )
@@ -246,11 +240,7 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
                     TicklePane(
                         onCompose = { id ->
                             navController.navigate("compose?contactId=$id") {
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
-                                }
                                 launchSingleTop = true
-                                restoreState = false
                             }
                         },
                     )
@@ -260,11 +250,7 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
                         onEditTickle = { id -> navController.navigate(Screen.TickleEdit.createRoute(id)) },
                         onCompose = { id ->
                             navController.navigate("compose?contactId=$id") {
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
-                                }
                                 launchSingleTop = true
-                                restoreState = false
                             }
                         }
                     )
@@ -300,13 +286,19 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
                 val contactId = backStackEntry.arguments?.getLong("contactId")?.takeIf { it != -1L }
                 ComposeScreen(
                     initialContactId = contactId,
-                    onNavigateToNetwork = {
-                        navController.navigate(Screen.Tickle.route) {
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
+                    onDone = {
+                        // Flow back to wherever Compose was opened from
+                        // (Contact Detail, Tickle list, or the previous tab).
+                        // Fallback covers the cold-start deep-link case where
+                        // nothing is underneath on the stack.
+                        if (!navController.popBackStack()) {
+                            navController.navigate(Screen.Tickle.route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
                             }
-                            launchSingleTop = true
-                            restoreState = true
                         }
                     }
                 )

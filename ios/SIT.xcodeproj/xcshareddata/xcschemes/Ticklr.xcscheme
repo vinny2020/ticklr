@@ -50,6 +50,17 @@
                ReferencedContainer = "container:SIT.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4E85D7CEF12DEA4864381C10"
+               BuildableName = "TicklrUITests.xctest"
+               BlueprintName = "TicklrUITests"
+               ReferencedContainer = "container:SIT.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <CommandLineArguments>
       </CommandLineArguments>

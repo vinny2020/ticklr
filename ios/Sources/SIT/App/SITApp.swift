@@ -24,6 +24,15 @@ struct SITApp: App {
     init() {
         MessageTemplateSeed.seedIfNeeded(container: modelContainer)
         CanonicalGroupSeed.seedIfNeeded(container: modelContainer)
+        #if DEBUG
+        // Automation aid: `-debugSeedDemoData YES` runs the same idempotent
+        // demo seed as Settings → Debug → Load Demo Data, so simulator runs
+        // can start with data without navigating the UI. Debug builds only.
+        if UserDefaults.standard.bool(forKey: "debugSeedDemoData") {
+            let context = ModelContext(modelContainer)
+            _ = try? SeedDataService.seedDemoData(context: context)
+        }
+        #endif
     }
 
     var body: some Scene {

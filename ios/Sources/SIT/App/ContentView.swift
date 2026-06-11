@@ -20,7 +20,7 @@ struct ContentView: View {
                 TickleListView()
                     .tabItem { Label(String(localized: "tab.tickle"), systemImage: "bell.badge.fill") }
                     .tag(AppTab.tickle)
-                ComposeView(onCancel: { selectedTab = .tickle })
+                ComposeView(onClose: { selectedTab = .tickle })
                     .tabItem { Label(String(localized: "tab.compose"), systemImage: "square.and.pencil") }
                     .tag(AppTab.compose)
                 SettingsView()

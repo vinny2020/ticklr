@@ -1,8 +1,11 @@
 import SwiftUI
 import SwiftData
+import MessageUI
 
 struct ComposeView: View {
-    var onCancel: (() -> Void)? = nil
+    /// Called when the user is finished here — either they cancelled, or the
+    /// message was sent. The presenter routes back to the previous screen.
+    var onClose: (() -> Void)? = nil
     var initialContact: Contact? = nil
 
     @Environment(\.modelContext) private var modelContext
@@ -17,6 +20,9 @@ struct ComposeView: View {
     @State private var searchText = ""
     @State private var showingComposer = false
     @State private var showingCannotSendAlert = false
+    @State private var showingSendFailedAlert = false
+    /// Outcome reported by the Messages composer; consumed in its onDismiss.
+    @State private var composeResult: MessageComposeResult?
     @FocusState private var searchFocused: Bool
 
     private let warmth: Warmth = .subtle
@@ -264,14 +270,16 @@ struct ComposeView: View {
                     // is already empty.
                     Button(String(localized: "common.cancel")) {
                         clearCompose()
-                        onCancel?()
+                        onClose?()
                     }
                     .foregroundStyle(palette.ink2)
                 }
             }
-            .sheet(isPresented: $showingComposer, onDismiss: clearCompose) {
+            .sheet(isPresented: $showingComposer, onDismiss: handleComposerDismiss) {
                 if let phone = recipientPhone {
-                    MessageComposerView(recipients: [phone], body: messageBody)
+                    MessageComposerView(recipients: [phone], body: messageBody) { result in
+                        composeResult = result
+                    }
                 }
             }
             .alert(String(localized: "compose.alert.cannotSend.title"), isPresented: $showingCannotSendAlert) {
@@ -279,10 +287,35 @@ struct ComposeView: View {
             } message: {
                 Text(String(localized: "compose.alert.cannotSend.message"))
             }
+            .alert(String(localized: "compose.alert.sendFailed.title",
+                          defaultValue: "Message Not Sent"), isPresented: $showingSendFailedAlert) {
+                Button(String(localized: "common.ok"), role: .cancel) {}
+            } message: {
+                Text(String(localized: "compose.alert.sendFailed.message",
+                            defaultValue: "Something went wrong. Your message is still here — try sending it again."))
+            }
         }
     }
 
     // MARK: — Helpers
+
+    /// Routes by composer outcome: sent → stamp the contact, reset, and flow
+    /// back to the previous screen; cancelled/failed → keep the draft so the
+    /// user can tweak and retry.
+    private func handleComposerDismiss() {
+        defer { composeResult = nil }
+        switch composeResult {
+        case .sent:
+            selectedContact?.lastContactedAt = .now
+            try? modelContext.save()
+            clearCompose()
+            onClose?()
+        case .failed:
+            showingSendFailedAlert = true
+        default:
+            break
+        }
+    }
 
     private func clearCompose() {
         selectedContact = nil
