@@ -14,6 +14,7 @@
 		0C03E3E93AEAAEAB358CF5C3 /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACA061EE9A732D89FD3E0F3 /* GroupListView.swift */; };
 		0C41C7D26198E0DC2C958072 /* AddContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77347A9F53BFBE3E1672671 /* AddContactView.swift */; };
 		0EA9C2254CEDC3F5A8E9033B /* OFL-NotoNaskhArabic.txt in Resources */ = {isa = PBXBuildFile; fileRef = D0E4D04216FC720E233AA609 /* OFL-NotoNaskhArabic.txt */; };
+		121B201A777B373F894B4D35 /* GroupsScreenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C85FA1377676F93CC23F9 /* GroupsScreenUITests.swift */; };
 		12FCF35AA80528F2EF325924 /* ContactRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9125614ECAB9E4D8E5428E51 /* ContactRowView.swift */; };
 		1423BBA388EC43ABC386281F /* OFL-NotoSerifDevanagari.txt in Resources */ = {isa = PBXBuildFile; fileRef = 89A8592D7BE1A77F3A839568 /* OFL-NotoSerifDevanagari.txt */; };
 		1538B4A01D22876B74D30A26 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 69286CB7AAC699E4A7076063 /* PrivacyInfo.xcprivacy */; };
@@ -135,6 +136,7 @@
 		537A021C4C432ABFB13A3219 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		53C7E0EBE485C198DCF9669E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		5CA413473ADA828136F21753 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		5D5C85FA1377676F93CC23F9 /* GroupsScreenUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsScreenUITests.swift; sourceTree = "<group>"; };
 		63EBB61C7877871E721045C7 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		69286CB7AAC699E4A7076063 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		6986C02DC105E08528D7DA6C /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -383,6 +385,7 @@
 			isa = PBXGroup;
 			children = (
 				E8175776A2DEBC88B756C24E /* ComposeFlowUITests.swift */,
+				5D5C85FA1377676F93CC23F9 /* GroupsScreenUITests.swift */,
 			);
 			name = SITUITests;
 			path = Tests/SITUITests;
@@ -660,6 +663,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D7662319C587D3965757B1B7 /* ComposeFlowUITests.swift in Sources */,
+				121B201A777B373F894B4D35 /* GroupsScreenUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

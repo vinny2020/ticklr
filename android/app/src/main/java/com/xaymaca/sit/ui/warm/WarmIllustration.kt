@@ -10,10 +10,13 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.asAndroidPath
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.rotate
+import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.drawscope.translate
 import com.xaymaca.sit.ui.theme.WarmCategory
 
@@ -78,6 +81,13 @@ private fun DrawScope.drawFamily(s: Float) {
             circle(Color(0xFFF4D9CC), f.cx, f.cy, f.headR, s)
             rect(f.color, f.bodyX, f.bodyY, f.bodyW, f.bodyH, s, radius = 4f)
         }
+        // dash · diamond · dash keepsake mark under the photo
+        val markColor = Color(0xFF6E3030).copy(alpha = 0.8f)
+        strokeLine(markColor, 1.2f, 52f, 99f, 66f, 99f, s)
+        strokeLine(markColor, 1.2f, 84f, 99f, 98f, 99f, s)
+        pushRotated(75f, 99f, 45f, s) {
+            rect(markColor, -3f, -3f, 6f, 6f, s, radius = 1f)
+        }
     }
     // heart pin
     pushRotated(220f, 40f, 15f, s) {
@@ -98,75 +108,88 @@ private fun DrawScope.drawFamily(s: Float) {
 
 private fun DrawScope.drawFriends(s: Float) {
     rect(Color(0xFFDDE7F0), 0f, 0f, 320f, 180f, s)
-    // postcard
-    pushRotated(34f, 28f, -7f, s) {
-        rect(Color(0xFFF4EAD7), 0f, 0f, 140f, 96f, s, radius = 5f)
-        strokeLine(Color(0xFF3F5C7A).copy(alpha = 0.45f), 0.8f, 70f, 14f, 70f, 82f, s)
-        val widths = listOf(56f, 60f, 68f, 60f)
-        for ((i, w) in widths.withIndex()) {
-            val y = 28f + i * 14f
-            val color = if (i == 0) Color(0xFF3F5C7A).copy(alpha = 0.85f) else Color(0xFF6B5F4F).copy(alpha = 0.55f)
-            val h = if (i == 0) 5f else 3f
-            rect(color, 14f, y, w, h, s, radius = 1f)
+    // postcard — faux-script bars, no literal copy
+    pushRotated(26f, 30f, -7f, s) {
+        rect(Color(0xFFF4EAD7), 0f, 0f, 124f, 86f, s, radius = 5f)
+        strokeLine(Color(0xFF3F5C7A).copy(alpha = 0.45f), 0.8f, 62f, 12f, 62f, 74f, s)
+        rect(Color(0xFF3F5C7A).copy(alpha = 0.85f), 12f, 22f, 44f, 5f, s, radius = 1f)
+        for ((y, w) in listOf(38f to 46f, 50f to 50f, 62f to 44f)) {
+            rect(Color(0xFF6B5F4F).copy(alpha = 0.55f), 12f, y, w, 3f, s, radius = 1f)
         }
         // stamp
-        rect(Color(0xFFC7D4E0), 84f, 14f, 40f, 26f, s)
-        strokeRectDashed(Color(0xFF3F5C7A), 0.6f, 84f, 14f, 40f, 26f, s)
-        circle(Color(0xFF3F5C7A), 104f, 27f, 6f, s)
+        rect(Color(0xFFC7D4E0), 74f, 12f, 36f, 24f, s)
+        strokeRectDashed(Color(0xFF3F5C7A), 0.6f, 74f, 12f, 36f, 24f, s)
+        circle(Color(0xFF3F5C7A), 92f, 24f, 5.5f, s)
     }
-    // mug A
-    pushTranslated(176f, 50f, s) {
-        path(Color(0xFFF4EAD7), s) {
-            moveTo(0f, 0f)
-            lineTo(36f, 0f)
-            lineTo(36f, 34f)
-            quadraticBezierTo(36f, 42f, 28f, 42f)
-            lineTo(8f, 42f)
-            quadraticBezierTo(0f, 42f, 0f, 34f)
-            close()
-        }
-        strokePath(Color(0xFFF4EAD7), 4f, s) {
-            moveTo(36f, 8f)
-            quadraticBezierTo(48f, 17f, 36f, 26f)
-        }
-        ellipse(Color(0xFFA2693C), 0f, -1f, 36f, 6f, s)
+    // two friends catching up over coffee (faceless; cream heads,
+    // identity carried by category blues — never skin tone)
+    circle(Color(0xFFF4D9CC), 196f, 78f, 13f, s)
+    path(Color(0xFF3F5C7A), s) {
+        moveTo(178f, 124f)
+        lineTo(178f, 106f)
+        cubicTo(178f, 87f, 214f, 87f, 214f, 106f)
+        lineTo(214f, 124f)
+        close()
     }
-    // mug B
-    pushTranslated(232f, 58f, s) {
-        path(Color(0xFF3F5C7A), s) {
-            moveTo(0f, 0f)
-            lineTo(30f, 0f)
-            lineTo(30f, 28f)
-            quadraticBezierTo(30f, 35f, 23f, 35f)
-            lineTo(7f, 35f)
-            quadraticBezierTo(0f, 35f, 0f, 28f)
-            close()
-        }
-        strokePath(Color(0xFF3F5C7A), 3.5f, s) {
-            moveTo(30f, 6f)
-            quadraticBezierTo(40f, 14f, 30f, 22f)
-        }
-        ellipse(Color(0xFF9D7A52), 0f, -1f, 30f, 5f, s)
+    circle(Color(0xFFF4D9CC), 266f, 82f, 12f, s)
+    path(Color(0xFF7E97B8), s) {
+        moveTo(250f, 124f)
+        lineTo(250f, 109f)
+        cubicTo(250f, 92f, 282f, 92f, 282f, 109f)
+        lineTo(282f, 124f)
+        close()
     }
-    // speech bubble
-    pushRotated(212f, 12f, 8f, s) {
+    // table
+    rect(Color(0xFFF4EAD7), 170f, 122f, 124f, 7f, s, radius = 3.5f)
+    // mugs on the table (one per friend; right mug mirrored)
+    pushTranslated(212f, 106f, s) {
+        mug(Color(0xFFFAF4E2), s)
+        strokePath(Color(0xFF6B5F4F).copy(alpha = 0.5f), 1f, s) {
+            moveTo(4f, -4f); quadraticBezierTo(6f, -7f, 4f, -10f)
+            moveTo(10f, -4f); quadraticBezierTo(8f, -7f, 10f, -10f)
+        }
+    }
+    pushTranslated(240f, 106f, s) {
+        scale(scaleX = -1f, scaleY = 1f, pivot = Offset.Zero) {
+            mug(Color(0xFFA2693C), s)
+        }
+    }
+    // speech bubble between them
+    pushRotated(204f, 18f, 4f, s) {
         path(Color(0xFFFAF4E2), s) {
             moveTo(0f, 0f)
-            lineTo(66f, 0f)
-            quadraticBezierTo(74f, 0f, 74f, 8f)
-            lineTo(74f, 28f)
-            quadraticBezierTo(74f, 36f, 66f, 36f)
-            lineTo(16f, 36f)
-            lineTo(6f, 44f)
-            lineTo(6f, 36f)
-            quadraticBezierTo(0f, 36f, 0f, 28f)
+            lineTo(62f, 0f)
+            quadraticBezierTo(70f, 0f, 70f, 8f)
+            lineTo(70f, 26f)
+            quadraticBezierTo(70f, 34f, 62f, 34f)
+            lineTo(18f, 34f)
+            lineTo(8f, 42f)
+            lineTo(8f, 34f)
+            quadraticBezierTo(0f, 34f, 0f, 26f)
             lineTo(0f, 8f)
-            quadraticBezierTo(0f, 0f, 6f, 0f)
+            quadraticBezierTo(0f, 0f, 8f, 0f)
             close()
         }
-        for (x in listOf(18f, 32f, 46f)) {
-            circle(Color(0xFF3F5C7A), x, 18f, 2.2f, s)
+        for (x in listOf(20f, 33f, 46f)) {
+            circle(Color(0xFF3F5C7A), x, 17f, 2.2f, s)
         }
+    }
+}
+
+/** Small table mug drawn in local space; body + handle. */
+private fun DrawScope.mug(color: Color, s: Float) {
+    path(color, s) {
+        moveTo(0f, 0f)
+        lineTo(14f, 0f)
+        lineTo(14f, 12f)
+        quadraticBezierTo(14f, 16f, 10f, 16f)
+        lineTo(4f, 16f)
+        quadraticBezierTo(0f, 16f, 0f, 12f)
+        close()
+    }
+    strokePath(color, 2.2f, s) {
+        moveTo(14f, 3f)
+        quadraticBezierTo(19f, 7f, 14f, 11f)
     }
 }
 
@@ -195,12 +218,23 @@ private fun DrawScope.drawWork(s: Float) {
             strokeLine(Color(0xFFA8B19A), 0.8f, 14f, y, 14f + w, y, s)
         }
     }
-    // calendar tile
+    // check-in tile — check ring (text-free, matches iOS + design system)
     pushRotated(216f, 32f, 4f, s) {
         rect(Color(0xFFFAF4E2), 0f, 0f, 74f, 78f, s, radius = 6f)
         rect(Color(0xFF4F6B47), 0f, 0f, 74f, 22f, s, radius = 6f)
-        // Q3 text is the calendar's headline — Canvas .drawText isn't
-        // trivial in Compose; skipped for v1 (icon-only milestone tile).
+        rect(Color(0xFFFAF4E2).copy(alpha = 0.9f), 22f, 9f, 30f, 5f, s, radius = 1.5f)
+        drawCircle(
+            color = Color(0xFF4F6B47),
+            radius = 13f * s,
+            center = Offset(37f * s, 48f * s),
+            style = Stroke(width = 2.4f * s),
+        )
+        strokeRoundPath(Color(0xFF4F6B47), 2.4f, s) {
+            moveTo(31f, 48f)
+            lineTo(35f, 52f)
+            lineTo(43f, 43f)
+        }
+        rect(Color(0xFF6B5F4F).copy(alpha = 0.55f), 22f, 66f, 30f, 3f, s, radius = 1.5f)
     }
     // pencil
     pushRotated(50f, 138f, -4f, s) {
@@ -225,10 +259,14 @@ private fun DrawScope.drawWork(s: Float) {
 
 private fun DrawScope.drawMilestones(s: Float) {
     rect(Color(0xFFEDDEB6), 0f, 0f, 320f, 180f, s)
-    // big calendar
+    // big calendar — abstract header marks + star on the day, no numerals
     pushRotated(28f, 24f, -4f, s) {
         rect(Color(0xFFFAF4E2), 0f, 0f, 160f, 130f, s, radius = 6f)
         rect(Color(0xFFA7791C), 0f, 0f, 160f, 24f, s, radius = 6f)
+        val headerMark = Color(0xFFFAF4E2).copy(alpha = 0.9f)
+        rect(headerMark, 48f, 9f, 42f, 6f, s, radius = 2f)
+        circle(headerMark, 100f, 12f, 2.6f, s)
+        rect(headerMark, 108f, 9f, 18f, 6f, s, radius = 2f)
         // grid 4 rows × 7 cols, highlight (1,3)
         for (r in 0 until 4) {
             for (c in 0 until 7) {
@@ -246,7 +284,37 @@ private fun DrawScope.drawMilestones(s: Float) {
                 )
             }
         }
+        // star on the big day
+        path(Color(0xFFFAF4E2), s) {
+            moveTo(80.5f, 58f)
+            var px = 80.5f; var py = 58f
+            for ((dx, dy) in listOf(
+                2.2f to 4.4f, 4.9f to 0.7f, -3.5f to 3.5f, 0.8f to 4.9f,
+                -4.4f to -2.3f, -4.4f to 2.3f, 0.8f to -4.9f, -3.5f to -3.5f, 4.9f to -0.7f,
+            )) {
+                px += dx; py += dy
+                lineTo(px, py)
+            }
+            close()
+        }
+        // dash marks on a few busy days
+        for ((x, y) in listOf(31f to 40f, 117f to 62f, 52.5f to 84f, 9.5f to 106f)) {
+            rect(Color(0xFF6B5F4F).copy(alpha = 0.5f), x, y, 13f, 2.5f, s, radius = 1f)
+        }
     }
+    // confetti
+    for ((spec, color) in listOf(
+        Triple(225f, 27f, 20f) to Color(0xFF9C3F3C).copy(alpha = 0.8f),
+        Triple(264f, 40f, -15f) to Color(0xFF4F6B47).copy(alpha = 0.7f),
+        Triple(290f, 28f, 30f) to Color(0xFF3F5C7A).copy(alpha = 0.6f),
+    )) {
+        val (cx, cy, deg) = spec
+        pushRotated(cx, cy, deg, s) {
+            rect(color, -3f, -3f, 6f, 6f, s, radius = 1f)
+        }
+    }
+    circle(Color(0xFFF5C842).copy(alpha = 0.9f), 246f, 20f, 3f, s)
+    circle(Color(0xFFB26342).copy(alpha = 0.8f), 296f, 60f, 2.6f, s)
     // candle
     pushTranslated(208f, 40f, s) {
         rect(Color(0xFFB26342), 0f, 20f, 14f, 60f, s, radius = 2f)
@@ -387,6 +455,15 @@ private inline fun DrawScope.strokePath(color: Color, w: Float, s: Float, build:
 private inline fun DrawScope.strokeQuadPath(color: Color, w: Float, s: Float, build: Path.() -> Unit) {
     val p = Path().apply(build)
     drawPath(p.scaled(s), color = color, style = Stroke(width = w * s))
+}
+
+private inline fun DrawScope.strokeRoundPath(color: Color, w: Float, s: Float, build: Path.() -> Unit) {
+    val p = Path().apply(build)
+    drawPath(
+        p.scaled(s),
+        color = color,
+        style = Stroke(width = w * s, cap = StrokeCap.Round, join = StrokeJoin.Round),
+    )
 }
 
 private fun heartPath(p: Path, dx: Float, dy: Float) {
