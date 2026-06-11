@@ -100,6 +100,15 @@ class ComposeViewModel @Inject constructor(
         _selectedContact.value = null
     }
 
+    /** Stamp the contact as reached-out-to at the moment of SMS handoff. */
+    fun recordHandoff(contact: Contact) {
+        viewModelScope.launch {
+            contactRepository.updateContact(
+                contact.copy(lastContactedAt = System.currentTimeMillis())
+            )
+        }
+    }
+
     fun clearCompose() {
         _selectedContact.value = null
         messageBody.value = ""

@@ -262,6 +262,21 @@ fun ContactDetailScreen(
                     }
                 }
 
+                if (c.lastContactedAt > 0L) {
+                    item {
+                        DetailSection(title = stringResource(R.string.warm_contact_lastConnected), warmth = warmth) {
+                            Text(
+                                text = android.text.format.DateUtils.getRelativeTimeSpanString(
+                                    c.lastContactedAt,
+                                    System.currentTimeMillis(),
+                                    android.text.format.DateUtils.DAY_IN_MILLIS,
+                                ).toString(),
+                                style = TextStyle(fontSize = 14.sp, color = palette.ink2),
+                            )
+                        }
+                    }
+                }
+
                 if (c.notes.isNotBlank()) {
                     item {
                         DetailSection(title = stringResource(R.string.contact_detail_section_notes), warmth = warmth) {
