@@ -7,7 +7,9 @@ Ticklr
 Your personal network manager
 
 ## Promotional Text *(170 chars — editable any time without re-review)*
-No account. No cloud. No algorithm deciding who matters. Just you, your people, and a gentle nudge when it's time to reach out.
+A warmer Ticklr: a fresh icon, hand-crafted artwork in every language, and smoother texting — send a note and land right back where you were.
+
+> Evergreen fallback (reusable between releases): *No account. No cloud. No algorithm deciding who matters. Just you, your people, and a gentle nudge when it's time to reach out.*
 
 ## Description *(4000 chars max — first ~3 lines visible before "more")*
 
@@ -30,7 +32,11 @@ YOUR DATA STAYS ON YOUR PHONE
 Ticklr has no servers and collects no data. Your contacts, reminders, and messages are stored exclusively in your device's secure local database. We have no way to see your data — because we never receive it.
 
 ## Keywords *(100 chars max, comma-separated — no spaces after commas)*
-personal CRM,contact manager,relationship tracker,stay in touch,network,reminders,follow up,tickle,privacy
+crm,contacts,relationship,reminder,keep in touch,follow up,birthday,friends,family,address book
+
+> 95 chars. Words already indexed from name/subtitle (personal, network, manager, Ticklr) are
+> deliberately omitted; Apple combines fields, so "personal crm" etc. still match. Singulars only —
+> plural matching is automatic. Keywords only update with a version submission, unlike promo text.
 
 ## Category
 - Primary: Productivity
