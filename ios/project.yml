@@ -82,6 +82,21 @@ targets:
     scheme:
       testTargets:
         - TicklrTests
+        - TicklrUITests
+
+  TicklrUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - path: Tests/SITUITests
+    settings:
+      base:
+        PRODUCT_NAME: TicklrUITests
+        PRODUCT_BUNDLE_IDENTIFIER: com.xaymaca.sit.uitests
+        SWIFT_VERSION: "6.0"
+        GENERATE_INFOPLIST_FILE: YES
+    dependencies:
+      - target: Ticklr
 
   TicklrTests:
     type: bundle.unit-test
