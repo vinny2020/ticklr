@@ -58,10 +58,18 @@ struct TickleScheduler {
     @MainActor
     static func markComplete(reminder: TickleReminder, context: ModelContext) {
         reminder.lastCompletedDate = Date()
-        reminder.nextDueDate = nextDueDate(from: Date(), frequency: reminder.frequency, customDays: reminder.customIntervalDays)
-        reminder.status = .active
         cancelNotification(for: reminder)
-        scheduleNotification(for: reminder)
+        if reminder.frequency == .oneTime {
+            reminder.status = .completed
+        } else {
+            if reminder.frequency == .annual {
+                reminder.nextDueDate = nextAnnualDate(after: Date(), matchingMonthDayOf: reminder.nextDueDate)
+            } else {
+                reminder.nextDueDate = nextDueDate(from: Date(), frequency: reminder.frequency, customDays: reminder.customIntervalDays)
+            }
+            reminder.status = .active
+            scheduleNotification(for: reminder)
+        }
         try? context.save()
     }
 
@@ -77,14 +85,35 @@ struct TickleScheduler {
     static func nextDueDate(from date: Date, frequency: TickleFrequency, customDays: Int? = nil) -> Date {
         let cal = Calendar.current
         switch frequency {
+        case .oneTime:    return date
         case .daily:      return cal.date(byAdding: .day,   value: 1,              to: date) ?? date
         case .weekly:     return cal.date(byAdding: .day,   value: 7,              to: date) ?? date
         case .biweekly:   return cal.date(byAdding: .day,   value: 14,             to: date) ?? date
         case .monthly:    return cal.date(byAdding: .month, value: 1,              to: date) ?? date
         case .bimonthly:  return cal.date(byAdding: .month, value: 2,              to: date) ?? date
         case .quarterly:  return cal.date(byAdding: .month, value: 3,              to: date) ?? date
+        case .annual:     return cal.date(byAdding: .year,  value: 1,              to: date) ?? date
         case .custom:     return cal.date(byAdding: .day,   value: customDays ?? 30, to: date) ?? date
         }
+    }
+
+    static func nextAnnualDate(after date: Date, matchingMonthDayOf annualDate: Date) -> Date {
+        let cal = Calendar.current
+        let annualComponents = cal.dateComponents([.month, .day, .hour, .minute, .second], from: annualDate)
+        let currentYear = cal.component(.year, from: date)
+        var candidateComponents = DateComponents()
+        candidateComponents.year = currentYear
+        candidateComponents.month = annualComponents.month
+        candidateComponents.day = annualComponents.day
+        candidateComponents.hour = annualComponents.hour
+        candidateComponents.minute = annualComponents.minute
+        candidateComponents.second = annualComponents.second
+
+        if let candidate = cal.date(from: candidateComponents), candidate > date {
+            return candidate
+        }
+        candidateComponents.year = currentYear + 1
+        return cal.date(from: candidateComponents) ?? cal.date(byAdding: .year, value: 1, to: annualDate) ?? annualDate
     }
 
     /// Decides the initial `nextDueDate` for a tickle being created or edited.
@@ -97,6 +126,10 @@ struct TickleScheduler {
         customDays: Int? = nil,
         now: Date = Date()
     ) -> Date {
+        if frequency == .oneTime { return startDate }
+        if frequency == .annual {
+            return nextAnnualDate(after: now, matchingMonthDayOf: startDate)
+        }
         if startDate > now { return startDate }
         return nextDueDate(from: startDate, frequency: frequency, customDays: customDays)
     }

@@ -145,18 +145,33 @@ class TickleViewModel @Inject constructor(
 
     fun markComplete(reminder: TickleReminder) {
         viewModelScope.launch {
-            val nextDue = TickleScheduler.nextDueDate(
-                from = System.currentTimeMillis(),
-                frequency = reminder.frequency,
-                customDays = reminder.customIntervalDays
-            )
-            tickleRepository.updateReminder(
-                reminder.copy(
-                    lastCompletedDate = System.currentTimeMillis(),
-                    nextDueDate = nextDue,
-                    status = TickleStatus.ACTIVE.name
+            val now = System.currentTimeMillis()
+            if (reminder.frequency == TickleFrequency.ONE_TIME.name) {
+                TickleScheduler.cancelNotification(context, reminder.id)
+                tickleRepository.updateReminder(
+                    reminder.copy(
+                        lastCompletedDate = now,
+                        status = TickleStatus.COMPLETED.name
+                    )
                 )
-            )
+            } else {
+                val nextDue = if (reminder.frequency == TickleFrequency.ANNUAL.name) {
+                    TickleScheduler.nextAnnualDate(after = now, matchingMonthDayOf = reminder.nextDueDate)
+                } else {
+                    TickleScheduler.nextDueDate(
+                        from = now,
+                        frequency = reminder.frequency,
+                        customDays = reminder.customIntervalDays
+                    )
+                }
+                tickleRepository.updateReminder(
+                    reminder.copy(
+                        lastCompletedDate = now,
+                        nextDueDate = nextDue,
+                        status = TickleStatus.ACTIVE.name
+                    )
+                )
+            }
         }
     }
 

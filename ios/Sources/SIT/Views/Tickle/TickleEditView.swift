@@ -82,6 +82,25 @@ struct TickleEditView: View {
                     DatePicker(String(localized: "tickleEdit.row.starting"), selection: $startDate, displayedComponents: .date)
                 }
 
+                Section(String(localized: "tickleEdit.section.commonAnnualEvents", defaultValue: "Common annual events")) {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack {
+                            annualPresetButton(
+                                title: String(localized: "tickleEdit.preset.birthday", defaultValue: "Birthday"),
+                                note: String(localized: "tickleEdit.presetNote.birthday", defaultValue: "Birthday")
+                            )
+                            annualPresetButton(
+                                title: String(localized: "tickleEdit.preset.anniversary", defaultValue: "Anniversary"),
+                                note: String(localized: "tickleEdit.presetNote.anniversary", defaultValue: "Anniversary")
+                            )
+                            annualPresetButton(
+                                title: String(localized: "tickleEdit.preset.specialEvent", defaultValue: "Special event"),
+                                note: String(localized: "tickleEdit.presetNote.specialEvent", defaultValue: "Special event")
+                            )
+                        }
+                    }
+                }
+
                 Section(String(localized: "tickleEdit.section.note")) {
                     TextField(String(localized: "tickleEdit.placeholder.note"), text: $note)
                 }
@@ -175,6 +194,16 @@ struct TickleEditView: View {
             try? await Task.sleep(for: .seconds(2))
             close()
         }
+    }
+
+    private func annualPresetButton(title: String, note presetNote: String) -> some View {
+        Button {
+            frequency = .annual
+            note = presetNote
+        } label: {
+            Text(title)
+        }
+        .buttonStyle(.bordered)
     }
 }
 

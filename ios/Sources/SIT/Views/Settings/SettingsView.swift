@@ -95,7 +95,7 @@ struct SettingsView: View {
                 // MARK: — Tickle Defaults
                 Section {
                     Picker(String(localized: "settings.row.defaultFrequency"), selection: defaultFrequency) {
-                        ForEach(TickleFrequency.allCases.filter { $0 != .custom }, id: \.self) { freq in
+                        ForEach(TickleFrequency.allCases.filter { $0 != .custom && $0 != .oneTime }, id: \.self) { freq in
                             Text(freq.localizedName).tag(freq)
                         }
                     }

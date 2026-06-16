@@ -1,10 +1,13 @@
 package com.xaymaca.sit.ui.tickle
 
+import android.app.DatePickerDialog
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -31,6 +34,9 @@ import com.xaymaca.sit.ui.shared.displayNameResId
 import com.xaymaca.sit.ui.theme.WarmCategory
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.text.DateFormat
+import java.util.Calendar
+import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -95,6 +101,29 @@ fun TickleEditScreen(
             it.company.contains(contactSearch, ignoreCase = true)
         }
     }
+    val formattedStartDate = remember(startDate) {
+        DateFormat.getDateInstance(DateFormat.MEDIUM).format(Date(startDate))
+    }
+    fun showStartDatePicker() {
+        val selected = Calendar.getInstance().apply { timeInMillis = startDate }
+        DatePickerDialog(
+            context,
+            { _, year, month, dayOfMonth ->
+                startDate = Calendar.getInstance().apply {
+                    set(Calendar.YEAR, year)
+                    set(Calendar.MONTH, month)
+                    set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    set(Calendar.HOUR_OF_DAY, 9)
+                    set(Calendar.MINUTE, 0)
+                    set(Calendar.SECOND, 0)
+                    set(Calendar.MILLISECOND, 0)
+                }.timeInMillis
+            },
+            selected.get(Calendar.YEAR),
+            selected.get(Calendar.MONTH),
+            selected.get(Calendar.DAY_OF_MONTH)
+        ).show()
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         Scaffold(
@@ -127,7 +156,8 @@ fun TickleEditScreen(
                                         val nextDue = TickleScheduler.nextDueDateForSave(
                                             original = original,
                                             frequency = selectedFrequency.name,
-                                            customDays = newCustomDays
+                                            customDays = newCustomDays,
+                                            startDate = startDate
                                         )
                                         val reminder = TickleReminder(
                                             id = tickleId ?: 0L,
@@ -300,6 +330,25 @@ fun TickleEditScreen(
                             }
                         }
 
+                        if (selectedFrequency == TickleFrequency.ONE_TIME || selectedFrequency == TickleFrequency.ANNUAL) {
+                            item {
+                                Text(
+                                    stringResource(R.string.tickle_edit_section_date),
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                                Spacer(modifier = Modifier.height(8.dp))
+                                OutlinedButton(
+                                    onClick = { showStartDatePicker() },
+                                    modifier = Modifier.fillMaxWidth(),
+                                    shape = RoundedCornerShape(10.dp)
+                                ) {
+                                    Text(formattedStartDate, modifier = Modifier.weight(1f))
+                                    Text(stringResource(R.string.common_change))
+                                }
+                            }
+                        }
+
                         // Custom interval stepper
                         if (selectedFrequency == TickleFrequency.CUSTOM) {
                             item {
@@ -334,6 +383,44 @@ fun TickleEditScreen(
                             }
                         }
 
+                        // Locale-neutral annual presets
+                        item {
+                            Text(
+                                stringResource(R.string.tickle_edit_section_common_annual_events),
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .horizontalScroll(rememberScrollState()),
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                AnnualPresetChip(
+                                    label = stringResource(R.string.tickle_edit_preset_birthday),
+                                    onClick = {
+                                        selectedFrequency = TickleFrequency.ANNUAL
+                                        note = context.getString(R.string.tickle_edit_preset_note_birthday)
+                                    }
+                                )
+                                AnnualPresetChip(
+                                    label = stringResource(R.string.tickle_edit_preset_anniversary),
+                                    onClick = {
+                                        selectedFrequency = TickleFrequency.ANNUAL
+                                        note = context.getString(R.string.tickle_edit_preset_note_anniversary)
+                                    }
+                                )
+                                AnnualPresetChip(
+                                    label = stringResource(R.string.tickle_edit_preset_special_event),
+                                    onClick = {
+                                        selectedFrequency = TickleFrequency.ANNUAL
+                                        note = context.getString(R.string.tickle_edit_preset_note_special_event)
+                                    }
+                                )
+                            }
+                        }
+
                         // Note
                         item {
                             Text(
@@ -364,6 +451,14 @@ fun TickleEditScreen(
                 .padding(bottom = 24.dp)
         )
     }
+}
+
+@Composable
+private fun AnnualPresetChip(label: String, onClick: () -> Unit) {
+    AssistChip(
+        onClick = onClick,
+        label = { Text(label) }
+    )
 }
 
 @Composable

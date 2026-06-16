@@ -23,6 +23,7 @@ class StringResourceTest {
             R.string.common_create,
             R.string.common_update,
             R.string.common_send,
+            R.string.common_change,
         )
         assertTrue(keys.all { it != 0 }, "All common string resource IDs should be non-zero")
     }
@@ -57,6 +58,11 @@ class StringResourceTest {
             R.string.tickle_saved,
             R.string.tickle_updated,
             R.string.tickle_notification_contact_fallback,
+            R.string.tickle_edit_section_date,
+            R.string.tickle_edit_section_common_annual_events,
+            R.string.tickle_edit_preset_birthday,
+            R.string.tickle_edit_preset_anniversary,
+            R.string.tickle_edit_preset_special_event,
         )
         assertTrue(keys.all { it != 0 }, "All tickle string resource IDs should be non-zero")
     }
@@ -99,12 +105,14 @@ class StringResourceTest {
     @Test
     fun `frequency string resources exist`() {
         val keys = listOf(
+            R.string.frequency_one_time,
             R.string.frequency_daily,
             R.string.frequency_weekly,
             R.string.frequency_biweekly,
             R.string.frequency_monthly,
             R.string.frequency_bimonthly,
             R.string.frequency_quarterly,
+            R.string.frequency_annual,
             R.string.frequency_custom,
         )
         assertTrue(keys.all { it != 0 }, "All frequency string resource IDs should be non-zero")

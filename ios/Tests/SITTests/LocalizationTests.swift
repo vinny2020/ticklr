@@ -99,6 +99,13 @@ final class LocalizationTests: XCTestCase {
             "tickleEdit.section.schedule",
             "tickleEdit.row.frequency",
             "tickleEdit.row.starting",
+            "tickleEdit.section.commonAnnualEvents",
+            "tickleEdit.preset.birthday",
+            "tickleEdit.preset.anniversary",
+            "tickleEdit.preset.specialEvent",
+            "tickleEdit.presetNote.birthday",
+            "tickleEdit.presetNote.anniversary",
+            "tickleEdit.presetNote.specialEvent",
             "tickleEdit.section.note",
             "tickleEdit.placeholder.note",
             "tickleEdit.default.note",
@@ -224,12 +231,14 @@ final class LocalizationTests: XCTestCase {
 
     func testFrequencyKeysResolve() {
         let keys: [String] = [
+            "frequency.oneTime",
             "frequency.daily",
             "frequency.weekly",
             "frequency.biweekly",
             "frequency.monthly",
             "frequency.bimonthly",
             "frequency.quarterly",
+            "frequency.annual",
             "frequency.custom",
         ]
         assertKeysAreLocalized(keys)
@@ -373,12 +382,14 @@ final class LocalizationTests: XCTestCase {
     // MARK: - TickleFrequency.localizedName
 
     func testFrequencyLocalizedNames() {
+        XCTAssertEqual(TickleFrequency.oneTime.localizedName, "One time")
         XCTAssertEqual(TickleFrequency.daily.localizedName, "Daily")
         XCTAssertEqual(TickleFrequency.weekly.localizedName, "Weekly")
         XCTAssertEqual(TickleFrequency.biweekly.localizedName, "Every 2 weeks")
         XCTAssertEqual(TickleFrequency.monthly.localizedName, "Monthly")
         XCTAssertEqual(TickleFrequency.bimonthly.localizedName, "Every 2 months")
         XCTAssertEqual(TickleFrequency.quarterly.localizedName, "Quarterly")
+        XCTAssertEqual(TickleFrequency.annual.localizedName, "Annual")
         XCTAssertEqual(TickleFrequency.custom.localizedName, "Custom")
     }
 
