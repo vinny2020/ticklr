@@ -51,7 +51,8 @@ object TickleScheduler {
     /**
      * Decides the `nextDueDate` to persist when saving a tickle.
      *
-     * - New tickle (`original == null`): one interval from `now`.
+     * - New one-time / annual tickle: use the selected date semantics.
+     * - New interval tickle (`original == null`): one interval from `now`.
      * - Edit where frequency or custom interval changed: one interval from `now`.
      *   "Next" should mean "one interval from now," not from the original
      *   `startDate` (which is in the past).
@@ -62,12 +63,16 @@ object TickleScheduler {
         original: TickleReminder?,
         frequency: String,
         customDays: Int?,
-        now: Long = System.currentTimeMillis()
+        now: Long = System.currentTimeMillis(),
+        startDate: Long? = null
     ): Long {
-        if (original == null) return nextDueDate(now, frequency, customDays)
+        val effectiveStartDate = startDate ?: original?.startDate ?: now
+        if (original == null) return initialNextDueDate(effectiveStartDate, frequency, customDays, now)
         val scheduleChanged =
-            original.frequency != frequency || original.customIntervalDays != customDays
-        return if (scheduleChanged) nextDueDate(now, frequency, customDays) else original.nextDueDate
+            original.frequency != frequency ||
+                original.customIntervalDays != customDays ||
+                original.startDate != effectiveStartDate
+        return if (scheduleChanged) initialNextDueDate(effectiveStartDate, frequency, customDays, now) else original.nextDueDate
     }
 
     /**
@@ -76,16 +81,48 @@ object TickleScheduler {
     fun nextDueDate(from: Long, frequency: String, customDays: Int? = null): Long {
         val cal = Calendar.getInstance().apply { timeInMillis = from }
         when (frequency) {
+            TickleFrequency.ONE_TIME.name -> return from
             TickleFrequency.DAILY.name -> cal.add(Calendar.DAY_OF_YEAR, 1)
             TickleFrequency.WEEKLY.name -> cal.add(Calendar.DAY_OF_YEAR, 7)
             TickleFrequency.BIWEEKLY.name -> cal.add(Calendar.DAY_OF_YEAR, 14)
             TickleFrequency.MONTHLY.name -> cal.add(Calendar.MONTH, 1)
             TickleFrequency.BIMONTHLY.name -> cal.add(Calendar.MONTH, 2)
             TickleFrequency.QUARTERLY.name -> cal.add(Calendar.MONTH, 3)
+            TickleFrequency.ANNUAL.name -> cal.add(Calendar.YEAR, 1)
             TickleFrequency.CUSTOM.name -> cal.add(Calendar.DAY_OF_YEAR, customDays ?: 30)
             else -> cal.add(Calendar.MONTH, 1)
         }
         return cal.timeInMillis
+    }
+
+    fun initialNextDueDate(
+        startDate: Long,
+        frequency: String,
+        customDays: Int? = null,
+        now: Long = System.currentTimeMillis()
+    ): Long {
+        return when (frequency) {
+            TickleFrequency.ONE_TIME.name -> startDate
+            TickleFrequency.ANNUAL.name -> nextAnnualDate(after = now, matchingMonthDayOf = startDate)
+            else -> nextDueDate(now, frequency, customDays)
+        }
+    }
+
+    fun nextAnnualDate(after: Long, matchingMonthDayOf: Long): Long {
+        val source = Calendar.getInstance().apply { timeInMillis = matchingMonthDayOf }
+        val candidate = Calendar.getInstance().apply {
+            timeInMillis = after
+            set(Calendar.MONTH, source.get(Calendar.MONTH))
+            set(Calendar.DAY_OF_MONTH, source.get(Calendar.DAY_OF_MONTH))
+            set(Calendar.HOUR_OF_DAY, source.get(Calendar.HOUR_OF_DAY))
+            set(Calendar.MINUTE, source.get(Calendar.MINUTE))
+            set(Calendar.SECOND, source.get(Calendar.SECOND))
+            set(Calendar.MILLISECOND, source.get(Calendar.MILLISECOND))
+        }
+        if (candidate.timeInMillis <= after) {
+            candidate.add(Calendar.YEAR, 1)
+        }
+        return candidate.timeInMillis
     }
 
     /**

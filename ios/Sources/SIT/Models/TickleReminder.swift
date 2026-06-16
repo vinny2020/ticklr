@@ -2,22 +2,26 @@ import SwiftData
 import Foundation
 
 enum TickleFrequency: String, Codable, CaseIterable {
+    case oneTime     = "One time"
     case daily        = "Daily"
     case weekly       = "Weekly"
     case biweekly     = "Every 2 weeks"
     case monthly      = "Monthly"
     case bimonthly    = "Every 2 months"
     case quarterly    = "Quarterly"
+    case annual       = "Annual"
     case custom       = "Custom"
 
     var localizedName: String {
         switch self {
+        case .oneTime:  return String(localized: "frequency.oneTime")
         case .daily:     return String(localized: "frequency.daily")
         case .weekly:    return String(localized: "frequency.weekly")
         case .biweekly:  return String(localized: "frequency.biweekly")
         case .monthly:   return String(localized: "frequency.monthly")
         case .bimonthly: return String(localized: "frequency.bimonthly")
         case .quarterly: return String(localized: "frequency.quarterly")
+        case .annual:    return String(localized: "frequency.annual")
         case .custom:    return String(localized: "frequency.custom")
         }
     }

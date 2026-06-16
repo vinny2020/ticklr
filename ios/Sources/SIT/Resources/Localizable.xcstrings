@@ -7741,6 +7741,16 @@
         }
       }
     },
+    "frequency.annual" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annual"
+          }
+        }
+      }
+    },
     "frequency.bimonthly" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -8392,6 +8402,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "每月"
+          }
+        }
+      }
+    },
+    "frequency.oneTime" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "One time"
           }
         }
       }
@@ -19957,6 +19977,76 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "开始日期"
+          }
+        }
+      }
+    },
+    "tickleEdit.preset.anniversary" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anniversary"
+          }
+        }
+      }
+    },
+    "tickleEdit.preset.birthday" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Birthday"
+          }
+        }
+      }
+    },
+    "tickleEdit.preset.specialEvent" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Special event"
+          }
+        }
+      }
+    },
+    "tickleEdit.presetNote.anniversary" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anniversary"
+          }
+        }
+      }
+    },
+    "tickleEdit.presetNote.birthday" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Birthday"
+          }
+        }
+      }
+    },
+    "tickleEdit.presetNote.specialEvent" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Special event"
+          }
+        }
+      }
+    },
+    "tickleEdit.section.commonAnnualEvents" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Common annual events"
           }
         }
       }

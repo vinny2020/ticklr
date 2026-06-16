@@ -51,6 +51,17 @@ final class TickleSchedulerTests: XCTestCase {
         XCTAssertEqual(result, expected)
     }
 
+    func testOneTimeReturnsSameDate() {
+        let result = TickleScheduler.nextDueDate(from: baseDate, frequency: .oneTime)
+        XCTAssertEqual(result, baseDate)
+    }
+
+    func testAnnualAddsOneCalendarYear() {
+        let result = TickleScheduler.nextDueDate(from: baseDate, frequency: .annual)
+        let expected = calendar.date(byAdding: .year, value: 1, to: baseDate)!
+        XCTAssertEqual(result, expected)
+    }
+
     func testCustomDefaultsTo30DaysWhenNilProvided() {
         let result = TickleScheduler.nextDueDate(from: baseDate, frequency: .custom, customDays: nil)
         let expected = calendar.date(byAdding: .day, value: 30, to: baseDate)!
@@ -58,7 +69,7 @@ final class TickleSchedulerTests: XCTestCase {
     }
 
     func testAllFrequenciesReturnFutureDate() {
-        for frequency in TickleFrequency.allCases {
+        for frequency in TickleFrequency.allCases where frequency != .oneTime {
             let result = TickleScheduler.nextDueDate(from: baseDate, frequency: frequency)
             XCTAssertGreaterThan(result, baseDate, "\(frequency.rawValue) should return a date after the base date")
         }
@@ -115,5 +126,35 @@ final class TickleSchedulerTests: XCTestCase {
         let result = TickleScheduler.initialNextDueDate(from: past, frequency: .custom, customDays: 21, now: now)
         let expected = calendar.date(byAdding: .day, value: 21, to: past)!
         XCTAssertEqual(result, expected)
+    }
+
+    func testInitialNextDueDateOneTimeUsesSelectedDate() {
+        let now = Date()
+        let selected = now.addingTimeInterval(7 * 24 * 60 * 60)
+        let result = TickleScheduler.initialNextDueDate(from: selected, frequency: .oneTime, now: now)
+        XCTAssertEqual(result, selected)
+    }
+
+    func testInitialNextDueDateAnnualUsesNextMatchingMonthDay() {
+        var selectedComponents = DateComponents()
+        selectedComponents.year = 2025
+        selectedComponents.month = 6
+        selectedComponents.day = 1
+        selectedComponents.hour = 9
+        let selected = calendar.date(from: selectedComponents)!
+
+        var nowComponents = DateComponents()
+        nowComponents.year = 2026
+        nowComponents.month = 6
+        nowComponents.day = 2
+        nowComponents.hour = 12
+        let now = calendar.date(from: nowComponents)!
+
+        let result = TickleScheduler.initialNextDueDate(from: selected, frequency: .annual, now: now)
+        let resultComponents = calendar.dateComponents([.year, .month, .day, .hour], from: result)
+        XCTAssertEqual(resultComponents.year, 2027)
+        XCTAssertEqual(resultComponents.month, 6)
+        XCTAssertEqual(resultComponents.day, 1)
+        XCTAssertEqual(resultComponents.hour, 9)
     }
 }

@@ -22,6 +22,13 @@ class TickleSchedulerTest {
         Calendar.getInstance().apply { timeInMillis = millis }
 
     @Test
+    fun `ONE_TIME returns selected date unchanged`() {
+        val from = calAt(2026, 3, 15)
+        val result = TickleScheduler.nextDueDate(from, TickleFrequency.ONE_TIME.name)
+        assertEquals(from, result)
+    }
+
+    @Test
     fun `DAILY adds exactly one day`() {
         val from = calAt(2026, 3, 15)
         val result = calFrom(TickleScheduler.nextDueDate(from, TickleFrequency.DAILY.name))
@@ -77,6 +84,15 @@ class TickleSchedulerTest {
     }
 
     @Test
+    fun `ANNUAL adds one calendar year`() {
+        val from = calAt(2026, 3, 15)
+        val result = calFrom(TickleScheduler.nextDueDate(from, TickleFrequency.ANNUAL.name))
+        assertEquals(2027, result.get(Calendar.YEAR))
+        assertEquals(3, result.get(Calendar.MONTH) + 1)
+        assertEquals(15, result.get(Calendar.DAY_OF_MONTH))
+    }
+
+    @Test
     fun `CUSTOM uses provided interval days`() {
         val from = calAt(2026, 3, 15)
         val result = calFrom(TickleScheduler.nextDueDate(from, TickleFrequency.CUSTOM.name, customDays = 10))
@@ -106,7 +122,7 @@ class TickleSchedulerTest {
     @Test
     fun `result is always strictly after the input`() {
         val from = System.currentTimeMillis()
-        for (freq in TickleFrequency.entries) {
+        for (freq in TickleFrequency.entries.filter { it != TickleFrequency.ONE_TIME }) {
             val next = TickleScheduler.nextDueDate(from, freq.name, customDays = 1)
             assertTrue(next > from, "Expected next > from for frequency ${freq.name}")
         }
@@ -133,6 +149,38 @@ class TickleSchedulerTest {
             now = now
         )
         assertEquals(now + TimeUnit.DAYS.toMillis(7), result)
+    }
+
+    @Test
+    fun `nextDueDateForSave on new one-time tickle uses selected date`() {
+        val now = calAt(2026, 3, 15)
+        val selected = calAt(2026, 3, 22)
+        val result = TickleScheduler.nextDueDateForSave(
+            original = null,
+            frequency = TickleFrequency.ONE_TIME.name,
+            customDays = null,
+            now = now,
+            startDate = selected
+        )
+        assertEquals(selected, result)
+    }
+
+    @Test
+    fun `nextDueDateForSave on new annual tickle uses next matching month day`() {
+        val now = calAt(2026, 6, 2)
+        val selected = calAt(2025, 6, 1)
+        val result = calFrom(
+            TickleScheduler.nextDueDateForSave(
+                original = null,
+                frequency = TickleFrequency.ANNUAL.name,
+                customDays = null,
+                now = now,
+                startDate = selected
+            )
+        )
+        assertEquals(2027, result.get(Calendar.YEAR))
+        assertEquals(6, result.get(Calendar.MONTH) + 1)
+        assertEquals(1, result.get(Calendar.DAY_OF_MONTH))
     }
 
     @Test

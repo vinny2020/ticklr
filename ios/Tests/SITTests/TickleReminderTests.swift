@@ -36,4 +36,19 @@ final class TickleReminderTests: XCTestCase {
         let expected = Calendar.current.date(byAdding: .day, value: 21, to: now)!
         XCTAssertEqual(r.nextDueDate, expected)
     }
+
+    func testInitWithOneTimeUsesSelectedDate() {
+        let selected = Date().addingTimeInterval(60 * 60 * 24 * 10)
+        let r = TickleReminder(note: "call next week", frequency: .oneTime, startDate: selected)
+        XCTAssertEqual(r.nextDueDate, selected)
+    }
+
+    func testInitWithAnnualUsesNextOccurrenceOfSelectedDate() {
+        let selected = Date().addingTimeInterval(60 * 60 * 24 * 30)
+        let r = TickleReminder(note: "birthday", frequency: .annual, startDate: selected)
+        XCTAssertEqual(
+            Calendar.current.dateComponents([.month, .day], from: r.nextDueDate),
+            Calendar.current.dateComponents([.month, .day], from: selected)
+        )
+    }
 }

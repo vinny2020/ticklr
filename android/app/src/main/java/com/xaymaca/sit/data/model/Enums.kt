@@ -1,12 +1,14 @@
 package com.xaymaca.sit.data.model
 
 enum class TickleFrequency(val label: String) {
+    ONE_TIME("One time"),
     DAILY("Daily"),
     WEEKLY("Weekly"),
     BIWEEKLY("Every 2 Weeks"),
     MONTHLY("Monthly"),
     BIMONTHLY("Every 2 Months"),
     QUARTERLY("Quarterly"),
+    ANNUAL("Annual"),
     CUSTOM("Custom")
 }
 
