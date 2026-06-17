@@ -12,6 +12,7 @@ android/.gradle/
 android/build/
 android/app/build/
 android/local.properties
+android/gradle/gradle-daemon-jvm.properties
 android/*.apk
 android/*.aab
 
