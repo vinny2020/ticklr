@@ -59,10 +59,10 @@ class SITApp : Application(), Configuration.Provider {
     private fun createNotificationChannel() {
         val channel = NotificationChannel(
             TICKLE_CHANNEL_ID,
-            "Tickle Reminders",
+            getString(R.string.tickle_notification_channel_name),
             NotificationManager.IMPORTANCE_DEFAULT
         ).apply {
-            description = "Ticklr reminders"
+            description = getString(R.string.tickle_notification_channel_description)
         }
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

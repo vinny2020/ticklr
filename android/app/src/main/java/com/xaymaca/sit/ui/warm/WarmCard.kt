@@ -23,11 +23,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.xaymaca.sit.R
 import com.xaymaca.sit.ui.theme.WarmCategory
 import com.xaymaca.sit.ui.theme.WarmHeadingFont
 import com.xaymaca.sit.ui.theme.WarmRadius
@@ -228,9 +230,8 @@ private fun HeadlineBlock(category: WarmCategory, sizeSp: androidx.compose.ui.un
 
 @Composable
 private fun CountLine(count: Int, color: androidx.compose.ui.graphics.Color) {
-    // Plural-aware string lands in a later commit; for v1 use a literal.
     Text(
-        text = "$count contacts",
+        text = pluralStringResource(R.plurals.warm_card_contact_count, count, count),
         style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = color),
     )
 }

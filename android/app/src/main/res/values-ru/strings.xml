@@ -17,6 +17,7 @@
     <string name="common_add">Добавить</string>
     <string name="common_update">Обновить</string>
     <string name="common_send">Отправить</string>
+    <string name="common_change">Изменить</string>
     <string name="common_edit">Редактировать</string>
 
     <!-- Settings -->
@@ -57,6 +58,12 @@
     <string name="tickle_list_section_upcoming">Предстоящие</string>
     <string name="tickle_list_section_snoozed">Отложено</string>
     <string name="tickle_list_empty_title">Нет tickle-напоминаний</string>
+    <plurals name="tickle_list_due_count">
+        <item quantity="one">%1$d человек, с которым нужно связаться сегодня.</item>
+        <item quantity="few">%1$d человека, с которыми нужно связаться сегодня.</item>
+        <item quantity="many">%1$d человек, с которыми нужно связаться сегодня.</item>
+        <item quantity="other">%1$d человека, с которыми нужно связаться сегодня.</item>
+    </plurals>
     <string name="tickle_list_empty_description">Нажмите +, чтобы запланировать напоминание</string>
     <string name="tickle_row_action_done">Готово</string>
     <string name="tickle_row_action_snooze">Отложить</string>
@@ -77,7 +84,15 @@
     <string name="tickle_edit_section_group">ГРУППА</string>
     <string name="tickle_edit_search_contacts">Поиск контактов</string>
     <string name="tickle_edit_section_frequency">ЧАСТОТА</string>
+    <string name="tickle_edit_section_date">ДАТА</string>
     <string name="tickle_edit_section_custom_interval">ПОЛЬЗОВАТЕЛЬСКИЙ ИНТЕРВАЛ (ДНИ)</string>
+    <string name="tickle_edit_section_common_annual_events">ОБЫЧНЫЕ ЕЖЕГОДНЫЕ СОБЫТИЯ</string>
+    <string name="tickle_edit_preset_birthday">День рождения</string>
+    <string name="tickle_edit_preset_anniversary">Годовщина</string>
+    <string name="tickle_edit_preset_special_event">Особое событие</string>
+    <string name="tickle_edit_preset_note_birthday">День рождения</string>
+    <string name="tickle_edit_preset_note_anniversary">Годовщина</string>
+    <string name="tickle_edit_preset_note_special_event">Особое событие</string>
     <string name="tickle_edit_section_note">ЗАМЕТКА (НЕОБЯЗАТЕЛЬНО)</string>
     <string name="tickle_edit_note_placeholder">О чём поговорить…</string>
     <string name="tickle_edit_default_note">Оставайтесь на связи</string>
@@ -91,6 +106,8 @@
     <string name="tickle_updated">Tickle обновлён</string>
     <string name="tickle_notification_contact_fallback">вашим контактом</string>
     <string name="tickle_notification_title">Пора связаться с %1$s</string>
+    <string name="tickle_notification_channel_name">Напоминания Ticklr</string>
+    <string name="tickle_notification_channel_description">Напоминания Ticklr</string>
     <string name="tickle_notification_body">Ваши люди важны — отправьте короткое сообщение сегодня.</string>
 
     <!-- Network list -->
@@ -230,12 +247,14 @@
     <string name="nav_settings">Настройки</string>
 
     <!-- Frequency display names -->
+    <string name="frequency_one_time">Один раз</string>
     <string name="frequency_daily">Ежедневно</string>
     <string name="frequency_weekly">Еженедельно</string>
     <string name="frequency_biweekly">Каждые 2 недели</string>
     <string name="frequency_monthly">Ежемесячно</string>
     <string name="frequency_bimonthly">Каждые 2 месяца</string>
     <string name="frequency_quarterly">Ежеквартально</string>
+    <string name="frequency_annual">Ежегодно</string>
     <string name="frequency_custom">Произвольно</string>
 
     <!-- Warm redesign -->
@@ -274,6 +293,12 @@
     <string name="warm_category_work_promptShort">Напиши коллеге</string>
     <string name="warm_category_milestones_promptShort">Создай напоминание</string>
     <string name="warm_category_community_promptShort">Время с близкими</string>
+    <plurals name="warm_card_contact_count">
+        <item quantity="one">%1$d контакт</item>
+        <item quantity="few">%1$d контакта</item>
+        <item quantity="many">%1$d контактов</item>
+        <item quantity="other">%1$d контакта</item>
+    </plurals>
     <string name="warm_card_tickleIdea">Идея для tickle:</string>
     <string name="warm_network_subtitle">Люди, которых ты держишь в своём круге.</string>
     <string name="warm_network_filter_all">Все</string>

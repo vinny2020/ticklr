@@ -1,5 +1,1 @@
-A fresh look and smoother flows.
-• New warm Cream & Espresso app icon
-• Refreshed card artwork that feels at home in every language
-• Sending a text now returns you right where you left off
-• Contact details show when you last connected
+You can now create one-time and annual tickles, including birthdays, anniversaries, and custom special events. This release also improves localization coverage and fixes several translated UI strings.

@@ -1,5 +1,1 @@
-Ein frischer Look und flüssigere Abläufe.
-• Neues warmes App-Icon in Creme & Espresso
-• Überarbeitete Karten-Illustrationen, die in jeder Sprache passen
-• Nach dem Senden einer Nachricht kehrst du dorthin zurück, wo du warst
-• Kontaktdetails zeigen, wann ihr zuletzt in Kontakt wart
+Du kannst jetzt einmalige und jährliche Tickles erstellen, darunter Geburtstage, Jahrestage und eigene besondere Ereignisse. Dieses Release verbessert außerdem die Lokalisierungsabdeckung und behebt mehrere übersetzte UI-Texte.

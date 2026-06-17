@@ -1,5 +1,1 @@
-Un nouveau look et des parcours plus fluides.
-• Nouvelle icône chaleureuse crème et espresso
-• Illustrations des cartes repensées, adaptées à toutes les langues
-• Après l'envoi d'un message, vous revenez là où vous étiez
-• La fiche contact affiche votre dernier échange
+Vous pouvez désormais créer des tickles ponctuels et annuels, notamment pour les anniversaires, dates anniversaires et événements spéciaux personnalisés. Cette version améliore aussi la couverture de localisation et corrige plusieurs textes traduits de l’interface.

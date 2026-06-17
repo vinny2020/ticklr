@@ -17,6 +17,7 @@
     <string name="common_add">Adaugă</string>
     <string name="common_update">Actualizează</string>
     <string name="common_send">Trimite</string>
+    <string name="common_change">Schimbă</string>
     <string name="common_edit">Editează</string>
 
     <!-- Settings -->
@@ -57,6 +58,11 @@
     <string name="tickle_list_section_upcoming">Viitoare</string>
     <string name="tickle_list_section_snoozed">Amânate</string>
     <string name="tickle_list_empty_title">Niciun tickle încă</string>
+    <plurals name="tickle_list_due_count">
+        <item quantity="one">%1$d persoană de contactat azi.</item>
+        <item quantity="few">%1$d persoane de contactat azi.</item>
+        <item quantity="other">%1$d de persoane de contactat azi.</item>
+    </plurals>
     <string name="tickle_list_empty_description">Apasă + pentru a programa o memento</string>
     <string name="tickle_row_action_done">Gata</string>
     <string name="tickle_row_action_snooze">Amână</string>
@@ -77,7 +83,15 @@
     <string name="tickle_edit_section_group">GRUP</string>
     <string name="tickle_edit_search_contacts">Caută contacte</string>
     <string name="tickle_edit_section_frequency">FRECVENȚĂ</string>
+    <string name="tickle_edit_section_date">DATĂ</string>
     <string name="tickle_edit_section_custom_interval">INTERVAL PERSONALIZAT (ZILE)</string>
+    <string name="tickle_edit_section_common_annual_events">EVENIMENTE ANUALE COMUNE</string>
+    <string name="tickle_edit_preset_birthday">Zi de naștere</string>
+    <string name="tickle_edit_preset_anniversary">Aniversare</string>
+    <string name="tickle_edit_preset_special_event">Eveniment special</string>
+    <string name="tickle_edit_preset_note_birthday">Zi de naștere</string>
+    <string name="tickle_edit_preset_note_anniversary">Aniversare</string>
+    <string name="tickle_edit_preset_note_special_event">Eveniment special</string>
     <string name="tickle_edit_section_note">NOTĂ (OPȚIONAL)</string>
     <string name="tickle_edit_note_placeholder">Despre ce să vorbești…</string>
     <string name="tickle_edit_default_note">Păstrați legătura</string>
@@ -91,6 +105,8 @@
     <string name="tickle_updated">Tickle actualizat</string>
     <string name="tickle_notification_contact_fallback">contactul tău</string>
     <string name="tickle_notification_title">E timpul să contactezi %1$s</string>
+    <string name="tickle_notification_channel_name">Mementouri Ticklr</string>
+    <string name="tickle_notification_channel_description">Mementouri Ticklr</string>
     <string name="tickle_notification_body">Oamenii tăi contează — trimite un mesaj rapid azi.</string>
 
     <!-- Network list -->
@@ -229,12 +245,14 @@
     <string name="nav_settings">Setări</string>
 
     <!-- Frequency display names -->
+    <string name="frequency_one_time">O singură dată</string>
     <string name="frequency_daily">Zilnic</string>
     <string name="frequency_weekly">Săptămânal</string>
     <string name="frequency_biweekly">La 2 săptămâni</string>
     <string name="frequency_monthly">Lunar</string>
     <string name="frequency_bimonthly">La 2 luni</string>
     <string name="frequency_quarterly">Trimestrial</string>
+    <string name="frequency_annual">Anual</string>
     <string name="frequency_custom">Personalizat</string>
 
     <!-- Warm redesign -->
@@ -273,6 +291,11 @@
     <string name="warm_category_work_promptShort">Salută un coleg</string>
     <string name="warm_category_milestones_promptShort">Pune un memento</string>
     <string name="warm_category_community_promptShort">Timp cu cercul tău</string>
+    <plurals name="warm_card_contact_count">
+        <item quantity="one">%1$d contact</item>
+        <item quantity="few">%1$d contacte</item>
+        <item quantity="other">%1$d de contacte</item>
+    </plurals>
     <string name="warm_card_tickleIdea">Idee de tickle:</string>
     <string name="warm_network_subtitle">Oamenii pe care îi păstrezi în cercul tău.</string>
     <string name="warm_network_filter_all">Toți</string>

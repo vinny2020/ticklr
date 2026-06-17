@@ -1,5 +1,1 @@
-Świeży wygląd i płynniejsze przepływy.
-• Nowa ciepła ikona aplikacji w kremie i espresso
-• Odświeżone ilustracje kart, które pasują do każdego języka
-• Po wysłaniu wiadomości wracasz dokładnie tam, gdzie byłeś
-• Szczegóły kontaktu pokazują, kiedy ostatnio się kontaktowaliście
+Możesz teraz tworzyć jednorazowe i coroczne tickle, w tym urodziny, rocznice oraz własne wydarzenia specjalne. Ta wersja poprawia też pokrycie lokalizacji i naprawia kilka przetłumaczonych tekstów interfejsu.

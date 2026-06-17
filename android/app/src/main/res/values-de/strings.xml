@@ -17,6 +17,7 @@
     <string name="common_add">Hinzufügen</string>
     <string name="common_update">Aktualisieren</string>
     <string name="common_send">Senden</string>
+    <string name="common_change">Ändern</string>
     <string name="common_edit">Bearbeiten</string>
 
     <!-- Settings -->
@@ -57,6 +58,10 @@
     <string name="tickle_list_section_upcoming">Bevorstehend</string>
     <string name="tickle_list_section_snoozed">Zurückgestellt</string>
     <string name="tickle_list_empty_title">Noch keine Tickles</string>
+    <plurals name="tickle_list_due_count">
+        <item quantity="one">%1$d Person, bei der du dich heute melden solltest.</item>
+        <item quantity="other">%1$d Personen, bei denen du dich heute melden solltest.</item>
+    </plurals>
     <string name="tickle_list_empty_description">Tippen Sie auf +, um eine Erinnerung zu planen</string>
     <string name="tickle_row_action_done">Erledigt</string>
     <string name="tickle_row_action_snooze">Zurückstellen</string>
@@ -77,7 +82,15 @@
     <string name="tickle_edit_section_group">GRUPPE</string>
     <string name="tickle_edit_search_contacts">Kontakte suchen</string>
     <string name="tickle_edit_section_frequency">HÄUFIGKEIT</string>
+    <string name="tickle_edit_section_date">DATUM</string>
     <string name="tickle_edit_section_custom_interval">BENUTZERDEFINIERTES INTERVALL (TAGE)</string>
+    <string name="tickle_edit_section_common_annual_events">HÄUFIGE JÄHRLICHE EREIGNISSE</string>
+    <string name="tickle_edit_preset_birthday">Geburtstag</string>
+    <string name="tickle_edit_preset_anniversary">Jahrestag</string>
+    <string name="tickle_edit_preset_special_event">Besonderes Ereignis</string>
+    <string name="tickle_edit_preset_note_birthday">Geburtstag</string>
+    <string name="tickle_edit_preset_note_anniversary">Jahrestag</string>
+    <string name="tickle_edit_preset_note_special_event">Besonderes Ereignis</string>
     <string name="tickle_edit_section_note">NOTIZ (OPTIONAL)</string>
     <string name="tickle_edit_note_placeholder">Worüber reden…</string>
     <string name="tickle_edit_default_note">In Kontakt bleiben</string>
@@ -91,6 +104,8 @@
     <string name="tickle_updated">Tickle aktualisiert</string>
     <string name="tickle_notification_contact_fallback">Ihr Kontakt</string>
     <string name="tickle_notification_title">Zeit, %1$s zu kontaktieren</string>
+    <string name="tickle_notification_channel_name">Ticklr-Erinnerungen</string>
+    <string name="tickle_notification_channel_description">Ticklr-Erinnerungen</string>
     <string name="tickle_notification_body">Ihre Kontakte sind wichtig — senden Sie heute eine kurze Nachricht.</string>
 
     <!-- Network list -->
@@ -228,12 +243,14 @@
     <string name="nav_settings">Einstellungen</string>
 
     <!-- Frequency display names -->
+    <string name="frequency_one_time">Einmalig</string>
     <string name="frequency_daily">Täglich</string>
     <string name="frequency_weekly">Wöchentlich</string>
     <string name="frequency_biweekly">Alle 2 Wochen</string>
     <string name="frequency_monthly">Monatlich</string>
     <string name="frequency_bimonthly">Alle 2 Monate</string>
     <string name="frequency_quarterly">Vierteljährlich</string>
+    <string name="frequency_annual">Jährlich</string>
     <string name="frequency_custom">Benutzerdefiniert</string>
 
     <!-- Warm redesign -->
@@ -272,6 +289,10 @@
     <string name="warm_category_work_promptShort">Bei Kollegen melden</string>
     <string name="warm_category_milestones_promptShort">Erinnerung einstellen</string>
     <string name="warm_category_community_promptShort">Zeit mit deinem Kreis</string>
+    <plurals name="warm_card_contact_count">
+        <item quantity="one">%1$d Kontakt</item>
+        <item quantity="other">%1$d Kontakte</item>
+    </plurals>
     <string name="warm_card_tickleIdea">Tickle-Idee:</string>
     <string name="warm_network_subtitle">Die Menschen, die du in deinem Kreis hältst.</string>
     <string name="warm_network_filter_all">Alle</string>

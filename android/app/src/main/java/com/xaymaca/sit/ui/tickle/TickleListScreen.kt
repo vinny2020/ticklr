@@ -49,6 +49,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -242,8 +243,7 @@ private fun WarmHeader(palette: WarmPalette, warmth: Warmth, dueCount: Int) {
         )
         Text(
             text = if (dueCount > 0) {
-                // Literal copy until a plural-aware string lands.
-                "$dueCount to reach out to today."
+                pluralStringResource(R.plurals.tickle_list_due_count, dueCount, dueCount)
             } else {
                 stringResource(R.string.warm_tickle_subtitle_empty)
             },
@@ -419,4 +419,3 @@ internal fun calendarDayDelta(now: Long, target: Long, zone: ZoneId = ZoneId.sys
     val targetDate = Instant.ofEpochMilli(target).atZone(zone).toLocalDate()
     return ChronoUnit.DAYS.between(today, targetDate).toInt()
 }
-

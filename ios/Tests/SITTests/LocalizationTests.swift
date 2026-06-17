@@ -3,6 +3,9 @@ import XCTest
 
 final class LocalizationTests: XCTestCase {
 
+    private static let shippedLocales = ["en", "ar", "cs", "de", "el", "es", "fr", "he", "hi", "hu",
+                                         "it", "ja", "ko", "nl", "pl", "pt", "ro", "ru", "sv", "ur", "zh-Hans"]
+
     // MARK: - Catalog presence
 
     func testLocalizableCatalogExistsInBundle() throws {
@@ -301,14 +304,45 @@ final class LocalizationTests: XCTestCase {
         assertKeysAreLocalized(Self.warmKeys)
     }
 
+    /// Every regular String Catalog entry compiled into the English bundle should also
+    /// be present in each shipped locale. Plurals live in Localizable.stringsdict and
+    /// are covered by their focused interpolation tests.
+    func testRegularStringCatalogKeysCoveredAcrossAllLocales() throws {
+        let appBundle = Bundle(for: Contact.self)
+        let englishPath = try XCTUnwrap(appBundle.path(forResource: "en", ofType: "lproj"))
+        let englishBundle = try XCTUnwrap(Bundle(path: englishPath))
+        let englishURL = try XCTUnwrap(englishBundle.url(forResource: "Localizable", withExtension: "strings"))
+        let englishStrings = try XCTUnwrap(
+            NSDictionary(contentsOf: englishURL) as? [String: String],
+            "Could not load English Localizable.strings"
+        )
+        let keys = englishStrings.keys.sorted()
+        XCTAssertFalse(keys.isEmpty, "English Localizable.strings should contain regular string keys")
+
+        var missing: [String] = []
+        for code in Self.shippedLocales {
+            guard let lpath = appBundle.path(forResource: code, ofType: "lproj"),
+                  let lbundle = Bundle(path: lpath) else {
+                XCTFail("\(code).lproj missing from app bundle")
+                continue
+            }
+            for key in keys {
+                let value = lbundle.localizedString(forKey: key, value: "__MISSING__", table: nil)
+                if value == "__MISSING__" || value.isEmpty {
+                    missing.append("\(code) ← \(key)")
+                }
+            }
+        }
+        XCTAssert(missing.isEmpty,
+                  "regular string catalog keys missing from compiled bundles:\n  " + missing.joined(separator: "\n  "))
+    }
+
     /// Every warm key has a non-empty translation in every shipped locale.
     /// Catches keys we forgot to add to a locale during translation passes.
     func testWarmKeysCoveredAcrossAllLocales() throws {
         let appBundle = Bundle(for: Contact.self)
-        let shippedLocales = ["en", "ar", "cs", "de", "el", "es", "fr", "he", "hi", "hu",
-                              "it", "ja", "ko", "nl", "pl", "pt", "ro", "ru", "sv", "ur", "zh-Hans"]
         var missing: [String] = []
-        for code in shippedLocales {
+        for code in Self.shippedLocales {
             guard let lpath = appBundle.path(forResource: code, ofType: "lproj"),
                   let lbundle = Bundle(path: lpath) else {
                 XCTFail("\(code).lproj missing from app bundle")

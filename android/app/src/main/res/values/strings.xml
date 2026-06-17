@@ -59,6 +59,10 @@
     <string name="tickle_list_section_snoozed">Snoozed</string>
     <string name="tickle_list_empty_title">No tickles yet</string>
     <string name="tickle_list_empty_description">Tap + to schedule a reminder</string>
+    <plurals name="tickle_list_due_count">
+        <item quantity="one">%1$d person to reach out to today.</item>
+        <item quantity="other">%1$d people to reach out to today.</item>
+    </plurals>
     <string name="tickle_row_action_done">Done</string>
     <string name="tickle_row_action_snooze">Snooze</string>
     <string name="tickle_row_action_delete">Delete</string>
@@ -101,6 +105,8 @@
     <string name="tickle_notification_contact_fallback">your contact</string>
     <string name="tickle_notification_title">Time to reach out to %1$s</string>
     <string name="tickle_notification_body">Your people matter — send a quick message today.</string>
+    <string name="tickle_notification_channel_name">Tickle reminders</string>
+    <string name="tickle_notification_channel_description">Ticklr reminders</string>
 
     <!-- Network list -->
     <string name="network_title">Network</string>
@@ -284,6 +290,10 @@
     <string name="warm_category_milestones_promptShort">Set a milestone reminder</string>
     <string name="warm_category_community_promptShort">Plan time with your circle</string>
     <string name="warm_card_tickleIdea">Tickle idea:</string>
+    <plurals name="warm_card_contact_count">
+        <item quantity="one">%1$d contact</item>
+        <item quantity="other">%1$d contacts</item>
+    </plurals>
     <string name="warm_network_subtitle">The people you keep in your circle.</string>
     <string name="warm_network_filter_all">All</string>
     <string name="warm_network_empty_filtered">No contacts in this group yet</string>
