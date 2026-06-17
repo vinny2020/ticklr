@@ -125,10 +125,14 @@ struct WarmCard: View {
                     countLine(contactsCount)
                 }
                 if showPrompt {
-                    Text("\(category.localizedPromptShort)  →")
-                        .font(.system(size: 12, weight: .semibold))
-                        .foregroundStyle(category.palette.accent)
-                        .padding(.top, 4)
+                    HStack(spacing: 4) {
+                        Text(category.localizedPromptShort)
+                        Image(systemName: "chevron.forward")
+                            .imageScale(.small)
+                    }
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(category.palette.accent)
+                    .padding(.top, 4)
                 }
             }
             .padding(.vertical, WarmSpacing.md)

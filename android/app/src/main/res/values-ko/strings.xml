@@ -17,6 +17,7 @@
     <string name="common_add">추가</string>
     <string name="common_update">업데이트</string>
     <string name="common_send">보내기</string>
+    <string name="common_change">변경</string>
     <string name="common_edit">편집</string>
 
     <!-- Settings -->
@@ -57,6 +58,9 @@
     <string name="tickle_list_section_upcoming">예정</string>
     <string name="tickle_list_section_snoozed">다시 알림</string>
     <string name="tickle_list_empty_title">tickle이 아직 없습니다</string>
+    <plurals name="tickle_list_due_count">
+        <item quantity="other">오늘 연락할 사람 %1$d명.</item>
+    </plurals>
     <string name="tickle_list_empty_description">+ 를 눌러 알림을 설정하세요</string>
     <string name="tickle_row_action_done">완료</string>
     <string name="tickle_row_action_snooze">다시 알림</string>
@@ -77,7 +81,15 @@
     <string name="tickle_edit_section_group">그룹</string>
     <string name="tickle_edit_search_contacts">연락처 검색</string>
     <string name="tickle_edit_section_frequency">빈도</string>
+    <string name="tickle_edit_section_date">날짜</string>
     <string name="tickle_edit_section_custom_interval">사용자 지정 간격 (일)</string>
+    <string name="tickle_edit_section_common_annual_events">일반적인 연례 이벤트</string>
+    <string name="tickle_edit_preset_birthday">생일</string>
+    <string name="tickle_edit_preset_anniversary">기념일</string>
+    <string name="tickle_edit_preset_special_event">특별한 이벤트</string>
+    <string name="tickle_edit_preset_note_birthday">생일</string>
+    <string name="tickle_edit_preset_note_anniversary">기념일</string>
+    <string name="tickle_edit_preset_note_special_event">특별한 이벤트</string>
     <string name="tickle_edit_section_note">메모 (선택 사항)</string>
     <string name="tickle_edit_note_placeholder">이야기할 내용…</string>
     <string name="tickle_edit_default_note">연락하고 지내기</string>
@@ -91,6 +103,8 @@
     <string name="tickle_updated">Tickle이 업데이트되었습니다</string>
     <string name="tickle_notification_contact_fallback">연락처</string>
     <string name="tickle_notification_title">%1$s에게 연락할 시간입니다</string>
+    <string name="tickle_notification_channel_name">Ticklr 알림</string>
+    <string name="tickle_notification_channel_description">Ticklr 알림</string>
     <string name="tickle_notification_body">소중한 사람들과 연결을 — 오늘 짧은 메시지를 보내세요.</string>
 
     <!-- Network list -->
@@ -227,12 +241,14 @@
     <string name="nav_settings">설정</string>
 
     <!-- Frequency display names -->
+    <string name="frequency_one_time">한 번</string>
     <string name="frequency_daily">매일</string>
     <string name="frequency_weekly">매주</string>
     <string name="frequency_biweekly">2주마다</string>
     <string name="frequency_monthly">매월</string>
     <string name="frequency_bimonthly">2개월마다</string>
     <string name="frequency_quarterly">분기마다</string>
+    <string name="frequency_annual">매년</string>
     <string name="frequency_custom">사용자 지정</string>
 
     <!-- Warm redesign -->
@@ -271,6 +287,9 @@
     <string name="warm_category_work_promptShort">동료에게 안부 전하기</string>
     <string name="warm_category_milestones_promptShort">기념 알림 설정하기</string>
     <string name="warm_category_community_promptShort">함께할 시간 계획하기</string>
+    <plurals name="warm_card_contact_count">
+        <item quantity="other">연락처 %1$d개</item>
+    </plurals>
     <string name="warm_card_tickleIdea">Tickle 아이디어:</string>
     <string name="warm_network_subtitle">당신의 곁에 두는 사람들.</string>
     <string name="warm_network_filter_all">전체</string>

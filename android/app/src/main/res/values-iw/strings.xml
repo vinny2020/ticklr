@@ -18,6 +18,7 @@
     <string name="common_add">הוספה</string>
     <string name="common_update">עדכון</string>
     <string name="common_send">שליחה</string>
+    <string name="common_change">שינוי</string>
     <string name="common_edit">עריכה</string>
 
     <!-- Settings -->
@@ -58,6 +59,10 @@
     <string name="tickle_list_section_upcoming">קרובות</string>
     <string name="tickle_list_section_snoozed">נדחו</string>
     <string name="tickle_list_empty_title">אין תזכורות עדיין</string>
+    <plurals name="tickle_list_due_count">
+        <item quantity="one">אדם אחד ליצור איתו קשר היום.</item>
+        <item quantity="other">%1$d אנשים ליצור איתם קשר היום.</item>
+    </plurals>
     <string name="tickle_list_empty_description">הקישו על + כדי לתזמן תזכורת</string>
     <string name="tickle_row_action_done">בוצע</string>
     <string name="tickle_row_action_snooze">דחייה</string>
@@ -78,7 +83,15 @@
     <string name="tickle_edit_section_group">קבוצה</string>
     <string name="tickle_edit_search_contacts">חיפוש אנשי קשר</string>
     <string name="tickle_edit_section_frequency">תדירות</string>
+    <string name="tickle_edit_section_date">תאריך</string>
     <string name="tickle_edit_section_custom_interval">מרווח מותאם (ימים)</string>
+    <string name="tickle_edit_section_common_annual_events">אירועים שנתיים נפוצים</string>
+    <string name="tickle_edit_preset_birthday">יום הולדת</string>
+    <string name="tickle_edit_preset_anniversary">יום שנה</string>
+    <string name="tickle_edit_preset_special_event">אירוע מיוחד</string>
+    <string name="tickle_edit_preset_note_birthday">יום הולדת</string>
+    <string name="tickle_edit_preset_note_anniversary">יום שנה</string>
+    <string name="tickle_edit_preset_note_special_event">אירוע מיוחד</string>
     <string name="tickle_edit_section_note">הערה (אופציונלי)</string>
     <string name="tickle_edit_note_placeholder">על מה לדבר…</string>
     <string name="tickle_edit_default_note">לשמור על קשר</string>
@@ -92,6 +105,8 @@
     <string name="tickle_updated">התזכורת עודכנה</string>
     <string name="tickle_notification_contact_fallback">איש הקשר שלך</string>
     <string name="tickle_notification_title">הגיע הזמן ליצור קשר עם %1$s</string>
+    <string name="tickle_notification_channel_name">תזכורות Ticklr</string>
+    <string name="tickle_notification_channel_description">תזכורות Ticklr</string>
     <string name="tickle_notification_body">האנשים שלך חשובים — שלחו הודעה קצרה היום.</string>
 
     <!-- Network list -->
@@ -234,12 +249,14 @@
     <string name="nav_settings">הגדרות</string>
 
     <!-- Frequency display names -->
+    <string name="frequency_one_time">חד-פעמי</string>
     <string name="frequency_daily">יומי</string>
     <string name="frequency_weekly">שבועי</string>
     <string name="frequency_biweekly">כל שבועיים</string>
     <string name="frequency_monthly">חודשי</string>
     <string name="frequency_bimonthly">כל חודשיים</string>
     <string name="frequency_quarterly">רבעוני</string>
+    <string name="frequency_annual">שנתי</string>
     <string name="frequency_custom">מותאם</string>
 
     <!-- Warm redesign -->
@@ -278,6 +295,10 @@
     <string name="warm_category_work_promptShort">תבדוק מה שלום קולגה</string>
     <string name="warm_category_milestones_promptShort">קבע תזכורת לאבן דרך</string>
     <string name="warm_category_community_promptShort">זמן יחד עם המעגל שלך</string>
+    <plurals name="warm_card_contact_count">
+        <item quantity="one">איש קשר אחד</item>
+        <item quantity="other">%1$d אנשי קשר</item>
+    </plurals>
     <string name="warm_card_tickleIdea">רעיון ל-tickle:</string>
     <string name="warm_network_subtitle">האנשים שאתה שומר במעגל שלך.</string>
     <string name="warm_network_filter_all">הכול</string>

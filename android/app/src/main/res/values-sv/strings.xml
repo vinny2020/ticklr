@@ -17,6 +17,7 @@
     <string name="common_add">Lägg till</string>
     <string name="common_update">Uppdatera</string>
     <string name="common_send">Skicka</string>
+    <string name="common_change">Ändra</string>
     <string name="common_edit">Redigera</string>
 
     <!-- Settings -->
@@ -57,6 +58,10 @@
     <string name="tickle_list_section_upcoming">Kommande</string>
     <string name="tickle_list_section_snoozed">Uppskjutna</string>
     <string name="tickle_list_empty_title">Inga tickles ännu</string>
+    <plurals name="tickle_list_due_count">
+        <item quantity="one">%1$d person att höra av dig till idag.</item>
+        <item quantity="other">%1$d personer att höra av dig till idag.</item>
+    </plurals>
     <string name="tickle_list_empty_description">Tryck på + för att schemalägga en påminnelse</string>
     <string name="tickle_row_action_done">Klar</string>
     <string name="tickle_row_action_snooze">Skjut upp</string>
@@ -77,7 +82,15 @@
     <string name="tickle_edit_section_group">GRUPP</string>
     <string name="tickle_edit_search_contacts">Sök kontakter</string>
     <string name="tickle_edit_section_frequency">FREKVENS</string>
+    <string name="tickle_edit_section_date">DATUM</string>
     <string name="tickle_edit_section_custom_interval">ANPASSAT INTERVALL (DAGAR)</string>
+    <string name="tickle_edit_section_common_annual_events">VANLIGA ÅRLIGA HÄNDELSER</string>
+    <string name="tickle_edit_preset_birthday">Födelsedag</string>
+    <string name="tickle_edit_preset_anniversary">Årsdag</string>
+    <string name="tickle_edit_preset_special_event">Särskild händelse</string>
+    <string name="tickle_edit_preset_note_birthday">Födelsedag</string>
+    <string name="tickle_edit_preset_note_anniversary">Årsdag</string>
+    <string name="tickle_edit_preset_note_special_event">Särskild händelse</string>
     <string name="tickle_edit_section_note">ANTECKNING (VALFRITT)</string>
     <string name="tickle_edit_note_placeholder">Vad att prata om…</string>
     <string name="tickle_edit_default_note">Håll kontakten</string>
@@ -91,6 +104,8 @@
     <string name="tickle_updated">Tickle uppdaterad</string>
     <string name="tickle_notification_contact_fallback">din kontakt</string>
     <string name="tickle_notification_title">Dags att kontakta %1$s</string>
+    <string name="tickle_notification_channel_name">Ticklr-påminnelser</string>
+    <string name="tickle_notification_channel_description">Ticklr-påminnelser</string>
     <string name="tickle_notification_body">Dina människor spelar roll — skicka ett snabbt meddelande idag.</string>
 
     <!-- Network list -->
@@ -228,12 +243,14 @@
     <string name="nav_settings">Inställningar</string>
 
     <!-- Frequency display names -->
+    <string name="frequency_one_time">En gång</string>
     <string name="frequency_daily">Dagligen</string>
     <string name="frequency_weekly">Veckovis</string>
     <string name="frequency_biweekly">Varannan vecka</string>
     <string name="frequency_monthly">Månadsvis</string>
     <string name="frequency_bimonthly">Varannan månad</string>
     <string name="frequency_quarterly">Kvartalsvis</string>
+    <string name="frequency_annual">Årlig</string>
     <string name="frequency_custom">Anpassad</string>
 
     <!-- Warm redesign -->
@@ -272,6 +289,10 @@
     <string name="warm_category_work_promptShort">Hör av dig till en kollega</string>
     <string name="warm_category_milestones_promptShort">Sätt en påminnelse</string>
     <string name="warm_category_community_promptShort">Tid med din krets</string>
+    <plurals name="warm_card_contact_count">
+        <item quantity="one">%1$d kontakt</item>
+        <item quantity="other">%1$d kontakter</item>
+    </plurals>
     <string name="warm_card_tickleIdea">Tickle-idé:</string>
     <string name="warm_network_subtitle">Människorna du har i din krets.</string>
     <string name="warm_network_filter_all">Alla</string>

@@ -63,6 +63,7 @@ class StringResourceTest {
             R.string.tickle_edit_preset_birthday,
             R.string.tickle_edit_preset_anniversary,
             R.string.tickle_edit_preset_special_event,
+            R.plurals.tickle_list_due_count,
         )
         assertTrue(keys.all { it != 0 }, "All tickle string resource IDs should be non-zero")
     }
@@ -88,6 +89,7 @@ class StringResourceTest {
             R.string.group_detail_member_added,
             R.string.group_detail_member_added_generic,
             R.string.group_dialog_char_count,
+            R.plurals.warm_card_contact_count,
         )
         assertTrue(keys.all { it != 0 }, "All group string resource IDs should be non-zero")
     }
@@ -124,6 +126,8 @@ class StringResourceTest {
             R.string.tickle_notification_title,
             R.string.tickle_notification_body,
             R.string.tickle_notification_contact_fallback,
+            R.string.tickle_notification_channel_name,
+            R.string.tickle_notification_channel_description,
         )
         assertTrue(keys.all { it != 0 }, "All notification string resource IDs should be non-zero")
     }

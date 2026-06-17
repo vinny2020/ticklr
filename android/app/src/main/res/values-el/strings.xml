@@ -17,6 +17,7 @@
     <string name="common_add">Προσθήκη</string>
     <string name="common_update">Ενημέρωση</string>
     <string name="common_send">Αποστολή</string>
+    <string name="common_change">Αλλαγή</string>
     <string name="common_edit">Επεξεργασία</string>
 
     <!-- Settings -->
@@ -57,6 +58,10 @@
     <string name="tickle_list_section_upcoming">Επερχόμενα</string>
     <string name="tickle_list_section_snoozed">Αναβληθέντα</string>
     <string name="tickle_list_empty_title">Δεν υπάρχουν tickle ακόμα</string>
+    <plurals name="tickle_list_due_count">
+        <item quantity="one">%1$d άτομο για να επικοινωνήσεις σήμερα.</item>
+        <item quantity="other">%1$d άτομα για να επικοινωνήσεις σήμερα.</item>
+    </plurals>
     <string name="tickle_list_empty_description">Πατήστε + για να προγραμματίσετε μια υπενθύμιση</string>
     <string name="tickle_row_action_done">Ολοκληρώθηκε</string>
     <string name="tickle_row_action_snooze">Αναβολή</string>
@@ -77,7 +82,15 @@
     <string name="tickle_edit_section_group">ΟΜΑΔΑ</string>
     <string name="tickle_edit_search_contacts">Αναζήτηση επαφών</string>
     <string name="tickle_edit_section_frequency">ΣΥΧΝΟΤΗΤΑ</string>
+    <string name="tickle_edit_section_date">ΗΜΕΡΟΜΗΝΙΑ</string>
     <string name="tickle_edit_section_custom_interval">ΠΡΟΣΑΡΜΟΣΜΕΝΟ ΔΙΑΣΤΗΜΑ (ΗΜΕΡΕΣ)</string>
+    <string name="tickle_edit_section_common_annual_events">ΣΥΝΗΘΙΣΜΕΝΑ ΕΤΗΣΙΑ ΓΕΓΟΝΟΤΑ</string>
+    <string name="tickle_edit_preset_birthday">Γενέθλια</string>
+    <string name="tickle_edit_preset_anniversary">Επέτειος</string>
+    <string name="tickle_edit_preset_special_event">Ειδική εκδήλωση</string>
+    <string name="tickle_edit_preset_note_birthday">Γενέθλια</string>
+    <string name="tickle_edit_preset_note_anniversary">Επέτειος</string>
+    <string name="tickle_edit_preset_note_special_event">Ειδική εκδήλωση</string>
     <string name="tickle_edit_section_note">ΣΗΜΕΙΩΣΗ (ΠΡΟΑΙΡΕΤΙΚΗ)</string>
     <string name="tickle_edit_note_placeholder">Για ποιο θέμα να μιλήσω…</string>
     <string name="tickle_edit_default_note">Μείνετε σε επαφή</string>
@@ -91,6 +104,8 @@
     <string name="tickle_updated">Το tickle ενημερώθηκε</string>
     <string name="tickle_notification_contact_fallback">την επαφή σας</string>
     <string name="tickle_notification_title">Ώρα να επικοινωνήσετε με %1$s</string>
+    <string name="tickle_notification_channel_name">Υπενθυμίσεις Ticklr</string>
+    <string name="tickle_notification_channel_description">Υπενθυμίσεις Ticklr</string>
     <string name="tickle_notification_body">Οι άνθρωποί σας μετράνε — στείλτε ένα γρήγορο μήνυμα σήμερα.</string>
 
     <!-- Network list -->
@@ -228,12 +243,14 @@
     <string name="nav_settings">Ρυθμίσεις</string>
 
     <!-- Frequency display names -->
+    <string name="frequency_one_time">Μία φορά</string>
     <string name="frequency_daily">Καθημερινά</string>
     <string name="frequency_weekly">Εβδομαδιαία</string>
     <string name="frequency_biweekly">Κάθε 2 εβδομάδες</string>
     <string name="frequency_monthly">Μηνιαία</string>
     <string name="frequency_bimonthly">Κάθε 2 μήνες</string>
     <string name="frequency_quarterly">Τριμηνιαία</string>
+    <string name="frequency_annual">Ετήσιο</string>
     <string name="frequency_custom">Προσαρμοσμένο</string>
 
     <!-- Warm redesign -->
@@ -272,6 +289,10 @@
     <string name="warm_category_work_promptShort">Πάρε νέα από συνεργάτη</string>
     <string name="warm_category_milestones_promptShort">Όρισε υπενθύμιση</string>
     <string name="warm_category_community_promptShort">Χρόνος με τον κύκλο σου</string>
+    <plurals name="warm_card_contact_count">
+        <item quantity="one">%1$d επαφή</item>
+        <item quantity="other">%1$d επαφές</item>
+    </plurals>
     <string name="warm_card_tickleIdea">Ιδέα tickle:</string>
     <string name="warm_network_subtitle">Οι άνθρωποι που κρατάς στον κύκλο σου.</string>
     <string name="warm_network_filter_all">Όλοι</string>

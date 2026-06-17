@@ -17,6 +17,7 @@
     <string name="common_add">Přidat</string>
     <string name="common_update">Aktualizovat</string>
     <string name="common_send">Odeslat</string>
+    <string name="common_change">Změnit</string>
     <string name="common_edit">Upravit</string>
 
     <!-- Settings -->
@@ -57,6 +58,11 @@
     <string name="tickle_list_section_upcoming">Nadcházející</string>
     <string name="tickle_list_section_snoozed">Odložené</string>
     <string name="tickle_list_empty_title">Zatím žádné tickle</string>
+    <plurals name="tickle_list_due_count">
+        <item quantity="one">%1$d člověk, kterému se dnes ozvat.</item>
+        <item quantity="few">%1$d lidé, kterým se dnes ozvat.</item>
+        <item quantity="other">%1$d lidí, kterým se dnes ozvat.</item>
+    </plurals>
     <string name="tickle_list_empty_description">Klepněte na + a naplánujte připomenutí</string>
     <string name="tickle_row_action_done">Hotovo</string>
     <string name="tickle_row_action_snooze">Odložit</string>
@@ -77,7 +83,15 @@
     <string name="tickle_edit_section_group">SKUPINA</string>
     <string name="tickle_edit_search_contacts">Hledat kontakty</string>
     <string name="tickle_edit_section_frequency">FREKVENCE</string>
+    <string name="tickle_edit_section_date">DATUM</string>
     <string name="tickle_edit_section_custom_interval">VLASTNÍ INTERVAL (DNY)</string>
+    <string name="tickle_edit_section_common_annual_events">BĚŽNÉ ROČNÍ UDÁLOSTI</string>
+    <string name="tickle_edit_preset_birthday">Narozeniny</string>
+    <string name="tickle_edit_preset_anniversary">Výročí</string>
+    <string name="tickle_edit_preset_special_event">Zvláštní událost</string>
+    <string name="tickle_edit_preset_note_birthday">Narozeniny</string>
+    <string name="tickle_edit_preset_note_anniversary">Výročí</string>
+    <string name="tickle_edit_preset_note_special_event">Zvláštní událost</string>
     <string name="tickle_edit_section_note">POZNÁMKA (VOLITELNÉ)</string>
     <string name="tickle_edit_note_placeholder">O čem mluvit…</string>
     <string name="tickle_edit_default_note">Zůstaňte v kontaktu</string>
@@ -91,6 +105,8 @@
     <string name="tickle_updated">Tickle aktualizován</string>
     <string name="tickle_notification_contact_fallback">váš kontakt</string>
     <string name="tickle_notification_title">Čas kontaktovat %1$s</string>
+    <string name="tickle_notification_channel_name">Připomenutí Ticklr</string>
+    <string name="tickle_notification_channel_description">Připomenutí Ticklr</string>
     <string name="tickle_notification_body">Vaši lidé jsou důležití — pošlete dnes rychlou zprávu.</string>
 
     <!-- Network list -->
@@ -230,12 +246,14 @@
     <string name="nav_settings">Nastavení</string>
 
     <!-- Frequency display names -->
+    <string name="frequency_one_time">Jednorázově</string>
     <string name="frequency_daily">Denně</string>
     <string name="frequency_weekly">Týdně</string>
     <string name="frequency_biweekly">Každé 2 týdny</string>
     <string name="frequency_monthly">Měsíčně</string>
     <string name="frequency_bimonthly">Každé 2 měsíce</string>
     <string name="frequency_quarterly">Čtvrtletně</string>
+    <string name="frequency_annual">Ročně</string>
     <string name="frequency_custom">Vlastní</string>
 
     <!-- Warm redesign -->
@@ -274,6 +292,11 @@
     <string name="warm_category_work_promptShort">Ozvi se kolegovi</string>
     <string name="warm_category_milestones_promptShort">Nastav připomenutí</string>
     <string name="warm_category_community_promptShort">Čas se svým okruhem</string>
+    <plurals name="warm_card_contact_count">
+        <item quantity="one">%1$d kontakt</item>
+        <item quantity="few">%1$d kontakty</item>
+        <item quantity="other">%1$d kontaktů</item>
+    </plurals>
     <string name="warm_card_tickleIdea">Nápad na tickle:</string>
     <string name="warm_network_subtitle">Lidé, které máš ve svém okruhu.</string>
     <string name="warm_network_filter_all">Vše</string>

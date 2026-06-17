@@ -17,6 +17,7 @@
     <string name="common_add">شامل کریں</string>
     <string name="common_update">اپ ڈیٹ کریں</string>
     <string name="common_send">بھیجیں</string>
+    <string name="common_change">تبدیل کریں</string>
     <string name="common_edit">ترمیم کریں</string>
 
     <!-- Settings -->
@@ -57,6 +58,10 @@
     <string name="tickle_list_section_upcoming">آنے والی</string>
     <string name="tickle_list_section_snoozed">ملتوی</string>
     <string name="tickle_list_empty_title">ابھی کوئی یاددہانی نہیں</string>
+    <plurals name="tickle_list_due_count">
+        <item quantity="one">آج رابطہ کرنے کے لیے %1$d شخص۔</item>
+        <item quantity="other">آج رابطہ کرنے کے لیے %1$d لوگ۔</item>
+    </plurals>
     <string name="tickle_list_empty_description">+ پر ٹیپ کر کے یاددہانی شیڈول کریں</string>
     <string name="tickle_row_action_done">مکمل</string>
     <string name="tickle_row_action_snooze">ملتوی کریں</string>
@@ -77,7 +82,15 @@
     <string name="tickle_edit_section_group">گروپ</string>
     <string name="tickle_edit_search_contacts">رابطے تلاش کریں</string>
     <string name="tickle_edit_section_frequency">تعدد</string>
+    <string name="tickle_edit_section_date">تاریخ</string>
     <string name="tickle_edit_section_custom_interval">حسب ضرورت وقفہ (دن)</string>
+    <string name="tickle_edit_section_common_annual_events">عام سالانہ مواقع</string>
+    <string name="tickle_edit_preset_birthday">سالگرہ</string>
+    <string name="tickle_edit_preset_anniversary">برسی</string>
+    <string name="tickle_edit_preset_special_event">خاص موقع</string>
+    <string name="tickle_edit_preset_note_birthday">سالگرہ</string>
+    <string name="tickle_edit_preset_note_anniversary">برسی</string>
+    <string name="tickle_edit_preset_note_special_event">خاص موقع</string>
     <string name="tickle_edit_section_note">نوٹ (اختیاری)</string>
     <string name="tickle_edit_note_placeholder">کس بارے میں بات کرنی ہے…</string>
     <string name="tickle_edit_default_note">رابطے میں رہیں</string>
@@ -91,6 +104,8 @@
     <string name="tickle_updated">یاددہانی اپ ڈیٹ ہو گئی</string>
     <string name="tickle_notification_contact_fallback">آپ کا رابطہ</string>
     <string name="tickle_notification_title">%1$s سے رابطہ کرنے کا وقت ہے</string>
+    <string name="tickle_notification_channel_name">Ticklr یاددہانیاں</string>
+    <string name="tickle_notification_channel_description">Ticklr یاددہانیاں</string>
     <string name="tickle_notification_body">آپ کے لوگ اہم ہیں — آج ایک مختصر پیغام بھیجیں۔</string>
 
     <!-- Network list -->
@@ -233,12 +248,14 @@
     <string name="nav_settings">ترتیبات</string>
 
     <!-- Frequency display names -->
+    <string name="frequency_one_time">ایک بار</string>
     <string name="frequency_daily">روزانہ</string>
     <string name="frequency_weekly">ہفتہ وار</string>
     <string name="frequency_biweekly">ہر 2 ہفتے</string>
     <string name="frequency_monthly">ماہانہ</string>
     <string name="frequency_bimonthly">ہر 2 ماہ</string>
     <string name="frequency_quarterly">سہ ماہی</string>
+    <string name="frequency_annual">سالانہ</string>
     <string name="frequency_custom">حسب ضرورت</string>
 
     <!-- Warm redesign -->
@@ -277,6 +294,10 @@
     <string name="warm_category_work_promptShort">کسی ساتھی سے بات</string>
     <string name="warm_category_milestones_promptShort">ریمائنڈر سیٹ کریں</string>
     <string name="warm_category_community_promptShort">اپنوں کے ساتھ وقت</string>
+    <plurals name="warm_card_contact_count">
+        <item quantity="one">%1$d رابطہ</item>
+        <item quantity="other">%1$d رابطے</item>
+    </plurals>
     <string name="warm_card_tickleIdea">ٹِکل آئیڈیا:</string>
     <string name="warm_network_subtitle">وہ لوگ جنہیں آپ اپنے حلقے میں رکھتے ہیں۔</string>
     <string name="warm_network_filter_all">سب</string>

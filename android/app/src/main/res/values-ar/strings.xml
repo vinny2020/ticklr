@@ -17,6 +17,7 @@
     <string name="common_add">إضافة</string>
     <string name="common_update">تحديث</string>
     <string name="common_send">إرسال</string>
+    <string name="common_change">تغيير</string>
     <string name="common_edit">تعديل</string>
 
     <!-- Settings -->
@@ -57,6 +58,14 @@
     <string name="tickle_list_section_upcoming">القادمة</string>
     <string name="tickle_list_section_snoozed">المؤجّلة</string>
     <string name="tickle_list_empty_title">لا توجد تذكيرات بعد</string>
+    <plurals name="tickle_list_due_count">
+        <item quantity="zero">لا أشخاص للتواصل معهم اليوم.</item>
+        <item quantity="one">%1$d شخص للتواصل معه اليوم.</item>
+        <item quantity="two">%1$d شخصان للتواصل معهما اليوم.</item>
+        <item quantity="few">%1$d أشخاص للتواصل معهم اليوم.</item>
+        <item quantity="many">%1$d شخصًا للتواصل معهم اليوم.</item>
+        <item quantity="other">%1$d شخص للتواصل معهم اليوم.</item>
+    </plurals>
     <string name="tickle_list_empty_description">اضغط + لجدولة تذكير</string>
     <string name="tickle_row_action_done">تم</string>
     <string name="tickle_row_action_snooze">تأجيل</string>
@@ -77,7 +86,15 @@
     <string name="tickle_edit_section_group">المجموعة</string>
     <string name="tickle_edit_search_contacts">بحث في جهات الاتصال</string>
     <string name="tickle_edit_section_frequency">التكرار</string>
+    <string name="tickle_edit_section_date">التاريخ</string>
     <string name="tickle_edit_section_custom_interval">فاصل مخصّص (بالأيام)</string>
+    <string name="tickle_edit_section_common_annual_events">الأحداث السنوية الشائعة</string>
+    <string name="tickle_edit_preset_birthday">عيد ميلاد</string>
+    <string name="tickle_edit_preset_anniversary">ذكرى سنوية</string>
+    <string name="tickle_edit_preset_special_event">مناسبة خاصة</string>
+    <string name="tickle_edit_preset_note_birthday">عيد ميلاد</string>
+    <string name="tickle_edit_preset_note_anniversary">ذكرى سنوية</string>
+    <string name="tickle_edit_preset_note_special_event">مناسبة خاصة</string>
     <string name="tickle_edit_section_note">ملاحظة (اختياري)</string>
     <string name="tickle_edit_note_placeholder">عمّ تريد التحدث…</string>
     <string name="tickle_edit_default_note">ابقَ على تواصل</string>
@@ -91,6 +108,8 @@
     <string name="tickle_updated">تم تحديث التذكير</string>
     <string name="tickle_notification_contact_fallback">جهة الاتصال</string>
     <string name="tickle_notification_title">حان وقت التواصل مع %1$s</string>
+    <string name="tickle_notification_channel_name">تذكيرات Ticklr</string>
+    <string name="tickle_notification_channel_description">تذكيرات Ticklr</string>
     <string name="tickle_notification_body">أحبّاؤك يهمّون — أرسل رسالة سريعة اليوم.</string>
 
     <!-- Network list -->
@@ -232,12 +251,14 @@
     <string name="nav_settings">الإعدادات</string>
 
     <!-- Frequency display names -->
+    <string name="frequency_one_time">مرة واحدة</string>
     <string name="frequency_daily">يومي</string>
     <string name="frequency_weekly">أسبوعي</string>
     <string name="frequency_biweekly">كل أسبوعين</string>
     <string name="frequency_monthly">شهري</string>
     <string name="frequency_bimonthly">كل شهرين</string>
     <string name="frequency_quarterly">ربع سنوي</string>
+    <string name="frequency_annual">سنوي</string>
     <string name="frequency_custom">مخصّص</string>
 
     <!-- Warm redesign -->
@@ -276,6 +297,14 @@
     <string name="warm_category_work_promptShort">اطمئنّ على زميل</string>
     <string name="warm_category_milestones_promptShort">ضع تذكيرًا لمحطّة</string>
     <string name="warm_category_community_promptShort">خطّط وقتًا مع دائرتك</string>
+    <plurals name="warm_card_contact_count">
+        <item quantity="zero">%1$d جهة اتصال</item>
+        <item quantity="one">%1$d جهة اتصال</item>
+        <item quantity="two">%1$d جهتا اتصال</item>
+        <item quantity="few">%1$d جهات اتصال</item>
+        <item quantity="many">%1$d جهة اتصال</item>
+        <item quantity="other">%1$d جهة اتصال</item>
+    </plurals>
     <string name="warm_card_tickleIdea">فكرة تذكير:</string>
     <string name="warm_network_subtitle">الأشخاص الذين تُبقيهم في دائرتك.</string>
     <string name="warm_network_filter_all">الكل</string>

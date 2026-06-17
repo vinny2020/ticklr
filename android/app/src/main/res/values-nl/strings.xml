@@ -17,6 +17,7 @@
     <string name="common_add">Toevoegen</string>
     <string name="common_update">Bijwerken</string>
     <string name="common_send">Versturen</string>
+    <string name="common_change">Wijzigen</string>
     <string name="common_edit">Bewerken</string>
 
     <!-- Settings -->
@@ -57,6 +58,10 @@
     <string name="tickle_list_section_upcoming">Binnenkort</string>
     <string name="tickle_list_section_snoozed">Uitgesteld</string>
     <string name="tickle_list_empty_title">Nog geen tickles</string>
+    <plurals name="tickle_list_due_count">
+        <item quantity="one">%1$d persoon om vandaag contact mee op te nemen.</item>
+        <item quantity="other">%1$d personen om vandaag contact mee op te nemen.</item>
+    </plurals>
     <string name="tickle_list_empty_description">Tik op + om een herinnering in te plannen</string>
     <string name="tickle_row_action_done">Klaar</string>
     <string name="tickle_row_action_snooze">Uitstellen</string>
@@ -77,7 +82,15 @@
     <string name="tickle_edit_section_group">GROEP</string>
     <string name="tickle_edit_search_contacts">Contacten zoeken</string>
     <string name="tickle_edit_section_frequency">FREQUENTIE</string>
+    <string name="tickle_edit_section_date">DATUM</string>
     <string name="tickle_edit_section_custom_interval">AANGEPAST INTERVAL (DAGEN)</string>
+    <string name="tickle_edit_section_common_annual_events">VEELVOORKOMENDE JAARLIJKSE GEBEURTENISSEN</string>
+    <string name="tickle_edit_preset_birthday">Verjaardag</string>
+    <string name="tickle_edit_preset_anniversary">Jubileum</string>
+    <string name="tickle_edit_preset_special_event">Speciale gebeurtenis</string>
+    <string name="tickle_edit_preset_note_birthday">Verjaardag</string>
+    <string name="tickle_edit_preset_note_anniversary">Jubileum</string>
+    <string name="tickle_edit_preset_note_special_event">Speciale gebeurtenis</string>
     <string name="tickle_edit_section_note">NOTITIE (OPTIONEEL)</string>
     <string name="tickle_edit_note_placeholder">Waarover praten…</string>
     <string name="tickle_edit_default_note">Blijf in contact</string>
@@ -91,6 +104,8 @@
     <string name="tickle_updated">Tickle bijgewerkt</string>
     <string name="tickle_notification_contact_fallback">uw contact</string>
     <string name="tickle_notification_title">Tijd om %1$s te contacteren</string>
+    <string name="tickle_notification_channel_name">Ticklr-herinneringen</string>
+    <string name="tickle_notification_channel_description">Ticklr-herinneringen</string>
     <string name="tickle_notification_body">Uw mensen tellen — stuur vandaag een snel berichtje.</string>
 
     <!-- Network list -->
@@ -228,12 +243,14 @@
     <string name="nav_settings">Instellingen</string>
 
     <!-- Frequency display names -->
+    <string name="frequency_one_time">Eenmalig</string>
     <string name="frequency_daily">Dagelijks</string>
     <string name="frequency_weekly">Wekelijks</string>
     <string name="frequency_biweekly">Elke 2 weken</string>
     <string name="frequency_monthly">Maandelijks</string>
     <string name="frequency_bimonthly">Elke 2 maanden</string>
     <string name="frequency_quarterly">Driemaandelijks</string>
+    <string name="frequency_annual">Jaarlijks</string>
     <string name="frequency_custom">Aangepast</string>
 
     <!-- Warm redesign -->
@@ -272,6 +289,10 @@
     <string name="warm_category_work_promptShort">Collega even bijpraten</string>
     <string name="warm_category_milestones_promptShort">Herinnering instellen</string>
     <string name="warm_category_community_promptShort">Tijd met je kring</string>
+    <plurals name="warm_card_contact_count">
+        <item quantity="one">%1$d contact</item>
+        <item quantity="other">%1$d contacten</item>
+    </plurals>
     <string name="warm_card_tickleIdea">Tickle-idee:</string>
     <string name="warm_network_subtitle">De mensen die je in je kring houdt.</string>
     <string name="warm_network_filter_all">Alle</string>
