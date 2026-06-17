@@ -1,0 +1,1 @@
+You can now create one-time and annual tickles, including birthdays, anniversaries, and custom special events. This release also improves localization coverage and fixes several translated UI strings.

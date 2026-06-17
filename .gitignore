@@ -49,3 +49,6 @@ ios/Package.resolved
 .claude/worktrees/
 .claude/rtl-screenshots/
 .claude/ipad-screenshots/
+
+# Fastlane generated output
+fastlane/report.xml

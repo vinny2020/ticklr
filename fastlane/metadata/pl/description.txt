@@ -1,0 +1,17 @@
+Twoi ludzie są ważni. Bądź w kontakcie na własnych zasadach.
+
+Ticklr to prywatny menedżer sieci kontaktów, który pomaga utrzymywać ważne relacje bez algorytmów, kanałów społecznościowych i konta w chmurze. Wszystko zostaje na Twoim urządzeniu.
+
+Ustawiaj cykliczne przypomnienia o kontakcie. Zadzwoń do taty w każdą niedzielę. Odezwij się do współpracownika raz na kwartał. Ticklr dyskretnie powiadomi Cię, gdy nadejdzie pora, a potem automatycznie zaplanuje kolejne przypomnienie.
+
+FUNKCJE
+
+- Kalendarz tickle: dzienne, tygodniowe, miesięczne lub niestandardowe przypomnienia dla każdego kontaktu
+- Import kontaktów z telefonu albo z eksportu CSV LinkedIn
+- Organizowanie w grupy: Rodzina, Praca, Zarząd, Przyjaciele lub dowolna własna etykieta
+- Tworzenie SMS-ów i MMS-ów do wielu kontaktów naraz z zapisanych szablonów wiadomości
+- 100% na urządzeniu: bez konta, bez synchronizacji w chmurze, bez analityki, bez śledzenia
+
+TWOJE DANE ZOSTAJĄ NA TELEFONIE
+
+Ticklr nie ma serwerów i nie zbiera danych. Twoje kontakty, przypomnienia i wiadomości są przechowywane wyłącznie w bezpiecznej lokalnej bazie danych na urządzeniu. Nie możemy zobaczyć Twoich danych, bo nigdy ich nie otrzymujemy.

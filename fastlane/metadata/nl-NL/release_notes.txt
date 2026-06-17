@@ -1,0 +1,1 @@
+Je kunt nu eenmalige en jaarlijkse tickles maken, waaronder verjaardagen, jubilea en eigen speciale gebeurtenissen. Deze release verbetert ook de lokalisatiedekking en corrigeert meerdere vertaalde UI-teksten.

@@ -1,0 +1,10 @@
+app_identifier("com.xaymaca.sit")
+metadata_path("fastlane/metadata")
+
+# Metadata-only by default. Ticklr's existing CI/CD remains responsible for
+# builds, signing, TestFlight, and release binaries.
+skip_binary_upload(true)
+skip_screenshots(true)
+submit_for_review(false)
+precheck_include_in_app_purchases(false)
+force(true)

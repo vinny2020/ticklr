@@ -1,0 +1,17 @@
+Your people matter. Stay in touch on your terms.
+
+Ticklr is a privacy-first contact network manager that helps you maintain meaningful relationships — without algorithms, social feeds, or a cloud account. Everything lives on your device.
+
+Set recurring reminders to reach out. Call your dad every Sunday. Check in with a colleague every quarter. Ticklr quietly notifies you when it's time, then schedules the next reminder automatically.
+
+FEATURES
+
+— Tickle calendar: set daily, weekly, monthly, or custom recurring reminders per contact
+— Import contacts from your iPhone or LinkedIn CSV export
+— Organize into groups: Family, Work, Board, Friends — any label you want
+— Compose SMS and MMS to multiple contacts at once using saved message templates
+— 100% on-device: no account, no cloud sync, no analytics, no tracking
+
+YOUR DATA STAYS ON YOUR PHONE
+
+Ticklr has no servers and collects no data. Your contacts, reminders, and messages are stored exclusively in your device's secure local database. We have no way to see your data — because we never receive it.

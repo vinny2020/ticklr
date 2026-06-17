@@ -1,0 +1,17 @@
+Dina människor spelar roll. Håll kontakten på dina villkor.
+
+Ticklr är en integritetsfokuserad kontakt- och nätverkshanterare som hjälper dig att vårda meningsfulla relationer utan algoritmer, sociala flöden eller molnkonto. Allt finns kvar på din enhet.
+
+Ställ in återkommande påminnelser för att höra av dig. Ring din pappa varje söndag. Stäm av med en kollega varje kvartal. Ticklr meddelar dig diskret när det är dags och schemalägger sedan automatiskt nästa påminnelse.
+
+FUNKTIONER
+
+- Tickle-kalender: dagliga, veckovisa, månatliga eller anpassade återkommande påminnelser per kontakt
+- Importera kontakter från telefonen eller en LinkedIn CSV-export
+- Organisera i grupper: Familj, Arbete, Styrelse, Vänner eller vilken etikett du vill
+- Skriv SMS och MMS till flera kontakter samtidigt med sparade meddelandemallar
+- 100% på enheten: inget konto, ingen molnsynkning, ingen analys, ingen spårning
+
+DINA DATA STANNAR PÅ TELEFONEN
+
+Ticklr har inga servrar och samlar inte in några data. Dina kontakter, påminnelser och meddelanden lagras enbart i enhetens säkra lokala databas. Vi kan inte se dina data eftersom vi aldrig tar emot dem.

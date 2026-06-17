@@ -1,0 +1,1 @@
+crm,contacts,relationship,reminder,keep in touch,follow up,birthday,friends,family,address book
