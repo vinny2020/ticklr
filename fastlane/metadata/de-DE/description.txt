@@ -1,0 +1,17 @@
+Ihre Menschen sind wichtig. Bleiben Sie zu Ihren Bedingungen in Kontakt.
+
+Ticklr ist ein datenschutzorientierter Kontakt- und Netzwerkmanager, der Ihnen hilft, wichtige Beziehungen zu pflegen, ganz ohne Algorithmen, Social Feeds oder Cloud-Konto. Alles bleibt auf Ihrem Gerät.
+
+Legen Sie wiederkehrende Erinnerungen fest. Rufen Sie Ihren Vater jeden Sonntag an. Melden Sie sich jedes Quartal bei einer Kollegin. Ticklr erinnert Sie unaufdringlich, wenn es Zeit ist, und plant danach automatisch die nächste Erinnerung.
+
+FUNKTIONEN
+
+- Tickle-Kalender: tägliche, wöchentliche, monatliche oder benutzerdefinierte Erinnerungen pro Kontakt
+- Kontakte vom Telefon oder aus einem LinkedIn-CSV-Export importieren
+- In Gruppen organisieren: Familie, Arbeit, Vorstand, Freunde oder jedes andere gewünschte Label
+- SMS und MMS mit gespeicherten Nachrichtenvorlagen an mehrere Kontakte gleichzeitig verfassen
+- 100 % auf dem Gerät: kein Konto, keine Cloud-Synchronisierung, keine Analysen, kein Tracking
+
+IHRE DATEN BLEIBEN AUF IHREM TELEFON
+
+Ticklr hat keine Server und sammelt keine Daten. Ihre Kontakte, Erinnerungen und Nachrichten werden ausschließlich in der sicheren lokalen Datenbank Ihres Geräts gespeichert. Wir können Ihre Daten nicht sehen, weil wir sie nie erhalten.

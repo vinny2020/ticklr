@@ -1,0 +1,1 @@
+Teď můžeš vytvářet jednorázové i roční tickly, včetně narozenin, výročí a vlastních zvláštních událostí. Tato verze také zlepšuje pokrytí lokalizace a opravuje několik přeložených textů v rozhraní.

@@ -1,0 +1,1 @@
+Du kan nu skapa engångs- och årliga tickles, inklusive födelsedagar, årsdagar och egna särskilda händelser. Den här versionen förbättrar också lokaliseringsstödet och rättar flera översatta UI-texter.

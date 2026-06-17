@@ -1,0 +1,17 @@
+Tu gente importa. Mantente en contacto a tu manera.
+
+Ticklr es un gestor de red de contactos centrado en la privacidad que te ayuda a mantener relaciones significativas sin algoritmos, redes sociales ni una cuenta en la nube. Todo vive en tu dispositivo.
+
+Programa recordatorios recurrentes para contactar. Llama a tu padre cada domingo. Escribe a un colega cada trimestre. Ticklr te avisa discretamente cuando llega el momento y luego programa el siguiente recordatorio automáticamente.
+
+FUNCIONES
+
+- Calendario tickle: crea recordatorios diarios, semanales, mensuales o personalizados para cada contacto
+- Importa contactos desde tu teléfono o desde una exportación CSV de LinkedIn
+- Organiza en grupos: Familia, Trabajo, Junta, Amigos o cualquier etiqueta que quieras
+- Redacta SMS y MMS para varios contactos a la vez con plantillas de mensajes guardadas
+- 100% en el dispositivo: sin cuenta, sin sincronización en la nube, sin analíticas, sin seguimiento
+
+TUS DATOS SE QUEDAN EN TU TELÉFONO
+
+Ticklr no tiene servidores y no recopila datos. Tus contactos, recordatorios y mensajes se almacenan exclusivamente en la base de datos local segura de tu dispositivo. No podemos ver tus datos porque nunca los recibimos.

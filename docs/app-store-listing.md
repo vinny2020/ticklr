@@ -1,5 +1,10 @@
 # Ticklr — App Store Listing Copy
 
+Repo-managed App Store Connect metadata lives under `fastlane/metadata/`.
+Use `python3 scripts/validate-app-store-metadata.py` before uploading, then
+`bundle exec fastlane ios store_metadata` to upload metadata only. Fastlane is
+not used for builds, signing, TestFlight, screenshots, or binary uploads.
+
 ## App Name
 Ticklr
 
