@@ -1,5 +1,1 @@
-Een frisse look en soepelere flows.
-• Nieuw warm app-icoon in crème en espresso
-• Vernieuwde kaartillustraties die in elke taal kloppen
-• Na het versturen van een bericht keer je terug waar je was
-• Contactdetails tonen wanneer je voor het laatst contact had
+Je kunt nu eenmalige en jaarlijkse tickles maken, waaronder verjaardagen, jubilea en eigen speciale gebeurtenissen. Deze release verbetert ook de lokalisatiedekking en corrigeert meerdere vertaalde UI-teksten.

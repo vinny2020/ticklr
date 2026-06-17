@@ -1,5 +1,1 @@
-Nuevo aspecto y flujos más fluidos.
-• Nuevo icono cálido en crema y espresso
-• Ilustraciones renovadas que lucen bien en todos los idiomas
-• Al enviar un mensaje vuelves justo donde estabas
-• La ficha del contacto muestra cuándo conectasteis por última vez
+Ahora puedes crear tickles únicos y anuales, incluidos cumpleaños, aniversarios y eventos especiales personalizados. Esta versión también mejora la cobertura de localización y corrige varios textos traducidos de la interfaz.

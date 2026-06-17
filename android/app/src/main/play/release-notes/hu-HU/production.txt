@@ -1,5 +1,1 @@
-Friss megjelenés és gördülékenyebb folyamatok.
-• Új, meleg krém-eszpresszó alkalmazásikon
-• Megújult kártyaillusztrációk, minden nyelven otthonosak
-• Üzenetküldés után oda térsz vissza, ahol voltál
-• A névjegy mutatja, mikor beszéltetek utoljára
+Mostantól egyszeri és éves tickle-öket is létrehozhatsz, például születésnapokhoz, évfordulókhoz és saját különleges eseményekhez. Ez a kiadás javítja a lokalizációs lefedettséget, és több lefordított UI-szöveget is korrigál.

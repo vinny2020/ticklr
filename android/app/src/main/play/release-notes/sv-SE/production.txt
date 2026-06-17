@@ -1,5 +1,1 @@
-Ett fräscht utseende och smidigare flöden.
-• Ny varm appikon i gräddvitt och espresso
-• Uppdaterade kortillustrationer som passar alla språk
-• När du skickat ett sms kommer du tillbaka dit du var
-• Kontaktuppgifterna visar när ni senast hade kontakt
+Du kan nu skapa engångs- och årliga tickles, inklusive födelsedagar, årsdagar och egna särskilda händelser. Den här versionen förbättrar också lokaliseringsstödet och rättar flera översatta UI-texter.

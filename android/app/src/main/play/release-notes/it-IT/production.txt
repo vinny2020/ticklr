@@ -1,5 +1,1 @@
-Un nuovo look e flussi più fluidi.
-• Nuova icona calda crema ed espresso
-• Illustrazioni delle schede rinnovate, perfette in ogni lingua
-• Dopo l'invio di un messaggio torni esattamente dove eri
-• I dettagli del contatto mostrano l'ultimo contatto
+Ora puoi creare tickle una tantum e annuali, inclusi compleanni, anniversari ed eventi speciali personalizzati. Questa versione migliora anche la copertura della localizzazione e corregge diverse stringhe tradotte dell’interfaccia.
