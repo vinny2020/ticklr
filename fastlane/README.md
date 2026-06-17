@@ -1,60 +1,32 @@
-# App Store Metadata
+fastlane documentation
+----
 
-Ticklr uses Fastlane only for App Store Connect listing metadata. It is not part
-of the build, signing, TestFlight, binary upload, or current CI/CD release flow.
+# Installation
 
-## What Is Managed
-
-Metadata lives under `fastlane/metadata/<locale>/`:
-
-- `name.txt`
-- `subtitle.txt`
-- `promotional_text.txt`
-- `description.txt`
-- `keywords.txt`
-- `release_notes.txt`
-- `privacy_url.txt`
-- `support_url.txt`
-- `marketing_url.txt`
-
-Screenshots are intentionally not managed here yet.
-
-## Local Setup
-
-Install Fastlane locally:
+Make sure you have the latest version of the Xcode command line tools installed:
 
 ```sh
-bundle install
+xcode-select --install
 ```
 
-Set App Store Connect API credentials. Keep `.p8` keys out of git.
+For _fastlane_ installation instructions, see [Installing _fastlane_](https://docs.fastlane.tools/#installing-fastlane)
+
+# Available Actions
+
+## iOS
+
+### ios store_metadata
 
 ```sh
-export APP_STORE_CONNECT_API_KEY_ID="..."
-export APP_STORE_CONNECT_ISSUER_ID="..."
-export APP_STORE_CONNECT_API_KEY_CONTENT="$(base64 -i /path/to/AuthKey_XXXX.p8)"
-export APP_STORE_CONNECT_API_KEY_IS_KEY_CONTENT_BASE64=true
+[bundle exec] fastlane ios store_metadata
 ```
 
-Validate metadata before upload:
+Upload App Store Connect metadata only; does not build or upload binaries/screenshots.
 
-```sh
-python3 scripts/validate-app-store-metadata.py
-```
+----
 
-Upload metadata only:
+This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.
 
-```sh
-bundle exec fastlane ios store_metadata
-```
+More information about _fastlane_ can be found on [fastlane.tools](https://fastlane.tools).
 
-## Locale Notes
-
-The metadata folders use App Store Connect locale tags, not Android resource or
-Play Console tags. For example, Android `values-he` / Play `iw-IL` maps to App
-Store `he`, and Play `zh-CN` maps to App Store `zh-Hans`.
-
-Ticklr ships an Urdu in-app localization, but this metadata setup does not add a
-`ur` App Store listing folder because App Store Connect metadata locale support
-does not currently match that app locale. It will fall back to the primary store
-listing unless Apple adds support or we choose another store locale strategy.
+The documentation of _fastlane_ can be found on [docs.fastlane.tools](https://docs.fastlane.tools).
