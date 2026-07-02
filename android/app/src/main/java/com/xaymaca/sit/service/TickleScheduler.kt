@@ -68,12 +68,28 @@ object TickleScheduler {
     ): Long {
         val effectiveStartDate = startDate ?: original?.startDate ?: now
         if (original == null) return initialNextDueDate(effectiveStartDate, frequency, customDays, now)
-        val scheduleChanged =
-            original.frequency != frequency ||
-                original.customIntervalDays != customDays ||
-                original.startDate != effectiveStartDate
-        return if (scheduleChanged) initialNextDueDate(effectiveStartDate, frequency, customDays, now) else original.nextDueDate
+        return if (scheduleChanged(original, frequency, customDays, effectiveStartDate)) {
+            initialNextDueDate(effectiveStartDate, frequency, customDays, now)
+        } else {
+            original.nextDueDate
+        }
     }
+
+    /**
+     * Whether an edit touched a schedule field (frequency, custom interval, or
+     * start date). Callers use this to decide whether to recompute schedule-derived
+     * state (`nextDueDate`, `status`) or preserve the original's — so a note/contact
+     * edit doesn't wipe completion history or un-snooze a reminder (TIC-67).
+     */
+    fun scheduleChanged(
+        original: TickleReminder,
+        frequency: String,
+        customDays: Int?,
+        startDate: Long
+    ): Boolean =
+        original.frequency != frequency ||
+            original.customIntervalDays != customDays ||
+            original.startDate != startDate
 
     /**
      * Calculates the next due date from a base timestamp based on the given frequency.

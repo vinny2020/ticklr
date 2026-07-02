@@ -201,9 +201,16 @@ class TickleViewModel @Inject constructor(
             val contactName = reminder.contactId?.let { cId ->
                 contactRepository.getContactById(cId)?.fullName
             } ?: context.getString(R.string.tickle_notification_contact_fallback)
-            TickleScheduler.scheduleNotification(
-                context, finalId, reminder.contactId, contactName, reminder.note, reminder.nextDueDate
-            )
+            // Only schedule an alarm for active reminders. A preserved snoozed or
+            // completed reminder (TIC-67) must not fire an alarm for its past due
+            // date; clear any stale alarm instead.
+            if (reminder.status == TickleStatus.ACTIVE.name) {
+                TickleScheduler.scheduleNotification(
+                    context, finalId, reminder.contactId, contactName, reminder.note, reminder.nextDueDate
+                )
+            } else {
+                TickleScheduler.cancelNotification(context, finalId)
+            }
             TickleScheduler.scheduleWorker(context)
             _toastMessage.value = if (isNew) context.getString(R.string.tickle_saved) else context.getString(R.string.tickle_updated)
         }

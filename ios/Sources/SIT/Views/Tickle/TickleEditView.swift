@@ -20,6 +20,14 @@ struct TickleEditView: View {
     @State private var toastMessage = ""
     @State private var isSaving = false
 
+    /// Schedule fields as seeded into the editor. On save we compare the live
+    /// form values against these to decide whether the schedule actually changed
+    /// — only then do we recompute `nextDueDate`/`status`. A note-only edit must
+    /// not skip a due occurrence or un-snooze the reminder (TIC-67).
+    private let initialFrequency: TickleFrequency
+    private let initialCustomIntervalDays: Int
+    private let initialStartDate: Date
+
     /// Close the editor — via the pane callback on iPad, else the sheet dismiss.
     private func close() {
         if let onClose { onClose() } else { dismiss() }
@@ -27,7 +35,11 @@ struct TickleEditView: View {
 
     private var isEditing: Bool { existing != nil }
 
-    private var canSave: Bool { selectedContact != nil && !isSaving }
+    /// TIC-70: a group-anchored reminder (no contact) is still saveable — an
+    /// existing group link satisfies the target requirement in place of a contact.
+    private var canSave: Bool {
+        (selectedContact != nil || existing?.group != nil) && !isSaving
+    }
 
     init(contact: Contact? = nil, existing: TickleReminder? = nil, onClose: (() -> Void)? = nil) {
         self.existing = existing
@@ -38,12 +50,18 @@ struct TickleEditView: View {
             _customIntervalDays  = State(initialValue: r.customIntervalDays ?? 30)
             _startDate           = State(initialValue: r.nextDueDate)
             _note                = State(initialValue: r.note)
+            initialFrequency          = r.frequency
+            initialCustomIntervalDays = r.customIntervalDays ?? 30
+            initialStartDate          = r.nextDueDate
         } else {
             _selectedContact     = State(initialValue: contact)
             _frequency           = State(initialValue: .monthly)
             _customIntervalDays  = State(initialValue: 30)
             _startDate           = State(initialValue: Date())
             _note                = State(initialValue: "")
+            initialFrequency          = .monthly
+            initialCustomIntervalDays = 30
+            initialStartDate          = Date()
         }
     }
 
@@ -57,6 +75,11 @@ struct TickleEditView: View {
                         HStack {
                             if let c = selectedContact {
                                 Text(c.fullName).foregroundStyle(.primary)
+                            } else if let group = existing?.group {
+                                // TIC-70: show the anchoring group's name where the
+                                // contact name would go, so the user sees the reminder
+                                // is group-based rather than an empty target.
+                                Text(group.displayName).foregroundStyle(.primary)
                             } else {
                                 Text(String(localized: "tickleEdit.placeholder.contact")).foregroundStyle(.secondary)
                             }
@@ -159,19 +182,42 @@ struct TickleEditView: View {
         let intervalDays = frequency == .custom ? customIntervalDays : nil
 
         if let r = existing {
-            r.contact          = selectedContact
-            r.group            = nil
-            r.frequency        = frequency
-            r.customIntervalDays = intervalDays
-            r.nextDueDate = TickleScheduler.initialNextDueDate(
-                from: startDate,
-                frequency: frequency,
-                customDays: intervalDays
-            )
+            // TIC-70: only overwrite the target when the user explicitly picked a
+            // contact. A group-anchored reminder edited without choosing one keeps
+            // its group link instead of being silently unlinked.
+            if let picked = selectedContact {
+                r.contact = picked
+                r.group   = nil
+            }
             r.note             = finalNote
-            r.status           = .active
+
+            // TIC-67: the schedule fields (frequency / custom interval / start
+            // date) drive nextDueDate and status. Recompute those ONLY when a
+            // schedule field actually changed — a note/target-only edit must not
+            // skip a due occurrence or un-snooze the reminder.
+            let scheduleChanged =
+                frequency != initialFrequency ||
+                customIntervalDays != initialCustomIntervalDays ||
+                !Calendar.current.isDate(startDate, inSameDayAs: initialStartDate)
+            r.frequency          = frequency
+            r.customIntervalDays = intervalDays
+            if scheduleChanged {
+                r.startDate   = startDate
+                r.nextDueDate = TickleScheduler.initialNextDueDate(
+                    from: startDate,
+                    frequency: frequency,
+                    customDays: intervalDays
+                )
+                r.status = .active
+            }
             TickleScheduler.cancelNotification(for: r)
-            TickleScheduler.scheduleNotification(for: r)
+            // Reschedule for active AND snoozed reminders — a snoozed reminder
+            // keeps a pending notification for its snooze-end date (snooze()
+            // itself schedules one), so a note-only edit must restore it.
+            // Only completed reminders stay silent.
+            if r.status != .completed {
+                TickleScheduler.scheduleNotification(for: r)
+            }
         } else {
             let reminder = TickleReminder(
                 contact:            selectedContact,
