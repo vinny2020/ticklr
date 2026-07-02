@@ -1,6 +1,7 @@
 package com.xaymaca.sit
 
 import com.xaymaca.sit.ui.nav.Screen
+import com.xaymaca.sit.ui.nav.startDestinationFor
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
@@ -47,5 +48,29 @@ class ScreenRouteTest {
     fun `createRouteWithContact always uses -1 as tickle placeholder regardless of contactId`() {
         val route = Screen.TickleEdit.createRouteWithContact(contactId = 100L)
         assertTrue(route.startsWith("tickle_edit/-1"))
+    }
+
+    // --- Start-destination selection (TIC-64) ---
+    // The graph's start destination is chosen once from the persisted onboarding
+    // flag. A completed onboarding must land on Tickle; an incomplete one on
+    // Onboarding. Reading this reactively mid-session rebuilt the graph and popped
+    // the back stack, dumping the "Add my first contact" user on the wrong screen.
+
+    @Test
+    fun `completed onboarding starts on the Tickle list`() {
+        assertEquals(Screen.Tickle.route, startDestinationFor(onboardingComplete = true))
+    }
+
+    @Test
+    fun `incomplete onboarding starts on the Onboarding screen`() {
+        assertEquals(Screen.Onboarding.route, startDestinationFor(onboardingComplete = false))
+    }
+
+    @Test
+    fun `start destination differs between onboarding states`() {
+        assertNotEquals(
+            startDestinationFor(onboardingComplete = true),
+            startDestinationFor(onboardingComplete = false)
+        )
     }
 }
