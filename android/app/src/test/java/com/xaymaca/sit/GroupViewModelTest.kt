@@ -45,17 +45,31 @@ class GroupViewModelTest {
         override fun countContactsInCategory(categoryId: String): Flow<Int> = flowOf(0)
     }
 
-    private class StubContactGroupDao : ContactGroupDao {
-        override fun getAll(): Flow<List<ContactGroup>> = flowOf(emptyList())
-        override suspend fun getById(id: Long): ContactGroup? = null
-        override suspend fun getByCategoryId(categoryId: String): ContactGroup? = null
-        override suspend fun findByNameCaseInsensitive(name: String): ContactGroup? = null
+    /** Fake that tracks inserted groups in-memory, so name-collision checks are exercised
+     *  without going through a real Room database (mirrors [FakeContactDao]-style tests). */
+    private class FakeContactGroupDao : ContactGroupDao {
+        val groups = mutableListOf<ContactGroup>()
+
+        override fun getAll(): Flow<List<ContactGroup>> = flowOf(groups.toList())
+        override suspend fun getById(id: Long): ContactGroup? = groups.find { it.id == id }
+        override suspend fun getByCategoryId(categoryId: String): ContactGroup? =
+            groups.find { it.categoryId == categoryId }
+        override suspend fun findByNameCaseInsensitive(name: String): ContactGroup? =
+            groups.find { it.name.trim().equals(name.trim(), ignoreCase = true) }
+        override suspend fun countByNameCaseInsensitive(name: String, excludeId: Long): Int =
+            groups.count { it.name.trim().equals(name.trim(), ignoreCase = true) && it.id != excludeId }
         override suspend fun getGroupWithContacts(id: Long): GroupWithContacts? = null
         override fun getAllGroupsWithContacts(): Flow<List<GroupWithContacts>> = flowOf(emptyList())
-        override suspend fun insert(group: ContactGroup): Long = 0L
-        override suspend fun update(group: ContactGroup) {}
-        override suspend fun delete(group: ContactGroup) {}
-        override suspend fun deleteAll() {}
+        override suspend fun insert(group: ContactGroup): Long {
+            groups.add(group)
+            return group.id
+        }
+        override suspend fun update(group: ContactGroup) {
+            val idx = groups.indexOfFirst { it.id == group.id }
+            if (idx >= 0) groups[idx] = group
+        }
+        override suspend fun delete(group: ContactGroup) { groups.remove(group) }
+        override suspend fun deleteAll() { groups.clear() }
         override suspend fun deleteAllCrossRefs() {}
         override suspend fun insertCrossRef(crossRef: ContactGroupCrossRef) {}
         override suspend fun deleteCrossRef(crossRef: ContactGroupCrossRef) {}
@@ -64,12 +78,14 @@ class GroupViewModelTest {
         override fun getAllCrossRefs(): Flow<List<ContactGroupCrossRef>> = flowOf(emptyList())
     }
 
+    private lateinit var contactGroupDao: FakeContactGroupDao
     private lateinit var viewModel: GroupViewModel
 
     @Before
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
-        viewModel = GroupViewModel(ContactRepository(StubContactDao(), StubContactGroupDao()))
+        contactGroupDao = FakeContactGroupDao()
+        viewModel = GroupViewModel(ContactRepository(StubContactDao(), contactGroupDao))
     }
 
     @After
@@ -123,5 +139,62 @@ class GroupViewModelTest {
         testScheduler.runCurrent()
         advanceTimeBy(2001)
         assertNull(viewModel.toastMessage.value)
+    }
+
+    // Regression tests for TIC-71: isGroupNameTaken must detect duplicates via a direct
+    // DAO query, without relying on the `groups` StateFlow being collected first — the
+    // GroupList/GroupDetail screens that call this never collect `groups`, so a version
+    // that reads `groups.value` would always see an empty list here.
+
+    @Test
+    fun `isGroupNameTaken is false when no group has that name`() = runTest {
+        contactGroupDao.groups.add(ContactGroup(id = 1L, name = "Family", emoji = "👪"))
+
+        assertEquals(false, viewModel.isGroupNameTaken("Friends"))
+    }
+
+    @Test
+    fun `isGroupNameTaken is true for an exact match without collecting the groups flow`() = runTest {
+        contactGroupDao.groups.add(ContactGroup(id = 1L, name = "Family", emoji = "👪"))
+
+        // Deliberately not reading viewModel.groups anywhere in this test.
+        assertEquals(true, viewModel.isGroupNameTaken("Family"))
+    }
+
+    @Test
+    fun `isGroupNameTaken is case-insensitive`() = runTest {
+        contactGroupDao.groups.add(ContactGroup(id = 1L, name = "Family", emoji = "👪"))
+
+        assertEquals(true, viewModel.isGroupNameTaken("family"))
+        assertEquals(true, viewModel.isGroupNameTaken("FAMILY"))
+    }
+
+    @Test
+    fun `isGroupNameTaken ignores surrounding whitespace`() = runTest {
+        contactGroupDao.groups.add(ContactGroup(id = 1L, name = "Family", emoji = "👪"))
+
+        assertEquals(true, viewModel.isGroupNameTaken("  Family  "))
+    }
+
+    @Test
+    fun `isGroupNameTaken excludes the group being renamed`() = runTest {
+        contactGroupDao.groups.add(ContactGroup(id = 1L, name = "Family", emoji = "👪"))
+
+        assertEquals(false, viewModel.isGroupNameTaken("Family", excludeId = 1L))
+    }
+
+    @Test
+    fun `isGroupNameTaken still flags a match against a different group when excluding`() = runTest {
+        contactGroupDao.groups.add(ContactGroup(id = 1L, name = "Family", emoji = "👪"))
+        contactGroupDao.groups.add(ContactGroup(id = 2L, name = "Friends", emoji = "👥"))
+
+        assertEquals(true, viewModel.isGroupNameTaken("Friends", excludeId = 1L))
+    }
+
+    @Test
+    fun `isGroupNameTaken is false for a blank name`() = runTest {
+        contactGroupDao.groups.add(ContactGroup(id = 1L, name = "Family", emoji = "👪"))
+
+        assertEquals(false, viewModel.isGroupNameTaken("   "))
     }
 }

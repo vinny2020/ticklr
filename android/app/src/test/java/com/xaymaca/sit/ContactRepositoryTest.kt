@@ -54,6 +54,7 @@ class ContactRepositoryTest {
         override suspend fun getById(id: Long): ContactGroup? = null
         override suspend fun getByCategoryId(categoryId: String): ContactGroup? = null
         override suspend fun findByNameCaseInsensitive(name: String): ContactGroup? = null
+        override suspend fun countByNameCaseInsensitive(name: String, excludeId: Long): Int = 0
         override suspend fun getGroupWithContacts(id: Long): GroupWithContacts? = null
         override fun getAllGroupsWithContacts(): Flow<List<GroupWithContacts>> = flowOf(emptyList())
         override suspend fun insert(group: ContactGroup): Long = 0L

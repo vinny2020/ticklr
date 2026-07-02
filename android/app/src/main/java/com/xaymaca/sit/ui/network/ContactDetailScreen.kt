@@ -659,6 +659,12 @@ private fun AddToGroupSheet(
     val palette = WarmTheme.palette()
     var showCreateField by remember { mutableStateOf(false) }
     var newGroupName by remember { mutableStateOf("") }
+    var isDuplicateInline by remember { mutableStateOf(false) }
+
+    LaunchedEffect(newGroupName) {
+        isDuplicateInline = newGroupName.trim().isNotBlank() &&
+            groupViewModel.isGroupNameTaken(newGroupName)
+    }
 
     ModalBottomSheet(onDismissRequest = onDismiss, containerColor = palette.paper) {
         Column(modifier = Modifier.fillMaxWidth()) {
@@ -722,8 +728,6 @@ private fun AddToGroupSheet(
                     )
                 }
             } else {
-                val isDuplicateInline = newGroupName.trim().isNotBlank() &&
-                    groupViewModel.isGroupNameTaken(newGroupName)
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
                     verticalAlignment = Alignment.CenterVertically,
