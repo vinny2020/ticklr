@@ -1,1 +1,9 @@
-Vous pouvez désormais créer des tickles ponctuels et annuels, notamment pour les anniversaires, dates anniversaires et événements spéciaux personnalisés. Cette version améliore aussi la couverture de localisation et corrige plusieurs textes traduits de l’interface.
+Cette mise à jour rend les tickles d'une fiabilité à toute épreuve :
+• Les anniversaires et dates importantes restent à la bonne date, même après un report
+• Votre tout premier tickle programme désormais son rappel correctement
+• Les rappels s'affichent même lorsque l'app est ouverte
+• Le réglage des rappels dans Réglages est toujours respecté
+• Supprimer un contact supprime aussi ses rappels
+• Modifier un tickle ne réinitialise plus sa planification
+• Import plus rapide et défilement plus fluide pour les grandes listes de contacts
+• Améliorations sur iPad et pour les langues de droite à gauche

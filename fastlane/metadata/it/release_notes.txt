@@ -1,1 +1,9 @@
-Ora puoi creare tickle una tantum e annuali, inclusi compleanni, anniversari ed eventi speciali personalizzati. Questa versione migliora anche la copertura della localizzazione e corregge diverse stringhe tradotte dell’interfaccia.
+Questo aggiornamento rende i tickles a prova di bomba:
+• Compleanni e anniversari restano alla data giusta, anche dopo un rinvio
+• Il tuo primo tickle ora programma il promemoria in modo affidabile
+• I promemoria compaiono anche con l'app aperta
+• L'interruttore dei promemoria nelle Impostazioni viene sempre rispettato
+• Eliminando un contatto si eliminano anche i suoi promemoria
+• Modificare un tickle non azzera più la pianificazione
+• Importazione più rapida e scorrimento più fluido con molti contatti
+• Rifiniture per iPad e layout da destra a sinistra

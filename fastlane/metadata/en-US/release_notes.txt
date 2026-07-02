@@ -1,1 +1,9 @@
-You can now create one-time and annual tickles, including birthdays, anniversaries, and custom special events. This release also improves localization coverage and fixes several translated UI strings.
+This update makes tickles rock-solid:
+• Birthdays and anniversaries stay on the right date, even after snoozing
+• Your very first tickle now schedules its reminder reliably
+• Reminders now appear even while the app is open
+• The reminders switch in Settings is always respected
+• Deleting a contact also removes their reminders
+• Editing a tickle no longer resets its schedule
+• Faster import and smoother scrolling for large contact lists
+• iPad and right-to-left layout polish

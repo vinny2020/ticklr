@@ -1,1 +1,9 @@
-Je kunt nu eenmalige en jaarlijkse tickles maken, waaronder verjaardagen, jubilea en eigen speciale gebeurtenissen. Deze release verbetert ook de lokalisatiedekking en corrigeert meerdere vertaalde UI-teksten.
+Deze update maakt tickles rotsvast:
+• Verjaardagen en jubilea blijven op de juiste datum, ook na snoozen
+• Je allereerste tickle plant zijn herinnering nu betrouwbaar in
+• Herinneringen verschijnen ook terwijl de app open is
+• De herinneringenschakelaar in Instellingen wordt altijd gerespecteerd
+• Bij het verwijderen van een contact verdwijnen ook de herinneringen
+• Een tickle bewerken reset het schema niet meer
+• Sneller importeren en soepeler scrollen bij grote contactlijsten
+• Verfijningen voor iPad en rechts-naar-links-indelingen

@@ -1,1 +1,9 @@
-Mostantól egyszeri és éves tickle-öket is létrehozhatsz, például születésnapokhoz, évfordulókhoz és saját különleges eseményekhez. Ez a kiadás javítja a lokalizációs lefedettséget, és több lefordított UI-szöveget is korrigál.
+Ez a frissítés sziklaszilárddá teszi a tickle-öket:
+• A születésnapok és évfordulók a helyes dátumon maradnak, szundi után is
+• A legelső tickle mostantól megbízhatóan ütemezi az emlékeztetőjét
+• Az emlékeztetők akkor is megjelennek, ha az app nyitva van
+• A Beállítások emlékeztető-kapcsolója mindig érvényesül
+• Egy névjegy törlésekor az emlékeztetői is törlődnek
+• Egy tickle szerkesztése többé nem állítja vissza az ütemezését
+• Gyorsabb importálás és gördülékenyebb görgetés nagy névjegylistáknál
+• Finomítások iPadre és jobbról balra írt elrendezésekhez
