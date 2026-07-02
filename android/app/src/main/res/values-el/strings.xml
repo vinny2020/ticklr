@@ -66,6 +66,8 @@
     <string name="tickle_row_action_done">Ολοκληρώθηκε</string>
     <string name="tickle_row_action_snooze">Αναβολή</string>
     <string name="tickle_row_action_delete">Διαγραφή</string>
+    <string name="tickle_row_delete_title">Διαγραφή tickle</string>
+    <string name="tickle_row_delete_message">Διαγραφή tickle για %1$s; Αυτό θα ακυρώσει επίσης την ειδοποίηση και δεν μπορεί να αναιρεθεί.</string>
     <string name="tickle_row_default_note">Υπενθύμιση tickle</string>
     <string name="tickle_row_today">Σήμερα</string>
     <string name="tickle_row_tomorrow">Αύριο</string>

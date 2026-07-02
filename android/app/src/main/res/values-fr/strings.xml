@@ -66,6 +66,8 @@
     <string name="tickle_row_action_done">Terminé</string>
     <string name="tickle_row_action_snooze">Reporter</string>
     <string name="tickle_row_action_delete">Supprimer</string>
+    <string name="tickle_row_delete_title">Supprimer le tickle</string>
+    <string name="tickle_row_delete_message">Supprimer le tickle pour %1$s ? Cela annulera également son alarme et cette action est irréversible.</string>
     <string name="tickle_row_default_note">Rappel tickle</string>
     <string name="tickle_row_today">Aujourd\'hui</string>
     <string name="tickle_row_tomorrow">Demain</string>

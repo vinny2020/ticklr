@@ -67,6 +67,8 @@
     <string name="tickle_row_action_done">Gata</string>
     <string name="tickle_row_action_snooze">Amână</string>
     <string name="tickle_row_action_delete">Șterge</string>
+    <string name="tickle_row_delete_title">Șterge tickle</string>
+    <string name="tickle_row_delete_message">Ștergi tickle-ul pentru %1$s? Aceasta va anula și alarma și nu poate fi anulat.</string>
     <string name="tickle_row_default_note">Memento tickle</string>
     <string name="tickle_row_today">Azi</string>
     <string name="tickle_row_tomorrow">Mâine</string>

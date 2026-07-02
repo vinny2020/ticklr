@@ -66,6 +66,8 @@
     <string name="tickle_row_action_done">Fatto</string>
     <string name="tickle_row_action_snooze">Posticipa</string>
     <string name="tickle_row_action_delete">Elimina</string>
+    <string name="tickle_row_delete_title">Elimina tickle</string>
+    <string name="tickle_row_delete_message">Eliminare il tickle per %1$s? Questo annullerà anche la sua sveglia e non può essere annullato.</string>
     <string name="tickle_row_default_note">Promemoria tickle</string>
     <string name="tickle_row_today">Oggi</string>
     <string name="tickle_row_tomorrow">Domani</string>

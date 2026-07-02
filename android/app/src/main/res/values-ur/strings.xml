@@ -66,6 +66,8 @@
     <string name="tickle_row_action_done">مکمل</string>
     <string name="tickle_row_action_snooze">ملتوی کریں</string>
     <string name="tickle_row_action_delete">حذف کریں</string>
+    <string name="tickle_row_delete_title">یاددہانی حذف کریں</string>
+    <string name="tickle_row_delete_message">%1$s کے لیے یاددہانی حذف کریں؟ اس سے اس کا الارم بھی منسوخ ہو جائے گا اور اسے واپس نہیں کیا جا سکتا۔</string>
     <string name="tickle_row_default_note">رابطے کی یاددہانی</string>
     <string name="tickle_row_today">آج</string>
     <string name="tickle_row_tomorrow">کل</string>

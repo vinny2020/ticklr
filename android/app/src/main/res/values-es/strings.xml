@@ -66,6 +66,8 @@
     <string name="tickle_row_action_done">Listo</string>
     <string name="tickle_row_action_snooze">Posponer</string>
     <string name="tickle_row_action_delete">Eliminar</string>
+    <string name="tickle_row_delete_title">Eliminar tickle</string>
+    <string name="tickle_row_delete_message">¿Eliminar el tickle de %1$s? Esto también cancelará su alarma y no se puede deshacer.</string>
     <string name="tickle_row_default_note">Recordatorio tickle</string>
     <string name="tickle_row_today">Hoy</string>
     <string name="tickle_row_tomorrow">Mañana</string>
