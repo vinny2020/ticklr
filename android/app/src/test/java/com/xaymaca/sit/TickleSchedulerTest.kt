@@ -346,4 +346,54 @@ class TickleSchedulerTest {
         )
         assertEquals(now + TimeUnit.DAYS.toMillis(30), result)
     }
+
+    // -- nextDueDateOnComplete (TIC-62) -----------------------------------------
+
+    @Test
+    fun `completing an annual tickle anchors on startDate not nextDueDate`() {
+        // The snooze-corruption scenario: birthday tickle anchored Mar 10 fires,
+        // user snoozes (nextDueDate becomes Mar 17), then completes a week later.
+        // The next occurrence must be Mar 10 of next year — the startDate anchor —
+        // not the snooze-shifted Mar 17.
+        val startDate = calAt(2025, 3, 10)
+        val completedAt = calAt(2026, 3, 17)
+        val result = calFrom(
+            TickleScheduler.nextDueDateOnComplete(
+                frequency = TickleFrequency.ANNUAL.name,
+                startDate = startDate,
+                now = completedAt
+            )
+        )
+        assertEquals(2027, result.get(Calendar.YEAR))
+        assertEquals(3, result.get(Calendar.MONTH) + 1)
+        assertEquals(10, result.get(Calendar.DAY_OF_MONTH))
+    }
+
+    @Test
+    fun `completing an annual tickle before its anniversary stays in the same year`() {
+        val startDate = calAt(2025, 6, 20)
+        val completedAt = calAt(2026, 2, 1)
+        val result = calFrom(
+            TickleScheduler.nextDueDateOnComplete(
+                frequency = TickleFrequency.ANNUAL.name,
+                startDate = startDate,
+                now = completedAt
+            )
+        )
+        assertEquals(2026, result.get(Calendar.YEAR))
+        assertEquals(6, result.get(Calendar.MONTH) + 1)
+        assertEquals(20, result.get(Calendar.DAY_OF_MONTH))
+    }
+
+    @Test
+    fun `completing a non-annual tickle advances one interval from now`() {
+        val startDate = calAt(2025, 12, 1)
+        val completedAt = calAt(2026, 3, 15)
+        val result = TickleScheduler.nextDueDateOnComplete(
+            frequency = TickleFrequency.WEEKLY.name,
+            startDate = startDate,
+            now = completedAt
+        )
+        assertEquals(completedAt + TimeUnit.DAYS.toMillis(7), result)
+    }
 }

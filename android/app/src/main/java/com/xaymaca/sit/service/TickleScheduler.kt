@@ -124,6 +124,25 @@ object TickleScheduler {
         }
     }
 
+    /**
+     * The next due date after completing a recurring reminder. Annual reminders
+     * anchor on [startDate], never on the reminder's current nextDueDate —
+     * snooze() overwrites nextDueDate, so deriving the next occurrence from it
+     * would shift the anniversary by the snooze amount, permanently (TIC-62).
+     */
+    fun nextDueDateOnComplete(
+        frequency: String,
+        startDate: Long,
+        customDays: Int? = null,
+        now: Long = System.currentTimeMillis()
+    ): Long {
+        return if (frequency == TickleFrequency.ANNUAL.name) {
+            nextAnnualDate(after = now, matchingMonthDayOf = startDate)
+        } else {
+            nextDueDate(from = now, frequency = frequency, customDays = customDays)
+        }
+    }
+
     fun nextAnnualDate(after: Long, matchingMonthDayOf: Long): Long {
         val source = Calendar.getInstance().apply { timeInMillis = matchingMonthDayOf }
         val candidate = Calendar.getInstance().apply {
