@@ -143,7 +143,10 @@ struct TickleEditView: View {
         // Reset happens via `defer` inside the dismiss Task so it survives
         // success, failure, and Task cancellation alike.
         isSaving = true
-        TickleScheduler.requestPermissionIfNeeded()
+        // Notification authorization is requested (and awaited) inside
+        // `TickleScheduler.scheduleNotification` itself now, so the first-ever
+        // tickle's notification isn't scheduled before the permission dialog
+        // has resolved (TIC-65).
         // Empty (not whitespace-only) defaults to the localized "Stay in touch"
         // so users never end up with a blank-noted reminder. A typed space is
         // intentional input — trim it instead of substituting.

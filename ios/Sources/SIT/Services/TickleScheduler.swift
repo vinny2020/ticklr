@@ -4,53 +4,87 @@ import UserNotifications
 
 struct TickleScheduler {
 
-    static func requestPermissionIfNeeded() {
-        Task {
-            let center = UNUserNotificationCenter.current()
-            let settings = await center.notificationSettings()
-            guard settings.authorizationStatus == .notDetermined else { return }
-            _ = try? await center.requestAuthorization(options: [.alert, .sound])
+    /// Requests notification authorization if it hasn't been determined yet, and
+    /// reports whether the app is currently authorized to display notifications
+    /// — either already authorized, or just granted. Callers await this before
+    /// scheduling (see `scheduleNotification`) so a fresh install's first-ever
+    /// tickle isn't dropped while the system permission prompt is still on
+    /// screen (TIC-65).
+    static func requestAuthorizationIfNeeded() async -> Bool {
+        let center = UNUserNotificationCenter.current()
+        let settings = await center.notificationSettings()
+        switch settings.authorizationStatus {
+        case .authorized, .provisional, .ephemeral:
+            return true
+        case .notDetermined:
+            return (try? await center.requestAuthorization(options: [.alert, .sound])) ?? false
+        case .denied:
+            return false
+        @unknown default:
+            return false
         }
     }
 
+    /// Schedules a local notification for `reminder`. Fire-and-forget from the
+    /// caller's perspective (matches the other static scheduling calls in this
+    /// file), but internally awaits authorization before calling `add(_:)` —
+    /// scheduling immediately after a fresh install's first tickle used to race
+    /// the still-pending permission dialog and silently fail (TIC-65). Errors
+    /// from `add(_:)` are logged instead of being swallowed.
+    @MainActor
     static func scheduleNotification(for reminder: TickleReminder) {
+        // In-app "Tickle reminders" toggle (TIC-68) — checked synchronously
+        // before any async work so a disabled pref never even requests
+        // authorization.
         let notificationsEnabled = (UserDefaults.standard.object(forKey: "tickleNotificationsEnabled") as? Bool) ?? true
         guard notificationsEnabled else { return }
 
-        let content = UNMutableNotificationContent()
+        Task { @MainActor in
+            guard await requestAuthorizationIfNeeded() else {
+                print("Ticklr: skipped scheduling tickle-\(reminder.id.uuidString) — notifications not authorized")
+                return
+            }
 
-        let name: String
-        if let contact = reminder.contact {
-            name = contact.fullName.isEmpty ? "someone" : contact.fullName
-        } else if let group = reminder.group {
-            name = group.name
-        } else {
-            name = "someone"
+            let content = UNMutableNotificationContent()
+
+            let name: String
+            if let contact = reminder.contact {
+                name = contact.fullName.isEmpty ? "someone" : contact.fullName
+            } else if let group = reminder.group {
+                name = group.name
+            } else {
+                name = "someone"
+            }
+
+            content.title = String(localized: "notification.title \(name)")
+            content.body = reminder.note.isEmpty ? reminder.frequency.localizedName : reminder.note
+            content.sound = .default
+
+            let trigger: UNNotificationTrigger
+            let cal = Calendar.current
+            let todayAt9 = cal.date(bySettingHour: 9, minute: 0, second: 0, of: reminder.nextDueDate) ?? reminder.nextDueDate
+            if todayAt9 <= Date() {
+                // Due date is today past 9am, or overdue — fire in 5 seconds
+                trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+            } else {
+                var components = cal.dateComponents([.year, .month, .day], from: reminder.nextDueDate)
+                components.hour = 9
+                components.minute = 0
+                trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+            }
+
+            let request = UNNotificationRequest(
+                identifier: "tickle-\(reminder.id.uuidString)",
+                content: content,
+                trigger: trigger
+            )
+
+            do {
+                try await UNUserNotificationCenter.current().add(request)
+            } catch {
+                print("Ticklr: failed to schedule tickle-\(reminder.id.uuidString): \(error)")
+            }
         }
-
-        content.title = String(localized: "notification.title \(name)")
-        content.body = reminder.note.isEmpty ? reminder.frequency.localizedName : reminder.note
-        content.sound = .default
-
-        let trigger: UNNotificationTrigger
-        let cal = Calendar.current
-        let todayAt9 = cal.date(bySettingHour: 9, minute: 0, second: 0, of: reminder.nextDueDate) ?? reminder.nextDueDate
-        if todayAt9 <= Date() {
-            // Due date is today past 9am, or overdue — fire in 5 seconds
-            trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-        } else {
-            var components = cal.dateComponents([.year, .month, .day], from: reminder.nextDueDate)
-            components.hour = 9
-            components.minute = 0
-            trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
-        }
-
-        let request = UNNotificationRequest(
-            identifier: "tickle-\(reminder.id.uuidString)",
-            content: content,
-            trigger: trigger
-        )
-        UNUserNotificationCenter.current().add(request)
     }
 
     static func cancelNotification(for reminder: TickleReminder) {
