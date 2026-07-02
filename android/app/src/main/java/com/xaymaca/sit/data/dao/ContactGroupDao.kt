@@ -24,6 +24,13 @@ interface ContactGroupDao {
     @Query("SELECT * FROM contact_groups WHERE LOWER(TRIM(name)) = LOWER(TRIM(:name)) LIMIT 1")
     suspend fun findByNameCaseInsensitive(name: String): ContactGroup?
 
+    /** Case-insensitive duplicate-name check, excluding a given group id (used when renaming). */
+    @Query(
+        "SELECT COUNT(*) FROM contact_groups " +
+        "WHERE LOWER(TRIM(name)) = LOWER(TRIM(:name)) AND id != :excludeId"
+    )
+    suspend fun countByNameCaseInsensitive(name: String, excludeId: Long): Int
+
     @Transaction
     @Query("SELECT * FROM contact_groups WHERE id = :id")
     suspend fun getGroupWithContacts(id: Long): GroupWithContacts?

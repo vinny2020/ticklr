@@ -388,13 +388,17 @@ private fun EditGroupDialog(
     group: ContactGroup,
     onDismiss: () -> Unit,
     onSave: (name: String, emoji: String) -> Unit,
-    isNameTaken: (String) -> Boolean
+    isNameTaken: suspend (String) -> Boolean
 ) {
     var name by remember { mutableStateOf(group.name) }
     var emoji by remember { mutableStateOf(group.emoji) }
-    val isDuplicate = name.trim().isNotBlank() &&
-        !name.trim().equals(group.name.trim(), ignoreCase = true) &&
-        isNameTaken(name)
+    var isDuplicate by remember { mutableStateOf(false) }
+
+    LaunchedEffect(name) {
+        isDuplicate = name.trim().isNotBlank() &&
+            !name.trim().equals(group.name.trim(), ignoreCase = true) &&
+            isNameTaken(name)
+    }
     val canSave = name.trim().isNotEmpty() && name.length <= 30 && !isDuplicate
 
     AlertDialog(

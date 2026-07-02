@@ -56,12 +56,15 @@ class GroupViewModel @Inject constructor(
     /**
      * Returns true if any existing group has the same name (case-insensitive).
      * Pass [excludeId] when editing so the group's own current name is not flagged.
+     *
+     * Queries the DAO directly rather than reading the [groups] StateFlow, since callers
+     * (create/rename dialogs) don't necessarily collect that flow and would otherwise see
+     * a permanently-empty snapshot.
      */
-    fun isGroupNameTaken(name: String, excludeId: Long = -1L): Boolean {
+    suspend fun isGroupNameTaken(name: String, excludeId: Long = -1L): Boolean {
         val trimmed = name.trim()
-        return groups.value.any {
-            it.name.equals(trimmed, ignoreCase = true) && it.id != excludeId
-        }
+        if (trimmed.isEmpty()) return false
+        return contactRepository.isGroupNameTaken(trimmed, excludeId)
     }
 
     fun updateGroup(group: ContactGroup) {

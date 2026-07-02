@@ -69,6 +69,10 @@ class ContactRepository @Inject constructor(
 
     suspend fun getGroupById(id: Long): ContactGroup? = contactGroupDao.getById(id)
 
+    /** Case-insensitive duplicate-name check, excluding [excludeId] (used when renaming). */
+    suspend fun isGroupNameTaken(name: String, excludeId: Long = -1L): Boolean =
+        contactGroupDao.countByNameCaseInsensitive(name, excludeId) > 0
+
     suspend fun getGroupWithContacts(id: Long): GroupWithContacts? =
         contactGroupDao.getGroupWithContacts(id)
 
