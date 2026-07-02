@@ -65,6 +65,8 @@
     <string name="tickle_row_action_done">완료</string>
     <string name="tickle_row_action_snooze">다시 알림</string>
     <string name="tickle_row_action_delete">삭제</string>
+    <string name="tickle_row_delete_title">Tickle 삭제</string>
+    <string name="tickle_row_delete_message">%1$s의 Tickle을 삭제할까요? 알람도 취소되며 되돌릴 수 없습니다.</string>
     <string name="tickle_row_default_note">Tickle 알림</string>
     <string name="tickle_row_today">오늘</string>
     <string name="tickle_row_tomorrow">내일</string>

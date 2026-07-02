@@ -66,6 +66,8 @@
     <string name="tickle_row_action_done">Done</string>
     <string name="tickle_row_action_snooze">Snooze</string>
     <string name="tickle_row_action_delete">Delete</string>
+    <string name="tickle_row_delete_title">Delete Tickle</string>
+    <string name="tickle_row_delete_message">Delete the tickle for %1$s? This will also cancel its alarm and cannot be undone.</string>
     <string name="tickle_row_default_note">Tickle reminder</string>
     <string name="tickle_row_today">Today</string>
     <string name="tickle_row_tomorrow">Tomorrow</string>

@@ -65,6 +65,8 @@
     <string name="tickle_row_action_done">完了</string>
     <string name="tickle_row_action_snooze">スヌーズ</string>
     <string name="tickle_row_action_delete">削除</string>
+    <string name="tickle_row_delete_title">Tickle を削除</string>
+    <string name="tickle_row_delete_message">%1$s のTickleを削除しますか？アラームもキャンセルされ、元に戻すことはできません。</string>
     <string name="tickle_row_default_note">Tickle リマインダー</string>
     <string name="tickle_row_today">今日</string>
     <string name="tickle_row_tomorrow">明日</string>

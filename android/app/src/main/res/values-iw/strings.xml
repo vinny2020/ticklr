@@ -67,6 +67,8 @@
     <string name="tickle_row_action_done">בוצע</string>
     <string name="tickle_row_action_snooze">דחייה</string>
     <string name="tickle_row_action_delete">מחיקה</string>
+    <string name="tickle_row_delete_title">מחיקת תזכורת</string>
+    <string name="tickle_row_delete_message">למחוק את התזכורת עבור %1$s? הפעולה תבטל גם את ההתראה שלה ולא ניתן לבטל אותה.</string>
     <string name="tickle_row_default_note">תזכורת קשר</string>
     <string name="tickle_row_today">היום</string>
     <string name="tickle_row_tomorrow">מחר</string>

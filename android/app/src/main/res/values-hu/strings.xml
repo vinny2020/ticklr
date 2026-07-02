@@ -66,6 +66,8 @@
     <string name="tickle_row_action_done">Kész</string>
     <string name="tickle_row_action_snooze">Halasztás</string>
     <string name="tickle_row_action_delete">Törlés</string>
+    <string name="tickle_row_delete_title">Tickle törlése</string>
+    <string name="tickle_row_delete_message">Törli a(z) %1$s tickle-jét? Ezzel a riasztása is törlődik, és nem vonható vissza.</string>
     <string name="tickle_row_default_note">Tickle emlékeztető</string>
     <string name="tickle_row_today">Ma</string>
     <string name="tickle_row_tomorrow">Holnap</string>

@@ -66,6 +66,8 @@
     <string name="tickle_row_action_done">Klaar</string>
     <string name="tickle_row_action_snooze">Uitstellen</string>
     <string name="tickle_row_action_delete">Verwijderen</string>
+    <string name="tickle_row_delete_title">Tickle verwijderen</string>
+    <string name="tickle_row_delete_message">Tickle voor %1$s verwijderen? Hierdoor wordt ook het alarm geannuleerd en dit kan niet ongedaan worden gemaakt.</string>
     <string name="tickle_row_default_note">Tickle-herinnering</string>
     <string name="tickle_row_today">Vandaag</string>
     <string name="tickle_row_tomorrow">Morgen</string>

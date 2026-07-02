@@ -66,6 +66,8 @@
     <string name="tickle_row_action_done">Erledigt</string>
     <string name="tickle_row_action_snooze">Zurückstellen</string>
     <string name="tickle_row_action_delete">Löschen</string>
+    <string name="tickle_row_delete_title">Tickle löschen</string>
+    <string name="tickle_row_delete_message">Tickle für %1$s löschen? Dadurch wird auch der Alarm abgebrochen und dies kann nicht rückgängig gemacht werden.</string>
     <string name="tickle_row_default_note">Tickle-Erinnerung</string>
     <string name="tickle_row_today">Heute</string>
     <string name="tickle_row_tomorrow">Morgen</string>

@@ -66,6 +66,8 @@
     <string name="tickle_row_action_done">हो गया</string>
     <string name="tickle_row_action_snooze">स्नूज़</string>
     <string name="tickle_row_action_delete">हटाएं</string>
+    <string name="tickle_row_delete_title">Tickle हटाएं</string>
+    <string name="tickle_row_delete_message">%1$s के लिए Tickle हटाएं? इससे उसका अलार्म भी रद्द हो जाएगा और इसे पूर्ववत नहीं किया जा सकता।</string>
     <string name="tickle_row_default_note">Tickle रिमाइंडर</string>
     <string name="tickle_row_today">आज</string>
     <string name="tickle_row_tomorrow">कल</string>

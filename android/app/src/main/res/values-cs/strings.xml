@@ -67,6 +67,8 @@
     <string name="tickle_row_action_done">Hotovo</string>
     <string name="tickle_row_action_snooze">Odložit</string>
     <string name="tickle_row_action_delete">Smazat</string>
+    <string name="tickle_row_delete_title">Smazat tickle</string>
+    <string name="tickle_row_delete_message">Smazat tickle pro %1$s? Tím se také zruší jeho upozornění a nelze to vrátit zpět.</string>
     <string name="tickle_row_default_note">Připomenutí tickle</string>
     <string name="tickle_row_today">Dnes</string>
     <string name="tickle_row_tomorrow">Zítra</string>

@@ -29,20 +29,26 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Snooze
 import androidx.compose.material.icons.outlined.CheckCircle
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -266,11 +272,15 @@ private fun TickleRow(
 ) {
     val category = WarmCategory.from(display.categoryId) ?: WarmCategory.Community
     val scope = rememberCoroutineScope()
+    var showDeleteDialog by remember { mutableStateOf(false) }
     val dismissState = rememberSwipeToDismissBoxState(
         confirmValueChange = { value ->
             when (value) {
                 SwipeToDismissBoxValue.StartToEnd -> { onComplete(); true }
-                SwipeToDismissBoxValue.EndToStart -> { onDelete(); true }
+                // Don't delete on swipe alone — reveal only the delete icon, then require an
+                // explicit confirmation before removing the reminder and its alarm. Returning
+                // false here snaps the row back to settled instead of completing the dismissal.
+                SwipeToDismissBoxValue.EndToStart -> { showDeleteDialog = true; false }
                 else -> false
             }
         },
@@ -304,21 +314,12 @@ private fun TickleRow(
                         tint = Color(0xFFFAF4E2),
                         modifier = Modifier.padding(start = 16.dp),
                     )
-                    SwipeToDismissBoxValue.EndToStart -> Row(
+                    SwipeToDismissBoxValue.EndToStart -> Icon(
+                        Icons.Default.Delete,
+                        contentDescription = stringResource(R.string.tickle_row_action_delete),
+                        tint = Color.White,
                         modifier = Modifier.padding(end = 16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    ) {
-                        Icon(
-                            Icons.Default.Snooze,
-                            contentDescription = stringResource(R.string.tickle_row_action_snooze),
-                            tint = Color.White,
-                        )
-                        Icon(
-                            Icons.Default.Delete,
-                            contentDescription = stringResource(R.string.tickle_row_action_delete),
-                            tint = Color.White,
-                        )
-                    }
+                    )
                     else -> {}
                 }
             }
@@ -399,6 +400,29 @@ private fun TickleRow(
                 )
             }
         }
+    }
+
+    if (showDeleteDialog) {
+        AlertDialog(
+            onDismissRequest = { showDeleteDialog = false },
+            title = { Text(stringResource(R.string.tickle_row_delete_title)) },
+            text = { Text(stringResource(R.string.tickle_row_delete_message, display.name)) },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showDeleteDialog = false
+                        onDelete()
+                    },
+                ) {
+                    Text(stringResource(R.string.common_delete), color = MaterialTheme.colorScheme.error)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDeleteDialog = false }) {
+                    Text(stringResource(R.string.common_cancel))
+                }
+            },
+        )
     }
 }
 

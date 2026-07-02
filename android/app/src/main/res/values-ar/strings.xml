@@ -70,6 +70,8 @@
     <string name="tickle_row_action_done">تم</string>
     <string name="tickle_row_action_snooze">تأجيل</string>
     <string name="tickle_row_action_delete">حذف</string>
+    <string name="tickle_row_delete_title">حذف التذكير</string>
+    <string name="tickle_row_delete_message">حذف التذكير الخاص بـ %1$s؟ سيؤدي هذا أيضًا إلى إلغاء المنبّه ولا يمكن التراجع عن هذا الإجراء.</string>
     <string name="tickle_row_default_note">تذكير</string>
     <string name="tickle_row_today">اليوم</string>
     <string name="tickle_row_tomorrow">غداً</string>

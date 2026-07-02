@@ -68,6 +68,8 @@
     <string name="tickle_row_action_done">Готово</string>
     <string name="tickle_row_action_snooze">Отложить</string>
     <string name="tickle_row_action_delete">Удалить</string>
+    <string name="tickle_row_delete_title">Удалить tickle</string>
+    <string name="tickle_row_delete_message">Удалить tickle для %1$s? Это также отменит его будильник, и это нельзя отменить.</string>
     <string name="tickle_row_default_note">Напоминание tickle</string>
     <string name="tickle_row_today">Сегодня</string>
     <string name="tickle_row_tomorrow">Завтра</string>

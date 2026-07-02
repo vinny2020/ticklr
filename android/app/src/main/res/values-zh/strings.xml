@@ -65,6 +65,8 @@
     <string name="tickle_row_action_done">完成</string>
     <string name="tickle_row_action_snooze">暂停</string>
     <string name="tickle_row_action_delete">删除</string>
+    <string name="tickle_row_delete_title">删除 Tickle</string>
+    <string name="tickle_row_delete_message">删除%1$s的Tickle？这也会取消其闹钟提醒，且无法撤销。</string>
     <string name="tickle_row_default_note">Tickle 提醒</string>
     <string name="tickle_row_today">今天</string>
     <string name="tickle_row_tomorrow">明天</string>

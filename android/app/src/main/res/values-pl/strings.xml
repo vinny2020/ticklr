@@ -68,6 +68,8 @@
     <string name="tickle_row_action_done">Gotowe</string>
     <string name="tickle_row_action_snooze">Odłóż</string>
     <string name="tickle_row_action_delete">Usuń</string>
+    <string name="tickle_row_delete_title">Usuń tickle</string>
+    <string name="tickle_row_delete_message">Usunąć tickle dla %1$s? Spowoduje to również anulowanie alarmu i nie można tego cofnąć.</string>
     <string name="tickle_row_default_note">Przypomnienie tickle</string>
     <string name="tickle_row_today">Dziś</string>
     <string name="tickle_row_tomorrow">Jutro</string>

@@ -66,6 +66,8 @@
     <string name="tickle_row_action_done">Klar</string>
     <string name="tickle_row_action_snooze">Skjut upp</string>
     <string name="tickle_row_action_delete">Ta bort</string>
+    <string name="tickle_row_delete_title">Ta bort tickle</string>
+    <string name="tickle_row_delete_message">Ta bort tickle för %1$s? Detta avbryter även larmet och går inte att ångra.</string>
     <string name="tickle_row_default_note">Tickle-påminnelse</string>
     <string name="tickle_row_today">Idag</string>
     <string name="tickle_row_tomorrow">Imorgon</string>
