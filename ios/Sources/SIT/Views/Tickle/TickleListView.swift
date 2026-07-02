@@ -77,7 +77,7 @@ struct TickleListView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { addToolbarItem }
             .sheet(isPresented: $showingAdd) {
-                TickleEditView()
+                TickleEditView(prefilledCategory: prefilledCategory)
             }
             .sheet(item: $editingReminder) { reminder in
                 TickleEditView(existing: reminder)
@@ -135,7 +135,7 @@ struct TickleListView: View {
     @ViewBuilder
     private var detailPane: some View {
         if paneAddingNew {
-            TickleEditView(onClose: { paneAddingNew = false })
+            TickleEditView(prefilledCategory: prefilledCategory, onClose: { paneAddingNew = false })
                 .id("new-tickle")
         } else if let target = paneEditTarget {
             TickleEditView(existing: target, onClose: { paneEditTarget = nil })

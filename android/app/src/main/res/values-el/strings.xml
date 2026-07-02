@@ -318,4 +318,8 @@
     <string name="warm_contact_accessBanner">Επίτρεψε την πρόσβαση στις επαφές για να χρησιμοποιηθεί η φωτογραφία από το ευρετήριο.</string>
     <string name="compose_template_label">Πρότυπο</string>
     <string name="tickle_action_compose">Σύνταξη μηνύματος</string>
+    <string name="tickle_row_group_fallback">Ομάδα</string>
+    <string name="tickle_row_tickle_fallback">Tickle</string>
+    <string name="template_default_title">Ένα γεια</string>
+    <string name="template_default_body">Γεια! Ήθελα απλώς να δω τι κάνεις. Ελπίζω να είσαι καλά. Τα λέμε σύντομα!</string>
 </resources>

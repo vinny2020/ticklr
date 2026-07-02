@@ -100,7 +100,7 @@ fun TickleListScreen(
     val snoozedReminders by viewModel.snoozedReminders.collectAsState()
     val reminderDisplays by viewModel.reminderDisplays.collectAsState()
     val actionTarget by viewModel.actionTarget.collectAsState()
-    val fallbackDisplay = TickleViewModel.RowDisplay(initials = "T", name = "Tickle")
+    val fallbackDisplay = TickleViewModel.RowDisplay(initials = "T", name = stringResource(R.string.tickle_row_tickle_fallback))
     val context = LocalContext.current
 
     Scaffold(

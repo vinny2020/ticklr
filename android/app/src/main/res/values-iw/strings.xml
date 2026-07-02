@@ -324,4 +324,8 @@
     <string name="warm_contact_accessBanner">אפשר גישה לאנשי הקשר כדי להשתמש בתמונה מספר הטלפונים.</string>
     <string name="compose_template_label">תבנית</string>
     <string name="tickle_action_compose">כתיבת הודעה</string>
+    <string name="tickle_row_group_fallback">קבוצה</string>
+    <string name="tickle_row_tickle_fallback">תזכורת</string>
+    <string name="template_default_title">בדיקת שלום</string>
+    <string name="template_default_body">היי! רק רציתי לבדוק מה שלומך. מקווה שאתה מרגיש טוב. נדבר בקרוב!</string>
 </resources>

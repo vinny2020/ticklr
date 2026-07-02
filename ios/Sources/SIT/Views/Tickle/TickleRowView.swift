@@ -38,7 +38,12 @@ struct TickleRowView: View {
             let days = cal.dateComponents([.day], from: reminder.nextDueDate, to: now).day ?? 0
             return String(localized: "tickleRow.due.overdue \(days)")
         }
-        if let days = cal.dateComponents([.day], from: now, to: reminder.nextDueDate).day, days < 8 {
+        // Calendar-day difference, not whole 24h spans: a reminder due tomorrow
+        // morning is "1 day out", not "In 0d". The today/yesterday branches above
+        // already own day-0 and day-(-1).
+        let startOfToday = cal.startOfDay(for: now)
+        let startOfDue = cal.startOfDay(for: reminder.nextDueDate)
+        if let days = cal.dateComponents([.day], from: startOfToday, to: startOfDue).day, days < 8 {
             return String(localized: "tickleRow.due.upcoming \(days)")
         }
         return reminder.nextDueDate.formatted(date: .abbreviated, time: .omitted)

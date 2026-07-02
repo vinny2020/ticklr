@@ -24,6 +24,7 @@ import androidx.compose.ui.window.PopupProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.xaymaca.sit.R
 import com.xaymaca.sit.service.SmsService
+import com.xaymaca.sit.service.StringListConverter
 import com.xaymaca.sit.ui.shared.TicklrToast
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -212,7 +213,7 @@ fun ComposeScreen(
                         ),
                     )
                     // No phone warning
-                    val phones = parseJsonStringArray(selectedContact!!.phoneNumbers)
+                    val phones = stringListConverter.fromString(selectedContact!!.phoneNumbers)
                     if (phones.isEmpty()) {
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
@@ -307,7 +308,7 @@ fun ComposeScreen(
                     Button(
                         onClick = {
                             val contact = selectedContact ?: return@Button
-                            val phones = parseJsonStringArray(contact.phoneNumbers)
+                            val phones = stringListConverter.fromString(contact.phoneNumbers)
                             val phone = phones.firstOrNull() ?: return@Button
                             val intent = SmsService().sendSmsIntent(context, listOf(phone), messageBody)
                             context.startActivity(intent)
@@ -346,13 +347,7 @@ fun ComposeScreen(
     }
 }
 
-private fun parseJsonStringArray(json: String): List<String> {
-    val trimmed = json.trim()
-    if (trimmed == "[]" || trimmed.isBlank()) return emptyList()
-    return trimmed
-        .removePrefix("[")
-        .removeSuffix("]")
-        .split(",")
-        .map { it.trim().removeSurrounding("\"") }
-        .filter { it.isNotBlank() }
-}
+// Single source of truth for JSON-array parsing — the same converter Room uses
+// for the phoneNumbers column. The old naive comma-split corrupted numbers that
+// contained a comma (e.g. dial pauses).
+private val stringListConverter = StringListConverter()

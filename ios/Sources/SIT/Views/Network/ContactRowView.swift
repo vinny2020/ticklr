@@ -33,6 +33,7 @@ struct ContactRowView: View {
             Image(systemName: "chevron.right")
                 .font(.system(size: 12, weight: .semibold))
                 .foregroundStyle(palette.ink3)
+                .flipsForRightToLeftLayoutDirection(true)
         }
         .padding(.horizontal, WarmSpacing.lg)
         .padding(.vertical, WarmSpacing.md)

@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.xaymaca.sit.data.model.Contact
 import com.xaymaca.sit.service.ContactPhotoService
 import com.xaymaca.sit.service.LocalPhotoStore
+import com.xaymaca.sit.service.StringListConverter
 import com.xaymaca.sit.ui.theme.WarmCategory
 
 enum class ContactPhotoStyle { List, Detail }
@@ -61,8 +62,8 @@ fun ContactPhotoView(
         val system = ContactPhotoService.fetch(
             context = context,
             contactId = contact.id,
-            phoneNumbers = parseJsonStringArray(contact.phoneNumbers),
-            emails = parseJsonStringArray(contact.emails),
+            phoneNumbers = stringListConverter.fromString(contact.phoneNumbers),
+            emails = stringListConverter.fromString(contact.emails),
         )
         resolved = if (system != null) Resolution.Image(system.asImageBitmap()) else Resolution.Empty
     }
@@ -116,14 +117,7 @@ private fun Contact.initials(): String {
     return if (pieces.isEmpty()) "?" else pieces.joinToString("").uppercase()
 }
 
-/** Lightweight JSON-array parser — same approach as ContactFingerprint
- *  and ContactDetailScreen, kept here so this composable doesn't have
- *  to depend on either of those. */
-private fun parseJsonStringArray(json: String): List<String> {
-    if (json.isBlank() || json == "[]") return emptyList()
-    val trimmed = json.trim().removePrefix("[").removeSuffix("]")
-    if (trimmed.isBlank()) return emptyList()
-    return Regex("\"((?:[^\"\\\\]|\\\\.)*)\"").findAll(trimmed)
-        .map { it.groupValues[1].replace("\\\\\"", "\"").replace("\\\\\\\\", "\\\\") }
-        .toList()
-}
+// Single source of truth for JSON-array parsing — the same converter Room uses
+// for the stored columns, so phone/email values round-trip exactly (the old
+// hand-rolled unescaper mangled escaped quotes/backslashes).
+private val stringListConverter = StringListConverter()

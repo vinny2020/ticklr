@@ -315,4 +315,8 @@
     <string name="warm_contact_accessBanner">アドレス帳の写真を使うには、連絡先へのアクセスを許可してください。</string>
     <string name="compose_template_label">テンプレート</string>
     <string name="tickle_action_compose">メッセージを作成</string>
+    <string name="tickle_row_group_fallback">グループ</string>
+    <string name="tickle_row_tickle_fallback">Tickle</string>
+    <string name="template_default_title">ご機嫌うかがい</string>
+    <string name="template_default_body">こんにちは！ちょっとご様子をうかがいたくて。お元気でお過ごしですか。またすぐに連絡しますね！</string>
 </resources>

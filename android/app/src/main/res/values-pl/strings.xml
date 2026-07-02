@@ -324,4 +324,8 @@
     <string name="warm_contact_accessBanner">Zezwól na dostęp do kontaktów, aby użyć zdjęcia z książki adresowej.</string>
     <string name="compose_template_label">Szablon</string>
     <string name="tickle_action_compose">Napisz wiadomość</string>
+    <string name="tickle_row_group_fallback">Grupa</string>
+    <string name="tickle_row_tickle_fallback">Tickle</string>
+    <string name="template_default_title">Sprawdzam, co słychać</string>
+    <string name="template_default_body">Cześć! Piszę, żeby zapytać, co słychać. Mam nadzieję, że u Ciebie wszystko dobrze. Do usłyszenia wkrótce!</string>
 </resources>

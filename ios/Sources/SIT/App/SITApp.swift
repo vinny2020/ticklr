@@ -1,5 +1,24 @@
 import SwiftUI
 import SwiftData
+import UserNotifications
+
+/// Presents tickle notifications that fire while the app is foregrounded.
+/// Without a delegate returning presentation options, iOS silently suppresses
+/// foreground notifications — so the "due today / overdue → fire in 5s" branch
+/// in `TickleScheduler.scheduleNotification` showed nothing (TIC-78). Holds no
+/// mutable state, so it is safe to hand to `UNUserNotificationCenter` as a
+/// shared delegate invoked off the main actor.
+final class NotificationPresenter: NSObject, UNUserNotificationCenterDelegate, @unchecked Sendable {
+    static let shared = NotificationPresenter()
+
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+    ) {
+        completionHandler([.banner, .list, .sound])
+    }
+}
 
 @main
 struct SITApp: App {
@@ -22,6 +41,7 @@ struct SITApp: App {
     }()
 
     init() {
+        UNUserNotificationCenter.current().delegate = NotificationPresenter.shared
         MessageTemplateSeed.seedIfNeeded(container: modelContainer)
         CanonicalGroupSeed.seedIfNeeded(container: modelContainer)
         #if DEBUG

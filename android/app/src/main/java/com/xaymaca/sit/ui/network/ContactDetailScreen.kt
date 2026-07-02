@@ -77,6 +77,7 @@ import com.xaymaca.sit.R
 import com.xaymaca.sit.data.model.Contact
 import com.xaymaca.sit.service.ContactPhotoService
 import com.xaymaca.sit.service.LocalPhotoStore
+import com.xaymaca.sit.service.StringListConverter
 import com.xaymaca.sit.ui.groups.GroupViewModel
 import com.xaymaca.sit.ui.theme.WarmCategory
 import com.xaymaca.sit.ui.theme.WarmCategoryPalette
@@ -174,9 +175,9 @@ fun ContactDetailScreen(
                 contentAlignment = Alignment.Center,
             ) { CircularProgressIndicator(color = categoryForTint.palette.accent) }
         } else {
-            val phoneNumbers = parseJsonStringArray(c.phoneNumbers)
-            val emails = parseJsonStringArray(c.emails)
-            val tags = parseJsonStringArray(c.tags)
+            val phoneNumbers = stringListConverter.fromString(c.phoneNumbers)
+            val emails = stringListConverter.fromString(c.emails)
+            val tags = stringListConverter.fromString(c.tags)
 
             LazyColumn(
                 modifier = Modifier.fillMaxSize().padding(paddingValues),
@@ -777,11 +778,8 @@ private fun AddToGroupSheet(
     }
 }
 
-private fun parseJsonStringArray(json: String): List<String> {
-    if (json.isBlank() || json == "[]") return emptyList()
-    val trimmed = json.trim().removePrefix("[").removeSuffix("]")
-    if (trimmed.isBlank()) return emptyList()
-    return Regex("\"((?:[^\"\\\\]|\\\\.)*)\"").findAll(trimmed)
-        .map { it.groupValues[1].replace("\\\\\"", "\"").replace("\\\\\\\\", "\\\\") }
-        .toList()
-}
+// Single source of truth for JSON-array parsing — the same converter Room uses
+// for the phoneNumbers/emails/tags columns, so a tel:/mailto: value with an
+// escaped quote or backslash round-trips exactly as stored (the old hand-rolled
+// unescaper corrupted them).
+private val stringListConverter = StringListConverter()

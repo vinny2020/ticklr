@@ -43,6 +43,7 @@ struct ContactsAccessBanner: View {
                     Spacer(minLength: 6)
                     Image(systemName: "chevron.right")
                         .font(.system(size: 11, weight: .semibold))
+                        .flipsForRightToLeftLayoutDirection(true)
                 }
                 .foregroundStyle(category.palette.accent)
                 .padding(.horizontal, 14)

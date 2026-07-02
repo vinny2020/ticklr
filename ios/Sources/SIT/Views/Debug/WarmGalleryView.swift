@@ -200,6 +200,7 @@ struct WarmGalleryView: View {
                                 Spacer()
                                 Image(systemName: "chevron.right")
                                     .foregroundStyle(palette.ink3)
+                                    .flipsForRightToLeftLayoutDirection(true)
                             }
                             .padding(.horizontal, 16)
                             .padding(.vertical, 12)

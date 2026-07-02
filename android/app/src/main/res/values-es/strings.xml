@@ -318,4 +318,8 @@
     <string name="warm_contact_accessBanner">Permite el acceso a contactos para usar la foto de tu agenda.</string>
     <string name="compose_template_label">Plantilla</string>
     <string name="tickle_action_compose">Redactar mensaje</string>
+    <string name="tickle_row_group_fallback">Grupo</string>
+    <string name="tickle_row_tickle_fallback">Tickle</string>
+    <string name="template_default_title">Un saludo</string>
+    <string name="template_default_body">¡Hola! Solo quería saludarte. Espero que estés muy bien. ¡Hablamos pronto!</string>
 </resources>

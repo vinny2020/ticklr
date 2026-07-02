@@ -45,6 +45,9 @@ fun AddContactScreen(
     var tagInput by remember { mutableStateOf("") }
     var tags by remember { mutableStateOf(listOf<String>()) }
     var existingContact by remember { mutableStateOf<Contact?>(null) }
+    // Guards against a double-tap on Save inserting the contact (and popping the
+    // back stack) twice — mirrors TickleEditScreen's isSaving guard.
+    var isSaving by remember { mutableStateOf(false) }
 
     // Load existing contact data if editing
     LaunchedEffect(contactId) {
@@ -89,7 +92,11 @@ fun AddContactScreen(
                 },
                 actions = {
                     TextButton(
+                        enabled = !isSaving,
                         onClick = {
+                            // Flip before launching so an immediate second tap is
+                            // rejected by `enabled = !isSaving` on recomposition.
+                            isSaving = true
                             coroutineScope.launch {
                                 val cleanPhones = phoneNumbers.filter { it.isNotBlank() }
                                 val cleanEmails = emails.filter { it.isNotBlank() }
@@ -121,6 +128,9 @@ fun AddContactScreen(
                                     )
                                 }
                                 onSaved()
+                                // Safety net: re-enable if onSaved() didn't tear
+                                // down this screen (e.g. navigation was a no-op).
+                                isSaving = false
                             }
                         }
                     ) {

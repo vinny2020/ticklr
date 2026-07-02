@@ -14,12 +14,14 @@ import com.xaymaca.sit.service.StringListConverter
 import com.xaymaca.sit.service.TickleScheduler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -75,29 +77,32 @@ class TickleViewModel @Inject constructor(
         .getAllReminders()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    // Emits the current time immediately, then once a minute while collected.
+    // Combining this with the reminders flow makes the Due/Upcoming/Snoozed
+    // sections re-evaluate as a reminder crosses its due time — previously `now`
+    // was captured only when Room re-emitted, so a reminder wouldn't move
+    // sections until some unrelated write happened to refresh the flow.
+    private val minuteTicker: Flow<Long> = flow {
+        while (true) {
+            emit(System.currentTimeMillis())
+            delay(60_000L)
+        }
+    }
+
     // Section semantics live in TickleScheduler.isDue/isUpcoming/isSnoozedWaiting
     // (TIC-61): due-ness is date-based, so a snoozed reminder whose snooze
     // window has elapsed surfaces in Due rather than sitting snoozed forever.
-    val dueReminders: StateFlow<List<TickleReminder>> = allReminders
-        .map { list ->
-            val now = System.currentTimeMillis()
-            list.filter { TickleScheduler.isDue(it, now) }
-        }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    val dueReminders: StateFlow<List<TickleReminder>> = combine(allReminders, minuteTicker) { list, now ->
+        list.filter { TickleScheduler.isDue(it, now) }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    val upcomingReminders: StateFlow<List<TickleReminder>> = allReminders
-        .map { list ->
-            val now = System.currentTimeMillis()
-            list.filter { TickleScheduler.isUpcoming(it, now) }
-        }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    val upcomingReminders: StateFlow<List<TickleReminder>> = combine(allReminders, minuteTicker) { list, now ->
+        list.filter { TickleScheduler.isUpcoming(it, now) }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    val snoozedReminders: StateFlow<List<TickleReminder>> = allReminders
-        .map { list ->
-            val now = System.currentTimeMillis()
-            list.filter { TickleScheduler.isSnoozedWaiting(it, now) }
-        }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    val snoozedReminders: StateFlow<List<TickleReminder>> = combine(allReminders, minuteTicker) { list, now ->
+        list.filter { TickleScheduler.isSnoozedWaiting(it, now) }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     /** Display data for each reminder row — avatar text, headline name,
      *  and resolved canonical category id (or null for none). */
@@ -126,7 +131,7 @@ class TickleViewModel @Inject constructor(
                     val g = groupMap[reminder.groupId]
                     RowDisplay(
                         initials = g?.name?.firstOrNull()?.uppercaseChar()?.toString() ?: "G",
-                        name = g?.name ?: "Group",
+                        name = g?.name ?: context.getString(R.string.tickle_row_group_fallback),
                         categoryId = g?.categoryId,
                     )
                 }
@@ -143,7 +148,7 @@ class TickleViewModel @Inject constructor(
                         categoryId = canonical,
                     )
                 }
-                else -> RowDisplay(initials = "T", name = "Tickle")
+                else -> RowDisplay(initials = "T", name = context.getString(R.string.tickle_row_tickle_fallback))
             }
             reminder.id to display
         }

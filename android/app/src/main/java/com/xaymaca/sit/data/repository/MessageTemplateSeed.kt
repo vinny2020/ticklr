@@ -5,8 +5,6 @@ import com.xaymaca.sit.data.model.MessageTemplate
 
 object MessageTemplateSeed {
     const val PREFS_KEY_HAS_SEEDED = "hasSeededDefaultTemplates"
-    const val DEFAULT_TITLE = "Checking in"
-    const val DEFAULT_BODY = "Hey! Just checking in — hope you're doing well. Let's catch up soon!"
 
     /**
      * Inserts the default "Checking in" template when the templates
@@ -23,9 +21,17 @@ object MessageTemplateSeed {
      * next launch; acceptable since the default is genuinely useful
      * and a re-delete is one tap.
      */
+    /**
+     * @param defaultTitle localized default-template title (resolved by the
+     *   caller from `R.string.template_default_title` so the seeded template
+     *   matches the device locale rather than always being English).
+     * @param defaultBody localized default-template body.
+     */
     suspend fun seedDefaultIfNeeded(
         repo: MessageTemplateRepository,
-        prefs: SharedPreferences
+        prefs: SharedPreferences,
+        defaultTitle: String,
+        defaultBody: String
     ) {
         val existing = repo.count()
         if (existing > 0) {
@@ -36,7 +42,7 @@ object MessageTemplateSeed {
             }
             return
         }
-        repo.insertTemplate(MessageTemplate(title = DEFAULT_TITLE, body = DEFAULT_BODY))
+        repo.insertTemplate(MessageTemplate(title = defaultTitle, body = defaultBody))
         prefs.edit().putBoolean(PREFS_KEY_HAS_SEEDED, true).apply()
     }
 }

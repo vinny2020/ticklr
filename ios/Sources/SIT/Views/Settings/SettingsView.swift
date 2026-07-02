@@ -17,6 +17,7 @@ struct SettingsView: View {
     #endif
 
     @Environment(\.horizontalSizeClass) private var hSize
+    @Environment(\.scenePhase) private var scenePhase
 
     private let warmth: Warmth = .subtle
     private var palette: WarmPalette { WarmTheme.palette(for: warmth) }
@@ -212,6 +213,14 @@ struct SettingsView: View {
             .navigationTitle("")
             .navigationBarTitleDisplayMode(.inline)
             .task { await fetchNotificationStatus() }
+            // Returning from the system Settings app (e.g. after toggling
+            // notification permission) doesn't re-run `.task`, so re-read the
+            // authorization status when the scene becomes active again.
+            .onChange(of: scenePhase) { _, phase in
+                if phase == .active {
+                    Task { await fetchNotificationStatus() }
+                }
+            }
         }
     }
 

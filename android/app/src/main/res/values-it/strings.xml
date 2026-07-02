@@ -318,4 +318,8 @@
     <string name="warm_contact_accessBanner">Consenti l’accesso ai contatti per usare la foto dalla rubrica.</string>
     <string name="compose_template_label">Modello</string>
     <string name="tickle_action_compose">Scrivi messaggio</string>
+    <string name="tickle_row_group_fallback">Gruppo</string>
+    <string name="tickle_row_tickle_fallback">Tickle</string>
+    <string name="template_default_title">Un saluto</string>
+    <string name="template_default_body">Ciao! Volevo solo salutarti. Spero tu stia bene. Ci sentiamo presto!</string>
 </resources>
