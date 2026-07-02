@@ -22,8 +22,10 @@ struct ContactImportService {
     /// Call from onboarding only — requires CNContactStore access.
     @MainActor
     static func importFromiOS(context: ModelContext) async throws {
-        // Fetch existing fingerprints to detect duplicates
-        let existingFingerprints: Set<String> = {
+        // Fetch existing fingerprints to detect duplicates. Mutated as we go so
+        // duplicates *within* this same import are also caught, not just ones
+        // that already existed in the store before the loop started.
+        var seenFingerprints: Set<String> = {
             let descriptor = FetchDescriptor<Contact>()
             let all = (try? context.fetch(descriptor)) ?? []
             return Set(all.map(\.fingerprint).filter { !$0.isEmpty })
@@ -76,7 +78,7 @@ struct ContactImportService {
         var skipped = 0
 
         for fields in fetched {
-            if !fields.fingerprint.isEmpty && existingFingerprints.contains(fields.fingerprint) {
+            if !fields.fingerprint.isEmpty && seenFingerprints.contains(fields.fingerprint) {
                 skipped += 1
                 continue
             }
@@ -92,6 +94,7 @@ struct ContactImportService {
                 fingerprint: fields.fingerprint
             )
             context.insert(contact)
+            if !fields.fingerprint.isEmpty { seenFingerprints.insert(fields.fingerprint) }
             imported += 1
         }
 

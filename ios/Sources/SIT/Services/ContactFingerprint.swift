@@ -11,8 +11,10 @@ import CryptoKit
 ///   - Phone: strip all non-digit characters
 ///   - Email: trim and lowercase
 ///
-/// Returns an empty string if there is no identifying info — these contacts
-/// are not deduplicated and can always be inserted.
+/// Returns an empty string when the contact has no phone AND no email — a name
+/// alone is not a reliable identity (LinkedIn omits email for most connections,
+/// so two different "John Smith"s must not collide). Empty fingerprints are
+/// treated as unset and are never deduplicated. Android mirrors this rule.
 enum ContactFingerprint {
 
     static func compute(
@@ -33,8 +35,8 @@ enum ContactFingerprint {
 
         let contactKey = primaryPhone.isEmpty ? primaryEmail : primaryPhone
 
-        // Don't fingerprint contacts with no identifying info
-        guard !first.isEmpty || !last.isEmpty || !contactKey.isEmpty else { return "" }
+        // No phone AND no email → not enough to safely dedup on. Leave unset.
+        guard !contactKey.isEmpty else { return "" }
 
         let raw = "\(first)|\(last)|\(contactKey)"
         return sha1(raw)

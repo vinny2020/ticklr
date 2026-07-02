@@ -97,8 +97,11 @@ class NetworkViewModel @Inject constructor(
 
     suspend fun importFromCSV(inputStream: InputStream): Int {
         val contacts = linkedInCSVParser.parse(inputStream)
-        contacts.forEach { contactRepository.insertContact(it) }
-        return contacts.size
+        // insertContact returns -1L for duplicates; count only genuine inserts
+        // so "Imported N contacts" reflects what actually landed, not re-imports.
+        var inserted = 0
+        contacts.forEach { if (contactRepository.insertContact(it) != -1L) inserted++ }
+        return inserted
     }
 
     suspend fun getContactById(id: Long): Contact? =

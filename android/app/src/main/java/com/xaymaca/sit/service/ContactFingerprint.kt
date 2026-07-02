@@ -13,10 +13,18 @@ import java.security.MessageDigest
  *   - Phone: strip all non-digit characters
  *   - Email: trim and lowercase
  *
- * A blank fingerprint ("") is treated as unset — contacts without a name
- * AND without any phone/email are not fingerprinted and can always be inserted.
+ * A blank fingerprint ("") is treated as unset — a contact is only
+ * deduplicated when it has a phone number OR an email. A name alone is
+ * not a reliable identity (LinkedIn omits email for most connections, so
+ * two different "John Smith"s must not collide) so name-only contacts get
+ * a blank fingerprint and are always inserted. iOS mirrors this rule.
  */
 object ContactFingerprint {
+
+    // Single source of truth for JSON-array parsing — the same converter Room
+    // uses for the phoneNumbers/emails columns, so fingerprinting sees exactly
+    // the values that were stored (dial pauses, commas and quotes intact).
+    private val listConverter = StringListConverter()
 
     fun compute(
         firstName: String,
@@ -27,29 +35,18 @@ object ContactFingerprint {
         val first = firstName.trim().lowercase()
         val last = lastName.trim().lowercase()
 
-        val phones: List<String> = parseJsonStringArray(phoneNumbersJson)
-        val emails: List<String> = parseJsonStringArray(emailsJson)
+        val phones: List<String> = listConverter.fromString(phoneNumbersJson)
+        val emails: List<String> = listConverter.fromString(emailsJson)
 
         val primaryPhone = phones.firstOrNull()?.replace(Regex("[^0-9]"), "") ?: ""
         val primaryEmail = emails.firstOrNull()?.trim()?.lowercase() ?: ""
         val contactKey = primaryPhone.ifBlank { primaryEmail }
 
-        // Don't fingerprint contacts with no identifying info
-        if (first.isBlank() && last.isBlank() && contactKey.isBlank()) return ""
+        // No phone AND no email → not enough to safely dedup on. Leave unset.
+        if (contactKey.isBlank()) return ""
 
         val raw = "$first|$last|$contactKey"
         return sha1(raw)
-    }
-
-    private fun parseJsonStringArray(json: String): List<String> {
-        val trimmed = json.trim()
-        if (trimmed == "[]" || trimmed.isBlank()) return emptyList()
-        return trimmed
-            .removePrefix("[")
-            .removeSuffix("]")
-            .split(",")
-            .map { it.trim().removeSurrounding("\"") }
-            .filter { it.isNotBlank() }
     }
 
     private fun sha1(input: String): String {
