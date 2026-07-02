@@ -211,9 +211,11 @@ struct TickleEditView: View {
                 r.status = .active
             }
             TickleScheduler.cancelNotification(for: r)
-            // Only (re)schedule for active reminders — a preserved snoozed or
-            // completed reminder must not fire a notification for its past due date.
-            if r.status == .active {
+            // Reschedule for active AND snoozed reminders — a snoozed reminder
+            // keeps a pending notification for its snooze-end date (snooze()
+            // itself schedules one), so a note-only edit must restore it.
+            // Only completed reminders stay silent.
+            if r.status != .completed {
                 TickleScheduler.scheduleNotification(for: r)
             }
         } else {
