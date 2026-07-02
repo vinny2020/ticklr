@@ -96,7 +96,7 @@ struct NetworkListView: View {
             .sheet(isPresented: $showingAddContact) { AddContactView() }
         } detail: {
             if let selectedContact {
-                ContactDetailView(contact: selectedContact)
+                ContactDetailView(contact: selectedContact, onDeleted: { self.selectedContact = nil })
             } else {
                 ContentUnavailableView(
                     String(localized: "warm.network.detail.empty.title",
