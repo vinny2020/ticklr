@@ -31,10 +31,10 @@ object LocalPhotoStore {
     fun exists(context: Context, contactId: Long): Boolean =
         fileFor(context, contactId).exists()
 
-    fun read(context: Context, contactId: Long): Bitmap? {
+    suspend fun read(context: Context, contactId: Long): Bitmap? = withContext(Dispatchers.IO) {
         val file = fileFor(context, contactId)
-        if (!file.exists()) return null
-        return BitmapFactory.decodeFile(file.absolutePath)
+        if (!file.exists()) return@withContext null
+        BitmapFactory.decodeFile(file.absolutePath)
     }
 
     suspend fun write(context: Context, contactId: Long, sourceUri: Uri) {

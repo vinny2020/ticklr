@@ -8,6 +8,8 @@ import com.xaymaca.sit.data.model.Contact
 import com.xaymaca.sit.data.model.ImportSource
 import com.xaymaca.sit.data.repository.ContactRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -24,7 +26,7 @@ class ContactImportService @Inject constructor(
      * Caller is responsible for ensuring READ_CONTACTS permission is granted.
      */
     suspend fun importPhoneContacts(): Int {
-        val contacts = readDeviceContacts(context.contentResolver)
+        val contacts = withContext(Dispatchers.IO) { readDeviceContacts(context.contentResolver) }
         var importCount = 0
         contacts.forEach { contact ->
             contactRepository.insertContact(contact)
