@@ -1,1 +1,9 @@
-Acum poți crea tickle-uri unice și anuale, inclusiv zile de naștere, aniversări și evenimente speciale personalizate. Această versiune îmbunătățește și acoperirea localizării și corectează mai multe texte traduse din interfață.
+Această actualizare face tickles de neclintit:
+• Zilele de naștere și aniversările rămân la data corectă, chiar și după amânare
+• Primul tău tickle își programează acum mementoul în mod fiabil
+• Mementourile apar chiar și cu aplicația deschisă
+• Comutatorul de mementouri din Setări este respectat întotdeauna
+• Ștergerea unui contact îi șterge și mementourile
+• Editarea unui tickle nu îi mai resetează programarea
+• Import mai rapid și derulare mai fluidă pentru liste mari de contacte
+• Rafinări pentru iPad și aspecte de la dreapta la stânga

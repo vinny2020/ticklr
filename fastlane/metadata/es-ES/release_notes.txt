@@ -1,1 +1,9 @@
-Ahora puedes crear tickles únicos y anuales, incluidos cumpleaños, aniversarios y eventos especiales personalizados. Esta versión también mejora la cobertura de localización y corrige varios textos traducidos de la interfaz.
+Esta actualización hace que los tickles sean sólidos como una roca:
+• Los cumpleaños y aniversarios se mantienen en la fecha correcta, incluso tras posponerlos
+• Tu primer tickle ahora programa su recordatorio de forma fiable
+• Los recordatorios aparecen incluso con la app abierta
+• El interruptor de recordatorios en Ajustes siempre se respeta
+• Al eliminar un contacto también se eliminan sus recordatorios
+• Editar un tickle ya no restablece su programación
+• Importación más rápida y desplazamiento más fluido con muchos contactos
+• Mejoras en iPad y en la disposición de derecha a izquierda

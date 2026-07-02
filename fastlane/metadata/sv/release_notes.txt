@@ -1,1 +1,9 @@
-Du kan nu skapa engångs- och årliga tickles, inklusive födelsedagar, årsdagar och egna särskilda händelser. Den här versionen förbättrar också lokaliseringsstödet och rättar flera översatta UI-texter.
+Den här uppdateringen gör tickles bergfasta:
+• Födelsedagar och årsdagar stannar på rätt datum, även efter snooze
+• Din allra första tickle schemalägger nu sin påminnelse tillförlitligt
+• Påminnelser visas även när appen är öppen
+• Påminnelsereglaget i Inställningar respekteras alltid
+• När du raderar en kontakt raderas även dess påminnelser
+• Att redigera en tickle nollställer inte längre schemat
+• Snabbare import och mjukare rullning i stora kontaktlistor
+• Finslipning för iPad och höger-till-vänster-layouter

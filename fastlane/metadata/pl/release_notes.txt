@@ -1,1 +1,9 @@
-Możesz teraz tworzyć jednorazowe i coroczne tickle, w tym urodziny, rocznice oraz własne wydarzenia specjalne. Ta wersja poprawia też pokrycie lokalizacji i naprawia kilka przetłumaczonych tekstów interfejsu.
+Ta aktualizacja czyni tickles niezawodnymi:
+• Urodziny i rocznice zostają we właściwej dacie, nawet po drzemce
+• Twój pierwszy tickle niezawodnie planuje teraz przypomnienie
+• Przypomnienia pojawiają się także przy otwartej aplikacji
+• Przełącznik przypomnień w Ustawieniach jest zawsze respektowany
+• Usunięcie kontaktu usuwa też jego przypomnienia
+• Edycja tickle nie resetuje już harmonogramu
+• Szybszy import i płynniejsze przewijanie przy dużych listach kontaktów
+• Szlify dla iPada i układów od prawej do lewej

@@ -1,1 +1,9 @@
-Du kannst jetzt einmalige und jährliche Tickles erstellen, darunter Geburtstage, Jahrestage und eigene besondere Ereignisse. Dieses Release verbessert außerdem die Lokalisierungsabdeckung und behebt mehrere übersetzte UI-Texte.
+Dieses Update macht Tickles grundsolide:
+• Geburtstage und Jahrestage bleiben am richtigen Datum – auch nach dem Zurückstellen
+• Dein allererster Tickle plant seine Erinnerung jetzt zuverlässig
+• Erinnerungen erscheinen auch bei geöffneter App
+• Der Erinnerungsschalter in den Einstellungen wird immer beachtet
+• Beim Löschen eines Kontakts werden auch seine Erinnerungen entfernt
+• Das Bearbeiten eines Tickles setzt den Zeitplan nicht mehr zurück
+• Schnellerer Import und flüssigeres Scrollen bei großen Kontaktlisten
+• Feinschliff für iPad und Rechts-nach-links-Layouts

@@ -1,1 +1,9 @@
-Teď můžeš vytvářet jednorázové i roční tickly, včetně narozenin, výročí a vlastních zvláštních událostí. Tato verze také zlepšuje pokrytí lokalizace a opravuje několik přeložených textů v rozhraní.
+Tato aktualizace dělá z tickles skálopevnou záležitost:
+• Narozeniny a výročí zůstávají na správném datu i po odložení
+• Vaše úplně první tickle nyní spolehlivě naplánuje připomenutí
+• Připomenutí se zobrazí, i když je aplikace otevřená
+• Přepínač připomenutí v Nastavení je vždy respektován
+• Smazáním kontaktu se smažou i jeho připomenutí
+• Úprava tickle už neresetuje jeho plán
+• Rychlejší import a plynulejší posouvání u velkých seznamů kontaktů
+• Vyladění pro iPad a rozvržení zprava doleva

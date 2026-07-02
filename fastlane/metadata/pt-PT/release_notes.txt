@@ -1,1 +1,9 @@
-Agora pode criar tickles únicos e anuais, incluindo aniversários, datas especiais e eventos personalizados. Esta versão também melhora a cobertura de localização e corrige vários textos traduzidos da interface.
+Esta atualização torna os tickles totalmente fiáveis:
+• Aniversários e datas comemorativas mantêm-se na data certa, mesmo após adiar
+• O seu primeiro tickle agora agenda o lembrete de forma fiável
+• Os lembretes aparecem mesmo com a app aberta
+• O interruptor de lembretes nas Definições é sempre respeitado
+• Eliminar um contacto elimina também os seus lembretes
+• Editar um tickle já não repõe o seu agendamento
+• Importação mais rápida e deslocamento mais fluido em listas grandes
+• Afinações para iPad e disposições da direita para a esquerda
