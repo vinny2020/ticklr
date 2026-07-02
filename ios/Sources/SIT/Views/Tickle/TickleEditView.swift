@@ -41,7 +41,7 @@ struct TickleEditView: View {
         (selectedContact != nil || existing?.group != nil) && !isSaving
     }
 
-    init(contact: Contact? = nil, existing: TickleReminder? = nil, onClose: (() -> Void)? = nil) {
+    init(contact: Contact? = nil, existing: TickleReminder? = nil, prefilledCategory: WarmCategory? = nil, onClose: (() -> Void)? = nil) {
         self.existing = existing
         self.onClose = onClose
         if let r = existing {
@@ -54,12 +54,16 @@ struct TickleEditView: View {
             initialCustomIntervalDays = r.customIntervalDays ?? 30
             initialStartDate          = r.nextDueDate
         } else {
+            // The Milestones hero card opens the editor pre-configured for an
+            // anniversary-style reminder — annual frequency — so it lands
+            // meaningfully different from the plain "+" (which defaults monthly).
+            let seededFrequency: TickleFrequency = prefilledCategory == .milestones ? .annual : .monthly
             _selectedContact     = State(initialValue: contact)
-            _frequency           = State(initialValue: .monthly)
+            _frequency           = State(initialValue: seededFrequency)
             _customIntervalDays  = State(initialValue: 30)
             _startDate           = State(initialValue: Date())
             _note                = State(initialValue: "")
-            initialFrequency          = .monthly
+            initialFrequency          = seededFrequency
             initialCustomIntervalDays = 30
             initialStartDate          = Date()
         }

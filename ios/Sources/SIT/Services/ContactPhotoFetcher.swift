@@ -38,7 +38,14 @@ enum ContactPhotoFetcher {
         if negativeCacheQueue.sync(execute: { negativeCache.contains(key as String) }) {
             return nil
         }
-        guard CNContactStore.authorizationStatus(for: .contacts) == .authorized else {
+        // Accept limited authorization (iOS 18+, rawValue 4) as well as full
+        // access — a limited grant still lets us match the user's chosen
+        // subset, and treating it as "no access" left photos blank for those
+        // contacts while `ContactsAccessBanner` already counts limited as
+        // granted. rawValue is used (not `.limited`) so this compiles against
+        // the iOS 17 minimum SDK where the enum case may be absent.
+        let authStatus = CNContactStore.authorizationStatus(for: .contacts)
+        guard authStatus == .authorized || authStatus.rawValue == 4 else {
             return nil
         }
 

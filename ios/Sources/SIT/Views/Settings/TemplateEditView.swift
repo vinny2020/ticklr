@@ -11,8 +11,16 @@ struct TemplateEditView: View {
     @State private var body_ = ""
     @State private var showToast = false
     @State private var toastMessage = ""
+    @State private var isSaving = false
 
     private var isEditing: Bool { template != nil }
+
+    /// Save is blocked while a title is empty or a save is already in flight —
+    /// without the in-flight guard a double-tap inserts a duplicate template
+    /// (same fix as TickleEditView).
+    private var canSave: Bool {
+        !title.trimmingCharacters(in: .whitespaces).isEmpty && !isSaving
+    }
 
     var body: some View {
         NavigationStack {
@@ -33,7 +41,7 @@ struct TemplateEditView: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button(String(localized: "common.save")) { save() }
-                        .disabled(title.trimmingCharacters(in: .whitespaces).isEmpty)
+                        .disabled(!canSave)
                 }
             }
             .onAppear {
@@ -61,6 +69,9 @@ struct TemplateEditView: View {
     }
 
     private func save() {
+        // Flip BEFORE any work so the next tap sees canSave == false; reset via
+        // `defer` inside the dismiss Task so it survives the 2s toast delay.
+        isSaving = true
         let trimmedTitle = title.trimmingCharacters(in: .whitespaces)
         let trimmedBody = body_.trimmingCharacters(in: .whitespaces)
         if let template {
@@ -74,7 +85,8 @@ struct TemplateEditView: View {
             ? String(localized: "templateEdit.toast.updated")
             : String(localized: "templateEdit.toast.saved")
         showToast = true
-        Task {
+        Task { @MainActor in
+            defer { isSaving = false }
             try? await Task.sleep(for: .seconds(2))
             dismiss()
         }

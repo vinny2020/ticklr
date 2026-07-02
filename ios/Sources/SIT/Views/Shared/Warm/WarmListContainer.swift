@@ -48,6 +48,7 @@ struct WarmRowDivider: View {
                 Spacer()
                 Image(systemName: "chevron.right")
                     .foregroundStyle(WarmTheme.subtle.ink3)
+                    .flipsForRightToLeftLayoutDirection(true)
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 12)

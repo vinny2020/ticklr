@@ -4,6 +4,7 @@ import SwiftData
 struct AddContactView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
     @Query(sort: \ContactGroup.name) private var groups: [ContactGroup]
 
     @State private var firstName = ""
@@ -90,6 +91,12 @@ struct AddContactView: View {
                         Button(String(localized: "common.add")) {
                             let v = newTag.trimmingCharacters(in: .whitespaces)
                             guard !v.isEmpty else { return }
+                            // Skip case-insensitive duplicates — `ForEach(tags, id: \.self)`
+                            // would otherwise produce colliding IDs.
+                            guard !tags.contains(where: { $0.caseInsensitiveCompare(v) == .orderedSame }) else {
+                                newTag = ""
+                                return
+                            }
                             tags.append(v)
                             newTag = ""
                         }
@@ -151,6 +158,10 @@ struct AddContactView: View {
         contact.groups = groups.filter { selectedGroupIDs.contains($0.id) }
         modelContext.insert(contact)
         try? modelContext.save()
+        // Saving a contact is a success path out of onboarding. Harmless
+        // (idempotent) when this screen is opened from the Network tab, where
+        // the flag is already set. Mirrors ImportView's own completion signal.
+        hasCompletedOnboarding = true
         dismiss()
     }
 }

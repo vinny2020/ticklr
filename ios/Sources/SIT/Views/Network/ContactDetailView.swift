@@ -598,6 +598,12 @@ private struct ContactEditSheet: View {
                         Button(String(localized: "common.add")) {
                             let v = newTag.trimmingCharacters(in: .whitespaces)
                             guard !v.isEmpty else { return }
+                            // Skip case-insensitive duplicates — `ForEach(tags, id: \.self)`
+                            // would otherwise produce colliding IDs.
+                            guard !tags.contains(where: { $0.caseInsensitiveCompare(v) == .orderedSame }) else {
+                                newTag = ""
+                                return
+                            }
                             tags.append(v)
                             newTag = ""
                         }

@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct OnboardingView: View {
-    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
     @State private var presented: Sheet? = nil
 
     private enum Sheet: Identifiable {
@@ -45,7 +44,12 @@ struct OnboardingView: View {
             .scrollIndicators(.hidden)
         }
         .background(palette.paper.ignoresSafeArea())
-        .sheet(item: $presented, onDismiss: { hasCompletedOnboarding = true }) { sheet in
+        // Onboarding completes only on a success path — `ImportView` and
+        // `AddContactView` each set `hasCompletedOnboarding` when an import
+        // finishes or a first contact is saved. Cancelling either sheet leaves
+        // the flag untouched so the user returns to onboarding rather than
+        // being dropped into an empty app (TIC-78).
+        .sheet(item: $presented) { sheet in
             switch sheet {
             case .importContacts: ImportView()
             case .addContact:     AddContactView()

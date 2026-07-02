@@ -11,7 +11,14 @@ enum MessageTemplateSeed {
         guard !UserDefaults.standard.bool(forKey: seededFlagKey) else { return }
         let context = ModelContext(container)
         context.insert(MessageTemplate(title: defaultTitle, body: defaultBody))
-        try? context.save()
+        do {
+            try context.save()
+        } catch {
+            // Leave the flag unset so seeding is retried on a later launch
+            // instead of being permanently skipped after a transient failure.
+            print("Ticklr: failed to seed default templates: \(error)")
+            return
+        }
         UserDefaults.standard.set(true, forKey: seededFlagKey)
     }
 }
