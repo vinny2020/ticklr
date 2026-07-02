@@ -7,7 +7,9 @@ import com.xaymaca.sit.data.dao.ContactDao
 import com.xaymaca.sit.data.model.Contact
 import com.xaymaca.sit.data.repository.ContactRepository
 import com.xaymaca.sit.service.ContactImportService
+import com.xaymaca.sit.service.ContactPhotoService
 import com.xaymaca.sit.service.LinkedInCSVParser
+import com.xaymaca.sit.service.LocalPhotoStore
 import com.xaymaca.sit.service.TickleScheduler
 import com.xaymaca.sit.ui.theme.WarmCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -100,6 +102,14 @@ class NetworkViewModel @Inject constructor(
                 TickleScheduler.cancelNotification(context, reminder.id)
             }
             contactRepository.deleteContact(contact)
+            // Centralized delete cleanup (TIC-72): both delete entry points
+            // (long-press in NetworkListScreen and the ContactDetailScreen
+            // button) route through here, so the photo file and the id-keyed
+            // photo cache are always cleaned up. Without this, SQLite rowid
+            // reuse lets a newly created contact inherit the deleted
+            // contact's id — and its orphaned photo file / stale cache entry.
+            LocalPhotoStore.delete(context, contact.id)
+            ContactPhotoService.evict(contact.id)
         }
     }
 

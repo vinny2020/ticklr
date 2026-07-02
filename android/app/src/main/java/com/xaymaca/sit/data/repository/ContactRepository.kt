@@ -102,12 +102,15 @@ class ContactRepository @Inject constructor(
         tickleReminderDao.getByGroupId(groupId)
 
     /**
-     * Deletes a group and its tickle reminders, which otherwise survive as
-     * name "?" with alarms still armed. Cross-ref cleanup is handled separately
-     * (TIC-72); alarm cancellation is the caller's job (see GroupViewModel).
+     * Deletes a group along with its tickle reminders (which otherwise survive
+     * as name "?" with alarms still armed, TIC-63) and its membership rows
+     * (not foreign-keyed, so a new group reusing the deleted group's rowid
+     * would silently inherit the old group's members, TIC-72). Alarm
+     * cancellation is the caller's job (see GroupViewModel).
      */
     suspend fun deleteGroup(group: ContactGroup) {
         tickleReminderDao.deleteByGroupId(group.id)
+        contactGroupDao.deleteCrossRefsForGroup(group.id)
         contactGroupDao.delete(group)
     }
 
