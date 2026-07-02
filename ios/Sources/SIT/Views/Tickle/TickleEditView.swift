@@ -35,7 +35,11 @@ struct TickleEditView: View {
 
     private var isEditing: Bool { existing != nil }
 
-    private var canSave: Bool { selectedContact != nil && !isSaving }
+    /// TIC-70: a group-anchored reminder (no contact) is still saveable — an
+    /// existing group link satisfies the target requirement in place of a contact.
+    private var canSave: Bool {
+        (selectedContact != nil || existing?.group != nil) && !isSaving
+    }
 
     init(contact: Contact? = nil, existing: TickleReminder? = nil, onClose: (() -> Void)? = nil) {
         self.existing = existing
@@ -71,6 +75,11 @@ struct TickleEditView: View {
                         HStack {
                             if let c = selectedContact {
                                 Text(c.fullName).foregroundStyle(.primary)
+                            } else if let group = existing?.group {
+                                // TIC-70: show the anchoring group's name where the
+                                // contact name would go, so the user sees the reminder
+                                // is group-based rather than an empty target.
+                                Text(group.displayName).foregroundStyle(.primary)
                             } else {
                                 Text(String(localized: "tickleEdit.placeholder.contact")).foregroundStyle(.secondary)
                             }
@@ -173,8 +182,13 @@ struct TickleEditView: View {
         let intervalDays = frequency == .custom ? customIntervalDays : nil
 
         if let r = existing {
-            r.contact          = selectedContact
-            r.group            = nil
+            // TIC-70: only overwrite the target when the user explicitly picked a
+            // contact. A group-anchored reminder edited without choosing one keeps
+            // its group link instead of being silently unlinked.
+            if let picked = selectedContact {
+                r.contact = picked
+                r.group   = nil
+            }
             r.note             = finalNote
 
             // TIC-67: the schedule fields (frequency / custom interval / start
