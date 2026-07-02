@@ -9,6 +9,7 @@ import com.xaymaca.sit.data.dao.ContactGroupDao
 import com.xaymaca.sit.data.dao.MessageTemplateDao
 import com.xaymaca.sit.data.dao.TickleReminderDao
 import com.xaymaca.sit.data.db.SITDatabase
+import com.xaymaca.sit.BuildConfig
 import com.xaymaca.sit.data.repository.ContactRepository
 import com.xaymaca.sit.data.repository.MessageTemplateRepository
 import com.xaymaca.sit.data.repository.TickleRepository
@@ -57,7 +58,14 @@ object DatabaseModule {
             "sit_database"
         )
             .addMigrations(MIGRATION_2_3, MIGRATION_3_4)
-            .fallbackToDestructiveMigration(dropAllTables = true)
+            .apply {
+                // Debug-only convenience. In production the on-device DB is the ONLY
+                // copy of the user's data — a missing migration must fail loudly,
+                // never silently wipe.
+                if (BuildConfig.DEBUG) {
+                    fallbackToDestructiveMigration(dropAllTables = true)
+                }
+            }
             .build()
     }
 
