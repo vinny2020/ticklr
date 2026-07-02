@@ -1,1 +1,6 @@
-You can now create one-time and annual tickles, including birthdays, anniversaries, and custom special events. This release also improves localization coverage and fixes several translated UI strings.
+This update is all about reliability:
+• Fixed a crash some users hit at launch after updating
+• Snoozed tickles now come back when the snooze ends
+• Reminders survive phone restarts and fire on time
+• Deleting a contact now removes their reminders too
+• Faster contact import and smoother scrolling

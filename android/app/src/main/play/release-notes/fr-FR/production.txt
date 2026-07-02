@@ -1,1 +1,6 @@
-Vous pouvez désormais créer des tickles ponctuels et annuels, notamment pour les anniversaires, dates anniversaires et événements spéciaux personnalisés. Cette version améliore aussi la couverture de localisation et corrige plusieurs textes traduits de l’interface.
+Cette mise à jour est axée sur la fiabilité :
+• Correction d'un plantage au lancement après la mise à jour
+• Les tickles reportés reviennent à la fin du report
+• Les rappels survivent aux redémarrages et arrivent à l'heure
+• Supprimer un contact supprime aussi ses rappels
+• Import des contacts plus rapide et défilement plus fluide

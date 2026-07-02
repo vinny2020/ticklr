@@ -1,1 +1,6 @@
-Du kan nu skapa engångs- och årliga tickles, inklusive födelsedagar, årsdagar och egna särskilda händelser. Den här versionen förbättrar också lokaliseringsstödet och rättar flera översatta UI-texter.
+Den här uppdateringen handlar om tillförlitlighet:
+• Åtgärdade en krasch vid start efter uppdatering
+• Snoozade tickles kommer tillbaka när snoozen är slut
+• Påminnelser överlever omstarter och kommer i tid
+• När du raderar en kontakt raderas även dess påminnelser
+• Snabbare kontaktimport och mjukare rullning

@@ -1,1 +1,6 @@
-Mostantól egyszeri és éves tickle-öket is létrehozhatsz, például születésnapokhoz, évfordulókhoz és saját különleges eseményekhez. Ez a kiadás javítja a lokalizációs lefedettséget, és több lefordított UI-szöveget is korrigál.
+Ez a frissítés a megbízhatóságról szól:
+• Javítottunk egy indításkori összeomlást frissítés után
+• A szundiztatott tickle-ök visszatérnek a szundi végén
+• Az emlékeztetők túlélik az újraindítást, és időben érkeznek
+• Egy névjegy törlésekor az emlékeztetői is törlődnek
+• Gyorsabb névjegyimport és gördülékenyebb görgetés
