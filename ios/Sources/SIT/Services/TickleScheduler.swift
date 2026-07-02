@@ -55,6 +55,32 @@ struct TickleScheduler {
             .removePendingNotificationRequests(withIdentifiers: ["tickle-\(reminder.id.uuidString)"])
     }
 
+    /// Deletes a contact together with every tickle that belongs to it,
+    /// cancelling each tickle's pending notification first. Without this the
+    /// `.nullify` delete rule would leave the reminders behind with
+    /// `contact == nil` ("Unknown") and their notifications still armed —
+    /// firing days after the contact is gone. Callers save the context.
+    @MainActor
+    static func deleteContact(_ contact: Contact, context: ModelContext) {
+        for reminder in contact.tickles {
+            cancelNotification(for: reminder)
+            context.delete(reminder)
+        }
+        context.delete(contact)
+    }
+
+    /// Deletes a group together with every tickle attached to it, cancelling
+    /// each tickle's pending notification first. Same orphaned-reminder
+    /// hazard as `deleteContact`. Callers save the context.
+    @MainActor
+    static func deleteGroup(_ group: ContactGroup, context: ModelContext) {
+        for reminder in group.tickles {
+            cancelNotification(for: reminder)
+            context.delete(reminder)
+        }
+        context.delete(group)
+    }
+
     @MainActor
     static func markComplete(reminder: TickleReminder, context: ModelContext) {
         reminder.lastCompletedDate = Date()

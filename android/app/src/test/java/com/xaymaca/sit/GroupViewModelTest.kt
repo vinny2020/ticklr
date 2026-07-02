@@ -1,14 +1,18 @@
 package com.xaymaca.sit
 
+import android.content.Context
 import com.xaymaca.sit.data.dao.ContactDao
 import com.xaymaca.sit.data.dao.ContactGroupDao
+import com.xaymaca.sit.data.dao.TickleReminderDao
 import com.xaymaca.sit.data.model.Contact
 import com.xaymaca.sit.data.model.ContactGroup
 import com.xaymaca.sit.data.model.ContactGroupCrossRef
 import com.xaymaca.sit.data.model.ContactWithGroups
 import com.xaymaca.sit.data.model.GroupWithContacts
+import com.xaymaca.sit.data.model.TickleReminder
 import com.xaymaca.sit.data.repository.ContactRepository
 import com.xaymaca.sit.ui.groups.GroupViewModel
+import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -71,6 +75,7 @@ class GroupViewModelTest {
         override suspend fun delete(group: ContactGroup) { groups.remove(group) }
         override suspend fun deleteAll() { groups.clear() }
         override suspend fun deleteAllCrossRefs() {}
+        override suspend fun deleteCrossRefsForContact(contactId: Long) {}
         override suspend fun insertCrossRef(crossRef: ContactGroupCrossRef) {}
         override suspend fun deleteCrossRef(crossRef: ContactGroupCrossRef) {}
         override fun getGroupsForContact(contactId: Long): Flow<List<ContactGroup>> = flowOf(emptyList())
@@ -79,13 +84,32 @@ class GroupViewModelTest {
     }
 
     private lateinit var contactGroupDao: FakeContactGroupDao
+
+    private class StubTickleReminderDao : TickleReminderDao {
+        override fun getAll(): Flow<List<TickleReminder>> = flowOf(emptyList())
+        override suspend fun getById(id: Long): TickleReminder? = null
+        override suspend fun insert(reminder: TickleReminder): Long = 0L
+        override suspend fun update(reminder: TickleReminder) {}
+        override suspend fun delete(reminder: TickleReminder) {}
+        override fun getByStatus(status: String): Flow<List<TickleReminder>> = flowOf(emptyList())
+        override suspend fun getDueReminders(now: Long): List<TickleReminder> = emptyList()
+        override suspend fun getByContactId(contactId: Long): List<TickleReminder> = emptyList()
+        override suspend fun getByGroupId(groupId: Long): List<TickleReminder> = emptyList()
+        override suspend fun deleteByContactId(contactId: Long) {}
+        override suspend fun deleteByGroupId(groupId: Long) {}
+        override suspend fun deleteAll() {}
+    }
+
     private lateinit var viewModel: GroupViewModel
 
     @Before
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
         contactGroupDao = FakeContactGroupDao()
-        viewModel = GroupViewModel(ContactRepository(StubContactDao(), contactGroupDao))
+        viewModel = GroupViewModel(
+            ContactRepository(StubContactDao(), contactGroupDao, StubTickleReminderDao()),
+            mockk<Context>(relaxed = true),
+        )
     }
 
     @After

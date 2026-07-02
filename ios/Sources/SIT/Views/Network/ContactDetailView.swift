@@ -77,7 +77,7 @@ struct ContactDetailView: View {
         ) {
             Button(String(localized: "contactDetail.button.deleteContact"), role: .destructive) {
                 PhotoStore.delete(for: contact.id)
-                modelContext.delete(contact)
+                TickleScheduler.deleteContact(contact, context: modelContext)
                 try? modelContext.save()
                 if let onDeleted { onDeleted() } else { dismiss() }
             }

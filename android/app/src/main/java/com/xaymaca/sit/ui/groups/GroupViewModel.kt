@@ -1,12 +1,15 @@
 package com.xaymaca.sit.ui.groups
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.xaymaca.sit.data.model.Contact
 import com.xaymaca.sit.data.model.ContactGroup
 import com.xaymaca.sit.data.model.GroupWithContacts
 import com.xaymaca.sit.data.repository.ContactRepository
+import com.xaymaca.sit.service.TickleScheduler
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +22,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GroupViewModel @Inject constructor(
-    private val contactRepository: ContactRepository
+    private val contactRepository: ContactRepository,
+    @ApplicationContext private val context: Context,
 ) : ViewModel() {
 
     val groups: StateFlow<List<ContactGroup>> = contactRepository
@@ -75,6 +79,11 @@ class GroupViewModel @Inject constructor(
 
     fun deleteGroup(group: ContactGroup) {
         viewModelScope.launch {
+            // Cancel armed alarms for this group's tickles before deleting them,
+            // otherwise they still fire referencing the deleted group.
+            contactRepository.getRemindersForGroup(group.id).forEach { reminder ->
+                TickleScheduler.cancelNotification(context, reminder.id)
+            }
             contactRepository.deleteGroup(group)
         }
     }
