@@ -83,11 +83,6 @@ android {
         }
     }
 
-    sourceSets {
-        // Room's exported schema JSONs double as test fixtures: MigrationTestHelper
-        // loads them from the unit-test asset path (works under Robolectric).
-        getByName("test").assets.srcDir("$projectDir/schemas")
-    }
 }
 
 ksp {
@@ -204,7 +199,6 @@ dependencies {
     // Unit tests
     testImplementation(libs.junit)
     testImplementation(libs.kotlin.test)
-    testImplementation(libs.room.testing)
     testImplementation(libs.gson)
     testImplementation(libs.kotlinx.coroutines.test)
 
