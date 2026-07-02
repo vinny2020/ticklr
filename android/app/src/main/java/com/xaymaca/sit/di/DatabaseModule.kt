@@ -25,14 +25,24 @@ import javax.inject.Singleton
 object DatabaseModule {
 
     /**
-     * v2 → v3: Add fingerprint column + unique index for contact deduplication.
-     * Existing contacts get an empty fingerprint ("") which is treated as unset —
-     * they remain in the DB untouched and will get fingerprinted on next edit/re-import.
+     * v2 → v3: Add fingerprint column for contact deduplication. Existing contacts
+     * get an empty fingerprint ("") which is treated as unset — they remain in the
+     * DB untouched and will get fingerprinted on next edit/re-import.
+     *
+     * TIC-60: this migration originally also created a partial unique index
+     * (index_contacts_fingerprint). The @Index was later removed from the Contact
+     * entity, so Room's post-migration schema validation expects NO indices on
+     * contacts — creating one here guaranteed a crash loop on the v2 upgrade path.
+     * Dedup is enforced in ContactRepository.insertContact via countByFingerprint,
+     * not by an index. MIGRATION_4_5 drops the index from devices that already
+     * migrated under the original code.
+     *
+     * Migrations are non-private so SITDatabaseMigrationTest can exercise the
+     * exact chain production uses.
      */
-    private val MIGRATION_2_3 = object : Migration(2, 3) {
+    val MIGRATION_2_3 = object : Migration(2, 3) {
         override fun migrate(db: SupportSQLiteDatabase) {
             db.execSQL("ALTER TABLE contacts ADD COLUMN fingerprint TEXT NOT NULL DEFAULT ''")
-            db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS index_contacts_fingerprint ON contacts(fingerprint) WHERE fingerprint != ''")
         }
     }
 
@@ -43,11 +53,26 @@ object DatabaseModule {
      * Existing rows get NULL (treated as user-created groups in the
      * warm UI).
      */
-    private val MIGRATION_3_4 = object : Migration(3, 4) {
+    val MIGRATION_3_4 = object : Migration(3, 4) {
         override fun migrate(db: SupportSQLiteDatabase) {
             db.execSQL("ALTER TABLE contact_groups ADD COLUMN categoryId TEXT DEFAULT NULL")
         }
     }
+
+    /**
+     * v4 → v5: Drop the orphaned partial unique index that the original v2→v3
+     * migration created (TIC-60). Devices that migrated before the fix still
+     * carry it and fail Room's schema validation on every open — a launch
+     * crash loop. No-op for fresh installs (which never had the index).
+     */
+    val MIGRATION_4_5 = object : Migration(4, 5) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("DROP INDEX IF EXISTS index_contacts_fingerprint")
+        }
+    }
+
+    /** Single source of truth for the migration chain — used by the provider and by tests. */
+    val ALL_MIGRATIONS = arrayOf<Migration>(MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
 
     @Provides
     @Singleton
@@ -57,7 +82,7 @@ object DatabaseModule {
             SITDatabase::class.java,
             "sit_database"
         )
-            .addMigrations(MIGRATION_2_3, MIGRATION_3_4)
+            .addMigrations(*ALL_MIGRATIONS)
             .apply {
                 // Debug-only convenience. In production the on-device DB is the ONLY
                 // copy of the user's data — a missing migration must fail loudly,
