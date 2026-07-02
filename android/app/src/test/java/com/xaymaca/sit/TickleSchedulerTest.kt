@@ -446,4 +446,39 @@ class TickleSchedulerTest {
         assertTrue(!TickleScheduler.isUpcoming(done, now))
         assertTrue(!TickleScheduler.isSnoozedWaiting(done, now))
     }
+
+    // -- Alarm lifecycle: shouldArmAlarm / shouldPostFiredAlarm (TIC-66) --------
+
+    @Test
+    fun `alarm is armed for future-due active and snoozed reminders only`() {
+        val now = calAt(2026, 3, 15)
+        val futureActive = reminder(TickleStatus.ACTIVE, dueAt = calAt(2026, 3, 20))
+        val futureSnoozed = reminder(TickleStatus.SNOOZED, dueAt = calAt(2026, 3, 22))
+        val pastActive = reminder(TickleStatus.ACTIVE, dueAt = calAt(2026, 3, 10))
+        val futureCompleted = reminder(TickleStatus.COMPLETED, dueAt = calAt(2026, 3, 20))
+
+        assertTrue(TickleScheduler.shouldArmAlarm(futureActive, now))
+        // Snoozed = alarm at snooze end, not silence — snooze is not a mute.
+        assertTrue(TickleScheduler.shouldArmAlarm(futureSnoozed, now))
+        // Past-due belongs to the Due UI / daily worker; arming would fire immediately.
+        assertTrue(!TickleScheduler.shouldArmAlarm(pastActive, now))
+        assertTrue(!TickleScheduler.shouldArmAlarm(futureCompleted, now))
+    }
+
+    @Test
+    fun `fired alarm posts only when the reminder is still genuinely due`() {
+        val now = calAt(2026, 3, 15)
+        val due = reminder(TickleStatus.ACTIVE, dueAt = calAt(2026, 3, 15))
+        val completed = reminder(TickleStatus.COMPLETED, dueAt = calAt(2026, 3, 15))
+        // Completed or snoozed AFTER the alarm was armed: nextDueDate moved to
+        // the future, so this firing is stale and must stay silent.
+        val rescheduled = reminder(TickleStatus.ACTIVE, dueAt = calAt(2026, 4, 15))
+        val snoozedPastEnd = reminder(TickleStatus.SNOOZED, dueAt = calAt(2026, 3, 14))
+
+        assertTrue(TickleScheduler.shouldPostFiredAlarm(due, now))
+        assertTrue(TickleScheduler.shouldPostFiredAlarm(snoozedPastEnd, now))
+        assertTrue(!TickleScheduler.shouldPostFiredAlarm(completed, now))
+        assertTrue(!TickleScheduler.shouldPostFiredAlarm(rescheduled, now))
+        assertTrue(!TickleScheduler.shouldPostFiredAlarm(null, now))
+    }
 }
