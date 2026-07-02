@@ -17,6 +17,15 @@ enum ContactPhotoFetcher {
     /// Sendable check.
     nonisolated(unsafe) private static let cache = NSCache<NSString, UIImage>()
 
+    /// Negative-result cache: contact IDs known to have no system-Contacts
+    /// photo match. Without this, every row appearance for the (majority)
+    /// no-match case re-triggers a full `enumerateContacts` scan of the
+    /// address book, with concurrent detached tasks stacking while
+    /// scrolling. `NSMutableSet` is not documented thread-safe like
+    /// `NSCache`, so access is confined to `negativeCacheQueue`.
+    nonisolated(unsafe) private static var negativeCache = Set<String>()
+    private static let negativeCacheQueue = DispatchQueue(label: "com.xaymaca.sit.contactPhotoFetcher.negativeCache")
+
     /// Caller passes Sendable primitives so the SwiftData `Contact` model
     /// (non-Sendable) never crosses the actor boundary.
     static func fetch(contactId: UUID,
@@ -25,6 +34,9 @@ enum ContactPhotoFetcher {
         let key = contactId.uuidString as NSString
         if let cached = cache.object(forKey: key) {
             return cached
+        }
+        if negativeCacheQueue.sync(execute: { negativeCache.contains(key as String) }) {
+            return nil
         }
         guard CNContactStore.authorizationStatus(for: .contacts) == .authorized else {
             return nil
@@ -35,7 +47,10 @@ enum ContactPhotoFetcher {
             $0.lowercased().trimmingCharacters(in: .whitespaces)
         }.filter { !$0.isEmpty })
 
-        guard !phones.isEmpty || !normEmails.isEmpty else { return nil }
+        guard !phones.isEmpty || !normEmails.isEmpty else {
+            negativeCacheQueue.sync { negativeCache.insert(key as String) }
+            return nil
+        }
 
         let resolved = await Task.detached(priority: .userInitiated) {
             return enumerateMatch(phones: phones, emails: normEmails)
@@ -43,12 +58,15 @@ enum ContactPhotoFetcher {
 
         if let resolved {
             cache.setObject(resolved, forKey: key)
+        } else {
+            negativeCacheQueue.sync { negativeCache.insert(key as String) }
         }
         return resolved
     }
 
     static func clearCache() {
         cache.removeAllObjects()
+        negativeCacheQueue.sync { negativeCache.removeAll() }
     }
 
     // MARK: - Internals
