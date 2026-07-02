@@ -318,4 +318,8 @@
     <string name="warm_contact_accessBanner">Autorise l’accès aux contacts pour utiliser la photo de ton carnet d’adresses.</string>
     <string name="compose_template_label">Modèle</string>
     <string name="tickle_action_compose">Rédiger un message</string>
+    <string name="tickle_row_group_fallback">Groupe</string>
+    <string name="tickle_row_tickle_fallback">Tickle</string>
+    <string name="template_default_title">Prendre des nouvelles</string>
+    <string name="template_default_body">Salut ! Je prends juste de tes nouvelles. J\'espère que tu vas bien. À bientôt !</string>
 </resources>

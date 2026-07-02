@@ -20,7 +20,11 @@ class SmsService @Inject constructor() {
      * semicolons (group MMS behavior varies by SMS app).
      */
     fun sendSmsIntent(context: Context, phoneNumbers: List<String>, message: String): Intent {
-        val target = if (phoneNumbers.size == 1) phoneNumbers.first() else phoneNumbers.joinToString(";")
+        // URI-encode each recipient before interpolating into the smsto: URI.
+        // A raw '#' (or other URI-significant char) in a stored number would
+        // otherwise be read as a fragment delimiter and truncate the recipient.
+        // Encoding per-number preserves the ';' separator between recipients.
+        val target = phoneNumbers.joinToString(";") { Uri.encode(it) }
         return Intent(Intent.ACTION_SENDTO).apply {
             data = Uri.parse("smsto:$target")
             putExtra("sms_body", message)

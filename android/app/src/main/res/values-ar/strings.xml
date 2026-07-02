@@ -330,4 +330,8 @@
     <string name="warm_contact_accessBanner">اسمح بالوصول إلى جهات الاتصال لاستخدام الصورة من دفتر العناوين.</string>
     <string name="compose_template_label">قالب</string>
     <string name="tickle_action_compose">كتابة رسالة</string>
+    <string name="tickle_row_group_fallback">مجموعة</string>
+    <string name="tickle_row_tickle_fallback">تذكير</string>
+    <string name="template_default_title">اطمئنان</string>
+    <string name="template_default_body">مرحبًا! أردت فقط الاطمئنان عليك. أتمنى أن تكون بخير. نتحدث قريبًا!</string>
 </resources>

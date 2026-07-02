@@ -318,4 +318,8 @@
     <string name="warm_contact_accessBanner">एड्रेस बुक से तस्वीर इस्तेमाल करने के लिए संपर्क-एक्सेस की अनुमति दें।</string>
     <string name="compose_template_label">टेम्पलेट</string>
     <string name="tickle_action_compose">संदेश लिखें</string>
+    <string name="tickle_row_group_fallback">समूह</string>
+    <string name="tickle_row_tickle_fallback">Tickle</string>
+    <string name="template_default_title">हालचाल पूछना</string>
+    <string name="template_default_body">नमस्ते! बस हालचाल पूछने के लिए संदेश भेज रहा हूँ। आशा है आप अच्छे होंगे। जल्द ही बात करते हैं!</string>
 </resources>

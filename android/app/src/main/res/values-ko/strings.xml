@@ -315,4 +315,8 @@
     <string name="warm_contact_accessBanner">주소록의 사진을 사용하려면 연락처 접근을 허용해 주세요.</string>
     <string name="compose_template_label">템플릿</string>
     <string name="tickle_action_compose">메시지 작성</string>
+    <string name="tickle_row_group_fallback">그룹</string>
+    <string name="tickle_row_tickle_fallback">Tickle</string>
+    <string name="template_default_title">안부 인사</string>
+    <string name="template_default_body">안녕하세요! 그냥 안부 전하려고요. 잘 지내시죠? 곧 다시 이야기해요!</string>
 </resources>

@@ -323,4 +323,8 @@
     <string name="warm_contact_accessBanner">ایڈریس بُک سے تصویر استعمال کرنے کے لیے رابطوں تک رسائی کی اجازت دیں۔</string>
     <string name="compose_template_label">ٹیمپلیٹ</string>
     <string name="tickle_action_compose">پیغام لکھیں</string>
+    <string name="tickle_row_group_fallback">گروپ</string>
+    <string name="tickle_row_tickle_fallback">یاددہانی</string>
+    <string name="template_default_title">خیر خیریت</string>
+    <string name="template_default_body">ہیلو! بس آپ کی خیریت پوچھنا چاہتا تھا۔ امید ہے آپ ٹھیک ہوں گے۔ جلد بات کرتے ہیں!</string>
 </resources>

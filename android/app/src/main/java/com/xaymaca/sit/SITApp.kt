@@ -46,7 +46,12 @@ class SITApp : Application(), Configuration.Provider {
     private fun seedDefaultTemplate() {
         val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         appScope.launch {
-            MessageTemplateSeed.seedDefaultIfNeeded(messageTemplateRepository, prefs)
+            MessageTemplateSeed.seedDefaultIfNeeded(
+                messageTemplateRepository,
+                prefs,
+                getString(R.string.template_default_title),
+                getString(R.string.template_default_body)
+            )
         }
     }
 
