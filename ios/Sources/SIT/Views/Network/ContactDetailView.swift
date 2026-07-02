@@ -9,6 +9,11 @@ private enum ActiveSheet: Identifiable {
 
 struct ContactDetailView: View {
     @Bindable var contact: Contact
+    /// When set (iPad detail pane, TIC-46/TIC-69), clear the caller's selection via
+    /// this callback after deleting instead of `dismiss()` — the pane is hosted in a
+    /// `NavigationSplitView`, not presented, so `dismiss()` there is a no-op and would
+    /// leave the detail pane bound to a destroyed model.
+    var onDeleted: (() -> Void)? = nil
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
 
@@ -74,7 +79,7 @@ struct ContactDetailView: View {
                 PhotoStore.delete(for: contact.id)
                 modelContext.delete(contact)
                 try? modelContext.save()
-                dismiss()
+                if let onDeleted { onDeleted() } else { dismiss() }
             }
         } message: {
             Text(String(localized: "common.cannotUndo"))

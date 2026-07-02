@@ -158,6 +158,7 @@ struct GroupListView: View {
                 editingGroup = group
             }
             Button(String(localized: "common.delete"), systemImage: "trash", role: .destructive) {
+                if selectedGroup == group { selectedGroup = nil }
                 modelContext.delete(group)
                 try? modelContext.save()
             }
