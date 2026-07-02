@@ -155,15 +155,12 @@ class TickleViewModel @Inject constructor(
                     )
                 )
             } else {
-                val nextDue = if (reminder.frequency == TickleFrequency.ANNUAL.name) {
-                    TickleScheduler.nextAnnualDate(after = now, matchingMonthDayOf = reminder.nextDueDate)
-                } else {
-                    TickleScheduler.nextDueDate(
-                        from = now,
-                        frequency = reminder.frequency,
-                        customDays = reminder.customIntervalDays
-                    )
-                }
+                val nextDue = TickleScheduler.nextDueDateOnComplete(
+                    frequency = reminder.frequency,
+                    startDate = reminder.startDate,
+                    customDays = reminder.customIntervalDays,
+                    now = now
+                )
                 tickleRepository.updateReminder(
                     reminder.copy(
                         lastCompletedDate = now,

@@ -100,7 +100,10 @@ struct TickleScheduler {
             reminder.status = .completed
         } else {
             if reminder.frequency == .annual {
-                reminder.nextDueDate = nextAnnualDate(after: Date(), matchingMonthDayOf: reminder.nextDueDate)
+                // Anchor on startDate, never nextDueDate: snooze() overwrites
+                // nextDueDate, so deriving the next occurrence from it shifts
+                // the anniversary by the snooze amount — permanently (TIC-62).
+                reminder.nextDueDate = nextAnnualDate(after: Date(), matchingMonthDayOf: reminder.startDate)
             } else {
                 reminder.nextDueDate = nextDueDate(from: Date(), frequency: reminder.frequency, customDays: reminder.customIntervalDays)
             }
