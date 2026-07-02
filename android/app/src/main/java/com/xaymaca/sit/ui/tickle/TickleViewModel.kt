@@ -149,44 +149,50 @@ class TickleViewModel @Inject constructor(
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
 
+    /** Resolves the display name used in a reminder's alarm notification. */
+    private suspend fun alarmContactName(reminder: TickleReminder): String =
+        reminder.contactId?.let { cId ->
+            contactRepository.getContactById(cId)?.fullName?.takeIf { it.isNotBlank() }
+        } ?: context.getString(R.string.tickle_notification_contact_fallback)
+
     fun markComplete(reminder: TickleReminder) {
         viewModelScope.launch {
             val now = System.currentTimeMillis()
-            if (reminder.frequency == TickleFrequency.ONE_TIME.name) {
-                TickleScheduler.cancelNotification(context, reminder.id)
-                tickleRepository.updateReminder(
-                    reminder.copy(
-                        lastCompletedDate = now,
-                        status = TickleStatus.COMPLETED.name
-                    )
+            val updated = if (reminder.frequency == TickleFrequency.ONE_TIME.name) {
+                reminder.copy(
+                    lastCompletedDate = now,
+                    status = TickleStatus.COMPLETED.name
                 )
             } else {
-                val nextDue = TickleScheduler.nextDueDateOnComplete(
-                    frequency = reminder.frequency,
-                    startDate = reminder.startDate,
-                    customDays = reminder.customIntervalDays,
-                    now = now
-                )
-                tickleRepository.updateReminder(
-                    reminder.copy(
-                        lastCompletedDate = now,
-                        nextDueDate = nextDue,
-                        status = TickleStatus.ACTIVE.name
-                    )
+                reminder.copy(
+                    lastCompletedDate = now,
+                    nextDueDate = TickleScheduler.nextDueDateOnComplete(
+                        frequency = reminder.frequency,
+                        startDate = reminder.startDate,
+                        customDays = reminder.customIntervalDays,
+                        now = now
+                    ),
+                    status = TickleStatus.ACTIVE.name
                 )
             }
+            tickleRepository.updateReminder(updated)
+            // TIC-66: arms the next occurrence's exact alarm (recurring) or
+            // cancels the stale one (one-time completed).
+            TickleScheduler.syncAlarm(context, updated, alarmContactName(updated))
         }
     }
 
     fun snooze(reminder: TickleReminder, days: Int = 7) {
         viewModelScope.launch {
             val snoozeUntil = System.currentTimeMillis() + days * 24L * 60 * 60 * 1000
-            tickleRepository.updateReminder(
-                reminder.copy(
-                    nextDueDate = snoozeUntil,
-                    status = TickleStatus.SNOOZED.name
-                )
+            val updated = reminder.copy(
+                nextDueDate = snoozeUntil,
+                status = TickleStatus.SNOOZED.name
             )
+            tickleRepository.updateReminder(updated)
+            // TIC-66: replaces the original-due-date alarm with one at snooze
+            // end — previously the stale alarm fired at the old time anyway.
+            TickleScheduler.syncAlarm(context, updated, alarmContactName(updated))
         }
     }
 
@@ -201,19 +207,11 @@ class TickleViewModel @Inject constructor(
         viewModelScope.launch {
             val id = tickleRepository.upsertReminder(reminder)
             val finalId = if (reminder.id == 0L) id else reminder.id
-            val contactName = reminder.contactId?.let { cId ->
-                contactRepository.getContactById(cId)?.fullName
-            } ?: context.getString(R.string.tickle_notification_contact_fallback)
-            // Only schedule an alarm for active reminders. A preserved snoozed or
-            // completed reminder (TIC-67) must not fire an alarm for its past due
-            // date; clear any stale alarm instead.
-            if (reminder.status == TickleStatus.ACTIVE.name) {
-                TickleScheduler.scheduleNotification(
-                    context, finalId, reminder.contactId, contactName, reminder.note, reminder.nextDueDate
-                )
-            } else {
-                TickleScheduler.cancelNotification(context, finalId)
-            }
+            // TIC-66/67: syncAlarm arms only reminders that will become due
+            // (active, or snoozed until snooze-end) and clears stale alarms for
+            // completed/past-due ones.
+            val saved = reminder.copy(id = finalId)
+            TickleScheduler.syncAlarm(context, saved, alarmContactName(saved))
             TickleScheduler.scheduleWorker(context)
             _toastMessage.value = if (isNew) context.getString(R.string.tickle_saved) else context.getString(R.string.tickle_updated)
         }

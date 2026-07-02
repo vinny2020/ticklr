@@ -179,6 +179,44 @@ object TickleScheduler {
     }
 
     /**
+     * Whether a reminder should have an exact alarm armed: it will become due
+     * in the future (ACTIVE, or SNOOZED until its snooze-end date) and isn't
+     * completed. Past-due reminders are the Due UI's / daily worker's job —
+     * arming an alarm for a past date would fire immediately.
+     */
+    fun shouldArmAlarm(reminder: TickleReminder, now: Long = System.currentTimeMillis()): Boolean =
+        reminder.nextDueDate > now &&
+            (reminder.status == TickleStatus.ACTIVE.name || reminder.status == TickleStatus.SNOOZED.name)
+
+    /**
+     * Whether a fired alarm should still post its notification, validated
+     * against current DB state (TIC-66): the reminder must still exist, not be
+     * completed, and actually be due — if the user completed or snoozed it
+     * after the alarm was armed, its nextDueDate moved into the future and the
+     * firing is stale.
+     */
+    fun shouldPostFiredAlarm(reminder: TickleReminder?, now: Long = System.currentTimeMillis()): Boolean =
+        reminder != null &&
+            reminder.status != TickleStatus.COMPLETED.name &&
+            reminder.nextDueDate <= now
+
+    /**
+     * Single source of truth for a reminder's exact alarm (TIC-66). Call after
+     * EVERY reminder mutation: arms the alarm when [shouldArmAlarm], otherwise
+     * cancels any stale one. Scheduling reuses the reminder-id request code, so
+     * arming also replaces a previously armed alarm for the same reminder.
+     */
+    fun syncAlarm(context: Context, reminder: TickleReminder, contactName: String) {
+        if (shouldArmAlarm(reminder)) {
+            scheduleNotification(
+                context, reminder.id, reminder.contactId, contactName, reminder.note, reminder.nextDueDate
+            )
+        } else {
+            cancelNotification(context, reminder.id)
+        }
+    }
+
+    /**
      * Schedules a one-shot local notification for a specific tickle reminder.
      */
     fun scheduleNotification(

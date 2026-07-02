@@ -20,6 +20,10 @@ class TickleRepository @Inject constructor(
     suspend fun getDueReminders(now: Long = System.currentTimeMillis()): List<TickleReminder> =
         tickleReminderDao.getDueReminders(now)
 
+    /** Reminders whose exact alarm should be armed — see [TickleReminderDao.getArmableReminders]. */
+    suspend fun getArmableReminders(now: Long = System.currentTimeMillis()): List<TickleReminder> =
+        tickleReminderDao.getArmableReminders(now)
+
     suspend fun upsertReminder(reminder: TickleReminder): Long =
         tickleReminderDao.insert(reminder)
 

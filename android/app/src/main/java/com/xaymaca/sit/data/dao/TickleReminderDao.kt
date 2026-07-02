@@ -31,6 +31,11 @@ interface TickleReminderDao {
     @Query("SELECT * FROM tickle_reminders WHERE nextDueDate <= :now AND status IN ('ACTIVE', 'SNOOZED')")
     suspend fun getDueReminders(now: Long): List<TickleReminder>
 
+    /** Reminders that should have an exact alarm armed: not yet due, not completed.
+     *  Used to re-register AlarmManager alarms after a reboot (TIC-66). */
+    @Query("SELECT * FROM tickle_reminders WHERE nextDueDate > :now AND status IN ('ACTIVE', 'SNOOZED')")
+    suspend fun getArmableReminders(now: Long): List<TickleReminder>
+
     /** Reminders belonging to a contact — used to cancel their alarms before
      *  the contact (and its tickles) are deleted. */
     @Query("SELECT * FROM tickle_reminders WHERE contactId = :contactId")
