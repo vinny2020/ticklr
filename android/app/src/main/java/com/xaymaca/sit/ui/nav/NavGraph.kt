@@ -43,6 +43,15 @@ import com.xaymaca.sit.ui.settings.TemplateListScreen
 import com.xaymaca.sit.ui.tickle.TickleEditScreen
 import com.xaymaca.sit.ui.tickle.TickleListScreen
 
+/**
+ * The graph's start destination, chosen once from persisted onboarding state.
+ * Kept pure (no Compose/Android deps) so it can be unit-tested and so callers
+ * read it a single time at NavHost creation — reading it reactively mid-session
+ * rebuilds the graph and wipes the back stack (TIC-64).
+ */
+internal fun startDestinationFor(onboardingComplete: Boolean): String =
+    if (onboardingComplete) Screen.Tickle.route else Screen.Onboarding.route
+
 private data class BottomNavItem(
     val screen: Screen,
     @StringRes val labelResId: Int,
@@ -69,9 +78,21 @@ private val bottomNavRoutes = setOf(
 fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
     val context = LocalContext.current
     val prefs = context.getSharedPreferences(SITApp.PREFS_NAME, Context.MODE_PRIVATE)
-    val onboardingComplete = prefs.getBoolean(SITApp.KEY_ONBOARDING_COMPLETE, false)
 
     val navController = rememberNavController()
+
+    // Compute the graph's start destination ONCE, at NavHost creation. Reading the
+    // onboarding pref reactively inside composition is a trap (TIC-64): completing
+    // onboarding writes the pref and navigates, the navigate triggers a
+    // recomposition (currentBackStackEntryAsState), the pref re-read flips this
+    // value, and NavHost rebuilds its graph with a new startDestinationId — which
+    // pops the entire back stack and discards the screen we just pushed. Keeping it
+    // stable lets the explicit navigate(...) { popUpTo } own onboarding transitions.
+    // Process death/recreation re-reads the persisted pref here, so a completed
+    // onboarding never resurrects.
+    val startDestination = remember {
+        startDestinationFor(prefs.getBoolean(SITApp.KEY_ONBOARDING_COMPLETE, false))
+    }
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
@@ -97,8 +118,6 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
             }
         }
     ) { innerPadding ->
-        val startDestination = if (onboardingComplete) Screen.Tickle.route else Screen.Onboarding.route
-
         Row(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
             if (showNavChrome && useRail) {
                 AppNavigationRail(currentDestination, navController)
@@ -114,12 +133,18 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
                     onImportContacts = { navController.navigate(Screen.Import.route) },
                     onAddContact = {
                         // Warm-redesign: second CTA replaces "Start Empty"
-                        // with "Add my first contact" — mark complete
-                        // and open AddContact directly.
+                        // with "Add my first contact" — mark onboarding complete,
+                        // then open the AddContact form with the Tickle home seeded
+                        // beneath it so saving (or backing out of) the form returns
+                        // to the app rather than an empty stack. Onboarding is popped
+                        // inclusive so back never returns to it. startDestination is
+                        // computed once (see above), so these navigations no longer
+                        // rebuild the graph and pop the stack (TIC-64).
                         prefs.edit().putBoolean(SITApp.KEY_ONBOARDING_COMPLETE, true).apply()
-                        navController.navigate(Screen.AddContact.route) {
+                        navController.navigate(Screen.Tickle.route) {
                             popUpTo(Screen.Onboarding.route) { inclusive = true }
                         }
+                        navController.navigate(Screen.AddContact.route)
                     }
                 )
             }
