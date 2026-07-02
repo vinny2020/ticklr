@@ -49,10 +49,10 @@ final class TickleEditViewTests: XCTestCase {
         XCTAssertEqual(reminder.frequency, .monthly)
     }
 
-    func testEditingOverdueTickleRecomputesNextDueDateFromStartDate() throws {
-        // The other half of the rule: when startDate is in the past, the
-        // helper must roll forward by one interval rather than firing today.
-        // Models the flow where a user opens an overdue tickle and saves.
+    func testEditingOverdueTickleWithoutScheduleChangePreservesDueDate() throws {
+        // TIC-67 flipped this rule: a save that leaves the schedule untouched
+        // must NOT roll nextDueDate forward — that silently skipped the due
+        // occurrence when a user opened an overdue tickle just to fix a typo.
         let contact = makeContact()
         let pastStart = Date().addingTimeInterval(-30 * 24 * 60 * 60)
         let reminder = TickleReminder(
@@ -61,19 +61,15 @@ final class TickleEditViewTests: XCTestCase {
             frequency: .weekly,
             startDate: pastStart
         )
-        // Force nextDueDate to past so we can detect the recomputation.
         reminder.nextDueDate = pastStart
 
         let view = TickleEditView(existing: reminder)
         let sut = try view.inspect()
         try sut.find(button: String(localized: "common.save")).tap()
 
-        // With nextDueDate == pastStart on the edit form, startDate state
-        // also = pastStart. initialNextDueDate(past, weekly) = pastStart + 7d.
-        let expected = Calendar.current.date(byAdding: .day, value: 7, to: pastStart)!
         XCTAssertEqual(
-            reminder.nextDueDate, expected,
-            "Editing an overdue tickle must roll its nextDueDate forward by one interval"
+            reminder.nextDueDate, pastStart,
+            "A schedule-untouched save on an overdue tickle must not skip the due occurrence"
         )
     }
 
