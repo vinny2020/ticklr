@@ -248,6 +248,83 @@ class TickleSchedulerTest {
         assertEquals(now + TimeUnit.DAYS.toMillis(21), result)
     }
 
+    // -- scheduleChanged (preserve-vs-recompute on edit, TIC-67) ----------------
+
+    @Test
+    fun `scheduleChanged is false for a note or contact-only edit`() {
+        val original = TickleReminder(
+            id = 1L,
+            frequency = TickleFrequency.MONTHLY.name,
+            customIntervalDays = null,
+            startDate = calAt(2025, 12, 1),
+            nextDueDate = calAt(2026, 4, 30)
+        )
+        // Same schedule fields as the original — only note/contact differ.
+        assertTrue(
+            !TickleScheduler.scheduleChanged(
+                original = original,
+                frequency = TickleFrequency.MONTHLY.name,
+                customDays = null,
+                startDate = original.startDate
+            )
+        )
+    }
+
+    @Test
+    fun `scheduleChanged is true when frequency changes`() {
+        val original = TickleReminder(
+            id = 1L,
+            frequency = TickleFrequency.WEEKLY.name,
+            startDate = calAt(2025, 12, 1),
+            nextDueDate = calAt(2026, 4, 30)
+        )
+        assertTrue(
+            TickleScheduler.scheduleChanged(
+                original = original,
+                frequency = TickleFrequency.MONTHLY.name,
+                customDays = null,
+                startDate = original.startDate
+            )
+        )
+    }
+
+    @Test
+    fun `scheduleChanged is true when custom interval changes`() {
+        val original = TickleReminder(
+            id = 1L,
+            frequency = TickleFrequency.CUSTOM.name,
+            customIntervalDays = 14,
+            startDate = calAt(2025, 12, 1),
+            nextDueDate = calAt(2026, 4, 30)
+        )
+        assertTrue(
+            TickleScheduler.scheduleChanged(
+                original = original,
+                frequency = TickleFrequency.CUSTOM.name,
+                customDays = 21,
+                startDate = original.startDate
+            )
+        )
+    }
+
+    @Test
+    fun `scheduleChanged is true when start date changes`() {
+        val original = TickleReminder(
+            id = 1L,
+            frequency = TickleFrequency.ANNUAL.name,
+            startDate = calAt(2025, 12, 1),
+            nextDueDate = calAt(2026, 12, 1)
+        )
+        assertTrue(
+            TickleScheduler.scheduleChanged(
+                original = original,
+                frequency = TickleFrequency.ANNUAL.name,
+                customDays = null,
+                startDate = calAt(2025, 12, 25)
+            )
+        )
+    }
+
     @Test
     fun `nextDueDateForSave when custom days went from null to a value recomputes`() {
         // Switching from MONTHLY (no custom days) to CUSTOM with 30 days is a

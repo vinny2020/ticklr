@@ -27,6 +27,7 @@ import com.xaymaca.sit.R
 import com.xaymaca.sit.data.model.Contact
 import com.xaymaca.sit.data.model.TickleFrequency
 import com.xaymaca.sit.data.model.TickleReminder
+import com.xaymaca.sit.data.model.TickleStatus
 import com.xaymaca.sit.service.TickleScheduler
 import com.xaymaca.sit.ui.network.NetworkViewModel
 import com.xaymaca.sit.ui.shared.TicklrToast
@@ -159,19 +160,43 @@ fun TickleEditScreen(
                                             customDays = newCustomDays,
                                             startDate = startDate
                                         )
-                                        val reminder = TickleReminder(
-                                            id = tickleId ?: 0L,
-                                            contactId = selectedContact?.id,
-                                            groupId = null,
-                                            // Empty (not whitespace-only) defaults to the localized
-                                            // "Stay in touch" — saves users from blank-noted reminders
-                                            // without overriding intentional whitespace edits.
-                                            note = if (note.isEmpty()) context.getString(R.string.tickle_edit_default_note) else note.trim(),
-                                            frequency = selectedFrequency.name,
-                                            customIntervalDays = newCustomDays,
-                                            startDate = startDate,
-                                            nextDueDate = nextDue
-                                        )
+                                        // Empty (not whitespace-only) defaults to the localized
+                                        // "Stay in touch" — saves users from blank-noted reminders
+                                        // without overriding intentional whitespace edits.
+                                        val finalNote = if (note.isEmpty()) context.getString(R.string.tickle_edit_default_note) else note.trim()
+                                        val reminder = if (original != null) {
+                                            // TIC-67: copy-from-original so a note/contact edit keeps
+                                            // lastCompletedDate + createdAt (REPLACE would wipe them).
+                                            // Only reset status when a schedule field changed — otherwise
+                                            // preserve it so a typo fix doesn't un-snooze the reminder.
+                                            val scheduleChanged = TickleScheduler.scheduleChanged(
+                                                original = original,
+                                                frequency = selectedFrequency.name,
+                                                customDays = newCustomDays,
+                                                startDate = startDate
+                                            )
+                                            original.copy(
+                                                contactId = selectedContact?.id,
+                                                groupId = null,
+                                                note = finalNote,
+                                                frequency = selectedFrequency.name,
+                                                customIntervalDays = newCustomDays,
+                                                startDate = startDate,
+                                                nextDueDate = nextDue,
+                                                status = if (scheduleChanged) TickleStatus.ACTIVE.name else original.status
+                                            )
+                                        } else {
+                                            TickleReminder(
+                                                id = 0L,
+                                                contactId = selectedContact?.id,
+                                                groupId = null,
+                                                note = finalNote,
+                                                frequency = selectedFrequency.name,
+                                                customIntervalDays = newCustomDays,
+                                                startDate = startDate,
+                                                nextDueDate = nextDue
+                                            )
+                                        }
                                         tickleViewModel.upsert(reminder, isNew = tickleId == null)
                                         delay(2000)
                                         onSaved()
