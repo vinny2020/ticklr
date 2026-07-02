@@ -237,7 +237,7 @@ struct SettingsView: View {
                 await fetchNotificationStatus()
                 if granted {
                     let all = (try? modelContext.fetch(FetchDescriptor<TickleReminder>())) ?? []
-                    for reminder in all where reminder.status == .active {
+                    for reminder in all where reminder.status == .active || reminder.status == .snoozed {
                         TickleScheduler.scheduleNotification(for: reminder)
                     }
                 } else {

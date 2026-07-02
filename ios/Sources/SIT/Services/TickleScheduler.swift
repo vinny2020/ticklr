@@ -14,6 +14,9 @@ struct TickleScheduler {
     }
 
     static func scheduleNotification(for reminder: TickleReminder) {
+        let notificationsEnabled = (UserDefaults.standard.object(forKey: "tickleNotificationsEnabled") as? Bool) ?? true
+        guard notificationsEnabled else { return }
+
         let content = UNMutableNotificationContent()
 
         let name: String
