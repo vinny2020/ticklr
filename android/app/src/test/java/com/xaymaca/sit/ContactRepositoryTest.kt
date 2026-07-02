@@ -51,24 +51,31 @@ class ContactRepositoryTest {
         override fun countContactsInCategory(categoryId: String): Flow<Int> = flowOf(0)
     }
 
-    // Fake ContactGroupDao that tracks cross-ref rows in memory
+    // Fake ContactGroupDao that tracks groups and cross-ref membership rows
     private class FakeContactGroupDao : ContactGroupDao {
+        val groups = mutableListOf<ContactGroup>()
         val crossRefs = mutableListOf<ContactGroupCrossRef>()
 
-        override fun getAll(): Flow<List<ContactGroup>> = flowOf(emptyList())
-        override suspend fun getById(id: Long): ContactGroup? = null
+        override fun getAll(): Flow<List<ContactGroup>> = flowOf(groups.toList())
+        override suspend fun getById(id: Long): ContactGroup? = groups.find { it.id == id }
         override suspend fun getByCategoryId(categoryId: String): ContactGroup? = null
         override suspend fun findByNameCaseInsensitive(name: String): ContactGroup? = null
         override suspend fun countByNameCaseInsensitive(name: String, excludeId: Long): Int = 0
         override suspend fun getGroupWithContacts(id: Long): GroupWithContacts? = null
         override fun getAllGroupsWithContacts(): Flow<List<GroupWithContacts>> = flowOf(emptyList())
-        override suspend fun insert(group: ContactGroup): Long = 0L
+        override suspend fun insert(group: ContactGroup): Long {
+            groups.add(group)
+            return group.id
+        }
         override suspend fun update(group: ContactGroup) {}
-        override suspend fun delete(group: ContactGroup) {}
-        override suspend fun deleteAll() {}
+        override suspend fun delete(group: ContactGroup) { groups.removeAll { it.id == group.id } }
+        override suspend fun deleteAll() { groups.clear() }
         override suspend fun deleteAllCrossRefs() { crossRefs.clear() }
         override suspend fun deleteCrossRefsForContact(contactId: Long) {
             crossRefs.removeAll { it.contactId == contactId }
+        }
+        override suspend fun deleteCrossRefsForGroup(groupId: Long) {
+            crossRefs.removeAll { it.groupId == groupId }
         }
         override suspend fun insertCrossRef(crossRef: ContactGroupCrossRef) { crossRefs.add(crossRef) }
         override suspend fun deleteCrossRef(crossRef: ContactGroupCrossRef) { crossRefs.remove(crossRef) }
@@ -189,5 +196,35 @@ class ContactRepositoryTest {
 
         assertTrue(tickleDao.reminders.none { it.groupId == 100L })
         assertTrue(tickleDao.reminders.any { it.groupId == 200L })
+    }
+
+    // TIC-72: deleting a group must wipe that group's membership rows so a
+    // new group reusing the deleted group's rowid can't inherit old members.
+    @Test
+    fun `deleteGroup wipes that group's cross-refs`() = runBlocking {
+        val group = ContactGroup(id = 5L, name = "Old", emoji = "👥")
+        groupDao.groups.add(group)
+        groupDao.crossRefs.add(ContactGroupCrossRef(contactId = 1L, groupId = 5L))
+        groupDao.crossRefs.add(ContactGroupCrossRef(contactId = 2L, groupId = 5L))
+
+        repository.deleteGroup(group)
+
+        assertTrue(groupDao.groups.none { it.id == 5L })
+        assertTrue(groupDao.crossRefs.none { it.groupId == 5L })
+    }
+
+    @Test
+    fun `deleteGroup leaves other groups' cross-refs intact`() = runBlocking {
+        val target = ContactGroup(id = 5L, name = "Old", emoji = "👥")
+        val other = ContactGroup(id = 6L, name = "Keep", emoji = "👥")
+        groupDao.groups.add(target)
+        groupDao.groups.add(other)
+        groupDao.crossRefs.add(ContactGroupCrossRef(contactId = 1L, groupId = 5L))
+        groupDao.crossRefs.add(ContactGroupCrossRef(contactId = 1L, groupId = 6L))
+
+        repository.deleteGroup(target)
+
+        assertEquals(1, groupDao.crossRefs.size)
+        assertTrue(groupDao.crossRefs.all { it.groupId == 6L })
     }
 }

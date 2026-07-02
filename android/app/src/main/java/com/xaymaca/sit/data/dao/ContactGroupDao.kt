@@ -59,6 +59,15 @@ interface ContactGroupDao {
     @Query("DELETE FROM contact_group_cross_ref WHERE contactId = :contactId")
     suspend fun deleteCrossRefsForContact(contactId: Long)
 
+    /**
+     * Wipe every membership row for a single group. Called on group delete
+     * so orphaned cross-refs can't be inherited by a new group that reuses
+     * the deleted group's rowid (SQLite reuses the max rowid after the
+     * newest row is removed).
+     */
+    @Query("DELETE FROM contact_group_cross_ref WHERE groupId = :groupId")
+    suspend fun deleteCrossRefsForGroup(groupId: Long)
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertCrossRef(crossRef: ContactGroupCrossRef)
 

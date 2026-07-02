@@ -76,6 +76,7 @@ class GroupViewModelTest {
         override suspend fun deleteAll() { groups.clear() }
         override suspend fun deleteAllCrossRefs() {}
         override suspend fun deleteCrossRefsForContact(contactId: Long) {}
+        override suspend fun deleteCrossRefsForGroup(groupId: Long) {}
         override suspend fun insertCrossRef(crossRef: ContactGroupCrossRef) {}
         override suspend fun deleteCrossRef(crossRef: ContactGroupCrossRef) {}
         override fun getGroupsForContact(contactId: Long): Flow<List<ContactGroup>> = flowOf(emptyList())

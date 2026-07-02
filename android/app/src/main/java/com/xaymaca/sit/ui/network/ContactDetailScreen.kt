@@ -368,7 +368,9 @@ fun ContactDetailScreen(
                 confirmButton = {
                     TextButton(
                         onClick = {
-                            LocalPhotoStore.delete(context, contactId)
+                            // Photo file + cache cleanup is centralized in
+                            // NetworkViewModel.deleteContact (TIC-72) so it's
+                            // shared with the long-press delete path.
                             viewModel.deleteContact(c)
                             showDeleteDialog = false
                             onBack()

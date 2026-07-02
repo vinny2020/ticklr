@@ -32,6 +32,17 @@ object ContactPhotoService {
         cache.evictAll()
     }
 
+    /**
+     * Evict a single contact's cached photo. Must be called on delete:
+     * because the cache is keyed by contact id and SQLite reuses the max
+     * rowid after the newest row is removed, a new contact can inherit a
+     * deleted contact's id — and without eviction it would show the deleted
+     * contact's stale cached photo. (TIC-72)
+     */
+    fun evict(contactId: Long) {
+        cache.remove(contactId)
+    }
+
     suspend fun fetch(
         context: Context,
         contactId: Long,
