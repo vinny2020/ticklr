@@ -29,8 +29,9 @@ class ContactImportService @Inject constructor(
         val contacts = withContext(Dispatchers.IO) { readDeviceContacts(context.contentResolver) }
         var importCount = 0
         contacts.forEach { contact ->
-            contactRepository.insertContact(contact)
-            importCount++
+            // insertContact returns -1L when the row is a duplicate and skipped.
+            // Count only genuine inserts so "Imported N" doesn't overstate on re-import.
+            if (contactRepository.insertContact(contact) != -1L) importCount++
         }
         return importCount
     }
