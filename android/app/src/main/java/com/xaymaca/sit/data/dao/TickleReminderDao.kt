@@ -25,7 +25,10 @@ interface TickleReminderDao {
     @Query("SELECT * FROM tickle_reminders WHERE status = :status ORDER BY nextDueDate ASC")
     fun getByStatus(status: String): Flow<List<TickleReminder>>
 
-    @Query("SELECT * FROM tickle_reminders WHERE nextDueDate <= :now AND status = 'ACTIVE'")
+    // SNOOZED is included: snoozing only pushes nextDueDate out, so once that
+    // date passes the reminder is due again (TIC-61). Due-ness is date-based,
+    // matching iOS — a status flip back to ACTIVE happens on completion.
+    @Query("SELECT * FROM tickle_reminders WHERE nextDueDate <= :now AND status IN ('ACTIVE', 'SNOOZED')")
     suspend fun getDueReminders(now: Long): List<TickleReminder>
 
     @Query("DELETE FROM tickle_reminders")
