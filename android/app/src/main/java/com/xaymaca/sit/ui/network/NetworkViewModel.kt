@@ -1,5 +1,6 @@
 package com.xaymaca.sit.ui.network
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.xaymaca.sit.data.dao.ContactDao
@@ -7,8 +8,10 @@ import com.xaymaca.sit.data.model.Contact
 import com.xaymaca.sit.data.repository.ContactRepository
 import com.xaymaca.sit.service.ContactImportService
 import com.xaymaca.sit.service.LinkedInCSVParser
+import com.xaymaca.sit.service.TickleScheduler
 import com.xaymaca.sit.ui.theme.WarmCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,6 +33,7 @@ class NetworkViewModel @Inject constructor(
     private val contactImportService: ContactImportService,
     private val linkedInCSVParser: LinkedInCSVParser,
     private val contactDao: ContactDao,
+    @ApplicationContext private val context: Context,
 ) : ViewModel() {
 
     val searchQuery = MutableStateFlow("")
@@ -89,7 +93,14 @@ class NetworkViewModel @Inject constructor(
     }
 
     fun deleteContact(contact: Contact) {
-        viewModelScope.launch { contactRepository.deleteContact(contact) }
+        viewModelScope.launch {
+            // Cancel any armed alarms for this contact's tickles first, otherwise
+            // they still fire with the deleted contact's name baked into the intent.
+            contactRepository.getRemindersForContact(contact.id).forEach { reminder ->
+                TickleScheduler.cancelNotification(context, reminder.id)
+            }
+            contactRepository.deleteContact(contact)
+        }
     }
 
     suspend fun importFromContacts(): Int =

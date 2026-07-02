@@ -2,11 +2,13 @@ package com.xaymaca.sit.data.repository
 
 import com.xaymaca.sit.data.dao.ContactDao
 import com.xaymaca.sit.data.dao.ContactGroupDao
+import com.xaymaca.sit.data.dao.TickleReminderDao
 import com.xaymaca.sit.data.model.Contact
 import com.xaymaca.sit.data.model.ContactGroup
 import com.xaymaca.sit.data.model.ContactGroupCrossRef
 import com.xaymaca.sit.data.model.ContactWithGroups
 import com.xaymaca.sit.data.model.GroupWithContacts
+import com.xaymaca.sit.data.model.TickleReminder
 import com.xaymaca.sit.service.ContactFingerprint
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -15,7 +17,8 @@ import javax.inject.Singleton
 @Singleton
 class ContactRepository @Inject constructor(
     private val contactDao: ContactDao,
-    private val contactGroupDao: ContactGroupDao
+    private val contactGroupDao: ContactGroupDao,
+    private val tickleReminderDao: TickleReminderDao
 ) {
     fun getAllContacts(): Flow<List<Contact>> = contactDao.getAll()
 
@@ -49,7 +52,21 @@ class ContactRepository @Inject constructor(
 
     suspend fun updateContact(contact: Contact) = contactDao.update(contact)
 
-    suspend fun deleteContact(contact: Contact) = contactDao.delete(contact)
+    /** Tickles attached to a contact — callers cancel their alarms before delete. */
+    suspend fun getRemindersForContact(contactId: Long): List<TickleReminder> =
+        tickleReminderDao.getByContactId(contactId)
+
+    /**
+     * Deletes a contact and everything that only makes sense while it exists:
+     * its tickle reminders (which otherwise survive as name "?" with alarms
+     * still armed) and its group-membership cross-refs. Alarm cancellation is
+     * the caller's job — it needs a Context (see NetworkViewModel.deleteContact).
+     */
+    suspend fun deleteContact(contact: Contact) {
+        tickleReminderDao.deleteByContactId(contact.id)
+        contactGroupDao.deleteCrossRefsForContact(contact.id)
+        contactDao.delete(contact)
+    }
 
     suspend fun deleteAllContacts() = contactDao.deleteAll()
 
@@ -80,7 +97,19 @@ class ContactRepository @Inject constructor(
 
     suspend fun updateGroup(group: ContactGroup) = contactGroupDao.update(group)
 
-    suspend fun deleteGroup(group: ContactGroup) = contactGroupDao.delete(group)
+    /** Tickles attached to a group — callers cancel their alarms before delete. */
+    suspend fun getRemindersForGroup(groupId: Long): List<TickleReminder> =
+        tickleReminderDao.getByGroupId(groupId)
+
+    /**
+     * Deletes a group and its tickle reminders, which otherwise survive as
+     * name "?" with alarms still armed. Cross-ref cleanup is handled separately
+     * (TIC-72); alarm cancellation is the caller's job (see GroupViewModel).
+     */
+    suspend fun deleteGroup(group: ContactGroup) {
+        tickleReminderDao.deleteByGroupId(group.id)
+        contactGroupDao.delete(group)
+    }
 
     suspend fun addContactToGroup(contactId: Long, groupId: Long) {
         contactGroupDao.insertCrossRef(ContactGroupCrossRef(contactId, groupId))

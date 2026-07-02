@@ -114,8 +114,9 @@ object DatabaseModule {
     @Singleton
     fun provideContactRepository(
         contactDao: ContactDao,
-        contactGroupDao: ContactGroupDao
-    ): ContactRepository = ContactRepository(contactDao, contactGroupDao)
+        contactGroupDao: ContactGroupDao,
+        tickleReminderDao: TickleReminderDao
+    ): ContactRepository = ContactRepository(contactDao, contactGroupDao, tickleReminderDao)
 
     @Provides
     @Singleton

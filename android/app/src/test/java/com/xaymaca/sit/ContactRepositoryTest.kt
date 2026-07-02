@@ -2,11 +2,13 @@ package com.xaymaca.sit
 
 import com.xaymaca.sit.data.dao.ContactDao
 import com.xaymaca.sit.data.dao.ContactGroupDao
+import com.xaymaca.sit.data.dao.TickleReminderDao
 import com.xaymaca.sit.data.model.Contact
 import com.xaymaca.sit.data.model.ContactGroup
 import com.xaymaca.sit.data.model.ContactGroupCrossRef
 import com.xaymaca.sit.data.model.ContactWithGroups
 import com.xaymaca.sit.data.model.GroupWithContacts
+import com.xaymaca.sit.data.model.TickleReminder
 import com.xaymaca.sit.data.repository.ContactRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -14,6 +16,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class ContactRepositoryTest {
@@ -48,8 +51,10 @@ class ContactRepositoryTest {
         override fun countContactsInCategory(categoryId: String): Flow<Int> = flowOf(0)
     }
 
-    // Minimal stub — ContactGroupDao is not under test here
-    private class StubContactGroupDao : ContactGroupDao {
+    // Fake ContactGroupDao that tracks cross-ref rows in memory
+    private class FakeContactGroupDao : ContactGroupDao {
+        val crossRefs = mutableListOf<ContactGroupCrossRef>()
+
         override fun getAll(): Flow<List<ContactGroup>> = flowOf(emptyList())
         override suspend fun getById(id: Long): ContactGroup? = null
         override suspend fun getByCategoryId(categoryId: String): ContactGroup? = null
@@ -61,15 +66,49 @@ class ContactRepositoryTest {
         override suspend fun update(group: ContactGroup) {}
         override suspend fun delete(group: ContactGroup) {}
         override suspend fun deleteAll() {}
-        override suspend fun deleteAllCrossRefs() {}
-        override suspend fun insertCrossRef(crossRef: ContactGroupCrossRef) {}
-        override suspend fun deleteCrossRef(crossRef: ContactGroupCrossRef) {}
+        override suspend fun deleteAllCrossRefs() { crossRefs.clear() }
+        override suspend fun deleteCrossRefsForContact(contactId: Long) {
+            crossRefs.removeAll { it.contactId == contactId }
+        }
+        override suspend fun insertCrossRef(crossRef: ContactGroupCrossRef) { crossRefs.add(crossRef) }
+        override suspend fun deleteCrossRef(crossRef: ContactGroupCrossRef) { crossRefs.remove(crossRef) }
         override fun getGroupsForContact(contactId: Long): Flow<List<ContactGroup>> = flowOf(emptyList())
         override fun getMemberCount(groupId: Long): Flow<Int> = flowOf(0)
-        override fun getAllCrossRefs(): Flow<List<ContactGroupCrossRef>> = flowOf(emptyList())
+        override fun getAllCrossRefs(): Flow<List<ContactGroupCrossRef>> = flowOf(crossRefs.toList())
+    }
+
+    // Fake TickleReminderDao that holds reminders in memory
+    private class FakeTickleReminderDao : TickleReminderDao {
+        val reminders = mutableListOf<TickleReminder>()
+
+        override fun getAll(): Flow<List<TickleReminder>> = flowOf(reminders.toList())
+        override suspend fun getById(id: Long): TickleReminder? = reminders.find { it.id == id }
+        override suspend fun insert(reminder: TickleReminder): Long {
+            reminders.add(reminder)
+            return reminder.id
+        }
+        override suspend fun update(reminder: TickleReminder) {}
+        override suspend fun delete(reminder: TickleReminder) { reminders.remove(reminder) }
+        override fun getByStatus(status: String): Flow<List<TickleReminder>> =
+            flowOf(reminders.filter { it.status == status })
+        override suspend fun getDueReminders(now: Long): List<TickleReminder> =
+            reminders.filter { it.nextDueDate <= now }
+        override suspend fun getByContactId(contactId: Long): List<TickleReminder> =
+            reminders.filter { it.contactId == contactId }
+        override suspend fun getByGroupId(groupId: Long): List<TickleReminder> =
+            reminders.filter { it.groupId == groupId }
+        override suspend fun deleteByContactId(contactId: Long) {
+            reminders.removeAll { it.contactId == contactId }
+        }
+        override suspend fun deleteByGroupId(groupId: Long) {
+            reminders.removeAll { it.groupId == groupId }
+        }
+        override suspend fun deleteAll() { reminders.clear() }
     }
 
     private lateinit var contactDao: FakeContactDao
+    private lateinit var groupDao: FakeContactGroupDao
+    private lateinit var tickleDao: FakeTickleReminderDao
     private lateinit var repository: ContactRepository
 
     private fun makeContact(id: Long, first: String, last: String) = Contact(
@@ -79,7 +118,9 @@ class ContactRepositoryTest {
     @Before
     fun setUp() {
         contactDao = FakeContactDao()
-        repository = ContactRepository(contactDao, StubContactGroupDao())
+        groupDao = FakeContactGroupDao()
+        tickleDao = FakeTickleReminderDao()
+        repository = ContactRepository(contactDao, groupDao, tickleDao)
     }
 
     @Test
@@ -114,5 +155,39 @@ class ContactRepositoryTest {
 
         assertEquals(0, contactDao.deleteAllCallCount)
         assertTrue(contactDao.contacts.isEmpty())
+    }
+
+    @Test
+    fun `deleteContact cascades to its tickles and cross-refs but spares others`() = runBlocking {
+        val alice = makeContact(1L, "Alice", "Smith")
+        val bob = makeContact(2L, "Bob", "Jones")
+        contactDao.contacts.add(alice)
+        contactDao.contacts.add(bob)
+        tickleDao.reminders.add(TickleReminder(id = 10L, contactId = 1L))
+        tickleDao.reminders.add(TickleReminder(id = 11L, contactId = 1L))
+        tickleDao.reminders.add(TickleReminder(id = 12L, contactId = 2L))
+        groupDao.crossRefs.add(ContactGroupCrossRef(contactId = 1L, groupId = 100L))
+        groupDao.crossRefs.add(ContactGroupCrossRef(contactId = 2L, groupId = 100L))
+
+        repository.deleteContact(alice)
+
+        // Alice's reminders and cross-refs gone; Bob's untouched.
+        assertTrue(tickleDao.reminders.none { it.contactId == 1L })
+        assertTrue(tickleDao.reminders.any { it.contactId == 2L })
+        assertTrue(groupDao.crossRefs.none { it.contactId == 1L })
+        assertTrue(groupDao.crossRefs.any { it.contactId == 2L })
+        assertFalse(contactDao.contacts.contains(alice))
+    }
+
+    @Test
+    fun `deleteGroup cascades to its tickles but spares other groups`() = runBlocking {
+        val group = ContactGroup(id = 100L, name = "Work")
+        tickleDao.reminders.add(TickleReminder(id = 20L, groupId = 100L))
+        tickleDao.reminders.add(TickleReminder(id = 21L, groupId = 200L))
+
+        repository.deleteGroup(group)
+
+        assertTrue(tickleDao.reminders.none { it.groupId == 100L })
+        assertTrue(tickleDao.reminders.any { it.groupId == 200L })
     }
 }

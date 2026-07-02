@@ -54,6 +54,11 @@ interface ContactGroupDao {
     @Query("DELETE FROM contact_group_cross_ref")
     suspend fun deleteAllCrossRefs()
 
+    /** Removes a contact's group memberships so no cross-ref row is left
+     *  pointing at a deleted contact. */
+    @Query("DELETE FROM contact_group_cross_ref WHERE contactId = :contactId")
+    suspend fun deleteCrossRefsForContact(contactId: Long)
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertCrossRef(crossRef: ContactGroupCrossRef)
 

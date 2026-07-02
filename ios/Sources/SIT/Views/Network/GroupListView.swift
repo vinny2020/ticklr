@@ -159,7 +159,7 @@ struct GroupListView: View {
             }
             Button(String(localized: "common.delete"), systemImage: "trash", role: .destructive) {
                 if selectedGroup == group { selectedGroup = nil }
-                modelContext.delete(group)
+                TickleScheduler.deleteGroup(group, context: modelContext)
                 try? modelContext.save()
             }
         }

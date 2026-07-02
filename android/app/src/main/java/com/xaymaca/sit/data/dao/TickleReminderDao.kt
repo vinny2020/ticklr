@@ -31,6 +31,21 @@ interface TickleReminderDao {
     @Query("SELECT * FROM tickle_reminders WHERE nextDueDate <= :now AND status IN ('ACTIVE', 'SNOOZED')")
     suspend fun getDueReminders(now: Long): List<TickleReminder>
 
+    /** Reminders belonging to a contact — used to cancel their alarms before
+     *  the contact (and its tickles) are deleted. */
+    @Query("SELECT * FROM tickle_reminders WHERE contactId = :contactId")
+    suspend fun getByContactId(contactId: Long): List<TickleReminder>
+
+    /** Reminders attached to a group — same purpose as [getByContactId]. */
+    @Query("SELECT * FROM tickle_reminders WHERE groupId = :groupId")
+    suspend fun getByGroupId(groupId: Long): List<TickleReminder>
+
+    @Query("DELETE FROM tickle_reminders WHERE contactId = :contactId")
+    suspend fun deleteByContactId(contactId: Long)
+
+    @Query("DELETE FROM tickle_reminders WHERE groupId = :groupId")
+    suspend fun deleteByGroupId(groupId: Long)
+
     @Query("DELETE FROM tickle_reminders")
     suspend fun deleteAll()
 }
