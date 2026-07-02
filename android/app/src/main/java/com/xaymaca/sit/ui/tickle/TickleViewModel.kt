@@ -75,22 +75,28 @@ class TickleViewModel @Inject constructor(
         .getAllReminders()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    // Section semantics live in TickleScheduler.isDue/isUpcoming/isSnoozedWaiting
+    // (TIC-61): due-ness is date-based, so a snoozed reminder whose snooze
+    // window has elapsed surfaces in Due rather than sitting snoozed forever.
     val dueReminders: StateFlow<List<TickleReminder>> = allReminders
         .map { list ->
             val now = System.currentTimeMillis()
-            list.filter { it.status == TickleStatus.ACTIVE.name && it.nextDueDate <= now }
+            list.filter { TickleScheduler.isDue(it, now) }
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val upcomingReminders: StateFlow<List<TickleReminder>> = allReminders
         .map { list ->
             val now = System.currentTimeMillis()
-            list.filter { it.status == TickleStatus.ACTIVE.name && it.nextDueDate > now }
+            list.filter { TickleScheduler.isUpcoming(it, now) }
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val snoozedReminders: StateFlow<List<TickleReminder>> = allReminders
-        .map { list -> list.filter { it.status == TickleStatus.SNOOZED.name } }
+        .map { list ->
+            val now = System.currentTimeMillis()
+            list.filter { TickleScheduler.isSnoozedWaiting(it, now) }
+        }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     /** Display data for each reminder row — avatar text, headline name,

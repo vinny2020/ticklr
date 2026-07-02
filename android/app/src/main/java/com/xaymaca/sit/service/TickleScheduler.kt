@@ -12,6 +12,7 @@ import com.xaymaca.sit.MainActivity
 import com.xaymaca.sit.SITApp
 import com.xaymaca.sit.data.model.TickleFrequency
 import com.xaymaca.sit.data.model.TickleReminder
+import com.xaymaca.sit.data.model.TickleStatus
 import com.xaymaca.sit.ui.nav.Screen
 import java.util.Calendar
 import java.util.concurrent.TimeUnit
@@ -123,6 +124,23 @@ object TickleScheduler {
             else -> nextDueDate(now, frequency, customDays)
         }
     }
+
+    /**
+     * Due-ness is date-based (TIC-61, matching iOS): a reminder is due once its
+     * nextDueDate has passed, whether ACTIVE or SNOOZED — snoozing only pushes
+     * the date out, it is not a mute. COMPLETED reminders are never due.
+     */
+    fun isDue(reminder: TickleReminder, now: Long): Boolean =
+        reminder.nextDueDate <= now &&
+            (reminder.status == TickleStatus.ACTIVE.name || reminder.status == TickleStatus.SNOOZED.name)
+
+    /** ACTIVE with a future due date — the Upcoming section. */
+    fun isUpcoming(reminder: TickleReminder, now: Long): Boolean =
+        reminder.status == TickleStatus.ACTIVE.name && reminder.nextDueDate > now
+
+    /** SNOOZED and still inside its snooze window — the Snoozed section. */
+    fun isSnoozedWaiting(reminder: TickleReminder, now: Long): Boolean =
+        reminder.status == TickleStatus.SNOOZED.name && reminder.nextDueDate > now
 
     /**
      * The next due date after completing a recurring reminder. Annual reminders

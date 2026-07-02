@@ -2,6 +2,7 @@ package com.xaymaca.sit
 
 import com.xaymaca.sit.data.model.TickleFrequency
 import com.xaymaca.sit.data.model.TickleReminder
+import com.xaymaca.sit.data.model.TickleStatus
 import com.xaymaca.sit.service.TickleScheduler
 import org.junit.Test
 import java.util.Calendar
@@ -395,5 +396,54 @@ class TickleSchedulerTest {
             now = completedAt
         )
         assertEquals(completedAt + TimeUnit.DAYS.toMillis(7), result)
+    }
+
+    // -- Section semantics: isDue / isUpcoming / isSnoozedWaiting (TIC-61) ------
+
+    private fun reminder(status: TickleStatus, dueAt: Long) = TickleReminder(
+        id = 1L,
+        frequency = TickleFrequency.WEEKLY.name,
+        startDate = calAt(2026, 1, 1),
+        nextDueDate = dueAt,
+        status = status.name
+    )
+
+    @Test
+    fun `snoozed reminder becomes due when its snooze window elapses`() {
+        // The TIC-61 regression: snooze used to be a permanent mute because
+        // every due filter required status == ACTIVE.
+        val now = calAt(2026, 3, 15)
+        val snoozeEnded = reminder(TickleStatus.SNOOZED, dueAt = calAt(2026, 3, 14))
+        assertTrue(TickleScheduler.isDue(snoozeEnded, now))
+        assertTrue(!TickleScheduler.isSnoozedWaiting(snoozeEnded, now))
+    }
+
+    @Test
+    fun `snoozed reminder inside its window is waiting not due`() {
+        val now = calAt(2026, 3, 15)
+        val stillSnoozing = reminder(TickleStatus.SNOOZED, dueAt = calAt(2026, 3, 20))
+        assertTrue(!TickleScheduler.isDue(stillSnoozing, now))
+        assertTrue(TickleScheduler.isSnoozedWaiting(stillSnoozing, now))
+        assertTrue(!TickleScheduler.isUpcoming(stillSnoozing, now))
+    }
+
+    @Test
+    fun `active reminder sections split on the due date`() {
+        val now = calAt(2026, 3, 15)
+        val due = reminder(TickleStatus.ACTIVE, dueAt = calAt(2026, 3, 10))
+        val upcoming = reminder(TickleStatus.ACTIVE, dueAt = calAt(2026, 3, 20))
+        assertTrue(TickleScheduler.isDue(due, now))
+        assertTrue(!TickleScheduler.isUpcoming(due, now))
+        assertTrue(TickleScheduler.isUpcoming(upcoming, now))
+        assertTrue(!TickleScheduler.isDue(upcoming, now))
+    }
+
+    @Test
+    fun `completed reminder is never due upcoming or snoozed`() {
+        val now = calAt(2026, 3, 15)
+        val done = reminder(TickleStatus.COMPLETED, dueAt = calAt(2026, 3, 10))
+        assertTrue(!TickleScheduler.isDue(done, now))
+        assertTrue(!TickleScheduler.isUpcoming(done, now))
+        assertTrue(!TickleScheduler.isSnoozedWaiting(done, now))
     }
 }
