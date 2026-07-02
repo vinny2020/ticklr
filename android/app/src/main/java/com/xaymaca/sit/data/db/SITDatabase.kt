@@ -24,7 +24,7 @@ import com.xaymaca.sit.data.model.TickleReminder
         TickleReminder::class
     ],
     version = 4,
-    exportSchema = false
+    exportSchema = true
 )
 abstract class SITDatabase : RoomDatabase() {
     abstract fun contactDao(): ContactDao

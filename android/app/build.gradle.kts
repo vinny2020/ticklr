@@ -82,6 +82,13 @@ android {
             }
         }
     }
+
+}
+
+ksp {
+    // Export the Room schema for every @Database version to schemas/ (checked in).
+    // This is what makes migration regression tests possible.
+    arg("room.schemaLocation", "$projectDir/schemas")
 }
 
 // Play Publisher configuration for Google Play Store deployment via GitHub Actions
