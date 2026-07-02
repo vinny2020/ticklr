@@ -1,1 +1,6 @@
-Du kannst jetzt einmalige und jährliche Tickles erstellen, darunter Geburtstage, Jahrestage und eigene besondere Ereignisse. Dieses Release verbessert außerdem die Lokalisierungsabdeckung und behebt mehrere übersetzte UI-Texte.
+Dieses Update dreht sich um Zuverlässigkeit:
+• Absturz beim Start nach dem Update behoben
+• Zurückgestellte Tickles kehren nach Ablauf zurück
+• Erinnerungen überstehen Neustarts und kommen pünktlich
+• Beim Löschen eines Kontakts werden auch seine Erinnerungen entfernt
+• Schnellerer Kontaktimport und flüssigeres Scrollen
