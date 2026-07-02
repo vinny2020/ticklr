@@ -1,1 +1,6 @@
-Ora puoi creare tickle una tantum e annuali, inclusi compleanni, anniversari ed eventi speciali personalizzati. Questa versione migliora anche la copertura della localizzazione e corregge diverse stringhe tradotte dell’interfaccia.
+Questo aggiornamento punta tutto sull'affidabilità:
+• Corretto un crash all'avvio dopo l'aggiornamento
+• I tickles posticipati tornano al termine del rinvio
+• I promemoria sopravvivono ai riavvii e arrivano puntuali
+• Eliminando un contatto si eliminano anche i suoi promemoria
+• Importazione contatti più rapida e scorrimento più fluido

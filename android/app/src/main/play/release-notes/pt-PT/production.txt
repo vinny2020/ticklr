@@ -1,1 +1,6 @@
-Agora pode criar tickles únicos e anuais, incluindo aniversários, datas especiais e eventos personalizados. Esta versão também melhora a cobertura de localização e corrige vários textos traduzidos da interface.
+Esta atualização é toda sobre fiabilidade:
+• Corrigido um bloqueio ao iniciar após atualizar
+• Os tickles adiados voltam quando o adiamento termina
+• Os lembretes sobrevivem a reinícios e chegam a horas
+• Eliminar um contacto elimina também os seus lembretes
+• Importação de contactos mais rápida e deslocamento mais fluido

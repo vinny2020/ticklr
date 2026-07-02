@@ -1,1 +1,6 @@
-Ahora puedes crear tickles únicos y anuales, incluidos cumpleaños, aniversarios y eventos especiales personalizados. Esta versión también mejora la cobertura de localización y corrige varios textos traducidos de la interfaz.
+Esta actualización se centra en la fiabilidad:
+• Corregido un fallo al abrir la app tras actualizar
+• Los tickles pospuestos vuelven cuando termina la pausa
+• Los recordatorios sobreviven a los reinicios y llegan a tiempo
+• Al eliminar un contacto también se eliminan sus recordatorios
+• Importación de contactos más rápida y desplazamiento más fluido

@@ -1,1 +1,6 @@
-Teď můžeš vytvářet jednorázové i roční tickly, včetně narozenin, výročí a vlastních zvláštních událostí. Tato verze také zlepšuje pokrytí lokalizace a opravuje několik přeložených textů v rozhraní.
+Tato aktualizace je o spolehlivosti:
+• Opravili jsme pád při spuštění po aktualizaci
+• Odložené tickles se vrátí, jakmile odklad skončí
+• Připomenutí přežijí restart telefonu a přijdou včas
+• Smazáním kontaktu se smažou i jeho připomenutí
+• Rychlejší import kontaktů a plynulejší posouvání

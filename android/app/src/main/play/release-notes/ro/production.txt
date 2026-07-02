@@ -1,1 +1,6 @@
-Acum poți crea tickle-uri unice și anuale, inclusiv zile de naștere, aniversări și evenimente speciale personalizate. Această versiune îmbunătățește și acoperirea localizării și corectează mai multe texte traduse din interfață.
+Această actualizare pune accent pe fiabilitate:
+• Am corectat o blocare la pornire după actualizare
+• Tickles amânate revin când se încheie amânarea
+• Mementourile supraviețuiesc repornirilor și sosesc la timp
+• Ștergerea unui contact îi șterge și mementourile
+• Import de contacte mai rapid și derulare mai fluidă

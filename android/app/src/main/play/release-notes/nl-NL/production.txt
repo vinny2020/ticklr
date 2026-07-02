@@ -1,1 +1,6 @@
-Je kunt nu eenmalige en jaarlijkse tickles maken, waaronder verjaardagen, jubilea en eigen speciale gebeurtenissen. Deze release verbetert ook de lokalisatiedekking en corrigeert meerdere vertaalde UI-teksten.
+Deze update draait om betrouwbaarheid:
+• Crash bij het opstarten na een update verholpen
+• Gesnoozede tickles komen terug zodra de snooze afloopt
+• Herinneringen overleven een herstart en komen op tijd
+• Bij het verwijderen van een contact verdwijnen ook de herinneringen
+• Sneller contacten importeren en soepeler scrollen
