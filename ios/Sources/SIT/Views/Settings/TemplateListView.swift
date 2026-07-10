@@ -7,6 +7,9 @@ struct TemplateListView: View {
 
     @State private var showingAdd = false
     @State private var editingTemplate: MessageTemplate?
+    /// Non-nil while a save-confirmation toast is showing after a
+    /// TemplateEditView sheet dismissed (TIC-84).
+    @State private var saveToastMessage: String?
 
     var body: some View {
         List {
@@ -42,11 +45,12 @@ struct TemplateListView: View {
             }
         }
         .sheet(isPresented: $showingAdd) {
-            TemplateEditView()
+            TemplateEditView(onSaved: { saveToastMessage = $0 })
         }
         .sheet(item: $editingTemplate) { template in
-            TemplateEditView(template: template)
+            TemplateEditView(template: template, onSaved: { saveToastMessage = $0 })
         }
+        .saveConfirmationToast(message: $saveToastMessage)
     }
 
     private func deleteTemplates(at offsets: IndexSet) {

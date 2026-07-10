@@ -9,6 +9,12 @@ struct TickleEditView: View {
     /// When set (iPad detail pane, TIC-46), close via this callback instead of the
     /// sheet `dismiss()` — the pane is hosted in a `NavigationSplitView`, not presented.
     var onClose: (() -> Void)? = nil
+    /// Runs right before the editor closes on a successful save, carrying the
+    /// localized save-confirmation text (TIC-84). Save now applies and the
+    /// editor dismisses immediately — the presenter (Tickle tab, Contact Detail,
+    /// Milestones hero) is what remains on screen afterward, so it — not this
+    /// sheet — shows the confirmation toast.
+    var onSaved: ((String) -> Void)? = nil
 
     @State private var selectedContact: Contact?
     @State private var frequency: TickleFrequency
@@ -16,8 +22,6 @@ struct TickleEditView: View {
     @State private var startDate: Date
     @State private var note: String
     @State private var showingContactPicker = false
-    @State private var showToast = false
-    @State private var toastMessage = ""
     @State private var isSaving = false
 
     /// Schedule fields as seeded into the editor. On save we compare the live
@@ -41,9 +45,10 @@ struct TickleEditView: View {
         (selectedContact != nil || existing?.group != nil) && !isSaving
     }
 
-    init(contact: Contact? = nil, existing: TickleReminder? = nil, prefilledCategory: WarmCategory? = nil, onClose: (() -> Void)? = nil) {
+    init(contact: Contact? = nil, existing: TickleReminder? = nil, prefilledCategory: WarmCategory? = nil, onClose: (() -> Void)? = nil, onSaved: ((String) -> Void)? = nil) {
         self.existing = existing
         self.onClose = onClose
+        self.onSaved = onSaved
         if let r = existing {
             _selectedContact     = State(initialValue: r.contact)
             _frequency           = State(initialValue: r.frequency)
@@ -147,28 +152,14 @@ struct TickleEditView: View {
             .sheet(isPresented: $showingContactPicker) {
                 ContactPickerSheet(selected: $selectedContact)
             }
-            .overlay(alignment: .bottom) {
-                if showToast {
-                    Text(verbatim: toastMessage)
-                        .font(.subheadline)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 10)
-                        .background(Color(red: 0.145, green: 0.388, blue: 0.922))
-                        .foregroundStyle(.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .shadow(radius: 4)
-                        .padding(.bottom, 16)
-                        .transition(.move(edge: .bottom).combined(with: .opacity))
-                }
-            }
-            .animation(.easeInOut(duration: 0.3), value: showToast)
         }
     }
 
     private func save() {
-        // Flip BEFORE any async work so the next tap sees canSave == false.
-        // Reset happens via `defer` inside the dismiss Task so it survives
-        // success, failure, and Task cancellation alike.
+        // Flip BEFORE any work so the next tap sees canSave == false — the
+        // editor closes immediately below, but stays disabled for whatever
+        // sliver of the dismiss animation it's still on screen for, so a
+        // rapid double-tap can't insert/mutate twice.
         isSaving = true
         // Notification authorization is requested (and awaited) inside
         // `TickleScheduler.scheduleNotification` itself now, so the first-ever
@@ -235,18 +226,14 @@ struct TickleEditView: View {
             TickleScheduler.scheduleNotification(for: reminder)
         }
         try? modelContext.save()
-        toastMessage = isEditing
+        // TIC-84: apply and close immediately — no artificial delay. The
+        // confirmation toast is handed to whichever presenter remains on
+        // screen after this sheet is gone, since it can no longer host it.
+        let message = isEditing
             ? String(localized: "tickleEdit.toast.updated")
             : String(localized: "tickleEdit.toast.saved")
-        showToast = true
-        Task { @MainActor in
-            // `defer` here (NOT at function scope) — save() returns before the
-            // sleep completes, so a function-level defer would re-enable the
-            // button instantly and reintroduce the duplicate-tap bug.
-            defer { isSaving = false }
-            try? await Task.sleep(for: .seconds(2))
-            close()
-        }
+        onSaved?(message)
+        close()
     }
 
     private func annualPresetButton(title: String, note presetNote: String) -> some View {
