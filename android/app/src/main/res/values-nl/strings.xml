@@ -316,6 +316,7 @@
     <string name="warm_contact_notes_placeholder">Notities over wat deze persoon voor je betekent…</string>
 
     <string name="warm_contact_accessBanner">Geef contactentoegang om de foto uit je adresboek te gebruiken.</string>
+    <string name="warm_tickle_notificationsBanner">Herinneringen staan uit — tik om meldingen aan te zetten.</string>
     <string name="compose_template_label">Sjabloon</string>
     <string name="tickle_action_compose">Bericht opstellen</string>
     <string name="tickle_row_group_fallback">Groep</string>

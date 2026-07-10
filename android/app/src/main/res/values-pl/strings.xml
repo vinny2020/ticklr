@@ -322,6 +322,7 @@
     <string name="warm_contact_notes_placeholder">Notatki o tym, co znaczy dla ciebie ta osoba…</string>
 
     <string name="warm_contact_accessBanner">Zezwól na dostęp do kontaktów, aby użyć zdjęcia z książki adresowej.</string>
+    <string name="warm_tickle_notificationsBanner">Przypomnienia są wyłączone — dotknij, aby włączyć powiadomienia.</string>
     <string name="compose_template_label">Szablon</string>
     <string name="tickle_action_compose">Napisz wiadomość</string>
     <string name="tickle_row_group_fallback">Grupa</string>
