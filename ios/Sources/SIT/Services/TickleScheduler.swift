@@ -56,6 +56,13 @@ struct TickleScheduler {
         }
         let bodyText = reminder.note.isEmpty ? reminder.frequency.localizedName : reminder.note
         let dueDate = reminder.nextDueDate
+        // Snapshot the routing IDs as plain values too (same reason as `name`
+        // above): the escaping Task must never touch `reminder`/`reminder.contact`
+        // after the `await`. Drives tap routing + Done/Snooze actions (TIC-83).
+        let userInfo = TickleNotificationRouter.userInfo(
+            reminderID: reminder.id,
+            contactID: reminder.contact?.id
+        )
 
         Task { @MainActor in
             guard await requestAuthorizationIfNeeded() else {
@@ -67,6 +74,8 @@ struct TickleScheduler {
             content.title = String(localized: "notification.title \(name)")
             content.body = bodyText
             content.sound = .default
+            content.userInfo = userInfo
+            content.categoryIdentifier = TickleNotificationRouter.categoryID
 
             let trigger: UNNotificationTrigger
             let cal = Calendar.current
