@@ -9,12 +9,14 @@ import com.xaymaca.sit.data.model.TickleStatus
 import com.xaymaca.sit.data.dao.ContactGroupDao
 import com.xaymaca.sit.data.repository.ContactRepository
 import com.xaymaca.sit.data.repository.TickleRepository
+import com.xaymaca.sit.service.PendingSnackbarMessageStore
 import com.xaymaca.sit.service.PendingTickleCompletion
 import com.xaymaca.sit.service.PendingTickleCompletionStore
 import com.xaymaca.sit.service.StringListConverter
 import com.xaymaca.sit.service.TickleScheduler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,6 +27,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,11 +36,23 @@ class TickleViewModel @Inject constructor(
     private val contactRepository: ContactRepository,
     private val contactGroupDao: ContactGroupDao,
     private val pendingTickleCompletionStore: PendingTickleCompletionStore,
+    private val pendingSnackbarMessageStore: PendingSnackbarMessageStore,
     @ApplicationContext private val context: Context,
 ) : ViewModel() {
 
-    private val _toastMessage = MutableStateFlow<String?>(null)
-    val toastMessage: StateFlow<String?> = _toastMessage.asStateFlow()
+    /**
+     * TIC-84: a pending one-shot save-confirmation snackbar message, stashed at
+     * `upsert()` (which runs on [viewModelScope], not the screen's own coroutine
+     * scope) and observed by the app-level scaffold (NavGraph) so it survives
+     * TickleEditScreen's immediate post-save pop — phone and tablet two-pane
+     * alike.
+     */
+    val pendingSnackbarMessage: StateFlow<String?> = pendingSnackbarMessageStore.pending
+
+    /** Clears the pending snackbar message once it has been surfaced (or is stale). */
+    fun consumePendingSnackbarMessage() {
+        pendingSnackbarMessageStore.consume()
+    }
 
     /**
      * TIC-82: a pending "mark [name]'s tickle done?" prompt stashed at SMS
@@ -221,20 +236,38 @@ class TickleViewModel @Inject constructor(
 
     fun upsert(reminder: TickleReminder, isNew: Boolean) {
         viewModelScope.launch {
-            val id = tickleRepository.upsertReminder(reminder)
-            val finalId = if (reminder.id == 0L) id else reminder.id
-            // TIC-66/67: syncAlarm arms only reminders that will become due
-            // (active, or snoozed until snooze-end) and clears stale alarms for
-            // completed/past-due ones.
-            val saved = reminder.copy(id = finalId)
-            TickleScheduler.syncAlarm(context, saved, alarmContactName(saved))
-            TickleScheduler.scheduleWorker(context)
-            _toastMessage.value = if (isNew) context.getString(R.string.tickle_saved) else context.getString(R.string.tickle_updated)
+            // TIC-84 INVARIANT — NonCancellable is load-bearing, do not
+            // "simplify" it away. On the phone flow this ViewModel is scoped to
+            // the tickle_edit NavBackStackEntry, and TickleEditScreen calls
+            // onSaved() → popBackStack() immediately after upsert() returns (no
+            // delay since TIC-84). The pop destroys the back-stack entry,
+            // clears its ViewModelStore, and CANCELS viewModelScope — which
+            // would abort this coroutine while suspended in the Room write (or
+            // before syncAlarm / scheduleWorker / the snackbar post ran):
+            // intermittently lost saves, missing alarms, missing confirmation.
+            // NonCancellable lets the whole save unit run to completion even
+            // after the scope is torn down. Entering the block before the pop
+            // is guaranteed: viewModelScope dispatches on Main.immediate, so
+            // this body runs synchronously up to its first suspension point —
+            // i.e. the NonCancellable context is installed before upsert()
+            // returns to the caller, and therefore before onSaved()/the pop
+            // (and any cancellation) can happen.
+            withContext(NonCancellable) {
+                val id = tickleRepository.upsertReminder(reminder)
+                val finalId = if (reminder.id == 0L) id else reminder.id
+                // TIC-66/67: syncAlarm arms only reminders that will become due
+                // (active, or snoozed until snooze-end) and clears stale alarms for
+                // completed/past-due ones.
+                val saved = reminder.copy(id = finalId)
+                TickleScheduler.syncAlarm(context, saved, alarmContactName(saved))
+                TickleScheduler.scheduleWorker(context)
+                // TIC-84: posted to the app-scoped store (not a screen-local toast)
+                // so the confirmation survives TickleEditScreen's immediate pop.
+                pendingSnackbarMessageStore.set(
+                    if (isNew) context.getString(R.string.tickle_saved) else context.getString(R.string.tickle_updated)
+                )
+            }
         }
-    }
-
-    fun clearToast() {
-        _toastMessage.value = null
     }
 
     suspend fun getReminderById(id: Long): TickleReminder? = tickleRepository.getReminderById(id)

@@ -16,6 +16,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
@@ -26,6 +27,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.InputStream
 import javax.inject.Inject
 
@@ -86,30 +88,53 @@ class NetworkViewModel @Inject constructor(
         categoryFilter.value = categoryId
     }
 
+    // NonCancellable on the three mutations below is load-bearing (found via
+    // TIC-84) — do not "simplify" it away. Each is fired from a screen that
+    // pops its own NavBackStackEntry in the same tick as the call
+    // (AddContactScreen's save → onSaved() → popBackStack(); ContactDetail's
+    // delete confirm → onBack()). On the phone flow this ViewModel is scoped
+    // to that entry, so the pop clears the ViewModelStore and CANCELS
+    // viewModelScope — without the guard, the coroutine aborts mid-Room-write
+    // and the save/delete is intermittently lost. NonCancellable lets the
+    // whole unit run to completion after teardown; it is always entered
+    // before the pop because viewModelScope dispatches on Main.immediate
+    // (the body runs synchronously up to its first suspension point, i.e.
+    // before the calling function returns to the screen).
+
     fun addContact(contact: Contact) {
-        viewModelScope.launch { contactRepository.insertContact(contact) }
+        viewModelScope.launch {
+            withContext(NonCancellable) {
+                contactRepository.insertContact(contact)
+            }
+        }
     }
 
     fun updateContact(contact: Contact) {
-        viewModelScope.launch { contactRepository.updateContact(contact) }
+        viewModelScope.launch {
+            withContext(NonCancellable) {
+                contactRepository.updateContact(contact)
+            }
+        }
     }
 
     fun deleteContact(contact: Contact) {
         viewModelScope.launch {
-            // Cancel any armed alarms for this contact's tickles first, otherwise
-            // they still fire with the deleted contact's name baked into the intent.
-            contactRepository.getRemindersForContact(contact.id).forEach { reminder ->
-                TickleScheduler.cancelNotification(context, reminder.id)
+            withContext(NonCancellable) {
+                // Cancel any armed alarms for this contact's tickles first, otherwise
+                // they still fire with the deleted contact's name baked into the intent.
+                contactRepository.getRemindersForContact(contact.id).forEach { reminder ->
+                    TickleScheduler.cancelNotification(context, reminder.id)
+                }
+                contactRepository.deleteContact(contact)
+                // Centralized delete cleanup (TIC-72): both delete entry points
+                // (long-press in NetworkListScreen and the ContactDetailScreen
+                // button) route through here, so the photo file and the id-keyed
+                // photo cache are always cleaned up. Without this, SQLite rowid
+                // reuse lets a newly created contact inherit the deleted
+                // contact's id — and its orphaned photo file / stale cache entry.
+                LocalPhotoStore.delete(context, contact.id)
+                ContactPhotoService.evict(contact.id)
             }
-            contactRepository.deleteContact(contact)
-            // Centralized delete cleanup (TIC-72): both delete entry points
-            // (long-press in NetworkListScreen and the ContactDetailScreen
-            // button) route through here, so the photo file and the id-keyed
-            // photo cache are always cleaned up. Without this, SQLite rowid
-            // reuse lets a newly created contact inherit the deleted
-            // contact's id — and its orphaned photo file / stale cache entry.
-            LocalPhotoStore.delete(context, contact.id)
-            ContactPhotoService.evict(contact.id)
         }
     }
 
