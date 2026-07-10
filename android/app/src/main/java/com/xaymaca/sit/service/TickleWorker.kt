@@ -3,13 +3,11 @@ package com.xaymaca.sit.service
 import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager
-import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.xaymaca.sit.R
-import com.xaymaca.sit.SITApp
 import com.xaymaca.sit.data.repository.ContactRepository
 import com.xaymaca.sit.data.repository.TickleRepository
 import dagger.assisted.Assisted
@@ -52,14 +50,15 @@ class TickleWorker @AssistedInject constructor(
             val title = context.getString(R.string.tickle_notification_title, contactName)
             val body = reminder.note.ifBlank { context.getString(R.string.tickle_notification_body) }
 
-            val notification = NotificationCompat.Builder(context, SITApp.TICKLE_CHANNEL_ID)
-                .setSmallIcon(android.R.drawable.ic_dialog_info)
-                .setContentTitle(title)
-                .setContentText(body)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(TickleScheduler.contentPendingIntent(context, reminder.id, reminder.contactId))
-                .setAutoCancel(true)
-                .build()
+            // TIC-83: shared builder adds the Done / Snooze shade actions.
+            val notification = TickleNotificationFactory.buildReminderNotification(
+                context = context,
+                reminderId = reminder.id,
+                contactId = reminder.contactId,
+                title = title,
+                body = body,
+                smallIcon = android.R.drawable.ic_dialog_info,
+            )
 
             notificationManager.notify(reminder.id.toInt(), notification)
         }

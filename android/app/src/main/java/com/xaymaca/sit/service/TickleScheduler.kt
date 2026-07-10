@@ -201,6 +201,53 @@ object TickleScheduler {
             reminder.nextDueDate <= now
 
     /**
+     * The reminder as it should be persisted after the user marks it done
+     * (TIC-83). Pure so the in-app `TickleViewModel.markComplete` and the
+     * notification-shade `TickleActionReceiver` produce identical state — a
+     * one-time tickle becomes COMPLETED; a recurring one stays ACTIVE and
+     * advances to its next occurrence (annual anchors on startDate, TIC-62).
+     * Callers persist the result and then call [syncAlarm].
+     */
+    fun completedReminder(
+        reminder: TickleReminder,
+        now: Long = System.currentTimeMillis()
+    ): TickleReminder =
+        if (reminder.frequency == TickleFrequency.ONE_TIME.name) {
+            reminder.copy(
+                lastCompletedDate = now,
+                status = TickleStatus.COMPLETED.name
+            )
+        } else {
+            reminder.copy(
+                lastCompletedDate = now,
+                nextDueDate = nextDueDateOnComplete(
+                    frequency = reminder.frequency,
+                    startDate = reminder.startDate,
+                    customDays = reminder.customIntervalDays,
+                    now = now
+                ),
+                status = TickleStatus.ACTIVE.name
+            )
+        }
+
+    /**
+     * The reminder as it should be persisted after the user snoozes it (TIC-83).
+     * Pure so the in-app path and the notification-shade `TickleActionReceiver`
+     * share one definition of "snooze": push `nextDueDate` out by [days] and
+     * mark SNOOZED (a date shift, not a mute — TIC-61). Callers persist the
+     * result and then call [syncAlarm].
+     */
+    fun snoozedReminder(
+        reminder: TickleReminder,
+        days: Int = 7,
+        now: Long = System.currentTimeMillis()
+    ): TickleReminder =
+        reminder.copy(
+            nextDueDate = now + days * 24L * 60 * 60 * 1000,
+            status = TickleStatus.SNOOZED.name
+        )
+
+    /**
      * Single source of truth for a reminder's exact alarm (TIC-66). Call after
      * EVERY reminder mutation: arms the alarm when [shouldArmAlarm], otherwise
      * cancels any stale one. Scheduling reuses the reminder-id request code, so

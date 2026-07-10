@@ -481,4 +481,88 @@ class TickleSchedulerTest {
         assertTrue(!TickleScheduler.shouldPostFiredAlarm(rescheduled, now))
         assertTrue(!TickleScheduler.shouldPostFiredAlarm(null, now))
     }
+
+    // -- completedReminder / snoozedReminder transitions (TIC-83) ---------------
+    // Shared by the in-app TickleViewModel and the notification-shade
+    // TickleActionReceiver, so both produce identical persisted state.
+
+    @Test
+    fun `completing a one-time reminder marks it COMPLETED and stamps completion`() {
+        val now = calAt(2026, 3, 15)
+        val original = TickleReminder(
+            id = 1L,
+            frequency = TickleFrequency.ONE_TIME.name,
+            startDate = calAt(2026, 3, 10),
+            nextDueDate = calAt(2026, 3, 10),
+            status = TickleStatus.ACTIVE.name
+        )
+        val result = TickleScheduler.completedReminder(original, now)
+        assertEquals(TickleStatus.COMPLETED.name, result.status)
+        assertEquals(now, result.lastCompletedDate)
+        // One-time completion doesn't advance the due date.
+        assertEquals(original.nextDueDate, result.nextDueDate)
+    }
+
+    @Test
+    fun `completing a recurring reminder stays ACTIVE and advances one interval`() {
+        val now = calAt(2026, 3, 15)
+        val original = TickleReminder(
+            id = 1L,
+            frequency = TickleFrequency.WEEKLY.name,
+            startDate = calAt(2026, 1, 1),
+            nextDueDate = calAt(2026, 3, 10),
+            status = TickleStatus.ACTIVE.name
+        )
+        val result = TickleScheduler.completedReminder(original, now)
+        assertEquals(TickleStatus.ACTIVE.name, result.status)
+        assertEquals(now, result.lastCompletedDate)
+        assertEquals(now + TimeUnit.DAYS.toMillis(7), result.nextDueDate)
+    }
+
+    @Test
+    fun `completing a snoozed annual reminder anchors next occurrence on startDate`() {
+        // Same TIC-62 anti-corruption path the action button must honour: a
+        // snoozed annual (nextDueDate shifted) completes to the startDate anchor.
+        val now = calAt(2026, 3, 17)
+        val original = TickleReminder(
+            id = 1L,
+            frequency = TickleFrequency.ANNUAL.name,
+            startDate = calAt(2025, 3, 10),
+            nextDueDate = calAt(2026, 3, 17),
+            status = TickleStatus.SNOOZED.name
+        )
+        val result = calFrom(TickleScheduler.completedReminder(original, now).nextDueDate)
+        assertEquals(2027, result.get(Calendar.YEAR))
+        assertEquals(3, result.get(Calendar.MONTH) + 1)
+        assertEquals(10, result.get(Calendar.DAY_OF_MONTH))
+    }
+
+    @Test
+    fun `snoozing sets SNOOZED and pushes the due date out by the default seven days`() {
+        val now = calAt(2026, 3, 15)
+        val original = TickleReminder(
+            id = 1L,
+            frequency = TickleFrequency.MONTHLY.name,
+            startDate = calAt(2026, 1, 1),
+            nextDueDate = calAt(2026, 3, 14),
+            status = TickleStatus.ACTIVE.name
+        )
+        val result = TickleScheduler.snoozedReminder(original, now = now)
+        assertEquals(TickleStatus.SNOOZED.name, result.status)
+        assertEquals(now + TimeUnit.DAYS.toMillis(7), result.nextDueDate)
+    }
+
+    @Test
+    fun `snoozing honours a custom day count`() {
+        val now = calAt(2026, 3, 15)
+        val original = TickleReminder(
+            id = 1L,
+            frequency = TickleFrequency.MONTHLY.name,
+            startDate = calAt(2026, 1, 1),
+            nextDueDate = calAt(2026, 3, 14),
+            status = TickleStatus.ACTIVE.name
+        )
+        val result = TickleScheduler.snoozedReminder(original, days = 3, now = now)
+        assertEquals(now + TimeUnit.DAYS.toMillis(3), result.nextDueDate)
+    }
 }

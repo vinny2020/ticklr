@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.xaymaca.sit.R
-import com.xaymaca.sit.data.model.TickleFrequency
 import com.xaymaca.sit.data.model.TickleReminder
 import com.xaymaca.sit.data.model.TickleStatus
 import com.xaymaca.sit.data.dao.ContactGroupDao
@@ -192,24 +191,9 @@ class TickleViewModel @Inject constructor(
 
     fun markComplete(reminder: TickleReminder) {
         viewModelScope.launch {
-            val now = System.currentTimeMillis()
-            val updated = if (reminder.frequency == TickleFrequency.ONE_TIME.name) {
-                reminder.copy(
-                    lastCompletedDate = now,
-                    status = TickleStatus.COMPLETED.name
-                )
-            } else {
-                reminder.copy(
-                    lastCompletedDate = now,
-                    nextDueDate = TickleScheduler.nextDueDateOnComplete(
-                        frequency = reminder.frequency,
-                        startDate = reminder.startDate,
-                        customDays = reminder.customIntervalDays,
-                        now = now
-                    ),
-                    status = TickleStatus.ACTIVE.name
-                )
-            }
+            // TIC-83: the complete transition lives in TickleScheduler so the
+            // in-app path and the notification-shade action can't drift.
+            val updated = TickleScheduler.completedReminder(reminder)
             tickleRepository.updateReminder(updated)
             // TIC-66: arms the next occurrence's exact alarm (recurring) or
             // cancels the stale one (one-time completed).
@@ -219,11 +203,8 @@ class TickleViewModel @Inject constructor(
 
     fun snooze(reminder: TickleReminder, days: Int = 7) {
         viewModelScope.launch {
-            val snoozeUntil = System.currentTimeMillis() + days * 24L * 60 * 60 * 1000
-            val updated = reminder.copy(
-                nextDueDate = snoozeUntil,
-                status = TickleStatus.SNOOZED.name
-            )
+            // TIC-83: shared snooze transition — see TickleScheduler.snoozedReminder.
+            val updated = TickleScheduler.snoozedReminder(reminder, days)
             tickleRepository.updateReminder(updated)
             // TIC-66: replaces the original-due-date alarm with one at snooze
             // end — previously the stale alarm fired at the old time anyway.
