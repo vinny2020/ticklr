@@ -69,6 +69,21 @@
             </intent-filter>
         </receiver>
 
+        <!-- Notification action receiver — handles the Done / Snooze shade
+             buttons (TIC-83). exported="false" for the same reason as
+             TickleAlarmReceiver: the action PendingIntents are package-restricted
+             (setPackage, TickleNotificationFactory.kt) but not component-explicit,
+             so the actions stay in the intent-filter for delivery to resolve
+             while exported="false" blocks third-party broadcasts. -->
+        <receiver
+            android:name=".service.TickleActionReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.xaymaca.sit.TICKLE_DONE" />
+                <action android:name="com.xaymaca.sit.TICKLE_SNOOZE" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

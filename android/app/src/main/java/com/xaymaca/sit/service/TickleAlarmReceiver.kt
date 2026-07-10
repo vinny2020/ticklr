@@ -5,10 +5,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.xaymaca.sit.R
-import com.xaymaca.sit.SITApp
 import com.xaymaca.sit.data.repository.ContactRepository
 import com.xaymaca.sit.data.repository.TickleRepository
 import dagger.hilt.android.AndroidEntryPoint
@@ -87,14 +85,15 @@ class TickleAlarmReceiver : BroadcastReceiver() {
         val title = context.getString(R.string.tickle_notification_title, contactName)
         val body = reminder.note.ifBlank { context.getString(R.string.tickle_notification_body) }
 
-        val notification = NotificationCompat.Builder(context, SITApp.TICKLE_CHANNEL_ID)
-            .setSmallIcon(R.mipmap.ic_launcher)
-            .setContentTitle(title)
-            .setContentText(body)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setContentIntent(TickleScheduler.contentPendingIntent(context, reminderId, reminder.contactId))
-            .setAutoCancel(true)
-            .build()
+        // TIC-83: shared builder adds the Done / Snooze shade actions.
+        val notification = TickleNotificationFactory.buildReminderNotification(
+            context = context,
+            reminderId = reminderId,
+            contactId = reminder.contactId,
+            title = title,
+            body = body,
+            smallIcon = R.mipmap.ic_launcher,
+        )
 
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
