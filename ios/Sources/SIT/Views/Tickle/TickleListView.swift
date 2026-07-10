@@ -20,13 +20,24 @@ struct TickleListView: View {
     @State private var paneAddingNew = false
 
     // MARK: Shared
-    @State private var composeContact: Contact?
+    @State private var composeTarget: ComposeTarget?
     @State private var prefilledCategory: WarmCategory? = nil
+    /// Non-nil while the "Tickle marked done — Undo" toast is showing after a
+    /// send auto-completed a due tickle (TIC-82).
+    @State private var completionSnapshot: TickleScheduler.CompletionSnapshot?
+
+    /// A contact to compose to, paired with the due tickle (if any) that a send
+    /// should auto-complete. Identifiable so it can drive a `.sheet(item:)`.
+    private struct ComposeTarget: Identifiable {
+        let id = UUID()
+        let contact: Contact
+        let reminder: TickleReminder?
+    }
 
     /// Deferred follow-up presentation, run from the action sheet's `onDismiss`
     /// so we never present a new sheet while the action sheet is still dismissing.
     private enum PendingAction {
-        case compose(Contact)
+        case compose(TickleReminder)
         case edit(TickleReminder)
     }
 
@@ -56,10 +67,17 @@ struct TickleListView: View {
     }
 
     var body: some View {
-        if isRegular {
-            regularBody    // iPad: NavigationSplitView, two-pane
-        } else {
-            compactBody    // iPhone: NavigationStack + modal sheets
+        Group {
+            if isRegular {
+                regularBody    // iPad: NavigationSplitView, two-pane
+            } else {
+                compactBody    // iPhone: NavigationStack + modal sheets
+            }
+        }
+        .tickleCompletionToast(snapshot: $completionSnapshot, warmth: warmth) {
+            if let snapshot = completionSnapshot {
+                TickleScheduler.undoCompletion(snapshot, context: modelContext)
+            }
         }
     }
 
@@ -86,7 +104,7 @@ struct TickleListView: View {
                 TickleActionSheet(
                     reminder: reminder,
                     warmth: warmth,
-                    onCompose: { if let contact = reminder.contact { pendingAction = .compose(contact) } },
+                    onCompose: { pendingAction = .compose(reminder) },
                     onMarkDone: { TickleScheduler.markComplete(reminder: reminder, context: modelContext) },
                     onSnooze: { TickleScheduler.snooze(reminder: reminder, days: 7, context: modelContext) },
                     onEdit: { pendingAction = .edit(reminder) }
@@ -94,8 +112,13 @@ struct TickleListView: View {
                 .presentationDetents([.height(TickleActionSheet.estimatedHeight(for: reminder))])
                 .presentationDragIndicator(.visible)
             }
-            .sheet(item: $composeContact) { contact in
-                ComposeView(onClose: { composeContact = nil }, initialContact: contact)
+            .sheet(item: $composeTarget) { target in
+                ComposeView(
+                    onClose: { composeTarget = nil },
+                    initialContact: target.contact,
+                    dueReminder: target.reminder,
+                    onTickleCompleted: { completionSnapshot = $0 }
+                )
             }
         }
     }
@@ -104,7 +127,10 @@ struct TickleListView: View {
     /// follow-up surface the user requested.
     private func runPendingAction() {
         switch pendingAction {
-        case .compose(let contact): composeContact = contact
+        case .compose(let reminder):
+            if let contact = reminder.contact {
+                composeTarget = ComposeTarget(contact: contact, reminder: reminder)
+            }
         case .edit(let reminder):   editingReminder = reminder
         case .none:                 break
         }
@@ -124,8 +150,13 @@ struct TickleListView: View {
             .navigationTitle("")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { addToolbarItem }
-            .sheet(item: $composeContact) { contact in
-                ComposeView(onClose: { composeContact = nil }, initialContact: contact)
+            .sheet(item: $composeTarget) { target in
+                ComposeView(
+                    onClose: { composeTarget = nil },
+                    initialContact: target.contact,
+                    dueReminder: target.reminder,
+                    onTickleCompleted: { completionSnapshot = $0 }
+                )
             }
         } detail: {
             detailPane
@@ -145,7 +176,11 @@ struct TickleListView: View {
                 reminder: reminder,
                 warmth: warmth,
                 dismissesOnAction: false,
-                onCompose: { if let contact = reminder.contact { composeContact = contact } },
+                onCompose: {
+                    if let contact = reminder.contact {
+                        composeTarget = ComposeTarget(contact: contact, reminder: reminder)
+                    }
+                },
                 onMarkDone: {
                     TickleScheduler.markComplete(reminder: reminder, context: modelContext)
                     selectedReminder = nil

@@ -7,6 +7,15 @@ struct ComposeView: View {
     /// message was sent. The presenter routes back to the previous screen.
     var onClose: (() -> Void)? = nil
     var initialContact: Contact? = nil
+    /// The currently-due tickle to auto-complete when this message is sent
+    /// (TIC-82). Threaded in from the Tickle tab (row/action-sheet/iPad pane)
+    /// and from ContactDetail when the contact has a due reminder. `nil` when
+    /// Compose is reached directly from its tab — then a send completes nothing.
+    var dueReminder: TickleReminder? = nil
+    /// Called after a send auto-completes `dueReminder`, handing the parent the
+    /// pre-completion snapshot so it can present the "Tickle marked done — Undo"
+    /// toast on the screen that remains once this compose surface is dismissed.
+    var onTickleCompleted: ((TickleScheduler.CompletionSnapshot) -> Void)? = nil
 
     @Environment(\.modelContext) private var modelContext
     @Environment(\.horizontalSizeClass) private var hSize
@@ -303,18 +312,34 @@ struct ComposeView: View {
     /// back to the previous screen; cancelled/failed → keep the draft so the
     /// user can tweak and retry.
     private func handleComposerDismiss() {
-        defer { composeResult = nil }
-        switch composeResult {
-        case .sent:
-            selectedContact?.lastContactedAt = .now
-            try? modelContext.save()
-            clearCompose()
-            onClose?()
-        case .failed:
-            showingSendFailedAlert = true
-        default:
-            break
+        let result = composeResult
+        composeResult = nil
+
+        // Only a confirmed send stamps the contact and auto-completes the tickle;
+        // cancelled/failed leave both untouched (TIC-82).
+        guard Self.isSuccessfulSend(result) else {
+            if result == .failed { showingSendFailedAlert = true }
+            return
         }
+
+        selectedContact?.lastContactedAt = .now
+        try? modelContext.save()
+        // Auto-complete the associated due tickle. Validates against the live
+        // store first, so a reminder deleted/completed while the composer was up
+        // won't be double-completed. The snapshot is handed to the parent to
+        // drive the undo toast on the screen that remains after dismissal.
+        let snapshot = dueReminder.flatMap {
+            TickleScheduler.completeAfterSend(reminder: $0, context: modelContext)
+        }
+        clearCompose()
+        onClose?()
+        if let snapshot { onTickleCompleted?(snapshot) }
+    }
+
+    /// Only a confirmed `.sent` result stamps the contact and completes the due
+    /// tickle; `.cancelled` / `.failed` (and `nil`) do neither (TIC-82).
+    static func isSuccessfulSend(_ result: MessageComposeResult?) -> Bool {
+        result == .sent
     }
 
     private func clearCompose() {

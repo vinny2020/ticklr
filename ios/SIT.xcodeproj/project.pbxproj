@@ -35,10 +35,12 @@
 		5A2E74BD7F7B979AE5B1C4F3 /* TickleReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB38137353FDCD5606A5A8FF /* TickleReminder.swift */; };
 		5C6F6974D1ED58434BB9CFDF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C7E0EBE485C198DCF9669E /* SettingsView.swift */; };
 		656FADADA38339BCFBD815D5 /* WordmarkLockup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EFBEBE9D718FAA0B157914 /* WordmarkLockup.swift */; };
+		6706B55EB7F80995CDC4F63C /* TickleSendCompletionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700285F29EFC6ABAA469B3A8 /* TickleSendCompletionTests.swift */; };
 		6A89CDD6B79D3E4E9E4BDBCE /* TickleEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4BF582AFC377CF7A29ADC9 /* TickleEditView.swift */; };
 		6D27B6C9F09AC21A760AF14D /* ContactsAccessBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C203898862FA7D9FC0D26AB9 /* ContactsAccessBanner.swift */; };
 		707528D3264086FB42BDD51E /* ComposeViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205CDD9B8C3402B672E5E739 /* ComposeViewTests.swift */; };
 		7116F3F3FE61E7C0FDF86F7E /* MessageComposerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADEFE7A1ADA2B9E3DDBBD81 /* MessageComposerService.swift */; };
+		7785F964126C098C3EE58EAD /* TickleCompletionToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = A314B38B2AF7A4C04B0699DE /* TickleCompletionToast.swift */; };
 		7BDB0ED4DF1D16C8F54EE670 /* WarmFilterChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D79AFAFDF53D4ACDAE74AF /* WarmFilterChip.swift */; };
 		7D2E16C11970003125067AF0 /* WarmHeadingFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1BCE2A47ECF0711BF683C2 /* WarmHeadingFont.swift */; };
 		840D3C6377E1F347573EAE19 /* TemplateEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F765EEB318998C9E229F0F /* TemplateEditView.swift */; };
@@ -141,6 +143,7 @@
 		69286CB7AAC699E4A7076063 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		6986C02DC105E08528D7DA6C /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6E1BCE2A47ECF0711BF683C2 /* WarmHeadingFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmHeadingFont.swift; sourceTree = "<group>"; };
+		700285F29EFC6ABAA469B3A8 /* TickleSendCompletionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleSendCompletionTests.swift; sourceTree = "<group>"; };
 		70C371A80FA068A7BCAF4918 /* TickleEditViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleEditViewTests.swift; sourceTree = "<group>"; };
 		72098A45B6ACBC527F5DF0B9 /* MessageTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTemplate.swift; sourceTree = "<group>"; };
 		7A27D41F38F9FB5871748B89 /* LocalizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationTests.swift; sourceTree = "<group>"; };
@@ -155,6 +158,7 @@
 		977BE8990F41F718C2693EFD /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		A1D79AFAFDF53D4ACDAE74AF /* WarmFilterChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmFilterChip.swift; sourceTree = "<group>"; };
 		A2676796C42A069C718F81E2 /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A314B38B2AF7A4C04B0699DE /* TickleCompletionToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleCompletionToast.swift; sourceTree = "<group>"; };
 		A60220490DD5F5ED7374E537 /* ContactDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailView.swift; sourceTree = "<group>"; };
 		A6A494ADD27B9C55B5B86A4D /* WarmCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmCard.swift; sourceTree = "<group>"; };
 		A918968E165DDF7AEA4E39A8 /* WarmCategoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmCategoryTests.swift; sourceTree = "<group>"; };
@@ -326,6 +330,7 @@
 				70C371A80FA068A7BCAF4918 /* TickleEditViewTests.swift */,
 				EDBC29B891A9D2602E4C6122 /* TickleReminderTests.swift */,
 				0B8316646A179885792C4004 /* TickleSchedulerTests.swift */,
+				700285F29EFC6ABAA469B3A8 /* TickleSendCompletionTests.swift */,
 				A918968E165DDF7AEA4E39A8 /* WarmCategoryTests.swift */,
 			);
 			name = SITTests;
@@ -349,6 +354,7 @@
 				01F5DAC52A66CB6C37894078 /* ContactPhotoView.swift */,
 				C203898862FA7D9FC0D26AB9 /* ContactsAccessBanner.swift */,
 				37449EAD55331D513415867C /* MonogramAvatar.swift */,
+				A314B38B2AF7A4C04B0699DE /* TickleCompletionToast.swift */,
 				420A93FB5239884112A3FF47 /* TicklePrompt.swift */,
 				A6A494ADD27B9C55B5B86A4D /* WarmCard.swift */,
 				8B1914E51A7708868BB45255 /* WarmEyebrow.swift */,
@@ -624,6 +630,7 @@
 				840D3C6377E1F347573EAE19 /* TemplateEditView.swift in Sources */,
 				F01FB1D28CE1BD691A9DD989 /* TemplateListView.swift in Sources */,
 				06F4EDA1D1049DE0D9691453 /* TickleActionSheet.swift in Sources */,
+				7785F964126C098C3EE58EAD /* TickleCompletionToast.swift in Sources */,
 				6A89CDD6B79D3E4E9E4BDBCE /* TickleEditView.swift in Sources */,
 				FCEBEAFB511E04C6C968B5BA /* TickleListView.swift in Sources */,
 				C7BDC5C1B15460DAF7B84796 /* TicklePrompt.swift in Sources */,
@@ -654,6 +661,7 @@
 				BD81ED295562938D457E136B /* TickleEditViewTests.swift in Sources */,
 				C5DD09913350E877AE4008CF /* TickleReminderTests.swift in Sources */,
 				43434A6ACC0CD3146036A11C /* TickleSchedulerTests.swift in Sources */,
+				6706B55EB7F80995CDC4F63C /* TickleSendCompletionTests.swift in Sources */,
 				8C3BA4EA1B30E83F38FCF45E /* WarmCategoryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -818,7 +826,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -832,7 +840,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.11.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = Ticklr;
@@ -915,7 +923,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -935,7 +943,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.11.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
