@@ -30,10 +30,9 @@ import com.xaymaca.sit.data.model.TickleReminder
 import com.xaymaca.sit.data.model.TickleStatus
 import com.xaymaca.sit.service.TickleScheduler
 import com.xaymaca.sit.ui.network.NetworkViewModel
-import com.xaymaca.sit.ui.shared.TicklrToast
 import com.xaymaca.sit.ui.shared.displayNameResId
 import com.xaymaca.sit.ui.theme.WarmCategory
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 import java.text.DateFormat
 import java.util.Calendar
@@ -52,7 +51,6 @@ fun TickleEditScreen(
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val contacts by networkViewModel.filteredContacts.collectAsState()
-    val toastMessage by tickleViewModel.toastMessage.collectAsState()
 
     // Form state — contact only. Group-based tickles were removed; legacy ones
     // load with selectedContact == null so the user picks a contact before saving.
@@ -126,355 +124,365 @@ fun TickleEditScreen(
         ).show()
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(
-                            stringResource(if (tickleId == null) R.string.tickle_edit_new_title else R.string.tickle_edit_title),
-                            fontWeight = FontWeight.Bold
-                        )
-                    },
-                    navigationIcon = {
-                        IconButton(onClick = onBack) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.common_back))
-                        }
-                    },
-                    actions = {
-                        val canSave = isLoaded && selectedContact != null && !isSaving
-                        TextButton(
-                            onClick = {
-                                // Flip OUTSIDE coroutineScope.launch so the next tap
-                                // sees canSave == false on the next recomposition. If
-                                // set inside the coroutine, recomposition lags and rapid
-                                // taps each launch a fresh insert.
-                                isSaving = true
-                                coroutineScope.launch {
-                                    try {
-                                        val newCustomDays = if (selectedFrequency == TickleFrequency.CUSTOM) customIntervalDays else null
-                                        val original = if (tickleId != null) tickleViewModel.getReminderById(tickleId) else null
-                                        val nextDue = TickleScheduler.nextDueDateForSave(
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        stringResource(if (tickleId == null) R.string.tickle_edit_new_title else R.string.tickle_edit_title),
+                        fontWeight = FontWeight.Bold
+                    )
+                },
+                navigationIcon = {
+                    IconButton(onClick = onBack) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.common_back))
+                    }
+                },
+                actions = {
+                    val canSave = isLoaded && selectedContact != null && !isSaving
+                    TextButton(
+                        onClick = {
+                            // Flip OUTSIDE coroutineScope.launch so the next tap
+                            // sees canSave == false on the next recomposition. If
+                            // set inside the coroutine, recomposition lags and rapid
+                            // taps each launch a fresh insert.
+                            isSaving = true
+                            coroutineScope.launch {
+                                try {
+                                    val newCustomDays = if (selectedFrequency == TickleFrequency.CUSTOM) customIntervalDays else null
+                                    val original = if (tickleId != null) tickleViewModel.getReminderById(tickleId) else null
+                                    val nextDue = TickleScheduler.nextDueDateForSave(
+                                        original = original,
+                                        frequency = selectedFrequency.name,
+                                        customDays = newCustomDays,
+                                        startDate = startDate
+                                    )
+                                    // Empty (not whitespace-only) defaults to the localized
+                                    // "Stay in touch" — saves users from blank-noted reminders
+                                    // without overriding intentional whitespace edits.
+                                    val finalNote = if (note.isEmpty()) context.getString(R.string.tickle_edit_default_note) else note.trim()
+                                    val reminder = if (original != null) {
+                                        // TIC-67: copy-from-original so a note/contact edit keeps
+                                        // lastCompletedDate + createdAt (REPLACE would wipe them).
+                                        // Only reset status when a schedule field changed — otherwise
+                                        // preserve it so a typo fix doesn't un-snooze the reminder.
+                                        val scheduleChanged = TickleScheduler.scheduleChanged(
                                             original = original,
                                             frequency = selectedFrequency.name,
                                             customDays = newCustomDays,
                                             startDate = startDate
                                         )
-                                        // Empty (not whitespace-only) defaults to the localized
-                                        // "Stay in touch" — saves users from blank-noted reminders
-                                        // without overriding intentional whitespace edits.
-                                        val finalNote = if (note.isEmpty()) context.getString(R.string.tickle_edit_default_note) else note.trim()
-                                        val reminder = if (original != null) {
-                                            // TIC-67: copy-from-original so a note/contact edit keeps
-                                            // lastCompletedDate + createdAt (REPLACE would wipe them).
-                                            // Only reset status when a schedule field changed — otherwise
-                                            // preserve it so a typo fix doesn't un-snooze the reminder.
-                                            val scheduleChanged = TickleScheduler.scheduleChanged(
-                                                original = original,
-                                                frequency = selectedFrequency.name,
-                                                customDays = newCustomDays,
-                                                startDate = startDate
-                                            )
-                                            original.copy(
-                                                contactId = selectedContact?.id,
-                                                groupId = null,
-                                                note = finalNote,
-                                                frequency = selectedFrequency.name,
-                                                customIntervalDays = newCustomDays,
-                                                startDate = startDate,
-                                                nextDueDate = nextDue,
-                                                status = if (scheduleChanged) TickleStatus.ACTIVE.name else original.status
-                                            )
-                                        } else {
-                                            TickleReminder(
-                                                id = 0L,
-                                                contactId = selectedContact?.id,
-                                                groupId = null,
-                                                note = finalNote,
-                                                frequency = selectedFrequency.name,
-                                                customIntervalDays = newCustomDays,
-                                                startDate = startDate,
-                                                nextDueDate = nextDue
-                                            )
-                                        }
-                                        tickleViewModel.upsert(reminder, isNew = tickleId == null)
-                                        delay(2000)
-                                        onSaved()
-                                    } finally {
-                                        // Runs on success, failure, AND CancellationException
-                                        // (which fires when popBackStack tears down the
-                                        // composable's coroutineScope). Belt-and-suspenders
-                                        // — re-enables the button if onSaved doesn't pop.
-                                        isSaving = false
+                                        original.copy(
+                                            contactId = selectedContact?.id,
+                                            groupId = null,
+                                            note = finalNote,
+                                            frequency = selectedFrequency.name,
+                                            customIntervalDays = newCustomDays,
+                                            startDate = startDate,
+                                            nextDueDate = nextDue,
+                                            status = if (scheduleChanged) TickleStatus.ACTIVE.name else original.status
+                                        )
+                                    } else {
+                                        TickleReminder(
+                                            id = 0L,
+                                            contactId = selectedContact?.id,
+                                            groupId = null,
+                                            note = finalNote,
+                                            frequency = selectedFrequency.name,
+                                            customIntervalDays = newCustomDays,
+                                            startDate = startDate,
+                                            nextDueDate = nextDue
+                                        )
                                     }
+                                    // TIC-84: save applies immediately and navigation
+                                    // happens immediately — no artificial delay.
+                                    // upsert() itself runs on the ViewModel's
+                                    // viewModelScope (not this screen's coroutineScope),
+                                    // so the DB write / alarm sync / save-confirmation
+                                    // snackbar all complete even after onSaved() pops
+                                    // this screen off the back stack.
+                                    tickleViewModel.upsert(reminder, isNew = tickleId == null)
+                                    onSaved()
+                                    // Deliberately NOT resetting isSaving here. With the
+                                    // delay(2000) gone there's no suspension point left
+                                    // between the flip-true above and this line — upsert()
+                                    // isn't suspend (it fires its own viewModelScope
+                                    // coroutine and returns) and onSaved() is a plain
+                                    // callback, so a `finally { isSaving = false }` would
+                                    // flip the guard back off before a rapid second/third
+                                    // tap's recomposition ever saw it disabled, letting
+                                    // each tap launch its own insert (the exact bug this
+                                    // guard exists to prevent). onSaved() is popping this
+                                    // screen (or, in the two-pane detail, swapping it out
+                                    // of composition) regardless, so there's no user-facing
+                                    // button left to re-enable on the success path.
+                                } catch (e: CancellationException) {
+                                    // Composable was disposed (e.g. the pop already tore
+                                    // down this coroutineScope) — nothing left to reset.
+                                    throw e
+                                } catch (e: Exception) {
+                                    // Genuine failure: re-enable so the user can retry.
+                                    isSaving = false
                                 }
-                            },
-                            enabled = canSave
-                        ) {
-                            Text(
-                                stringResource(R.string.common_save),
-                                color = if (canSave) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.primary.copy(alpha = 0.38f),
-                                fontWeight = FontWeight.SemiBold
-                            )
-                        }
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.background,
-                        titleContentColor = MaterialTheme.colorScheme.onBackground
-                    )
-                )
-            },
-            containerColor = MaterialTheme.colorScheme.background
-        ) { paddingValues ->
-            if (!isLoaded) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
-                }
-            } else {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues)
-                ) {
-                    // Pinned contact-search header. Keeping the search field outside
-                    // the LazyColumn ensures it (and the result rows below it) stay
-                    // visible when the keyboard is up.
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 12.dp)
+                            }
+                        },
+                        enabled = canSave
                     ) {
                         Text(
-                            stringResource(R.string.tickle_edit_section_contact),
+                            stringResource(R.string.common_save),
+                            color = if (canSave) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.primary.copy(alpha = 0.38f),
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.background,
+                    titleContentColor = MaterialTheme.colorScheme.onBackground
+                )
+            )
+        },
+        containerColor = MaterialTheme.colorScheme.background
+    ) { paddingValues ->
+        if (!isLoaded) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+            }
+        } else {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+            ) {
+                // Pinned contact-search header. Keeping the search field outside
+                // the LazyColumn ensures it (and the result rows below it) stay
+                // visible when the keyboard is up.
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 12.dp)
+                ) {
+                    Text(
+                        stringResource(R.string.tickle_edit_section_contact),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    OutlinedTextField(
+                        value = contactSearch,
+                        onValueChange = { contactSearch = it },
+                        label = { Text(stringResource(R.string.tickle_edit_search_contacts)) },
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true,
+                        shape = RoundedCornerShape(10.dp)
+                    )
+                }
+
+                LazyColumn(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth()
+                        .imePadding(),
+                    contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 0.dp, bottom = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    if (selectedContact != null) {
+                        item {
+                            SelectedContactChip(
+                                contact = selectedContact!!,
+                                onClear = { selectedContact = null }
+                            )
+                        }
+                    }
+                    // Hide the list once a contact is picked. For a NEW tickle, the
+                    // list reappears when the user clears the chip; for an EDIT it
+                    // only appears while the user is typing in the search field.
+                    val showContactList = contactSearch.isNotBlank() ||
+                        (tickleId == null && selectedContact == null)
+                    if (showContactList) {
+                        items(filteredContacts.take(8)) { contact ->
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable {
+                                        selectedContact = contact
+                                        contactSearch = ""
+                                    }
+                                    .padding(vertical = 8.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(36.dp)
+                                        .clip(CircleShape)
+                                        .background(WarmCategory.Community.palette.accent),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        contact.initials,
+                                        style = MaterialTheme.typography.labelMedium,
+                                        fontWeight = FontWeight.Bold,
+                                        color = MaterialTheme.colorScheme.onPrimary
+                                    )
+                                }
+                                Spacer(modifier = Modifier.width(10.dp))
+                                Text(contact.fullName, style = MaterialTheme.typography.bodyLarge)
+                            }
+                        }
+                    }
+
+                    // Frequency selector
+                    item {
+                        Text(
+                            stringResource(R.string.tickle_edit_section_frequency),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Spacer(modifier = Modifier.height(8.dp))
-                        OutlinedTextField(
-                            value = contactSearch,
-                            onValueChange = { contactSearch = it },
-                            label = { Text(stringResource(R.string.tickle_edit_search_contacts)) },
-                            modifier = Modifier.fillMaxWidth(),
-                            singleLine = true,
-                            shape = RoundedCornerShape(10.dp)
-                        )
-                    }
-
-                    LazyColumn(
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxWidth()
-                            .imePadding(),
-                        contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 0.dp, bottom = 16.dp),
-                        verticalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        if (selectedContact != null) {
-                            item {
-                                SelectedContactChip(
-                                    contact = selectedContact!!,
-                                    onClear = { selectedContact = null }
+                        Box {
+                            OutlinedButton(
+                                onClick = { showFrequencyDropdown = true },
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = RoundedCornerShape(10.dp)
+                            ) {
+                                Text(
+                                    stringResource(selectedFrequency.displayNameResId),
+                                    modifier = Modifier.weight(1f)
                                 )
+                                Icon(Icons.Default.ArrowDropDown, contentDescription = null)
                             }
-                        }
-                        // Hide the list once a contact is picked. For a NEW tickle, the
-                        // list reappears when the user clears the chip; for an EDIT it
-                        // only appears while the user is typing in the search field.
-                        val showContactList = contactSearch.isNotBlank() ||
-                            (tickleId == null && selectedContact == null)
-                        if (showContactList) {
-                            items(filteredContacts.take(8)) { contact ->
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .clickable {
-                                            selectedContact = contact
-                                            contactSearch = ""
+                            DropdownMenu(
+                                expanded = showFrequencyDropdown,
+                                onDismissRequest = { showFrequencyDropdown = false }
+                            ) {
+                                TickleFrequency.entries.forEach { freq ->
+                                    DropdownMenuItem(
+                                        text = { Text(stringResource(freq.displayNameResId)) },
+                                        onClick = {
+                                            selectedFrequency = freq
+                                            showFrequencyDropdown = false
                                         }
-                                        .padding(vertical = 8.dp),
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Box(
-                                        modifier = Modifier
-                                            .size(36.dp)
-                                            .clip(CircleShape)
-                                            .background(WarmCategory.Community.palette.accent),
-                                        contentAlignment = Alignment.Center
-                                    ) {
-                                        Text(
-                                            contact.initials,
-                                            style = MaterialTheme.typography.labelMedium,
-                                            fontWeight = FontWeight.Bold,
-                                            color = MaterialTheme.colorScheme.onPrimary
-                                        )
-                                    }
-                                    Spacer(modifier = Modifier.width(10.dp))
-                                    Text(contact.fullName, style = MaterialTheme.typography.bodyLarge)
+                                    )
                                 }
                             }
                         }
+                    }
 
-                        // Frequency selector
+                    if (selectedFrequency == TickleFrequency.ONE_TIME || selectedFrequency == TickleFrequency.ANNUAL) {
                         item {
                             Text(
-                                stringResource(R.string.tickle_edit_section_frequency),
+                                stringResource(R.string.tickle_edit_section_date),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                             Spacer(modifier = Modifier.height(8.dp))
-                            Box {
-                                OutlinedButton(
-                                    onClick = { showFrequencyDropdown = true },
-                                    modifier = Modifier.fillMaxWidth(),
-                                    shape = RoundedCornerShape(10.dp)
-                                ) {
-                                    Text(
-                                        stringResource(selectedFrequency.displayNameResId),
-                                        modifier = Modifier.weight(1f)
-                                    )
-                                    Icon(Icons.Default.ArrowDropDown, contentDescription = null)
-                                }
-                                DropdownMenu(
-                                    expanded = showFrequencyDropdown,
-                                    onDismissRequest = { showFrequencyDropdown = false }
-                                ) {
-                                    TickleFrequency.entries.forEach { freq ->
-                                        DropdownMenuItem(
-                                            text = { Text(stringResource(freq.displayNameResId)) },
-                                            onClick = {
-                                                selectedFrequency = freq
-                                                showFrequencyDropdown = false
-                                            }
-                                        )
-                                    }
-                                }
+                            OutlinedButton(
+                                onClick = { showStartDatePicker() },
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = RoundedCornerShape(10.dp)
+                            ) {
+                                Text(formattedStartDate, modifier = Modifier.weight(1f))
+                                Text(stringResource(R.string.common_change))
                             }
                         }
+                    }
 
-                        if (selectedFrequency == TickleFrequency.ONE_TIME || selectedFrequency == TickleFrequency.ANNUAL) {
-                            item {
-                                Text(
-                                    stringResource(R.string.tickle_edit_section_date),
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                                )
-                                Spacer(modifier = Modifier.height(8.dp))
-                                OutlinedButton(
-                                    onClick = { showStartDatePicker() },
-                                    modifier = Modifier.fillMaxWidth(),
-                                    shape = RoundedCornerShape(10.dp)
-                                ) {
-                                    Text(formattedStartDate, modifier = Modifier.weight(1f))
-                                    Text(stringResource(R.string.common_change))
-                                }
-                            }
-                        }
-
-                        // Custom interval stepper
-                        if (selectedFrequency == TickleFrequency.CUSTOM) {
-                            item {
-                                Text(
-                                    stringResource(R.string.tickle_edit_section_custom_interval),
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                                )
-                                Spacer(modifier = Modifier.height(8.dp))
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.spacedBy(16.dp)
-                                ) {
-                                    OutlinedButton(
-                                        onClick = { if (customIntervalDays > 1) customIntervalDays-- },
-                                        shape = CircleShape
-                                    ) {
-                                        Text("−")
-                                    }
-                                    Text(
-                                        stringResource(R.string.tickle_edit_custom_interval_days, customIntervalDays),
-                                        style = MaterialTheme.typography.titleMedium,
-                                        fontWeight = FontWeight.SemiBold
-                                    )
-                                    OutlinedButton(
-                                        onClick = { customIntervalDays++ },
-                                        shape = CircleShape
-                                    ) {
-                                        Text("+")
-                                    }
-                                }
-                            }
-                        }
-
-                        // Locale-neutral annual presets
+                    // Custom interval stepper
+                    if (selectedFrequency == TickleFrequency.CUSTOM) {
                         item {
                             Text(
-                                stringResource(R.string.tickle_edit_section_common_annual_events),
+                                stringResource(R.string.tickle_edit_section_custom_interval),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                             Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .horizontalScroll(rememberScrollState()),
-                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(16.dp)
                             ) {
-                                AnnualPresetChip(
-                                    label = stringResource(R.string.tickle_edit_preset_birthday),
-                                    onClick = {
-                                        selectedFrequency = TickleFrequency.ANNUAL
-                                        note = context.getString(R.string.tickle_edit_preset_note_birthday)
-                                    }
+                                OutlinedButton(
+                                    onClick = { if (customIntervalDays > 1) customIntervalDays-- },
+                                    shape = CircleShape
+                                ) {
+                                    Text("−")
+                                }
+                                Text(
+                                    stringResource(R.string.tickle_edit_custom_interval_days, customIntervalDays),
+                                    style = MaterialTheme.typography.titleMedium,
+                                    fontWeight = FontWeight.SemiBold
                                 )
-                                AnnualPresetChip(
-                                    label = stringResource(R.string.tickle_edit_preset_anniversary),
-                                    onClick = {
-                                        selectedFrequency = TickleFrequency.ANNUAL
-                                        note = context.getString(R.string.tickle_edit_preset_note_anniversary)
-                                    }
-                                )
-                                AnnualPresetChip(
-                                    label = stringResource(R.string.tickle_edit_preset_special_event),
-                                    onClick = {
-                                        selectedFrequency = TickleFrequency.ANNUAL
-                                        note = context.getString(R.string.tickle_edit_preset_note_special_event)
-                                    }
-                                )
+                                OutlinedButton(
+                                    onClick = { customIntervalDays++ },
+                                    shape = CircleShape
+                                ) {
+                                    Text("+")
+                                }
                             }
                         }
+                    }
 
-                        // Note
-                        item {
-                            Text(
-                                stringResource(R.string.tickle_edit_section_note),
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                    // Locale-neutral annual presets
+                    item {
+                        Text(
+                            stringResource(R.string.tickle_edit_section_common_annual_events),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .horizontalScroll(rememberScrollState()),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            AnnualPresetChip(
+                                label = stringResource(R.string.tickle_edit_preset_birthday),
+                                onClick = {
+                                    selectedFrequency = TickleFrequency.ANNUAL
+                                    note = context.getString(R.string.tickle_edit_preset_note_birthday)
+                                }
                             )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            OutlinedTextField(
-                                value = note,
-                                onValueChange = { note = it },
-                                label = { Text(stringResource(R.string.tickle_edit_note_placeholder)) },
-                                modifier = Modifier.fillMaxWidth(),
-                                minLines = 2,
-                                shape = RoundedCornerShape(10.dp)
+                            AnnualPresetChip(
+                                label = stringResource(R.string.tickle_edit_preset_anniversary),
+                                onClick = {
+                                    selectedFrequency = TickleFrequency.ANNUAL
+                                    note = context.getString(R.string.tickle_edit_preset_note_anniversary)
+                                }
+                            )
+                            AnnualPresetChip(
+                                label = stringResource(R.string.tickle_edit_preset_special_event),
+                                onClick = {
+                                    selectedFrequency = TickleFrequency.ANNUAL
+                                    note = context.getString(R.string.tickle_edit_preset_note_special_event)
+                                }
                             )
                         }
+                    }
+
+                    // Note
+                    item {
+                        Text(
+                            stringResource(R.string.tickle_edit_section_note),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        OutlinedTextField(
+                            value = note,
+                            onValueChange = { note = it },
+                            label = { Text(stringResource(R.string.tickle_edit_note_placeholder)) },
+                            modifier = Modifier.fillMaxWidth(),
+                            minLines = 2,
+                            shape = RoundedCornerShape(10.dp)
+                        )
                     }
                 }
             }
         }
-
-        TicklrToast(
-            message = toastMessage,
-            onDismiss = tickleViewModel::clearToast,
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 24.dp)
-        )
     }
 }
 

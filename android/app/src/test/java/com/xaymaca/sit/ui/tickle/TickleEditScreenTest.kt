@@ -70,7 +70,6 @@ class TickleEditScreenTest {
     fun setUp() {
         tickleVM = mockk(relaxed = true)
         networkVM = mockk(relaxed = true)
-        every { tickleVM.toastMessage } returns MutableStateFlow(null)
         every { networkVM.filteredContacts } returns MutableStateFlow(listOf(contact))
         coEvery { networkVM.getContactById(contact.id) } returns contact
     }
@@ -263,5 +262,39 @@ class TickleEditScreenTest {
         composeRule.waitForIdle()
 
         coVerify(exactly = 1) { tickleVM.upsert(any(), any()) }
+    }
+
+    @Test
+    fun save_popsImmediately_withNoArtificialDelay() {
+        // TIC-84 regression: save used to be `upsert(...); delay(2000); onSaved()`,
+        // blocking the screen (and the tablet detail pane) behind a 2s toast dwell.
+        // Save must now apply and navigate away immediately — asserting a small
+        // wall-clock budget catches a reintroduced `delay(...)` without being an
+        // exact-timing test.
+        var savedInvoked = false
+        composeRule.setContent {
+            TickleEditScreen(
+                tickleId = null,
+                onSaved = { savedInvoked = true },
+                onBack = {},
+                tickleViewModel = tickleVM,
+                networkViewModel = networkVM
+            )
+        }
+
+        composeRule.waitForIdle()
+        composeRule.onNodeWithText(contact.fullName).performClick()
+        composeRule.waitForIdle()
+
+        val before = System.currentTimeMillis()
+        composeRule.onNodeWithText("Save").performClick()
+        composeRule.waitForIdle()
+        val elapsed = System.currentTimeMillis() - before
+
+        assertTrue("onSaved() must fire", savedInvoked)
+        assertTrue(
+            "Save must pop without an artificial delay — took ${elapsed}ms",
+            elapsed < 1000
+        )
     }
 }

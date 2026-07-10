@@ -150,6 +150,27 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
         }
     }
 
+    // TIC-84: TickleEditScreen's save now applies and pops immediately (no
+    // artificial delay), so its save-confirmation ("Tickle saved"/"Tickle
+    // updated") can no longer live as a screen-local toast — it wouldn't
+    // survive the pop. TickleViewModel.upsert() posts it to the same
+    // app-scoped PendingSnackbarMessageStore pattern as the TIC-82 prompt
+    // above, and this effect surfaces it on the shared snackbarHostState.
+    // Short duration is fine here (unlike the TIC-82 prompt, the app stays
+    // foregrounded through save+pop, so there's no risk of the timed
+    // dismissal ticking away while we're covered by another app).
+    LaunchedEffect(Unit) {
+        tickleViewModel.pendingSnackbarMessage.collect { message ->
+            if (message == null) return@collect
+            // Consume first so the message shows exactly once.
+            tickleViewModel.consumePendingSnackbarMessage()
+            snackbarHostState.showSnackbar(
+                message = message,
+                duration = SnackbarDuration.Short,
+            )
+        }
+    }
+
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         bottomBar = {
