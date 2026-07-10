@@ -72,6 +72,7 @@ import com.xaymaca.sit.ui.theme.WarmPalette
 import com.xaymaca.sit.ui.theme.WarmSpacing
 import com.xaymaca.sit.ui.theme.WarmTheme
 import com.xaymaca.sit.ui.theme.Warmth
+import com.xaymaca.sit.ui.warm.NotificationsAccessBanner
 import com.xaymaca.sit.ui.warm.WarmCard
 import com.xaymaca.sit.ui.warm.WarmCardVariant
 import com.xaymaca.sit.ui.warm.WarmEyebrow
@@ -123,6 +124,16 @@ fun TickleListScreen(
         ) {
             item {
                 WarmHeader(palette = palette, warmth = warmth, dueCount = dueReminders.size)
+            }
+
+            // Reminders exist but can't be delivered without POST_NOTIFICATIONS
+            // (Android 13+) — surface the ask right where the stakes are visible.
+            if (dueReminders.isNotEmpty() || upcomingReminders.isNotEmpty() || snoozedReminders.isNotEmpty()) {
+                item {
+                    NotificationsAccessBanner(
+                        modifier = Modifier.padding(horizontal = WarmSpacing.Lg),
+                    )
+                }
             }
 
             item {

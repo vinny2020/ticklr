@@ -313,6 +313,7 @@
     <string name="warm_contact_notes_placeholder">이 사람이 왜 소중한지 기록해 두세요…</string>
 
     <string name="warm_contact_accessBanner">주소록의 사진을 사용하려면 연락처 접근을 허용해 주세요.</string>
+    <string name="warm_tickle_notificationsBanner">리마인더가 꺼져 있어요 — 탭해서 알림을 켜 주세요.</string>
     <string name="compose_template_label">템플릿</string>
     <string name="tickle_action_compose">메시지 작성</string>
     <string name="tickle_row_group_fallback">그룹</string>

@@ -322,6 +322,7 @@
     <string name="warm_contact_notes_placeholder">הערות על מה שהאדם הזה משמעותי עבורך…</string>
 
     <string name="warm_contact_accessBanner">אפשר גישה לאנשי הקשר כדי להשתמש בתמונה מספר הטלפונים.</string>
+    <string name="warm_tickle_notificationsBanner">התזכורות כבויות — הקש כדי להפעיל התראות.</string>
     <string name="compose_template_label">תבנית</string>
     <string name="tickle_action_compose">כתיבת הודעה</string>
     <string name="tickle_row_group_fallback">קבוצה</string>

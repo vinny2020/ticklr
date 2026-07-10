@@ -320,6 +320,7 @@
     <string name="warm_contact_notes_placeholder">Poznámky o tom, čím je pro tebe tento člověk důležitý…</string>
 
     <string name="warm_contact_accessBanner">Povol přístup ke kontaktům, aby šla použít fotka z tvého adresáře.</string>
+    <string name="warm_tickle_notificationsBanner">Připomenutí jsou vypnutá — klepni a zapni oznámení.</string>
     <string name="compose_template_label">Šablona</string>
     <string name="tickle_action_compose">Napsat zprávu</string>
     <string name="tickle_row_group_fallback">Skupina</string>

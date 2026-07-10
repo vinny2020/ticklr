@@ -316,6 +316,7 @@
     <string name="warm_contact_notes_placeholder">Notes about how this person matters to you…</string>
 
     <string name="warm_contact_accessBanner">Allow contacts access to use the photo from your address book.</string>
+    <string name="warm_tickle_notificationsBanner">Reminders are off — tap to turn on notifications.</string>
     <string name="compose_template_label">Template</string>
     <string name="tickle_action_compose">Compose message</string>
     <string name="tickle_row_group_fallback">Group</string>

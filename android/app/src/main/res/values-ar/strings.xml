@@ -328,6 +328,7 @@
     <string name="warm_contact_notes_placeholder">ملاحظات عمّا يجعل هذا الشخص يهمّك…</string>
 
     <string name="warm_contact_accessBanner">اسمح بالوصول إلى جهات الاتصال لاستخدام الصورة من دفتر العناوين.</string>
+    <string name="warm_tickle_notificationsBanner">التذكيرات متوقفة — انقر لتفعيل الإشعارات.</string>
     <string name="compose_template_label">قالب</string>
     <string name="tickle_action_compose">كتابة رسالة</string>
     <string name="tickle_row_group_fallback">مجموعة</string>
