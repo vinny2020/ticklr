@@ -75,6 +75,10 @@
     <string name="tickle_row_in_days">In %1$dd</string>
     <string name="tickle_row_days_overdue">%1$dd overdue</string>
 
+    <!-- Tickle mark-done prompt (TIC-82) — shown on return from an SMS handoff -->
+    <string name="tickle_prompt_message">All set — mark %1$s\'s tickle done?</string>
+    <string name="tickle_prompt_mark_done">Mark done</string>
+
     <!-- Tickle edit -->
     <string name="tickle_edit_new_title">New Tickle</string>
     <string name="tickle_edit_title">Edit Tickle</string>

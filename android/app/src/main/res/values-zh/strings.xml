@@ -320,4 +320,6 @@
     <string name="tickle_row_tickle_fallback">Tickle</string>
     <string name="template_default_title">问候一下</string>
     <string name="template_default_body">嘿！只是问候一下，希望你一切都好。我们很快再聊！</string>
+    <string name="tickle_prompt_message">搞定 — 把%1$s的Tickle标记为完成？</string>
+    <string name="tickle_prompt_mark_done">标记完成</string>
 </resources>

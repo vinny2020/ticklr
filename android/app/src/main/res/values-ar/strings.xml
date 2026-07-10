@@ -335,4 +335,6 @@
     <string name="tickle_row_tickle_fallback">تذكير</string>
     <string name="template_default_title">اطمئنان</string>
     <string name="template_default_body">مرحبًا! أردت فقط الاطمئنان عليك. أتمنى أن تكون بخير. نتحدث قريبًا!</string>
+    <string name="tickle_prompt_message">تم — وضع علامة على التذكير الخاص بـ %1$s كمكتمل؟</string>
+    <string name="tickle_prompt_mark_done">وضع علامة كمكتمل</string>
 </resources>

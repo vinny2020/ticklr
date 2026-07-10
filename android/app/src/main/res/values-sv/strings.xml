@@ -323,4 +323,6 @@
     <string name="tickle_row_tickle_fallback">Tickle</string>
     <string name="template_default_title">Hör av mig</string>
     <string name="template_default_body">Hej! Ville bara höra av mig. Hoppas att allt är bra med dig. Vi hörs snart!</string>
+    <string name="tickle_prompt_message">Klart — markera tickle för %1$s som klar?</string>
+    <string name="tickle_prompt_mark_done">Markera som klar</string>
 </resources>

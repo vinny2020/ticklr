@@ -127,4 +127,18 @@ class NetworkViewModel @Inject constructor(
 
     suspend fun getContactById(id: Long): Contact? =
         contactRepository.getContactById(id)
+
+    /**
+     * The id of a currently-due reminder for this contact, or null if none.
+     * "Due" means past its nextDueDate and still ACTIVE or SNOOZED — the same
+     * predicate the Tickle list uses ([TickleScheduler.isDue]). Used by the
+     * contact-detail "Send a text" chip (TIC-82) so the compose it opens can
+     * prompt to mark that tickle done on return.
+     */
+    suspend fun dueReminderIdForContact(contactId: Long): Long? {
+        val now = System.currentTimeMillis()
+        return contactRepository.getRemindersForContact(contactId)
+            .firstOrNull { TickleScheduler.isDue(it, now) }
+            ?.id
+    }
 }

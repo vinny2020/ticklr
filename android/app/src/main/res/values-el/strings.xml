@@ -323,4 +323,6 @@
     <string name="tickle_row_tickle_fallback">Tickle</string>
     <string name="template_default_title">Ένα γεια</string>
     <string name="template_default_body">Γεια! Ήθελα απλώς να δω τι κάνεις. Ελπίζω να είσαι καλά. Τα λέμε σύντομα!</string>
+    <string name="tickle_prompt_message">Έτοιμο — να επισημανθεί ως ολοκληρωμένο το tickle για %1$s;</string>
+    <string name="tickle_prompt_mark_done">Επισήμανση ως ολοκληρωμένο</string>
 </resources>

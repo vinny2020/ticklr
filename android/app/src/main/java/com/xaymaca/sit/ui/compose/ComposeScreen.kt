@@ -34,9 +34,13 @@ fun ComposeScreen(
      *  app, or compose dismissed. The caller routes back to the previous screen. */
     onDone: () -> Unit = {},
     initialContactId: Long? = null,
+    /** TIC-82: due tickle this compose was opened for; drives the mark-done
+     *  prompt on return from the SMS handoff. Null when composing from the tab. */
+    initialReminderId: Long? = null,
     viewModel: ComposeViewModel = hiltViewModel()
 ) {
-    LaunchedEffect(initialContactId) {
+    LaunchedEffect(initialContactId, initialReminderId) {
+        viewModel.attachReminder(initialReminderId, initialContactId)
         if (initialContactId != null) viewModel.preSelectContact(initialContactId)
     }
     val context = LocalContext.current

@@ -10,6 +10,8 @@ import com.xaymaca.sit.data.model.TickleStatus
 import com.xaymaca.sit.data.dao.ContactGroupDao
 import com.xaymaca.sit.data.repository.ContactRepository
 import com.xaymaca.sit.data.repository.TickleRepository
+import com.xaymaca.sit.service.PendingTickleCompletion
+import com.xaymaca.sit.service.PendingTickleCompletionStore
 import com.xaymaca.sit.service.StringListConverter
 import com.xaymaca.sit.service.TickleScheduler
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,11 +33,39 @@ class TickleViewModel @Inject constructor(
     private val tickleRepository: TickleRepository,
     private val contactRepository: ContactRepository,
     private val contactGroupDao: ContactGroupDao,
+    private val pendingTickleCompletionStore: PendingTickleCompletionStore,
     @ApplicationContext private val context: Context,
 ) : ViewModel() {
 
     private val _toastMessage = MutableStateFlow<String?>(null)
     val toastMessage: StateFlow<String?> = _toastMessage.asStateFlow()
+
+    /**
+     * TIC-82: a pending "mark [name]'s tickle done?" prompt stashed at SMS
+     * handoff, observed by the app-level scaffold (NavGraph) so it survives
+     * ComposeScreen's pre-handoff pop and shows on return.
+     */
+    val pendingTickleCompletion: StateFlow<PendingTickleCompletion?> =
+        pendingTickleCompletionStore.pending
+
+    /** Clears the pending prompt once it has been surfaced (or is stale). */
+    fun consumePendingTickleCompletion() {
+        pendingTickleCompletionStore.consume()
+    }
+
+    /**
+     * Completes the reminder behind a mark-done prompt, going through the same
+     * [markComplete] / [TickleScheduler] path as the in-app actions so alarms
+     * stay in sync. Re-validates against the DB: if the reminder was completed
+     * or deleted in the meantime, this is a no-op.
+     */
+    fun completePendingTickle(reminderId: Long) {
+        viewModelScope.launch {
+            val reminder = tickleRepository.getReminderById(reminderId) ?: return@launch
+            if (reminder.status == TickleStatus.COMPLETED.name) return@launch
+            markComplete(reminder)
+        }
+    }
 
     private val stringListConverter = StringListConverter()
 

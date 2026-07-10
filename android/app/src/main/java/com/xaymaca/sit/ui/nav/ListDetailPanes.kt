@@ -64,7 +64,7 @@ fun NetworkPane(
     onImport: () -> Unit,
     onEditContact: (Long) -> Unit,
     onAddTickleForContact: (Long) -> Unit,
-    onCompose: (Long) -> Unit,
+    onCompose: (contactId: Long, reminderId: Long?) -> Unit,
 ) {
     val navigator = rememberListDetailPaneScaffoldNavigator<Long?>()
 
@@ -148,7 +148,7 @@ fun GroupsPane(
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun TicklePane(
-    onCompose: (Long) -> Unit,
+    onCompose: (contactId: Long, reminderId: Long?) -> Unit,
 ) {
     // Shared with TickleListScreen and TickleEditScreen via the nav-entry-scoped
     // ViewModelStoreOwner, so a row tap's resolved `actionTarget` drives this pane.
@@ -224,7 +224,7 @@ fun TicklePane(
                                 onCompose = {
                                     val contactId = target.reminder.contactId
                                     viewModel.dismissActionSheet()
-                                    if (contactId != null) onCompose(contactId)
+                                    if (contactId != null) onCompose(contactId, target.reminder.id)
                                 },
                                 onCall = {
                                     target.phones.firstOrNull()?.let { number ->

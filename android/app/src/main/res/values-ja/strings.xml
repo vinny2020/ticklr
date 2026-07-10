@@ -320,4 +320,6 @@
     <string name="tickle_row_tickle_fallback">Tickle</string>
     <string name="template_default_title">ご機嫌うかがい</string>
     <string name="template_default_body">こんにちは！ちょっとご様子をうかがいたくて。お元気でお過ごしですか。またすぐに連絡しますね！</string>
+    <string name="tickle_prompt_message">完了 — %1$s のTickleを完了にしますか？</string>
+    <string name="tickle_prompt_mark_done">完了にする</string>
 </resources>

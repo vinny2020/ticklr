@@ -105,7 +105,7 @@ fun ContactDetailScreen(
     onBack: () -> Unit,
     onAddTickle: () -> Unit,
     onEdit: () -> Unit,
-    onCompose: (Long) -> Unit = {},
+    onCompose: (contactId: Long, reminderId: Long?) -> Unit = { _, _ -> },
     viewModel: NetworkViewModel = hiltViewModel(),
     groupViewModel: GroupViewModel = hiltViewModel(),
 ) {
@@ -114,6 +114,10 @@ fun ContactDetailScreen(
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     var contact by remember { mutableStateOf<Contact?>(null) }
+    // TIC-82: id of this contact's currently-due tickle (if any), resolved once
+    // the screen loads. Attached to the compose the "Send a text" chip opens so
+    // returning from the SMS handoff can prompt to mark that tickle done.
+    var dueReminderId by remember { mutableStateOf<Long?>(null) }
     var showDeleteDialog by remember { mutableStateOf(false) }
     var showGroupSheet by remember { mutableStateOf(false) }
     var photoRefreshKey by remember { mutableStateOf(UUID.randomUUID()) }
@@ -132,6 +136,7 @@ fun ContactDetailScreen(
 
     LaunchedEffect(contactId) {
         contact = viewModel.getContactById(contactId)
+        dueReminderId = viewModel.dueReminderIdForContact(contactId)
     }
 
     val photoPicker = rememberLauncherForActivityResult(
@@ -218,7 +223,7 @@ fun ContactDetailScreen(
                         palette = palette,
                         canText = phoneNumbers.isNotEmpty(),
                         canCall = phoneNumbers.isNotEmpty(),
-                        onSendText = { onCompose(contactId) },
+                        onSendText = { onCompose(contactId, dueReminderId) },
                         onCreateTickle = onAddTickle,
                         onCall = {
                             phoneNumbers.firstOrNull()?.let { number ->

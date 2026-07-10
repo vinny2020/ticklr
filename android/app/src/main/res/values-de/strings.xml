@@ -323,4 +323,6 @@
     <string name="tickle_row_tickle_fallback">Tickle</string>
     <string name="template_default_title">Kurz melden</string>
     <string name="template_default_body">Hey! Ich wollte mich nur mal melden. Ich hoffe, dir geht es gut. Bis bald!</string>
+    <string name="tickle_prompt_message">Erledigt — Tickle für %1$s als erledigt markieren?</string>
+    <string name="tickle_prompt_mark_done">Als erledigt markieren</string>
 </resources>

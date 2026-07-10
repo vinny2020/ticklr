@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -42,6 +43,7 @@ import com.xaymaca.sit.ui.settings.TemplateEditScreen
 import com.xaymaca.sit.ui.settings.TemplateListScreen
 import com.xaymaca.sit.ui.tickle.TickleEditScreen
 import com.xaymaca.sit.ui.tickle.TickleListScreen
+import com.xaymaca.sit.ui.tickle.TickleViewModel
 
 /**
  * The graph's start destination, chosen once from persisted onboarding state.
@@ -111,7 +113,45 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
     // the immersive (chrome-free) phone detail experience.
     val useTwoPane = widthSizeClass == WindowWidthSizeClass.Expanded
 
+    // TIC-82: the "mark [name]'s tickle done?" prompt. The pending completion is
+    // stashed in an app-scoped singleton at SMS handoff (ComposeViewModel) and
+    // observed here — a level that outlives ComposeScreen's pre-handoff pop and
+    // the round trip out to the SMS app — via an activity-scoped TickleViewModel
+    // (LocalViewModelStoreOwner is the Activity here, so this is a stable
+    // instance across recompositions). Marking done routes through the existing
+    // TickleViewModel.markComplete / TickleScheduler path so alarms stay in sync.
+    //
+    // Mechanics: the effect is keyed on Unit and collects the StateFlow itself,
+    // NOT via collectAsState — consume() emits null, and if that null were an
+    // effect key change it would cancel the running coroutine mid-showSnackbar
+    // and dismiss the prompt after one frame. collect processes emissions
+    // sequentially, so the null lands after showSnackbar returns and no-ops.
+    // Duration is Indefinite: the handoff backgrounds us before the user reads
+    // anything, and a timed snackbar's delay() keeps counting while we're
+    // covered by the SMS app — a Long (~10s) prompt would be gone before the
+    // user got back. withDismissAction gives an explicit dismiss instead.
+    val snackbarHostState = remember { SnackbarHostState() }
+    val tickleViewModel: TickleViewModel = hiltViewModel()
+    val markDoneLabel = stringResource(R.string.tickle_prompt_mark_done)
+    LaunchedEffect(Unit) {
+        tickleViewModel.pendingTickleCompletion.collect { pending ->
+            if (pending == null) return@collect
+            // Consume first so the prompt shows exactly once.
+            tickleViewModel.consumePendingTickleCompletion()
+            val result = snackbarHostState.showSnackbar(
+                message = context.getString(R.string.tickle_prompt_message, pending.contactName),
+                actionLabel = markDoneLabel,
+                withDismissAction = true,
+                duration = SnackbarDuration.Indefinite,
+            )
+            if (result == SnackbarResult.ActionPerformed) {
+                tickleViewModel.completePendingTickle(pending.reminderId)
+            }
+        }
+    }
+
     Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         bottomBar = {
             if (showNavChrome && !useRail) {
                 AppBottomNavBar(currentDestination, navController)
@@ -172,10 +212,10 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
                         onAddTickleForContact = { id ->
                             navController.navigate(Screen.TickleEdit.createRouteWithContact(id))
                         },
-                        onCompose = { id ->
+                        onCompose = { id, reminderId ->
                             // Keep the current screen on the back stack so
                             // finishing (or backing out of) Compose returns here.
-                            navController.navigate("compose?contactId=$id") {
+                            navController.navigate(Screen.Compose.createRoute(id, reminderId)) {
                                 launchSingleTop = true
                             }
                         },
@@ -209,8 +249,8 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
                     onBack = { navController.popBackStack() },
                     onAddTickle = { navController.navigate(Screen.TickleEdit.createRouteWithContact(contactId)) },
                     onEdit = { navController.navigate("edit_contact/$contactId") },
-                    onCompose = { id ->
-                        navController.navigate("compose?contactId=$id") {
+                    onCompose = { id, reminderId ->
+                        navController.navigate(Screen.Compose.createRoute(id, reminderId)) {
                             launchSingleTop = true
                         }
                     }
@@ -263,8 +303,8 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
             composable(Screen.Tickle.route) {
                 if (useTwoPane) {
                     TicklePane(
-                        onCompose = { id ->
-                            navController.navigate("compose?contactId=$id") {
+                        onCompose = { id, reminderId ->
+                            navController.navigate(Screen.Compose.createRoute(id, reminderId)) {
                                 launchSingleTop = true
                             }
                         },
@@ -273,8 +313,8 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
                     TickleListScreen(
                         onAddTickle = { navController.navigate(Screen.TickleEdit.createRoute(-1L)) },
                         onEditTickle = { id -> navController.navigate(Screen.TickleEdit.createRoute(id)) },
-                        onCompose = { id ->
-                            navController.navigate("compose?contactId=$id") {
+                        onCompose = { id, reminderId ->
+                            navController.navigate(Screen.Compose.createRoute(id, reminderId)) {
                                 launchSingleTop = true
                             }
                         }
@@ -299,18 +339,28 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
                 )
             }
 
-            // Compose — accepts optional contactId query param for pre-selection from ContactDetailScreen
+            // Compose — accepts optional contactId (pre-selection) and reminderId
+            // (TIC-82 mark-done prompt) query params, from ContactDetailScreen,
+            // the Tickle action sheet, or a reminder-notification deep link.
             composable(
-                route = "${Screen.Compose.route}?contactId={contactId}",
-                arguments = listOf(navArgument("contactId") {
-                    type = NavType.LongType
-                    defaultValue = -1L
-                }),
+                route = Screen.Compose.ROUTE,
+                arguments = listOf(
+                    navArgument(Screen.Compose.ARG_CONTACT_ID) {
+                        type = NavType.LongType
+                        defaultValue = -1L
+                    },
+                    navArgument(Screen.Compose.ARG_REMINDER_ID) {
+                        type = NavType.LongType
+                        defaultValue = -1L
+                    },
+                ),
                 deepLinks = listOf(navDeepLink { uriPattern = Screen.Compose.DEEP_LINK_PATTERN })
             ) { backStackEntry ->
-                val contactId = backStackEntry.arguments?.getLong("contactId")?.takeIf { it != -1L }
+                val contactId = backStackEntry.arguments?.getLong(Screen.Compose.ARG_CONTACT_ID)?.takeIf { it != -1L }
+                val reminderId = backStackEntry.arguments?.getLong(Screen.Compose.ARG_REMINDER_ID)?.takeIf { it != -1L }
                 ComposeScreen(
                     initialContactId = contactId,
+                    initialReminderId = reminderId,
                     onDone = {
                         // Flow back to wherever Compose was opened from
                         // (Contact Detail, Tickle list, or the previous tab).
