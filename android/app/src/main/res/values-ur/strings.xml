@@ -328,4 +328,6 @@
     <string name="tickle_row_tickle_fallback">یاددہانی</string>
     <string name="template_default_title">خیر خیریت</string>
     <string name="template_default_body">ہیلو! بس آپ کی خیریت پوچھنا چاہتا تھا۔ امید ہے آپ ٹھیک ہوں گے۔ جلد بات کرتے ہیں!</string>
+    <string name="tickle_prompt_message">ہو گیا — %1$s کے لیے یاددہانی مکمل کے طور پر نشان زد کریں؟</string>
+    <string name="tickle_prompt_mark_done">مکمل نشان زد کریں</string>
 </resources>

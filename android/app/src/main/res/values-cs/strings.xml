@@ -327,4 +327,6 @@
     <string name="tickle_row_tickle_fallback">Tickle</string>
     <string name="template_default_title">Jen se ozývám</string>
     <string name="template_default_body">Ahoj! Jen se ozývám. Doufám, že se máš dobře. Brzy se ozvu!</string>
+    <string name="tickle_prompt_message">Hotovo — označit tickle pro %1$s jako hotový?</string>
+    <string name="tickle_prompt_mark_done">Označit jako hotové</string>
 </resources>

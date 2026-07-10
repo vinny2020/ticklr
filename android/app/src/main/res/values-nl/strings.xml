@@ -323,4 +323,6 @@
     <string name="tickle_row_tickle_fallback">Tickle</string>
     <string name="template_default_title">Even bijpraten</string>
     <string name="template_default_body">Hoi! Ik wilde even hallo zeggen. Ik hoop dat het goed met je gaat. Tot snel!</string>
+    <string name="tickle_prompt_message">Klaar — Tickle voor %1$s als voltooid markeren?</string>
+    <string name="tickle_prompt_mark_done">Als klaar markeren</string>
 </resources>

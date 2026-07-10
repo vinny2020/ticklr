@@ -329,4 +329,6 @@
     <string name="tickle_row_tickle_fallback">תזכורת</string>
     <string name="template_default_title">בדיקת שלום</string>
     <string name="template_default_body">היי! רק רציתי לבדוק מה שלומך. מקווה שאתה מרגיש טוב. נדבר בקרוב!</string>
+    <string name="tickle_prompt_message">בוצע — לסמן את התזכורת עבור %1$s כהושלמה?</string>
+    <string name="tickle_prompt_mark_done">סמן כבוצע</string>
 </resources>

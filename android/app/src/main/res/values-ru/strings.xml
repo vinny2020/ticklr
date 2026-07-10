@@ -329,4 +329,6 @@
     <string name="tickle_row_tickle_fallback">Tickle</string>
     <string name="template_default_title">Как дела?</string>
     <string name="template_default_body">Привет! Просто решил узнать, как дела. Надеюсь, у тебя всё хорошо. Скоро на связи!</string>
+    <string name="tickle_prompt_message">Готово — отметить tickle для %1$s как выполненный?</string>
+    <string name="tickle_prompt_mark_done">Отметить выполненным</string>
 </resources>

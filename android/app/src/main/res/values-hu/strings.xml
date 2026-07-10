@@ -323,4 +323,6 @@
     <string name="tickle_row_tickle_fallback">Tickle</string>
     <string name="template_default_title">Csak jelentkezem</string>
     <string name="template_default_body">Szia! Csak jelentkezem. Remélem, jól vagy. Beszéljünk hamarosan!</string>
+    <string name="tickle_prompt_message">Kész — megjelölöd késznek %1$s tickle-jét?</string>
+    <string name="tickle_prompt_mark_done">Megjelölés késznek</string>
 </resources>

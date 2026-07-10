@@ -323,4 +323,6 @@
     <string name="tickle_row_tickle_fallback">Tickle</string>
     <string name="template_default_title">Un saluto</string>
     <string name="template_default_body">Ciao! Volevo solo salutarti. Spero tu stia bene. Ci sentiamo presto!</string>
+    <string name="tickle_prompt_message">Fatto — segnare il tickle per %1$s come completato?</string>
+    <string name="tickle_prompt_mark_done">Segna completato</string>
 </resources>

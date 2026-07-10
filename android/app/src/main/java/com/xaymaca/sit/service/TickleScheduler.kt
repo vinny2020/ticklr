@@ -307,7 +307,9 @@ object TickleScheduler {
     fun contentPendingIntent(context: Context, reminderId: Long, contactId: Long?): PendingIntent {
         val deepLink = Intent(
             Intent.ACTION_VIEW,
-            Uri.parse(Screen.Compose.deepLinkUri(contactId)),
+            // TIC-82: carry the reminderId so returning from the SMS handoff can
+            // prompt "mark [name]'s tickle done?".
+            Uri.parse(Screen.Compose.deepLinkUri(contactId, reminderId)),
             context,
             MainActivity::class.java
         )

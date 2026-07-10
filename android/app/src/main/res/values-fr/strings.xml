@@ -323,4 +323,6 @@
     <string name="tickle_row_tickle_fallback">Tickle</string>
     <string name="template_default_title">Prendre des nouvelles</string>
     <string name="template_default_body">Salut ! Je prends juste de tes nouvelles. J\'espère que tu vas bien. À bientôt !</string>
+    <string name="tickle_prompt_message">Terminé — marquer le tickle pour %1$s comme fait ?</string>
+    <string name="tickle_prompt_mark_done">Marquer comme fait</string>
 </resources>

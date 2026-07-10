@@ -323,4 +323,6 @@
     <string name="tickle_row_tickle_fallback">Tickle</string>
     <string name="template_default_title">Um olá</string>
     <string name="template_default_body">Olá! Só queria dar um alô. Espero que estejas bem. Falamos em breve!</string>
+    <string name="tickle_prompt_message">Tudo certo — marcar o tickle de %1$s como concluído?</string>
+    <string name="tickle_prompt_mark_done">Marcar concluído</string>
 </resources>

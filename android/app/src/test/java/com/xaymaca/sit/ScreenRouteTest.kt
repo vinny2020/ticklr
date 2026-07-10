@@ -50,6 +50,63 @@ class ScreenRouteTest {
         assertTrue(route.startsWith("tickle_edit/-1"))
     }
 
+    // --- Compose route + deep link (TIC-82) ---
+    // The compose route carries an optional contactId (recipient pre-select) and
+    // an optional reminderId (drives the mark-done prompt on return). The -1L
+    // sentinel means "absent" and is what NavGraph filters out via takeIf.
+
+    @Test
+    fun `compose route template contains both contactId and reminderId placeholders`() {
+        assertTrue(Screen.Compose.ROUTE.contains("{${Screen.Compose.ARG_CONTACT_ID}}"))
+        assertTrue(Screen.Compose.ROUTE.contains("{${Screen.Compose.ARG_REMINDER_ID}}"))
+    }
+
+    @Test
+    fun `compose createRoute embeds both contact and reminder ids`() {
+        assertEquals(
+            "compose?contactId=7&reminderId=42",
+            Screen.Compose.createRoute(contactId = 7L, reminderId = 42L),
+        )
+    }
+
+    @Test
+    fun `compose createRoute falls back to -1 sentinels when ids are null`() {
+        assertEquals(
+            "compose?contactId=-1&reminderId=-1",
+            Screen.Compose.createRoute(),
+        )
+    }
+
+    @Test
+    fun `compose createRoute keeps a contact but no reminder`() {
+        assertEquals(
+            "compose?contactId=5&reminderId=-1",
+            Screen.Compose.createRoute(contactId = 5L),
+        )
+    }
+
+    @Test
+    fun `compose deep link uri includes the reminderId when present`() {
+        assertEquals(
+            "ticklr://compose?contactId=5&reminderId=42",
+            Screen.Compose.deepLinkUri(contactId = 5L, reminderId = 42L),
+        )
+    }
+
+    @Test
+    fun `compose deep link uri omits reminderId when null but keeps contact sentinel`() {
+        assertEquals(
+            "ticklr://compose?contactId=-1",
+            Screen.Compose.deepLinkUri(contactId = null, reminderId = null),
+        )
+    }
+
+    @Test
+    fun `compose deep link pattern matches the DEEP_LINK_PATTERN arg names`() {
+        assertTrue(Screen.Compose.DEEP_LINK_PATTERN.contains("{${Screen.Compose.ARG_CONTACT_ID}}"))
+        assertTrue(Screen.Compose.DEEP_LINK_PATTERN.contains("{${Screen.Compose.ARG_REMINDER_ID}}"))
+    }
+
     // --- Start-destination selection (TIC-64) ---
     // The graph's start destination is chosen once from the persisted onboarding
     // flag. A completed onboarding must land on Tickle; an incomplete one on

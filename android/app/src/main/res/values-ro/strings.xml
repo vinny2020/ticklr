@@ -326,4 +326,6 @@
     <string name="tickle_row_tickle_fallback">Tickle</string>
     <string name="template_default_title">Un salut</string>
     <string name="template_default_body">Salut! Voiam doar să te salut. Sper că ești bine. Vorbim curând!</string>
+    <string name="tickle_prompt_message">Gata — marchezi tickle-ul pentru %1$s ca finalizat?</string>
+    <string name="tickle_prompt_mark_done">Marchează finalizat</string>
 </resources>

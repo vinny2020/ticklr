@@ -323,4 +323,6 @@
     <string name="tickle_row_tickle_fallback">Tickle</string>
     <string name="template_default_title">हालचाल पूछना</string>
     <string name="template_default_body">नमस्ते! बस हालचाल पूछने के लिए संदेश भेज रहा हूँ। आशा है आप अच्छे होंगे। जल्द ही बात करते हैं!</string>
+    <string name="tickle_prompt_message">हो गया — %1$s के लिए Tickle पूरा मार्क करें?</string>
+    <string name="tickle_prompt_mark_done">पूरा मार्क करें</string>
 </resources>

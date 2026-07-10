@@ -5,8 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.xaymaca.sit.data.dao.ContactGroupDao
 import com.xaymaca.sit.data.model.Contact
 import com.xaymaca.sit.data.model.MessageTemplate
+import com.xaymaca.sit.data.model.TickleStatus
 import com.xaymaca.sit.data.repository.ContactRepository
 import com.xaymaca.sit.data.repository.MessageTemplateRepository
+import com.xaymaca.sit.data.repository.TickleRepository
+import com.xaymaca.sit.service.PendingTickleCompletion
+import com.xaymaca.sit.service.PendingTickleCompletionStore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +26,26 @@ class ComposeViewModel @Inject constructor(
     private val contactRepository: ContactRepository,
     private val messageTemplateRepository: MessageTemplateRepository,
     private val contactGroupDao: ContactGroupDao,
+    private val tickleRepository: TickleRepository,
+    private val pendingTickleCompletionStore: PendingTickleCompletionStore,
 ) : ViewModel() {
+
+    // TIC-82: the due tickle this compose was opened for, and the contact it
+    // belongs to. Held here (not in composable state) so a recipient swap can
+    // be detected at send time — if the user re-targets the message to someone
+    // else, the reminder no longer applies and we don't prompt to complete it.
+    private var pendingReminderId: Long? = null
+    private var pendingReminderContactId: Long? = null
+
+    /**
+     * Attach the due reminder (if any) this compose was launched for. Called by
+     * ComposeScreen from the reminder id threaded through its entry point
+     * (tickle action sheet, notification deep link, or contact-detail chip).
+     */
+    fun attachReminder(reminderId: Long?, contactId: Long?) {
+        pendingReminderId = reminderId?.takeIf { it != -1L }
+        pendingReminderContactId = contactId?.takeIf { it != -1L }
+    }
 
     private val allContacts: StateFlow<List<Contact>> = contactRepository
         .getAllContacts()
@@ -100,12 +123,35 @@ class ComposeViewModel @Inject constructor(
         _selectedContact.value = null
     }
 
-    /** Stamp the contact as reached-out-to at the moment of SMS handoff. */
+    /**
+     * Stamp the contact as reached-out-to at the moment of SMS handoff, and —
+     * when this compose carried a still-due reminder for THIS contact (TIC-82)
+     * — stash a "mark done?" prompt to surface on return. The prompt is skipped
+     * when the reminder was completed or deleted in the meantime (validated
+     * against the DB, mirroring TIC-66's shouldPostFiredAlarm philosophy), and
+     * when the user re-targeted the message to a different contact.
+     */
     fun recordHandoff(contact: Contact) {
         viewModelScope.launch {
             contactRepository.updateContact(
                 contact.copy(lastContactedAt = System.currentTimeMillis())
             )
+            val reminderId = pendingReminderId
+            if (reminderId != null && contact.id == pendingReminderContactId) {
+                val reminder = tickleRepository.getReminderById(reminderId)
+                if (reminder != null && reminder.status != TickleStatus.COMPLETED.name) {
+                    pendingTickleCompletionStore.set(
+                        PendingTickleCompletion(
+                            reminderId = reminderId,
+                            contactName = contact.fullName.ifBlank { "" },
+                        )
+                    )
+                }
+            }
+            // One-shot: once handed off, don't re-prompt for a later send in the
+            // same compose session unless a new reminder is attached.
+            pendingReminderId = null
+            pendingReminderContactId = null
         }
     }
 

@@ -87,7 +87,7 @@ import kotlinx.coroutines.launch
 fun TickleListScreen(
     onAddTickle: () -> Unit,
     onEditTickle: (Long) -> Unit,
-    onCompose: (Long) -> Unit,
+    onCompose: (contactId: Long, reminderId: Long?) -> Unit,
     // When true (tablet two-pane), the host renders the connect actions in the
     // detail pane instead of this modal bottom sheet. Tap still resolves the same
     // `actionTarget` on the shared ViewModel; only the presentation differs.
@@ -225,7 +225,7 @@ fun TickleListScreen(
                 onCompose = {
                     val contactId = target.reminder.contactId
                     viewModel.dismissActionSheet()
-                    if (contactId != null) onCompose(contactId)
+                    if (contactId != null) onCompose(contactId, target.reminder.id)
                 },
                 onCall = {
                     target.phones.firstOrNull()?.let { number ->
