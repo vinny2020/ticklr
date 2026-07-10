@@ -22,10 +22,22 @@ struct ContactDetailView: View {
     @State private var pickerSelection: PhotosPickerItem? = nil
     @State private var photoVersion = UUID()
     @State private var photoSaveError: String? = nil
+    /// Non-nil while the "Tickle marked done — Undo" toast is showing after a
+    /// send from the "Send a text" chip auto-completed a due tickle (TIC-82).
+    @State private var completionSnapshot: TickleScheduler.CompletionSnapshot?
 
     private let warmth: Warmth = .subtle
     private var palette: WarmPalette { WarmTheme.palette(for: warmth) }
     private var category: WarmCategory { WarmCategory.resolve(for: contact) }
+
+    /// The contact's currently-due tickle (active or snoozed, `nextDueDate <= now`),
+    /// earliest first — the one a "Send a text" should auto-complete (TIC-82).
+    /// `nil` when nothing is due, so a send completes nothing.
+    private var dueReminder: TickleReminder? {
+        contact.tickles
+            .filter { TickleScheduler.isDueForSendCompletion($0) }
+            .min { $0.nextDueDate < $1.nextDueDate }
+    }
 
     var body: some View {
         ScrollView {
@@ -67,7 +79,14 @@ struct ContactDetailView: View {
             case .addToGroup:  AddToGroupSheet(contact: contact)
             case .compose:
                 ComposeView(onClose: { activeSheet = nil },
-                            initialContact: contact)
+                            initialContact: contact,
+                            dueReminder: dueReminder,
+                            onTickleCompleted: { completionSnapshot = $0 })
+            }
+        }
+        .tickleCompletionToast(snapshot: $completionSnapshot, warmth: warmth) {
+            if let snapshot = completionSnapshot {
+                TickleScheduler.undoCompletion(snapshot, context: modelContext)
             }
         }
         .confirmationDialog(

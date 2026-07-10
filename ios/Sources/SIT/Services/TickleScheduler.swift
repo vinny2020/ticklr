@@ -39,42 +39,50 @@ struct TickleScheduler {
         let notificationsEnabled = (UserDefaults.standard.object(forKey: "tickleNotificationsEnabled") as? Bool) ?? true
         guard notificationsEnabled else { return }
 
+        // Snapshot everything the async Task needs as plain value types BEFORE the
+        // Task closure captures anything. Reading @Model properties *inside* the
+        // Task — i.e. after the `await` suspension, or after the model's context is
+        // torn down / the model deleted — faults with a SwiftData assertion
+        // ("model instance was destroyed"). The escaping closure must never
+        // capture the TickleReminder (or its Contact/Group) itself.
+        let identifier = "tickle-\(reminder.id.uuidString)"
+        let name: String
+        if let contact = reminder.contact {
+            name = contact.fullName.isEmpty ? "someone" : contact.fullName
+        } else if let group = reminder.group {
+            name = group.name
+        } else {
+            name = "someone"
+        }
+        let bodyText = reminder.note.isEmpty ? reminder.frequency.localizedName : reminder.note
+        let dueDate = reminder.nextDueDate
+
         Task { @MainActor in
             guard await requestAuthorizationIfNeeded() else {
-                print("Ticklr: skipped scheduling tickle-\(reminder.id.uuidString) — notifications not authorized")
+                print("Ticklr: skipped scheduling \(identifier) — notifications not authorized")
                 return
             }
 
             let content = UNMutableNotificationContent()
-
-            let name: String
-            if let contact = reminder.contact {
-                name = contact.fullName.isEmpty ? "someone" : contact.fullName
-            } else if let group = reminder.group {
-                name = group.name
-            } else {
-                name = "someone"
-            }
-
             content.title = String(localized: "notification.title \(name)")
-            content.body = reminder.note.isEmpty ? reminder.frequency.localizedName : reminder.note
+            content.body = bodyText
             content.sound = .default
 
             let trigger: UNNotificationTrigger
             let cal = Calendar.current
-            let todayAt9 = cal.date(bySettingHour: 9, minute: 0, second: 0, of: reminder.nextDueDate) ?? reminder.nextDueDate
+            let todayAt9 = cal.date(bySettingHour: 9, minute: 0, second: 0, of: dueDate) ?? dueDate
             if todayAt9 <= Date() {
                 // Due date is today past 9am, or overdue — fire in 5 seconds
                 trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
             } else {
-                var components = cal.dateComponents([.year, .month, .day], from: reminder.nextDueDate)
+                var components = cal.dateComponents([.year, .month, .day], from: dueDate)
                 components.hour = 9
                 components.minute = 0
                 trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
             }
 
             let request = UNNotificationRequest(
-                identifier: "tickle-\(reminder.id.uuidString)",
+                identifier: identifier,
                 content: content,
                 trigger: trigger
             )
@@ -82,7 +90,7 @@ struct TickleScheduler {
             do {
                 try await UNUserNotificationCenter.current().add(request)
             } catch {
-                print("Ticklr: failed to schedule tickle-\(reminder.id.uuidString): \(error)")
+                print("Ticklr: failed to schedule \(identifier): \(error)")
             }
         }
     }
@@ -135,6 +143,96 @@ struct TickleScheduler {
             }
             reminder.status = .active
             scheduleNotification(for: reminder)
+        }
+        try? context.save()
+    }
+
+    // MARK: - Send-driven completion (TIC-82)
+
+    /// The exact reminder state captured immediately before a send auto-completes
+    /// a due tickle, so an Undo can restore it byte-for-byte. Value type keyed by
+    /// the reminder's stable `id` (not a live model reference) so it survives the
+    /// compose sheet dismissing and can be handed to whatever screen shows the
+    /// undo toast.
+    struct CompletionSnapshot: Sendable, Equatable {
+        let reminderID: UUID
+        let nextDueDate: Date
+        let status: TickleStatus
+        let lastCompletedDate: Date?
+    }
+
+    /// Whether `reminder` is still eligible for send-driven auto-completion:
+    /// active or snoozed, and due now (`nextDueDate <= now`). A future-dated
+    /// (upcoming or freshly-snoozed) or already-completed tickle returns false.
+    static func isDueForSendCompletion(_ reminder: TickleReminder, now: Date = Date()) -> Bool {
+        (reminder.status == .active || reminder.status == .snoozed) && reminder.nextDueDate <= now
+    }
+
+    /// Auto-completes the tickle associated with a just-sent text — but only after
+    /// re-validating against the live store, mirroring TIC-66's guard-before-acting
+    /// philosophy: the reminder must still exist (not deleted while the composer was
+    /// up) and still be due. Returns the pre-completion snapshot on success (so the
+    /// caller can offer Undo), or `nil` when the send should not complete anything.
+    /// Completion routes through `markComplete` so notification state stays in sync.
+    @MainActor
+    static func completeAfterSend(
+        reminder: TickleReminder,
+        context: ModelContext,
+        now: Date = Date()
+    ) -> CompletionSnapshot? {
+        let targetID = reminder.id
+        let descriptor = FetchDescriptor<TickleReminder>(
+            predicate: #Predicate { $0.id == targetID }
+        )
+        // Re-fetch: a reminder deleted (or completed) meanwhile won't come back due.
+        guard let live = try? context.fetch(descriptor).first else { return nil }
+        guard isDueForSendCompletion(live, now: now) else { return nil }
+
+        let snapshot = CompletionSnapshot(
+            reminderID: live.id,
+            nextDueDate: live.nextDueDate,
+            status: live.status,
+            lastCompletedDate: live.lastCompletedDate
+        )
+        markComplete(reminder: live, context: context)
+        return snapshot
+    }
+
+    /// Whether an undo-restored due date warrants re-arming a notification:
+    /// only when its 9am trigger (the same computation `scheduleNotification`
+    /// uses) is genuinely in the future. An auto-completed tickle is overdue by
+    /// definition, so its restored date would land in `scheduleNotification`'s
+    /// overdue branch — a 5-second `UNTimeIntervalNotificationTrigger` that would
+    /// banner "time to reach out to X" moments after the user just texted X and
+    /// tapped Undo. For overdue restores the in-app Due section carries the state
+    /// (the user is literally looking at the app when they tap Undo); mirrors
+    /// Android's `shouldArmAlarm`, which only arms future dates.
+    static func shouldRearmAfterUndo(nextDueDate: Date, now: Date = Date()) -> Bool {
+        let cal = Calendar.current
+        let triggerDate = cal.date(bySettingHour: 9, minute: 0, second: 0, of: nextDueDate) ?? nextDueDate
+        return triggerDate > now
+    }
+
+    /// Restores the exact pre-completion state captured in `snapshot` and re-syncs
+    /// the tickle's notification state for the restored due date. No-op if the
+    /// reminder has since been deleted.
+    @MainActor
+    static func undoCompletion(_ snapshot: CompletionSnapshot, context: ModelContext) {
+        let targetID = snapshot.reminderID
+        let descriptor = FetchDescriptor<TickleReminder>(
+            predicate: #Predicate { $0.id == targetID }
+        )
+        guard let live = try? context.fetch(descriptor).first else { return }
+        live.nextDueDate = snapshot.nextDueDate
+        live.status = snapshot.status
+        live.lastCompletedDate = snapshot.lastCompletedDate
+        // markComplete armed a notification for the *new* due date (recurring) or
+        // cancelled it (one-time); always disarm that. Re-arm only when the
+        // restored trigger is genuinely in the future — never the overdue
+        // 5-second banner (see `shouldRearmAfterUndo`).
+        cancelNotification(for: live)
+        if shouldRearmAfterUndo(nextDueDate: live.nextDueDate) {
+            scheduleNotification(for: live)
         }
         try? context.save()
     }
