@@ -6,11 +6,14 @@ struct TemplateEditView: View {
     @Environment(\.dismiss) private var dismiss
 
     var template: MessageTemplate?
+    /// Runs right before the editor dismisses on a successful save, carrying
+    /// the localized save-confirmation text (TIC-84). Save now applies and the
+    /// sheet dismisses immediately — `TemplateListView`, which remains on
+    /// screen afterward, shows the confirmation toast instead of this sheet.
+    var onSaved: ((String) -> Void)? = nil
 
     @State private var title = ""
     @State private var body_ = ""
-    @State private var showToast = false
-    @State private var toastMessage = ""
     @State private var isSaving = false
 
     private var isEditing: Bool { template != nil }
@@ -50,27 +53,14 @@ struct TemplateEditView: View {
                     body_ = template.body
                 }
             }
-            .overlay(alignment: .bottom) {
-                if showToast {
-                    Text(verbatim: toastMessage)
-                        .font(.subheadline)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 10)
-                        .background(Color(red: 0.145, green: 0.388, blue: 0.922))
-                        .foregroundStyle(.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .shadow(radius: 4)
-                        .padding(.bottom, 16)
-                        .transition(.move(edge: .bottom).combined(with: .opacity))
-                }
-            }
-            .animation(.easeInOut(duration: 0.3), value: showToast)
         }
     }
 
     private func save() {
-        // Flip BEFORE any work so the next tap sees canSave == false; reset via
-        // `defer` inside the dismiss Task so it survives the 2s toast delay.
+        // Flip BEFORE any work so the next tap sees canSave == false — the
+        // sheet dismisses immediately below, but stays disabled for whatever
+        // sliver of the dismiss animation it's still on screen for, so a
+        // rapid double-tap can't insert a duplicate template.
         isSaving = true
         let trimmedTitle = title.trimmingCharacters(in: .whitespaces)
         let trimmedBody = body_.trimmingCharacters(in: .whitespaces)
@@ -81,14 +71,13 @@ struct TemplateEditView: View {
             let newTemplate = MessageTemplate(title: trimmedTitle, body: trimmedBody)
             modelContext.insert(newTemplate)
         }
-        toastMessage = isEditing
+        // TIC-84: apply and dismiss immediately — no artificial delay. The
+        // confirmation toast is handed to the presenter (TemplateListView),
+        // which remains on screen after this sheet is gone.
+        let message = isEditing
             ? String(localized: "templateEdit.toast.updated")
             : String(localized: "templateEdit.toast.saved")
-        showToast = true
-        Task { @MainActor in
-            defer { isSaving = false }
-            try? await Task.sleep(for: .seconds(2))
-            dismiss()
-        }
+        onSaved?(message)
+        dismiss()
     }
 }

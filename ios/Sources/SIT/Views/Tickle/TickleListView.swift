@@ -25,6 +25,10 @@ struct TickleListView: View {
     /// Non-nil while the "Tickle marked done — Undo" toast is showing after a
     /// send auto-completed a due tickle (TIC-82).
     @State private var completionSnapshot: TickleScheduler.CompletionSnapshot?
+    /// Non-nil while a plain save-confirmation toast is showing after a
+    /// TickleEditView sheet (add, edit, or the Milestones hero) or the iPad
+    /// detail-pane editor dismissed (TIC-84).
+    @State private var saveToastMessage: String?
 
     /// A contact to compose to, paired with the due tickle (if any) that a send
     /// should auto-complete. Identifiable so it can drive a `.sheet(item:)`.
@@ -79,6 +83,7 @@ struct TickleListView: View {
                 TickleScheduler.undoCompletion(snapshot, context: modelContext)
             }
         }
+        .saveConfirmationToast(message: $saveToastMessage, warmth: warmth)
     }
 
     // MARK: - Compact (iPhone)
@@ -95,10 +100,10 @@ struct TickleListView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { addToolbarItem }
             .sheet(isPresented: $showingAdd) {
-                TickleEditView(prefilledCategory: prefilledCategory)
+                TickleEditView(prefilledCategory: prefilledCategory, onSaved: { saveToastMessage = $0 })
             }
             .sheet(item: $editingReminder) { reminder in
-                TickleEditView(existing: reminder)
+                TickleEditView(existing: reminder, onSaved: { saveToastMessage = $0 })
             }
             .sheet(item: $actionSheetReminder, onDismiss: runPendingAction) { reminder in
                 TickleActionSheet(
@@ -166,10 +171,18 @@ struct TickleListView: View {
     @ViewBuilder
     private var detailPane: some View {
         if paneAddingNew {
-            TickleEditView(prefilledCategory: prefilledCategory, onClose: { paneAddingNew = false })
+            TickleEditView(
+                prefilledCategory: prefilledCategory,
+                onClose: { paneAddingNew = false },
+                onSaved: { saveToastMessage = $0 }
+            )
                 .id("new-tickle")
         } else if let target = paneEditTarget {
-            TickleEditView(existing: target, onClose: { paneEditTarget = nil })
+            TickleEditView(
+                existing: target,
+                onClose: { paneEditTarget = nil },
+                onSaved: { saveToastMessage = $0 }
+            )
                 .id(target.persistentModelID)
         } else if let reminder = selectedReminder {
             TickleActionSheet(

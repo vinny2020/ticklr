@@ -115,6 +115,50 @@ final class TickleEditViewTests: XCTestCase {
         XCTAssertEqual(reminder.note, "", "Whitespace-only must be trimmed, not defaulted")
     }
 
+    func testSavingExistingTickleInvokesOnSavedWithUpdatedMessageAndNoDelay() throws {
+        // TIC-84: save must apply and the editor must close immediately — no
+        // artificial 2s wait. There's no Task to await here on purpose: if
+        // `onSaved` only fired after a sleep, this assertion (which runs the
+        // very next line after `.tap()`) would see `savedMessage == nil` and
+        // fail. Its passing IS the regression guard for the removed delay.
+        let contact = makeContact()
+        let reminder = TickleReminder(
+            contact: contact,
+            note: "before",
+            frequency: .monthly,
+            startDate: Date().addingTimeInterval(7 * 24 * 60 * 60)
+        )
+        var savedMessage: String?
+        var closeCount = 0
+
+        let view = TickleEditView(existing: reminder, onClose: { closeCount += 1 }) { message in
+            savedMessage = message
+        }
+        let sut = try view.inspect()
+        try sut.find(button: String(localized: "common.save")).tap()
+
+        XCTAssertEqual(savedMessage, String(localized: "tickleEdit.toast.updated"))
+        XCTAssertEqual(closeCount, 1, "Save must close the editor immediately, with no delay")
+    }
+
+    func testSavingNewTickleInvokesOnSavedWithSavedMessageAndNoDelay() throws {
+        // Same contract for the create path (existing == nil): the toast text
+        // differs ("saved" vs "updated"), and `onSaved` must still fire
+        // synchronously with the save, not after a sleep.
+        let contact = makeContact()
+        var savedMessage: String?
+        var closeCount = 0
+
+        let view = TickleEditView(contact: contact, onClose: { closeCount += 1 }) { message in
+            savedMessage = message
+        }
+        let sut = try view.inspect()
+        try sut.find(button: String(localized: "common.save")).tap()
+
+        XCTAssertEqual(savedMessage, String(localized: "tickleEdit.toast.saved"))
+        XCTAssertEqual(closeCount, 1, "Save must close the editor immediately, with no delay")
+    }
+
     // NOTE on rapid-tap regression: a true end-to-end test on iOS would need
     // the ViewInspector inspection-callback pattern (adding a
     // `didAppear: ((Self) -> Void)?` to TickleEditView), because

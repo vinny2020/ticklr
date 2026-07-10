@@ -41,6 +41,7 @@
 		6D27B6C9F09AC21A760AF14D /* ContactsAccessBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C203898862FA7D9FC0D26AB9 /* ContactsAccessBanner.swift */; };
 		707528D3264086FB42BDD51E /* ComposeViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205CDD9B8C3402B672E5E739 /* ComposeViewTests.swift */; };
 		7116F3F3FE61E7C0FDF86F7E /* MessageComposerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADEFE7A1ADA2B9E3DDBBD81 /* MessageComposerService.swift */; };
+		7426C06388B7B7F1AB72B2DE /* SaveConfirmationToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EE33928D41292F74DBD608 /* SaveConfirmationToast.swift */; };
 		7785F964126C098C3EE58EAD /* TickleCompletionToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = A314B38B2AF7A4C04B0699DE /* TickleCompletionToast.swift */; };
 		7BDB0ED4DF1D16C8F54EE670 /* WarmFilterChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D79AFAFDF53D4ACDAE74AF /* WarmFilterChip.swift */; };
 		7D2E16C11970003125067AF0 /* WarmHeadingFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1BCE2A47ECF0711BF683C2 /* WarmHeadingFont.swift */; };
@@ -122,6 +123,7 @@
 		1D98A08F7576CDC556F9440C /* ContactFingerprint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactFingerprint.swift; sourceTree = "<group>"; };
 		205CDD9B8C3402B672E5E739 /* ComposeViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeViewTests.swift; sourceTree = "<group>"; };
 		209311518915490C7F72039B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		22EE33928D41292F74DBD608 /* SaveConfirmationToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveConfirmationToast.swift; sourceTree = "<group>"; };
 		2A12E96AE23E8405CF010707 /* ur */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ur; path = ur.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		30D196741B99B788C9E325C3 /* LinkedInCSVParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedInCSVParserTests.swift; sourceTree = "<group>"; };
 		3590E3652E129205BDF65A19 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -359,6 +361,7 @@
 				01F5DAC52A66CB6C37894078 /* ContactPhotoView.swift */,
 				C203898862FA7D9FC0D26AB9 /* ContactsAccessBanner.swift */,
 				37449EAD55331D513415867C /* MonogramAvatar.swift */,
+				22EE33928D41292F74DBD608 /* SaveConfirmationToast.swift */,
 				A314B38B2AF7A4C04B0699DE /* TickleCompletionToast.swift */,
 				420A93FB5239884112A3FF47 /* TicklePrompt.swift */,
 				A6A494ADD27B9C55B5B86A4D /* WarmCard.swift */,
@@ -631,6 +634,7 @@
 				E01711F3B9475DEFFD7DDDD4 /* OnboardingView.swift in Sources */,
 				2085C634C34E1699E983C564 /* PhotoStore.swift in Sources */,
 				F48BE3B2B06B47E783EAAC70 /* SITApp.swift in Sources */,
+				7426C06388B7B7F1AB72B2DE /* SaveConfirmationToast.swift in Sources */,
 				8CF13461108C2CC7E64EB847 /* SeedDataService.swift in Sources */,
 				5C6F6974D1ED58434BB9CFDF /* SettingsView.swift in Sources */,
 				840D3C6377E1F347573EAE19 /* TemplateEditView.swift in Sources */,

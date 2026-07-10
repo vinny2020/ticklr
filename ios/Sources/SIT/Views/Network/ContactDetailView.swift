@@ -25,6 +25,9 @@ struct ContactDetailView: View {
     /// Non-nil while the "Tickle marked done — Undo" toast is showing after a
     /// send from the "Send a text" chip auto-completed a due tickle (TIC-82).
     @State private var completionSnapshot: TickleScheduler.CompletionSnapshot?
+    /// Non-nil while a plain save-confirmation toast is showing after the
+    /// "Create a tickle" sheet dismissed (TIC-84).
+    @State private var saveToastMessage: String?
 
     private let warmth: Warmth = .subtle
     private var palette: WarmPalette { WarmTheme.palette(for: warmth) }
@@ -75,7 +78,7 @@ struct ContactDetailView: View {
         .sheet(item: $activeSheet) { sheet in
             switch sheet {
             case .edit:        ContactEditSheet(contact: contact)
-            case .addTickle:   TickleEditView(contact: contact)
+            case .addTickle:   TickleEditView(contact: contact, onSaved: { saveToastMessage = $0 })
             case .addToGroup:  AddToGroupSheet(contact: contact)
             case .compose:
                 ComposeView(onClose: { activeSheet = nil },
@@ -89,6 +92,7 @@ struct ContactDetailView: View {
                 TickleScheduler.undoCompletion(snapshot, context: modelContext)
             }
         }
+        .saveConfirmationToast(message: $saveToastMessage, warmth: warmth)
         .confirmationDialog(
             String(localized: "contactDetail.deleteConfirm.title \(contact.fullName)"),
             isPresented: $showingDeleteConfirm,
