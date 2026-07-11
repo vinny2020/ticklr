@@ -40,6 +40,11 @@ fun ComposeScreen(
     /** TIC-82: due tickle this compose was opened for; drives the mark-done
      *  prompt on return from the SMS handoff. Null when composing from the tab. */
     initialReminderId: Long? = null,
+    /** TIC-90: navigates to the Message Templates management screen (Settings'
+     *  destination) — reached from "Manage templates…" at the bottom of the
+     *  template dropdown, or "Create a template…" when there are none yet.
+     *  Compose stays on the back stack, so returning restores draft state. */
+    onManageTemplates: () -> Unit = {},
     viewModel: ComposeViewModel = hiltViewModel()
 ) {
     LaunchedEffect(initialContactId, initialReminderId) {
@@ -65,6 +70,9 @@ fun ComposeScreen(
     // the dropdown closes or a query is typed so it re-opens on suggestions.
     var showAllContacts by remember { mutableStateOf(false) }
     var selectedTemplateName by remember { mutableStateOf<String?>(null) }
+    // TIC-90: a template tap that would clobber typed text is held here until
+    // the user confirms the replace-your-draft dialog (or cancels, discarding it).
+    var pendingTemplate by remember { mutableStateOf<com.xaymaca.sit.data.model.MessageTemplate?>(null) }
     val messageFocusRequester = remember { FocusRequester() }
     val warmth = com.xaymaca.sit.ui.theme.Warmth.Subtle
     val warmPalette = com.xaymaca.sit.ui.theme.WarmTheme.palette(warmth)
@@ -271,13 +279,15 @@ fun ComposeScreen(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Template dropdown — hidden if no templates
+                // Template picker — a dropdown when templates exist, otherwise
+                // a "Create a template…" affordance (TIC-90) since there's
+                // nothing to pick from yet.
+                com.xaymaca.sit.ui.warm.WarmEyebrow(
+                    text = stringResource(R.string.compose_template_label),
+                    warmth = warmth,
+                )
+                Spacer(modifier = Modifier.height(4.dp))
                 if (templates.isNotEmpty()) {
-                    com.xaymaca.sit.ui.warm.WarmEyebrow(
-                        text = stringResource(R.string.compose_template_label),
-                        warmth = warmth,
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
                     Box {
                         OutlinedButton(
                             onClick = { showTemplateDropdown = true },
@@ -314,16 +324,51 @@ fun ComposeScreen(
                                         }
                                     },
                                     onClick = {
-                                        viewModel.applyTemplate(template)
-                                        selectedTemplateName = template.title
                                         showTemplateDropdown = false
+                                        // TIC-90: only overwrite the draft outright when
+                                        // it's empty or unchanged since the last template
+                                        // applied — anything else prompts first so typed
+                                        // text is never lost silently.
+                                        if (viewModel.shouldConfirmTemplateReplace()) {
+                                            pendingTemplate = template
+                                        } else {
+                                            viewModel.applyTemplate(template)
+                                            selectedTemplateName = template.title
+                                        }
                                     }
                                 )
                             }
+                            HorizontalDivider(color = warmPalette.cardBorder)
+                            DropdownMenuItem(
+                                text = {
+                                    Text(
+                                        stringResource(R.string.compose_template_manage),
+                                        color = accent,
+                                        fontWeight = FontWeight.Medium,
+                                    )
+                                },
+                                onClick = {
+                                    showTemplateDropdown = false
+                                    onManageTemplates()
+                                },
+                            )
                         }
                     }
-                    Spacer(modifier = Modifier.height(16.dp))
+                } else {
+                    OutlinedButton(
+                        onClick = onManageTemplates,
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(com.xaymaca.sit.ui.theme.WarmRadius.Surface),
+                        border = androidx.compose.foundation.BorderStroke(1.dp, warmPalette.cardBorder),
+                        colors = androidx.compose.material3.ButtonDefaults.outlinedButtonColors(
+                            containerColor = warmPalette.cardBg,
+                            contentColor = accent,
+                        ),
+                    ) {
+                        Text(stringResource(R.string.compose_template_create))
+                    }
                 }
+                Spacer(modifier = Modifier.height(16.dp))
 
                 // Message body
                 com.xaymaca.sit.ui.warm.WarmEyebrow(
@@ -388,6 +433,30 @@ fun ComposeScreen(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 24.dp)
+        )
+    }
+
+    // TIC-90: confirm before a template tap overwrites typed text. Cancel
+    // discards the pending template and leaves the draft untouched.
+    pendingTemplate?.let { template ->
+        AlertDialog(
+            onDismissRequest = { pendingTemplate = null },
+            title = { Text(stringResource(R.string.compose_template_replace_title)) },
+            text = { Text(stringResource(R.string.compose_template_replace_message)) },
+            confirmButton = {
+                TextButton(onClick = {
+                    viewModel.applyTemplate(template)
+                    selectedTemplateName = template.title
+                    pendingTemplate = null
+                }) {
+                    Text(stringResource(R.string.compose_template_replace_confirm))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { pendingTemplate = null }) {
+                    Text(stringResource(R.string.common_cancel))
+                }
+            },
         )
     }
 }

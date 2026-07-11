@@ -207,6 +207,11 @@
     <string name="compose_suggestions_due_badge">Esedékes</string>
     <string name="compose_tickle_offer_message">Létrehozol egy Tickle-t %1$s számára?</string>
     <string name="compose_tickle_offer_action">Tickle létrehozása</string>
+    <string name="compose_template_manage">Sablonok kezelése…</string>
+    <string name="compose_template_create">Sablon létrehozása…</string>
+    <string name="compose_template_replace_title">Lecseréled a piszkozatodat?</string>
+    <string name="compose_template_replace_message">Ha alkalmazod ezt a sablont, lecseréli a beírt szöveget.</string>
+    <string name="compose_template_replace_confirm">Csere</string>
 
     <!-- Onboarding -->
     <string name="onboarding_tagline">AZ EMBEREID SZÁMÍTANAK</string>

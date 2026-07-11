@@ -31,7 +31,9 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 /**
  * TIC-82/TIC-86: at SMS handoff, `recordHandoff` stashes at most one follow-up —
@@ -267,5 +269,52 @@ class ComposeViewModelTest {
 
         assertNull(store.pending.value)
         assertEquals(1L, offerStore.pending.value?.contactId)
+    }
+
+    // ---- TIC-90: template apply / replace-draft wiring ------------------------
+
+    private val checkingIn = MessageTemplate(id = 1L, title = "Checking in", body = "Hey! Just checking in.")
+    private val runningLate = MessageTemplate(id = 2L, title = "Running late", body = "Running a few minutes late!")
+
+    @Test
+    fun `an empty draft never needs a replace confirmation`() {
+        assertFalse(viewModel.shouldConfirmTemplateReplace())
+    }
+
+    @Test
+    fun `hand-typed text needs a replace confirmation before a template applies`() {
+        viewModel.setMessage("Hand-typed note that was never a template.")
+        assertTrue(viewModel.shouldConfirmTemplateReplace())
+    }
+
+    @Test
+    fun `applying a template then re-applying it needs no confirmation`() {
+        viewModel.applyTemplate(checkingIn)
+        assertEquals(checkingIn.body, viewModel.messageBody.value)
+        // Untouched since applying — a second template tap is safe to apply directly.
+        assertFalse(viewModel.shouldConfirmTemplateReplace())
+    }
+
+    @Test
+    fun `editing an applied template's body needs a confirmation before a new template applies`() {
+        viewModel.applyTemplate(checkingIn)
+        viewModel.setMessage(checkingIn.body + " Extra note.")
+        assertTrue(viewModel.shouldConfirmTemplateReplace())
+    }
+
+    @Test
+    fun `applying a second template after confirming updates the tracked applied body`() {
+        viewModel.applyTemplate(checkingIn)
+        viewModel.applyTemplate(runningLate)
+        assertEquals(runningLate.body, viewModel.messageBody.value)
+        assertFalse(viewModel.shouldConfirmTemplateReplace())
+    }
+
+    @Test
+    fun `clearCompose resets the applied-template tracking`() {
+        viewModel.applyTemplate(checkingIn)
+        viewModel.clearCompose()
+        assertEquals("", viewModel.messageBody.value)
+        assertFalse(viewModel.shouldConfirmTemplateReplace())
     }
 }

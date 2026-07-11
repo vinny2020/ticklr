@@ -492,6 +492,11 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
                 ComposeScreen(
                     initialContactId = contactId,
                     initialReminderId = reminderId,
+                    // TIC-90: "Manage templates…" (dropdown) / "Create a
+                    // template…" (empty state) both land here. Compose stays
+                    // on the back stack (no popUpTo), so returning restores
+                    // the draft exactly as it was.
+                    onManageTemplates = { navController.navigate(Screen.TemplateList.route) },
                     onDone = {
                         // Flow back to wherever Compose was opened from
                         // (Contact Detail, Tickle list, or the previous tab).
