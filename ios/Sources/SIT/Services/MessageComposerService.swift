@@ -37,6 +37,17 @@ struct MessageComposerView: UIViewControllerRepresentable {
         return MFMessageComposeViewController.canSendText()
     }
 
+    /// Shared gate for any "compose a text" affordance (TIC-93): true only
+    /// when the target has at least one phone number to text AND the device
+    /// can actually send text (false on iPad/Simulator/devices without
+    /// Messages configured). Previously `TickleActionSheet`'s "Compose
+    /// message" row checked both conditions while `ContactDetailView`'s
+    /// "Send a text" chip only checked for a phone number — the chip could
+    /// show enabled on a device that can't actually send. Both now call this.
+    static func canCompose(phoneNumbers: [String]) -> Bool {
+        !phoneNumbers.isEmpty && canSendMessages()
+    }
+
     // MARK: - Coordinator
     class Coordinator: NSObject, @preconcurrency MFMessageComposeViewControllerDelegate {
         let dismiss: DismissAction

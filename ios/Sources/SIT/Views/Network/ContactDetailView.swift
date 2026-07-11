@@ -180,11 +180,14 @@ struct ContactDetailView: View {
     // MARK: - Action chips
 
     private var actionChipRow: some View {
-        let canText = !contact.phoneNumbers.isEmpty
+        // TIC-93: same gate TickleActionSheet's "Compose message" row uses —
+        // requires both a phone number AND a device that can actually send
+        // text (false on iPad/Simulator/devices without Messages configured).
+        let canText = MessageComposerView.canCompose(phoneNumbers: contact.phoneNumbers)
         let canCall = !contact.phoneNumbers.isEmpty
         return HStack(spacing: 8) {
             actionChip(
-                title: String(localized: "warm.contact.sendTickle", defaultValue: "Send a text"),
+                title: String(localized: "warm.contact.sendText", defaultValue: "Send a text"),
                 systemImage: "message.fill",
                 style: .filled,
                 isEnabled: canText
@@ -394,9 +397,13 @@ struct ContactDetailView: View {
     // MARK: - Featured host card
 
     private func hostCard(category: WarmCategory) -> some View {
-        WarmCard(category: category, variant: .hero, warmth: warmth, showPrompt: true)
-            .padding(.horizontal, WarmSpacing.lg)
-            .padding(.top, 6)
+        // TIC-93: tapping the host card opens the same "Create a tickle"
+        // sheet as the chip above — it was purely decorative before.
+        WarmCard(category: category, variant: .hero, warmth: warmth, showPrompt: true) {
+            activeSheet = .addTickle
+        }
+        .padding(.horizontal, WarmSpacing.lg)
+        .padding(.top, 6)
     }
 
     private var deleteButton: some View {

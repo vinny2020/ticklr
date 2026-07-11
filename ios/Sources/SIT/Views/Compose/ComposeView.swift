@@ -3,8 +3,12 @@ import SwiftData
 import MessageUI
 
 struct ComposeView: View {
-    /// Called when the user is finished here — either they cancelled, or the
-    /// message was sent. The presenter routes back to the previous screen.
+    /// Called when the user is finished here — either they confirmed a
+    /// discard/cleared an empty draft via Cancel, or the message was sent.
+    /// The Compose TAB (ContentView) passes `nil` (TIC-93: staying on
+    /// Compose, form reset, is the whole point — there's nowhere to route
+    /// back to); sheet presenters (ContactDetailView, notification-tap
+    /// compose) still pass a closure that dismisses the sheet.
     var onClose: (() -> Void)? = nil
     var initialContact: Contact? = nil
     /// The currently-due tickle to auto-complete when this message is sent
@@ -45,6 +49,9 @@ struct ComposeView: View {
     /// draft (TIC-90 draft protection).
     @State private var pendingTemplate: MessageTemplate?
     @State private var showingReplaceDraftConfirm = false
+    /// Drives the "Discard draft?" confirmation queued by Cancel when the
+    /// message body isn't empty (TIC-93 draft protection).
+    @State private var showingDiscardDraftConfirm = false
     /// Outcome reported by the Messages composer; consumed in its onDismiss.
     @State private var composeResult: MessageComposeResult?
     @FocusState private var searchFocused: Bool
@@ -263,13 +270,19 @@ struct ComposeView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    // Always shown so the user can leave the Compose tab and
-                    // return to Tickle (the new home) without having to tap
-                    // another tab. clearCompose() is a no-op when the form
-                    // is already empty.
+                    // TIC-93: Cancel no longer switches tabs on its own — that's
+                    // entirely up to what the caller wires into `onClose` (the
+                    // Compose tab passes nil so it stays put; sheet presenters
+                    // still dismiss). A non-empty draft is protected behind a
+                    // confirmation instead of being silently discarded.
                     Button(String(localized: "common.cancel")) {
-                        clearCompose()
-                        onClose?()
+                        switch Self.cancelDecision(messageBody: messageBody) {
+                        case .clearSilently:
+                            clearCompose()
+                            onClose?()
+                        case .confirmDiscard:
+                            showingDiscardDraftConfirm = true
+                        }
                     }
                     .foregroundStyle(palette.ink2)
                 }
@@ -325,6 +338,21 @@ struct ComposeView: View {
                 }
             } message: { _ in
                 Text(String(localized: "compose.template.replaceDraft.message"))
+            }
+            // TIC-93 draft protection: Cancel with a non-empty message body
+            // queues this instead of silently clearing the form.
+            .confirmationDialog(
+                String(localized: "compose.discardDraft.title"),
+                isPresented: $showingDiscardDraftConfirm,
+                titleVisibility: .visible
+            ) {
+                Button(String(localized: "compose.discardDraft.confirm"), role: .destructive) {
+                    clearCompose()
+                    onClose?()
+                }
+                Button(String(localized: "compose.discardDraft.keepEditing"), role: .cancel) {}
+            } message: {
+                Text(String(localized: "compose.discardDraft.message"))
             }
             .alert(String(localized: "compose.alert.cannotSend.title"), isPresented: $showingCannotSendAlert) {
                 Button(String(localized: "common.ok"), role: .cancel) {}
@@ -460,9 +488,10 @@ struct ComposeView: View {
 
     // MARK: — Helpers
 
-    /// Routes by composer outcome: sent → stamp the contact, reset, and flow
-    /// back to the previous screen; cancelled/failed → keep the draft so the
-    /// user can tweak and retry.
+    /// Routes by composer outcome: sent → stamp the contact, reset, and call
+    /// `onClose` (TIC-93: on the Compose tab that's `nil`, so the reset form
+    /// just stays put; sheet presenters still flow back via their closure);
+    /// cancelled/failed → keep the draft so the user can tweak and retry.
     private func handleComposerDismiss() {
         let result = composeResult
         composeResult = nil
@@ -557,6 +586,21 @@ struct ComposeView: View {
     enum TemplateReplaceDecision: Equatable {
         case applyDirectly
         case confirmReplace
+    }
+
+    // MARK: - Cancel + draft protection (TIC-93)
+
+    enum CancelDecision: Equatable {
+        case clearSilently
+        case confirmDiscard
+    }
+
+    /// Pure decision for whether tapping Cancel needs to confirm before
+    /// discarding the draft (TIC-93). A trimmed-empty body has nothing to
+    /// protect and clears/stays silently; any hand-typed text queues the
+    /// "Discard draft?" confirmation instead of being silently dropped.
+    static func cancelDecision(messageBody: String) -> CancelDecision {
+        messageBody.trimmingCharacters(in: .whitespaces).isEmpty ? .clearSilently : .confirmDiscard
     }
 
     /// Pure decision for whether picking a new template needs to confirm

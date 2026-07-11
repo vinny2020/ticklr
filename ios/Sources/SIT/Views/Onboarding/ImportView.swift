@@ -1,6 +1,7 @@
 import SwiftUI
 import SwiftData
 import UniformTypeIdentifiers
+import Contacts
 
 struct ImportView: View {
     /// Where this import is happening from (TIC-85). `.onboarding` is only
@@ -30,6 +31,9 @@ struct ImportView: View {
     @State private var showingDocumentPicker = false
     @State private var importError: String?
     @State private var showingError = false
+    /// Drives the system multi-select contact picker (TIC-93) — the
+    /// alongside-the-bulk-import "Choose contacts…" affordance.
+    @State private var showingContactPicker = false
 
     var body: some View {
         NavigationStack {
@@ -45,6 +49,15 @@ struct ImportView: View {
                                 ProgressView()
                             }
                         }
+                    }
+                    .disabled(isImporting)
+
+                    // TIC-93: alongside the all-at-once sweep above, let the
+                    // user hand-pick specific contacts via the system picker.
+                    Button {
+                        showingContactPicker = true
+                    } label: {
+                        Label(String(localized: "import.button.chooseContacts"), systemImage: "checklist")
                     }
                     .disabled(isImporting)
 
@@ -97,6 +110,12 @@ struct ImportView: View {
             } message: {
                 Text(verbatim: importError ?? "")
             }
+            .sheet(isPresented: $showingContactPicker) {
+                ContactPickerRepresentable(isPresented: $showingContactPicker) { contacts in
+                    importSelected(contacts)
+                }
+                .ignoresSafeArea()
+            }
         }
     }
 
@@ -111,6 +130,20 @@ struct ImportView: View {
             importError = error.localizedDescription
             showingError = true
         }
+    }
+
+    /// Routes the picker's selection through the same dedup/insert core the
+    /// bulk import uses (TIC-93): `CNContact` → `ImportedFields` (shared
+    /// mapping) → `applyImport`. Synchronous — a hand-picked selection is a
+    /// handful of contacts, not the whole address book, so there's no need
+    /// for the bulk path's off-main-actor enumeration.
+    @MainActor
+    private func importSelected(_ contacts: [CNContact]) {
+        guard !contacts.isEmpty else { return }
+        let fields = contacts.map(ContactImportService.importedFields(from:))
+        let result = ContactImportService.applyImport(fields: fields, context: modelContext)
+        try? modelContext.save()
+        finishImport(imported: result.imported, skipped: result.skipped)
     }
 
     private func importFromLinkedIn(url: URL) {

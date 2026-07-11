@@ -76,6 +76,21 @@ final class ComposeViewTests: XCTestCase {
         XCTAssertNoThrow(try sut.find(button: String(localized: "compose.template.create")),
                          "zero templates must surface a 'Create a template…' entry")
     }
+
+    // MARK: - TIC-93: Cancel with an empty draft still exits directly
+
+    func testCancelTapWithEmptyDraftInvokesOnCloseDirectly() throws {
+        // Empty-body Cancel must clear/close silently — no confirmation
+        // dialog in the way — same contract as before TIC-93, just now
+        // routed through `cancelDecision` instead of an unconditional close.
+        var cancelCount = 0
+        let view = ComposeView(onClose: { cancelCount += 1 }).modelContainer(container)
+
+        let sut = try view.inspect()
+        try sut.find(button: String(localized: "common.cancel")).tap()
+
+        XCTAssertEqual(cancelCount, 1, "an empty draft has nothing to protect — Cancel should exit directly")
+    }
 }
 
 /// TIC-90: pure decision logic for whether picking a template needs to
@@ -123,6 +138,45 @@ final class ComposeViewTemplateReplaceDecisionTests: XCTestCase {
             ComposeView.templateReplaceDecision(currentBody: "Just calling to say hi", appliedTemplateBody: nil),
             .confirmReplace,
             "hand-typed text with no template applied is exactly the draft this feature protects"
+        )
+    }
+}
+
+/// TIC-93: pure decision logic for whether tapping Cancel needs to confirm
+/// before discarding the draft. A non-empty (trimmed) message body must never
+/// be silently dropped; an empty one has nothing to protect.
+@MainActor
+final class ComposeViewCancelDecisionTests: XCTestCase {
+
+    func testClearsSilentlyWhenBodyIsEmpty() {
+        XCTAssertEqual(
+            ComposeView.cancelDecision(messageBody: ""),
+            .clearSilently,
+            "nothing typed — Cancel should exit without asking"
+        )
+    }
+
+    func testClearsSilentlyWhenBodyIsWhitespaceOnly() {
+        XCTAssertEqual(
+            ComposeView.cancelDecision(messageBody: "   "),
+            .clearSilently,
+            "whitespace-only text is treated the same as empty (matches canSend's trim rule)"
+        )
+    }
+
+    func testConfirmsDiscardWhenBodyIsHandTyped() {
+        XCTAssertEqual(
+            ComposeView.cancelDecision(messageBody: "Hey! Thinking of you."),
+            .confirmDiscard,
+            "a real draft must be protected behind a confirmation, not silently dropped"
+        )
+    }
+
+    func testConfirmsDiscardWhenBodyHasLeadingOrTrailingWhitespaceAroundRealText() {
+        XCTAssertEqual(
+            ComposeView.cancelDecision(messageBody: "  hi there  "),
+            .confirmDiscard,
+            "trimming only strips whitespace-only bodies — real text surrounded by whitespace still counts as a draft"
         )
     }
 }

@@ -209,6 +209,11 @@ final class LocalizationTests: XCTestCase {
             "compose.suggest.section.dueToday",
             "compose.suggest.section.recents",
             "compose.suggest.browseAll",
+            // TIC-93 discard-draft confirmation
+            "compose.discardDraft.title",
+            "compose.discardDraft.confirm",
+            "compose.discardDraft.keepEditing",
+            "compose.discardDraft.message",
         ]
         assertKeysAreLocalized(keys)
     }
@@ -230,6 +235,7 @@ final class LocalizationTests: XCTestCase {
             "onboarding.button.skipImport",
             "import.navTitle",
             "import.button.iphoneContacts",
+            "import.button.chooseContacts",
             "import.button.linkedinConnections",
             "import.footer.description",
             "import.section.linkedinGuide",
@@ -307,7 +313,7 @@ final class LocalizationTests: XCTestCase {
         "warm.onboarding.title", "warm.onboarding.subtitle",
         "warm.onboarding.cta.import", "warm.onboarding.cta.add", "warm.onboarding.footer",
         // contact detail
-        "warm.contact.addPhoto", "warm.contact.tickleEvery", "warm.contact.sendTickle",
+        "warm.contact.addPhoto", "warm.contact.tickleEvery", "warm.contact.sendText",
         "warm.contact.createTickle", "warm.contact.call",
         "warm.contact.lastConnected", "warm.contact.notes.placeholder",
         "warm.contact.accessBanner",
@@ -316,6 +322,19 @@ final class LocalizationTests: XCTestCase {
     /// Every warm key resolves to a non-empty value in the default (English) bundle.
     func testWarmKeysResolveInDefaultLocale() {
         assertKeysAreLocalized(Self.warmKeys)
+    }
+
+    /// TIC-93: `warm.contact.sendTickle` was renamed to `warm.contact.sendText`
+    /// (pure key rename — every locale's translated value carried over
+    /// unchanged). The new key resolves to the same English copy the old key
+    /// used to, and the old key no longer resolves to anything at all.
+    func testSendTextKeyRenameResolvesAndOldKeyIsGone() {
+        let renamed = String(localized: String.LocalizationValue("warm.contact.sendText"))
+        XCTAssertEqual(renamed, "Send a text", "the value must carry over unchanged from the old key")
+
+        let stale = String(localized: String.LocalizationValue("warm.contact.sendTickle"))
+        XCTAssertEqual(stale, "warm.contact.sendTickle",
+                        "the old key must no longer resolve — String(localized:) falls back to the raw key when missing")
     }
 
     /// Every regular String Catalog entry compiled into the English bundle should also

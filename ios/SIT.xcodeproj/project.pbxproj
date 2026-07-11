@@ -41,6 +41,7 @@
 		6A89CDD6B79D3E4E9E4BDBCE /* TickleEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4BF582AFC377CF7A29ADC9 /* TickleEditView.swift */; };
 		6D27B6C9F09AC21A760AF14D /* ContactsAccessBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C203898862FA7D9FC0D26AB9 /* ContactsAccessBanner.swift */; };
 		707528D3264086FB42BDD51E /* ComposeViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205CDD9B8C3402B672E5E739 /* ComposeViewTests.swift */; };
+		7116682EC515CFA23279501D /* MessageComposerCanComposeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2D5A1846FA68B114805127 /* MessageComposerCanComposeTests.swift */; };
 		7116F3F3FE61E7C0FDF86F7E /* MessageComposerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADEFE7A1ADA2B9E3DDBBD81 /* MessageComposerService.swift */; };
 		7426C06388B7B7F1AB72B2DE /* SaveConfirmationToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EE33928D41292F74DBD608 /* SaveConfirmationToast.swift */; };
 		7785F964126C098C3EE58EAD /* TickleCompletionToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = A314B38B2AF7A4C04B0699DE /* TickleCompletionToast.swift */; };
@@ -68,6 +69,7 @@
 		AA02325BB0CA65EB315DF2F1 /* BebasNeue-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D3DCE02125449F9E013629EF /* BebasNeue-Regular.ttf */; };
 		AF7B9499DE3B99B9194191B5 /* GroupDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033862D2DB3D8A467AAFFA5D /* GroupDetailView.swift */; };
 		BD81ED295562938D457E136B /* TickleEditViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C371A80FA068A7BCAF4918 /* TickleEditViewTests.swift */; };
+		C0F4589A56B56626CC95961B /* ContactPickerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE0F349AD3CCC7B0BAE37F1 /* ContactPickerRepresentable.swift */; };
 		C23579AC5E693D90584F9F24 /* SuggestTickleToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEEA22C38A02D1319831F49 /* SuggestTickleToast.swift */; };
 		C5DD09913350E877AE4008CF /* TickleReminderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBC29B891A9D2602E4C6122 /* TickleReminderTests.swift */; };
 		C7BDC5C1B15460DAF7B84796 /* TicklePrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420A93FB5239884112A3FF47 /* TicklePrompt.swift */; };
@@ -132,6 +134,7 @@
 		0F033D809DFE50DA44209A95 /* LaunchScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenView.swift; sourceTree = "<group>"; };
 		10D31DBFE56E32631DD7B650 /* ContactTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTests.swift; sourceTree = "<group>"; };
 		1D98A08F7576CDC556F9440C /* ContactFingerprint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactFingerprint.swift; sourceTree = "<group>"; };
+		1F2D5A1846FA68B114805127 /* MessageComposerCanComposeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageComposerCanComposeTests.swift; sourceTree = "<group>"; };
 		205CDD9B8C3402B672E5E739 /* ComposeViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeViewTests.swift; sourceTree = "<group>"; };
 		209311518915490C7F72039B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		22EE33928D41292F74DBD608 /* SaveConfirmationToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveConfirmationToast.swift; sourceTree = "<group>"; };
@@ -159,6 +162,7 @@
 		63EBB61C7877871E721045C7 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		69286CB7AAC699E4A7076063 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		6986C02DC105E08528D7DA6C /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		6DE0F349AD3CCC7B0BAE37F1 /* ContactPickerRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactPickerRepresentable.swift; sourceTree = "<group>"; };
 		6E1BCE2A47ECF0711BF683C2 /* WarmHeadingFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmHeadingFont.swift; sourceTree = "<group>"; };
 		700285F29EFC6ABAA469B3A8 /* TickleSendCompletionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleSendCompletionTests.swift; sourceTree = "<group>"; };
 		70C371A80FA068A7BCAF4918 /* TickleEditViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleEditViewTests.swift; sourceTree = "<group>"; };
@@ -331,6 +335,7 @@
 		38AE8D59BE6A7951737BF4A1 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				6DE0F349AD3CCC7B0BAE37F1 /* ContactPickerRepresentable.swift */,
 				8FBD25432AF93E7B78C501EE /* ImportView.swift */,
 				977BE8990F41F718C2693EFD /* OnboardingView.swift */,
 			);
@@ -358,6 +363,7 @@
 				901EF7F333375E781CF94056 /* ImportFeedbackTests.swift */,
 				30D196741B99B788C9E325C3 /* LinkedInCSVParserTests.swift */,
 				7A27D41F38F9FB5871748B89 /* LocalizationTests.swift */,
+				1F2D5A1846FA68B114805127 /* MessageComposerCanComposeTests.swift */,
 				4C5A706128E821005311026F /* PostOnboardingLandingTests.swift */,
 				70C371A80FA068A7BCAF4918 /* TickleEditViewTests.swift */,
 				D74FD20F0EB3B04BC7402FCA /* TickleNotificationRoutingTests.swift */,
@@ -649,6 +655,7 @@
 				4BE808CBAA4EA9D55409DD82 /* ContactImportService.swift in Sources */,
 				0A15CDA437196AAA901C1371 /* ContactPhotoFetcher.swift in Sources */,
 				0416C761CFE00886D364C29D /* ContactPhotoView.swift in Sources */,
+				C0F4589A56B56626CC95961B /* ContactPickerRepresentable.swift in Sources */,
 				12FCF35AA80528F2EF325924 /* ContactRowView.swift in Sources */,
 				6D27B6C9F09AC21A760AF14D /* ContactsAccessBanner.swift in Sources */,
 				87572A827C3A4DED6D5E968C /* ContentView.swift in Sources */,
@@ -707,6 +714,7 @@
 				F270284BAF01A90FDA75B306 /* ImportFeedbackTests.swift in Sources */,
 				9CA0D612EF182E101FDE37A4 /* LinkedInCSVParserTests.swift in Sources */,
 				919527C153F058BE1EDA72A3 /* LocalizationTests.swift in Sources */,
+				7116682EC515CFA23279501D /* MessageComposerCanComposeTests.swift in Sources */,
 				94E7271B66ACCF8744AD57F7 /* PostOnboardingLandingTests.swift in Sources */,
 				BD81ED295562938D457E136B /* TickleEditViewTests.swift in Sources */,
 				A0DF94177BA2698341980E2A /* TickleNotificationRoutingTests.swift in Sources */,

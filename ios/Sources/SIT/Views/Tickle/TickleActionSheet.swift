@@ -47,8 +47,9 @@ struct TickleActionSheet: View {
     private var phones: [String] { reminder.contact?.phoneNumbers ?? [] }
     private var emails: [String] { reminder.contact?.emails ?? [] }
     /// Compose requires both a number to text and a device that can send text
-    /// (false on iPad/Simulator/devices without Messages configured).
-    private var canCompose: Bool { !phones.isEmpty && MessageComposerView.canSendMessages() }
+    /// (false on iPad/Simulator/devices without Messages configured) — TIC-93
+    /// unified gate shared with `ContactDetailView`'s "Send a text" chip.
+    private var canCompose: Bool { MessageComposerView.canCompose(phoneNumbers: phones) }
 
     private var displayName: String {
         if let contact = reminder.contact { return contact.fullName }
@@ -62,7 +63,7 @@ struct TickleActionSheet: View {
         let phones = reminder.contact?.phoneNumbers ?? []
         let emails = reminder.contact?.emails ?? []
         var rows = 3 // mark done, snooze, edit
-        if !phones.isEmpty && MessageComposerView.canSendMessages() { rows += 1 } // compose
+        if MessageComposerView.canCompose(phoneNumbers: phones) { rows += 1 } // compose
         if !phones.isEmpty { rows += 1 } // call
         if !emails.isEmpty { rows += 1 } // email
         let header: CGFloat = 92
