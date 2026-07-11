@@ -231,6 +231,7 @@
     <string name="import_snackbar_success">יובאו %1$d אנשי קשר</string>
     <string name="import_snackbar_linkedin">יובאו %1$d אנשי קשר מ-LinkedIn</string>
     <string name="import_snackbar_permission_denied">הרשאת אנשי קשר נדחתה</string>
+    <string name="import_snackbar_permission_settings">הגישה לאנשי קשר כבויה — הפעל אותה בהגדרות</string>
     <string name="import_snackbar_failed">הייבוא נכשל: %1$s</string>
     <string name="import_snackbar_could_not_open">לא ניתן לפתוח את הקובץ</string>
     <plurals name="import_result_contacts">

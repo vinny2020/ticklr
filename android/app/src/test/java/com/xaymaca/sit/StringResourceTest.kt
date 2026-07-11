@@ -154,6 +154,7 @@ class StringResourceTest {
             R.string.import_snackbar_success,
             R.string.import_snackbar_failed,
             R.string.import_snackbar_permission_denied,
+            R.string.import_snackbar_permission_settings,
             R.string.import_snackbar_linkedin,
             R.string.import_snackbar_could_not_open,
             R.string.import_skip_button,

@@ -226,6 +226,7 @@
     <string name="import_snackbar_success">%1$d संपर्क आयात किए</string>
     <string name="import_snackbar_linkedin">%1$d LinkedIn संपर्क आयात किए</string>
     <string name="import_snackbar_permission_denied">संपर्क अनुमति अस्वीकृत</string>
+    <string name="import_snackbar_permission_settings">संपर्क एक्सेस बंद है — इसे सेटिंग्स में चालू करें</string>
     <string name="import_snackbar_failed">आयात विफल: %1$s</string>
     <string name="import_snackbar_could_not_open">फ़ाइल नहीं खोली जा सकी</string>
     <plurals name="import_result_contacts">
