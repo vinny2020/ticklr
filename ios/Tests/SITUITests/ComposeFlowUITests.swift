@@ -94,8 +94,10 @@ final class ComposeFlowUITests: XCTestCase {
                       "Cancelling compose should return to the contact detail screen")
     }
 
-    /// Compose tab → Cancel returns to the Tickle home tab.
-    func testComposeTabCancelReturnsToTickleHome() {
+    /// Compose tab → Cancel with an empty draft resets the form and stays on
+    /// Compose (TIC-93) — it no longer bounces to the Tickle home. There's
+    /// nowhere to "return" to since Compose already is the current tab.
+    func testComposeTabCancelStaysOnComposeTab() {
         let app = launchApp()
 
         let dueRow = firstDueRow(in: app)
@@ -110,7 +112,19 @@ final class ComposeFlowUITests: XCTestCase {
                       "Compose tab should show its Cancel button")
         cancel.tap()
 
-        XCTAssertTrue(dueRow.waitForExistence(timeout: 5),
-                      "Cancel on the Compose tab should land on the Tickle home")
+        // Still on Compose — Cancel is still there (the form reset, the
+        // screen didn't dismiss) — and the Tickle home's due row, which
+        // would only be visible after switching tabs, is not.
+        XCTAssertTrue(cancel.waitForExistence(timeout: 5),
+                      "Cancel with an empty draft should reset the form and stay on Compose")
+        XCTAssertFalse(dueRow.exists, "should not have switched back to the Tickle tab")
     }
+
+    // Note: the draft-protection confirmation itself ("Discard draft?" /
+    // Discard / Keep Editing) is covered by `ComposeViewCancelDecisionTests`
+    // (pure `ComposeView.cancelDecision` logic) rather than here — driving a
+    // SwiftUI TextEditor through the keyboard and then a system
+    // confirmationDialog in the same XCUITest flow proved flaky (keyboard
+    // dismissal swallows the first synthesized tap on the toolbar button),
+    // and the pure-logic test already pins the actual branching decision.
 }

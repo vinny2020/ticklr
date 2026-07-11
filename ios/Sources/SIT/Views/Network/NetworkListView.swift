@@ -206,7 +206,7 @@ struct NetworkListView: View {
             .swipeActions(edge: .leading, allowsFullSwipe: true) {
                 if hasPhone {
                     Button { startCompose(contact) } label: {
-                        Label(String(localized: "warm.contact.sendTickle", defaultValue: "Send a text"),
+                        Label(String(localized: "warm.contact.sendText", defaultValue: "Send a text"),
                               systemImage: "message.fill")
                     }
                     .tint(accent)
@@ -229,7 +229,7 @@ struct NetworkListView: View {
             .contextMenu {
                 if hasPhone {
                     Button { startCompose(contact) } label: {
-                        Label(String(localized: "warm.contact.sendTickle", defaultValue: "Send a text"),
+                        Label(String(localized: "warm.contact.sendText", defaultValue: "Send a text"),
                               systemImage: "message.fill")
                     }
                 }

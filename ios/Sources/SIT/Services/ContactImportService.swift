@@ -4,6 +4,25 @@ import Foundation
 
 struct ContactImportService {
 
+    /// The CNContact keys the bulk enumeration below fetches. The selective
+    /// `CNContactPickerViewController` flow (TIC-93) doesn't need this list —
+    /// the system picker hands back already-populated `CNContact` objects for
+    /// the user's selection without the app needing Contacts access at all —
+    /// but it's exposed here as the single source of truth for what this app
+    /// reads off a contact, so a future re-fetch path could reuse it too.
+    // `CNKeyDescriptor` isn't `Sendable` (it's an NSObject-based protocol from
+    // an Objective-C framework), but this array is a read-only constant never
+    // mutated after initialization — safe to read concurrently from any
+    // isolation context, hence the explicit opt-out of the compiler's check.
+    nonisolated(unsafe) static let importKeysToFetch: [CNKeyDescriptor] = [
+        CNContactGivenNameKey as CNKeyDescriptor,
+        CNContactFamilyNameKey as CNKeyDescriptor,
+        CNContactPhoneNumbersKey as CNKeyDescriptor,
+        CNContactEmailAddressesKey as CNKeyDescriptor,
+        CNContactOrganizationNameKey as CNKeyDescriptor,
+        CNContactJobTitleKey as CNKeyDescriptor
+    ]
+
     /// Sendable snapshot of the fields pulled off a `CNContact`, plus its
     /// precomputed dedup fingerprint. `CNContact` itself is not Sendable,
     /// so instances never leave the detached task that enumerates them —
@@ -20,6 +39,30 @@ struct ContactImportService {
         let fingerprint: String
     }
 
+    /// Builds a Sendable `ImportedFields` snapshot from a fetched `CNContact`
+    /// — shared by the bulk `importFromiOS` enumeration and the selective
+    /// `CNContactPickerViewController` path (TIC-93) so both compute the
+    /// dedup fingerprint identically instead of duplicating the mapping.
+    static func importedFields(from cnContact: CNContact) -> ImportedFields {
+        let phoneNumbers = cnContact.phoneNumbers.map { $0.value.stringValue }
+        let emails = cnContact.emailAddresses.map { $0.value as String }
+        let fingerprint = ContactFingerprint.compute(
+            firstName: cnContact.givenName,
+            lastName: cnContact.familyName,
+            phoneNumbers: phoneNumbers,
+            emails: emails
+        )
+        return ImportedFields(
+            firstName: cnContact.givenName,
+            lastName: cnContact.familyName,
+            phoneNumbers: phoneNumbers,
+            emails: emails,
+            company: cnContact.organizationName,
+            jobTitle: cnContact.jobTitle,
+            fingerprint: fingerprint
+        )
+    }
+
     /// Requests Contacts permission and imports all contacts into SwiftData.
     /// Call from onboarding or any recurring "import from iPhone Contacts"
     /// entry point — requires CNContactStore access. Returns the (imported,
@@ -34,39 +77,12 @@ struct ContactImportService {
         // detached enumeration).
         let fetched: [ImportedFields] = try await Task.detached(priority: .userInitiated) {
             let store = CNContactStore()
-            let keys: [CNKeyDescriptor] = [
-                CNContactGivenNameKey as CNKeyDescriptor,
-                CNContactFamilyNameKey as CNKeyDescriptor,
-                CNContactPhoneNumbersKey as CNKeyDescriptor,
-                CNContactEmailAddressesKey as CNKeyDescriptor,
-                CNContactOrganizationNameKey as CNKeyDescriptor,
-                CNContactJobTitleKey as CNKeyDescriptor
-            ]
-
             try await store.requestAccess(for: .contacts)
 
-            let request = CNContactFetchRequest(keysToFetch: keys)
+            let request = CNContactFetchRequest(keysToFetch: importKeysToFetch)
             var results: [ImportedFields] = []
             try store.enumerateContacts(with: request) { cnContact, _ in
-                let phoneNumbers = cnContact.phoneNumbers.map { $0.value.stringValue }
-                let emails = cnContact.emailAddresses.map { $0.value as String }
-                let fingerprint = ContactFingerprint.compute(
-                    firstName: cnContact.givenName,
-                    lastName: cnContact.familyName,
-                    phoneNumbers: phoneNumbers,
-                    emails: emails
-                )
-                results.append(
-                    ImportedFields(
-                        firstName: cnContact.givenName,
-                        lastName: cnContact.familyName,
-                        phoneNumbers: phoneNumbers,
-                        emails: emails,
-                        company: cnContact.organizationName,
-                        jobTitle: cnContact.jobTitle,
-                        fingerprint: fingerprint
-                    )
-                )
+                results.append(importedFields(from: cnContact))
             }
             return results
         }.value

@@ -48,8 +48,10 @@ struct ContentView: View {
                 TickleListView()
                     .tabItem { Label(String(localized: "tab.tickle"), systemImage: "bell.badge.fill") }
                     .tag(AppTab.tickle)
+                // TIC-93: no `onClose` here — Cancel and post-send both reset
+                // the form and stay on the Compose tab; there's nothing to
+                // route back to since Compose already IS the current screen.
                 ComposeView(
-                    onClose: { selectedTab = .tickle },
                     onSuggestTickle: { tickleSuggestion = $0 }
                 )
                     .tabItem { Label(String(localized: "tab.compose"), systemImage: "square.and.pencil") }
