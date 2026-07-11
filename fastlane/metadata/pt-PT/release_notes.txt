@@ -1,9 +1,7 @@
-Esta atualização torna os tickles totalmente fiáveis:
-• Aniversários e datas comemorativas mantêm-se na data certa, mesmo após adiar
-• O seu primeiro tickle agora agenda o lembrete de forma fiável
-• Os lembretes aparecem mesmo com a app aberta
-• O interruptor de lembretes nas Definições é sempre respeitado
-• Eliminar um contacto elimina também os seus lembretes
-• Editar um tickle já não repõe o seu agendamento
-• Importação mais rápida e deslocamento mais fluido em listas grandes
-• Afinações para iPad e disposições da direita para a esquerda
+Os teus lembretes funcionam finalmente como sempre deviam.
+• Envia uma mensagem e o tickle marca-se sozinho como feito — com anular
+• Toca num lembrete para ires direto à mensagem; Feito ou Adiar a partir da notificação
+• O compor sugere com quem falar hoje
+• Desliza num contacto para escrever ou criar um tickle; a nova barra A–Z acelera redes grandes
+• Anula quase tudo; adia 1 dia, 3 ou uma semana
+• Os grupos filtram a tua rede e têm os seus próprios tickles

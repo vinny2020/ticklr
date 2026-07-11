@@ -1,9 +1,7 @@
-Tato aktualizace dělá z tickles skálopevnou záležitost:
-• Narozeniny a výročí zůstávají na správném datu i po odložení
-• Vaše úplně první tickle nyní spolehlivě naplánuje připomenutí
-• Připomenutí se zobrazí, i když je aplikace otevřená
-• Přepínač připomenutí v Nastavení je vždy respektován
-• Smazáním kontaktu se smažou i jeho připomenutí
-• Úprava tickle už neresetuje jeho plán
-• Rychlejší import a plynulejší posouvání u velkých seznamů kontaktů
-• Vyladění pro iPad a rozvržení zprava doleva
+Tvoje připomenutí konečně fungují tak, jak vždycky měla.
+• Pošli zprávu a tickle se odškrtne sám — s možností vrácení
+• Klepni na připomenutí a přejdi rovnou do zprávy; Hotovo nebo Odložit přímo z oznámení
+• Psaní zprávy napoví, s kým se dnes ozvat
+• Přejeď po kontaktu a napiš mu nebo vytvoř tickle; nová lišta A–Z zrychluje velké sítě
+• Vrať zpět skoro cokoli; odlož o 1 den, 3 nebo týden
+• Skupiny filtrují tvou síť a mají vlastní tickle

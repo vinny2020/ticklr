@@ -1,9 +1,7 @@
-Den här uppdateringen gör tickles bergfasta:
-• Födelsedagar och årsdagar stannar på rätt datum, även efter snooze
-• Din allra första tickle schemalägger nu sin påminnelse tillförlitligt
-• Påminnelser visas även när appen är öppen
-• Påminnelsereglaget i Inställningar respekteras alltid
-• När du raderar en kontakt raderas även dess påminnelser
-• Att redigera en tickle nollställer inte längre schemat
-• Snabbare import och mjukare rullning i stora kontaktlistor
-• Finslipning för iPad och höger-till-vänster-layouter
+Dina påminnelser funkar äntligen som de alltid borde ha gjort.
+• Skicka ett sms så bockar tickeln av sig själv — med ångra
+• Tryck på en påminnelse och hoppa direkt till meddelandet; Klar eller Snooza från notisen
+• Skriv-fliken föreslår vem som står på tur idag
+• Svep på en kontakt för att skriva eller skapa en tickle; nya A–Ö-listen gör stora nätverk snabba
+• Ångra nästan allt; snooza 1 dag, 3 eller en vecka
+• Grupper kan filtrera ditt nätverk och ha egna tickles

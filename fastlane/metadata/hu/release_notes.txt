@@ -1,9 +1,7 @@
-Ez a frissítés sziklaszilárddá teszi a tickle-öket:
-• A születésnapok és évfordulók a helyes dátumon maradnak, szundi után is
-• A legelső tickle mostantól megbízhatóan ütemezi az emlékeztetőjét
-• Az emlékeztetők akkor is megjelennek, ha az app nyitva van
-• A Beállítások emlékeztető-kapcsolója mindig érvényesül
-• Egy névjegy törlésekor az emlékeztetői is törlődnek
-• Egy tickle szerkesztése többé nem állítja vissza az ütemezését
-• Gyorsabb importálás és gördülékenyebb görgetés nagy névjegylistáknál
-• Finomítások iPadre és jobbról balra írt elrendezésekhez
+Az emlékeztetőid végre úgy működnek, ahogy mindig is kellett volna.
+• Küldj üzenetet, és a tickle magától kipipálódik — visszavonással
+• Koppints egy emlékeztetőre, és ugorj rögtön az üzenethez; Kész vagy Szundi az értesítésből
+• Az üzenetírás javasolja, kivel beszélj ma
+• Húzd el egy névjegyen az ujjad íráshoz vagy tickle-höz; az új A–Z sáv felgyorsítja a nagy hálózatokat
+• Vonj vissza szinte bármit; szundi 1, 3 napra vagy egy hétre
+• A csoportok szűrik a hálózatod, és saját tickle-jük is lehet

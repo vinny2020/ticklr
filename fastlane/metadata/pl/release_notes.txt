@@ -1,9 +1,7 @@
-Ta aktualizacja czyni tickles niezawodnymi:
-• Urodziny i rocznice zostają we właściwej dacie, nawet po drzemce
-• Twój pierwszy tickle niezawodnie planuje teraz przypomnienie
-• Przypomnienia pojawiają się także przy otwartej aplikacji
-• Przełącznik przypomnień w Ustawieniach jest zawsze respektowany
-• Usunięcie kontaktu usuwa też jego przypomnienia
-• Edycja tickle nie resetuje już harmonogramu
-• Szybszy import i płynniejsze przewijanie przy dużych listach kontaktów
-• Szlify dla iPada i układów od prawej do lewej
+Twoje przypomnienia w końcu działają tak, jak zawsze powinny.
+• Wyślij wiadomość, a tickle sam się odhaczy — z możliwością cofnięcia
+• Stuknij przypomnienie, by przejść prosto do wiadomości; Zrobione lub Drzemka z powiadomienia
+• Tworzenie podpowiada, z kim się dziś odezwać
+• Przesuń kontakt, by napisać lub utworzyć tickle; nowy pasek A–Z przyspiesza duże sieci
+• Cofnij prawie wszystko; drzemka na 1 dzień, 3 lub tydzień
+• Grupy filtrują twoją sieć i mają własne tickle

@@ -1,9 +1,7 @@
-Deze update maakt tickles rotsvast:
-• Verjaardagen en jubilea blijven op de juiste datum, ook na snoozen
-• Je allereerste tickle plant zijn herinnering nu betrouwbaar in
-• Herinneringen verschijnen ook terwijl de app open is
-• De herinneringenschakelaar in Instellingen wordt altijd gerespecteerd
-• Bij het verwijderen van een contact verdwijnen ook de herinneringen
-• Een tickle bewerken reset het schema niet meer
-• Sneller importeren en soepeler scrollen bij grote contactlijsten
-• Verfijningen voor iPad en rechts-naar-links-indelingen
+Je herinneringen werken eindelijk zoals het altijd had gemoeten.
+• Stuur een bericht en de tickle vinkt zichzelf af — met ongedaan maken
+• Tik op een herinnering en spring direct naar het bericht; Klaar of Uitstellen vanuit de melding
+• Opstellen stelt voor wie vandaag aan de beurt is
+• Veeg over een contact om te appen of een tickle te maken; de nieuwe A–Z-balk maakt grote netwerken snel
+• Maak bijna alles ongedaan; stel 1 dag, 3 of een week uit
+• Groepen filteren je netwerk en hebben eigen tickles

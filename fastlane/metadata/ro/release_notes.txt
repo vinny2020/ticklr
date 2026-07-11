@@ -1,9 +1,7 @@
-Această actualizare face tickles de neclintit:
-• Zilele de naștere și aniversările rămân la data corectă, chiar și după amânare
-• Primul tău tickle își programează acum mementoul în mod fiabil
-• Mementourile apar chiar și cu aplicația deschisă
-• Comutatorul de mementouri din Setări este respectat întotdeauna
-• Ștergerea unui contact îi șterge și mementourile
-• Editarea unui tickle nu îi mai resetează programarea
-• Import mai rapid și derulare mai fluidă pentru liste mari de contacte
-• Rafinări pentru iPad și aspecte de la dreapta la stânga
+Mementourile tale funcționează în sfârșit cum ar fi trebuit mereu.
+• Trimite un mesaj și tickle-ul se bifează singur — cu anulare
+• Atinge un memento și treci direct la mesaj; Gata sau Amână din notificare
+• Compunerea îți sugerează cu cine să vorbești azi
+• Glisează pe un contact ca să-i scrii sau să creezi un tickle; noua bară A–Z face rețelele mari rapide
+• Anulează aproape orice; amână 1 zi, 3 sau o săptămână
+• Grupurile îți filtrează rețeaua și au propriile tickle-uri
