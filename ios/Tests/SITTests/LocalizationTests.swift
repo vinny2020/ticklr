@@ -61,7 +61,6 @@ final class LocalizationTests: XCTestCase {
             "settings.row.app",
             "settings.row.version",
             "settings.row.builtBy",
-            "settings.button.resetOnboarding",
             "settings.button.enableInSettings",
         ]
         assertKeysAreLocalized(keys)
