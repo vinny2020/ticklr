@@ -8,6 +8,11 @@ struct GroupListView: View {
     @State private var showingAddGroup = false
     @State private var editingGroup: ContactGroup?
     @State private var selectedGroup: ContactGroup?
+    /// The user group awaiting delete confirmation. Deleting a group cascades to
+    /// every tickle attached to it (TickleScheduler.deleteGroup), so — unlike the
+    /// undoable mark-done/snooze — it's guarded by a destructive confirmation that
+    /// spells out the cascade count (TIC-87).
+    @State private var groupPendingDeletion: ContactGroup?
 
     private let warmth: Warmth = .subtle
     private var palette: WarmPalette { WarmTheme.palette(for: warmth) }
@@ -60,6 +65,23 @@ struct GroupListView: View {
             }
             .sheet(item: $editingGroup) { group in
                 GroupEditSheet(group: group)
+            }
+            .confirmationDialog(
+                String(localized: "groupList.deleteConfirm.title \(groupPendingDeletion?.displayName ?? "")"),
+                isPresented: Binding(
+                    get: { groupPendingDeletion != nil },
+                    set: { if !$0 { groupPendingDeletion = nil } }
+                ),
+                titleVisibility: .visible,
+                presenting: groupPendingDeletion
+            ) { group in
+                Button(String(localized: "common.delete"), role: .destructive) {
+                    if selectedGroup == group { selectedGroup = nil }
+                    TickleScheduler.deleteGroup(group, context: modelContext)
+                    try? modelContext.save()
+                }
+            } message: { group in
+                Text(String(localized: "groupList.deleteConfirm.message \(group.tickles.count)"))
             }
             .overlay {
                 if groups.isEmpty {
@@ -159,9 +181,7 @@ struct GroupListView: View {
                 editingGroup = group
             }
             Button(String(localized: "common.delete"), systemImage: "trash", role: .destructive) {
-                if selectedGroup == group { selectedGroup = nil }
-                TickleScheduler.deleteGroup(group, context: modelContext)
-                try? modelContext.save()
+                groupPendingDeletion = group
             }
         }
     }

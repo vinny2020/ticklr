@@ -22,9 +22,14 @@ struct TickleListView: View {
     // MARK: Shared
     @State private var composeTarget: ComposeTarget?
     @State private var prefilledCategory: WarmCategory? = nil
-    /// Non-nil while the "Tickle marked done — Undo" toast is showing after a
-    /// send auto-completed a due tickle (TIC-82).
+    /// Non-nil while the "Tickle marked done — Undo" toast is showing — after a
+    /// send auto-completed a due tickle (TIC-82) or any in-app mark-done (TIC-87:
+    /// row checkmark, leading swipe, action sheet, iPad pane).
     @State private var completionSnapshot: TickleScheduler.CompletionSnapshot?
+    /// Non-nil while the "Tickle snoozed — Undo" toast is showing after an in-app
+    /// snooze (TIC-87). Kept separate from `completionSnapshot` so the two toasts
+    /// carry different copy; only one is ever non-nil at a time (latest wins).
+    @State private var snoozeSnapshot: TickleScheduler.CompletionSnapshot?
     /// Non-nil while a plain save-confirmation toast is showing after a
     /// TickleEditView sheet (add, edit, or the Milestones hero) or the iPad
     /// detail-pane editor dismissed (TIC-84).
@@ -90,6 +95,11 @@ struct TickleListView: View {
                 TickleScheduler.undoCompletion(snapshot, context: modelContext)
             }
         }
+        .tickleSnoozeToast(snapshot: $snoozeSnapshot, warmth: warmth) {
+            if let snapshot = snoozeSnapshot {
+                TickleScheduler.undoSnooze(snapshot, context: modelContext)
+            }
+        }
         .saveConfirmationToast(message: $saveToastMessage, warmth: warmth)
         .suggestTickleToast(suggestion: $tickleSuggestion, warmth: warmth) { suggestion in
             suggestionEditContact = fetchContact(suggestion.contactID)
@@ -102,6 +112,22 @@ struct TickleListView: View {
     private func fetchContact(_ id: UUID) -> Contact? {
         let descriptor = FetchDescriptor<Contact>(predicate: #Predicate { $0.id == id })
         return try? modelContext.fetch(descriptor).first
+    }
+
+    // MARK: - Mark-done / snooze with undo (TIC-87)
+
+    /// Completes `reminder`, snapshotting its prior state and surfacing the
+    /// mark-done undo toast. Clears any pending snooze toast so only one is up.
+    private func markDone(_ reminder: TickleReminder) {
+        snoozeSnapshot = nil
+        completionSnapshot = TickleScheduler.completeWithSnapshot(reminder: reminder, context: modelContext)
+    }
+
+    /// Snoozes `reminder` by `days`, snapshotting its prior state and surfacing the
+    /// snooze undo toast. Clears any pending mark-done toast so only one is up.
+    private func snoozeReminder(_ reminder: TickleReminder, days: Int) {
+        completionSnapshot = nil
+        snoozeSnapshot = TickleScheduler.snoozeWithSnapshot(reminder: reminder, days: days, context: modelContext)
     }
 
     // MARK: - Compact (iPhone)
@@ -128,8 +154,8 @@ struct TickleListView: View {
                     reminder: reminder,
                     warmth: warmth,
                     onCompose: { pendingAction = .compose(reminder) },
-                    onMarkDone: { TickleScheduler.markComplete(reminder: reminder, context: modelContext) },
-                    onSnooze: { TickleScheduler.snooze(reminder: reminder, days: 7, context: modelContext) },
+                    onMarkDone: { markDone(reminder) },
+                    onSnooze: { days in snoozeReminder(reminder, days: days) },
                     onEdit: { pendingAction = .edit(reminder) }
                 )
                 .presentationDetents([.height(TickleActionSheet.estimatedHeight(for: reminder))])
@@ -215,11 +241,11 @@ struct TickleListView: View {
                     }
                 },
                 onMarkDone: {
-                    TickleScheduler.markComplete(reminder: reminder, context: modelContext)
+                    markDone(reminder)
                     selectedReminder = nil
                 },
-                onSnooze: {
-                    TickleScheduler.snooze(reminder: reminder, days: 7, context: modelContext)
+                onSnooze: { days in
+                    snoozeReminder(reminder, days: days)
                     selectedReminder = nil
                 },
                 onEdit: { paneEditTarget = reminder }
@@ -347,13 +373,13 @@ struct TickleListView: View {
     @ViewBuilder
     private func row(for reminder: TickleReminder) -> some View {
         let content = TickleRowView(reminder: reminder, onComplete: {
-            TickleScheduler.markComplete(reminder: reminder, context: modelContext)
+            markDone(reminder)
         }, warmth: warmth)
         .contentShape(Rectangle())
         .tag(reminder)
         .swipeActions(edge: .leading, allowsFullSwipe: true) {
             Button {
-                TickleScheduler.markComplete(reminder: reminder, context: modelContext)
+                markDone(reminder)
             } label: {
                 Label(String(localized: "common.done"), systemImage: "checkmark")
             }
@@ -381,7 +407,7 @@ struct TickleListView: View {
             }
             .tint(palette.ink2)
             Button {
-                TickleScheduler.snooze(reminder: reminder, days: 7, context: modelContext)
+                snoozeReminder(reminder, days: 7)
             } label: {
                 Label(String(localized: "tickleList.action.snooze"), systemImage: "zzz")
             }
