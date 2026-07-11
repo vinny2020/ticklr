@@ -171,20 +171,23 @@ fun SettingsScreen(
                 )
             }
 
-            HorizontalDivider(color = warmPalette.cardBorder, modifier = Modifier.padding(start = 56.dp))
-
-            // Danger zone
-            SettingsSectionHeader(stringResource(R.string.settings_section_developer))
-
-            SettingsRow(
-                icon = Icons.Default.Refresh,
-                title = stringResource(R.string.settings_reset_onboarding_title),
-                subtitle = stringResource(R.string.settings_reset_onboarding_subtitle),
-                iconTint = MaterialTheme.colorScheme.error,
-                onClick = { showResetConfirm = true }
-            )
-
+            // Danger zone — debug-only. Release builds must not render an
+            // empty "Developer" header, a dangling divider, or Reset
+            // Onboarding (a destructive control with no business showing
+            // to production users) (TIC-89).
             if (viewModel.isDebug) {
+                HorizontalDivider(color = warmPalette.cardBorder, modifier = Modifier.padding(start = 56.dp))
+
+                SettingsSectionHeader(stringResource(R.string.settings_section_developer))
+
+                SettingsRow(
+                    icon = Icons.Default.Refresh,
+                    title = stringResource(R.string.settings_reset_onboarding_title),
+                    subtitle = stringResource(R.string.settings_reset_onboarding_subtitle),
+                    iconTint = MaterialTheme.colorScheme.error,
+                    onClick = { showResetConfirm = true }
+                )
+
                 HorizontalDivider(color = warmPalette.cardBorder, modifier = Modifier.padding(start = 56.dp))
                 SettingsRow(
                     icon = Icons.Default.BugReport,
