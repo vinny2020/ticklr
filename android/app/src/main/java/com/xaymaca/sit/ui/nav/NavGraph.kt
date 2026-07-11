@@ -195,14 +195,16 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
                     onAddContact = {
                         // Warm-redesign: second CTA replaces "Start Empty"
                         // with "Add my first contact" — mark onboarding complete,
-                        // then open the AddContact form with the Tickle home seeded
+                        // then open the AddContact form with the Network home seeded
                         // beneath it so saving (or backing out of) the form returns
                         // to the app rather than an empty stack. Onboarding is popped
                         // inclusive so back never returns to it. startDestination is
                         // computed once (see above), so these navigations no longer
                         // rebuild the graph and pop the stack (TIC-64).
+                        // TIC-85: lands on Network (not Tickle) so the user sees the
+                        // contact they just added, instead of an empty tickle list.
                         prefs.edit().putBoolean(SITApp.KEY_ONBOARDING_COMPLETE, true).apply()
-                        navController.navigate(Screen.Tickle.route) {
+                        navController.navigate(Screen.Network.route) {
                             popUpTo(Screen.Onboarding.route) { inclusive = true }
                         }
                         navController.navigate(Screen.AddContact.route)
@@ -212,8 +214,28 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
 
             // Import
             composable(Screen.Import.route) {
+                // TIC-85: a successful import auto-advances straight to Network
+                // (no "Continue" tap) so the user sees what just landed; "Skip
+                // for now" still lands on Tickle, whose empty state carries the
+                // onboarding hero CTA. Both are distinct callbacks (not one
+                // onComplete) precisely because they now differ in destination.
+                //
+                // Scope note (TIC-94, not done here): this composable is also
+                // reached mid-session from Settings and Network imports via the
+                // same Screen.Import.route with the same popUpTo(0) full-stack
+                // reset below — those imports inherit this same Network landing
+                // as an acceptable interim behavior. TIC-94 will make onSuccess
+                // entry-context-aware (e.g. pop back to Settings/Network instead
+                // of nuking the stack) without needing to touch this callback
+                // split again.
                 ImportScreen(
-                    onComplete = {
+                    onImportSuccess = {
+                        prefs.edit().putBoolean(SITApp.KEY_ONBOARDING_COMPLETE, true).apply()
+                        navController.navigate(Screen.Network.route) {
+                            popUpTo(0) { inclusive = true }
+                        }
+                    },
+                    onSkip = {
                         prefs.edit().putBoolean(SITApp.KEY_ONBOARDING_COMPLETE, true).apply()
                         navController.navigate(Screen.Tickle.route) {
                             popUpTo(0) { inclusive = true }

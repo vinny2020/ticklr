@@ -210,20 +210,29 @@
 
     <!-- Import -->
     <string name="import_title">Importar contactos</string>
-    <string name="import_success_card">Se importaron %1$d contactos exitosamente</string>
     <string name="import_from_phone_title">Importar desde contactos del teléfono</string>
     <string name="import_from_phone_subtitle">Sincroniza tus contactos desde la libreta de direcciones del dispositivo.</string>
     <string name="import_from_linkedin_title">Crea tu red desde un CSV de LinkedIn</string>
     <string name="import_from_linkedin_subtitle">Las exportaciones de LinkedIn incluyen nombres y empresas, sin números de teléfono. Agregarás los detalles de contacto manualmente después de importar.</string>
     <string name="import_linkedin_instructions_title">Cómo exportar desde LinkedIn</string>
     <string name="import_linkedin_instructions">1. Ve a linkedin.com\n2. Toca Yo → Configuración y privacidad\n3. Privacidad de datos → Obtener una copia de tus datos\n4. Selecciona \"Conexiones\" y solicita la exportación\n5. Descarga el archivo CSV y selecciónalo aquí</string>
-    <string name="import_continue_button">Continuar a la red</string>
     <string name="import_skip_button">Omitir por ahora</string>
     <string name="import_snackbar_success">Se importaron %1$d contactos</string>
     <string name="import_snackbar_linkedin">Se importaron %1$d contactos de LinkedIn</string>
     <string name="import_snackbar_permission_denied">Permiso de contactos denegado</string>
     <string name="import_snackbar_failed">Importación fallida: %1$s</string>
     <string name="import_snackbar_could_not_open">No se pudo abrir el archivo</string>
+    <plurals name="import_result_contacts">
+        <item quantity="one">Se importó %1$d contacto</item>
+        <item quantity="other">Se importaron %1$d contactos</item>
+    </plurals>
+    <plurals name="import_result_duplicates_skipped">
+        <item quantity="one">%1$d duplicado omitido</item>
+        <item quantity="other">%1$d duplicados omitidos</item>
+    </plurals>
+    <string name="import_result_combined">%1$s — %2$s</string>
+    <string name="import_result_no_new_with_duplicates">Sin contactos nuevos — %1$s</string>
+    <string name="import_result_no_new_contacts">No se encontraron contactos nuevos</string>
 
     <!-- Template list -->
     <string name="template_list_title">Plantillas de mensajes</string>

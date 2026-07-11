@@ -210,20 +210,29 @@
 
     <!-- Import -->
     <string name="import_title">Importer des contacts</string>
-    <string name="import_success_card">%1$d contacts importés avec succès</string>
     <string name="import_from_phone_title">Importer depuis les contacts du téléphone</string>
     <string name="import_from_phone_subtitle">Synchronisez vos contacts depuis le carnet d\'adresses de l\'appareil.</string>
     <string name="import_from_linkedin_title">Alimentez votre réseau depuis un CSV LinkedIn</string>
     <string name="import_from_linkedin_subtitle">Les exports LinkedIn incluent noms et entreprises, sans numéros de téléphone. Vous ajouterez les coordonnées manuellement après l\'import.</string>
     <string name="import_linkedin_instructions_title">Comment exporter depuis LinkedIn</string>
     <string name="import_linkedin_instructions">1. Allez sur linkedin.com\n2. Appuyez sur Moi → Paramètres et confidentialité\n3. Confidentialité des données → Obtenir une copie de vos données\n4. Sélectionnez « Connexions » et demandez l\'export\n5. Téléchargez le fichier CSV et sélectionnez-le ici</string>
-    <string name="import_continue_button">Continuer vers le réseau</string>
     <string name="import_skip_button">Passer pour l\'instant</string>
     <string name="import_snackbar_success">%1$d contacts importés</string>
     <string name="import_snackbar_linkedin">%1$d contacts LinkedIn importés</string>
     <string name="import_snackbar_permission_denied">Permission d\'accès aux contacts refusée</string>
     <string name="import_snackbar_failed">Échec de l\'import : %1$s</string>
     <string name="import_snackbar_could_not_open">Impossible d\'ouvrir le fichier</string>
+    <plurals name="import_result_contacts">
+        <item quantity="one">%1$d contact importé</item>
+        <item quantity="other">%1$d contacts importés</item>
+    </plurals>
+    <plurals name="import_result_duplicates_skipped">
+        <item quantity="one">%1$d doublon ignoré</item>
+        <item quantity="other">%1$d doublons ignorés</item>
+    </plurals>
+    <string name="import_result_combined">%1$s — %2$s</string>
+    <string name="import_result_no_new_with_duplicates">Aucun nouveau contact — %1$s</string>
+    <string name="import_result_no_new_contacts">Aucun nouveau contact trouvé</string>
 
     <!-- Template list -->
     <string name="template_list_title">Modèles de messages</string>

@@ -210,20 +210,29 @@
 
     <!-- Import -->
     <string name="import_title">Contacten importeren</string>
-    <string name="import_success_card">%1$d contacten succesvol geïmporteerd</string>
     <string name="import_from_phone_title">Importeren vanuit telefooncontacten</string>
     <string name="import_from_phone_subtitle">Synchroniseer uw contacten vanuit het adresboek van het apparaat.</string>
     <string name="import_from_linkedin_title">Vul uw netwerk vanuit LinkedIn-CSV</string>
     <string name="import_from_linkedin_subtitle">LinkedIn-exports bevatten namen en bedrijven, zonder telefoonnummers. U voegt contactgegevens handmatig toe na het importeren.</string>
     <string name="import_linkedin_instructions_title">Hoe exporteren vanuit LinkedIn</string>
     <string name="import_linkedin_instructions">1. Ga naar linkedin.com\n2. Tik op Ik → Instellingen en privacy\n3. Gegevensprivacy → Een kopie van uw gegevens ophalen\n4. Selecteer \"Verbindingen\" en vraag de export aan\n5. Download het CSV-bestand en selecteer het hier</string>
-    <string name="import_continue_button">Doorgaan naar netwerk</string>
     <string name="import_skip_button">Nu overslaan</string>
     <string name="import_snackbar_success">%1$d contacten geïmporteerd</string>
     <string name="import_snackbar_linkedin">%1$d LinkedIn-contacten geïmporteerd</string>
     <string name="import_snackbar_permission_denied">Toegang tot contacten geweigerd</string>
     <string name="import_snackbar_failed">Importeren mislukt: %1$s</string>
     <string name="import_snackbar_could_not_open">Bestand kon niet worden geopend</string>
+    <plurals name="import_result_contacts">
+        <item quantity="one">%1$d contact geïmporteerd</item>
+        <item quantity="other">%1$d contacten geïmporteerd</item>
+    </plurals>
+    <plurals name="import_result_duplicates_skipped">
+        <item quantity="one">%1$d duplicaat overgeslagen</item>
+        <item quantity="other">%1$d duplicaten overgeslagen</item>
+    </plurals>
+    <string name="import_result_combined">%1$s — %2$s</string>
+    <string name="import_result_no_new_with_duplicates">Geen nieuwe contacten — %1$s</string>
+    <string name="import_result_no_new_contacts">Geen nieuwe contacten gevonden</string>
 
     <!-- Template list -->
     <string name="template_list_title">Berichtsjablonen</string>

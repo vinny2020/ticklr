@@ -211,7 +211,6 @@
 
     <!-- Import -->
     <string name="import_title">رابطے درآمد کریں</string>
-    <string name="import_success_card">%1$d رابطے کامیابی سے درآمد ہوئے</string>
     <string name="import_from_phone_title">فون رابطوں سے درآمد کریں</string>
     <string name="import_from_phone_subtitle">اپنے رابطے ڈیوائس ایڈریس بک سے سنک کریں۔</string>
     <string name="import_from_linkedin_title">LinkedIn CSV سے اپنا نیٹ ورک بنائیں</string>
@@ -222,13 +221,23 @@
 3. Data Privacy → Get a copy of your data
 4. "Connections" منتخب کریں اور برآمد کی درخواست کریں
 5. CSV فائل ڈاؤن لوڈ کریں اور اسے یہاں منتخب کریں</string>
-    <string name="import_continue_button">نیٹ ورک پر جاری رکھیں</string>
     <string name="import_skip_button">ابھی چھوڑ دیں</string>
     <string name="import_snackbar_success">%1$d رابطے درآمد ہوئے</string>
     <string name="import_snackbar_linkedin">%1$d LinkedIn رابطے درآمد ہوئے</string>
     <string name="import_snackbar_permission_denied">رابطوں کی اجازت رد کر دی گئی</string>
     <string name="import_snackbar_failed">درآمد ناکام: %1$s</string>
     <string name="import_snackbar_could_not_open">فائل نہیں کھل سکی</string>
+    <plurals name="import_result_contacts">
+        <item quantity="one">%1$d رابطہ درآمد ہوا</item>
+        <item quantity="other">%1$d رابطے درآمد ہوئے</item>
+    </plurals>
+    <plurals name="import_result_duplicates_skipped">
+        <item quantity="one">%1$d نقل نظر انداز ہوئی</item>
+        <item quantity="other">%1$d نقلیں نظر انداز ہوئیں</item>
+    </plurals>
+    <string name="import_result_combined">%1$s — %2$s</string>
+    <string name="import_result_no_new_with_duplicates">کوئی نیا رابطہ نہیں — %1$s</string>
+    <string name="import_result_no_new_contacts">کوئی نیا رابطہ نہیں ملا</string>
 
     <!-- Template list -->
     <string name="template_list_title">پیغام ٹیمپلیٹس</string>

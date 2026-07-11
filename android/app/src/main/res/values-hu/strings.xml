@@ -210,20 +210,29 @@
 
     <!-- Import -->
     <string name="import_title">Névjegyek importálása</string>
-    <string name="import_success_card">%1$d névjegy sikeresen importálva</string>
     <string name="import_from_phone_title">Importálás telefonos névjegyekből</string>
     <string name="import_from_phone_subtitle">Szinkronizálja névjegyeit az eszköz címjegyzékéből.</string>
     <string name="import_from_linkedin_title">Hálózat feltöltése LinkedIn CSV-ből</string>
     <string name="import_from_linkedin_subtitle">A LinkedIn-exportok neveket és cégeket tartalmaznak, telefonszámok nélkül. A kapcsolati adatokat importálás után kézzel adhatja hozzá.</string>
     <string name="import_linkedin_instructions_title">Hogyan exportáljon LinkedIn-ről</string>
     <string name="import_linkedin_instructions">1. Menjen a linkedin.com-ra\n2. Koppintson az Én → Beállítások és adatvédelem menüre\n3. Adatvédelem → Adatai másolatának letöltése\n4. Válassza a „Kapcsolatok" lehetőséget, és kérjen exportálást\n5. Töltse le a CSV-fájlt, és válassza ki itt</string>
-    <string name="import_continue_button">Folytatás a hálózathoz</string>
     <string name="import_skip_button">Kihagyás most</string>
     <string name="import_snackbar_success">%1$d névjegy importálva</string>
     <string name="import_snackbar_linkedin">%1$d LinkedIn-névjegy importálva</string>
     <string name="import_snackbar_permission_denied">Névjegy-hozzáférés megtagadva</string>
     <string name="import_snackbar_failed">Az importálás sikertelen: %1$s</string>
     <string name="import_snackbar_could_not_open">A fájl nem nyitható meg</string>
+    <plurals name="import_result_contacts">
+        <item quantity="one">%1$d névjegy importálva</item>
+        <item quantity="other">%1$d névjegy importálva</item>
+    </plurals>
+    <plurals name="import_result_duplicates_skipped">
+        <item quantity="one">%1$d duplikátum kihagyva</item>
+        <item quantity="other">%1$d duplikátum kihagyva</item>
+    </plurals>
+    <string name="import_result_combined">%1$s — %2$s</string>
+    <string name="import_result_no_new_with_duplicates">Nincs új névjegy — %1$s</string>
+    <string name="import_result_no_new_contacts">Nem található új névjegy</string>
 
     <!-- Template list -->
     <string name="template_list_title">Üzenetsablonok</string>

@@ -208,20 +208,27 @@
 
     <!-- Import -->
     <string name="import_title">导入联系人</string>
-    <string name="import_success_card">成功导入 %1$d 位联系人</string>
     <string name="import_from_phone_title">从手机联系人导入</string>
     <string name="import_from_phone_subtitle">从设备通讯录同步联系人。</string>
     <string name="import_from_linkedin_title">从 LinkedIn CSV 导入人脉</string>
     <string name="import_from_linkedin_subtitle">LinkedIn 导出包含姓名和公司信息 — 不含电话号码。导入后您可手动添加联系方式。</string>
     <string name="import_linkedin_instructions_title">如何从 LinkedIn 导出</string>
     <string name="import_linkedin_instructions">1. 前往 linkedin.com\n2. 点击"我" → 设置与隐私\n3. 数据隐私 → 获取数据副本\n4. 选择"连接"并请求导出\n5. 下载 CSV 文件并在此处选择</string>
-    <string name="import_continue_button">前往人脉</string>
     <string name="import_skip_button">暂时跳过</string>
     <string name="import_snackbar_success">已导入 %1$d 位联系人</string>
     <string name="import_snackbar_linkedin">已导入 %1$d 位 LinkedIn 联系人</string>
     <string name="import_snackbar_permission_denied">联系人权限被拒绝</string>
     <string name="import_snackbar_failed">导入失败：%1$s</string>
     <string name="import_snackbar_could_not_open">无法打开文件</string>
+    <plurals name="import_result_contacts">
+        <item quantity="other">已导入 %1$d 位联系人</item>
+    </plurals>
+    <plurals name="import_result_duplicates_skipped">
+        <item quantity="other">跳过 %1$d 个重复项</item>
+    </plurals>
+    <string name="import_result_combined">%1$s — %2$s</string>
+    <string name="import_result_no_new_with_duplicates">没有新联系人 — %1$s</string>
+    <string name="import_result_no_new_contacts">未找到新联系人</string>
 
     <!-- Template list -->
     <string name="template_list_title">消息模板</string>

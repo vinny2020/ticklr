@@ -210,20 +210,29 @@
 
     <!-- Import -->
     <string name="import_title">Kontakte importieren</string>
-    <string name="import_success_card">%1$d Kontakte erfolgreich importiert</string>
     <string name="import_from_phone_title">Aus Telefonkontakten importieren</string>
     <string name="import_from_phone_subtitle">Kontakte aus dem Adressbuch des Geräts synchronisieren.</string>
     <string name="import_from_linkedin_title">Netzwerk aus LinkedIn-CSV aufbauen</string>
     <string name="import_from_linkedin_subtitle">LinkedIn-Exporte enthalten Namen und Unternehmen, aber keine Telefonnummern. Kontaktdaten werden nach dem Import manuell ergänzt.</string>
     <string name="import_linkedin_instructions_title">So exportieren Sie aus LinkedIn</string>
     <string name="import_linkedin_instructions">1. Gehen Sie zu linkedin.com\n2. Tippen Sie auf Ich → Einstellungen und Datenschutz\n3. Datenschutz → Kopie Ihrer Daten abrufen\n4. Wählen Sie „Verbindungen" und fordern Sie den Export an\n5. Laden Sie die CSV-Datei herunter und wählen Sie sie hier aus</string>
-    <string name="import_continue_button">Weiter zum Netzwerk</string>
     <string name="import_skip_button">Jetzt überspringen</string>
     <string name="import_snackbar_success">%1$d Kontakte importiert</string>
     <string name="import_snackbar_linkedin">%1$d LinkedIn-Kontakte importiert</string>
     <string name="import_snackbar_permission_denied">Zugriff auf Kontakte verweigert</string>
     <string name="import_snackbar_failed">Import fehlgeschlagen: %1$s</string>
     <string name="import_snackbar_could_not_open">Datei konnte nicht geöffnet werden</string>
+    <plurals name="import_result_contacts">
+        <item quantity="one">%1$d Kontakt importiert</item>
+        <item quantity="other">%1$d Kontakte importiert</item>
+    </plurals>
+    <plurals name="import_result_duplicates_skipped">
+        <item quantity="one">%1$d Duplikat übersprungen</item>
+        <item quantity="other">%1$d Duplikate übersprungen</item>
+    </plurals>
+    <string name="import_result_combined">%1$s — %2$s</string>
+    <string name="import_result_no_new_with_duplicates">Keine neuen Kontakte — %1$s</string>
+    <string name="import_result_no_new_contacts">Keine neuen Kontakte gefunden</string>
 
     <!-- Template list -->
     <string name="template_list_title">Nachrichtenvorlagen</string>

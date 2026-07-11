@@ -211,7 +211,6 @@
 
     <!-- Import -->
     <string name="import_title">ייבוא אנשי קשר</string>
-    <string name="import_success_card">יובאו בהצלחה %1$d אנשי קשר</string>
     <string name="import_from_phone_title">ייבוא מאנשי הקשר בטלפון</string>
     <string name="import_from_phone_subtitle">סנכרון אנשי הקשר מפנקס הכתובות במכשיר.</string>
     <string name="import_from_linkedin_title">בניית הרשת מקובץ CSV של LinkedIn</string>
@@ -222,13 +221,23 @@
 3. Data Privacy → Get a copy of your data
 4. בחרו "Connections" ובקשו ייצוא
 5. הורידו את קובץ ה-CSV ובחרו אותו כאן</string>
-    <string name="import_continue_button">המשך לרשת</string>
     <string name="import_skip_button">דלג עכשיו</string>
     <string name="import_snackbar_success">יובאו %1$d אנשי קשר</string>
     <string name="import_snackbar_linkedin">יובאו %1$d אנשי קשר מ-LinkedIn</string>
     <string name="import_snackbar_permission_denied">הרשאת אנשי קשר נדחתה</string>
     <string name="import_snackbar_failed">הייבוא נכשל: %1$s</string>
     <string name="import_snackbar_could_not_open">לא ניתן לפתוח את הקובץ</string>
+    <plurals name="import_result_contacts">
+        <item quantity="one">יובא איש קשר אחד</item>
+        <item quantity="other">יובאו %1$d אנשי קשר</item>
+    </plurals>
+    <plurals name="import_result_duplicates_skipped">
+        <item quantity="one">כפילות אחת דולגה</item>
+        <item quantity="other">%1$d כפילויות דולגו</item>
+    </plurals>
+    <string name="import_result_combined">%1$s — %2$s</string>
+    <string name="import_result_no_new_with_duplicates">אין אנשי קשר חדשים — %1$s</string>
+    <string name="import_result_no_new_contacts">לא נמצאו אנשי קשר חדשים</string>
 
     <!-- Template list -->
     <string name="template_list_title">תבניות הודעה</string>

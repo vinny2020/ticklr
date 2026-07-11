@@ -210,20 +210,29 @@
 
     <!-- Import -->
     <string name="import_title">संपर्क आयात करें</string>
-    <string name="import_success_card">%1$d संपर्क सफलतापूर्वक आयात किए</string>
     <string name="import_from_phone_title">फ़ोन संपर्क से आयात करें</string>
     <string name="import_from_phone_subtitle">डिवाइस की एड्रेस बुक से संपर्क सिंक करें।</string>
     <string name="import_from_linkedin_title">LinkedIn CSV से नेटवर्क बनाएं</string>
     <string name="import_from_linkedin_subtitle">LinkedIn एक्सपोर्ट में नाम और कंपनियां शामिल हैं — फ़ोन नंबर नहीं। आयात के बाद संपर्क विवरण मैन्युअल रूप से जोड़ें।</string>
     <string name="import_linkedin_instructions_title">LinkedIn से एक्सपोर्ट कैसे करें</string>
     <string name="import_linkedin_instructions">1. linkedin.com पर जाएं\n2. मैं → सेटिंग्स और गोपनीयता टैप करें\n3. डेटा गोपनीयता → अपने डेटा की एक प्रति प्राप्त करें\n4. "कनेक्शन" चुनें और एक्सपोर्ट का अनुरोध करें\n5. CSV फ़ाइल डाउनलोड करें और यहां चुनें</string>
-    <string name="import_continue_button">नेटवर्क पर जाएं</string>
     <string name="import_skip_button">अभी छोड़ें</string>
     <string name="import_snackbar_success">%1$d संपर्क आयात किए</string>
     <string name="import_snackbar_linkedin">%1$d LinkedIn संपर्क आयात किए</string>
     <string name="import_snackbar_permission_denied">संपर्क अनुमति अस्वीकृत</string>
     <string name="import_snackbar_failed">आयात विफल: %1$s</string>
     <string name="import_snackbar_could_not_open">फ़ाइल नहीं खोली जा सकी</string>
+    <plurals name="import_result_contacts">
+        <item quantity="one">%1$d संपर्क आयात किया गया</item>
+        <item quantity="other">%1$d संपर्क आयात किए गए</item>
+    </plurals>
+    <plurals name="import_result_duplicates_skipped">
+        <item quantity="one">%1$d डुप्लिकेट छोड़ा गया</item>
+        <item quantity="other">%1$d डुप्लिकेट छोड़े गए</item>
+    </plurals>
+    <string name="import_result_combined">%1$s — %2$s</string>
+    <string name="import_result_no_new_with_duplicates">कोई नया संपर्क नहीं — %1$s</string>
+    <string name="import_result_no_new_contacts">कोई नया संपर्क नहीं मिला</string>
 
     <!-- Template list -->
     <string name="template_list_title">संदेश टेम्पलेट</string>

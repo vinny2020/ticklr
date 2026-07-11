@@ -214,20 +214,33 @@
 
     <!-- Import -->
     <string name="import_title">Importuj kontakty</string>
-    <string name="import_success_card">Pomyślnie zaimportowano %1$d kontaktów</string>
     <string name="import_from_phone_title">Importuj z kontaktów telefonu</string>
     <string name="import_from_phone_subtitle">Synchronizuj kontakty z książki adresowej urządzenia.</string>
     <string name="import_from_linkedin_title">Uzupełnij sieć z pliku CSV LinkedIn</string>
     <string name="import_from_linkedin_subtitle">Eksporty LinkedIn zawierają imiona i firmy bez numerów telefonów. Dane kontaktowe dodasz ręcznie po imporcie.</string>
     <string name="import_linkedin_instructions_title">Jak eksportować z LinkedIn</string>
     <string name="import_linkedin_instructions">1. Przejdź na linkedin.com\n2. Dotknij Ja → Ustawienia i prywatność\n3. Prywatność danych → Pobierz kopię swoich danych\n4. Wybierz „Połączenia" i poproś o eksport\n5. Pobierz plik CSV i wybierz go tutaj</string>
-    <string name="import_continue_button">Przejdź do sieci</string>
     <string name="import_skip_button">Pomiń na razie</string>
     <string name="import_snackbar_success">Zaimportowano %1$d kontaktów</string>
     <string name="import_snackbar_linkedin">Zaimportowano %1$d kontaktów LinkedIn</string>
     <string name="import_snackbar_permission_denied">Odmówiono dostępu do kontaktów</string>
     <string name="import_snackbar_failed">Import nie powiódł się: %1$s</string>
     <string name="import_snackbar_could_not_open">Nie można otworzyć pliku</string>
+    <plurals name="import_result_contacts">
+        <item quantity="one">Zaimportowano %1$d kontakt</item>
+        <item quantity="few">Zaimportowano %1$d kontakty</item>
+        <item quantity="many">Zaimportowano %1$d kontaktów</item>
+        <item quantity="other">Zaimportowano %1$d kontaktu</item>
+    </plurals>
+    <plurals name="import_result_duplicates_skipped">
+        <item quantity="one">Pominięto %1$d duplikat</item>
+        <item quantity="few">Pominięto %1$d duplikaty</item>
+        <item quantity="many">Pominięto %1$d duplikatów</item>
+        <item quantity="other">Pominięto %1$d duplikatu</item>
+    </plurals>
+    <string name="import_result_combined">%1$s — %2$s</string>
+    <string name="import_result_no_new_with_duplicates">Brak nowych kontaktów — %1$s</string>
+    <string name="import_result_no_new_contacts">Nie znaleziono nowych kontaktów</string>
 
     <!-- Template list -->
     <string name="template_list_title">Szablony wiadomości</string>

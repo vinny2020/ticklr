@@ -21,19 +21,21 @@ class ContactImportService @Inject constructor(
     private val gson = Gson()
 
     /**
-     * Reads all contacts from the device using ContactsContract.
-     * Returns the number of contacts imported.
+     * Reads all contacts from the device using ContactsContract, inserting each
+     * and tallying genuine inserts vs. skipped duplicates.
      * Caller is responsible for ensuring READ_CONTACTS permission is granted.
      */
-    suspend fun importPhoneContacts(): Int {
+    suspend fun importPhoneContacts(): ImportResult {
         val contacts = withContext(Dispatchers.IO) { readDeviceContacts(context.contentResolver) }
-        var importCount = 0
+        var inserted = 0
+        var skipped = 0
         contacts.forEach { contact ->
             // insertContact returns -1L when the row is a duplicate and skipped.
-            // Count only genuine inserts so "Imported N" doesn't overstate on re-import.
-            if (contactRepository.insertContact(contact) != -1L) importCount++
+            // Count both so callers can report "Imported N" without overstating
+            // on re-import, and (TIC-85) surface a duplicates-skipped count.
+            if (contactRepository.insertContact(contact) != -1L) inserted++ else skipped++
         }
-        return importCount
+        return ImportResult(inserted, skipped)
     }
 
     private fun readDeviceContacts(resolver: ContentResolver): List<Contact> {
@@ -163,3 +165,14 @@ class ContactImportService @Inject constructor(
         return result
     }
 }
+
+/**
+ * Outcome of one import pass — shared by the phone-contacts path
+ * ([ContactImportService.importPhoneContacts]) and the LinkedIn CSV path
+ * (`NetworkViewModel.importFromCSV`), both of which dedupe row-by-row via
+ * `ContactRepository.insertContact`'s `-1L` sentinel. Feeds
+ * [formatImportSummaryMessage] (TIC-85) so the onboarding Import screen's
+ * auto-advance snackbar can report "Imported N contacts" and, when the device
+ * had contacts already on file, how many duplicates were skipped.
+ */
+data class ImportResult(val inserted: Int, val skipped: Int)

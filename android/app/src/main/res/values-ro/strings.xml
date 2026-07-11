@@ -212,20 +212,31 @@
 
     <!-- Import -->
     <string name="import_title">Importă contacte</string>
-    <string name="import_success_card">%1$d contacte importate cu succes</string>
     <string name="import_from_phone_title">Importă din contactele telefonului</string>
     <string name="import_from_phone_subtitle">Sincronizează contactele din agenda dispozitivului.</string>
     <string name="import_from_linkedin_title">Populează rețeaua din CSV LinkedIn</string>
     <string name="import_from_linkedin_subtitle">Exporturile LinkedIn includ nume și companii, fără numere de telefon. Vei adăuga detaliile de contact manual după import.</string>
     <string name="import_linkedin_instructions_title">Cum să exporți din LinkedIn</string>
     <string name="import_linkedin_instructions">1. Mergi la linkedin.com\n2. Apasă Eu → Setări și confidențialitate\n3. Confidențialitatea datelor → Obține o copie a datelor tale\n4. Selectează „Conexiuni" și solicită exportul\n5. Descarcă fișierul CSV și selectează-l aici</string>
-    <string name="import_continue_button">Continuă la rețea</string>
     <string name="import_skip_button">Sari deocamdată</string>
     <string name="import_snackbar_success">%1$d contacte importate</string>
     <string name="import_snackbar_linkedin">%1$d contacte LinkedIn importate</string>
     <string name="import_snackbar_permission_denied">Permisiunea pentru contacte refuzată</string>
     <string name="import_snackbar_failed">Import eșuat: %1$s</string>
     <string name="import_snackbar_could_not_open">Nu s-a putut deschide fișierul</string>
+    <plurals name="import_result_contacts">
+        <item quantity="one">%1$d contact importat</item>
+        <item quantity="few">%1$d contacte importate</item>
+        <item quantity="other">%1$d de contacte importate</item>
+    </plurals>
+    <plurals name="import_result_duplicates_skipped">
+        <item quantity="one">%1$d duplicat omis</item>
+        <item quantity="few">%1$d duplicate omise</item>
+        <item quantity="other">%1$d de duplicate omise</item>
+    </plurals>
+    <string name="import_result_combined">%1$s — %2$s</string>
+    <string name="import_result_no_new_with_duplicates">Niciun contact nou — %1$s</string>
+    <string name="import_result_no_new_contacts">Nu s-au găsit contacte noi</string>
 
     <!-- Template list -->
     <string name="template_list_title">Șabloane de mesaje</string>

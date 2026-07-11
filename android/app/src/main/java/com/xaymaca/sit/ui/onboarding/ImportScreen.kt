@@ -29,7 +29,8 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ImportScreen(
-    onComplete: () -> Unit,
+    onImportSuccess: () -> Unit,
+    onSkip: () -> Unit,
     onBack: () -> Unit,
     viewModel: NetworkViewModel = hiltViewModel()
 ) {
@@ -38,7 +39,19 @@ fun ImportScreen(
     val snackbarHostState = remember { SnackbarHostState() }
 
     var isImporting by remember { mutableStateOf(false) }
-    var importedCount by remember { mutableStateOf<Int?>(null) }
+
+    // TIC-85: a successful import (whether 0, 1, or N contacts landed) now
+    // auto-advances to the Network tab immediately via onImportSuccess()
+    // instead of showing an in-place success card + "Continue" button — that
+    // extra tap was pure ceremony since the import had already happened. The
+    // count/duplicates summary travels via NetworkViewModel's
+    // PendingSnackbarMessageStore post (TIC-84 pattern) and is surfaced by the
+    // app-level snackbar host after navigation, not here. isImporting is only
+    // reset in the failure branches below — on success onImportSuccess()
+    // tears this screen down before another recomposition would observe it
+    // reset. onImportSuccess and onSkip are distinct callbacks (not one
+    // onComplete) because they land on different tabs — Network for a real
+    // import, Tickle for "Skip for now" (its empty state carries the hero CTA).
 
     // Permission launcher for READ_CONTACTS
     val contactsPermissionLauncher = rememberLauncherForActivityResult(
@@ -48,13 +61,11 @@ fun ImportScreen(
             coroutineScope.launch {
                 isImporting = true
                 try {
-                    val count = viewModel.importFromContacts()
-                    importedCount = count
-                    snackbarHostState.showSnackbar(context.getString(R.string.import_snackbar_success, count))
+                    viewModel.importFromContacts()
+                    onImportSuccess()
                 } catch (e: Exception) {
-                    snackbarHostState.showSnackbar(context.getString(R.string.import_snackbar_failed, e.message ?: ""))
-                } finally {
                     isImporting = false
+                    snackbarHostState.showSnackbar(context.getString(R.string.import_snackbar_failed, e.message ?: ""))
                 }
             }
         } else {
@@ -74,16 +85,15 @@ fun ImportScreen(
                 try {
                     val inputStream = context.contentResolver.openInputStream(uri)
                     if (inputStream != null) {
-                        val count = viewModel.importFromCSV(inputStream)
-                        importedCount = count
-                        snackbarHostState.showSnackbar(context.getString(R.string.import_snackbar_linkedin, count))
+                        viewModel.importFromCSV(inputStream)
+                        onImportSuccess()
                     } else {
+                        isImporting = false
                         snackbarHostState.showSnackbar(context.getString(R.string.import_snackbar_could_not_open))
                     }
                 } catch (e: Exception) {
-                    snackbarHostState.showSnackbar(context.getString(R.string.import_snackbar_failed, e.message ?: ""))
-                } finally {
                     isImporting = false
+                    snackbarHostState.showSnackbar(context.getString(R.string.import_snackbar_failed, e.message ?: ""))
                 }
             }
         }
@@ -123,22 +133,6 @@ fun ImportScreen(
                 }
             }
 
-            importedCount?.let { count ->
-                Card(
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surfaceVariant
-                    ),
-                    shape = RoundedCornerShape(12.dp)
-                ) {
-                    Text(
-                        text = stringResource(R.string.import_success_card, count),
-                        modifier = Modifier.padding(16.dp),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
-                }
-            }
-
             // Import from Phone Contacts button
             ImportOptionCard(
                 icon = Icons.Default.Contacts,
@@ -153,13 +147,11 @@ fun ImportScreen(
                         coroutineScope.launch {
                             isImporting = true
                             try {
-                                val count = viewModel.importFromContacts()
-                                importedCount = count
-                                snackbarHostState.showSnackbar(context.getString(R.string.import_snackbar_success, count))
+                                viewModel.importFromContacts()
+                                onImportSuccess()
                             } catch (e: Exception) {
-                                snackbarHostState.showSnackbar(context.getString(R.string.import_snackbar_failed, e.message ?: ""))
-                            } finally {
                                 isImporting = false
+                                snackbarHostState.showSnackbar(context.getString(R.string.import_snackbar_failed, e.message ?: ""))
                             }
                         }
                     } else {
@@ -207,25 +199,14 @@ fun ImportScreen(
 
             Spacer(modifier = Modifier.weight(1f))
 
-            // Continue button
-            if (importedCount != null) {
-                Button(
-                    onClick = onComplete,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(52.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
-                    shape = RoundedCornerShape(14.dp)
-                ) {
-                    Text(stringResource(R.string.import_continue_button), fontWeight = FontWeight.SemiBold)
-                }
-            } else {
-                TextButton(
-                    onClick = onComplete,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(stringResource(R.string.import_skip_button), color = MaterialTheme.colorScheme.onSurfaceVariant)
-                }
+            // TIC-85: success no longer routes through here — it auto-advances
+            // via onImportSuccess() from the import handlers above. This
+            // button is now exclusively the "Skip for now" escape hatch.
+            TextButton(
+                onClick = onSkip,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(stringResource(R.string.import_skip_button), color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
     }

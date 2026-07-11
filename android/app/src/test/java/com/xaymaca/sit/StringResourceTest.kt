@@ -156,7 +156,6 @@ class StringResourceTest {
             R.string.import_snackbar_permission_denied,
             R.string.import_snackbar_linkedin,
             R.string.import_snackbar_could_not_open,
-            R.string.import_continue_button,
             R.string.import_skip_button,
         )
         assertTrue(keys.all { it != 0 }, "All onboarding/import string resource IDs should be non-zero")

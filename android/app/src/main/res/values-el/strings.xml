@@ -210,20 +210,29 @@
 
     <!-- Import -->
     <string name="import_title">Εισαγωγή επαφών</string>
-    <string name="import_success_card">Εισήχθησαν επιτυχώς %1$d επαφές</string>
     <string name="import_from_phone_title">Εισαγωγή από επαφές τηλεφώνου</string>
     <string name="import_from_phone_subtitle">Συγχρονίστε τις επαφές σας από το βιβλίο διευθύνσεων της συσκευής.</string>
     <string name="import_from_linkedin_title">Εμπλουτίστε το δίκτυό σας από CSV του LinkedIn</string>
     <string name="import_from_linkedin_subtitle">Οι εξαγωγές LinkedIn περιλαμβάνουν ονόματα και εταιρείες χωρίς αριθμούς τηλεφώνου. Θα προσθέσετε τα στοιχεία επικοινωνίας χειροκίνητα μετά την εισαγωγή.</string>
     <string name="import_linkedin_instructions_title">Πώς να εξαγάγετε από το LinkedIn</string>
     <string name="import_linkedin_instructions">1. Μεταβείτε στο linkedin.com\n2. Πατήστε Εγώ → Ρυθμίσεις και απόρρητο\n3. Απόρρητο δεδομένων → Λήψη αντιγράφου δεδομένων\n4. Επιλέξτε «Συνδέσεις» και ζητήστε εξαγωγή\n5. Κατεβάστε το αρχείο CSV και επιλέξτε το εδώ</string>
-    <string name="import_continue_button">Συνέχεια στο δίκτυο</string>
     <string name="import_skip_button">Παράλειψη για τώρα</string>
     <string name="import_snackbar_success">Εισήχθησαν %1$d επαφές</string>
     <string name="import_snackbar_linkedin">Εισήχθησαν %1$d επαφές LinkedIn</string>
     <string name="import_snackbar_permission_denied">Η άδεια πρόσβασης σε επαφές απορρίφθηκε</string>
     <string name="import_snackbar_failed">Αποτυχία εισαγωγής: %1$s</string>
     <string name="import_snackbar_could_not_open">Δεν ήταν δυνατό το άνοιγμα του αρχείου</string>
+    <plurals name="import_result_contacts">
+        <item quantity="one">Εισήχθη %1$d επαφή</item>
+        <item quantity="other">Εισήχθησαν %1$d επαφές</item>
+    </plurals>
+    <plurals name="import_result_duplicates_skipped">
+        <item quantity="one">%1$d διπλότυπο παραλείφθηκε</item>
+        <item quantity="other">%1$d διπλότυπα παραλείφθηκαν</item>
+    </plurals>
+    <string name="import_result_combined">%1$s — %2$s</string>
+    <string name="import_result_no_new_with_duplicates">Καμία νέα επαφή — %1$s</string>
+    <string name="import_result_no_new_contacts">Δεν βρέθηκαν νέες επαφές</string>
 
     <!-- Template list -->
     <string name="template_list_title">Πρότυπα μηνυμάτων</string>

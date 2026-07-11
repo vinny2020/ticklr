@@ -214,20 +214,30 @@
 
     <!-- Import -->
     <string name="import_title">Import Contacts</string>
-    <string name="import_success_card">Successfully imported %1$d contacts</string>
     <string name="import_from_phone_title">Import from Phone Contacts</string>
     <string name="import_from_phone_subtitle">Sync your contacts from the device address book.</string>
     <string name="import_from_linkedin_title">Seed your network from LinkedIn CSV</string>
     <string name="import_from_linkedin_subtitle">LinkedIn exports include names and companies — no phone numbers. You\'ll add contact details manually after importing.</string>
     <string name="import_linkedin_instructions_title">How to export from LinkedIn</string>
     <string name="import_linkedin_instructions">1. Go to linkedin.com\n2. Tap Me → Settings &amp; Privacy\n3. Data Privacy → Get a copy of your data\n4. Select \"Connections\" and request export\n5. Download the CSV file and select it here</string>
-    <string name="import_continue_button">Continue to Network</string>
     <string name="import_skip_button">Skip for now</string>
     <string name="import_snackbar_success">Imported %1$d contacts</string>
     <string name="import_snackbar_linkedin">Imported %1$d LinkedIn contacts</string>
     <string name="import_snackbar_permission_denied">Contacts permission denied</string>
     <string name="import_snackbar_failed">Import failed: %1$s</string>
     <string name="import_snackbar_could_not_open">Could not open file</string>
+    <!-- TIC-85: post-import summary, shown on the app-level snackbar after auto-advancing to Network -->
+    <plurals name="import_result_contacts">
+        <item quantity="one">Imported %1$d contact</item>
+        <item quantity="other">Imported %1$d contacts</item>
+    </plurals>
+    <plurals name="import_result_duplicates_skipped">
+        <item quantity="one">%1$d duplicate skipped</item>
+        <item quantity="other">%1$d duplicates skipped</item>
+    </plurals>
+    <string name="import_result_combined">%1$s — %2$s</string>
+    <string name="import_result_no_new_with_duplicates">No new contacts — %1$s</string>
+    <string name="import_result_no_new_contacts">No new contacts found</string>
 
     <!-- Template list -->
     <string name="template_list_title">Message Templates</string>
