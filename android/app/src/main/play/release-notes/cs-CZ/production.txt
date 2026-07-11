@@ -1,6 +1,6 @@
-Tato aktualizace je o spolehlivosti:
-• Opravili jsme pád při spuštění po aktualizaci
-• Odložené tickles se vrátí, jakmile odklad skončí
-• Připomenutí přežijí restart telefonu a přijdou včas
-• Smazáním kontaktu se smažou i jeho připomenutí
-• Rychlejší import kontaktů a plynulejší posouvání
+Tvoje připomenutí konečně fungují tak, jak vždycky měla.
+• Napiš někomu a Ticklr nabídne označit tickle jako hotový
+• Připomenutí jsou zase spolehlivá — Hotovo nebo Odložit přímo z oznámení
+• Psaní zprávy napoví, s kým se dnes ozvat
+• Vrať zpět skoro cokoli; odlož o 1 den, 3 nebo týden
+• Skupiny filtrují tvou síť a mají vlastní tickle

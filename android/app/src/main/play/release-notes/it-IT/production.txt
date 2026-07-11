@@ -1,6 +1,6 @@
-Questo aggiornamento punta tutto sull'affidabilità:
-• Corretto un crash all'avvio dopo l'aggiornamento
-• I tickles posticipati tornano al termine del rinvio
-• I promemoria sopravvivono ai riavvii e arrivano puntuali
-• Eliminando un contatto si eliminano anche i suoi promemoria
-• Importazione contatti più rapida e scorrimento più fluido
+I tuoi promemoria funzionano finalmente come avrebbero sempre dovuto.
+• Scrivi a qualcuno e Ticklr ti propone di segnare il tickle come fatto
+• I promemoria sono di nuovo affidabili — Fatto o Posticipa dalla notifica
+• Componi ti suggerisce chi sentire oggi
+• Annulla quasi tutto; posticipa di 1 giorno, 3 o una settimana
+• I gruppi filtrano la tua rete e hanno i propri tickles

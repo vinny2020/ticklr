@@ -1,6 +1,6 @@
-Ta aktualizacja stawia na niezawodność:
-• Naprawiono awarię przy uruchamianiu po aktualizacji
-• Odłożone tickles wracają po zakończeniu drzemki
-• Przypomnienia przetrwają restart telefonu i przychodzą na czas
-• Usunięcie kontaktu usuwa też jego przypomnienia
-• Szybszy import kontaktów i płynniejsze przewijanie
+Twoje przypomnienia w końcu działają tak, jak zawsze powinny.
+• Napisz do kogoś, a Ticklr zaproponuje oznaczenie tickle jako zrobione
+• Przypomnienia znów są niezawodne — Zrobione lub Drzemka prosto z powiadomienia
+• Tworzenie podpowiada, z kim się dziś odezwać
+• Cofnij prawie wszystko; drzemka na 1 dzień, 3 lub tydzień
+• Grupy filtrują twoją sieć i mają własne tickle

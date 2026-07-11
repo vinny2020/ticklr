@@ -1,6 +1,6 @@
-Esta atualização é toda sobre fiabilidade:
-• Corrigido um bloqueio ao iniciar após atualizar
-• Os tickles adiados voltam quando o adiamento termina
-• Os lembretes sobrevivem a reinícios e chegam a horas
-• Eliminar um contacto elimina também os seus lembretes
-• Importação de contactos mais rápida e deslocamento mais fluido
+Os teus lembretes funcionam finalmente como sempre deviam.
+• Escreve a alguém e o Ticklr propõe marcar o tickle como feito
+• Os lembretes voltam a ser fiáveis — Feito ou Adiar diretamente da notificação
+• O compor sugere com quem falar hoje
+• Anula quase tudo; adia 1 dia, 3 ou uma semana
+• Os grupos filtram a tua rede e têm os seus próprios tickles

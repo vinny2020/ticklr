@@ -1,6 +1,6 @@
-Deze update draait om betrouwbaarheid:
-• Crash bij het opstarten na een update verholpen
-• Gesnoozede tickles komen terug zodra de snooze afloopt
-• Herinneringen overleven een herstart en komen op tijd
-• Bij het verwijderen van een contact verdwijnen ook de herinneringen
-• Sneller contacten importeren en soepeler scrollen
+Je herinneringen werken eindelijk zoals het altijd had gemoeten.
+• Stuur iemand een bericht en Ticklr biedt aan de tickle af te vinken
+• Herinneringen zijn weer betrouwbaar — Klaar of Uitstellen vanuit de melding
+• Opstellen stelt voor wie vandaag aan de beurt is
+• Maak bijna alles ongedaan; stel 1 dag, 3 of een week uit
+• Groepen filteren je netwerk en hebben eigen tickles

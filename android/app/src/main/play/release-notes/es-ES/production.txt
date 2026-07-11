@@ -1,6 +1,6 @@
-Esta actualización se centra en la fiabilidad:
-• Corregido un fallo al abrir la app tras actualizar
-• Los tickles pospuestos vuelven cuando termina la pausa
-• Los recordatorios sobreviven a los reinicios y llegan a tiempo
-• Al eliminar un contacto también se eliminan sus recordatorios
-• Importación de contactos más rápida y desplazamiento más fluido
+Tus recordatorios por fin funcionan como siempre debieron.
+• Escribe a alguien y Ticklr te ofrece marcar su tickle como hecho
+• Los recordatorios vuelven a ser fiables — Hecho o Posponer desde la notificación
+• Redactar te sugiere con quién toca hablar hoy
+• Deshaz casi todo; pospón 1 día, 3 o una semana
+• Los grupos filtran tu red y tienen sus propios tickles
