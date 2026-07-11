@@ -340,4 +340,13 @@
     <string name="template_default_body">नमस्ते! बस हालचाल पूछने के लिए संदेश भेज रहा हूँ। आशा है आप अच्छे होंगे। जल्द ही बात करते हैं!</string>
     <string name="tickle_prompt_message">हो गया — %1$s के लिए Tickle पूरा मार्क करें?</string>
     <string name="tickle_prompt_mark_done">पूरा मार्क करें</string>
+    <!-- TIC-87: undo economy (confirm/undo for mark-done, snooze, member remove, template delete) -->
+    <string name="common_undo">पूर्ववत करें</string>
+    <string name="tickle_snooze_1_day">1 दिन</string>
+    <string name="tickle_snooze_3_days">3 दिन</string>
+    <string name="tickle_snooze_1_week">1 सप्ताह</string>
+    <string name="tickle_marked_done">पूरा किया के रूप में चिह्नित</string>
+    <string name="tickle_snoozed">टाल दिया</string>
+    <string name="group_member_removed">%1$s हटाया गया</string>
+    <string name="template_deleted">टेम्पलेट हटाया गया</string>
 </resources>

@@ -340,4 +340,13 @@
     <string name="template_default_body">Hoi! Ik wilde even hallo zeggen. Ik hoop dat het goed met je gaat. Tot snel!</string>
     <string name="tickle_prompt_message">Klaar — Tickle voor %1$s als voltooid markeren?</string>
     <string name="tickle_prompt_mark_done">Als klaar markeren</string>
+    <!-- TIC-87: undo economy (confirm/undo for mark-done, snooze, member remove, template delete) -->
+    <string name="common_undo">Ongedaan maken</string>
+    <string name="tickle_snooze_1_day">1 dag</string>
+    <string name="tickle_snooze_3_days">3 dagen</string>
+    <string name="tickle_snooze_1_week">1 week</string>
+    <string name="tickle_marked_done">Gemarkeerd als klaar</string>
+    <string name="tickle_snoozed">Uitgesteld</string>
+    <string name="group_member_removed">%1$s verwijderd</string>
+    <string name="template_deleted">Sjabloon verwijderd</string>
 </resources>

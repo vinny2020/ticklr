@@ -345,4 +345,13 @@
     <string name="tickle_row_tickle_fallback">Tickle</string>
     <string name="template_default_title">Checking in</string>
     <string name="template_default_body">Hey! Just checking in — hope you\'re doing well. Let\'s catch up soon!</string>
+    <!-- TIC-87: undo economy (confirm/undo for mark-done, snooze, member remove, template delete) -->
+    <string name="common_undo">Undo</string>
+    <string name="tickle_snooze_1_day">1 day</string>
+    <string name="tickle_snooze_3_days">3 days</string>
+    <string name="tickle_snooze_1_week">1 week</string>
+    <string name="tickle_marked_done">Marked done</string>
+    <string name="tickle_snoozed">Snoozed</string>
+    <string name="group_member_removed">%1$s removed</string>
+    <string name="template_deleted">Template deleted</string>
 </resources>

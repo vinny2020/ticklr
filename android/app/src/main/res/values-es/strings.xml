@@ -340,4 +340,13 @@
     <string name="template_default_body">¡Hola! Solo quería saludarte. Espero que estés muy bien. ¡Hablamos pronto!</string>
     <string name="tickle_prompt_message">Listo, ¿marcar el tickle de %1$s como hecho?</string>
     <string name="tickle_prompt_mark_done">Marcar hecho</string>
+    <!-- TIC-87: undo economy (confirm/undo for mark-done, snooze, member remove, template delete) -->
+    <string name="common_undo">Deshacer</string>
+    <string name="tickle_snooze_1_day">1 día</string>
+    <string name="tickle_snooze_3_days">3 días</string>
+    <string name="tickle_snooze_1_week">1 semana</string>
+    <string name="tickle_marked_done">Marcado como hecho</string>
+    <string name="tickle_snoozed">Pospuesto</string>
+    <string name="group_member_removed">%1$s eliminado</string>
+    <string name="template_deleted">Plantilla eliminada</string>
 </resources>

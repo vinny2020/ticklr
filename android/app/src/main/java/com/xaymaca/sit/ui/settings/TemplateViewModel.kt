@@ -57,6 +57,22 @@ class TemplateViewModel @Inject constructor(
         }
     }
 
+    /**
+     * TIC-87: re-inserts a swipe-deleted [template] after the user taps UNDO. Passing
+     * the original object (non-zero id) preserves its primary key — Room's
+     * autoGenerate only mints an id when id == 0, and the DAO insert is
+     * onConflict = REPLACE, so the row comes back with its exact prior id/createdAt
+     * (order-stable in the createdAt-desc list). NonCancellable so restoring a real
+     * row can't be lost to a scope teardown mid-write.
+     */
+    fun restoreTemplate(template: MessageTemplate) {
+        viewModelScope.launch {
+            withContext(NonCancellable) {
+                repo.insertTemplate(template)
+            }
+        }
+    }
+
     fun seedDefaultIfNeeded(prefs: SharedPreferences) {
         viewModelScope.launch {
             MessageTemplateSeed.seedDefaultIfNeeded(

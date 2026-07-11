@@ -345,4 +345,13 @@
     <string name="template_default_body">ہیلو! بس آپ کی خیریت پوچھنا چاہتا تھا۔ امید ہے آپ ٹھیک ہوں گے۔ جلد بات کرتے ہیں!</string>
     <string name="tickle_prompt_message">ہو گیا — %1$s کے لیے یاددہانی مکمل کے طور پر نشان زد کریں؟</string>
     <string name="tickle_prompt_mark_done">مکمل نشان زد کریں</string>
+    <!-- TIC-87: undo economy (confirm/undo for mark-done, snooze, member remove, template delete) -->
+    <string name="common_undo">واپس لیں</string>
+    <string name="tickle_snooze_1_day">1 دن</string>
+    <string name="tickle_snooze_3_days">3 دن</string>
+    <string name="tickle_snooze_1_week">1 ہفتہ</string>
+    <string name="tickle_marked_done">مکمل کے طور پر نشان زد</string>
+    <string name="tickle_snoozed">مؤخر کر دیا</string>
+    <string name="group_member_removed">%1$s کو ہٹا دیا گیا</string>
+    <string name="template_deleted">ٹیمپلیٹ حذف کر دیا گیا</string>
 </resources>

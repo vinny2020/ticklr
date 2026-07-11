@@ -345,4 +345,13 @@
     <string name="template_default_body">היי! רק רציתי לבדוק מה שלומך. מקווה שאתה מרגיש טוב. נדבר בקרוב!</string>
     <string name="tickle_prompt_message">בוצע — לסמן את התזכורת עבור %1$s כהושלמה?</string>
     <string name="tickle_prompt_mark_done">סמן כבוצע</string>
+    <!-- TIC-87: undo economy (confirm/undo for mark-done, snooze, member remove, template delete) -->
+    <string name="common_undo">בטל</string>
+    <string name="tickle_snooze_1_day">יום 1</string>
+    <string name="tickle_snooze_3_days">3 ימים</string>
+    <string name="tickle_snooze_1_week">שבוע 1</string>
+    <string name="tickle_marked_done">סומן כבוצע</string>
+    <string name="tickle_snoozed">נדחה</string>
+    <string name="group_member_removed">%1$s הוסר</string>
+    <string name="template_deleted">התבנית נמחקה</string>
 </resources>

@@ -346,4 +346,13 @@
     <string name="template_default_body">Ahoj! Jen se ozývám. Doufám, že se máš dobře. Brzy se ozvu!</string>
     <string name="tickle_prompt_message">Hotovo — označit tickle pro %1$s jako hotový?</string>
     <string name="tickle_prompt_mark_done">Označit jako hotové</string>
+    <!-- TIC-87: undo economy (confirm/undo for mark-done, snooze, member remove, template delete) -->
+    <string name="common_undo">Zpět</string>
+    <string name="tickle_snooze_1_day">1 den</string>
+    <string name="tickle_snooze_3_days">3 dny</string>
+    <string name="tickle_snooze_1_week">1 týden</string>
+    <string name="tickle_marked_done">Označeno jako hotové</string>
+    <string name="tickle_snoozed">Odloženo</string>
+    <string name="group_member_removed">%1$s odebrán</string>
+    <string name="template_deleted">Šablona smazána</string>
 </resources>

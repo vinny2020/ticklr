@@ -1,5 +1,6 @@
 package com.xaymaca.sit.ui.tickle
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -25,6 +26,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -59,7 +64,7 @@ fun TickleActionSheet(
     onCall: () -> Unit,
     onEmail: () -> Unit,
     onMarkDone: () -> Unit,
-    onSnooze: () -> Unit,
+    onSnooze: (days: Int) -> Unit,
     onEdit: () -> Unit,
     onDismiss: () -> Unit,
 ) {
@@ -90,12 +95,16 @@ fun TickleActionContent(
     onCall: () -> Unit,
     onEmail: () -> Unit,
     onMarkDone: () -> Unit,
-    onSnooze: () -> Unit,
+    onSnooze: (days: Int) -> Unit,
     onEdit: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val palette = WarmTheme.palette()
     val category = WarmCategory.from(target.categoryId) ?: WarmCategory.Community
+    // TIC-87: Snooze is a duration choice (1 day / 3 days / 1 week) rather than a
+    // hardcoded 7-day jump. Tapping the row expands the options inline, matching the
+    // sheet's warm row style; picking one snoozes and (via the caller) dismisses.
+    var snoozeExpanded by remember { mutableStateOf(false) }
 
     Column(modifier = modifier.fillMaxWidth()) {
         // Header: avatar + name + frequency
@@ -139,10 +148,41 @@ fun TickleActionContent(
         Box(modifier = Modifier.fillMaxWidth().padding(start = 64.dp).height(1.dp).background(palette.cardBorder))
 
         ActionRow(Icons.Default.CheckCircle, stringResource(R.string.tickle_row_action_done), palette.ink2, onMarkDone)
-        ActionRow(Icons.Default.Snooze, stringResource(R.string.tickle_row_action_snooze), palette.ink2, onSnooze)
+        ActionRow(
+            Icons.Default.Snooze,
+            stringResource(R.string.tickle_row_action_snooze),
+            palette.ink2,
+            onClick = { snoozeExpanded = !snoozeExpanded },
+        )
+        AnimatedVisibility(visible = snoozeExpanded) {
+            Column {
+                SnoozeDurationRow(stringResource(R.string.tickle_snooze_1_day)) { onSnooze(1) }
+                SnoozeDurationRow(stringResource(R.string.tickle_snooze_3_days)) { onSnooze(3) }
+                SnoozeDurationRow(stringResource(R.string.tickle_snooze_1_week)) { onSnooze(7) }
+            }
+        }
         ActionRow(Icons.Default.Edit, stringResource(R.string.common_edit), palette.ink2, onEdit)
 
         Spacer(modifier = Modifier.height(24.dp))
+    }
+}
+
+/** Indented duration option under the expanded Snooze row (TIC-87). Aligns under the
+ *  Snooze label (past the 38dp icon puck + spacing) so it reads as a sub-choice. */
+@Composable
+private fun SnoozeDurationRow(label: String, onClick: () -> Unit) {
+    val palette = WarmTheme.palette()
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(start = 66.dp, end = WarmSpacing.Lg, top = 10.dp, bottom = 10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = label,
+            style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Medium, color = palette.ink2),
+        )
     }
 }
 
