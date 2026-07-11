@@ -67,9 +67,9 @@ git add assets/design-system && git commit -m "Bump design-system pin"
 - **Bundle ID (iOS)**: `com.xaymaca.sit` · **Debug**: `com.xaymaca.sit.debug` (parallel install with App Store build)
 - **Application ID (Android)**: `com.xaymaca.sit`
 - **GitHub repo**: `github.com/vinny2020/ticklr`
-- **Landing page**: `xaymaca.com/sit`
-- **Privacy policy**: `xaymaca.com/sit/privacy`
-- **Support URL**: `xaymaca.com/sit/support`
+- **Landing page**: `ticklr.org`
+- **Privacy policy**: `ticklr.org/privacy`
+- **Support URL**: `ticklr.org/support`
 - **iOS App Store**: `apps.apple.com/us/app/ticklr/id6760884034`
 - **Google Play**: `play.google.com/store/apps/details?id=com.xaymaca.sit`
 
