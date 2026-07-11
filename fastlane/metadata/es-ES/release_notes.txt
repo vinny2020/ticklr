@@ -1,9 +1,7 @@
-Esta actualización hace que los tickles sean sólidos como una roca:
-• Los cumpleaños y aniversarios se mantienen en la fecha correcta, incluso tras posponerlos
-• Tu primer tickle ahora programa su recordatorio de forma fiable
-• Los recordatorios aparecen incluso con la app abierta
-• El interruptor de recordatorios en Ajustes siempre se respeta
-• Al eliminar un contacto también se eliminan sus recordatorios
-• Editar un tickle ya no restablece su programación
-• Importación más rápida y desplazamiento más fluido con muchos contactos
-• Mejoras en iPad y en la disposición de derecha a izquierda
+Tus recordatorios por fin funcionan como siempre debieron.
+• Envía un mensaje y el tickle se marca solo como hecho — con deshacer
+• Toca un recordatorio para ir directo al mensaje; Hecho o Posponer desde la notificación
+• Redactar te sugiere con quién toca hablar hoy
+• Desliza un contacto para escribirle o crear un tickle; la nueva barra A–Z agiliza redes grandes
+• Deshaz casi todo; pospón 1 día, 3 o una semana
+• Los grupos filtran tu red y tienen sus propios tickles

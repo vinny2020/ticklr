@@ -1,9 +1,7 @@
-Dieses Update macht Tickles grundsolide:
-• Geburtstage und Jahrestage bleiben am richtigen Datum – auch nach dem Zurückstellen
-• Dein allererster Tickle plant seine Erinnerung jetzt zuverlässig
-• Erinnerungen erscheinen auch bei geöffneter App
-• Der Erinnerungsschalter in den Einstellungen wird immer beachtet
-• Beim Löschen eines Kontakts werden auch seine Erinnerungen entfernt
-• Das Bearbeiten eines Tickles setzt den Zeitplan nicht mehr zurück
-• Schnellerer Import und flüssigeres Scrollen bei großen Kontaktlisten
-• Feinschliff für iPad und Rechts-nach-links-Layouts
+Deine Erinnerungen funktionieren endlich so, wie sie immer sollten.
+• Schick eine Nachricht und der Tickle hakt sich selbst ab — mit Rückgängig
+• Tippe auf eine Erinnerung und lande direkt in der Nachricht; Erledigt oder Später aus der Benachrichtigung
+• Verfassen schlägt vor, wer heute dran ist
+• Wische über einen Kontakt zum Schreiben oder Tickle-Anlegen; die neue A–Z-Leiste macht große Netzwerke schnell
+• Mach fast alles rückgängig; schlummere 1 Tag, 3 oder eine Woche
+• Gruppen filtern dein Netzwerk und haben eigene Tickles

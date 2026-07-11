@@ -1,9 +1,7 @@
-Cette mise à jour rend les tickles d'une fiabilité à toute épreuve :
-• Les anniversaires et dates importantes restent à la bonne date, même après un report
-• Votre tout premier tickle programme désormais son rappel correctement
-• Les rappels s'affichent même lorsque l'app est ouverte
-• Le réglage des rappels dans Réglages est toujours respecté
-• Supprimer un contact supprime aussi ses rappels
-• Modifier un tickle ne réinitialise plus sa planification
-• Import plus rapide et défilement plus fluide pour les grandes listes de contacts
-• Améliorations sur iPad et pour les langues de droite à gauche
+Tes rappels fonctionnent enfin comme ils l'auraient toujours dû.
+• Envoie un message et le tickle se coche tout seul — avec annulation
+• Touche un rappel pour passer directement au message ; Fait ou Reporter depuis la notification
+• La rédaction suggère qui contacter aujourd'hui
+• Balaye un contact pour lui écrire ou créer un tickle ; le nouveau rail A–Z accélère les grands réseaux
+• Annule presque tout ; reporte d'1 jour, 3 ou une semaine
+• Les groupes filtrent ton réseau et ont leurs propres tickles

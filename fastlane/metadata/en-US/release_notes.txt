@@ -1,9 +1,7 @@
-This update makes tickles rock-solid:
-• Birthdays and anniversaries stay on the right date, even after snoozing
-• Your very first tickle now schedules its reminder reliably
-• Reminders now appear even while the app is open
-• The reminders switch in Settings is always respected
-• Deleting a contact also removes their reminders
-• Editing a tickle no longer resets its schedule
-• Faster import and smoother scrolling for large contact lists
-• iPad and right-to-left layout polish
+Your reminders now work the way they always should have.
+• Send a text and the tickle checks itself off — with undo
+• Tap a reminder to jump straight into a message; Done or Snooze right from the notification
+• Compose suggests who's due today
+• Swipe a contact to text or tickle them; the new A–Z rail makes big networks fast
+• Undo almost anything; snooze for 1 day, 3, or a week
+• Groups can filter your network and carry their own tickles
