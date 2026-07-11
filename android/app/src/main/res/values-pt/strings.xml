@@ -207,6 +207,11 @@
     <string name="compose_suggestions_due_badge">Pendente</string>
     <string name="compose_tickle_offer_message">Criar um Tickle para %1$s?</string>
     <string name="compose_tickle_offer_action">Criar Tickle</string>
+    <string name="compose_template_manage">Gerenciar modelos…</string>
+    <string name="compose_template_create">Criar um modelo…</string>
+    <string name="compose_template_replace_title">Substituir o seu rascunho?</string>
+    <string name="compose_template_replace_message">Ao aplicar este modelo, você vai substituir o que escreveu.</string>
+    <string name="compose_template_replace_confirm">Substituir</string>
 
     <!-- Onboarding -->
     <string name="onboarding_tagline">AS SUAS PESSOAS IMPORTAM</string>

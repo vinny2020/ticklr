@@ -207,6 +207,11 @@
     <string name="compose_suggestions_due_badge">Openstaand</string>
     <string name="compose_tickle_offer_message">Een Tickle voor %1$s maken?</string>
     <string name="compose_tickle_offer_action">Tickle maken</string>
+    <string name="compose_template_manage">Sjablonen beheren…</string>
+    <string name="compose_template_create">Sjabloon maken…</string>
+    <string name="compose_template_replace_title">Concept vervangen?</string>
+    <string name="compose_template_replace_message">Als je dit sjabloon toepast, wordt vervangen wat je hebt getypt.</string>
+    <string name="compose_template_replace_confirm">Vervangen</string>
 
     <!-- Onboarding -->
     <string name="onboarding_tagline">UW MENSEN TELLEN</string>

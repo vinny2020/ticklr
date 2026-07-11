@@ -213,6 +213,12 @@
     <!-- Create-a-tickle offer (TIC-86) \u2014 shown on return from a plain SMS handoff -->
     <string name="compose_tickle_offer_message">Create a tickle for %1$s?</string>
     <string name="compose_tickle_offer_action">Create tickle</string>
+    <!-- Compose template picker \u2014 manage entry, empty state, and replace-draft confirm (TIC-90) -->
+    <string name="compose_template_manage">Manage templates\u2026</string>
+    <string name="compose_template_create">Create a template\u2026</string>
+    <string name="compose_template_replace_title">Replace your draft?</string>
+    <string name="compose_template_replace_message">Applying this template will replace what you\u2019ve typed.</string>
+    <string name="compose_template_replace_confirm">Replace</string>
 
     <!-- Onboarding -->
     <string name="onboarding_tagline">YOUR PEOPLE MATTER</string>

@@ -209,6 +209,11 @@
     <string name="compose_suggestions_due_badge">De făcut</string>
     <string name="compose_tickle_offer_message">Creezi un Tickle pentru %1$s?</string>
     <string name="compose_tickle_offer_action">Creează Tickle</string>
+    <string name="compose_template_manage">Gestionează șabloanele…</string>
+    <string name="compose_template_create">Creează un șablon…</string>
+    <string name="compose_template_replace_title">Înlocuiești ciorna ta?</string>
+    <string name="compose_template_replace_message">Aplicarea acestui șablon va înlocui textul pe care l-ai scris.</string>
+    <string name="compose_template_replace_confirm">Înlocuiește</string>
 
     <!-- Onboarding -->
     <string name="onboarding_tagline">OAMENII TĂI CONTEAZĂ</string>

@@ -207,6 +207,11 @@
     <string name="compose_suggestions_due_badge">बकाया</string>
     <string name="compose_tickle_offer_message">%1$s के लिए Tickle बनाएँ?</string>
     <string name="compose_tickle_offer_action">Tickle बनाएँ</string>
+    <string name="compose_template_manage">टेम्पलेट प्रबंधित करें…</string>
+    <string name="compose_template_create">एक टेम्पलेट बनाएं…</string>
+    <string name="compose_template_replace_title">अपना ड्राफ़्ट बदलें?</string>
+    <string name="compose_template_replace_message">यह टेम्पलेट लागू करने से आपका लिखा हुआ बदल जाएगा।</string>
+    <string name="compose_template_replace_confirm">बदलें</string>
 
     <!-- Onboarding -->
     <string name="onboarding_tagline">आपके लोग मायने रखते हैं</string>

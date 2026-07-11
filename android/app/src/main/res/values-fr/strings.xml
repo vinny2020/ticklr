@@ -207,6 +207,11 @@
     <string name="compose_suggestions_due_badge">À faire</string>
     <string name="compose_tickle_offer_message">Créer un Tickle pour %1$s ?</string>
     <string name="compose_tickle_offer_action">Créer un Tickle</string>
+    <string name="compose_template_manage">Gérer les modèles…</string>
+    <string name="compose_template_create">Créer un modèle…</string>
+    <string name="compose_template_replace_title">Remplacer ton brouillon ?</string>
+    <string name="compose_template_replace_message">L\'application de ce modèle remplacera ce que tu as écrit.</string>
+    <string name="compose_template_replace_confirm">Remplacer</string>
 
     <!-- Onboarding -->
     <string name="onboarding_tagline">VOS CONTACTS COMPTENT</string>

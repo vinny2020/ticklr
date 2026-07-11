@@ -207,6 +207,11 @@
     <string name="compose_suggestions_due_badge">باقی</string>
     <string name="compose_tickle_offer_message">%1$s کے لیے Tickle بنائیں؟</string>
     <string name="compose_tickle_offer_action">Tickle بنائیں</string>
+    <string name="compose_template_manage">ٹیمپلیٹس کا نظم کریں…</string>
+    <string name="compose_template_create">ایک ٹیمپلیٹ بنائیں…</string>
+    <string name="compose_template_replace_title">اپنا ڈرافٹ تبدیل کریں؟</string>
+    <string name="compose_template_replace_message">یہ ٹیمپلیٹ لاگو کرنے سے آپ کا لکھا ہوا متن تبدیل ہو جائے گا۔</string>
+    <string name="compose_template_replace_confirm">تبدیل کریں</string>
 
     <!-- Onboarding -->
     <string name="onboarding_tagline">آپ کے لوگ اہم ہیں</string>

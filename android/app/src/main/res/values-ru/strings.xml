@@ -211,6 +211,11 @@
     <string name="compose_suggestions_due_badge">Пора</string>
     <string name="compose_tickle_offer_message">Создать Tickle для %1$s?</string>
     <string name="compose_tickle_offer_action">Создать Tickle</string>
+    <string name="compose_template_manage">Управление шаблонами…</string>
+    <string name="compose_template_create">Создать шаблон…</string>
+    <string name="compose_template_replace_title">Заменить черновик?</string>
+    <string name="compose_template_replace_message">Применение этого шаблона заменит твой набранный текст.</string>
+    <string name="compose_template_replace_confirm">Заменить</string>
 
     <!-- Onboarding -->
     <string name="onboarding_tagline">ВАШИ ЛЮДИ ВАЖНЫ</string>

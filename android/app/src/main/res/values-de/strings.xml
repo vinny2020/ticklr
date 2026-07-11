@@ -207,6 +207,11 @@
     <string name="compose_suggestions_due_badge">Fällig</string>
     <string name="compose_tickle_offer_message">Einen Tickle für %1$s erstellen?</string>
     <string name="compose_tickle_offer_action">Tickle erstellen</string>
+    <string name="compose_template_manage">Vorlagen verwalten…</string>
+    <string name="compose_template_create">Vorlage erstellen…</string>
+    <string name="compose_template_replace_title">Deinen Entwurf ersetzen?</string>
+    <string name="compose_template_replace_message">Beim Anwenden dieser Vorlage wird dein bisheriger Text ersetzt.</string>
+    <string name="compose_template_replace_confirm">Ersetzen</string>
 
     <!-- Onboarding -->
     <string name="onboarding_tagline">IHRE KONTAKTE ZÄHLEN</string>

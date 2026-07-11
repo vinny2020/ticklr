@@ -205,6 +205,11 @@
     <string name="compose_suggestions_due_badge">예정</string>
     <string name="compose_tickle_offer_message">%1$s님의 Tickle을 만들까요?</string>
     <string name="compose_tickle_offer_action">Tickle 만들기</string>
+    <string name="compose_template_manage">템플릿 관리…</string>
+    <string name="compose_template_create">템플릿 만들기…</string>
+    <string name="compose_template_replace_title">초안을 바꿀까요?</string>
+    <string name="compose_template_replace_message">이 템플릿을 적용하면 입력한 내용이 바뀝니다.</string>
+    <string name="compose_template_replace_confirm">바꾸기</string>
 
     <!-- Onboarding -->
     <string name="onboarding_tagline">당신의 사람들이 중요합니다</string>

@@ -205,6 +205,11 @@
     <string name="compose_suggestions_due_badge">期限</string>
     <string name="compose_tickle_offer_message">%1$s の Tickle を作成しますか？</string>
     <string name="compose_tickle_offer_action">Tickle を作成</string>
+    <string name="compose_template_manage">テンプレートを管理…</string>
+    <string name="compose_template_create">テンプレートを作成…</string>
+    <string name="compose_template_replace_title">下書きを置き換えますか？</string>
+    <string name="compose_template_replace_message">このテンプレートを適用すると、入力した内容が置き換わります。</string>
+    <string name="compose_template_replace_confirm">置き換える</string>
 
     <!-- Onboarding -->
     <string name="onboarding_tagline">あなたの人とのつながりが大切</string>

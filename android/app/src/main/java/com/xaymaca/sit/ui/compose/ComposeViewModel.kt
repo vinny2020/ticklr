@@ -213,14 +213,33 @@ class ComposeViewModel @Inject constructor(
     fun clearCompose() {
         _selectedContact.value = null
         messageBody.value = ""
+        lastAppliedTemplateBody = null
     }
 
     fun setMessage(text: String) {
         messageBody.value = text
+        // Any edit that leaves the body reading differently than the last
+        // template applied means it's no longer a safe-to-overwrite draft.
+        if (text != lastAppliedTemplateBody) lastAppliedTemplateBody = null
     }
+
+    // TIC-90: the body of the most recently applied template, so a second
+    // template application can tell an untouched draft (safe to overwrite)
+    // apart from user-typed text (needs a confirm prompt first). Cleared by
+    // setMessage/clearCompose whenever the body no longer matches it.
+    private var lastAppliedTemplateBody: String? = null
+
+    /**
+     * TIC-90: whether applying [MessageTemplate] right now would silently
+     * clobber user-typed text. ComposeScreen calls this before applying a
+     * template and shows a "Replace your draft?" confirmation when true.
+     */
+    fun shouldConfirmTemplateReplace(): Boolean =
+        TemplateApplyDecision.shouldConfirmReplace(messageBody.value, lastAppliedTemplateBody)
 
     fun applyTemplate(template: MessageTemplate) {
         messageBody.value = template.body
+        lastAppliedTemplateBody = template.body
     }
 
     fun showToast(message: String) {
