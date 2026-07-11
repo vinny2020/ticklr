@@ -46,14 +46,7 @@ struct TickleScheduler {
         // ("model instance was destroyed"). The escaping closure must never
         // capture the TickleReminder (or its Contact/Group) itself.
         let identifier = "tickle-\(reminder.id.uuidString)"
-        let name: String
-        if let contact = reminder.contact {
-            name = contact.fullName.isEmpty ? "someone" : contact.fullName
-        } else if let group = reminder.group {
-            name = group.name
-        } else {
-            name = "someone"
-        }
+        let name = notificationDisplayName(for: reminder)
         let bodyText = reminder.note.isEmpty ? reminder.frequency.localizedName : reminder.note
         let dueDate = reminder.nextDueDate
         // Snapshot the routing IDs as plain values too (same reason as `name`
@@ -101,6 +94,21 @@ struct TickleScheduler {
             } catch {
                 print("Ticklr: failed to schedule \(identifier): \(error)")
             }
+        }
+    }
+
+    /// The name shown in a reminder's notification title: the contact's full
+    /// name when contact-anchored, else the anchoring group's name for a group
+    /// tickle (TIC-88), else a generic fallback. Pure and synchronous — read
+    /// before the scheduling Task suspends so no `@Model` is captured in the
+    /// escaping closure — and directly unit-testable for the precedence rules.
+    static func notificationDisplayName(for reminder: TickleReminder) -> String {
+        if let contact = reminder.contact {
+            return contact.fullName.isEmpty ? "someone" : contact.fullName
+        } else if let group = reminder.group {
+            return group.name
+        } else {
+            return "someone"
         }
     }
 

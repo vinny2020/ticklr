@@ -13,39 +13,57 @@ struct GroupListView: View {
     /// undoable mark-done/snooze — it's guarded by a destructive confirmation that
     /// spells out the cascade count (TIC-87).
     @State private var groupPendingDeletion: ContactGroup?
+    /// Drives the create-with-members flow (TIC-88): creating a group parks it
+    /// here, and the create sheet's dismissal promotes it to the Add Members
+    /// sheet. See `GroupCreationFlow`.
+    @State private var creationFlow = GroupCreationFlow()
 
     private let warmth: Warmth = .subtle
     private var palette: WarmPalette { WarmTheme.palette(for: warmth) }
 
     var body: some View {
         NavigationSplitView {
-            ScrollView {
-                LazyVStack(alignment: .leading, spacing: 14) {
-                    header
-                        .padding(.horizontal, WarmSpacing.lg)
-                        .padding(.top, 8)
+            sidebar
+        } detail: {
+            detail
+        }
+    }
 
-                    ForEach(canonicalGroups, id: \.persistentModelID) { group in
-                        canonicalRow(group)
-                            .padding(.horizontal, WarmSpacing.lg)
-                    }
+    // MARK: - Columns
 
-                    if !userGroups.isEmpty {
-                        WarmEyebrow(text: yourGroupsLabel, warmth: warmth)
-                            .padding(.horizontal, WarmSpacing.lg)
-                            .padding(.top, 12)
-                        WarmListContainer(warmth: warmth) {
-                            ForEach(Array(userGroups.enumerated()), id: \.element.persistentModelID) { idx, group in
-                                userGroupRow(group)
-                                if idx < userGroups.count - 1 {
-                                    WarmRowDivider(warmth: warmth)
-                                }
-                            }
+    private var scrollContent: some View {
+        LazyVStack(alignment: .leading, spacing: 14) {
+            header
+                .padding(.horizontal, WarmSpacing.lg)
+                .padding(.top, 8)
+
+            ForEach(canonicalGroups, id: \.persistentModelID) { group in
+                canonicalRow(group)
+                    .padding(.horizontal, WarmSpacing.lg)
+            }
+
+            if !userGroups.isEmpty {
+                WarmEyebrow(text: yourGroupsLabel, warmth: warmth)
+                    .padding(.horizontal, WarmSpacing.lg)
+                    .padding(.top, 12)
+                WarmListContainer(warmth: warmth) {
+                    ForEach(Array(userGroups.enumerated()), id: \.element.persistentModelID) { idx, group in
+                        userGroupRow(group)
+                        if idx < userGroups.count - 1 {
+                            WarmRowDivider(warmth: warmth)
                         }
-                        .padding(.horizontal, WarmSpacing.lg)
                     }
                 }
-                .padding(.bottom, 24)
+                .padding(.horizontal, WarmSpacing.lg)
+            }
+        }
+        .padding(.bottom, 24)
+    }
+
+    @ViewBuilder
+    private var sidebar: some View {
+        ScrollView {
+                scrollContent
             }
             .background(palette.paper.ignoresSafeArea())
             .navigationTitle("")
@@ -60,11 +78,16 @@ struct GroupListView: View {
                     }
                 }
             }
-            .sheet(isPresented: $showingAddGroup) {
-                GroupEditSheet(group: nil)
+            .sheet(isPresented: $showingAddGroup, onDismiss: { creationFlow.createSheetDismissed() }) {
+                GroupEditSheet(group: nil, onCreated: { creationFlow.groupCreated($0) })
             }
             .sheet(item: $editingGroup) { group in
                 GroupEditSheet(group: group)
+            }
+            // Presented only once the create sheet has fully dismissed —
+            // stacking two sheets in the same frame drops one (TIC-88).
+            .sheet(item: populateGroupBinding) { group in
+                AddMembersSheet(group: group)
             }
             .confirmationDialog(
                 String(localized: "groupList.deleteConfirm.title \(groupPendingDeletion?.displayName ?? "")"),
@@ -92,25 +115,37 @@ struct GroupListView: View {
                     )
                 }
             }
-        } detail: {
-            if let selectedGroup {
-                NavigationStack {
-                    GroupDetailView(group: selectedGroup)
-                }
-            } else {
-                ContentUnavailableView(
-                    String(localized: "warm.groups.detail.empty.title",
-                           defaultValue: "Pick a circle"),
-                    systemImage: "person.3.sequence",
-                    description: Text(String(localized: "warm.groups.detail.empty.description",
-                                              defaultValue: "Choose a group to see its members."))
-                )
-                .background(palette.paper.ignoresSafeArea())
+    }
+
+    @ViewBuilder
+    private var detail: some View {
+        if let selectedGroup {
+            NavigationStack {
+                GroupDetailView(group: selectedGroup)
             }
+        } else {
+            ContentUnavailableView(
+                String(localized: "warm.groups.detail.empty.title",
+                       defaultValue: "Pick a circle"),
+                systemImage: "person.3.sequence",
+                description: Text(String(localized: "warm.groups.detail.empty.description",
+                                          defaultValue: "Choose a group to see its members."))
+            )
+            .background(palette.paper.ignoresSafeArea())
         }
     }
 
     // MARK: - Pieces
+
+    /// Drives the deferred Add Members sheet for a just-created group. Extracted
+    /// from the view builder so the type-checker doesn't choke on an inline
+    /// `Binding(get:set:)` inside the already-large body.
+    private var populateGroupBinding: Binding<ContactGroup?> {
+        Binding(
+            get: { creationFlow.groupToPopulate },
+            set: { if $0 == nil { creationFlow.populateFinished() } }
+        )
+    }
 
     private var header: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -210,10 +245,49 @@ struct GroupListView: View {
     }
 }
 
+// MARK: - Create-with-members flow (TIC-88)
+
+/// Two-phase "create a group, then immediately populate it" state machine.
+///
+/// A freshly created group can't be handed to the Add Members sheet while the
+/// create sheet is still on screen — presenting a second sheet mid-dismiss
+/// races and one gets dropped. So creation parks the new group in
+/// `pendingCreatedGroup`; the create sheet's `onDismiss` promotes it to
+/// `groupToPopulate`, which drives the Add Members sheet. A cancelled create
+/// (nothing parked) is a no-op. Extracted as a value type so the transition
+/// rules are unit-testable without hosting the view.
+struct GroupCreationFlow {
+    private(set) var pendingCreatedGroup: ContactGroup?
+    var groupToPopulate: ContactGroup?
+
+    /// A group was just created in the edit sheet — park it until the sheet closes.
+    mutating func groupCreated(_ group: ContactGroup) {
+        pendingCreatedGroup = group
+    }
+
+    /// The create/edit sheet finished dismissing. Promote a freshly created
+    /// group into the populate slot; a plain cancel (nothing parked) does nothing.
+    mutating func createSheetDismissed() {
+        guard let group = pendingCreatedGroup else { return }
+        pendingCreatedGroup = nil
+        groupToPopulate = group
+    }
+
+    /// The Add Members sheet closed — clear the populate slot.
+    mutating func populateFinished() {
+        groupToPopulate = nil
+    }
+}
+
 // MARK: - Create / Edit Sheet
 
 struct GroupEditSheet: View {
     let group: ContactGroup?
+    /// Called with the newly-inserted group right after a successful *create*
+    /// (never on edit), so the presenter can immediately open Add Members for
+    /// it — the create-with-members flow (TIC-88). Fires after the context is
+    /// saved so the group is fully persisted.
+    var onCreated: ((ContactGroup) -> Void)? = nil
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
     @Query(sort: \ContactGroup.name) private var allGroups: [ContactGroup]
@@ -227,8 +301,9 @@ struct GroupEditSheet: View {
         "🎯", "💡", "🌱", "🔥", "🎉", "🤝"
     ]
 
-    init(group: ContactGroup?) {
+    init(group: ContactGroup?, onCreated: ((ContactGroup) -> Void)? = nil) {
         self.group = group
+        self.onCreated = onCreated
         _name = State(initialValue: group?.displayName ?? "")
         _emoji = State(initialValue: group?.emoji ?? "👥")
     }
@@ -332,11 +407,15 @@ struct GroupEditSheet: View {
         if let group {
             if !isCanonical { group.name = trimmedName }   // canonical name is derived
             group.emoji = trimmedEmoji
+            try? modelContext.save()
         } else {
             let newGroup = ContactGroup(name: trimmedName, emoji: trimmedEmoji)
             modelContext.insert(newGroup)
+            try? modelContext.save()
+            // TIC-88: hand the persisted group back so the Groups list can
+            // auto-open Add Members for it — no extra taps to start populating.
+            onCreated?(newGroup)
         }
-        try? modelContext.save()
         dismiss()
     }
 }

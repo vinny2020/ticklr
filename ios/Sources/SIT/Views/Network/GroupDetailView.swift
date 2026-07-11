@@ -9,6 +9,7 @@ struct GroupDetailView: View {
     @State private var searchText = ""
     @State private var showingAddMembers = false
     @State private var showingEditGroup = false
+    @State private var showingCreateTickle = false
 
     var members: [Contact] {
         let base = group.contacts.sorted { $0.lastName < $1.lastName }
@@ -37,13 +38,25 @@ struct GroupDetailView: View {
         .navigationTitle("\(group.emoji) \(group.displayName)")
         .navigationBarTitleDisplayMode(.large)
         .toolbar {
+            // TIC-88: group-level actions promoted out of the ellipsis menu.
+            // "Create a tickle" and "Add Members" are now direct toolbar
+            // buttons; only "Edit group" remains behind the overflow menu.
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    showingCreateTickle = true
+                } label: {
+                    Label(String(localized: "warm.contact.createTickle"), systemImage: "bell.badge")
+                }
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    showingAddMembers = true
+                } label: {
+                    Label(String(localized: "groupDetail.menu.addMembers"), systemImage: "person.badge.plus")
+                }
+            }
             ToolbarItem(placement: .topBarTrailing) {
                 Menu {
-                    Button {
-                        showingAddMembers = true
-                    } label: {
-                        Label(String(localized: "groupDetail.menu.addMembers"), systemImage: "person.badge.plus")
-                    }
                     Button {
                         showingEditGroup = true
                     } label: {
@@ -71,12 +84,20 @@ struct GroupDetailView: View {
         .sheet(isPresented: $showingEditGroup) {
             GroupEditSheet(group: group)
         }
+        .sheet(isPresented: $showingCreateTickle) {
+            // Bound to this group: on save the reminder's `group` is wired and
+            // `contact` left nil (TIC-88). TickleEditView hosts its own
+            // NavigationStack and dismisses via the sheet.
+            TickleEditView(group: group)
+        }
     }
 }
 
 // MARK: - Add Members Sheet
 
-private struct AddMembersSheet: View {
+/// Internal (not `private`) so the Groups list can present it directly after a
+/// create-with-members flow (TIC-88), in addition to Group Detail's own button.
+struct AddMembersSheet: View {
     @Bindable var group: ContactGroup
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss

@@ -35,6 +35,16 @@ struct TickleEditView: View {
     private let initialCustomIntervalDays: Int
     private let initialStartDate: Date
 
+    /// Group this editor is bound to when creating a group-anchored tickle
+    /// (TIC-88) — mirrors `contact:` for the group case. On save of a NEW
+    /// reminder with no contact picked, the reminder's `group` is wired and its
+    /// `contact` left nil; if the user does pick a contact, the contact wins
+    /// and this link is dropped (same precedence as the TIC-70 edit path).
+    /// Only set on the create path — editing an existing reminder preserves its
+    /// stored target, so this stays nil there. Read synchronously in `save()`;
+    /// never captured by the notification-scheduling escaping closure.
+    private let creationGroup: ContactGroup?
+
     /// Close the editor — via the pane callback on iPad, else the sheet dismiss.
     private func close() {
         if let onClose { onClose() } else { dismiss() }
@@ -45,13 +55,16 @@ struct TickleEditView: View {
     /// TIC-70: a group-anchored reminder (no contact) is still saveable — an
     /// existing group link satisfies the target requirement in place of a contact.
     private var canSave: Bool {
-        (selectedContact != nil || existing?.group != nil) && !isSaving
+        (selectedContact != nil || existing?.group != nil || creationGroup != nil) && !isSaving
     }
 
-    init(contact: Contact? = nil, existing: TickleReminder? = nil, prefilledCategory: WarmCategory? = nil, onClose: (() -> Void)? = nil, onSaved: ((String) -> Void)? = nil) {
+    init(contact: Contact? = nil, group: ContactGroup? = nil, existing: TickleReminder? = nil, prefilledCategory: WarmCategory? = nil, onClose: (() -> Void)? = nil, onSaved: ((String) -> Void)? = nil) {
         self.existing = existing
         self.onClose = onClose
         self.onSaved = onSaved
+        // A group binding only applies to a brand-new reminder; editing keeps
+        // the existing reminder's own target.
+        self.creationGroup = existing == nil ? group : nil
         if let r = existing {
             _selectedContact     = State(initialValue: r.contact)
             _frequency           = State(initialValue: r.frequency)
@@ -84,10 +97,12 @@ struct TickleEditView: View {
                         HStack {
                             if let c = selectedContact {
                                 Text(c.fullName).foregroundStyle(.primary)
-                            } else if let group = existing?.group {
-                                // TIC-70: show the anchoring group's name where the
-                                // contact name would go, so the user sees the reminder
-                                // is group-based rather than an empty target.
+                            } else if let group = existing?.group ?? creationGroup {
+                                // TIC-70/TIC-88: show the anchoring group's name where
+                                // the contact name would go, so the user sees the
+                                // reminder is group-based rather than an empty target —
+                                // both when editing an existing group tickle and when
+                                // creating one from a group's detail screen.
                                 Text(group.displayName).foregroundStyle(.primary)
                             } else {
                                 Text(String(localized: "tickleEdit.placeholder.contact")).foregroundStyle(.secondary)
@@ -214,9 +229,13 @@ struct TickleEditView: View {
                 TickleScheduler.scheduleNotification(for: r)
             }
         } else {
+            // TIC-88: a group-anchored new tickle wires `group` and leaves
+            // `contact` nil. If a contact was picked in a group-seeded editor,
+            // the contact wins (mirrors the TIC-70 edit rule) and the group
+            // link is dropped so the reminder isn't double-targeted.
             let reminder = TickleReminder(
                 contact:            selectedContact,
-                group:              nil,
+                group:              selectedContact == nil ? creationGroup : nil,
                 note:               finalNote,
                 frequency:          frequency,
                 customIntervalDays: intervalDays,

@@ -280,6 +280,45 @@ final class TickleEditViewTests: XCTestCase {
         XCTAssertEqual(view.frequency, .annual)
     }
 
+    // MARK: - TIC-88: group-anchored tickle creation via the edit view path
+
+    func testNewGroupTickleSeedsFrequencyFromStoredDefault() {
+        // A group tickle (opened from a group's detail screen) seeds its
+        // frequency from the Settings default, exactly like a contact tickle —
+        // it must not be hardcoded, and the group binding must not divert it.
+        UserDefaults.standard.set(TickleFrequency.quarterly.rawValue, forKey: "defaultTickleFrequency")
+
+        let group = ContactGroup(name: "Hiking Crew")
+        let view = TickleEditView(group: group)
+
+        XCTAssertEqual(view.frequency, .quarterly)
+    }
+
+    func testEditingGroupTickleWithoutPickingContactKeepsGroupAndContactNil() throws {
+        // The group-creation feature leans on the TIC-70 edit rule: a
+        // group-anchored reminder saved without picking a contact keeps its
+        // group link and its contact stays nil (rather than being unlinked or
+        // silently turned into an "Unknown"-contact reminder).
+        let group = ContactGroup(name: "Book Club")
+        let futureStart = Date().addingTimeInterval(14 * 24 * 60 * 60)
+        let reminder = TickleReminder(
+            contact: nil,
+            group: group,
+            note: "plan next read",
+            frequency: .monthly,
+            startDate: futureStart
+        )
+        XCTAssertNil(reminder.contact)
+        XCTAssertNotNil(reminder.group)
+
+        let view = TickleEditView(existing: reminder)
+        let sut = try view.inspect()
+        try sut.find(button: String(localized: "common.save")).tap()
+
+        XCTAssertNil(reminder.contact, "Saving a group tickle without a picked contact must leave contact nil")
+        XCTAssertEqual(reminder.group?.id, group.id, "The group link must be preserved on save")
+    }
+
     // NOTE on rapid-tap regression: a true end-to-end test on iOS would need
     // the ViewInspector inspection-callback pattern (adding a
     // `didAppear: ((Self) -> Void)?` to TickleEditView), because
