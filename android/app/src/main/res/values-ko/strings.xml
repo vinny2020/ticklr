@@ -18,6 +18,9 @@
     <string name="common_update">업데이트</string>
     <string name="common_send">보내기</string>
     <string name="common_change">변경</string>
+    <string name="common_done">완료</string>
+    <!-- TIC-96: shared empty-database CTA -->
+    <string name="common_add_or_import_contacts">연락처 추가 또는 가져오기</string>
     <string name="common_edit">편집</string>
 
     <!-- Settings -->
@@ -101,6 +104,8 @@
     <string name="tickle_edit_create_group_button">그룹 만들기</string>
     <string name="tickle_edit_new_group_dialog_title">새 그룹</string>
     <string name="tickle_edit_group_name_label">그룹 이름</string>
+    <!-- TIC-96: empty-database dead-end fix for the contact picker -->
+    <string name="tickle_edit_empty_contacts_title">아직 연락처가 없어요.</string>
     <string name="tickle_saved">Tickle이 저장되었습니다</string>
     <string name="tickle_updated">Tickle이 업데이트되었습니다</string>
     <string name="tickle_notification_contact_fallback">연락처</string>
@@ -195,6 +200,10 @@
     <string name="compose_to_label">받는 사람</string>
     <string name="compose_search_placeholder">연락처 검색…</string>
     <string name="compose_no_phone">전화번호가 없습니다</string>
+    <!-- TIC-96: inline no-phone dead-end fix -->
+    <string name="compose_add_number">번호 추가</string>
+    <!-- TIC-96: empty-database dead-end fix -->
+    <string name="compose_empty_contacts_title">아직 연락처가 없어요.</string>
     <string name="compose_select_template">템플릿 선택</string>
     <string name="compose_message_label">메시지</string>
     <string name="compose_message_placeholder">메시지를 입력하세요…</string>
@@ -351,4 +360,8 @@
     <string name="tickle_snoozed">미룸</string>
     <string name="group_member_removed">%1$s 제거됨</string>
     <string name="template_deleted">템플릿 삭제됨</string>
+    <!-- TIC-96: multi-phone chooser -->
+    <string name="phone_chooser_title">번호 선택</string>
+    <!-- TIC-96: honest picker-cap hint -->
+    <string name="picker_showing_hint">%2$d개 중 %1$d개 표시</string>
 </resources>

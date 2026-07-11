@@ -18,6 +18,9 @@
     <string name="common_update">Uppdatera</string>
     <string name="common_send">Skicka</string>
     <string name="common_change">Ändra</string>
+    <string name="common_done">Klart</string>
+    <!-- TIC-96: shared empty-database CTA -->
+    <string name="common_add_or_import_contacts">Lägg till eller importera kontakter</string>
     <string name="common_edit">Redigera</string>
 
     <!-- Settings -->
@@ -102,6 +105,8 @@
     <string name="tickle_edit_create_group_button">Skapa en grupp</string>
     <string name="tickle_edit_new_group_dialog_title">Ny grupp</string>
     <string name="tickle_edit_group_name_label">Gruppnamn</string>
+    <!-- TIC-96: empty-database dead-end fix for the contact picker -->
+    <string name="tickle_edit_empty_contacts_title">Du har inga kontakter än.</string>
     <string name="tickle_saved">Tickle sparad</string>
     <string name="tickle_updated">Tickle uppdaterad</string>
     <string name="tickle_notification_contact_fallback">din kontakt</string>
@@ -197,6 +202,10 @@
     <string name="compose_to_label">Till</string>
     <string name="compose_search_placeholder">Sök kontakter…</string>
     <string name="compose_no_phone">Inget telefonnummer registrerat</string>
+    <!-- TIC-96: inline no-phone dead-end fix -->
+    <string name="compose_add_number">Lägg till ett nummer</string>
+    <!-- TIC-96: empty-database dead-end fix -->
+    <string name="compose_empty_contacts_title">Du har inga kontakter än.</string>
     <string name="compose_select_template">Välj mall</string>
     <string name="compose_message_label">Meddelande</string>
     <string name="compose_message_placeholder">Skriv ditt meddelande…</string>
@@ -356,4 +365,8 @@
     <string name="tickle_snoozed">Uppskjuten</string>
     <string name="group_member_removed">%1$s borttagen</string>
     <string name="template_deleted">Mall borttagen</string>
+    <!-- TIC-96: multi-phone chooser -->
+    <string name="phone_chooser_title">Välj ett nummer</string>
+    <!-- TIC-96: honest picker-cap hint -->
+    <string name="picker_showing_hint">Visar %1$d av %2$d</string>
 </resources>

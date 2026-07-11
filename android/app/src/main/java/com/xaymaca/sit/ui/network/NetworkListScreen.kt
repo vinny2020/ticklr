@@ -1,5 +1,7 @@
 package com.xaymaca.sit.ui.network
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -31,6 +33,7 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -44,10 +47,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -56,6 +61,11 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.xaymaca.sit.R
 import com.xaymaca.sit.data.model.Contact
+import com.xaymaca.sit.service.StringListConverter
+import com.xaymaca.sit.ui.shared.PendingPhoneChoice
+import com.xaymaca.sit.ui.shared.PhoneChoice
+import com.xaymaca.sit.ui.shared.PhoneChooser
+import com.xaymaca.sit.ui.shared.PhoneNumberChooserDialog
 import com.xaymaca.sit.ui.theme.WarmCategory
 import com.xaymaca.sit.ui.theme.WarmHeadingFont
 import com.xaymaca.sit.ui.theme.WarmSpacing
@@ -65,6 +75,7 @@ import com.xaymaca.sit.ui.warm.ContactPhotoView
 import com.xaymaca.sit.ui.warm.ContactPhotoStyle
 import com.xaymaca.sit.ui.warm.FilterChipKind
 import com.xaymaca.sit.ui.warm.WarmFilterChip
+import kotlinx.coroutines.launch
 
 private val CHIP_CATEGORIES = listOf(
     WarmCategory.Family,
@@ -79,6 +90,10 @@ fun NetworkListScreen(
     onContactClick: (Long) -> Unit,
     onAddContact: () -> Unit,
     onImport: () -> Unit,
+    /** TIC-96: long-press "Send a text" quick action. */
+    onCompose: (contactId: Long, reminderId: Long?) -> Unit = { _, _ -> },
+    /** TIC-96: long-press "Create a tickle" quick action. */
+    onAddTickleForContact: (Long) -> Unit = {},
     viewModel: NetworkViewModel = hiltViewModel(),
 ) {
     val warmth = Warmth.Subtle
@@ -90,6 +105,11 @@ fun NetworkListScreen(
     val userGroups by viewModel.userGroups.collectAsState()
     var showMenu by remember { mutableStateOf(false) }
     var contactToDelete by remember { mutableStateOf<Contact?>(null) }
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+    // TIC-96: a resolved multi-number choice awaiting the user's pick for the
+    // long-press quick action's Call row — see PhoneChooser.
+    var phoneChoice by remember { mutableStateOf<PendingPhoneChoice?>(null) }
 
     Scaffold(
         containerColor = palette.paper,
@@ -149,7 +169,29 @@ fun NetworkListScreen(
                     contact = contact,
                     palette = palette,
                     onClick = { onContactClick(contact.id) },
-                    onLongPress = { contactToDelete = contact },
+                    // TIC-96: long-press quick actions — Send a text / Create a
+                    // tickle / Call / Delete — replacing the delete-only long
+                    // press. Delete keeps its existing confirm dialog below.
+                    onSendText = {
+                        coroutineScope.launch {
+                            val dueReminderId = viewModel.dueReminderIdForContact(contact.id)
+                            onCompose(contact.id, dueReminderId)
+                        }
+                    },
+                    onCreateTickle = { onAddTickleForContact(contact.id) },
+                    onCall = {
+                        val phones = stringListConverter.fromString(contact.phoneNumbers)
+                        when (val choice = PhoneChooser.choose(phones)) {
+                            is PhoneChoice.Direct ->
+                                context.startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:${choice.number}")))
+                            is PhoneChoice.NeedsChoice ->
+                                phoneChoice = PendingPhoneChoice(choice.numbers) { number ->
+                                    context.startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:$number")))
+                                }
+                            PhoneChoice.None -> {}
+                        }
+                    },
+                    onDeleteRequested = { contactToDelete = contact },
                 )
                 Box(
                     modifier = Modifier
@@ -199,6 +241,14 @@ fun NetworkListScreen(
                     Text(stringResource(R.string.common_cancel))
                 }
             },
+        )
+    }
+
+    phoneChoice?.let { pending ->
+        PhoneNumberChooserDialog(
+            numbers = pending.numbers,
+            onSelect = { number -> pending.onChosen(number); phoneChoice = null },
+            onDismiss = { phoneChoice = null },
         )
     }
 }
@@ -299,45 +349,84 @@ private fun ContactRow(
     contact: Contact,
     palette: com.xaymaca.sit.ui.theme.WarmPalette,
     onClick: () -> Unit,
-    onLongPress: () -> Unit,
+    /** TIC-96: long-press quick actions, replacing the previous delete-only
+     *  long press. Delete keeps its confirm dialog (owned by the caller). */
+    onSendText: () -> Unit,
+    onCreateTickle: () -> Unit,
+    onCall: () -> Unit,
+    onDeleteRequested: () -> Unit,
 ) {
     // For row tinting we'd need to resolve the contact's first canonical
     // group; ContactPhotoView's fallback uses .Community when it can't
     // resolve, which is the spec'd behavior for uncategorized contacts.
     val category = WarmCategory.Community
+    var showQuickActions by remember { mutableStateOf(false) }
+    val hasPhone = remember(contact.phoneNumbers) {
+        stringListConverter.fromString(contact.phoneNumbers).isNotEmpty()
+    }
 
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .combinedClickable(onClick = onClick, onLongClick = onLongPress)
-            .padding(horizontal = WarmSpacing.Lg, vertical = WarmSpacing.Md),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        ContactPhotoView(
-            contact = contact,
-            category = category,
-            style = ContactPhotoStyle.List,
-        )
-        Spacer(modifier = Modifier.width(12.dp))
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = contact.fullName.ifBlank { stringResource(R.string.common_no_name) },
-                style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = palette.ink),
-                maxLines = 1,
+    Box {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .combinedClickable(onClick = onClick, onLongClick = { showQuickActions = true })
+                .padding(horizontal = WarmSpacing.Lg, vertical = WarmSpacing.Md),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            ContactPhotoView(
+                contact = contact,
+                category = category,
+                style = ContactPhotoStyle.List,
             )
-            if (contact.company.isNotBlank()) {
+            Spacer(modifier = Modifier.width(12.dp))
+            Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = contact.company,
-                    style = TextStyle(fontSize = 13.sp, color = palette.ink2),
+                    text = contact.fullName.ifBlank { stringResource(R.string.common_no_name) },
+                    style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = palette.ink),
                     maxLines = 1,
                 )
+                if (contact.company.isNotBlank()) {
+                    Text(
+                        text = contact.company,
+                        style = TextStyle(fontSize = 13.sp, color = palette.ink2),
+                        maxLines = 1,
+                    )
+                }
             }
+            Icon(
+                imageVector = Icons.Filled.ChevronRight,
+                contentDescription = null,
+                tint = palette.ink3,
+                modifier = Modifier.size(20.dp),
+            )
         }
-        Icon(
-            imageVector = Icons.Filled.ChevronRight,
-            contentDescription = null,
-            tint = palette.ink3,
-            modifier = Modifier.size(20.dp),
-        )
+        DropdownMenu(
+            expanded = showQuickActions,
+            onDismissRequest = { showQuickActions = false },
+        ) {
+            DropdownMenuItem(
+                text = { Text(stringResource(R.string.warm_contact_sendTickle)) },
+                enabled = hasPhone,
+                onClick = { showQuickActions = false; onSendText() },
+            )
+            DropdownMenuItem(
+                text = { Text(stringResource(R.string.warm_contact_createTickle)) },
+                onClick = { showQuickActions = false; onCreateTickle() },
+            )
+            DropdownMenuItem(
+                text = { Text(stringResource(R.string.warm_contact_call)) },
+                enabled = hasPhone,
+                onClick = { showQuickActions = false; onCall() },
+            )
+            HorizontalDivider(color = palette.cardBorder)
+            DropdownMenuItem(
+                text = { Text(stringResource(R.string.common_delete), color = MaterialTheme.colorScheme.error) },
+                onClick = { showQuickActions = false; onDeleteRequested() },
+            )
+        }
     }
 }
+
+// Single source of truth for JSON-array parsing — the same converter Room uses
+// for the phoneNumbers column.
+private val stringListConverter = StringListConverter()

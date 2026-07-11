@@ -42,7 +42,6 @@ fun SettingsScreen(
     val seedMessage by viewModel.seedMessage.collectAsState()
 
     var showThemeDialog by remember { mutableStateOf(false) }
-    var tempThemeMode by remember(showThemeDialog) { mutableIntStateOf(themeMode) }
 
     var showResetConfirm by remember { mutableStateOf(false) }
     var showClearConfirm by remember { mutableStateOf(false) }
@@ -211,37 +210,30 @@ fun SettingsScreen(
     }
 
     if (showThemeDialog) {
+        // TIC-96: applies immediately on tap via the existing SettingsViewModel
+        // pref listener — no separate OK/Cancel step, since there's nothing left
+        // to confirm or discard. The dialog is just a "Done" close affordance.
         AlertDialog(
             onDismissRequest = { showThemeDialog = false },
             title = { Text(stringResource(R.string.settings_choose_theme)) },
             text = {
                 Column {
-                    ThemeOption(stringResource(R.string.settings_theme_system), tempThemeMode == 0) {
-                        tempThemeMode = 0
+                    ThemeOption(stringResource(R.string.settings_theme_system), themeMode == 0) {
+                        viewModel.setThemeMode(0)
                     }
-                    ThemeOption(stringResource(R.string.settings_theme_light), tempThemeMode == 1) {
-                        tempThemeMode = 1
+                    ThemeOption(stringResource(R.string.settings_theme_light), themeMode == 1) {
+                        viewModel.setThemeMode(1)
                     }
-                    ThemeOption(stringResource(R.string.settings_theme_dark), tempThemeMode == 2) {
-                        tempThemeMode = 2
+                    ThemeOption(stringResource(R.string.settings_theme_dark), themeMode == 2) {
+                        viewModel.setThemeMode(2)
                     }
                 }
             },
             confirmButton = {
-                TextButton(
-                    onClick = {
-                        viewModel.setThemeMode(tempThemeMode)
-                        showThemeDialog = false
-                    }
-                ) {
-                    Text(stringResource(R.string.common_ok))
+                TextButton(onClick = { showThemeDialog = false }) {
+                    Text(stringResource(R.string.common_done))
                 }
             },
-            dismissButton = {
-                TextButton(onClick = { showThemeDialog = false }) {
-                    Text(stringResource(R.string.common_cancel))
-                }
-            }
         )
     }
 

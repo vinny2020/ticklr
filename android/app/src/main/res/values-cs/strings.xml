@@ -18,6 +18,9 @@
     <string name="common_update">Aktualizovat</string>
     <string name="common_send">Odeslat</string>
     <string name="common_change">Změnit</string>
+    <string name="common_done">Hotovo</string>
+    <!-- TIC-96: shared empty-database CTA -->
+    <string name="common_add_or_import_contacts">Přidat nebo importovat kontakty</string>
     <string name="common_edit">Upravit</string>
 
     <!-- Settings -->
@@ -103,6 +106,8 @@
     <string name="tickle_edit_create_group_button">Vytvořit skupinu</string>
     <string name="tickle_edit_new_group_dialog_title">Nová skupina</string>
     <string name="tickle_edit_group_name_label">Název skupiny</string>
+    <!-- TIC-96: empty-database dead-end fix for the contact picker -->
+    <string name="tickle_edit_empty_contacts_title">Zatím nemáš žádné kontakty.</string>
     <string name="tickle_saved">Tickle uložen</string>
     <string name="tickle_updated">Tickle aktualizován</string>
     <string name="tickle_notification_contact_fallback">váš kontakt</string>
@@ -200,6 +205,10 @@
     <string name="compose_to_label">Komu</string>
     <string name="compose_search_placeholder">Hledat kontakty…</string>
     <string name="compose_no_phone">Není zadáno telefonní číslo</string>
+    <!-- TIC-96: inline no-phone dead-end fix -->
+    <string name="compose_add_number">Přidat číslo</string>
+    <!-- TIC-96: empty-database dead-end fix -->
+    <string name="compose_empty_contacts_title">Zatím nemáš žádné kontakty.</string>
     <string name="compose_select_template">Vybrat šablonu</string>
     <string name="compose_message_label">Zpráva</string>
     <string name="compose_message_placeholder">Napište zprávu…</string>
@@ -362,4 +371,8 @@
     <string name="tickle_snoozed">Odloženo</string>
     <string name="group_member_removed">%1$s odebrán</string>
     <string name="template_deleted">Šablona smazána</string>
+    <!-- TIC-96: multi-phone chooser -->
+    <string name="phone_chooser_title">Vyber číslo</string>
+    <!-- TIC-96: honest picker-cap hint -->
+    <string name="picker_showing_hint">Zobrazeno %1$d z %2$d</string>
 </resources>

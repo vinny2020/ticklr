@@ -18,6 +18,9 @@
     <string name="common_update">Aggiorna</string>
     <string name="common_send">Invia</string>
     <string name="common_change">Cambia</string>
+    <string name="common_done">Fatto</string>
+    <!-- TIC-96: shared empty-database CTA -->
+    <string name="common_add_or_import_contacts">Aggiungi o importa contatti</string>
     <string name="common_edit">Modifica</string>
 
     <!-- Settings -->
@@ -102,6 +105,8 @@
     <string name="tickle_edit_create_group_button">Crea un gruppo</string>
     <string name="tickle_edit_new_group_dialog_title">Nuovo gruppo</string>
     <string name="tickle_edit_group_name_label">Nome del gruppo</string>
+    <!-- TIC-96: empty-database dead-end fix for the contact picker -->
+    <string name="tickle_edit_empty_contacts_title">Non hai ancora contatti.</string>
     <string name="tickle_saved">Tickle salvato</string>
     <string name="tickle_updated">Tickle aggiornato</string>
     <string name="tickle_notification_contact_fallback">il tuo contatto</string>
@@ -197,6 +202,10 @@
     <string name="compose_to_label">A</string>
     <string name="compose_search_placeholder">Cerca contatti…</string>
     <string name="compose_no_phone">Nessun numero di telefono registrato</string>
+    <!-- TIC-96: inline no-phone dead-end fix -->
+    <string name="compose_add_number">Aggiungi un numero</string>
+    <!-- TIC-96: empty-database dead-end fix -->
+    <string name="compose_empty_contacts_title">Non hai ancora contatti.</string>
     <string name="compose_select_template">Seleziona modello</string>
     <string name="compose_message_label">Messaggio</string>
     <string name="compose_message_placeholder">Scrivi il tuo messaggio…</string>
@@ -356,4 +365,8 @@
     <string name="tickle_snoozed">Posticipato</string>
     <string name="group_member_removed">%1$s rimosso</string>
     <string name="template_deleted">Modello eliminato</string>
+    <!-- TIC-96: multi-phone chooser -->
+    <string name="phone_chooser_title">Scegli un numero</string>
+    <!-- TIC-96: honest picker-cap hint -->
+    <string name="picker_showing_hint">Visualizzati %1$d di %2$d</string>
 </resources>

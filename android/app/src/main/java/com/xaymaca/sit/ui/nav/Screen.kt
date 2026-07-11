@@ -1,7 +1,21 @@
 package com.xaymaca.sit.ui.nav
 
 sealed class Screen(val route: String) {
-    object Network : Screen("network")
+    object Network : Screen("network") {
+        const val ARG_FOCUS_CONTACT_ID = "focusContactId"
+
+        /**
+         * TIC-96: optional query param carrying a contact to land on directly in
+         * the expanded-width two-pane detail slot. Used by cross-section jumps
+         * (e.g. tapping a group member in GroupsPane) that target Network instead
+         * of falling back to the full-screen ContactDetail route — keeping the
+         * jump inside the pane world. Defaults to the "-1 absent" sentinel, same
+         * convention as Compose/TickleEdit's optional args.
+         */
+        const val ROUTE = "network?focusContactId={focusContactId}"
+
+        fun createRouteFocusingContact(contactId: Long) = "network?focusContactId=$contactId"
+    }
     object AddContact : Screen("add_contact")
     data class ContactDetail(val id: Long = 0L) : Screen("contact_detail/{contactId}") {
         companion object {

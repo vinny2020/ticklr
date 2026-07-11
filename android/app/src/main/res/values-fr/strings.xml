@@ -18,6 +18,9 @@
     <string name="common_update">Mettre à jour</string>
     <string name="common_send">Envoyer</string>
     <string name="common_change">Modifier</string>
+    <string name="common_done">Terminé</string>
+    <!-- TIC-96: shared empty-database CTA -->
+    <string name="common_add_or_import_contacts">Ajouter ou importer des contacts</string>
     <string name="common_edit">Modifier</string>
 
     <!-- Settings -->
@@ -102,6 +105,8 @@
     <string name="tickle_edit_create_group_button">Créer un groupe</string>
     <string name="tickle_edit_new_group_dialog_title">Nouveau groupe</string>
     <string name="tickle_edit_group_name_label">Nom du groupe</string>
+    <!-- TIC-96: empty-database dead-end fix for the contact picker -->
+    <string name="tickle_edit_empty_contacts_title">Tu n\'as pas encore de contacts.</string>
     <string name="tickle_saved">Tickle enregistré</string>
     <string name="tickle_updated">Tickle mis à jour</string>
     <string name="tickle_notification_contact_fallback">votre contact</string>
@@ -197,6 +202,10 @@
     <string name="compose_to_label">À</string>
     <string name="compose_search_placeholder">Rechercher des contacts…</string>
     <string name="compose_no_phone">Aucun numéro de téléphone enregistré</string>
+    <!-- TIC-96: inline no-phone dead-end fix -->
+    <string name="compose_add_number">Ajouter un numéro</string>
+    <!-- TIC-96: empty-database dead-end fix -->
+    <string name="compose_empty_contacts_title">Tu n\'as pas encore de contacts.</string>
     <string name="compose_select_template">Sélectionner un modèle</string>
     <string name="compose_message_label">Message</string>
     <string name="compose_message_placeholder">Rédigez votre message…</string>
@@ -356,4 +365,8 @@
     <string name="tickle_snoozed">Reporté</string>
     <string name="group_member_removed">%1$s retiré</string>
     <string name="template_deleted">Modèle supprimé</string>
+    <!-- TIC-96: multi-phone chooser -->
+    <string name="phone_chooser_title">Choisis un numéro</string>
+    <!-- TIC-96: honest picker-cap hint -->
+    <string name="picker_showing_hint">Affichage de %1$d sur %2$d</string>
 </resources>

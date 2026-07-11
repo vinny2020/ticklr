@@ -1,6 +1,7 @@
 package com.xaymaca.sit.ui.compose
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -19,15 +20,25 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupProperties
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import com.xaymaca.sit.R
 import com.xaymaca.sit.service.SmsService
 import com.xaymaca.sit.service.StringListConverter
+import com.xaymaca.sit.ui.shared.EmptyContactsCta
+import com.xaymaca.sit.ui.shared.PendingPhoneChoice
+import com.xaymaca.sit.ui.shared.PhoneChoice
+import com.xaymaca.sit.ui.shared.PhoneChooser
+import com.xaymaca.sit.ui.shared.PhoneNumberChooserDialog
+import com.xaymaca.sit.ui.shared.PickerCap
+import com.xaymaca.sit.ui.shared.PickerCapHintText
 import com.xaymaca.sit.ui.shared.TicklrToast
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -40,6 +51,10 @@ fun ComposeScreen(
     /** TIC-82: due tickle this compose was opened for; drives the mark-done
      *  prompt on return from the SMS handoff. Null when composing from the tab. */
     initialReminderId: Long? = null,
+    /** TIC-96: "Add a number" for a selected contact with no phone on file. */
+    onEditContact: (Long) -> Unit = {},
+    /** TIC-96: "Add or import contacts" when the whole database is empty. */
+    onImportContacts: () -> Unit = {},
     /** TIC-90: navigates to the Message Templates management screen (Settings'
      *  destination) — reached from "Manage templates…" at the bottom of the
      *  template dropdown, or "Create a template…" when there are none yet.
@@ -59,9 +74,26 @@ fun ComposeScreen(
     val toastMessage by viewModel.toastMessage.collectAsState()
     val searchQuery by viewModel.searchQuery.collectAsState()
     val canSend by viewModel.canSend.collectAsState()
+    val hasContacts by viewModel.hasContacts.collectAsState()
     // TIC-86: browse-mode suggestions shown when the "To" field is focused with an
     // empty query (Due today / Recents / All contacts…).
     val suggestions by viewModel.recipientSuggestions.collectAsState()
+
+    // TIC-96: re-read the selected contact on resume so "Add a number"
+    // (edit_contact, reached via the no-phone dead-end fix below) is reflected
+    // immediately on return instead of showing the stale phone-less contact.
+    val lifecycleOwner = LocalLifecycleOwner.current
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) viewModel.refreshSelectedContact()
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
+    }
+
+    // TIC-96: a resolved multi-number choice awaiting the user's pick — see
+    // PhoneChooser. A single number keeps the direct-send fast path.
+    var phoneChoice by remember { mutableStateOf<PendingPhoneChoice?>(null) }
 
     var showTemplateDropdown by remember { mutableStateOf(false) }
     var showContactDropdown by remember { mutableStateOf(false) }
@@ -154,6 +186,17 @@ fun ComposeScreen(
                 )
                 Spacer(modifier = Modifier.height(8.dp))
 
+                // TIC-96: an empty database makes the rest of this form
+                // pointless — nothing to address a message to. Swap it for a
+                // CTA instead of a search field with nothing to find.
+                if (!hasContacts) {
+                    EmptyContactsCta(
+                        title = stringResource(R.string.compose_empty_contacts_title),
+                        accent = accent,
+                        onAddOrImport = onImportContacts,
+                    )
+                } else {
+
                 // To: contact search field
                 com.xaymaca.sit.ui.warm.WarmEyebrow(
                     text = stringResource(R.string.compose_to_label),
@@ -205,8 +248,18 @@ fun ComposeScreen(
                         }
                         if (!browsing) {
                             // Non-empty query keeps the existing filtered recall list.
-                            contacts.take(8).forEach { contact ->
+                            // TIC-96: capped honestly — a "Showing N of Total" hint
+                            // row appears when the search matches more than fit.
+                            val capped = PickerCap.cap(contacts)
+                            capped.shown.forEach { contact ->
                                 RecipientRow(contact, warmPalette, accent, showDueBadge = false, onClick = { onPick(contact) })
+                            }
+                            if (capped.isTruncated) {
+                                DropdownMenuItem(
+                                    enabled = false,
+                                    text = { PickerCapHintText(capped.shown.size, capped.total, warmPalette.ink3) },
+                                    onClick = {},
+                                )
                             }
                         } else if (showAllContacts) {
                             // Browse-all: the full alphabetical list, no typing needed.
@@ -265,7 +318,10 @@ fun ComposeScreen(
                             selectedLabelColor = accent,
                         ),
                     )
-                    // No phone warning
+                    // No phone dead-end (TIC-96): inline "Add a number" instead of
+                    // a disabled Send with no way forward. Navigates to the edit
+                    // form; the lifecycle-resume effect above re-reads the contact
+                    // on return so a newly added number is picked up.
                     val phones = stringListConverter.fromString(selectedContact!!.phoneNumbers)
                     if (phones.isEmpty()) {
                         Spacer(modifier = Modifier.height(4.dp))
@@ -273,6 +329,14 @@ fun ComposeScreen(
                             stringResource(R.string.compose_no_phone),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.error
+                        )
+                        Text(
+                            stringResource(R.string.compose_add_number),
+                            style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.SemiBold),
+                            color = accent,
+                            modifier = Modifier
+                                .padding(top = 2.dp)
+                                .clickable { onEditContact(selectedContact!!.id) },
                         )
                     }
                 }
@@ -399,16 +463,20 @@ fun ComposeScreen(
                         onClick = {
                             val contact = selectedContact ?: return@Button
                             val phones = stringListConverter.fromString(contact.phoneNumbers)
-                            val phone = phones.firstOrNull() ?: return@Button
-                            val intent = SmsService().sendSmsIntent(context, listOf(phone), messageBody)
-                            context.startActivity(intent)
-                            viewModel.recordHandoff(contact)
-                            viewModel.clearCompose()
-                            selectedTemplateName = null
-                            // Leave Compose underneath the SMS app so the user
-                            // returns to the screen they came from, not an
-                            // empty compose form.
-                            onDone()
+                            // TIC-96: a contact with more than one number used to
+                            // silently text whichever was first — now the user
+                            // picks when there's more than one to choose from.
+                            when (val choice = PhoneChooser.choose(phones)) {
+                                is PhoneChoice.Direct -> sendTo(
+                                    context, viewModel, contact, choice.number, messageBody,
+                                ) { selectedTemplateName = null; onDone() }
+                                is PhoneChoice.NeedsChoice -> phoneChoice = PendingPhoneChoice(choice.numbers) { number ->
+                                    sendTo(context, viewModel, contact, number, messageBody) {
+                                        selectedTemplateName = null; onDone()
+                                    }
+                                }
+                                PhoneChoice.None -> {}
+                            }
                         },
                         enabled = canSend,
                         colors = ButtonDefaults.buttonColors(
@@ -424,6 +492,7 @@ fun ComposeScreen(
                         Text(stringResource(R.string.common_send))
                     }
                 }
+                } // TIC-96: end of the `hasContacts` form branch opened above.
             }
         }
 
@@ -459,6 +528,38 @@ fun ComposeScreen(
             },
         )
     }
+
+    // TIC-96: the recipient has more than one number — resolve which before
+    // completing the SMS handoff.
+    phoneChoice?.let { pending ->
+        PhoneNumberChooserDialog(
+            numbers = pending.numbers,
+            onSelect = { number -> pending.onChosen(number); phoneChoice = null },
+            onDismiss = { phoneChoice = null },
+        )
+    }
+}
+
+/**
+ * TIC-96: completes the SMS handoff to a specific, already-resolved [phone] —
+ * shared by the direct-send fast path and the multi-number chooser's onSelect
+ * so both funnel through the exact same handoff + clear + navigate sequence.
+ */
+private fun sendTo(
+    context: android.content.Context,
+    viewModel: ComposeViewModel,
+    contact: com.xaymaca.sit.data.model.Contact,
+    phone: String,
+    messageBody: String,
+    onSent: () -> Unit,
+) {
+    val intent = SmsService().sendSmsIntent(context, listOf(phone), messageBody)
+    context.startActivity(intent)
+    viewModel.recordHandoff(contact)
+    viewModel.clearCompose()
+    // Leave Compose underneath the SMS app so the user returns to the screen
+    // they came from, not an empty compose form.
+    onSent()
 }
 
 // Single source of truth for JSON-array parsing — the same converter Room uses
