@@ -226,6 +226,7 @@
     <string name="import_snackbar_success">Εισήχθησαν %1$d επαφές</string>
     <string name="import_snackbar_linkedin">Εισήχθησαν %1$d επαφές LinkedIn</string>
     <string name="import_snackbar_permission_denied">Η άδεια πρόσβασης σε επαφές απορρίφθηκε</string>
+    <string name="import_snackbar_permission_settings">Η πρόσβαση σε επαφές είναι απενεργοποιημένη — ενεργοποίησέ την στις Ρυθμίσεις</string>
     <string name="import_snackbar_failed">Αποτυχία εισαγωγής: %1$s</string>
     <string name="import_snackbar_could_not_open">Δεν ήταν δυνατό το άνοιγμα του αρχείου</string>
     <plurals name="import_result_contacts">

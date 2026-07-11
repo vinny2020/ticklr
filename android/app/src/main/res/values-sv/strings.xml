@@ -226,6 +226,7 @@
     <string name="import_snackbar_success">%1$d kontakter importerade</string>
     <string name="import_snackbar_linkedin">%1$d LinkedIn-kontakter importerade</string>
     <string name="import_snackbar_permission_denied">Åtkomst till kontakter nekad</string>
+    <string name="import_snackbar_permission_settings">Åtkomst till kontakter är avstängd — aktivera den i Inställningar</string>
     <string name="import_snackbar_failed">Importen misslyckades: %1$s</string>
     <string name="import_snackbar_could_not_open">Det gick inte att öppna filen</string>
     <plurals name="import_result_contacts">

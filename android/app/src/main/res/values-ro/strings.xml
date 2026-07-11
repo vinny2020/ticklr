@@ -228,6 +228,7 @@
     <string name="import_snackbar_success">%1$d contacte importate</string>
     <string name="import_snackbar_linkedin">%1$d contacte LinkedIn importate</string>
     <string name="import_snackbar_permission_denied">Permisiunea pentru contacte refuzată</string>
+    <string name="import_snackbar_permission_settings">Accesul la contacte este dezactivat — activează-l din Setări</string>
     <string name="import_snackbar_failed">Import eșuat: %1$s</string>
     <string name="import_snackbar_could_not_open">Nu s-a putut deschide fișierul</string>
     <plurals name="import_result_contacts">

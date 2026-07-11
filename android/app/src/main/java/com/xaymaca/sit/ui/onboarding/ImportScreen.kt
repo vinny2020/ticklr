@@ -1,8 +1,11 @@
 package com.xaymaca.sit.ui.onboarding
 
 import android.Manifest
+import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.provider.Settings
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
@@ -20,11 +23,61 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.xaymaca.sit.R
 import com.xaymaca.sit.ui.network.NetworkViewModel
 import kotlinx.coroutines.launch
+
+/**
+ * MIME types offered to [ActivityResultContracts.OpenDocument] for the LinkedIn
+ * CSV picker. TIC-95: the previous `GetContent` contract filtered on the single
+ * generic "text" wildcard MIME, which greyed out CSVs that email/Drive apps
+ * serve under a non-text MIME (spreadsheet or generic-binary types), making
+ * the picker look broken. `OpenDocument` accepts an array of acceptable MIME
+ * types instead of a single filter, and content URIs it returns only need a
+ * one-shot read here — no persistable permission is requested since the file
+ * is opened once during this launch.
+ */
+internal val CSV_PICKER_MIME_TYPES = arrayOf(
+    "text/*",
+    "text/csv",
+    "text/comma-separated-values",
+    "application/csv",
+    "application/vnd.ms-excel",
+    "application/octet-stream",
+)
+
+/** Outcome of tapping "From phone contacts" when READ_CONTACTS isn't granted. */
+internal enum class ContactsPermissionAction { RequestPrompt, OpenSettings }
+
+/**
+ * TIC-95: mirrors the rationale/permanent-denial decision in
+ * [com.xaymaca.sit.ui.warm.ContactsAccessBanner] — before the user has ever
+ * been asked, or after a single denial where Android still allows showing a
+ * rationale, the system prompt reappears. Once permanently denied (rationale
+ * no longer allowed, and this isn't the first attempt), the system won't
+ * re-show its own dialog, so the only productive path left is the app's
+ * Settings page.
+ */
+internal fun decideContactsPermissionAction(
+    rationaleAllowed: Boolean,
+    userAttemptedOnce: Boolean,
+): ContactsPermissionAction =
+    if (rationaleAllowed || !userAttemptedOnce) {
+        ContactsPermissionAction.RequestPrompt
+    } else {
+        ContactsPermissionAction.OpenSettings
+    }
+
+private fun openAppSettings(context: android.content.Context) {
+    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+        data = Uri.fromParts("package", context.packageName, null)
+        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    }
+    context.startActivity(intent)
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,10 +88,16 @@ fun ImportScreen(
     viewModel: NetworkViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
+    val activity = context as? Activity
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
     var isImporting by remember { mutableStateOf(false) }
+    // TIC-95: tracks whether the system permission prompt has already been
+    // shown once this screen-visit, so decideContactsPermissionAction() can
+    // tell "never asked" apart from "permanently denied" — see that
+    // function's doc for the full rationale.
+    var userAttemptedOnce by remember { mutableStateOf(false) }
 
     // TIC-85: a successful import (whether 0, 1, or N contacts landed) now
     // auto-advances to the Network tab immediately via onImportSuccess()
@@ -57,6 +116,7 @@ fun ImportScreen(
     val contactsPermissionLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { granted ->
+        userAttemptedOnce = true
         if (granted) {
             coroutineScope.launch {
                 isImporting = true
@@ -75,9 +135,11 @@ fun ImportScreen(
         }
     }
 
-    // File picker launcher for LinkedIn CSV
+    // File picker launcher for LinkedIn CSV. OpenDocument (not GetContent) so
+    // CSVs served under non-text MIME types (application/vnd.ms-excel,
+    // application/octet-stream — common from email/Drive) aren't greyed out.
     val csvPickerLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.GetContent()
+        ActivityResultContracts.OpenDocument()
     ) { uri: Uri? ->
         if (uri != null) {
             coroutineScope.launch {
@@ -143,19 +205,37 @@ fun ImportScreen(
                         context, Manifest.permission.READ_CONTACTS
                     ) == PackageManager.PERMISSION_GRANTED
 
-                    if (hasPermission) {
-                        coroutineScope.launch {
-                            isImporting = true
-                            try {
-                                viewModel.importFromContacts()
-                                onImportSuccess()
-                            } catch (e: Exception) {
-                                isImporting = false
-                                snackbarHostState.showSnackbar(context.getString(R.string.import_snackbar_failed, e.message ?: ""))
+                    when {
+                        hasPermission -> {
+                            coroutineScope.launch {
+                                isImporting = true
+                                try {
+                                    viewModel.importFromContacts()
+                                    onImportSuccess()
+                                } catch (e: Exception) {
+                                    isImporting = false
+                                    snackbarHostState.showSnackbar(context.getString(R.string.import_snackbar_failed, e.message ?: ""))
+                                }
                             }
                         }
-                    } else {
-                        contactsPermissionLauncher.launch(Manifest.permission.READ_CONTACTS)
+                        activity == null -> contactsPermissionLauncher.launch(Manifest.permission.READ_CONTACTS)
+                        else -> {
+                            val rationaleAllowed = ActivityCompat.shouldShowRequestPermissionRationale(
+                                activity, Manifest.permission.READ_CONTACTS
+                            )
+                            when (decideContactsPermissionAction(rationaleAllowed, userAttemptedOnce)) {
+                                ContactsPermissionAction.RequestPrompt ->
+                                    contactsPermissionLauncher.launch(Manifest.permission.READ_CONTACTS)
+                                ContactsPermissionAction.OpenSettings -> {
+                                    coroutineScope.launch {
+                                        snackbarHostState.showSnackbar(
+                                            context.getString(R.string.import_snackbar_permission_settings)
+                                        )
+                                    }
+                                    openAppSettings(context)
+                                }
+                            }
+                        }
                     }
                 },
                 enabled = !isImporting
@@ -167,7 +247,7 @@ fun ImportScreen(
                 title = stringResource(R.string.import_from_linkedin_title),
                 subtitle = stringResource(R.string.import_from_linkedin_subtitle),
                 onClick = {
-                    csvPickerLauncher.launch("text/*")
+                    csvPickerLauncher.launch(CSV_PICKER_MIME_TYPES)
                 },
                 enabled = !isImporting
             )

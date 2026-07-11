@@ -234,6 +234,7 @@
     <string name="import_snackbar_success">تم استيراد %1$d جهة اتصال</string>
     <string name="import_snackbar_linkedin">تم استيراد %1$d جهة اتصال من LinkedIn</string>
     <string name="import_snackbar_permission_denied">تم رفض إذن الوصول إلى جهات الاتصال</string>
+    <string name="import_snackbar_permission_settings">الوصول إلى جهات الاتصال متوقف — فعّله من الإعدادات</string>
     <string name="import_snackbar_failed">فشل الاستيراد: %1$s</string>
     <string name="import_snackbar_could_not_open">تعذّر فتح الملف</string>
     <plurals name="import_result_contacts">

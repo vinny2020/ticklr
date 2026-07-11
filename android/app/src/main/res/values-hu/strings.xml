@@ -226,6 +226,7 @@
     <string name="import_snackbar_success">%1$d névjegy importálva</string>
     <string name="import_snackbar_linkedin">%1$d LinkedIn-névjegy importálva</string>
     <string name="import_snackbar_permission_denied">Névjegy-hozzáférés megtagadva</string>
+    <string name="import_snackbar_permission_settings">A névjegyekhez való hozzáférés ki van kapcsolva — engedélyezd a Beállításokban</string>
     <string name="import_snackbar_failed">Az importálás sikertelen: %1$s</string>
     <string name="import_snackbar_could_not_open">A fájl nem nyitható meg</string>
     <plurals name="import_result_contacts">

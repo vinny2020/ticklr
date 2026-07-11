@@ -224,6 +224,7 @@
     <string name="import_snackbar_success">已导入 %1$d 位联系人</string>
     <string name="import_snackbar_linkedin">已导入 %1$d 位 LinkedIn 联系人</string>
     <string name="import_snackbar_permission_denied">联系人权限被拒绝</string>
+    <string name="import_snackbar_permission_settings">联系人访问已关闭 — 请在设置中启用</string>
     <string name="import_snackbar_failed">导入失败：%1$s</string>
     <string name="import_snackbar_could_not_open">无法打开文件</string>
     <plurals name="import_result_contacts">

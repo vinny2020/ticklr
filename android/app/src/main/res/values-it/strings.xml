@@ -226,6 +226,7 @@
     <string name="import_snackbar_success">%1$d contatti importati</string>
     <string name="import_snackbar_linkedin">%1$d contatti LinkedIn importati</string>
     <string name="import_snackbar_permission_denied">Permesso contatti negato</string>
+    <string name="import_snackbar_permission_settings">L\'accesso ai contatti è disattivato — attivalo nelle Impostazioni</string>
     <string name="import_snackbar_failed">Importazione fallita: %1$s</string>
     <string name="import_snackbar_could_not_open">Impossibile aprire il file</string>
     <plurals name="import_result_contacts">

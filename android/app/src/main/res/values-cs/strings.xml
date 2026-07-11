@@ -229,6 +229,7 @@
     <string name="import_snackbar_success">Importováno %1$d kontaktů</string>
     <string name="import_snackbar_linkedin">Importováno %1$d kontaktů LinkedIn</string>
     <string name="import_snackbar_permission_denied">Přístup ke kontaktům odepřen</string>
+    <string name="import_snackbar_permission_settings">Přístup ke kontaktům je vypnutý — zapni ho v Nastavení</string>
     <string name="import_snackbar_failed">Import se nezdařil: %1$s</string>
     <string name="import_snackbar_could_not_open">Soubor nelze otevřít</string>
     <plurals name="import_result_contacts">

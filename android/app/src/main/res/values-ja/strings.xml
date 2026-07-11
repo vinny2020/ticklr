@@ -224,6 +224,7 @@
     <string name="import_snackbar_success">%1$d 件の連絡先をインポートしました</string>
     <string name="import_snackbar_linkedin">%1$d 件の LinkedIn 連絡先をインポートしました</string>
     <string name="import_snackbar_permission_denied">連絡先へのアクセスが拒否されました</string>
+    <string name="import_snackbar_permission_settings">連絡先へのアクセスがオフです — 設定でオンにしてください</string>
     <string name="import_snackbar_failed">インポートに失敗しました：%1$s</string>
     <string name="import_snackbar_could_not_open">ファイルを開けませんでした</string>
     <plurals name="import_result_contacts">

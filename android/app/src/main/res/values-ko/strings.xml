@@ -224,6 +224,7 @@
     <string name="import_snackbar_success">%1$d개의 연락처를 가져왔습니다</string>
     <string name="import_snackbar_linkedin">%1$d개의 LinkedIn 연락처를 가져왔습니다</string>
     <string name="import_snackbar_permission_denied">연락처 권한이 거부되었습니다</string>
+    <string name="import_snackbar_permission_settings">연락처 접근이 꺼져 있어요 — 설정에서 켜주세요</string>
     <string name="import_snackbar_failed">가져오기 실패: %1$s</string>
     <string name="import_snackbar_could_not_open">파일을 열 수 없습니다</string>
     <plurals name="import_result_contacts">
