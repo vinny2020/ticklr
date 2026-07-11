@@ -23,11 +23,15 @@ struct TickleActionSheet: View {
     var dismissesOnAction: Bool = true
     let onCompose: () -> Void
     let onMarkDone: () -> Void
-    let onSnooze: () -> Void
+    /// Snooze the reminder by the chosen number of days (TIC-87 duration choice).
+    let onSnooze: (Int) -> Void
     let onEdit: () -> Void
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
+
+    /// Drives the snooze-duration confirmation dialog (1 day / 3 days / 1 week).
+    @State private var showingSnoozeOptions = false
 
     /// Dismiss only when presented as a sheet; a no-op in the iPad detail pane.
     private func dismissIfNeeded() { if dismissesOnAction { dismiss() } }
@@ -116,8 +120,7 @@ struct TickleActionSheet: View {
             actionRow(icon: "zzz",
                       title: String(localized: "tickleList.action.snooze", defaultValue: "Snooze"),
                       tint: palette.ink2) {
-                onSnooze()
-                dismissIfNeeded()
+                showingSnoozeOptions = true
             }
 
             actionRow(icon: "pencil",
@@ -132,6 +135,24 @@ struct TickleActionSheet: View {
         .padding(.top, 8)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(palette.paper)
+        .confirmationDialog(
+            String(localized: "tickleAction.snooze.title", defaultValue: "Snooze for how long?"),
+            isPresented: $showingSnoozeOptions,
+            titleVisibility: .visible
+        ) {
+            Button(String(localized: "tickleAction.snooze.oneDay", defaultValue: "1 day")) {
+                onSnooze(1)
+                dismissIfNeeded()
+            }
+            Button(String(localized: "tickleAction.snooze.threeDays", defaultValue: "3 days")) {
+                onSnooze(3)
+                dismissIfNeeded()
+            }
+            Button(String(localized: "tickleAction.snooze.oneWeek", defaultValue: "1 week")) {
+                onSnooze(7)
+                dismissIfNeeded()
+            }
+        }
     }
 
     private var header: some View {

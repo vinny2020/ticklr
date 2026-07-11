@@ -177,12 +177,37 @@ struct TickleScheduler {
         (reminder.status == .active || reminder.status == .snoozed) && reminder.nextDueDate <= now
     }
 
+    /// Snapshots `reminder`'s exact pre-completion state, then completes it via
+    /// `markComplete`. The shared snapshot+complete path behind every in-app
+    /// mark-done entry point (row checkmark, leading swipe, action sheet, iPad
+    /// pane — TIC-87) as well as the send-driven `completeAfterSend`. The returned
+    /// snapshot lets the caller offer Undo through the same `undoCompletion`
+    /// machinery. No due-ness re-validation here: an explicit in-app Done acts on
+    /// the reminder the user is looking at, whatever its state. Callers save via
+    /// `markComplete`.
+    @MainActor
+    static func completeWithSnapshot(
+        reminder: TickleReminder,
+        context: ModelContext
+    ) -> CompletionSnapshot {
+        let snapshot = CompletionSnapshot(
+            reminderID: reminder.id,
+            nextDueDate: reminder.nextDueDate,
+            status: reminder.status,
+            lastCompletedDate: reminder.lastCompletedDate
+        )
+        markComplete(reminder: reminder, context: context)
+        return snapshot
+    }
+
     /// Auto-completes the tickle associated with a just-sent text — but only after
     /// re-validating against the live store, mirroring TIC-66's guard-before-acting
     /// philosophy: the reminder must still exist (not deleted while the composer was
     /// up) and still be due. Returns the pre-completion snapshot on success (so the
     /// caller can offer Undo), or `nil` when the send should not complete anything.
-    /// Completion routes through `markComplete` so notification state stays in sync.
+    /// Completion routes through `completeWithSnapshot` → `markComplete` so
+    /// notification state stays in sync and the Undo path is shared with the in-app
+    /// mark-done surfaces (TIC-87).
     @MainActor
     static func completeAfterSend(
         reminder: TickleReminder,
@@ -196,15 +221,7 @@ struct TickleScheduler {
         // Re-fetch: a reminder deleted (or completed) meanwhile won't come back due.
         guard let live = try? context.fetch(descriptor).first else { return nil }
         guard isDueForSendCompletion(live, now: now) else { return nil }
-
-        let snapshot = CompletionSnapshot(
-            reminderID: live.id,
-            nextDueDate: live.nextDueDate,
-            status: live.status,
-            lastCompletedDate: live.lastCompletedDate
-        )
-        markComplete(reminder: live, context: context)
-        return snapshot
+        return completeWithSnapshot(reminder: live, context: context)
     }
 
     /// Whether an undo-restored due date warrants re-arming a notification:
@@ -222,11 +239,13 @@ struct TickleScheduler {
         return triggerDate > now
     }
 
-    /// Restores the exact pre-completion state captured in `snapshot` and re-syncs
-    /// the tickle's notification state for the restored due date. No-op if the
-    /// reminder has since been deleted.
+    /// Restores the exact pre-action state captured in `snapshot` and re-syncs the
+    /// tickle's notification state for the restored due date. Shared by
+    /// `undoCompletion` and `undoSnooze` — both need the same restore-fields +
+    /// disarm + conditional-rearm sequence. No-op if the reminder has since been
+    /// deleted.
     @MainActor
-    static func undoCompletion(_ snapshot: CompletionSnapshot, context: ModelContext) {
+    private static func restore(_ snapshot: CompletionSnapshot, context: ModelContext) {
         let targetID = snapshot.reminderID
         let descriptor = FetchDescriptor<TickleReminder>(
             predicate: #Predicate { $0.id == targetID }
@@ -235,16 +254,25 @@ struct TickleScheduler {
         live.nextDueDate = snapshot.nextDueDate
         live.status = snapshot.status
         live.lastCompletedDate = snapshot.lastCompletedDate
-        // markComplete armed a notification for the *new* due date (recurring) or
-        // cancelled it (one-time); always disarm that. Re-arm only when the
-        // restored trigger is genuinely in the future — never the overdue
-        // 5-second banner (see `shouldRearmAfterUndo`).
+        // The completing/snoozing call armed a notification for the *new* due date
+        // (recurring/snoozed) or cancelled it (one-time); always disarm that.
+        // Re-arm only when the restored trigger is genuinely in the future — never
+        // the overdue 5-second banner (see `shouldRearmAfterUndo`).
         cancelNotification(for: live)
         if shouldRearmAfterUndo(nextDueDate: live.nextDueDate) {
             scheduleNotification(for: live)
         }
         try? context.save()
     }
+
+    /// Restores the exact pre-completion state captured in `snapshot`. Handles the
+    /// notification re-arm rules; no-op if the reminder was since deleted.
+    @MainActor
+    static func undoCompletion(_ snapshot: CompletionSnapshot, context: ModelContext) {
+        restore(snapshot, context: context)
+    }
+
+    // MARK: - Snooze (with undo, TIC-87)
 
     @MainActor
     static func snooze(reminder: TickleReminder, days: Int = 7, context: ModelContext) {
@@ -253,6 +281,36 @@ struct TickleScheduler {
         cancelNotification(for: reminder)
         scheduleNotification(for: reminder)
         try? context.save()
+    }
+
+    /// Snapshots `reminder`'s exact pre-snooze state, then snoozes it `days` into
+    /// the future. Mirrors `completeWithSnapshot`: the returned snapshot (reusing
+    /// `CompletionSnapshot`, whose reminderID/nextDueDate/status/lastCompletedDate
+    /// fields fully capture a snooze) lets the caller offer Undo through
+    /// `undoSnooze`. A re-snooze of an already-snoozed tickle captures `.snoozed`
+    /// as the prior status, so Undo restores the earlier snooze window exactly.
+    @MainActor
+    static func snoozeWithSnapshot(
+        reminder: TickleReminder,
+        days: Int = 7,
+        context: ModelContext
+    ) -> CompletionSnapshot {
+        let snapshot = CompletionSnapshot(
+            reminderID: reminder.id,
+            nextDueDate: reminder.nextDueDate,
+            status: reminder.status,
+            lastCompletedDate: reminder.lastCompletedDate
+        )
+        snooze(reminder: reminder, days: days, context: context)
+        return snapshot
+    }
+
+    /// Restores the exact pre-snooze state captured in `snapshot`. Mirrors
+    /// `undoCompletion` (same restore + notification re-sync); no-op if the
+    /// reminder was since deleted.
+    @MainActor
+    static func undoSnooze(_ snapshot: CompletionSnapshot, context: ModelContext) {
+        restore(snapshot, context: context)
     }
 
     static func nextDueDate(from date: Date, frequency: TickleFrequency, customDays: Int? = nil) -> Date {

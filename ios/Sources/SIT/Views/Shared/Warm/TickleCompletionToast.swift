@@ -37,13 +37,17 @@ struct WarmToastCapsule<Trailing: View>: View {
     }
 }
 
-/// Bottom toast shown after a sent text auto-completes a due tickle (TIC-82):
-/// "Tickle marked done" with an Undo affordance. Bound to an optional
-/// `CompletionSnapshot` — non-nil presents the toast; tapping Undo or the
-/// auto-dismiss timeout clears it. The snapshot carries the exact pre-completion
-/// state so `onUndo` can restore it.
-struct TickleCompletionToast: ViewModifier {
+/// Bottom toast bound to an optional `CompletionSnapshot`: non-nil presents an
+/// `icon + text + Undo` capsule; tapping Undo or the auto-dismiss timeout clears
+/// it. The snapshot carries the exact pre-action state so `onUndo` can restore it.
+/// Shared chrome/timer behind both the mark-done toast ("Tickle marked done",
+/// TIC-82) and the snooze toast ("Tickle snoozed", TIC-87) — see the two
+/// `View` conveniences below. `CompletionSnapshot` doubles as the snooze snapshot
+/// (its fields fully capture a snooze).
+struct SnapshotUndoToast: ViewModifier {
     @Binding var snapshot: TickleScheduler.CompletionSnapshot?
+    let icon: String
+    let text: String
     var warmth: Warmth = .subtle
     /// Runs when the user taps Undo, before the toast is cleared.
     let onUndo: () -> Void
@@ -75,12 +79,7 @@ struct TickleCompletionToast: ViewModifier {
     }
 
     private var toast: some View {
-        WarmToastCapsule(
-            icon: "checkmark.circle.fill",
-            text: String(localized: "tickle.completedToast.title",
-                          defaultValue: "Tickle marked done"),
-            warmth: warmth
-        ) {
+        WarmToastCapsule(icon: icon, text: text, warmth: warmth) {
             Button(String(localized: "common.undo", defaultValue: "Undo")) {
                 onUndo()
                 snapshot = nil
@@ -92,12 +91,39 @@ struct TickleCompletionToast: ViewModifier {
 }
 
 extension View {
-    /// Presents the send-driven tickle-completion undo toast bound to `snapshot`.
+    /// Presents the tickle mark-done undo toast bound to `snapshot` — set by the
+    /// send-driven auto-completion (TIC-82) and every in-app mark-done surface
+    /// (TIC-87: row checkmark, leading swipe, action sheet, iPad pane).
     func tickleCompletionToast(
         snapshot: Binding<TickleScheduler.CompletionSnapshot?>,
         warmth: Warmth = .subtle,
         onUndo: @escaping () -> Void
     ) -> some View {
-        modifier(TickleCompletionToast(snapshot: snapshot, warmth: warmth, onUndo: onUndo))
+        modifier(SnapshotUndoToast(
+            snapshot: snapshot,
+            icon: "checkmark.circle.fill",
+            text: String(localized: "tickle.completedToast.title",
+                         defaultValue: "Tickle marked done"),
+            warmth: warmth,
+            onUndo: onUndo
+        ))
+    }
+
+    /// Presents the tickle snooze undo toast bound to `snapshot` (TIC-87): every
+    /// snooze — swipe fast-path or action-sheet/iPad-pane duration choice — shows
+    /// this, restoring the exact prior state via `undoSnooze`.
+    func tickleSnoozeToast(
+        snapshot: Binding<TickleScheduler.CompletionSnapshot?>,
+        warmth: Warmth = .subtle,
+        onUndo: @escaping () -> Void
+    ) -> some View {
+        modifier(SnapshotUndoToast(
+            snapshot: snapshot,
+            icon: "zzz",
+            text: String(localized: "tickle.snoozedToast.title",
+                         defaultValue: "Tickle snoozed"),
+            warmth: warmth,
+            onUndo: onUndo
+        ))
     }
 }
