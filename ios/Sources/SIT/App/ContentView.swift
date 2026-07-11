@@ -21,6 +21,12 @@ struct ContentView: View {
     /// Drives the "Tickle marked done — Undo" toast after a notification-tap send
     /// auto-completes the due tickle (TIC-82).
     @State private var completionSnapshot: TickleScheduler.CompletionSnapshot?
+    /// Drives the "Create a tickle for [name]?" offer toast after a plain
+    /// (reminder-less) send from the Compose tab (TIC-86).
+    @State private var tickleSuggestion: TickleSuggestion?
+    /// The contact whose new-tickle editor is presented when the user taps the
+    /// offer — re-fetched from the suggestion's id so no `@Model` is captured.
+    @State private var suggestionEditContact: Contact?
 
     /// A resolved notification-tap compose target: the live contact to address,
     /// paired with the due reminder a send should complete.
@@ -42,7 +48,10 @@ struct ContentView: View {
                 TickleListView()
                     .tabItem { Label(String(localized: "tab.tickle"), systemImage: "bell.badge.fill") }
                     .tag(AppTab.tickle)
-                ComposeView(onClose: { selectedTab = .tickle })
+                ComposeView(
+                    onClose: { selectedTab = .tickle },
+                    onSuggestTickle: { tickleSuggestion = $0 }
+                )
                     .tabItem { Label(String(localized: "tab.compose"), systemImage: "square.and.pencil") }
                     .tag(AppTab.compose)
                 SettingsView()
@@ -62,6 +71,12 @@ struct ContentView: View {
                 if let snapshot = completionSnapshot {
                     TickleScheduler.undoCompletion(snapshot, context: modelContext)
                 }
+            }
+            .suggestTickleToast(suggestion: $tickleSuggestion, warmth: .subtle) { suggestion in
+                suggestionEditContact = fetchContact(suggestion.contactID)
+            }
+            .sheet(item: $suggestionEditContact) { contact in
+                TickleEditView(contact: contact)
             }
             // Warm tap (UI already live) fires onChange; cold start (route set
             // before this view appeared) is caught by onAppear.

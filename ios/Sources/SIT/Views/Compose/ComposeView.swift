@@ -16,6 +16,12 @@ struct ComposeView: View {
     /// pre-completion snapshot so it can present the "Tickle marked done — Undo"
     /// toast on the screen that remains once this compose surface is dismissed.
     var onTickleCompleted: ((TickleScheduler.CompletionSnapshot) -> Void)? = nil
+    /// Called after a plain send (one with no `dueReminder` attached) to offer
+    /// creating a tickle for the just-texted contact (TIC-86). Handed a
+    /// value-only `TickleSuggestion` so the presenter can host the offer toast
+    /// on the screen that remains after this compose surface dismisses. Mutually
+    /// exclusive with `onTickleCompleted` for a single send — never both.
+    var onSuggestTickle: ((TickleSuggestion) -> Void)? = nil
 
     @Environment(\.modelContext) private var modelContext
     @Environment(\.horizontalSizeClass) private var hSize
@@ -27,6 +33,7 @@ struct ComposeView: View {
     @State private var messageBody = ""
 
     @State private var searchText = ""
+    @State private var showingBrowseAll = false
     @State private var showingComposer = false
     @State private var showingCannotSendAlert = false
     @State private var showingSendFailedAlert = false
@@ -53,6 +60,12 @@ struct ComposeView: View {
             $0.fullName.localizedCaseInsensitiveContains(searchText) ||
             $0.company.localizedCaseInsensitiveContains(searchText)
         }
+    }
+
+    /// Recipient suggestions shown while the To-field is empty (TIC-86):
+    /// due-today contacts (most overdue first) + recents (excluding due-today).
+    var suggestions: (dueToday: [Contact], recents: [Contact]) {
+        ComposeSuggestions.assemble(from: contacts)
     }
 
     var recipientPhone: String? {
@@ -130,51 +143,11 @@ struct ComposeView: View {
                                 )
                                 .padding(.horizontal)
 
-                            if !filteredContacts.isEmpty {
-                                VStack(spacing: 0) {
-                                    ForEach(filteredContacts) { contact in
-                                        Button {
-                                            selectedContact = contact
-                                            searchText = ""
-                                            searchFocused = false
-                                        } label: {
-                                            HStack {
-                                                VStack(alignment: .leading, spacing: 2) {
-                                                    Text(contact.fullName)
-                                                        .font(.body)
-                                                        .foregroundStyle(palette.ink)
-                                                    if !contact.company.isEmpty {
-                                                        Text(contact.company)
-                                                            .font(.caption)
-                                                            .foregroundStyle(palette.ink2)
-                                                    }
-                                                }
-                                                Spacer()
-                                                if contact.phoneNumbers.isEmpty {
-                                                    Image(systemName: "exclamationmark.circle")
-                                                        .foregroundStyle(.orange)
-                                                        .font(.caption)
-                                                }
-                                            }
-                                            .padding(.horizontal, 14)
-                                            .padding(.vertical, 10)
-                                        }
-                                        .buttonStyle(.plain)
-                                        if contact.id != filteredContacts.last?.id {
-                                            Rectangle()
-                                                .fill(palette.cardBorder)
-                                                .frame(height: 1)
-                                                .padding(.leading, 14)
-                                        }
-                                    }
-                                }
-                                .background(palette.cardBg)
-                                .clipShape(RoundedRectangle(cornerRadius: WarmRadius.surface, style: .continuous))
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: WarmRadius.surface, style: .continuous)
-                                        .stroke(palette.cardBorder, lineWidth: 1)
-                                )
-                                .padding(.horizontal)
+                            if searchText.isEmpty {
+                                suggestionsView
+                            } else if !filteredContacts.isEmpty {
+                                recipientCard(contacts: filteredContacts)
+                                    .padding(.horizontal)
                             }
                         }
                     }
@@ -291,6 +264,13 @@ struct ComposeView: View {
                     }
                 }
             }
+            .sheet(isPresented: $showingBrowseAll) {
+                ComposeContactPickerSheet(warmth: warmth) { contact in
+                    selectedContact = contact
+                    searchText = ""
+                    searchFocused = false
+                }
+            }
             .alert(String(localized: "compose.alert.cannotSend.title"), isPresented: $showingCannotSendAlert) {
                 Button(String(localized: "common.ok"), role: .cancel) {}
             } message: {
@@ -304,6 +284,123 @@ struct ComposeView: View {
                             defaultValue: "Something went wrong. Your message is still here — try sending it again."))
             }
         }
+    }
+
+    // MARK: — Recipient suggestions (TIC-86)
+
+    /// Suggestions shown while the To-field is empty: a "Due today" section
+    /// (most overdue first), a capped "Recents" section, and an always-present
+    /// "All contacts…" browse affordance so the user can pick without typing.
+    @ViewBuilder
+    private var suggestionsView: some View {
+        let sections = suggestions
+        VStack(alignment: .leading, spacing: 14) {
+            if !sections.dueToday.isEmpty {
+                suggestionSection(
+                    title: String(localized: "compose.suggest.section.dueToday"),
+                    contacts: sections.dueToday
+                )
+            }
+            if !sections.recents.isEmpty {
+                suggestionSection(
+                    title: String(localized: "compose.suggest.section.recents"),
+                    contacts: sections.recents
+                )
+            }
+            browseAllButton
+        }
+        .padding(.horizontal)
+    }
+
+    @ViewBuilder
+    private func suggestionSection(title: String, contacts: [Contact]) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            WarmEyebrow(text: title, warmth: warmth)
+                .padding(.leading, 2)
+            recipientCard(contacts: contacts)
+        }
+    }
+
+    /// Card of tappable recipient rows — shared by the filtered search results
+    /// and the empty-field suggestion sections so they read identically.
+    @ViewBuilder
+    private func recipientCard(contacts: [Contact]) -> some View {
+        VStack(spacing: 0) {
+            ForEach(contacts) { contact in
+                recipientRow(contact: contact)
+                if contact.id != contacts.last?.id {
+                    Rectangle()
+                        .fill(palette.cardBorder)
+                        .frame(height: 1)
+                        .padding(.leading, 14)
+                }
+            }
+        }
+        .background(palette.cardBg)
+        .clipShape(RoundedRectangle(cornerRadius: WarmRadius.surface, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: WarmRadius.surface, style: .continuous)
+                .stroke(palette.cardBorder, lineWidth: 1)
+        )
+    }
+
+    private func recipientRow(contact: Contact) -> some View {
+        Button {
+            selectedContact = contact
+            searchText = ""
+            searchFocused = false
+        } label: {
+            HStack {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(contact.fullName)
+                        .font(.body)
+                        .foregroundStyle(palette.ink)
+                    if !contact.company.isEmpty {
+                        Text(contact.company)
+                            .font(.caption)
+                            .foregroundStyle(palette.ink2)
+                    }
+                }
+                Spacer()
+                // Contacts without a phone number stay visible but flagged, so
+                // the "no phone" state is surfaced at selection time as before.
+                if contact.phoneNumbers.isEmpty {
+                    Image(systemName: "exclamationmark.circle")
+                        .foregroundStyle(.orange)
+                        .font(.caption)
+                }
+            }
+            .padding(.horizontal, 14)
+            .padding(.vertical, 10)
+        }
+        .buttonStyle(.plain)
+    }
+
+    private var browseAllButton: some View {
+        Button {
+            searchFocused = false
+            showingBrowseAll = true
+        } label: {
+            HStack {
+                Text(String(localized: "compose.suggest.browseAll"))
+                    .font(.body)
+                    .foregroundStyle(palette.ink)
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.caption)
+                    .foregroundStyle(palette.ink3)
+                    .flipsForRightToLeftLayoutDirection(true)
+            }
+            .padding(.horizontal, 14)
+            .padding(.vertical, 12)
+            .background(palette.cardBg)
+            .clipShape(RoundedRectangle(cornerRadius: WarmRadius.surface, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: WarmRadius.surface, style: .continuous)
+                    .stroke(palette.cardBorder, lineWidth: 1)
+            )
+        }
+        .buttonStyle(.plain)
     }
 
     // MARK: — Helpers
@@ -324,16 +421,47 @@ struct ComposeView: View {
 
         selectedContact?.lastContactedAt = .now
         try? modelContext.save()
-        // Auto-complete the associated due tickle. Validates against the live
-        // store first, so a reminder deleted/completed while the composer was up
-        // won't be double-completed. The snapshot is handed to the parent to
-        // drive the undo toast on the screen that remains after dismissal.
-        let snapshot = dueReminder.flatMap {
-            TickleScheduler.completeAfterSend(reminder: $0, context: modelContext)
+
+        // At most one post-send surface (TIC-82 undo ↔ TIC-86 offer exclusivity):
+        // a reminder-attached send routes to completion/undo; a plain send offers
+        // a tickle only when the contact has no other open (active/snoozed)
+        // reminder — someone already covered mustn't be offered a duplicate.
+        let surface = ComposeSuggestions.postSendSurface(
+            result: result,
+            hadDueReminderAttached: dueReminder != nil,
+            contactHasOpenReminder: selectedContact.map(ComposeSuggestions.hasOpenReminder) ?? false
+        )
+
+        switch surface {
+        case .completionUndo:
+            // Auto-complete the associated due tickle. Validates against the live
+            // store first, so a reminder deleted/completed while the composer was
+            // up won't be double-completed. The snapshot is handed to the parent
+            // to drive the undo toast on the screen that remains after dismissal.
+            let snapshot = dueReminder.flatMap {
+                TickleScheduler.completeAfterSend(reminder: $0, context: modelContext)
+            }
+            clearCompose()
+            onClose?()
+            if let snapshot { onTickleCompleted?(snapshot) }
+
+        case .suggestTickle:
+            // Plain send to an uncovered contact: capture a value-only handle to
+            // them BEFORE clearing the form, then offer to create a tickle on the
+            // surface that remains.
+            let suggestion = selectedContact.map {
+                TickleSuggestion(contactID: $0.id, contactName: $0.fullName)
+            }
+            clearCompose()
+            onClose?()
+            if let suggestion { onSuggestTickle?(suggestion) }
+
+        case .none:
+            // Confirmed send, but no surface to show (contact already covered by
+            // an open reminder). Still reset and flow back like any other send.
+            clearCompose()
+            onClose?()
         }
-        clearCompose()
-        onClose?()
-        if let snapshot { onTickleCompleted?(snapshot) }
     }
 
     /// Only a confirmed `.sent` result stamps the contact and completes the due
@@ -347,5 +475,83 @@ struct ComposeView: View {
         selectedTemplate = nil
         messageBody = ""
         searchText = ""
+    }
+}
+
+// MARK: - Browse-all recipient picker (TIC-86)
+
+/// Full alphabetical contact picker reached from the "All contacts…" affordance,
+/// letting the user pick a recipient without typing. Reuses the shared
+/// `contactPicker.*` strings. Contacts without a phone number stay visible but
+/// flagged, matching the inline compose list.
+private struct ComposeContactPickerSheet: View {
+    var warmth: Warmth = .subtle
+    let onSelect: (Contact) -> Void
+
+    @Environment(\.dismiss) private var dismiss
+    @Query(sort: \Contact.lastName) private var contacts: [Contact]
+    @State private var searchText = ""
+
+    private var palette: WarmPalette { WarmTheme.palette(for: warmth) }
+
+    private var filtered: [Contact] {
+        guard !searchText.isEmpty else { return contacts }
+        return contacts.filter {
+            $0.fullName.localizedCaseInsensitiveContains(searchText) ||
+            $0.company.localizedCaseInsensitiveContains(searchText)
+        }
+    }
+
+    var body: some View {
+        NavigationStack {
+            List(filtered) { contact in
+                Button {
+                    onSelect(contact)
+                    dismiss()
+                } label: {
+                    HStack {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(contact.fullName)
+                                .font(.body)
+                                .foregroundStyle(palette.ink)
+                            if !contact.company.isEmpty {
+                                Text(contact.company)
+                                    .font(.caption)
+                                    .foregroundStyle(palette.ink2)
+                            }
+                        }
+                        Spacer()
+                        if contact.phoneNumbers.isEmpty {
+                            Image(systemName: "exclamationmark.circle")
+                                .foregroundStyle(.orange)
+                                .font(.caption)
+                        }
+                    }
+                }
+                .listRowBackground(palette.cardBg)
+            }
+            .listStyle(.plain)
+            .scrollContentBackground(.hidden)
+            .background(palette.paper.ignoresSafeArea())
+            .searchable(text: $searchText, prompt: String(localized: "contactPicker.search"))
+            .navigationTitle(String(localized: "contactPicker.navTitle"))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(String(localized: "common.cancel")) { dismiss() }
+                }
+            }
+            .overlay {
+                if contacts.isEmpty {
+                    ContentUnavailableView(
+                        String(localized: "contactPicker.empty.title"),
+                        systemImage: "person.slash",
+                        description: Text(String(localized: "contactPicker.empty.description"))
+                    )
+                } else if !searchText.isEmpty && filtered.isEmpty {
+                    ContentUnavailableView.search
+                }
+            }
+        }
     }
 }
