@@ -9,6 +9,7 @@ import com.xaymaca.sit.data.repository.ContactRepository
 import com.xaymaca.sit.data.repository.TickleRepository
 import com.xaymaca.sit.service.PendingSnackbarMessageStore
 import com.xaymaca.sit.service.PendingTickleCompletionStore
+import com.xaymaca.sit.service.PendingTickleOfferStore
 import com.xaymaca.sit.service.TickleScheduler
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -104,6 +105,7 @@ class TickleViewModelUpsertCancellationTest {
             contactRepository = contactRepository,
             contactGroupDao = contactGroupDao,
             pendingTickleCompletionStore = PendingTickleCompletionStore(),
+            pendingTickleOfferStore = PendingTickleOfferStore(),
             pendingSnackbarMessageStore = snackbarStore,
             context = context,
         )

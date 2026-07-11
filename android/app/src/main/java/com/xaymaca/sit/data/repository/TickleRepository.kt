@@ -17,6 +17,10 @@ class TickleRepository @Inject constructor(
 
     suspend fun getReminderById(id: Long): TickleReminder? = tickleReminderDao.getById(id)
 
+    /** All reminders attached to a contact, any status (TIC-86 duplicate-offer check). */
+    suspend fun getRemindersForContact(contactId: Long): List<TickleReminder> =
+        tickleReminderDao.getByContactId(contactId)
+
     suspend fun getDueReminders(now: Long = System.currentTimeMillis()): List<TickleReminder> =
         tickleReminderDao.getDueReminders(now)
 

@@ -16,6 +16,7 @@ import com.xaymaca.sit.data.repository.ContactRepository
 import com.xaymaca.sit.data.repository.MessageTemplateRepository
 import com.xaymaca.sit.data.repository.TickleRepository
 import com.xaymaca.sit.service.PendingTickleCompletionStore
+import com.xaymaca.sit.service.PendingTickleOfferStore
 import com.xaymaca.sit.ui.compose.ComposeViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -33,8 +34,10 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 /**
- * TIC-82: the mark-done prompt is stashed at SMS handoff only when the compose
- * carried a still-valid reminder id for the recipient it was sent to.
+ * TIC-82/TIC-86: at SMS handoff, `recordHandoff` stashes at most one follow-up —
+ * the mark-done prompt when the compose carried a still-valid reminder id for the
+ * recipient it was sent to; otherwise the create-a-tickle offer, but only when
+ * the recipient has no live (non-COMPLETED) reminder already; otherwise nothing.
  */
 @OptIn(ExperimentalCoroutinesApi::class)
 class ComposeViewModelTest {
@@ -109,6 +112,7 @@ class ComposeViewModelTest {
 
     private lateinit var tickleDao: FakeTickleReminderDao
     private lateinit var store: PendingTickleCompletionStore
+    private lateinit var offerStore: PendingTickleOfferStore
     private lateinit var viewModel: ComposeViewModel
 
     private val alice = Contact(id = 1L, firstName = "Alice", lastName = "Smith")
@@ -120,12 +124,14 @@ class ComposeViewModelTest {
         tickleDao = FakeTickleReminderDao()
         val contactGroupDao = StubContactGroupDao()
         store = PendingTickleCompletionStore()
+        offerStore = PendingTickleOfferStore()
         viewModel = ComposeViewModel(
             contactRepository = ContactRepository(StubContactDao(), contactGroupDao, tickleDao),
             messageTemplateRepository = MessageTemplateRepository(StubMessageTemplateDao()),
             contactGroupDao = contactGroupDao,
             tickleRepository = TickleRepository(tickleDao),
             pendingTickleCompletionStore = store,
+            pendingTickleOfferStore = offerStore,
         )
     }
 
@@ -135,7 +141,7 @@ class ComposeViewModelTest {
     }
 
     @Test
-    fun `handoff with an attached active reminder stashes the mark-done prompt`() = runTest {
+    fun `handoff with an attached active reminder stashes the mark-done prompt and no offer`() = runTest {
         tickleDao.reminders.add(
             TickleReminder(id = 10L, contactId = 1L, status = TickleStatus.ACTIVE.name)
         )
@@ -147,18 +153,69 @@ class ComposeViewModelTest {
         val pending = store.pending.value
         assertEquals(10L, pending?.reminderId)
         assertEquals("Alice Smith", pending?.contactName)
+        // TIC-86 exclusivity: the mark-done prompt wins, so no offer is stashed.
+        assertNull(offerStore.pending.value)
     }
 
     @Test
-    fun `handoff without an attached reminder stashes nothing`() = runTest {
+    fun `plain handoff without a reminder stashes the create-a-tickle offer and no prompt`() = runTest {
+        viewModel.recordHandoff(alice)
+        advanceUntilIdle()
+
+        // No mark-done prompt (nothing to complete)...
+        assertNull(store.pending.value)
+        // ...but a "create a tickle for Alice?" offer instead (TIC-86).
+        val offer = offerStore.pending.value
+        assertEquals(1L, offer?.contactId)
+        assertEquals("Alice Smith", offer?.contactName)
+    }
+
+    @Test
+    fun `plain handoff skips the offer when the recipient already has an active tickle`() = runTest {
+        // Alice already has an ACTIVE reminder — just not one this compose
+        // carried (no attachReminder). Offering would invite a duplicate.
+        tickleDao.reminders.add(
+            TickleReminder(id = 20L, contactId = 1L, status = TickleStatus.ACTIVE.name)
+        )
+
+        viewModel.recordHandoff(alice)
+        advanceUntilIdle()
+
+        // Outcome 3: no mark-done prompt AND no offer — she's already covered.
+        assertNull(store.pending.value)
+        assertNull(offerStore.pending.value)
+    }
+
+    @Test
+    fun `plain handoff skips the offer when the recipient already has a snoozed tickle`() = runTest {
+        // SNOOZED is still a live reminder (a date shift, not a mute — TIC-61).
+        tickleDao.reminders.add(
+            TickleReminder(id = 21L, contactId = 1L, status = TickleStatus.SNOOZED.name)
+        )
+
         viewModel.recordHandoff(alice)
         advanceUntilIdle()
 
         assertNull(store.pending.value)
+        assertNull(offerStore.pending.value)
     }
 
     @Test
-    fun `handoff skips the prompt when the reminder was already completed`() = runTest {
+    fun `plain handoff still offers when the recipient has only completed tickles`() = runTest {
+        // A COMPLETED one-time tickle is history, not coverage — offer away.
+        tickleDao.reminders.add(
+            TickleReminder(id = 22L, contactId = 1L, status = TickleStatus.COMPLETED.name)
+        )
+
+        viewModel.recordHandoff(alice)
+        advanceUntilIdle()
+
+        assertNull(store.pending.value)
+        assertEquals(1L, offerStore.pending.value?.contactId)
+    }
+
+    @Test
+    fun `handoff offers a tickle when the attached reminder was already completed`() = runTest {
         tickleDao.reminders.add(
             TickleReminder(id = 10L, contactId = 1L, status = TickleStatus.COMPLETED.name)
         )
@@ -168,10 +225,11 @@ class ComposeViewModelTest {
         advanceUntilIdle()
 
         assertNull(store.pending.value)
+        assertEquals(1L, offerStore.pending.value?.contactId)
     }
 
     @Test
-    fun `handoff skips the prompt when the reminder was deleted`() = runTest {
+    fun `handoff offers a tickle when the attached reminder was deleted`() = runTest {
         // Reminder 10 is attached but absent from the DB (deleted in the meantime).
         viewModel.attachReminder(reminderId = 10L, contactId = 1L)
 
@@ -179,10 +237,11 @@ class ComposeViewModelTest {
         advanceUntilIdle()
 
         assertNull(store.pending.value)
+        assertEquals(1L, offerStore.pending.value?.contactId)
     }
 
     @Test
-    fun `handoff skips the prompt when the recipient was re-targeted`() = runTest {
+    fun `handoff offers a tickle for the actual recipient when re-targeted`() = runTest {
         tickleDao.reminders.add(
             TickleReminder(id = 10L, contactId = 1L, status = TickleStatus.ACTIVE.name)
         )
@@ -192,16 +251,21 @@ class ComposeViewModelTest {
         viewModel.recordHandoff(bob)
         advanceUntilIdle()
 
+        // Alice's reminder is not marked done (wrong recipient)...
         assertNull(store.pending.value)
+        // ...and the offer targets Bob, the contact actually texted.
+        assertEquals(2L, offerStore.pending.value?.contactId)
+        assertEquals("Bob Jones", offerStore.pending.value?.contactName)
     }
 
     @Test
-    fun `attachReminder treats -1 sentinel as no reminder`() = runTest {
+    fun `attachReminder treats -1 sentinel as no reminder and offers a tickle`() = runTest {
         viewModel.attachReminder(reminderId = -1L, contactId = -1L)
 
         viewModel.recordHandoff(alice)
         advanceUntilIdle()
 
         assertNull(store.pending.value)
+        assertEquals(1L, offerStore.pending.value?.contactId)
     }
 }

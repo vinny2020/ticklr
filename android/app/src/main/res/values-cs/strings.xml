@@ -204,6 +204,12 @@
     <string name="compose_message_placeholder">Napište zprávu…</string>
     <string name="compose_remove_contact">Odebrat kontakt</string>
     <string name="compose_message_sent">Zpráva odeslána \u2713</string>
+    <string name="compose_suggestions_due_today">Na dnes</string>
+    <string name="compose_suggestions_recents">Nedávné</string>
+    <string name="compose_suggestions_all">Všechny kontakty…</string>
+    <string name="compose_suggestions_due_badge">K vyřízení</string>
+    <string name="compose_tickle_offer_message">Vytvořit Tickle pro %1$s?</string>
+    <string name="compose_tickle_offer_action">Vytvořit Tickle</string>
 
     <!-- Onboarding -->
     <string name="onboarding_tagline">VAŠI LIDÉ JSOU DŮLEŽITÍ</string>

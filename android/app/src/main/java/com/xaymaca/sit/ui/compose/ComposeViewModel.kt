@@ -5,14 +5,19 @@ import androidx.lifecycle.viewModelScope
 import com.xaymaca.sit.data.dao.ContactGroupDao
 import com.xaymaca.sit.data.model.Contact
 import com.xaymaca.sit.data.model.MessageTemplate
+import com.xaymaca.sit.data.model.TickleReminder
 import com.xaymaca.sit.data.model.TickleStatus
 import com.xaymaca.sit.data.repository.ContactRepository
 import com.xaymaca.sit.data.repository.MessageTemplateRepository
 import com.xaymaca.sit.data.repository.TickleRepository
 import com.xaymaca.sit.service.PendingTickleCompletion
 import com.xaymaca.sit.service.PendingTickleCompletionStore
+import com.xaymaca.sit.service.PendingTickleOffer
+import com.xaymaca.sit.service.PendingTickleOfferStore
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -28,6 +33,7 @@ class ComposeViewModel @Inject constructor(
     private val contactGroupDao: ContactGroupDao,
     private val tickleRepository: TickleRepository,
     private val pendingTickleCompletionStore: PendingTickleCompletionStore,
+    private val pendingTickleOfferStore: PendingTickleOfferStore,
 ) : ViewModel() {
 
     // TIC-82: the due tickle this compose was opened for, and the contact it
@@ -65,6 +71,22 @@ class ComposeViewModel @Inject constructor(
             it.company.contains(query, ignoreCase = true)
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    private val allReminders: StateFlow<List<TickleReminder>> = tickleRepository
+        .getAllReminders()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    /**
+     * TIC-86: browse-mode suggestions for the "To" field when it's focused with an
+     * empty query — Due today (currently-due reminders, most overdue first),
+     * Recents (by lastContactedAt), and the full alphabetical browse list. Assembly
+     * lives in the pure [RecipientSuggestionAssembler] so the ordering/cap/exclusion
+     * rules are unit-tested; the ViewModel just supplies the live data + clock.
+     */
+    val recipientSuggestions: StateFlow<RecipientSuggestions> =
+        combine(allContacts, allReminders) { contacts, reminders ->
+            RecipientSuggestionAssembler.assemble(contacts, reminders, System.currentTimeMillis())
+        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), RecipientSuggestions.EMPTY)
 
     private val _selectedContact = MutableStateFlow<Contact?>(null)
     val selectedContact: StateFlow<Contact?> = _selectedContact.asStateFlow()
@@ -124,34 +146,67 @@ class ComposeViewModel @Inject constructor(
     }
 
     /**
-     * Stamp the contact as reached-out-to at the moment of SMS handoff, and —
-     * when this compose carried a still-due reminder for THIS contact (TIC-82)
-     * — stash a "mark done?" prompt to surface on return. The prompt is skipped
-     * when the reminder was completed or deleted in the meantime (validated
-     * against the DB, mirroring TIC-66's shouldPostFiredAlarm philosophy), and
-     * when the user re-targeted the message to a different contact.
+     * Stamp the contact as reached-out-to at the moment of SMS handoff, and stash
+     * at most ONE follow-up prompt for the return to the app — three outcomes:
+     *
+     * 1. **Mark-done prompt** (TIC-82): this compose carried a still-valid
+     *    reminder for THIS recipient. Skipped when the reminder was completed or
+     *    deleted in the meantime (validated against the DB, mirroring TIC-66's
+     *    shouldPostFiredAlarm philosophy) or the message was re-targeted.
+     * 2. **Create-a-tickle offer** (TIC-86): no mark-done prompt applies AND the
+     *    recipient has no non-COMPLETED reminder — "text now → remind me later".
+     * 3. **Nothing**: no mark-done prompt applies but the recipient already has
+     *    an ACTIVE/SNOOZED reminder (just not the one this compose carried, or
+     *    not due right now) — offering would invite creating a duplicate tickle
+     *    for someone already covered.
      */
     fun recordHandoff(contact: Contact) {
         viewModelScope.launch {
-            contactRepository.updateContact(
-                contact.copy(lastContactedAt = System.currentTimeMillis())
-            )
-            val reminderId = pendingReminderId
-            if (reminderId != null && contact.id == pendingReminderContactId) {
-                val reminder = tickleRepository.getReminderById(reminderId)
-                if (reminder != null && reminder.status != TickleStatus.COMPLETED.name) {
-                    pendingTickleCompletionStore.set(
-                        PendingTickleCompletion(
-                            reminderId = reminderId,
-                            contactName = contact.fullName.ifBlank { "" },
+            // see TickleViewModel.upsert — TIC-84 invariant: ComposeScreen pops
+            // (onDone()) right after the handoff and this ViewModel is
+            // destination-scoped, so the pop cancels viewModelScope while this
+            // coroutine is suspended in the Room write (or before the
+            // prompt/offer stash runs). NonCancellable lets the lastContactedAt
+            // stamp + DB validation + stash run to completion.
+            withContext(NonCancellable) {
+                contactRepository.updateContact(
+                    contact.copy(lastContactedAt = System.currentTimeMillis())
+                )
+                val contactName = contact.fullName.ifBlank { "" }
+                val reminderId = pendingReminderId
+                var stashedMarkDone = false
+                if (reminderId != null && contact.id == pendingReminderContactId) {
+                    val reminder = tickleRepository.getReminderById(reminderId)
+                    if (reminder != null && reminder.status != TickleStatus.COMPLETED.name) {
+                        pendingTickleCompletionStore.set(
+                            PendingTickleCompletion(
+                                reminderId = reminderId,
+                                contactName = contactName,
+                            )
                         )
-                    )
+                        stashedMarkDone = true
+                    }
                 }
+                if (!stashedMarkDone) {
+                    // Outcome 3 guard: don't offer a tickle for a contact who
+                    // already has a live (non-COMPLETED) reminder.
+                    val alreadyCovered = tickleRepository
+                        .getRemindersForContact(contact.id)
+                        .any { it.status != TickleStatus.COMPLETED.name }
+                    if (!alreadyCovered) {
+                        pendingTickleOfferStore.set(
+                            PendingTickleOffer(
+                                contactId = contact.id,
+                                contactName = contactName,
+                            )
+                        )
+                    }
+                }
+                // One-shot: once handed off, don't re-prompt for a later send in
+                // the same compose session unless a new reminder is attached.
+                pendingReminderId = null
+                pendingReminderContactId = null
             }
-            // One-shot: once handed off, don't re-prompt for a later send in the
-            // same compose session unless a new reminder is attached.
-            pendingReminderId = null
-            pendingReminderContactId = null
         }
     }
 

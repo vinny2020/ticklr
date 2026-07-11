@@ -201,6 +201,12 @@
     <string name="compose_message_placeholder">הקלידו הודעה…</string>
     <string name="compose_remove_contact">הסרת איש קשר</string>
     <string name="compose_message_sent">ההודעה נשלחה ✓</string>
+    <string name="compose_suggestions_due_today">להיום</string>
+    <string name="compose_suggestions_recents">אחרונים</string>
+    <string name="compose_suggestions_all">כל אנשי הקשר…</string>
+    <string name="compose_suggestions_due_badge">לביצוע</string>
+    <string name="compose_tickle_offer_message">ליצור Tickle עבור %1$s?</string>
+    <string name="compose_tickle_offer_action">צור Tickle</string>
 
     <!-- Onboarding -->
     <string name="onboarding_tagline">האנשים שלך חשובים</string>

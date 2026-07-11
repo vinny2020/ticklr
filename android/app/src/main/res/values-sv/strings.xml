@@ -201,6 +201,12 @@
     <string name="compose_message_placeholder">Skriv ditt meddelande…</string>
     <string name="compose_remove_contact">Ta bort kontakt</string>
     <string name="compose_message_sent">Meddelande skickat \u2713</string>
+    <string name="compose_suggestions_due_today">Idag</string>
+    <string name="compose_suggestions_recents">Senaste</string>
+    <string name="compose_suggestions_all">Alla kontakter…</string>
+    <string name="compose_suggestions_due_badge">Att göra</string>
+    <string name="compose_tickle_offer_message">Skapa en Tickle för %1$s?</string>
+    <string name="compose_tickle_offer_action">Skapa Tickle</string>
 
     <!-- Onboarding -->
     <string name="onboarding_tagline">DINA MÄNNISKOR SPELAR ROLL</string>

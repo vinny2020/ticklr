@@ -201,6 +201,12 @@
     <string name="compose_message_placeholder">अपना संदेश लिखें…</string>
     <string name="compose_remove_contact">संपर्क हटाएं</string>
     <string name="compose_message_sent">संदेश भेजा गया \u2713</string>
+    <string name="compose_suggestions_due_today">आज के लिए</string>
+    <string name="compose_suggestions_recents">हाल के</string>
+    <string name="compose_suggestions_all">सभी संपर्क…</string>
+    <string name="compose_suggestions_due_badge">बकाया</string>
+    <string name="compose_tickle_offer_message">%1$s के लिए Tickle बनाएँ?</string>
+    <string name="compose_tickle_offer_action">Tickle बनाएँ</string>
 
     <!-- Onboarding -->
     <string name="onboarding_tagline">आपके लोग मायने रखते हैं</string>

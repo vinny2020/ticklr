@@ -205,6 +205,14 @@
     <string name="compose_message_placeholder">Type your message…</string>
     <string name="compose_remove_contact">Remove contact</string>
     <string name="compose_message_sent">Message sent \u2713</string>
+    <!-- Compose recipient suggestions (TIC-86) \u2014 shown when the To field is focused with an empty query -->
+    <string name="compose_suggestions_due_today">Due today</string>
+    <string name="compose_suggestions_recents">Recents</string>
+    <string name="compose_suggestions_all">All contacts\u2026</string>
+    <string name="compose_suggestions_due_badge">Due</string>
+    <!-- Create-a-tickle offer (TIC-86) \u2014 shown on return from a plain SMS handoff -->
+    <string name="compose_tickle_offer_message">Create a tickle for %1$s?</string>
+    <string name="compose_tickle_offer_action">Create tickle</string>
 
     <!-- Onboarding -->
     <string name="onboarding_tagline">YOUR PEOPLE MATTER</string>
