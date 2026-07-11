@@ -210,20 +210,29 @@
 
     <!-- Import -->
     <string name="import_title">Importera kontakter</string>
-    <string name="import_success_card">%1$d kontakter importerade</string>
     <string name="import_from_phone_title">Importera från telefonkontakter</string>
     <string name="import_from_phone_subtitle">Synkronisera dina kontakter från enhetens adressbok.</string>
     <string name="import_from_linkedin_title">Fyll ditt nätverk från LinkedIn-CSV</string>
     <string name="import_from_linkedin_subtitle">LinkedIn-exporter innehåller namn och företag utan telefonnummer. Du lägger till kontaktuppgifter manuellt efter importen.</string>
     <string name="import_linkedin_instructions_title">Hur du exporterar från LinkedIn</string>
     <string name="import_linkedin_instructions">1. Gå till linkedin.com\n2. Tryck på Jag → Inställningar och sekretess\n3. Datasekretess → Hämta en kopia av dina data\n4. Välj \"Kontakter\" och begär export\n5. Ladda ner CSV-filen och välj den här</string>
-    <string name="import_continue_button">Fortsätt till nätverket</string>
     <string name="import_skip_button">Hoppa över för nu</string>
     <string name="import_snackbar_success">%1$d kontakter importerade</string>
     <string name="import_snackbar_linkedin">%1$d LinkedIn-kontakter importerade</string>
     <string name="import_snackbar_permission_denied">Åtkomst till kontakter nekad</string>
     <string name="import_snackbar_failed">Importen misslyckades: %1$s</string>
     <string name="import_snackbar_could_not_open">Det gick inte att öppna filen</string>
+    <plurals name="import_result_contacts">
+        <item quantity="one">%1$d kontakt importerad</item>
+        <item quantity="other">%1$d kontakter importerade</item>
+    </plurals>
+    <plurals name="import_result_duplicates_skipped">
+        <item quantity="one">%1$d dublett hoppades över</item>
+        <item quantity="other">%1$d dubbletter hoppades över</item>
+    </plurals>
+    <string name="import_result_combined">%1$s — %2$s</string>
+    <string name="import_result_no_new_with_duplicates">Inga nya kontakter — %1$s</string>
+    <string name="import_result_no_new_contacts">Inga nya kontakter hittades</string>
 
     <!-- Template list -->
     <string name="template_list_title">Meddelandemallar</string>

@@ -218,20 +218,37 @@
 
     <!-- Import -->
     <string name="import_title">استيراد جهات الاتصال</string>
-    <string name="import_success_card">تم استيراد %1$d جهة اتصال بنجاح</string>
     <string name="import_from_phone_title">الاستيراد من جهات اتصال الهاتف</string>
     <string name="import_from_phone_subtitle">زامِن جهات الاتصال من دفتر العناوين على جهازك.</string>
     <string name="import_from_linkedin_title">أنشئ شبكتك من ملف LinkedIn CSV</string>
     <string name="import_from_linkedin_subtitle">تتضمن صادرات LinkedIn الأسماء والشركات فقط — بلا أرقام هواتف. ستُضيف التفاصيل يدوياً بعد الاستيراد.</string>
     <string name="import_linkedin_instructions_title">كيفية التصدير من LinkedIn</string>
     <string name="import_linkedin_instructions">1. افتح linkedin.com\n2. اضغط Me ← Settings &amp; Privacy\n3. Data Privacy ← Get a copy of your data\n4. اختر \"Connections\" واطلب التصدير\n5. حمِّل ملف CSV واختره هنا</string>
-    <string name="import_continue_button">المتابعة إلى الشبكة</string>
     <string name="import_skip_button">تخطٍّ الآن</string>
     <string name="import_snackbar_success">تم استيراد %1$d جهة اتصال</string>
     <string name="import_snackbar_linkedin">تم استيراد %1$d جهة اتصال من LinkedIn</string>
     <string name="import_snackbar_permission_denied">تم رفض إذن الوصول إلى جهات الاتصال</string>
     <string name="import_snackbar_failed">فشل الاستيراد: %1$s</string>
     <string name="import_snackbar_could_not_open">تعذّر فتح الملف</string>
+    <plurals name="import_result_contacts">
+        <item quantity="zero">تم استيراد %1$d جهة اتصال</item>
+        <item quantity="one">تم استيراد %1$d جهة اتصال</item>
+        <item quantity="two">تم استيراد %1$d جهتا اتصال</item>
+        <item quantity="few">تم استيراد %1$d جهات اتصال</item>
+        <item quantity="many">تم استيراد %1$d جهة اتصال</item>
+        <item quantity="other">تم استيراد %1$d جهة اتصال</item>
+    </plurals>
+    <plurals name="import_result_duplicates_skipped">
+        <item quantity="zero">تم تخطي %1$d نسخة مكررة</item>
+        <item quantity="one">تم تخطي %1$d نسخة مكررة</item>
+        <item quantity="two">تم تخطي %1$d نسختين مكررتين</item>
+        <item quantity="few">تم تخطي %1$d نسخ مكررة</item>
+        <item quantity="many">تم تخطي %1$d نسخة مكررة</item>
+        <item quantity="other">تم تخطي %1$d نسخة مكررة</item>
+    </plurals>
+    <string name="import_result_combined">%1$s — %2$s</string>
+    <string name="import_result_no_new_with_duplicates">لا جهات اتصال جديدة — %1$s</string>
+    <string name="import_result_no_new_contacts">لم يتم العثور على جهات اتصال جديدة</string>
 
     <!-- Template list -->
     <string name="template_list_title">قوالب الرسائل</string>

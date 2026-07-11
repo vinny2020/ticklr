@@ -213,20 +213,31 @@
 
     <!-- Import -->
     <string name="import_title">Importovat kontakty</string>
-    <string name="import_success_card">Úspěšně importováno %1$d kontaktů</string>
     <string name="import_from_phone_title">Importovat z kontaktů v telefonu</string>
     <string name="import_from_phone_subtitle">Synchronizujte kontakty z adresáře zařízení.</string>
     <string name="import_from_linkedin_title">Naplňte síť z LinkedIn CSV</string>
     <string name="import_from_linkedin_subtitle">Exporty LinkedIn obsahují jména a firmy bez telefonních čísel. Po importu přidáte kontaktní údaje ručně.</string>
     <string name="import_linkedin_instructions_title">Jak exportovat z LinkedIn</string>
     <string name="import_linkedin_instructions">1. Přejděte na linkedin.com\n2. Klepněte na Já → Nastavení a soukromí\n3. Ochrana dat → Získat kopii svých dat\n4. Vyberte „Připojení" a požádejte o export\n5. Stáhněte soubor CSV a vyberte jej zde</string>
-    <string name="import_continue_button">Pokračovat do sítě</string>
     <string name="import_skip_button">Přeskočit prozatím</string>
     <string name="import_snackbar_success">Importováno %1$d kontaktů</string>
     <string name="import_snackbar_linkedin">Importováno %1$d kontaktů LinkedIn</string>
     <string name="import_snackbar_permission_denied">Přístup ke kontaktům odepřen</string>
     <string name="import_snackbar_failed">Import se nezdařil: %1$s</string>
     <string name="import_snackbar_could_not_open">Soubor nelze otevřít</string>
+    <plurals name="import_result_contacts">
+        <item quantity="one">Importován %1$d kontakt</item>
+        <item quantity="few">Importovány %1$d kontakty</item>
+        <item quantity="other">Importováno %1$d kontaktů</item>
+    </plurals>
+    <plurals name="import_result_duplicates_skipped">
+        <item quantity="one">Přeskočen %1$d duplikát</item>
+        <item quantity="few">Přeskočeny %1$d duplikáty</item>
+        <item quantity="other">Přeskočeno %1$d duplikátů</item>
+    </plurals>
+    <string name="import_result_combined">%1$s — %2$s</string>
+    <string name="import_result_no_new_with_duplicates">Žádné nové kontakty — %1$s</string>
+    <string name="import_result_no_new_contacts">Nebyly nalezeny žádné nové kontakty</string>
 
     <!-- Template list -->
     <string name="template_list_title">Šablony zpráv</string>

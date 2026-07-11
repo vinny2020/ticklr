@@ -8,9 +8,12 @@ import com.xaymaca.sit.data.model.Contact
 import com.xaymaca.sit.data.repository.ContactRepository
 import com.xaymaca.sit.service.ContactImportService
 import com.xaymaca.sit.service.ContactPhotoService
+import com.xaymaca.sit.service.ImportResult
 import com.xaymaca.sit.service.LinkedInCSVParser
 import com.xaymaca.sit.service.LocalPhotoStore
+import com.xaymaca.sit.service.PendingSnackbarMessageStore
 import com.xaymaca.sit.service.TickleScheduler
+import com.xaymaca.sit.service.formatImportSummaryMessage
 import com.xaymaca.sit.ui.theme.WarmCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -37,6 +40,7 @@ class NetworkViewModel @Inject constructor(
     private val contactImportService: ContactImportService,
     private val linkedInCSVParser: LinkedInCSVParser,
     private val contactDao: ContactDao,
+    private val pendingSnackbarMessageStore: PendingSnackbarMessageStore,
     @ApplicationContext private val context: Context,
 ) : ViewModel() {
 
@@ -138,16 +142,31 @@ class NetworkViewModel @Inject constructor(
         }
     }
 
-    suspend fun importFromContacts(): Int =
-        contactImportService.importPhoneContacts()
+    /**
+     * Imports device contacts and stashes the result summary on the app-scoped
+     * [PendingSnackbarMessageStore] (TIC-84 pattern) before returning — the
+     * Import screen (onboarding, or a mid-session import from Settings/Network)
+     * auto-advances to the Network tab as soon as this returns (TIC-85), so the
+     * message has to be posted here rather than built from a screen-local
+     * count that would already be gone by the time it's shown.
+     */
+    suspend fun importFromContacts(): ImportResult {
+        val result = contactImportService.importPhoneContacts()
+        pendingSnackbarMessageStore.set(formatImportSummaryMessage(context, result))
+        return result
+    }
 
-    suspend fun importFromCSV(inputStream: InputStream): Int {
+    /** CSV counterpart of [importFromContacts] — same TIC-85 summary-posting contract. */
+    suspend fun importFromCSV(inputStream: InputStream): ImportResult {
         val contacts = linkedInCSVParser.parse(inputStream)
-        // insertContact returns -1L for duplicates; count only genuine inserts
-        // so "Imported N contacts" reflects what actually landed, not re-imports.
+        // insertContact returns -1L for duplicates; tally both so the summary
+        // can report genuine inserts and duplicates skipped separately.
         var inserted = 0
-        contacts.forEach { if (contactRepository.insertContact(it) != -1L) inserted++ }
-        return inserted
+        var skipped = 0
+        contacts.forEach { if (contactRepository.insertContact(it) != -1L) inserted++ else skipped++ }
+        val result = ImportResult(inserted, skipped)
+        pendingSnackbarMessageStore.set(formatImportSummaryMessage(context, result))
+        return result
     }
 
     suspend fun getContactById(id: Long): Contact? =

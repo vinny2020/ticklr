@@ -208,20 +208,27 @@
 
     <!-- Import -->
     <string name="import_title">連絡先をインポート</string>
-    <string name="import_success_card">%1$d 件の連絡先をインポートしました</string>
     <string name="import_from_phone_title">電話の連絡先からインポート</string>
     <string name="import_from_phone_subtitle">デバイスのアドレス帳から連絡先を同期します。</string>
     <string name="import_from_linkedin_title">LinkedIn CSV からネットワークをシード</string>
     <string name="import_from_linkedin_subtitle">LinkedIn のエクスポートには名前と会社情報が含まれますが、電話番号は含まれません。インポート後、連絡先の詳細を手動で追加します。</string>
     <string name="import_linkedin_instructions_title">LinkedIn からエクスポートする方法</string>
     <string name="import_linkedin_instructions">1. linkedin.com にアクセス\n2. 「自分」→「設定とプライバシー」をタップ\n3. データのプライバシー → データのコピーを取得\n4.「コネクション」を選択してエクスポートを申請\n5. CSV ファイルをダウンロードしてここで選択</string>
-    <string name="import_continue_button">ネットワークへ進む</string>
     <string name="import_skip_button">今はスキップ</string>
     <string name="import_snackbar_success">%1$d 件の連絡先をインポートしました</string>
     <string name="import_snackbar_linkedin">%1$d 件の LinkedIn 連絡先をインポートしました</string>
     <string name="import_snackbar_permission_denied">連絡先へのアクセスが拒否されました</string>
     <string name="import_snackbar_failed">インポートに失敗しました：%1$s</string>
     <string name="import_snackbar_could_not_open">ファイルを開けませんでした</string>
+    <plurals name="import_result_contacts">
+        <item quantity="other">%1$d 件の連絡先をインポートしました</item>
+    </plurals>
+    <plurals name="import_result_duplicates_skipped">
+        <item quantity="other">%1$d 件の重複をスキップしました</item>
+    </plurals>
+    <string name="import_result_combined">%1$s — %2$s</string>
+    <string name="import_result_no_new_with_duplicates">新しい連絡先はありません — %1$s</string>
+    <string name="import_result_no_new_contacts">新しい連絡先は見つかりませんでした</string>
 
     <!-- Template list -->
     <string name="template_list_title">メッセージテンプレート</string>
