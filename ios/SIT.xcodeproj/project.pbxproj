@@ -60,6 +60,7 @@
 		984F8919395A52436BA23ECC /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 52B2D827FDB5FDABB740E34A /* Localizable.xcstrings */; };
 		9CA0D612EF182E101FDE37A4 /* LinkedInCSVParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D196741B99B788C9E325C3 /* LinkedInCSVParserTests.swift */; };
 		9CC3A189563F711043FF4F77 /* OFL-NotoSerifJP.txt in Resources */ = {isa = PBXBuildFile; fileRef = B202F00A260D45CDA07CAB8E /* OFL-NotoSerifJP.txt */; };
+		9DC847FCC2BFE02BF343C577 /* GroupFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3416D505AC168ABA8379A68 /* GroupFeatureTests.swift */; };
 		A0DF94177BA2698341980E2A /* TickleNotificationRoutingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74FD20F0EB3B04BC7402FCA /* TickleNotificationRoutingTests.swift */; };
 		A12D6BFE761485462744D2F9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FE39C5E32CF68501239897AF /* InfoPlist.strings */; };
 		A47CF298C3FF9F43615F03D1 /* CanonicalGroupSeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71E34F441267292176C85B0 /* CanonicalGroupSeed.swift */; };
@@ -196,6 +197,7 @@
 		BB38137353FDCD5606A5A8FF /* TickleReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleReminder.swift; sourceTree = "<group>"; };
 		BE5F28CBE2FCC020F374E286 /* NotoSerifDevanagari-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSerifDevanagari-SemiBold.ttf"; sourceTree = "<group>"; };
 		C203898862FA7D9FC0D26AB9 /* ContactsAccessBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsAccessBanner.swift; sourceTree = "<group>"; };
+		C3416D505AC168ABA8379A68 /* GroupFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupFeatureTests.swift; sourceTree = "<group>"; };
 		C3936B5E7A48687C98F2843D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C3BA80FD4DE962EB1F107E78 /* test_contacts.csv */ = {isa = PBXFileReference; path = test_contacts.csv; sourceTree = "<group>"; };
 		C9AAF458A6C9EBA96236F28F /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -352,6 +354,7 @@
 				205CDD9B8C3402B672E5E739 /* ComposeViewTests.swift */,
 				EA9ED8CB5E6D9F8E216A7470 /* ContactImportServiceTests.swift */,
 				10D31DBFE56E32631DD7B650 /* ContactTests.swift */,
+				C3416D505AC168ABA8379A68 /* GroupFeatureTests.swift */,
 				901EF7F333375E781CF94056 /* ImportFeedbackTests.swift */,
 				30D196741B99B788C9E325C3 /* LinkedInCSVParserTests.swift */,
 				7A27D41F38F9FB5871748B89 /* LocalizationTests.swift */,
@@ -700,6 +703,7 @@
 				707528D3264086FB42BDD51E /* ComposeViewTests.swift in Sources */,
 				CDE377155C3E8D64FB62AE2F /* ContactImportServiceTests.swift in Sources */,
 				9283E70E0707CC70CFA0AD0F /* ContactTests.swift in Sources */,
+				9DC847FCC2BFE02BF343C577 /* GroupFeatureTests.swift in Sources */,
 				F270284BAF01A90FDA75B306 /* ImportFeedbackTests.swift in Sources */,
 				9CA0D612EF182E101FDE37A4 /* LinkedInCSVParserTests.swift in Sources */,
 				919527C153F058BE1EDA72A3 /* LocalizationTests.swift in Sources */,

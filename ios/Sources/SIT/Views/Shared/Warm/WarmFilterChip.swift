@@ -6,6 +6,11 @@ struct WarmFilterChip: View {
     enum Kind {
         case all
         case category(WarmCategory)
+        /// A user-created (non-canonical) group filter (TIC-88). Carries the
+        /// group's emoji so the chip can show it where a category shows its SF
+        /// Symbol. Styled neutrally (like `.all`) so custom-group chips read as
+        /// distinct from the canonical category chips that follow "All".
+        case userGroup(emoji: String)
     }
 
     let kind: Kind
@@ -22,6 +27,10 @@ struct WarmFilterChip: View {
                 if case .category(let cat) = kind {
                     Image(systemName: cat.systemImageName)
                         .font(.system(size: 11, weight: .semibold))
+                }
+                if case .userGroup(let emoji) = kind {
+                    Text(emoji)
+                        .font(.system(size: 12))
                 }
                 Text(label)
                     .font(.system(size: 13, weight: .semibold))
@@ -53,35 +62,35 @@ struct WarmFilterChip: View {
 
     private var background: Color {
         switch (kind, isActive) {
-        case (.all, true):                  palette.ink
-        case (.all, false):                 palette.cardBg
-        case (.category(let c), true):      c.palette.accent
-        case (.category(let c), false):     c.palette.accentTint
+        case (.all, true), (.userGroup, true):    palette.ink
+        case (.all, false), (.userGroup, false):  palette.cardBg
+        case (.category(let c), true):            c.palette.accent
+        case (.category(let c), false):           c.palette.accentTint
         }
     }
 
     private var foreground: Color {
         switch (kind, isActive) {
-        case (.all, true):                  palette.paper
-        case (.all, false):                 palette.ink
-        case (.category, true):             Color(red: 0.98, green: 0.96, blue: 0.89)
-        case (.category(let c), false):     c.palette.accent
+        case (.all, true), (.userGroup, true):    palette.paper
+        case (.all, false), (.userGroup, false):  palette.ink
+        case (.category, true):                   Color(red: 0.98, green: 0.96, blue: 0.89)
+        case (.category(let c), false):           c.palette.accent
         }
     }
 
     private var borderColor: Color {
         switch (kind, isActive) {
-        case (.category, false):            palette.cardBorder
-        default:                            Color.clear
+        case (.category, false), (.userGroup, false):  palette.cardBorder
+        default:                                       Color.clear
         }
     }
 
     private var countBadgeBackground: Color {
         switch (kind, isActive) {
-        case (.all, true):                  palette.paper.opacity(0.18)
-        case (.all, false):                 palette.ink.opacity(0.06)
-        case (.category, true):             Color.white.opacity(0.22)
-        case (.category(let c), false):     c.palette.accentBadge
+        case (.all, true), (.userGroup, true):    palette.paper.opacity(0.18)
+        case (.all, false), (.userGroup, false):  palette.ink.opacity(0.06)
+        case (.category, true):                   Color.white.opacity(0.22)
+        case (.category(let c), false):           c.palette.accentBadge
         }
     }
 

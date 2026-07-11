@@ -4,6 +4,7 @@ import SwiftData
 struct NetworkListView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Contact.lastName) private var contacts: [Contact]
+    @Query(sort: \ContactGroup.name) private var allGroups: [ContactGroup]
 
     @State private var searchText = ""
     @State private var filter: Filter = .all
@@ -18,11 +19,14 @@ struct NetworkListView: View {
     private let warmth: Warmth = .subtle
     private var palette: WarmPalette { WarmTheme.palette(for: warmth) }
 
-    /// Filter taxonomy from HANDOFF lines 56-58: All + 4 chips, with
-    /// Milestones intentionally excluded (it's a Tickle-tab concept).
+    /// Filter taxonomy from HANDOFF lines 56-58: All + 4 canonical chips, with
+    /// Milestones intentionally excluded (it's a Tickle-tab concept). TIC-88
+    /// appends the user's custom groups after the canonical 4, keyed by the
+    /// group's stable `id` so the chip's selection survives list re-sorts.
     private enum Filter: Hashable {
         case all
         case category(WarmCategory)
+        case userGroup(UUID)
     }
 
     private static let chipCategories: [WarmCategory] =
@@ -148,9 +152,32 @@ struct NetworkListView: View {
                         )
                     }
                 }
+                // TIC-88: the user's custom groups follow the canonical chips,
+                // horizontally scrollable. Selecting one filters the list to
+                // that group's members.
+                ForEach(userGroups, id: \.persistentModelID) { group in
+                    WarmFilterChip(
+                        kind: .userGroup(emoji: group.emoji),
+                        label: group.displayName,
+                        count: group.contacts.count,
+                        isActive: filter == .userGroup(group.id),
+                        action: { filter = .userGroup(group.id) },
+                        warmth: warmth
+                    )
+                }
             }
             .padding(.horizontal, 16)
         }
+    }
+
+    /// User-created groups only — the 5 canonical category groups are already
+    /// represented by their own chips (4 of them) and are excluded here.
+    /// Sorted by creation order to match the Groups tab's "Your Groups" list.
+    private var userGroups: [ContactGroup] {
+        let canonicalIds = Set(WarmCategory.allCases.map { $0.groupUUID })
+        return allGroups
+            .filter { !canonicalIds.contains($0.id) }
+            .sorted { $0.createdAt < $1.createdAt }
     }
 
     // MARK: - Filtering
@@ -162,10 +189,9 @@ struct NetworkListView: View {
         case .all:
             break
         case .category(let cat):
-            let canonicalId = cat.groupUUID
-            result = result.filter { c in
-                c.groups.contains { $0.id == canonicalId }
-            }
+            result = GroupMembershipFilter.contacts(result, inGroupWithID: cat.groupUUID)
+        case .userGroup(let id):
+            result = GroupMembershipFilter.contacts(result, inGroupWithID: id)
         }
 
         if !searchText.isEmpty {
@@ -182,6 +208,19 @@ struct NetworkListView: View {
         let canonicalId = category.groupUUID
         return contacts.reduce(0) { acc, c in
             acc + (c.groups.contains { $0.id == canonicalId } ? 1 : 0)
+        }
+    }
+}
+
+/// Pure membership predicate behind the Network group filters (TIC-88).
+/// Extracted from `NetworkListView.filtered` so both the canonical-category
+/// and user-group filter paths share one definition of "is this contact in
+/// the group with this id", and so the logic is unit-testable without hosting
+/// the SwiftUI view.
+enum GroupMembershipFilter {
+    static func contacts(_ contacts: [Contact], inGroupWithID id: UUID) -> [Contact] {
+        contacts.filter { contact in
+            contact.groups.contains { $0.id == id }
         }
     }
 }
