@@ -187,6 +187,7 @@
     <string name="group_detail_member_added">%1$s کو %2$s میں شامل کیا گیا</string>
     <string name="group_detail_member_added_generic">%1$s کو گروپ میں شامل کیا گیا</string>
     <string name="group_detail_edit_group">گروپ میں ترمیم</string>
+    <string name="group_detail_create_tickle">ٹِکل بنائیں</string>
     <string name="group_detail_add_members_fab">اراکین شامل کریں</string>
     <string name="group_edit_dialog_title">گروپ میں ترمیم</string>
 

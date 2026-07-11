@@ -191,6 +191,7 @@
     <string name="group_detail_member_added">%1$s добавлен(а) в %2$s</string>
     <string name="group_detail_member_added_generic">%1$s добавлен(а) в группу</string>
     <string name="group_detail_edit_group">Редактировать группу</string>
+    <string name="group_detail_create_tickle">Создать tickle</string>
     <string name="group_detail_add_members_fab">Добавить участников</string>
     <string name="group_edit_dialog_title">Редактировать группу</string>
 

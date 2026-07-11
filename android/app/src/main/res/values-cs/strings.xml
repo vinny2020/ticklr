@@ -190,6 +190,7 @@
     <string name="group_detail_member_added">%1$s přidán do %2$s</string>
     <string name="group_detail_member_added_generic">%1$s přidán do skupiny</string>
     <string name="group_detail_edit_group">Upravit skupinu</string>
+    <string name="group_detail_create_tickle">Vytvořit tickle</string>
     <string name="group_detail_add_members_fab">Přidat členy</string>
     <string name="group_edit_dialog_title">Upravit skupinu</string>
 

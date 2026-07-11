@@ -49,11 +49,18 @@ class GroupViewModel @Inject constructor(
         }
     }
 
-    fun createGroup(name: String, emoji: String) {
+    /**
+     * Inserts a new group and hands the generated row id back via [onCreated]
+     * (TIC-88 create-with-members: the caller navigates straight into the new
+     * group's detail). [onCreated] runs on the main dispatcher after the insert
+     * completes, so it can drive navigation directly.
+     */
+    fun createGroup(name: String, emoji: String, onCreated: (Long) -> Unit = {}) {
         viewModelScope.launch {
-            contactRepository.insertGroup(
+            val id = contactRepository.insertGroup(
                 ContactGroup(name = name.trim(), emoji = emoji.trim().ifBlank { "👥" })
             )
+            onCreated(id)
         }
     }
 

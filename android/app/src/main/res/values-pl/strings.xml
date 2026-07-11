@@ -191,6 +191,7 @@
     <string name="group_detail_member_added">%1$s dodany do %2$s</string>
     <string name="group_detail_member_added_generic">%1$s dodany do grupy</string>
     <string name="group_detail_edit_group">Edytuj grupę</string>
+    <string name="group_detail_create_tickle">Utwórz tickle</string>
     <string name="group_detail_add_members_fab">Dodaj członków</string>
     <string name="group_edit_dialog_title">Edytuj grupę</string>
 

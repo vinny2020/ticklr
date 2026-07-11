@@ -20,6 +20,18 @@ import java.util.concurrent.TimeUnit
 object TickleScheduler {
 
     /**
+     * TIC-88: resolves the headline name for a reminder's notification. A
+     * contact tickle uses the contact's name; a group tickle (contactId null,
+     * groupId set) falls back to the group's name; anything left over uses the
+     * generic [fallback]. Pure so the fallback order is unit-testable without a
+     * DB — callers pass the already-resolved contact/group names.
+     */
+    fun reminderDisplayName(contactName: String?, groupName: String?, fallback: String): String =
+        contactName?.takeIf { it.isNotBlank() }
+            ?: groupName?.takeIf { it.isNotBlank() }
+            ?: fallback
+
+    /**
      * Schedules the daily WorkManager check for due tickle reminders.
      * Fires once per day with an initial delay to the next 9am.
      */

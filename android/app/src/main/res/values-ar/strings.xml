@@ -195,6 +195,7 @@
     <string name="group_detail_member_added">تمت إضافة %1$s إلى %2$s</string>
     <string name="group_detail_member_added_generic">تمت إضافة %1$s إلى المجموعة</string>
     <string name="group_detail_edit_group">تعديل المجموعة</string>
+    <string name="group_detail_create_tickle">أنشئ تذكيرًا</string>
     <string name="group_detail_add_members_fab">إضافة أعضاء</string>
     <string name="group_edit_dialog_title">تعديل المجموعة</string>
 

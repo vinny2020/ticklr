@@ -185,6 +185,7 @@
     <string name="group_detail_member_added">%1$s 已添加到 %2$s</string>
     <string name="group_detail_member_added_generic">%1$s 已添加到群组</string>
     <string name="group_detail_edit_group">编辑群组</string>
+    <string name="group_detail_create_tickle">创建 tickle</string>
     <string name="group_detail_add_members_fab">添加成员</string>
     <string name="group_edit_dialog_title">编辑群组</string>
 

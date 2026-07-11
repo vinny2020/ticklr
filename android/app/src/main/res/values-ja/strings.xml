@@ -185,6 +185,7 @@
     <string name="group_detail_member_added">%1$s を %2$s に追加しました</string>
     <string name="group_detail_member_added_generic">%1$s をグループに追加しました</string>
     <string name="group_detail_edit_group">グループを編集</string>
+    <string name="group_detail_create_tickle">リマインドを作る</string>
     <string name="group_detail_add_members_fab">メンバーを追加</string>
     <string name="group_edit_dialog_title">グループを編集</string>
 

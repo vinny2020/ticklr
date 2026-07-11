@@ -408,24 +408,44 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
                         onContactClick = { id ->
                             navController.navigate(Screen.ContactDetail.createRoute(id))
                         },
+                        onAddTickleForGroup = { id ->
+                            navController.navigate(Screen.TickleEdit.createRouteWithGroup(id))
+                        },
                     )
                 } else {
                     GroupListScreen(
-                        onGroupClick = { id -> navController.navigate(Screen.GroupDetail.createRoute(id)) }
+                        onGroupClick = { id -> navController.navigate(Screen.GroupDetail.createRoute(id)) },
+                        // TIC-88 create-with-members: jump straight into the new
+                        // group with the Add Members sheet already open.
+                        onGroupCreated = { id ->
+                            navController.navigate(Screen.GroupDetail.createRouteWithAddMembers(id))
+                        }
                     )
                 }
             }
 
             composable(
                 route = Screen.GroupDetail.ROUTE,
-                arguments = listOf(navArgument("groupId") { type = NavType.LongType })
+                arguments = listOf(
+                    navArgument("groupId") { type = NavType.LongType },
+                    navArgument(Screen.GroupDetail.ARG_OPEN_ADD) {
+                        type = NavType.BoolType
+                        defaultValue = false
+                    }
+                )
             ) { backStackEntry ->
                 val groupId = backStackEntry.arguments?.getLong("groupId") ?: return@composable
+                val openAdd = backStackEntry.arguments?.getBoolean(Screen.GroupDetail.ARG_OPEN_ADD) ?: false
                 GroupDetailScreen(
                     groupId = groupId,
+                    openAddMembersOnLaunch = openAdd,
                     onBack = { navController.popBackStack() },
                     onContactClick = { id ->
                         navController.navigate(Screen.ContactDetail.createRoute(id))
+                    },
+                    // TIC-88 group tickle creation path.
+                    onAddTickle = {
+                        navController.navigate(Screen.TickleEdit.createRouteWithGroup(groupId))
                     }
                 )
             }
@@ -457,14 +477,17 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
                 route = Screen.TickleEdit.ROUTE,
                 arguments = listOf(
                     navArgument("tickleId") { type = NavType.LongType },
-                    navArgument("contactId") { type = NavType.LongType; defaultValue = -1L }
+                    navArgument("contactId") { type = NavType.LongType; defaultValue = -1L },
+                    navArgument("groupId") { type = NavType.LongType; defaultValue = -1L }
                 )
             ) { backStackEntry ->
                 val tickleId = backStackEntry.arguments?.getLong("tickleId") ?: -1L
                 val contactId = backStackEntry.arguments?.getLong("contactId")?.takeIf { it != -1L }
+                val groupId = backStackEntry.arguments?.getLong("groupId")?.takeIf { it != -1L }
                 TickleEditScreen(
                     tickleId = if (tickleId == -1L) null else tickleId,
                     preselectedContactId = contactId,
+                    preselectedGroupId = groupId,
                     onSaved = { navController.popBackStack() },
                     onBack = { navController.popBackStack() }
                 )

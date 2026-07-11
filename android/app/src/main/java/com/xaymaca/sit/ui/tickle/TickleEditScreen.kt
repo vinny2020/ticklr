@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.xaymaca.sit.R
 import com.xaymaca.sit.data.model.Contact
+import com.xaymaca.sit.data.model.ContactGroup
 import com.xaymaca.sit.data.model.TickleFrequency
 import com.xaymaca.sit.data.model.TickleReminder
 import com.xaymaca.sit.data.model.TickleStatus
@@ -38,11 +39,20 @@ import java.text.DateFormat
 import java.util.Calendar
 import java.util.Date
 
+/**
+ * TIC-88: resolves the (contactId, groupId) a saved tickle should carry. A
+ * group-bound tickle stores its groupId with a null contact; a contact-bound one
+ * the reverse. Pure so the mutual exclusion is unit-testable without the form.
+ */
+internal fun tickleBinding(groupBound: Boolean, contactId: Long?, groupId: Long?): Pair<Long?, Long?> =
+    if (groupBound) null to groupId else contactId to null
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TickleEditScreen(
     tickleId: Long?,
     preselectedContactId: Long? = null,
+    preselectedGroupId: Long? = null,
     onSaved: () -> Unit,
     onBack: () -> Unit,
     tickleViewModel: TickleViewModel = hiltViewModel(),
@@ -52,8 +62,15 @@ fun TickleEditScreen(
     val coroutineScope = rememberCoroutineScope()
     val contacts by networkViewModel.filteredContacts.collectAsState()
 
-    // Form state — contact only. Group-based tickles were removed; legacy ones
-    // load with selectedContact == null so the user picks a contact before saving.
+    // TIC-88: a tickle is either contact-bound or group-bound. `groupBound` is
+    // decided synchronously (a preselected group for a NEW tickle, or an edited
+    // reminder that carries a groupId) so the contact picker never flashes before
+    // [boundGroup] finishes loading. When group-bound, Save wires groupId and
+    // leaves contactId null; the contact search/list is hidden entirely.
+    var groupBound by remember { mutableStateOf(preselectedGroupId != null) }
+    var boundGroup by remember { mutableStateOf<ContactGroup?>(null) }
+
+    // Form state — contact only. Group-based tickles bind via [boundGroup] above.
     var selectedContact by remember { mutableStateOf<Contact?>(null) }
     var contactSearch by remember { mutableStateOf("") }
     var selectedFrequency by remember { mutableStateOf(TickleFrequency.MONTHLY) }
@@ -71,10 +88,16 @@ fun TickleEditScreen(
         }
     }
 
-    // Load existing reminder for edit mode. Legacy group-based tickles are
-    // auto-converted: their frequency / note / startDate carry over, but the
-    // group association is dropped and selectedContact stays null until the
-    // user picks one (Save remains disabled until they do).
+    // TIC-88: pre-populate the bound group when navigating from GroupDetail.
+    LaunchedEffect(preselectedGroupId) {
+        if (tickleId == null && preselectedGroupId != null) {
+            boundGroup = tickleViewModel.getGroupById(preselectedGroupId)
+        }
+    }
+
+    // Load existing reminder for edit mode. TIC-88: a reminder that carries a
+    // groupId re-opens group-bound (contact picker hidden); a contact reminder
+    // re-selects its contact. Frequency / note / startDate always carry over.
     LaunchedEffect(tickleId) {
         if (tickleId != null) {
             val reminder = tickleViewModel.getReminderById(tickleId)
@@ -85,7 +108,10 @@ fun TickleEditScreen(
                 customIntervalDays = reminder.customIntervalDays ?: 14
                 note = reminder.note
                 startDate = reminder.startDate
-                if (reminder.contactId != null) {
+                if (reminder.groupId != null) {
+                    groupBound = true
+                    boundGroup = tickleViewModel.getGroupById(reminder.groupId)
+                } else if (reminder.contactId != null) {
                     selectedContact = networkViewModel.getContactById(reminder.contactId)
                 }
             }
@@ -139,7 +165,10 @@ fun TickleEditScreen(
                     }
                 },
                 actions = {
-                    val canSave = isLoaded && selectedContact != null && !isSaving
+                    // Group-bound: savable once its group has resolved. Contact-bound:
+                    // needs a picked contact. Either way, wait for load + no in-flight save.
+                    val canSave = isLoaded && !isSaving &&
+                        (if (groupBound) boundGroup != null else selectedContact != null)
                     TextButton(
                         onClick = {
                             // Flip OUTSIDE coroutineScope.launch so the next tap
@@ -161,6 +190,11 @@ fun TickleEditScreen(
                                     // "Stay in touch" — saves users from blank-noted reminders
                                     // without overriding intentional whitespace edits.
                                     val finalNote = if (note.isEmpty()) context.getString(R.string.tickle_edit_default_note) else note.trim()
+                                    val (savedContactId, savedGroupId) = tickleBinding(
+                                        groupBound = groupBound,
+                                        contactId = selectedContact?.id,
+                                        groupId = boundGroup?.id,
+                                    )
                                     val reminder = if (original != null) {
                                         // TIC-67: copy-from-original so a note/contact edit keeps
                                         // lastCompletedDate + createdAt (REPLACE would wipe them).
@@ -173,8 +207,8 @@ fun TickleEditScreen(
                                             startDate = startDate
                                         )
                                         original.copy(
-                                            contactId = selectedContact?.id,
-                                            groupId = null,
+                                            contactId = savedContactId,
+                                            groupId = savedGroupId,
                                             note = finalNote,
                                             frequency = selectedFrequency.name,
                                             customIntervalDays = newCustomDays,
@@ -185,8 +219,8 @@ fun TickleEditScreen(
                                     } else {
                                         TickleReminder(
                                             id = 0L,
-                                            contactId = selectedContact?.id,
-                                            groupId = null,
+                                            contactId = savedContactId,
+                                            groupId = savedGroupId,
                                             note = finalNote,
                                             frequency = selectedFrequency.name,
                                             customIntervalDays = newCustomDays,
@@ -258,28 +292,45 @@ fun TickleEditScreen(
                     .fillMaxSize()
                     .padding(paddingValues)
             ) {
-                // Pinned contact-search header. Keeping the search field outside
-                // the LazyColumn ensures it (and the result rows below it) stay
-                // visible when the keyboard is up.
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 12.dp)
-                ) {
-                    Text(
-                        stringResource(R.string.tickle_edit_section_contact),
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    OutlinedTextField(
-                        value = contactSearch,
-                        onValueChange = { contactSearch = it },
-                        label = { Text(stringResource(R.string.tickle_edit_search_contacts)) },
-                        modifier = Modifier.fillMaxWidth(),
-                        singleLine = true,
-                        shape = RoundedCornerShape(10.dp)
-                    )
+                // TIC-88: group-bound tickles pin a read-only group header instead
+                // of the contact search — the target is fixed, so there's nothing
+                // to pick. Contact-bound tickles keep the search field pinned
+                // outside the LazyColumn so it (and its result rows) survive the IME.
+                if (groupBound) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 12.dp)
+                    ) {
+                        Text(
+                            stringResource(R.string.tickle_edit_section_group),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        BoundGroupChip(group = boundGroup)
+                    }
+                } else {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 12.dp)
+                    ) {
+                        Text(
+                            stringResource(R.string.tickle_edit_section_contact),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        OutlinedTextField(
+                            value = contactSearch,
+                            onValueChange = { contactSearch = it },
+                            label = { Text(stringResource(R.string.tickle_edit_search_contacts)) },
+                            modifier = Modifier.fillMaxWidth(),
+                            singleLine = true,
+                            shape = RoundedCornerShape(10.dp)
+                        )
+                    }
                 }
 
                 LazyColumn(
@@ -290,7 +341,7 @@ fun TickleEditScreen(
                     contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 0.dp, bottom = 16.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    if (selectedContact != null) {
+                    if (!groupBound && selectedContact != null) {
                         item {
                             SelectedContactChip(
                                 contact = selectedContact!!,
@@ -301,8 +352,9 @@ fun TickleEditScreen(
                     // Hide the list once a contact is picked. For a NEW tickle, the
                     // list reappears when the user clears the chip; for an EDIT it
                     // only appears while the user is typing in the search field.
-                    val showContactList = contactSearch.isNotBlank() ||
-                        (tickleId == null && selectedContact == null)
+                    // Group-bound tickles never show the contact list.
+                    val showContactList = !groupBound && (contactSearch.isNotBlank() ||
+                        (tickleId == null && selectedContact == null))
                     if (showContactList) {
                         items(filteredContacts.take(8)) { contact ->
                             Row(
@@ -492,6 +544,41 @@ private fun AnnualPresetChip(label: String, onClick: () -> Unit) {
         onClick = onClick,
         label = { Text(label) }
     )
+}
+
+/** TIC-88: read-only header for a group-bound tickle — the group can't be
+ *  changed from the edit form, so this shows the emoji + name without a clear
+ *  affordance. Renders a placeholder puck while the group is still resolving. */
+@Composable
+private fun BoundGroupChip(group: ContactGroup?) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .background(
+                color = MaterialTheme.colorScheme.surfaceVariant,
+                shape = RoundedCornerShape(24.dp)
+            )
+            .padding(horizontal = 12.dp, vertical = 8.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .size(28.dp)
+                .clip(CircleShape)
+                .background(WarmCategory.Community.palette.accent),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                group?.emoji ?: "👥",
+                style = MaterialTheme.typography.labelMedium
+            )
+        }
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(
+            group?.name ?: "…",
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.SemiBold
+        )
+    }
 }
 
 @Composable

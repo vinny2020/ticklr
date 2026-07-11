@@ -189,6 +189,7 @@
     <string name="group_detail_member_added">%1$s adăugat în %2$s</string>
     <string name="group_detail_member_added_generic">%1$s adăugat în grup</string>
     <string name="group_detail_edit_group">Editează grup</string>
+    <string name="group_detail_create_tickle">Creează un tickle</string>
     <string name="group_detail_add_members_fab">Adaugă membri</string>
     <string name="group_edit_dialog_title">Editează grup</string>
 

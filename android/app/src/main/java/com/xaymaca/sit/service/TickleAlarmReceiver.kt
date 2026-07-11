@@ -78,9 +78,11 @@ class TickleAlarmReceiver : BroadcastReceiver() {
         val reminder = tickleRepository.getReminderById(reminderId) ?: return
         if (!TickleScheduler.shouldPostFiredAlarm(reminder)) return
 
-        val contactName = reminder.contactId?.let { cId ->
-            contactRepository.getContactById(cId)?.fullName?.takeIf { it.isNotBlank() }
-        } ?: context.getString(R.string.tickle_notification_contact_fallback)
+        val contactName = TickleScheduler.reminderDisplayName(
+            contactName = reminder.contactId?.let { contactRepository.getContactById(it)?.fullName },
+            groupName = reminder.groupId?.let { contactRepository.getGroupById(it)?.name },
+            fallback = context.getString(R.string.tickle_notification_contact_fallback),
+        )
 
         val title = context.getString(R.string.tickle_notification_title, contactName)
         val body = reminder.note.ifBlank { context.getString(R.string.tickle_notification_body) }
@@ -112,9 +114,11 @@ class TickleAlarmReceiver : BroadcastReceiver() {
         // AlarmManager alarms are wiped by a restart — re-arm each future-due
         // reminder (TIC-66). Past-due ones are the daily worker's job.
         tickleRepository.getArmableReminders().forEach { reminder ->
-            val contactName = reminder.contactId?.let { cId ->
-                contactRepository.getContactById(cId)?.fullName?.takeIf { it.isNotBlank() }
-            } ?: context.getString(R.string.tickle_notification_contact_fallback)
+            val contactName = TickleScheduler.reminderDisplayName(
+                contactName = reminder.contactId?.let { contactRepository.getContactById(it)?.fullName },
+                groupName = reminder.groupId?.let { contactRepository.getGroupById(it)?.name },
+                fallback = context.getString(R.string.tickle_notification_contact_fallback),
+            )
             TickleScheduler.syncAlarm(context, reminder, contactName)
         }
     }

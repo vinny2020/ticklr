@@ -29,6 +29,11 @@ import com.xaymaca.sit.ui.theme.WarmTheme
 sealed class FilterChipKind {
     object All : FilterChipKind()
     data class CategoryKind(val category: WarmCategory) : FilterChipKind()
+
+    /** TIC-88: a user-created group filter chip. Neutral pill styling (like the
+     *  All chip) rather than a canonical category's accent, so custom groups read
+     *  as distinct from the four canonical categories. */
+    object GroupKind : FilterChipKind()
 }
 
 /**
@@ -48,25 +53,33 @@ fun WarmFilterChip(
 ) {
     val palette = WarmTheme.palette(warmth)
 
+    // GroupKind shares the neutral All-chip styling (ink when active, cardBg
+    // otherwise) so custom groups read distinctly from canonical categories.
+    val neutralActive = (kind is FilterChipKind.All || kind is FilterChipKind.GroupKind) && isActive
+    val neutralInactive = (kind is FilterChipKind.All || kind is FilterChipKind.GroupKind) && !isActive
     val background = when {
-        kind is FilterChipKind.All && isActive -> palette.ink
-        kind is FilterChipKind.All && !isActive -> palette.cardBg
+        neutralActive -> palette.ink
+        neutralInactive -> palette.cardBg
         kind is FilterChipKind.CategoryKind && isActive -> kind.category.palette.accent
         kind is FilterChipKind.CategoryKind && !isActive -> kind.category.palette.accentTint
         else -> palette.cardBg
     }
     val foreground = when {
-        kind is FilterChipKind.All && isActive -> palette.paper
-        kind is FilterChipKind.All && !isActive -> palette.ink
+        neutralActive -> palette.paper
+        neutralInactive -> palette.ink
         kind is FilterChipKind.CategoryKind && isActive -> Color(0xFFFAF4E2)
         kind is FilterChipKind.CategoryKind && !isActive -> kind.category.palette.accent
         else -> palette.ink
     }
-    val borderColor = if (kind is FilterChipKind.CategoryKind && !isActive) palette.cardBorder else Color.Transparent
+    val borderColor = when {
+        kind is FilterChipKind.CategoryKind && !isActive -> palette.cardBorder
+        kind is FilterChipKind.GroupKind && !isActive -> palette.cardBorder
+        else -> Color.Transparent
+    }
 
     val countBg = when {
-        kind is FilterChipKind.All && isActive -> palette.paper.copy(alpha = 0.18f)
-        kind is FilterChipKind.All && !isActive -> palette.ink.copy(alpha = 0.06f)
+        neutralActive -> palette.paper.copy(alpha = 0.18f)
+        neutralInactive -> palette.ink.copy(alpha = 0.06f)
         kind is FilterChipKind.CategoryKind && isActive -> Color.White.copy(alpha = 0.22f)
         kind is FilterChipKind.CategoryKind && !isActive -> kind.category.palette.accentBadge
         else -> palette.ink.copy(alpha = 0.06f)
