@@ -16,7 +16,7 @@ packages:
 settings:
   base:
     PRODUCT_NAME: Ticklr
-    MARKETING_VERSION: "1.11.1"
+    MARKETING_VERSION: "1.12.0"
     CURRENT_PROJECT_VERSION: "18"
     SWIFT_VERSION: "6.0"
     DEVELOPMENT_TEAM: ""
