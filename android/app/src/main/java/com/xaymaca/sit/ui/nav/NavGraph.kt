@@ -54,6 +54,31 @@ import com.xaymaca.sit.ui.tickle.TickleViewModel
 internal fun startDestinationFor(onboardingComplete: Boolean): String =
     if (onboardingComplete) Screen.Tickle.route else Screen.Onboarding.route
 
+/**
+ * TIC-94: which flow launched Import — onboarding (first-run) vs in-app
+ * (Settings row / Network overflow menu, reached mid-session). Parsed from
+ * the `origin` nav arg; anything other than the exact onboarding sentinel —
+ * including a missing/null arg — defaults to [ImportOrigin.InApp], the
+ * non-destructive choice, rather than onboarding's stack-wiping one.
+ */
+internal enum class ImportOrigin { Onboarding, InApp }
+
+internal fun importOriginFor(origin: String?): ImportOrigin =
+    if (origin == Screen.Import.ORIGIN_ONBOARDING) ImportOrigin.Onboarding else ImportOrigin.InApp
+
+/**
+ * TIC-94: what an Import completion (success or skip) should do to the back
+ * stack. Onboarding has no meaningful stack yet, so it resets to a fresh tab
+ * ([FreshStart] — the caller picks Network for success, Tickle for skip). An
+ * in-app entry (Settings, Network overflow) has a real stack underneath it
+ * that must survive, so it just returns to whatever launched Import
+ * ([ReturnToCaller]) instead of the old blanket `popUpTo(0)`.
+ */
+internal enum class ImportExit { FreshStart, ReturnToCaller }
+
+internal fun importExitFor(origin: ImportOrigin): ImportExit =
+    if (origin == ImportOrigin.Onboarding) ImportExit.FreshStart else ImportExit.ReturnToCaller
+
 private data class BottomNavItem(
     val screen: Screen,
     @StringRes val labelResId: Int,
@@ -222,7 +247,9 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
             // Onboarding
             composable(Screen.Onboarding.route) {
                 OnboardingScreen(
-                    onImportContacts = { navController.navigate(Screen.Import.route) },
+                    onImportContacts = {
+                        navController.navigate(Screen.Import.createRoute(Screen.Import.ORIGIN_ONBOARDING))
+                    },
                     onAddContact = {
                         // Warm-redesign: second CTA replaces "Start Empty"
                         // with "Add my first contact" — mark onboarding complete,
@@ -244,32 +271,58 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
             }
 
             // Import
-            composable(Screen.Import.route) {
-                // TIC-85: a successful import auto-advances straight to Network
-                // (no "Continue" tap) so the user sees what just landed; "Skip
-                // for now" still lands on Tickle, whose empty state carries the
-                // onboarding hero CTA. Both are distinct callbacks (not one
-                // onComplete) precisely because they now differ in destination.
-                //
-                // Scope note (TIC-94, not done here): this composable is also
-                // reached mid-session from Settings and Network imports via the
-                // same Screen.Import.route with the same popUpTo(0) full-stack
-                // reset below — those imports inherit this same Network landing
-                // as an acceptable interim behavior. TIC-94 will make onSuccess
-                // entry-context-aware (e.g. pop back to Settings/Network instead
-                // of nuking the stack) without needing to touch this callback
-                // split again.
+            composable(
+                route = Screen.Import.ROUTE,
+                arguments = listOf(
+                    navArgument(Screen.Import.ARG_ORIGIN) {
+                        type = NavType.StringType
+                        defaultValue = Screen.Import.ORIGIN_IN_APP
+                    }
+                )
+            ) { backStackEntry ->
+                // TIC-94: a successful import auto-advances (TIC-85, no "Continue"
+                // tap) and "Skip for now" bails out — but where either lands
+                // depends on how Import was reached. Onboarding has no back
+                // stack worth keeping, so both reset to a fresh tab (Network for
+                // success so the user sees what just landed; Tickle for skip,
+                // whose empty state carries the onboarding hero CTA). An in-app
+                // entry (Settings row, Network overflow menu) has a real stack
+                // underneath — popUpTo(0) there used to teleport the user to
+                // Network and destroy it. Both now just popBackStack() to
+                // return to wherever the user was. The TIC-85 count snackbar
+                // still shows post-pop since it rides the app-level
+                // PendingSnackbarMessageStore/TickleViewModel-observed state
+                // above, not screen-local state.
+                val origin = importOriginFor(
+                    backStackEntry.arguments?.getString(Screen.Import.ARG_ORIGIN)
+                )
                 ImportScreen(
                     onImportSuccess = {
-                        prefs.edit().putBoolean(SITApp.KEY_ONBOARDING_COMPLETE, true).apply()
-                        navController.navigate(Screen.Network.route) {
-                            popUpTo(0) { inclusive = true }
+                        when (importExitFor(origin)) {
+                            ImportExit.FreshStart -> {
+                                prefs.edit().putBoolean(SITApp.KEY_ONBOARDING_COMPLETE, true).apply()
+                                navController.navigate(Screen.Network.route) {
+                                    popUpTo(0) { inclusive = true }
+                                }
+                            }
+                            ImportExit.ReturnToCaller -> navController.popBackStack()
                         }
                     },
                     onSkip = {
-                        prefs.edit().putBoolean(SITApp.KEY_ONBOARDING_COMPLETE, true).apply()
-                        navController.navigate(Screen.Tickle.route) {
-                            popUpTo(0) { inclusive = true }
+                        when (importExitFor(origin)) {
+                            ImportExit.FreshStart -> {
+                                prefs.edit().putBoolean(SITApp.KEY_ONBOARDING_COMPLETE, true).apply()
+                                navController.navigate(Screen.Tickle.route) {
+                                    popUpTo(0) { inclusive = true }
+                                }
+                            }
+                            // TIC-94: in-app "Skip for now" now behaves exactly
+                            // like the back arrow (plain popBackStack, no
+                            // teleport) rather than hiding/relabeling the
+                            // button — "Skip for now" still reads correctly as
+                            // "leave without importing" outside onboarding, and
+                            // reusing it avoids a new string across 21 locales.
+                            ImportExit.ReturnToCaller -> navController.popBackStack()
                         }
                     },
                     onBack = { navController.popBackStack() }
@@ -281,7 +334,9 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
                 if (useTwoPane) {
                     NetworkPane(
                         onAddContact = { navController.navigate(Screen.AddContact.route) },
-                        onImport = { navController.navigate(Screen.Import.route) },
+                        onImport = {
+                            navController.navigate(Screen.Import.createRoute(Screen.Import.ORIGIN_IN_APP))
+                        },
                         onEditContact = { id -> navController.navigate("edit_contact/$id") },
                         onAddTickleForContact = { id ->
                             navController.navigate(Screen.TickleEdit.createRouteWithContact(id))
@@ -300,7 +355,9 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
                             navController.navigate(Screen.ContactDetail.createRoute(id))
                         },
                         onAddContact = { navController.navigate(Screen.AddContact.route) },
-                        onImport = { navController.navigate(Screen.Import.route) }
+                        onImport = {
+                            navController.navigate(Screen.Import.createRoute(Screen.Import.ORIGIN_IN_APP))
+                        }
                     )
                 }
             }
@@ -456,7 +513,9 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
             // Settings
             composable(Screen.Settings.route) {
                 SettingsScreen(
-                    onImport = { navController.navigate(Screen.Import.route) },
+                    onImport = {
+                        navController.navigate(Screen.Import.createRoute(Screen.Import.ORIGIN_IN_APP))
+                    },
                     onTemplates = { navController.navigate(Screen.TemplateList.route) },
                     onResetOnboarding = {
                         prefs.edit().putBoolean(SITApp.KEY_ONBOARDING_COMPLETE, false).apply()
