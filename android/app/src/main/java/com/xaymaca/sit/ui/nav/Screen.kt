@@ -53,7 +53,26 @@ sealed class Screen(val route: String) {
     }
     object Settings : Screen("settings")
     object Onboarding : Screen("onboarding")
-    object Import : Screen("import")
+    object Import : Screen("import") {
+        const val ARG_ORIGIN = "origin"
+
+        /** First-run flow — no meaningful back stack to preserve on completion. */
+        const val ORIGIN_ONBOARDING = "onboarding"
+
+        /** Reached mid-session from Settings or the Network overflow menu — the
+         * user's existing back stack must survive completion/skip. */
+        const val ORIGIN_IN_APP = "inApp"
+
+        /**
+         * In-app navigation route. `origin` (TIC-94) tells NavGraph whether a
+         * completed/skipped import should reset to a fresh tab (onboarding) or
+         * simply return to whatever screen launched it (in-app). Defaults to
+         * the non-destructive in-app behavior if ever omitted.
+         */
+        const val ROUTE = "import?origin={origin}"
+
+        fun createRoute(origin: String = ORIGIN_IN_APP): String = "import?origin=$origin"
+    }
     object TemplateList : Screen("template_list")
     data class TemplateEdit(val id: Long = -1L) : Screen("template_edit/{templateId}") {
         companion object {

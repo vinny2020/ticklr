@@ -1,6 +1,10 @@
 package com.xaymaca.sit
 
+import com.xaymaca.sit.ui.nav.ImportExit
+import com.xaymaca.sit.ui.nav.ImportOrigin
 import com.xaymaca.sit.ui.nav.Screen
+import com.xaymaca.sit.ui.nav.importExitFor
+import com.xaymaca.sit.ui.nav.importOriginFor
 import com.xaymaca.sit.ui.nav.startDestinationFor
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -129,5 +133,68 @@ class ScreenRouteTest {
             startDestinationFor(onboardingComplete = true),
             startDestinationFor(onboardingComplete = false)
         )
+    }
+
+    // --- Import route + entry-context (TIC-94) ---
+    // Import is reached from three places: onboarding (no back stack worth
+    // keeping) and Settings/Network overflow (mid-session, real back stack
+    // underneath). The `origin` nav arg tells NavGraph which behavior applies.
+
+    @Test
+    fun `import route template contains the origin placeholder`() {
+        assertTrue(Screen.Import.ROUTE.contains("{${Screen.Import.ARG_ORIGIN}}"))
+    }
+
+    @Test
+    fun `import createRoute embeds the onboarding origin`() {
+        assertEquals(
+            "import?origin=onboarding",
+            Screen.Import.createRoute(Screen.Import.ORIGIN_ONBOARDING),
+        )
+    }
+
+    @Test
+    fun `import createRoute embeds the in-app origin`() {
+        assertEquals(
+            "import?origin=inApp",
+            Screen.Import.createRoute(Screen.Import.ORIGIN_IN_APP),
+        )
+    }
+
+    @Test
+    fun `import createRoute defaults to in-app origin`() {
+        assertEquals(Screen.Import.createRoute(Screen.Import.ORIGIN_IN_APP), Screen.Import.createRoute())
+    }
+
+    @Test
+    fun `import origin parses the onboarding sentinel`() {
+        assertEquals(ImportOrigin.Onboarding, importOriginFor(Screen.Import.ORIGIN_ONBOARDING))
+    }
+
+    @Test
+    fun `import origin parses the in-app sentinel`() {
+        assertEquals(ImportOrigin.InApp, importOriginFor(Screen.Import.ORIGIN_IN_APP))
+    }
+
+    @Test
+    fun `import origin defaults to in-app for a null arg`() {
+        // A missing origin arg must never fall back to onboarding's
+        // stack-wiping behavior — in-app (popBackStack) is the safe default.
+        assertEquals(ImportOrigin.InApp, importOriginFor(null))
+    }
+
+    @Test
+    fun `import origin defaults to in-app for an unrecognized value`() {
+        assertEquals(ImportOrigin.InApp, importOriginFor("bogus"))
+    }
+
+    @Test
+    fun `onboarding origin resets to a fresh tab on completion`() {
+        assertEquals(ImportExit.FreshStart, importExitFor(ImportOrigin.Onboarding))
+    }
+
+    @Test
+    fun `in-app origin returns to the caller on completion`() {
+        assertEquals(ImportExit.ReturnToCaller, importExitFor(ImportOrigin.InApp))
     }
 }
