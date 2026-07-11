@@ -18,6 +18,9 @@
     <string name="common_update">Ενημέρωση</string>
     <string name="common_send">Αποστολή</string>
     <string name="common_change">Αλλαγή</string>
+    <string name="common_done">Τέλος</string>
+    <!-- TIC-96: shared empty-database CTA -->
+    <string name="common_add_or_import_contacts">Προσθήκη ή εισαγωγή επαφών</string>
     <string name="common_edit">Επεξεργασία</string>
 
     <!-- Settings -->
@@ -102,6 +105,8 @@
     <string name="tickle_edit_create_group_button">Δημιουργία ομάδας</string>
     <string name="tickle_edit_new_group_dialog_title">Νέα ομάδα</string>
     <string name="tickle_edit_group_name_label">Όνομα ομάδας</string>
+    <!-- TIC-96: empty-database dead-end fix for the contact picker -->
+    <string name="tickle_edit_empty_contacts_title">Δεν έχεις ακόμα επαφές.</string>
     <string name="tickle_saved">Το tickle αποθηκεύτηκε</string>
     <string name="tickle_updated">Το tickle ενημερώθηκε</string>
     <string name="tickle_notification_contact_fallback">την επαφή σας</string>
@@ -197,6 +202,10 @@
     <string name="compose_to_label">Προς</string>
     <string name="compose_search_placeholder">Αναζήτηση επαφών…</string>
     <string name="compose_no_phone">Δεν υπάρχει αριθμός τηλεφώνου</string>
+    <!-- TIC-96: inline no-phone dead-end fix -->
+    <string name="compose_add_number">Προσθήκη αριθμού</string>
+    <!-- TIC-96: empty-database dead-end fix -->
+    <string name="compose_empty_contacts_title">Δεν έχεις ακόμα επαφές.</string>
     <string name="compose_select_template">Επιλογή προτύπου</string>
     <string name="compose_message_label">Μήνυμα</string>
     <string name="compose_message_placeholder">Πληκτρολογήστε το μήνυμά σας…</string>
@@ -356,4 +365,8 @@
     <string name="tickle_snoozed">Αναβλήθηκε</string>
     <string name="group_member_removed">Ο/Η %1$s αφαιρέθηκε</string>
     <string name="template_deleted">Το πρότυπο διαγράφηκε</string>
+    <!-- TIC-96: multi-phone chooser -->
+    <string name="phone_chooser_title">Επίλεξε έναν αριθμό</string>
+    <!-- TIC-96: honest picker-cap hint -->
+    <string name="picker_showing_hint">Εμφάνιση %1$d από %2$d</string>
 </resources>

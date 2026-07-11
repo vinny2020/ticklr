@@ -251,4 +251,29 @@ class ScreenRouteTest {
     fun `in-app origin returns to the caller on completion`() {
         assertEquals(ImportExit.ReturnToCaller, importExitFor(ImportOrigin.InApp))
     }
+
+    // --- Network focus-contact route (TIC-96) ---
+    // GroupsPane's member tap targets Network's two-pane detail slot instead of
+    // the full-screen ContactDetail route, keeping the cross-section jump inside
+    // the pane world at expanded width.
+
+    @Test
+    fun `network ROUTE template contains the focusContactId placeholder`() {
+        assertTrue(Screen.Network.ROUTE.contains("{${Screen.Network.ARG_FOCUS_CONTACT_ID}}"))
+    }
+
+    @Test
+    fun `network route stays plain for the bottom-nav tab`() {
+        assertEquals("network", Screen.Network.route)
+    }
+
+    @Test
+    fun `createRouteFocusingContact embeds the contact id`() {
+        assertEquals("network?focusContactId=42", Screen.Network.createRouteFocusingContact(42L))
+    }
+
+    @Test
+    fun `createRouteFocusingContact differs from the plain tab route`() {
+        assertNotEquals(Screen.Network.route, Screen.Network.createRouteFocusingContact(1L))
+    }
 }

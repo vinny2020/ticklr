@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
@@ -56,6 +57,15 @@ class ComposeViewModel @Inject constructor(
     private val allContacts: StateFlow<List<Contact>> = contactRepository
         .getAllContacts()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    /**
+     * TIC-96: whether the database has any contact at all — drives the
+     * "Add or import contacts" empty-state CTA that replaces the (otherwise
+     * pointless) recipient form when there's nothing to address a message to.
+     */
+    val hasContacts: StateFlow<Boolean> = allContacts
+        .map { it.isNotEmpty() }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     val templates: StateFlow<List<MessageTemplate>> = messageTemplateRepository
         .getAllTemplates()
@@ -143,6 +153,20 @@ class ComposeViewModel @Inject constructor(
 
     fun clearContact() {
         _selectedContact.value = null
+    }
+
+    /**
+     * TIC-96: re-reads the selected contact from the DB — called when the
+     * screen resumes (e.g. returning from "Add a number" on edit_contact) so a
+     * phone number just added there is reflected without the user having to
+     * re-pick the recipient. No-op when nothing is selected.
+     */
+    fun refreshSelectedContact() {
+        val current = _selectedContact.value ?: return
+        viewModelScope.launch {
+            val fresh = contactRepository.getContactById(current.id)
+            if (fresh != null) _selectedContact.value = fresh
+        }
     }
 
     /**

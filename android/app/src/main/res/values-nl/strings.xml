@@ -18,6 +18,9 @@
     <string name="common_update">Bijwerken</string>
     <string name="common_send">Versturen</string>
     <string name="common_change">Wijzigen</string>
+    <string name="common_done">Klaar</string>
+    <!-- TIC-96: shared empty-database CTA -->
+    <string name="common_add_or_import_contacts">Contacten toevoegen of importeren</string>
     <string name="common_edit">Bewerken</string>
 
     <!-- Settings -->
@@ -102,6 +105,8 @@
     <string name="tickle_edit_create_group_button">Een groep aanmaken</string>
     <string name="tickle_edit_new_group_dialog_title">Nieuwe groep</string>
     <string name="tickle_edit_group_name_label">Groepsnaam</string>
+    <!-- TIC-96: empty-database dead-end fix for the contact picker -->
+    <string name="tickle_edit_empty_contacts_title">Je hebt nog geen contacten.</string>
     <string name="tickle_saved">Tickle opgeslagen</string>
     <string name="tickle_updated">Tickle bijgewerkt</string>
     <string name="tickle_notification_contact_fallback">uw contact</string>
@@ -197,6 +202,10 @@
     <string name="compose_to_label">Aan</string>
     <string name="compose_search_placeholder">Contacten zoeken…</string>
     <string name="compose_no_phone">Geen telefoonnummer geregistreerd</string>
+    <!-- TIC-96: inline no-phone dead-end fix -->
+    <string name="compose_add_number">Nummer toevoegen</string>
+    <!-- TIC-96: empty-database dead-end fix -->
+    <string name="compose_empty_contacts_title">Je hebt nog geen contacten.</string>
     <string name="compose_select_template">Sjabloon selecteren</string>
     <string name="compose_message_label">Bericht</string>
     <string name="compose_message_placeholder">Typ uw bericht…</string>
@@ -356,4 +365,8 @@
     <string name="tickle_snoozed">Uitgesteld</string>
     <string name="group_member_removed">%1$s verwijderd</string>
     <string name="template_deleted">Sjabloon verwijderd</string>
+    <!-- TIC-96: multi-phone chooser -->
+    <string name="phone_chooser_title">Kies een nummer</string>
+    <!-- TIC-96: honest picker-cap hint -->
+    <string name="picker_showing_hint">%1$d van %2$d weergegeven</string>
 </resources>

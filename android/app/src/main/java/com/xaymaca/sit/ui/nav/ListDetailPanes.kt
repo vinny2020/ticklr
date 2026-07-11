@@ -16,12 +16,14 @@ import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.AnimatedPane
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffold
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
+import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldDestinationItem
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -34,6 +36,10 @@ import com.xaymaca.sit.ui.groups.GroupDetailScreen
 import com.xaymaca.sit.ui.groups.GroupListScreen
 import com.xaymaca.sit.ui.network.ContactDetailScreen
 import com.xaymaca.sit.ui.network.NetworkListScreen
+import com.xaymaca.sit.ui.shared.PendingPhoneChoice
+import com.xaymaca.sit.ui.shared.PhoneChoice
+import com.xaymaca.sit.ui.shared.PhoneChooser
+import com.xaymaca.sit.ui.shared.PhoneNumberChooserDialog
 import com.xaymaca.sit.ui.shared.WordmarkLockup
 import com.xaymaca.sit.ui.tickle.TickleActionContent
 import com.xaymaca.sit.ui.tickle.TickleEditScreen
@@ -65,8 +71,27 @@ fun NetworkPane(
     onEditContact: (Long) -> Unit,
     onAddTickleForContact: (Long) -> Unit,
     onCompose: (contactId: Long, reminderId: Long?) -> Unit,
+    /**
+     * TIC-96: a contact to land on directly in the detail slot, e.g. when a
+     * cross-section jump (a group member tap in GroupsPane) targets Network
+     * instead of the full-screen ContactDetail route — the jump stays inside
+     * the pane world instead of leaving it. Null for the ordinary tab entry.
+     */
+    initialContactId: Long? = null,
 ) {
-    val navigator = rememberListDetailPaneScaffoldNavigator<Long?>()
+    // Seeds the navigator's destination history so a jump-in lands straight on
+    // the requested contact's detail pane rather than the empty placeholder.
+    val initialHistory = remember(initialContactId) {
+        if (initialContactId != null) {
+            listOf(
+                ThreePaneScaffoldDestinationItem<Long?>(ListDetailPaneScaffoldRole.List),
+                ThreePaneScaffoldDestinationItem<Long?>(ListDetailPaneScaffoldRole.Detail, initialContactId),
+            )
+        } else {
+            listOf(ThreePaneScaffoldDestinationItem<Long?>(ListDetailPaneScaffoldRole.List))
+        }
+    }
+    val navigator = rememberListDetailPaneScaffoldNavigator(initialDestinationHistory = initialHistory)
 
     BackHandler(enabled = navigator.canNavigateBack()) {
         navigator.navigateBack()
@@ -83,6 +108,8 @@ fun NetworkPane(
                     },
                     onAddContact = onAddContact,
                     onImport = onImport,
+                    onCompose = onCompose,
+                    onAddTickleForContact = onAddTickleForContact,
                 )
             }
         },
@@ -163,12 +190,16 @@ fun GroupsPane(
 @Composable
 fun TicklePane(
     onCompose: (contactId: Long, reminderId: Long?) -> Unit,
+    onAddContact: () -> Unit,
 ) {
     // Shared with TickleListScreen and TickleEditScreen via the nav-entry-scoped
     // ViewModelStoreOwner, so a row tap's resolved `actionTarget` drives this pane.
     val viewModel: TickleViewModel = hiltViewModel()
     val actionTarget by viewModel.actionTarget.collectAsState()
     val context = LocalContext.current
+    // TIC-96: a resolved multi-number choice awaiting the user's pick — see
+    // PhoneChooser. Single-number targets keep the direct-dial fast path.
+    var phoneChoice by remember { mutableStateOf<PendingPhoneChoice?>(null) }
 
     // Edit/new form state for the detail pane. NEW_TICKLE_KEY means "compose new".
     var editingTickleId by rememberSaveable { mutableStateOf<Long?>(null) }
@@ -221,6 +252,7 @@ fun TicklePane(
                         preselectedContactId = null,
                         onSaved = { editingTickleId = null },
                         onBack = { editingTickleId = null },
+                        onAddContact = onAddContact,
                         tickleViewModel = viewModel,
                     )
                     target != null -> Surface(
@@ -241,8 +273,14 @@ fun TicklePane(
                                     if (contactId != null) onCompose(contactId, target.reminder.id)
                                 },
                                 onCall = {
-                                    target.phones.firstOrNull()?.let { number ->
-                                        context.startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:$number")))
+                                    when (val choice = PhoneChooser.choose(target.phones)) {
+                                        is PhoneChoice.Direct ->
+                                            context.startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:${choice.number}")))
+                                        is PhoneChoice.NeedsChoice ->
+                                            phoneChoice = PendingPhoneChoice(choice.numbers) { number ->
+                                                context.startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:$number")))
+                                            }
+                                        PhoneChoice.None -> {}
                                     }
                                     viewModel.dismissActionSheet()
                                 },
@@ -273,6 +311,14 @@ fun TicklePane(
             }
         },
     )
+
+    phoneChoice?.let { pending ->
+        PhoneNumberChooserDialog(
+            numbers = pending.numbers,
+            onSelect = { number -> pending.onChosen(number); phoneChoice = null },
+            onDismiss = { phoneChoice = null },
+        )
+    }
 }
 
 /**
