@@ -17,7 +17,10 @@ struct TickleEditView: View {
     var onSaved: ((String) -> Void)? = nil
 
     @State private var selectedContact: Contact?
-    @State private var frequency: TickleFrequency
+    // Not `private`: TIC-91 tests assert the seeded value directly via
+    // `@testable import`, which needs `internal` (module-level) access —
+    // `private`/`fileprivate` stay opaque to @testable regardless of target.
+    @State var frequency: TickleFrequency
     @State private var customIntervalDays: Int
     @State private var startDate: Date
     @State private var note: String
@@ -59,10 +62,7 @@ struct TickleEditView: View {
             initialCustomIntervalDays = r.customIntervalDays ?? 30
             initialStartDate          = r.nextDueDate
         } else {
-            // The Milestones hero card opens the editor pre-configured for an
-            // anniversary-style reminder — annual frequency — so it lands
-            // meaningfully different from the plain "+" (which defaults monthly).
-            let seededFrequency: TickleFrequency = prefilledCategory == .milestones ? .annual : .monthly
+            let seededFrequency = Self.seededFrequency(prefilledCategory: prefilledCategory)
             _selectedContact     = State(initialValue: contact)
             _frequency           = State(initialValue: seededFrequency)
             _customIntervalDays  = State(initialValue: 30)
@@ -234,6 +234,40 @@ struct TickleEditView: View {
             : String(localized: "tickleEdit.toast.saved")
         onSaved?(message)
         close()
+    }
+
+    /// Resolves the frequency to seed a brand-new tickle with (TIC-91).
+    ///
+    /// The Milestones hero card opens the editor pre-configured for an
+    /// anniversary-style reminder — `.annual`, unconditionally — so it lands
+    /// meaningfully different from the plain "+" regardless of what's stored
+    /// in Settings. Every other new-tickle entry point seeds from the user's
+    /// Settings → Tickle Defaults preference instead of always hardcoding
+    /// `.monthly`.
+    ///
+    /// A free function (not tied to view rendering) so it's directly unit
+    /// testable without ViewInspector/ModelContainer plumbing — mirrors this
+    /// file's existing pattern of pushing pure decision logic out of the body.
+    static func seededFrequency(prefilledCategory: WarmCategory?, defaults: UserDefaults = .standard) -> TickleFrequency {
+        guard prefilledCategory != .milestones else { return .annual }
+        return resolvedDefaultFrequency(from: defaults)
+    }
+
+    /// Reads and parses the stored Settings default
+    /// (`@AppStorage("defaultTickleFrequency")` in `SettingsView`, a
+    /// `TickleFrequency.rawValue` string). Parses defensively: unset,
+    /// unrecognized (e.g. left over from a removed case), or `.custom` values
+    /// all fall back to `.monthly` — `.custom` has no stored interval to seed
+    /// a new reminder with, and the Settings picker already excludes it as a
+    /// selectable default for that reason.
+    static func resolvedDefaultFrequency(from defaults: UserDefaults = .standard) -> TickleFrequency {
+        guard let raw = defaults.string(forKey: "defaultTickleFrequency"),
+              let parsed = TickleFrequency(rawValue: raw),
+              parsed != .custom
+        else {
+            return .monthly
+        }
+        return parsed
     }
 
     private func annualPresetButton(title: String, note presetNote: String) -> some View {
