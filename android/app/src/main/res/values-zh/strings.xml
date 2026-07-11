@@ -199,6 +199,12 @@
     <string name="compose_message_placeholder">输入消息…</string>
     <string name="compose_remove_contact">移除联系人</string>
     <string name="compose_message_sent">消息已发送 \u2713</string>
+    <string name="compose_suggestions_due_today">今天到期</string>
+    <string name="compose_suggestions_recents">最近</string>
+    <string name="compose_suggestions_all">所有联系人…</string>
+    <string name="compose_suggestions_due_badge">待办</string>
+    <string name="compose_tickle_offer_message">为%1$s创建一个 Tickle？</string>
+    <string name="compose_tickle_offer_action">创建 Tickle</string>
 
     <!-- Onboarding -->
     <string name="onboarding_tagline">您的人脉很重要</string>

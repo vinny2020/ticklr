@@ -201,6 +201,12 @@
     <string name="compose_message_placeholder">Írja be az üzenetét…</string>
     <string name="compose_remove_contact">Névjegy eltávolítása</string>
     <string name="compose_message_sent">Üzenet elküldve \u2713</string>
+    <string name="compose_suggestions_due_today">Mára</string>
+    <string name="compose_suggestions_recents">Legutóbbiak</string>
+    <string name="compose_suggestions_all">Összes névjegy…</string>
+    <string name="compose_suggestions_due_badge">Esedékes</string>
+    <string name="compose_tickle_offer_message">Létrehozol egy Tickle-t %1$s számára?</string>
+    <string name="compose_tickle_offer_action">Tickle létrehozása</string>
 
     <!-- Onboarding -->
     <string name="onboarding_tagline">AZ EMBEREID SZÁMÍTANAK</string>

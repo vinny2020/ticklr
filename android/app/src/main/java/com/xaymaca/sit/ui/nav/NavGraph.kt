@@ -171,6 +171,37 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
         }
     }
 
+    // TIC-86: the "create a tickle for [name]?" offer — stashed at a plain SMS
+    // handoff (ComposeViewModel, when no mark-done reminder applied) and surfaced
+    // here, the level that outlives ComposeScreen's pre-handoff pop and the trip
+    // out to the SMS app. Same hard-won mechanics as the TIC-82 prompt above:
+    // collect the StateFlow directly inside LaunchedEffect(Unit) (NOT
+    // collectAsState) so consume()'s null lands as the next sequential emission
+    // rather than cancelling the running showSnackbar; and Indefinite duration so
+    // a timed delay() isn't ticking away while we're covered by the SMS app.
+    // Unlike the mark-done prompt (which mutates a reminder via TickleViewModel),
+    // this action just navigates — TickleEdit prefilled with the contact — so it
+    // needs the navController, available here at the collector site. The offer and
+    // the mark-done prompt are mutually exclusive per handoff (ComposeViewModel
+    // stashes at most one), so these two effects never both fire for one send.
+    val createTickleLabel = stringResource(R.string.compose_tickle_offer_action)
+    LaunchedEffect(Unit) {
+        tickleViewModel.pendingTickleOffer.collect { offer ->
+            if (offer == null) return@collect
+            // Consume first so the offer shows exactly once.
+            tickleViewModel.consumePendingTickleOffer()
+            val result = snackbarHostState.showSnackbar(
+                message = context.getString(R.string.compose_tickle_offer_message, offer.contactName),
+                actionLabel = createTickleLabel,
+                withDismissAction = true,
+                duration = SnackbarDuration.Indefinite,
+            )
+            if (result == SnackbarResult.ActionPerformed) {
+                navController.navigate(Screen.TickleEdit.createRouteWithContact(offer.contactId))
+            }
+        }
+    }
+
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         bottomBar = {

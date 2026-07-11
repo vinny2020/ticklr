@@ -16,8 +16,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupProperties
@@ -51,9 +54,16 @@ fun ComposeScreen(
     val toastMessage by viewModel.toastMessage.collectAsState()
     val searchQuery by viewModel.searchQuery.collectAsState()
     val canSend by viewModel.canSend.collectAsState()
+    // TIC-86: browse-mode suggestions shown when the "To" field is focused with an
+    // empty query (Due today / Recents / All contacts…).
+    val suggestions by viewModel.recipientSuggestions.collectAsState()
 
     var showTemplateDropdown by remember { mutableStateOf(false) }
     var showContactDropdown by remember { mutableStateOf(false) }
+    // TIC-86: once the user taps "All contacts…", the dropdown swaps the
+    // Due/Recents suggestions for the full alphabetical browse list. Reset whenever
+    // the dropdown closes or a query is typed so it re-opens on suggestions.
+    var showAllContacts by remember { mutableStateOf(false) }
     var selectedTemplateName by remember { mutableStateOf<String?>(null) }
     val messageFocusRequester = remember { FocusRequester() }
     val warmth = com.xaymaca.sit.ui.theme.Warmth.Subtle
@@ -148,45 +158,76 @@ fun ComposeScreen(
                         onValueChange = { query ->
                             if (selectedContact == null) {
                                 viewModel.setSearchQuery(query)
-                                showContactDropdown = query.isNotBlank()
+                                // Typing leaves browse mode and shows the filtered
+                                // recall list; an empty field re-opens suggestions.
+                                showAllContacts = false
+                                showContactDropdown = true
                             }
                         },
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            // TIC-86: focusing the empty field opens the
+                            // Due/Recents suggestions — recipient entry is no
+                            // longer recall-only.
+                            .onFocusChanged { if (it.isFocused && selectedContact == null) showContactDropdown = true },
                         placeholder = { Text(stringResource(R.string.compose_search_placeholder), color = warmPalette.ink3) },
                         singleLine = true,
                         shape = RoundedCornerShape(com.xaymaca.sit.ui.theme.WarmRadius.Surface),
                         enabled = selectedContact == null,
                         colors = warmFieldColors,
                     )
+                    val browsing = searchQuery.isBlank()
+                    val hasContent = if (browsing) !suggestions.isEmpty else contacts.isNotEmpty()
                     DropdownMenu(
-                        expanded = showContactDropdown && contacts.isNotEmpty() && selectedContact == null,
-                        onDismissRequest = { showContactDropdown = false },
+                        expanded = showContactDropdown && hasContent && selectedContact == null,
+                        onDismissRequest = {
+                            showContactDropdown = false
+                            showAllContacts = false
+                        },
                         properties = PopupProperties(focusable = false),
-                        modifier = Modifier.background(warmPalette.cardBg),
+                        modifier = Modifier
+                            .background(warmPalette.cardBg)
+                            .heightIn(max = 360.dp),
                     ) {
-                        contacts.take(8).forEach { contact ->
+                        val onPick: (com.xaymaca.sit.data.model.Contact) -> Unit = { contact ->
+                            viewModel.selectContact(contact)
+                            showContactDropdown = false
+                            showAllContacts = false
+                            selectedTemplateName = null
+                        }
+                        if (!browsing) {
+                            // Non-empty query keeps the existing filtered recall list.
+                            contacts.take(8).forEach { contact ->
+                                RecipientRow(contact, warmPalette, accent, showDueBadge = false, onClick = { onPick(contact) })
+                            }
+                        } else if (showAllContacts) {
+                            // Browse-all: the full alphabetical list, no typing needed.
+                            suggestions.all.forEach { contact ->
+                                RecipientRow(contact, warmPalette, accent, showDueBadge = false, onClick = { onPick(contact) })
+                            }
+                        } else {
+                            if (suggestions.dueToday.isNotEmpty()) {
+                                RecipientSectionHeader(stringResource(R.string.compose_suggestions_due_today))
+                                suggestions.dueToday.forEach { contact ->
+                                    RecipientRow(contact, warmPalette, accent, showDueBadge = true, onClick = { onPick(contact) })
+                                }
+                            }
+                            if (suggestions.recents.isNotEmpty()) {
+                                RecipientSectionHeader(stringResource(R.string.compose_suggestions_recents))
+                                suggestions.recents.forEach { contact ->
+                                    RecipientRow(contact, warmPalette, accent, showDueBadge = false, onClick = { onPick(contact) })
+                                }
+                            }
+                            // Browse-all affordance — reveals the alphabetical list.
                             DropdownMenuItem(
                                 text = {
-                                    Column {
-                                        Text(
-                                            contact.fullName.ifBlank { stringResource(R.string.common_no_name) },
-                                            fontWeight = FontWeight.Medium,
-                                            color = warmPalette.ink,
-                                        )
-                                        if (contact.company.isNotBlank()) {
-                                            Text(
-                                                contact.company,
-                                                style = MaterialTheme.typography.bodySmall,
-                                                color = warmPalette.ink2,
-                                            )
-                                        }
-                                    }
+                                    Text(
+                                        stringResource(R.string.compose_suggestions_all),
+                                        fontWeight = FontWeight.Medium,
+                                        color = accent,
+                                    )
                                 },
-                                onClick = {
-                                    viewModel.selectContact(contact)
-                                    showContactDropdown = false
-                                    selectedTemplateName = null
-                                }
+                                onClick = { showAllContacts = true },
                             )
                         }
                     }
@@ -355,3 +396,73 @@ fun ComposeScreen(
 // for the phoneNumbers column. The old naive comma-split corrupted numbers that
 // contained a comma (e.g. dial pauses).
 private val stringListConverter = StringListConverter()
+
+/**
+ * TIC-86: a warm section label inside the recipient suggestions dropdown, reusing
+ * the screen's [com.xaymaca.sit.ui.warm.WarmEyebrow] treatment (uppercase, tracked)
+ * so the browse buckets read as section headers, not tappable rows.
+ */
+@Composable
+private fun RecipientSectionHeader(text: String) {
+    com.xaymaca.sit.ui.warm.WarmEyebrow(
+        text = text,
+        modifier = Modifier.padding(start = 12.dp, top = 8.dp, bottom = 2.dp),
+    )
+}
+
+/**
+ * TIC-86: a single recipient row in the suggestions/browse dropdown — name (+
+ * company subtitle), with an amber "Due" badge for currently-due contacts so the
+ * due state reads at a glance (amber = tickle due state in the Pulse brand).
+ */
+@Composable
+private fun RecipientRow(
+    contact: com.xaymaca.sit.data.model.Contact,
+    palette: com.xaymaca.sit.ui.theme.WarmPalette,
+    accent: Color,
+    showDueBadge: Boolean,
+    onClick: () -> Unit,
+) {
+    DropdownMenuItem(
+        text = {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        contact.fullName.ifBlank { stringResource(R.string.common_no_name) },
+                        fontWeight = FontWeight.Medium,
+                        color = palette.ink,
+                    )
+                    if (contact.company.isNotBlank()) {
+                        Text(
+                            contact.company,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = palette.ink2,
+                        )
+                    }
+                }
+                if (showDueBadge) {
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = stringResource(R.string.compose_suggestions_due_badge).uppercase(),
+                        style = TextStyle(
+                            fontSize = 10.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            letterSpacing = (10 * 0.12).sp,
+                            color = com.xaymaca.sit.ui.theme.Amber,
+                        ),
+                        modifier = Modifier
+                            .background(
+                                com.xaymaca.sit.ui.theme.Amber.copy(alpha = 0.15f),
+                                RoundedCornerShape(6.dp),
+                            )
+                            .padding(horizontal = 8.dp, vertical = 3.dp),
+                    )
+                }
+            }
+        },
+        onClick = onClick,
+    )
+}

@@ -209,6 +209,12 @@
     <string name="compose_message_placeholder">اكتب رسالتك…</string>
     <string name="compose_remove_contact">إزالة جهة الاتصال</string>
     <string name="compose_message_sent">تم إرسال الرسالة ✓</string>
+    <string name="compose_suggestions_due_today">لليوم</string>
+    <string name="compose_suggestions_recents">الأخيرة</string>
+    <string name="compose_suggestions_all">كل جهات الاتصال…</string>
+    <string name="compose_suggestions_due_badge">مستحق</string>
+    <string name="compose_tickle_offer_message">إنشاء Tickle لـ %1$s؟</string>
+    <string name="compose_tickle_offer_action">إنشاء Tickle</string>
 
     <!-- Onboarding -->
     <string name="onboarding_tagline">الأشخاص المهمون لك</string>

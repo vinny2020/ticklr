@@ -201,6 +201,12 @@
     <string name="compose_message_placeholder">Πληκτρολογήστε το μήνυμά σας…</string>
     <string name="compose_remove_contact">Αφαίρεση επαφής</string>
     <string name="compose_message_sent">Το μήνυμα εστάλη \u2713</string>
+    <string name="compose_suggestions_due_today">Για σήμερα</string>
+    <string name="compose_suggestions_recents">Πρόσφατα</string>
+    <string name="compose_suggestions_all">Όλες οι επαφές…</string>
+    <string name="compose_suggestions_due_badge">Εκκρεμεί</string>
+    <string name="compose_tickle_offer_message">Δημιουργία Tickle για %1$s;</string>
+    <string name="compose_tickle_offer_action">Δημιουργία Tickle</string>
 
     <!-- Onboarding -->
     <string name="onboarding_tagline">ΟΙ ΑΝΘΡΩΠΟΙ ΣΑΣ ΜΕΤΡΑΝΕ</string>

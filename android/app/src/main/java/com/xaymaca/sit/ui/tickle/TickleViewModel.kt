@@ -12,6 +12,8 @@ import com.xaymaca.sit.data.repository.TickleRepository
 import com.xaymaca.sit.service.PendingSnackbarMessageStore
 import com.xaymaca.sit.service.PendingTickleCompletion
 import com.xaymaca.sit.service.PendingTickleCompletionStore
+import com.xaymaca.sit.service.PendingTickleOffer
+import com.xaymaca.sit.service.PendingTickleOfferStore
 import com.xaymaca.sit.service.StringListConverter
 import com.xaymaca.sit.service.TickleScheduler
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,6 +38,7 @@ class TickleViewModel @Inject constructor(
     private val contactRepository: ContactRepository,
     private val contactGroupDao: ContactGroupDao,
     private val pendingTickleCompletionStore: PendingTickleCompletionStore,
+    private val pendingTickleOfferStore: PendingTickleOfferStore,
     private val pendingSnackbarMessageStore: PendingSnackbarMessageStore,
     @ApplicationContext private val context: Context,
 ) : ViewModel() {
@@ -65,6 +68,22 @@ class TickleViewModel @Inject constructor(
     /** Clears the pending prompt once it has been surfaced (or is stale). */
     fun consumePendingTickleCompletion() {
         pendingTickleCompletionStore.consume()
+    }
+
+    /**
+     * TIC-86: a pending "create a tickle for [name]?" offer stashed at a plain
+     * SMS handoff (no mark-done reminder applied), observed by the app-level
+     * scaffold (NavGraph) so it survives ComposeScreen's pre-handoff pop and the
+     * round trip out to the SMS app. Its action navigates to TickleEdit prefilled
+     * with the contact — no ViewModel mutation, so there's no completePending-style
+     * helper here; NavGraph owns the navigation.
+     */
+    val pendingTickleOffer: StateFlow<PendingTickleOffer?> =
+        pendingTickleOfferStore.pending
+
+    /** Clears the pending offer once it has been surfaced (or is stale). */
+    fun consumePendingTickleOffer() {
+        pendingTickleOfferStore.consume()
     }
 
     /**

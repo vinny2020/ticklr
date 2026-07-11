@@ -201,6 +201,12 @@
     <string name="compose_message_placeholder">Scrivi il tuo messaggio…</string>
     <string name="compose_remove_contact">Rimuovi contatto</string>
     <string name="compose_message_sent">Messaggio inviato \u2713</string>
+    <string name="compose_suggestions_due_today">Per oggi</string>
+    <string name="compose_suggestions_recents">Recenti</string>
+    <string name="compose_suggestions_all">Tutti i contatti…</string>
+    <string name="compose_suggestions_due_badge">In scadenza</string>
+    <string name="compose_tickle_offer_message">Creare un Tickle per %1$s?</string>
+    <string name="compose_tickle_offer_action">Crea Tickle</string>
 
     <!-- Onboarding -->
     <string name="onboarding_tagline">LE TUE PERSONE CONTANO</string>
