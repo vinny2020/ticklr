@@ -64,4 +64,65 @@ final class ComposeViewTests: XCTestCase {
 
         XCTAssertEqual(cancelCount, 1, "Cancel must fire onClose regardless of form state")
     }
+
+    // MARK: - TIC-90: template menu affordances
+
+    func testEmptyTemplatesShowsCreateTemplateEntry() throws {
+        // No templates saved yet — the menu must offer a way in rather than
+        // disappearing (the bug this ticket fixes).
+        let view = ComposeView().modelContainer(container)
+        let sut = try view.inspect()
+
+        XCTAssertNoThrow(try sut.find(button: String(localized: "compose.template.create")),
+                         "zero templates must surface a 'Create a template…' entry")
+    }
+}
+
+/// TIC-90: pure decision logic for whether picking a template needs to
+/// confirm before overwriting a hand-typed draft. Picking a template must
+/// never silently clobber text the user actually typed, but switching
+/// templates (or picking one into an empty/untouched body) should stay a
+/// single tap.
+@MainActor
+final class ComposeViewTemplateReplaceDecisionTests: XCTestCase {
+
+    func testAppliesDirectlyWhenBodyIsEmpty() {
+        XCTAssertEqual(
+            ComposeView.templateReplaceDecision(currentBody: "", appliedTemplateBody: nil),
+            .applyDirectly,
+            "an empty draft has nothing to protect"
+        )
+    }
+
+    func testAppliesDirectlyWhenBodyIsWhitespaceOnly() {
+        XCTAssertEqual(
+            ComposeView.templateReplaceDecision(currentBody: "   ", appliedTemplateBody: nil),
+            .applyDirectly,
+            "whitespace-only text is treated the same as empty (matches canSend's trim rule)"
+        )
+    }
+
+    func testAppliesDirectlyWhenBodyStillEqualsAppliedTemplate() {
+        XCTAssertEqual(
+            ComposeView.templateReplaceDecision(currentBody: "Hey! Thinking of you.", appliedTemplateBody: "Hey! Thinking of you."),
+            .applyDirectly,
+            "an untouched, previously-applied template body isn't a user draft — switching needs no confirmation"
+        )
+    }
+
+    func testConfirmsWhenBodyDiffersFromAppliedTemplate() {
+        XCTAssertEqual(
+            ComposeView.templateReplaceDecision(currentBody: "Hey! Thinking of you, and also...", appliedTemplateBody: "Hey! Thinking of you."),
+            .confirmReplace,
+            "edited text derived from a template is still a draft worth protecting"
+        )
+    }
+
+    func testConfirmsWhenNoTemplateAppliedYetAndBodyIsHandTyped() {
+        XCTAssertEqual(
+            ComposeView.templateReplaceDecision(currentBody: "Just calling to say hi", appliedTemplateBody: nil),
+            .confirmReplace,
+            "hand-typed text with no template applied is exactly the draft this feature protects"
+        )
+    }
 }
