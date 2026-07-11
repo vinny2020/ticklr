@@ -37,6 +37,14 @@ struct ComposeView: View {
     @State private var showingComposer = false
     @State private var showingCannotSendAlert = false
     @State private var showingSendFailedAlert = false
+    /// Presents `TemplateListView` as a sheet so templates can be created/edited
+    /// without leaving Compose (TIC-90) — reached from both the "Manage
+    /// templates…" entry (templates exist) and "Create a template…" (none yet).
+    @State private var showingManageTemplates = false
+    /// The template awaiting confirmation before it overwrites a hand-typed
+    /// draft (TIC-90 draft protection).
+    @State private var pendingTemplate: MessageTemplate?
+    @State private var showingReplaceDraftConfirm = false
     /// Outcome reported by the Messages composer; consumed in its onDismiss.
     @State private var composeResult: MessageComposeResult?
     @FocusState private var searchFocused: Bool
@@ -152,41 +160,50 @@ struct ComposeView: View {
                         }
                     }
 
-                    if !templates.isEmpty {
-                        VStack(alignment: .leading, spacing: 6) {
-                            WarmEyebrow(text: String(localized: "compose.label.template"), warmth: warmth)
-                                .padding(.horizontal)
+                    // Always shown — even with zero templates — so there's a path
+                    // from Compose into template management either way (TIC-90).
+                    VStack(alignment: .leading, spacing: 6) {
+                        WarmEyebrow(text: String(localized: "compose.label.template"), warmth: warmth)
+                            .padding(.horizontal)
 
-                            Menu {
+                        Menu {
+                            if templates.isEmpty {
+                                Button(String(localized: "compose.template.create")) {
+                                    showingManageTemplates = true
+                                }
+                            } else {
                                 Button(String(localized: "compose.template.none")) {
                                     selectedTemplate = nil
                                 }
                                 ForEach(templates) { template in
                                     Button(template.title) {
-                                        selectedTemplate = template
-                                        messageBody = template.body
+                                        selectTemplate(template)
                                     }
                                 }
-                            } label: {
-                                HStack {
-                                    Text(verbatim: selectedTemplate?.title ?? String(localized: "compose.placeholder.template"))
-                                        .foregroundStyle(selectedTemplate == nil ? palette.ink2 : palette.ink)
-                                    Spacer()
-                                    Image(systemName: "chevron.up.chevron.down")
-                                        .font(.caption)
-                                        .foregroundStyle(palette.ink2)
+                                Divider()
+                                Button(String(localized: "compose.template.manage")) {
+                                    showingManageTemplates = true
                                 }
-                                .padding(.horizontal, 14)
-                                .padding(.vertical, 10)
-                                .background(palette.cardBg)
-                                .clipShape(RoundedRectangle(cornerRadius: WarmRadius.surface, style: .continuous))
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: WarmRadius.surface, style: .continuous)
-                                        .stroke(palette.cardBorder, lineWidth: 1)
-                                )
                             }
-                            .padding(.horizontal)
+                        } label: {
+                            HStack {
+                                Text(verbatim: selectedTemplate?.title ?? String(localized: "compose.placeholder.template"))
+                                    .foregroundStyle(selectedTemplate == nil ? palette.ink2 : palette.ink)
+                                Spacer()
+                                Image(systemName: "chevron.up.chevron.down")
+                                    .font(.caption)
+                                    .foregroundStyle(palette.ink2)
+                            }
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 10)
+                            .background(palette.cardBg)
+                            .clipShape(RoundedRectangle(cornerRadius: WarmRadius.surface, style: .continuous))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: WarmRadius.surface, style: .continuous)
+                                    .stroke(palette.cardBorder, lineWidth: 1)
+                            )
                         }
+                        .padding(.horizontal)
                     }
 
                     VStack(alignment: .leading, spacing: 6) {
@@ -270,6 +287,44 @@ struct ComposeView: View {
                     searchText = ""
                     searchFocused = false
                 }
+            }
+            // TIC-90: "Manage templates…" / "Create a template…" open full
+            // add/edit/delete right from Compose. On dismiss, the live @Query
+            // already reflects any edits; if the applied template was deleted
+            // while managing, drop the now-dangling selection.
+            .sheet(isPresented: $showingManageTemplates, onDismiss: {
+                if let applied = selectedTemplate, !templates.contains(where: { $0.id == applied.id }) {
+                    selectedTemplate = nil
+                }
+            }) {
+                NavigationStack {
+                    TemplateListView()
+                        .toolbar {
+                            ToolbarItem(placement: .topBarTrailing) {
+                                Button(String(localized: "common.done")) {
+                                    showingManageTemplates = false
+                                }
+                            }
+                        }
+                }
+            }
+            // TIC-90 draft protection: only prompts when picking a template
+            // would silently clobber hand-typed text — see
+            // `shouldConfirmTemplateReplace`.
+            .confirmationDialog(
+                String(localized: "compose.template.replaceDraft.title"),
+                isPresented: $showingReplaceDraftConfirm,
+                titleVisibility: .visible,
+                presenting: pendingTemplate
+            ) { template in
+                Button(String(localized: "compose.template.replaceDraft.confirm"), role: .destructive) {
+                    applyTemplate(template)
+                }
+                Button(String(localized: "common.cancel"), role: .cancel) {
+                    pendingTemplate = nil
+                }
+            } message: { _ in
+                Text(String(localized: "compose.template.replaceDraft.message"))
             }
             .alert(String(localized: "compose.alert.cannotSend.title"), isPresented: $showingCannotSendAlert) {
                 Button(String(localized: "common.ok"), role: .cancel) {}
@@ -475,6 +530,44 @@ struct ComposeView: View {
         selectedTemplate = nil
         messageBody = ""
         searchText = ""
+        pendingTemplate = nil
+    }
+
+    // MARK: — Template selection + draft protection (TIC-90)
+
+    /// Picking a template from the menu: applies immediately unless doing so
+    /// would silently clobber hand-typed text, in which case a confirmation is
+    /// queued instead.
+    private func selectTemplate(_ template: MessageTemplate) {
+        switch Self.templateReplaceDecision(currentBody: messageBody, appliedTemplateBody: selectedTemplate?.body) {
+        case .applyDirectly:
+            applyTemplate(template)
+        case .confirmReplace:
+            pendingTemplate = template
+            showingReplaceDraftConfirm = true
+        }
+    }
+
+    private func applyTemplate(_ template: MessageTemplate) {
+        selectedTemplate = template
+        messageBody = template.body
+        pendingTemplate = nil
+    }
+
+    enum TemplateReplaceDecision: Equatable {
+        case applyDirectly
+        case confirmReplace
+    }
+
+    /// Pure decision for whether picking a new template needs to confirm
+    /// before overwriting the current draft (TIC-90). Applies directly when
+    /// the body is empty, or still equals the body of the template currently
+    /// applied (i.e. untouched since it was picked) — only text the user
+    /// actually typed themselves needs protecting.
+    static func templateReplaceDecision(currentBody: String, appliedTemplateBody: String?) -> TemplateReplaceDecision {
+        guard !currentBody.trimmingCharacters(in: .whitespaces).isEmpty else { return .applyDirectly }
+        if let appliedTemplateBody, currentBody == appliedTemplateBody { return .applyDirectly }
+        return .confirmReplace
     }
 }
 
