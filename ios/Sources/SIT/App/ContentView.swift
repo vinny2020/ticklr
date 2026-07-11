@@ -65,7 +65,10 @@ struct ContentView: View {
             }
             // Warm tap (UI already live) fires onChange; cold start (route set
             // before this view appeared) is caught by onAppear.
-            .onAppear { consumePendingRoute() }
+            .onAppear {
+                consumePendingRoute()
+                applyPendingOnboardingLanding()
+            }
             .onChange(of: routeCoordinator.pendingRoute) { _, _ in consumePendingRoute() }
         } else {
             OnboardingView()
@@ -89,6 +92,16 @@ struct ContentView: View {
                 composeRoute = ComposeRoute(contact: contact, reminder: reminder)
             }
         }
+    }
+
+    /// Applies the one-shot post-onboarding landing request (TIC-85), if one
+    /// is pending. Fires exactly once — right as `SITApp` swaps `OnboardingView`
+    /// for a freshly-created `ContentView` on a successful import or first-
+    /// contact save. `NetworkListView` consumes any attached toast itself once
+    /// it appears, so this only needs to steer the initial tab.
+    private func applyPendingOnboardingLanding() {
+        guard PostOnboardingLanding.consumeLandingRequest() else { return }
+        selectedTab = .network
     }
 
     private func fetchContact(_ id: UUID) -> Contact? {

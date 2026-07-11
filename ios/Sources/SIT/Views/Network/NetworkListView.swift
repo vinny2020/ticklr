@@ -10,6 +10,10 @@ struct NetworkListView: View {
     @State private var showingImport = false
     @State private var showingAddContact = false
     @State private var selectedContact: Contact?
+    /// Import result toast (TIC-85) — set either by the "Get started" sheet's
+    /// own completion callback, or picked up in `onAppear` when onboarding just
+    /// landed here via `PostOnboardingLanding`.
+    @State private var importToastMessage: String?
 
     private let warmth: Warmth = .subtle
     private var palette: WarmPalette { WarmTheme.palette(for: warmth) }
@@ -92,8 +96,16 @@ struct NetworkListView: View {
                     }
                 }
             }
-            .sheet(isPresented: $showingImport) { ImportView() }
+            .sheet(isPresented: $showingImport) {
+                ImportView(onImportFinished: { importToastMessage = $0 })
+            }
             .sheet(isPresented: $showingAddContact) { AddContactView() }
+            .saveConfirmationToast(message: $importToastMessage, warmth: warmth)
+            .onAppear {
+                if let toast = PostOnboardingLanding.consumeToast() {
+                    importToastMessage = toast
+                }
+            }
         } detail: {
             if let selectedContact {
                 ContactDetailView(contact: selectedContact, onDeleted: { self.selectedContact = nil })

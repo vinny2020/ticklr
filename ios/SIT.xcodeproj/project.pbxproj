@@ -54,6 +54,7 @@
 		919527C153F058BE1EDA72A3 /* LocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A27D41F38F9FB5871748B89 /* LocalizationTests.swift */; };
 		9283E70E0707CC70CFA0AD0F /* ContactTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D31DBFE56E32631DD7B650 /* ContactTests.swift */; };
 		949EFAA2F52FC214F6E65F95 /* TickleRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2BE0559EF55B0E2A1DDE54 /* TickleRowView.swift */; };
+		94E7271B66ACCF8744AD57F7 /* PostOnboardingLandingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5A706128E821005311026F /* PostOnboardingLandingTests.swift */; };
 		984F8919395A52436BA23ECC /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 52B2D827FDB5FDABB740E34A /* Localizable.xcstrings */; };
 		9CA0D612EF182E101FDE37A4 /* LinkedInCSVParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D196741B99B788C9E325C3 /* LinkedInCSVParserTests.swift */; };
 		9CC3A189563F711043FF4F77 /* OFL-NotoSerifJP.txt in Resources */ = {isa = PBXBuildFile; fileRef = B202F00A260D45CDA07CAB8E /* OFL-NotoSerifJP.txt */; };
@@ -67,7 +68,9 @@
 		C5DD09913350E877AE4008CF /* TickleReminderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBC29B891A9D2602E4C6122 /* TickleReminderTests.swift */; };
 		C7BDC5C1B15460DAF7B84796 /* TicklePrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420A93FB5239884112A3FF47 /* TicklePrompt.swift */; };
 		C841C01A99444F20DEC56868 /* MonogramAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37449EAD55331D513415867C /* MonogramAvatar.swift */; };
+		C9DED7817017DED20F57A874 /* ImportFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827C1AC8395B5CB14C1B8B66 /* ImportFeedback.swift */; };
 		CCCCA1639CE5316D17A6AE7E /* LinkedInCSVParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFE5D9B2591E4B4A53F5EEC /* LinkedInCSVParser.swift */; };
+		CDE377155C3E8D64FB62AE2F /* ContactImportServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9ED8CB5E6D9F8E216A7470 /* ContactImportServiceTests.swift */; };
 		D2644F8AB791907856A6E389 /* ComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07B4E4B1B6C11A40612610C /* ComposeView.swift */; };
 		D4C1A48DAA2D66E88EFC5692 /* WarmListContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5907E434D833533D8A7EBC /* WarmListContainer.swift */; };
 		D7093B43ACD10588484F4A32 /* CategoryBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06BB941D9F261F754634A26D /* CategoryBadge.swift */; };
@@ -81,7 +84,9 @@
 		EB7DAC0AD2F9B1BEF8BED719 /* ContactFingerprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D98A08F7576CDC556F9440C /* ContactFingerprint.swift */; };
 		F01FB1D28CE1BD691A9DD989 /* TemplateListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA698C2842FF3F307B474724 /* TemplateListView.swift */; };
 		F23284FE6EFA2F4A8A6A1F89 /* NotoSerifDevanagari-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE5F28CBE2FCC020F374E286 /* NotoSerifDevanagari-SemiBold.ttf */; };
+		F270284BAF01A90FDA75B306 /* ImportFeedbackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901EF7F333375E781CF94056 /* ImportFeedbackTests.swift */; };
 		F48BE3B2B06B47E783EAAC70 /* SITApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1887449FF664ADCCCB1BFC3 /* SITApp.swift */; };
+		F9083A1023AD45547A74C994 /* PostOnboardingLanding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02568199B7DB12DE7A3BA2D4 /* PostOnboardingLanding.swift */; };
 		FCEBEAFB511E04C6C968B5BA /* TickleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A933C06096E53F2DAD773D26 /* TickleListView.swift */; };
 /* End PBXBuildFile section */
 
@@ -108,6 +113,7 @@
 		00F298878BB7FB2F2C63DC2B /* TickleScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleScheduler.swift; sourceTree = "<group>"; };
 		01F5DAC52A66CB6C37894078 /* ContactPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactPhotoView.swift; sourceTree = "<group>"; };
 		0245F8A1C0C8EF0E794507B1 /* ContactPhotoFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactPhotoFetcher.swift; sourceTree = "<group>"; };
+		02568199B7DB12DE7A3BA2D4 /* PostOnboardingLanding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOnboardingLanding.swift; sourceTree = "<group>"; };
 		02B1CFCC3988DCAF2034813A /* NetworkListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkListView.swift; sourceTree = "<group>"; };
 		033862D2DB3D8A467AAFFA5D /* GroupDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailView.swift; sourceTree = "<group>"; };
 		06BB941D9F261F754634A26D /* CategoryBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBadge.swift; sourceTree = "<group>"; };
@@ -136,6 +142,7 @@
 		455DDB76B445C37831B67137 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		45775744E6927B98A73B2CAC /* Ticklr.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Ticklr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49E849839D5DE00393F1F990 /* TicklrTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = TicklrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C5A706128E821005311026F /* PostOnboardingLandingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOnboardingLandingTests.swift; sourceTree = "<group>"; };
 		4EEF74492B5B4A7268A80E2D /* TicklrUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = TicklrUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50AD38DE9F1FCCBD8B82DEED /* ContactImportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactImportService.swift; sourceTree = "<group>"; };
 		52B2D827FDB5FDABB740E34A /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -151,12 +158,14 @@
 		70C371A80FA068A7BCAF4918 /* TickleEditViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleEditViewTests.swift; sourceTree = "<group>"; };
 		72098A45B6ACBC527F5DF0B9 /* MessageTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTemplate.swift; sourceTree = "<group>"; };
 		7A27D41F38F9FB5871748B89 /* LocalizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationTests.swift; sourceTree = "<group>"; };
+		827C1AC8395B5CB14C1B8B66 /* ImportFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportFeedback.swift; sourceTree = "<group>"; };
 		87AED7CFC7935978FFBCCCE3 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		89A8592D7BE1A77F3A839568 /* OFL-NotoSerifDevanagari.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "OFL-NotoSerifDevanagari.txt"; sourceTree = "<group>"; };
 		8ACA061EE9A732D89FD3E0F3 /* GroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListView.swift; sourceTree = "<group>"; };
 		8B1914E51A7708868BB45255 /* WarmEyebrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmEyebrow.swift; sourceTree = "<group>"; };
 		8C5907E434D833533D8A7EBC /* WarmListContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmListContainer.swift; sourceTree = "<group>"; };
 		8FBD25432AF93E7B78C501EE /* ImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportView.swift; sourceTree = "<group>"; };
+		901EF7F333375E781CF94056 /* ImportFeedbackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportFeedbackTests.swift; sourceTree = "<group>"; };
 		9125614ECAB9E4D8E5428E51 /* ContactRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRowView.swift; sourceTree = "<group>"; };
 		9413278558DA1F8BBE00FF96 /* SeedDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedDataService.swift; sourceTree = "<group>"; };
 		977BE8990F41F718C2693EFD /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -201,6 +210,7 @@
 		E77347A9F53BFBE3E1672671 /* AddContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactView.swift; sourceTree = "<group>"; };
 		E7F93D464D33962932C5C942 /* TickleActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleActionSheet.swift; sourceTree = "<group>"; };
 		E8175776A2DEBC88B756C24E /* ComposeFlowUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeFlowUITests.swift; sourceTree = "<group>"; };
+		EA9ED8CB5E6D9F8E216A7470 /* ContactImportServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactImportServiceTests.swift; sourceTree = "<group>"; };
 		EDBC29B891A9D2602E4C6122 /* TickleReminderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleReminderTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -330,9 +340,12 @@
 			isa = PBXGroup;
 			children = (
 				205CDD9B8C3402B672E5E739 /* ComposeViewTests.swift */,
+				EA9ED8CB5E6D9F8E216A7470 /* ContactImportServiceTests.swift */,
 				10D31DBFE56E32631DD7B650 /* ContactTests.swift */,
+				901EF7F333375E781CF94056 /* ImportFeedbackTests.swift */,
 				30D196741B99B788C9E325C3 /* LinkedInCSVParserTests.swift */,
 				7A27D41F38F9FB5871748B89 /* LocalizationTests.swift */,
+				4C5A706128E821005311026F /* PostOnboardingLandingTests.swift */,
 				70C371A80FA068A7BCAF4918 /* TickleEditViewTests.swift */,
 				D74FD20F0EB3B04BC7402FCA /* TickleNotificationRoutingTests.swift */,
 				EDBC29B891A9D2602E4C6122 /* TickleReminderTests.swift */,
@@ -445,10 +458,12 @@
 				1D98A08F7576CDC556F9440C /* ContactFingerprint.swift */,
 				50AD38DE9F1FCCBD8B82DEED /* ContactImportService.swift */,
 				0245F8A1C0C8EF0E794507B1 /* ContactPhotoFetcher.swift */,
+				827C1AC8395B5CB14C1B8B66 /* ImportFeedback.swift */,
 				0EFE5D9B2591E4B4A53F5EEC /* LinkedInCSVParser.swift */,
 				CADEFE7A1ADA2B9E3DDBBD81 /* MessageComposerService.swift */,
 				40663A4021DF41A99C3F4585 /* MessageTemplateSeed.swift */,
 				3FD57FB9BA4F1EF1E2F57E1F /* PhotoStore.swift */,
+				02568199B7DB12DE7A3BA2D4 /* PostOnboardingLanding.swift */,
 				9413278558DA1F8BBE00FF96 /* SeedDataService.swift */,
 				DA54EAB5F02BB7EFA494EEC1 /* TickleNotificationRouter.swift */,
 				00F298878BB7FB2F2C63DC2B /* TickleScheduler.swift */,
@@ -623,6 +638,7 @@
 				87572A827C3A4DED6D5E968C /* ContentView.swift in Sources */,
 				AF7B9499DE3B99B9194191B5 /* GroupDetailView.swift in Sources */,
 				0C03E3E93AEAAEAB358CF5C3 /* GroupListView.swift in Sources */,
+				C9DED7817017DED20F57A874 /* ImportFeedback.swift in Sources */,
 				8BB34E5F91AFE802C9B16626 /* ImportView.swift in Sources */,
 				20030189F6FC7FC341A0510D /* LaunchScreenView.swift in Sources */,
 				CCCCA1639CE5316D17A6AE7E /* LinkedInCSVParser.swift in Sources */,
@@ -633,6 +649,7 @@
 				184D3DD687352B351AB7A501 /* NetworkListView.swift in Sources */,
 				E01711F3B9475DEFFD7DDDD4 /* OnboardingView.swift in Sources */,
 				2085C634C34E1699E983C564 /* PhotoStore.swift in Sources */,
+				F9083A1023AD45547A74C994 /* PostOnboardingLanding.swift in Sources */,
 				F48BE3B2B06B47E783EAAC70 /* SITApp.swift in Sources */,
 				7426C06388B7B7F1AB72B2DE /* SaveConfirmationToast.swift in Sources */,
 				8CF13461108C2CC7E64EB847 /* SeedDataService.swift in Sources */,
@@ -666,9 +683,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				707528D3264086FB42BDD51E /* ComposeViewTests.swift in Sources */,
+				CDE377155C3E8D64FB62AE2F /* ContactImportServiceTests.swift in Sources */,
 				9283E70E0707CC70CFA0AD0F /* ContactTests.swift in Sources */,
+				F270284BAF01A90FDA75B306 /* ImportFeedbackTests.swift in Sources */,
 				9CA0D612EF182E101FDE37A4 /* LinkedInCSVParserTests.swift in Sources */,
 				919527C153F058BE1EDA72A3 /* LocalizationTests.swift in Sources */,
+				94E7271B66ACCF8744AD57F7 /* PostOnboardingLandingTests.swift in Sources */,
 				BD81ED295562938D457E136B /* TickleEditViewTests.swift in Sources */,
 				A0DF94177BA2698341980E2A /* TickleNotificationRoutingTests.swift in Sources */,
 				C5DD09913350E877AE4008CF /* TickleReminderTests.swift in Sources */,

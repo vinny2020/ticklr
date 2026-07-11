@@ -228,6 +228,7 @@ final class LocalizationTests: XCTestCase {
             "import.step.6",
             "import.step.7",
             "import.alert.error.title",
+            "import.toast.noneImported",
         ]
         assertKeysAreLocalized(keys)
     }
@@ -389,6 +390,30 @@ final class LocalizationTests: XCTestCase {
                       "singular should use 'day' not 'days': \(oneResult)")
         XCTAssertTrue(manyResult.contains("days"),
                       "plural should use 'days': \(manyResult)")
+    }
+
+    /// TIC-85: import result toast — "Imported N contact(s)".
+    func testPluralImportToastImported() {
+        let oneResult = String(localized: "import.toast.imported \(1)")
+        let manyResult = String(localized: "import.toast.imported \(12)")
+        XCTAssertTrue(oneResult.contains("1"))
+        XCTAssertTrue(oneResult.contains("contact") && !oneResult.contains("contacts"),
+                      "singular should use 'contact' not 'contacts': \(oneResult)")
+        XCTAssertTrue(manyResult.contains("12"))
+        XCTAssertTrue(manyResult.contains("contacts"),
+                      "plural should use 'contacts': \(manyResult)")
+    }
+
+    /// TIC-85: import result toast — "N duplicate(s) skipped".
+    func testPluralImportToastSkippedSuffix() {
+        let oneResult = String(localized: "import.toast.skippedSuffix \(1)")
+        let manyResult = String(localized: "import.toast.skippedSuffix \(3)")
+        XCTAssertTrue(oneResult.contains("1"))
+        XCTAssertTrue(oneResult.contains("duplicate") && !oneResult.contains("duplicates"),
+                      "singular should use 'duplicate' not 'duplicates': \(oneResult)")
+        XCTAssertTrue(manyResult.contains("3"))
+        XCTAssertTrue(manyResult.contains("duplicates"),
+                      "plural should use 'duplicates': \(manyResult)")
     }
 
     func testDeleteConfirmTitle() {

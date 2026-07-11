@@ -51,7 +51,7 @@ struct OnboardingView: View {
         // being dropped into an empty app (TIC-78).
         .sheet(item: $presented) { sheet in
             switch sheet {
-            case .importContacts: ImportView()
+            case .importContacts: ImportView(context: .onboarding)
             case .addContact:     AddContactView()
             }
         }
