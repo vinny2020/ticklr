@@ -341,4 +341,13 @@
     <string name="template_default_body">Hey! Ich wollte mich nur mal melden. Ich hoffe, dir geht es gut. Bis bald!</string>
     <string name="tickle_prompt_message">Erledigt — Tickle für %1$s als erledigt markieren?</string>
     <string name="tickle_prompt_mark_done">Als erledigt markieren</string>
+    <!-- TIC-87: undo economy (confirm/undo for mark-done, snooze, member remove, template delete) -->
+    <string name="common_undo">Rückgängig</string>
+    <string name="tickle_snooze_1_day">1 Tag</string>
+    <string name="tickle_snooze_3_days">3 Tage</string>
+    <string name="tickle_snooze_1_week">1 Woche</string>
+    <string name="tickle_marked_done">Als erledigt markiert</string>
+    <string name="tickle_snoozed">Zurückgestellt</string>
+    <string name="group_member_removed">%1$s entfernt</string>
+    <string name="template_deleted">Vorlage gelöscht</string>
 </resources>

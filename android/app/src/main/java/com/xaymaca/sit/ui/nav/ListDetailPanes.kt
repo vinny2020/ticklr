@@ -242,8 +242,8 @@ fun TicklePane(
                                     viewModel.markComplete(target.reminder)
                                     viewModel.dismissActionSheet()
                                 },
-                                onSnooze = {
-                                    viewModel.snooze(target.reminder)
+                                onSnooze = { days ->
+                                    viewModel.snooze(target.reminder, days)
                                     viewModel.dismissActionSheet()
                                 },
                                 onEdit = {

@@ -336,4 +336,13 @@
     <string name="template_default_body">안녕하세요! 그냥 안부 전하려고요. 잘 지내시죠? 곧 다시 이야기해요!</string>
     <string name="tickle_prompt_message">완료 — %1$s의 Tickle을 완료로 표시할까요?</string>
     <string name="tickle_prompt_mark_done">완료 표시</string>
+    <!-- TIC-87: undo economy (confirm/undo for mark-done, snooze, member remove, template delete) -->
+    <string name="common_undo">실행 취소</string>
+    <string name="tickle_snooze_1_day">1일</string>
+    <string name="tickle_snooze_3_days">3일</string>
+    <string name="tickle_snooze_1_week">1주</string>
+    <string name="tickle_marked_done">완료로 표시함</string>
+    <string name="tickle_snoozed">미룸</string>
+    <string name="group_member_removed">%1$s 제거됨</string>
+    <string name="template_deleted">템플릿 삭제됨</string>
 </resources>

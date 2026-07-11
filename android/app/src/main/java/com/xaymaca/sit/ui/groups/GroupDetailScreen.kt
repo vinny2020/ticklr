@@ -28,6 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import kotlinx.coroutines.launch
 import com.xaymaca.sit.R
 import com.xaymaca.sit.data.model.Contact
 import com.xaymaca.sit.data.model.ContactGroup
@@ -50,6 +51,15 @@ fun GroupDetailScreen(
 
     val allContacts by viewModel.allContacts.collectAsState()
     val toastMessage by viewModel.toastMessage.collectAsState()
+
+    // TIC-87: member-remove now offers UNDO (re-add membership) instead of silently
+    // dropping the row — consistent with contact/tickle deletes carrying a safety
+    // net, but a light snackbar rather than a confirm dialog (membership is cheap to
+    // restore, no cascade). The remove itself stays a swipe; undo re-adds the cross-ref.
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+    val undoLabel = stringResource(R.string.common_undo)
+    val noNameLabel = stringResource(R.string.common_no_name)
 
     LaunchedEffect(groupId) {
         val gwc = viewModel.getGroupWithContacts(groupId)
@@ -98,6 +108,7 @@ fun GroupDetailScreen(
                     )
                 )
             },
+            snackbarHost = { SnackbarHost(snackbarHostState) },
             floatingActionButton = {
                 FloatingActionButton(
                     onClick = { showAddSheet = true },
@@ -134,7 +145,18 @@ fun GroupDetailScreen(
                             contact = contact,
                             onClick = { onContactClick(contact.id) },
                             onRemove = {
+                                val name = contact.fullName.ifBlank { noNameLabel }
                                 viewModel.removeMember(contact.id, groupId)
+                                scope.launch {
+                                    val result = snackbarHostState.showSnackbar(
+                                        message = context.getString(R.string.group_member_removed, name),
+                                        actionLabel = undoLabel,
+                                        duration = SnackbarDuration.Short,
+                                    )
+                                    if (result == SnackbarResult.ActionPerformed) {
+                                        viewModel.addMember(contact.id, groupId)
+                                    }
+                                }
                             }
                         )
                         HorizontalDivider(

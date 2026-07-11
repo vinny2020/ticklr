@@ -361,4 +361,13 @@
     <string name="template_default_body">مرحبًا! أردت فقط الاطمئنان عليك. أتمنى أن تكون بخير. نتحدث قريبًا!</string>
     <string name="tickle_prompt_message">تم — وضع علامة على التذكير الخاص بـ %1$s كمكتمل؟</string>
     <string name="tickle_prompt_mark_done">وضع علامة كمكتمل</string>
+    <!-- TIC-87: undo economy (confirm/undo for mark-done, snooze, member remove, template delete) -->
+    <string name="common_undo">تراجع</string>
+    <string name="tickle_snooze_1_day">يوم واحد</string>
+    <string name="tickle_snooze_3_days">3 أيام</string>
+    <string name="tickle_snooze_1_week">أسبوع واحد</string>
+    <string name="tickle_marked_done">تم وضع علامة كمكتمل</string>
+    <string name="tickle_snoozed">تم التأجيل</string>
+    <string name="group_member_removed">تمت إزالة %1$s</string>
+    <string name="template_deleted">تم حذف القالب</string>
 </resources>

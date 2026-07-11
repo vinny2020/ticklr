@@ -341,4 +341,13 @@
     <string name="template_default_body">Szia! Csak jelentkezem. Remélem, jól vagy. Beszéljünk hamarosan!</string>
     <string name="tickle_prompt_message">Kész — megjelölöd késznek %1$s tickle-jét?</string>
     <string name="tickle_prompt_mark_done">Megjelölés késznek</string>
+    <!-- TIC-87: undo economy (confirm/undo for mark-done, snooze, member remove, template delete) -->
+    <string name="common_undo">Visszavonás</string>
+    <string name="tickle_snooze_1_day">1 nap</string>
+    <string name="tickle_snooze_3_days">3 nap</string>
+    <string name="tickle_snooze_1_week">1 hét</string>
+    <string name="tickle_marked_done">Késznek jelölve</string>
+    <string name="tickle_snoozed">Elhalasztva</string>
+    <string name="group_member_removed">%1$s eltávolítva</string>
+    <string name="template_deleted">Sablon törölve</string>
 </resources>

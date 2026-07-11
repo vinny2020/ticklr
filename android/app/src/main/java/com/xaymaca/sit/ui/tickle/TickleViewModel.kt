@@ -19,11 +19,15 @@ import com.xaymaca.sit.service.TickleScheduler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
@@ -99,6 +103,24 @@ class TickleViewModel @Inject constructor(
             markComplete(reminder)
         }
     }
+
+    /**
+     * TIC-87: a one-shot request to offer UNDO after an in-app mark-done or snooze.
+     * [snapshot] is the reminder's exact pre-mutation state; restoring it re-persists
+     * every field and re-syncs the alarm (see [undoTickleChange]). Collected by
+     * TickleListScreen's own screen-local SnackbarHost — the user stays on-screen, so
+     * (unlike the app-scoped TIC-82/84/86 stores) there's no pop to survive, and a
+     * short-lived SharedFlow event fits: emissions with no active collector (e.g. a
+     * mark-done issued from the notification-return prompt while off the Tickle tab)
+     * are simply dropped rather than replayed stale.
+     */
+    data class TickleUndoRequest(val snapshot: TickleReminder, val message: String)
+
+    private val _undoRequest = MutableSharedFlow<TickleUndoRequest>(
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST,
+    )
+    val undoRequest: SharedFlow<TickleUndoRequest> = _undoRequest.asSharedFlow()
 
     private val stringListConverter = StringListConverter()
 
@@ -232,6 +254,11 @@ class TickleViewModel @Inject constructor(
             // TIC-66: arms the next occurrence's exact alarm (recurring) or
             // cancels the stale one (one-time completed).
             TickleScheduler.syncAlarm(context, updated, alarmContactName(updated))
+            // TIC-87: offer undo, restoring `reminder` — the exact pre-mutation
+            // snapshot (an immutable data class, so the reference IS the snapshot).
+            _undoRequest.tryEmit(
+                TickleUndoRequest(reminder, context.getString(R.string.tickle_marked_done))
+            )
         }
     }
 
@@ -243,6 +270,28 @@ class TickleViewModel @Inject constructor(
             // TIC-66: replaces the original-due-date alarm with one at snooze
             // end — previously the stale alarm fired at the old time anyway.
             TickleScheduler.syncAlarm(context, updated, alarmContactName(updated))
+            // TIC-87: offer undo, restoring the pre-snooze snapshot.
+            _undoRequest.tryEmit(
+                TickleUndoRequest(reminder, context.getString(R.string.tickle_snoozed))
+            )
+        }
+    }
+
+    /**
+     * TIC-87: restores a reminder to its exact pre-mutation [snapshot] after the user
+     * taps UNDO on a mark-done / snooze snackbar, then re-syncs its alarm. syncAlarm
+     * arms only future-due reminders (shouldArmAlarm), mirroring iOS's
+     * `shouldRearmAfterUndo` — so undoing a completion on a now-past-due reminder
+     * leaves it alarm-less for the Due UI rather than firing immediately.
+     * NonCancellable for parity with the other write paths (upsert): an UNDO tap can
+     * race a tab switch that tears down this VM's scope mid-write.
+     */
+    fun undoTickleChange(snapshot: TickleReminder) {
+        viewModelScope.launch {
+            withContext(NonCancellable) {
+                tickleRepository.updateReminder(snapshot)
+                TickleScheduler.syncAlarm(context, snapshot, alarmContactName(snapshot))
+            }
         }
     }
 

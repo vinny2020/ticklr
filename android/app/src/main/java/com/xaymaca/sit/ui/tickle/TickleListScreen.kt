@@ -36,6 +36,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
@@ -104,8 +108,32 @@ fun TickleListScreen(
     val fallbackDisplay = TickleViewModel.RowDisplay(initials = "T", name = stringResource(R.string.tickle_row_tickle_fallback))
     val context = LocalContext.current
 
+    // TIC-87: screen-local undo host. Every in-app mark-done / snooze (row check
+    // icon, swipe-right complete, action-sheet Done/Snooze, and — since this same
+    // TickleListScreen is the list pane in the tablet two-pane — the detail-pane
+    // actions, which mutate through the SAME shared ViewModel) surfaces an UNDO
+    // snackbar here. The user stays on-screen, so a plain screen-local host is
+    // right (no app-scoped store needed to survive a pop). Collected inside
+    // LaunchedEffect(Unit) so a rapid second event lands sequentially after the
+    // first showSnackbar returns rather than cancelling it.
+    val snackbarHostState = remember { SnackbarHostState() }
+    val undoLabel = stringResource(R.string.common_undo)
+    LaunchedEffect(Unit) {
+        viewModel.undoRequest.collect { request ->
+            val result = snackbarHostState.showSnackbar(
+                message = request.message,
+                actionLabel = undoLabel,
+                duration = SnackbarDuration.Short,
+            )
+            if (result == SnackbarResult.ActionPerformed) {
+                viewModel.undoTickleChange(request.snapshot)
+            }
+        }
+    }
+
     Scaffold(
         containerColor = palette.paper,
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = onAddTickle,
@@ -240,7 +268,7 @@ fun TickleListScreen(
                     viewModel.dismissActionSheet()
                 },
                 onMarkDone = { viewModel.markComplete(target.reminder); viewModel.dismissActionSheet() },
-                onSnooze = { viewModel.snooze(target.reminder); viewModel.dismissActionSheet() },
+                onSnooze = { days -> viewModel.snooze(target.reminder, days); viewModel.dismissActionSheet() },
                 onEdit = { onEditTickle(target.reminder.id); viewModel.dismissActionSheet() },
                 onDismiss = { viewModel.dismissActionSheet() },
             )

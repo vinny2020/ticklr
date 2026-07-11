@@ -565,4 +565,78 @@ class TickleSchedulerTest {
         val result = TickleScheduler.snoozedReminder(original, days = 3, now = now)
         assertEquals(now + TimeUnit.DAYS.toMillis(3), result.nextDueDate)
     }
+
+    // -- Snooze duration picker: 1 day / 3 days / 1 week (TIC-87) ----------------
+    // The action sheet now offers these three durations; each routes through the
+    // same pure snoozedReminder transition, only the day count differs.
+
+    @Test
+    fun `snoozing one day pushes the due date out by exactly one day`() {
+        val now = calAt(2026, 3, 15)
+        val original = reminder(TickleStatus.ACTIVE, dueAt = calAt(2026, 3, 14))
+        val result = TickleScheduler.snoozedReminder(original, days = 1, now = now)
+        assertEquals(TickleStatus.SNOOZED.name, result.status)
+        assertEquals(now + TimeUnit.DAYS.toMillis(1), result.nextDueDate)
+    }
+
+    @Test
+    fun `snoozing three days pushes the due date out by exactly three days`() {
+        val now = calAt(2026, 3, 15)
+        val original = reminder(TickleStatus.ACTIVE, dueAt = calAt(2026, 3, 14))
+        val result = TickleScheduler.snoozedReminder(original, days = 3, now = now)
+        assertEquals(TickleStatus.SNOOZED.name, result.status)
+        assertEquals(now + TimeUnit.DAYS.toMillis(3), result.nextDueDate)
+    }
+
+    @Test
+    fun `snoozing one week pushes the due date out by exactly seven days`() {
+        val now = calAt(2026, 3, 15)
+        val original = reminder(TickleStatus.ACTIVE, dueAt = calAt(2026, 3, 14))
+        val result = TickleScheduler.snoozedReminder(original, days = 7, now = now)
+        assertEquals(TickleStatus.SNOOZED.name, result.status)
+        assertEquals(now + TimeUnit.DAYS.toMillis(7), result.nextDueDate)
+    }
+
+    // -- Undo-snapshot exactness (TIC-87) ---------------------------------------
+    // The in-app undo restores the reminder's exact PRE-mutation fields. Because
+    // completedReminder / snoozedReminder are pure copies, the caller's original
+    // reference is an untouched snapshot — restoring it re-persists every field.
+
+    @Test
+    fun `completing a reminder leaves the original snapshot untouched for undo`() {
+        val now = calAt(2026, 3, 15)
+        val snapshot = TickleReminder(
+            id = 7L,
+            contactId = 42L,
+            note = "call about the move",
+            frequency = TickleFrequency.WEEKLY.name,
+            startDate = calAt(2026, 1, 1),
+            nextDueDate = calAt(2026, 3, 10),
+            lastCompletedDate = null,
+            status = TickleStatus.ACTIVE.name
+        )
+        val updated = TickleScheduler.completedReminder(snapshot, now)
+        // The transition advanced the persisted copy...
+        assertEquals(now, updated.lastCompletedDate)
+        assertEquals(now + TimeUnit.DAYS.toMillis(7), updated.nextDueDate)
+        // ...but the snapshot the undo restores still holds every prior field verbatim.
+        assertEquals(42L, snapshot.contactId)
+        assertEquals("call about the move", snapshot.note)
+        assertEquals(calAt(2026, 3, 10), snapshot.nextDueDate)
+        assertEquals(null, snapshot.lastCompletedDate)
+        assertEquals(TickleStatus.ACTIVE.name, snapshot.status)
+    }
+
+    @Test
+    fun `snoozing a reminder leaves the original snapshot untouched for undo`() {
+        val now = calAt(2026, 3, 15)
+        val snapshot = reminder(TickleStatus.ACTIVE, dueAt = calAt(2026, 3, 14))
+        val updated = TickleScheduler.snoozedReminder(snapshot, days = 3, now = now)
+        // Persisted copy is snoozed and shifted...
+        assertEquals(TickleStatus.SNOOZED.name, updated.status)
+        assertEquals(now + TimeUnit.DAYS.toMillis(3), updated.nextDueDate)
+        // ...while the undo snapshot still carries the pre-snooze status and due date.
+        assertEquals(TickleStatus.ACTIVE.name, snapshot.status)
+        assertEquals(calAt(2026, 3, 14), snapshot.nextDueDate)
+    }
 }

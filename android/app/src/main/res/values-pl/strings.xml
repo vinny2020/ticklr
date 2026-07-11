@@ -351,4 +351,13 @@
     <string name="template_default_body">Cześć! Piszę, żeby zapytać, co słychać. Mam nadzieję, że u Ciebie wszystko dobrze. Do usłyszenia wkrótce!</string>
     <string name="tickle_prompt_message">Gotowe — oznaczyć tickle dla %1$s jako zrobiony?</string>
     <string name="tickle_prompt_mark_done">Oznacz jako zrobione</string>
+    <!-- TIC-87: undo economy (confirm/undo for mark-done, snooze, member remove, template delete) -->
+    <string name="common_undo">Cofnij</string>
+    <string name="tickle_snooze_1_day">1 dzień</string>
+    <string name="tickle_snooze_3_days">3 dni</string>
+    <string name="tickle_snooze_1_week">1 tydzień</string>
+    <string name="tickle_marked_done">Oznaczono jako zrobione</string>
+    <string name="tickle_snoozed">Odłożono</string>
+    <string name="group_member_removed">Usunięto %1$s</string>
+    <string name="template_deleted">Usunięto szablon</string>
 </resources>

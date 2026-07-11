@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import kotlinx.coroutines.launch
 import com.xaymaca.sit.R
 import com.xaymaca.sit.SITApp
 
@@ -32,12 +33,21 @@ fun TemplateListScreen(
     val context = LocalContext.current
     val templates by viewModel.templates.collectAsState()
 
+    // TIC-87: swipe-delete now offers UNDO (re-insert with the same id) instead of
+    // silently dropping the template — the light-action counterpart to the confirm
+    // dialogs guarding heavier contact/tickle deletes.
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+    val undoLabel = stringResource(R.string.common_undo)
+    val deletedMessage = stringResource(R.string.template_deleted)
+
     LaunchedEffect(Unit) {
         val prefs = context.getSharedPreferences(SITApp.PREFS_NAME, Context.MODE_PRIVATE)
         viewModel.seedDefaultIfNeeded(prefs)
     }
 
     Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             TopAppBar(
                 title = { Text(stringResource(R.string.template_list_title), fontWeight = FontWeight.Bold) },
@@ -87,6 +97,16 @@ fun TemplateListScreen(
                         confirmValueChange = { value ->
                             if (value == SwipeToDismissBoxValue.EndToStart) {
                                 viewModel.deleteTemplate(template)
+                                scope.launch {
+                                    val result = snackbarHostState.showSnackbar(
+                                        message = deletedMessage,
+                                        actionLabel = undoLabel,
+                                        duration = SnackbarDuration.Short,
+                                    )
+                                    if (result == SnackbarResult.ActionPerformed) {
+                                        viewModel.restoreTemplate(template)
+                                    }
+                                }
                                 true
                             } else false
                         }

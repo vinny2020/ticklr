@@ -336,4 +336,13 @@
     <string name="template_default_body">こんにちは！ちょっとご様子をうかがいたくて。お元気でお過ごしですか。またすぐに連絡しますね！</string>
     <string name="tickle_prompt_message">完了 — %1$s のTickleを完了にしますか？</string>
     <string name="tickle_prompt_mark_done">完了にする</string>
+    <!-- TIC-87: undo economy (confirm/undo for mark-done, snooze, member remove, template delete) -->
+    <string name="common_undo">元に戻す</string>
+    <string name="tickle_snooze_1_day">1日</string>
+    <string name="tickle_snooze_3_days">3日</string>
+    <string name="tickle_snooze_1_week">1週間</string>
+    <string name="tickle_marked_done">完了にしました</string>
+    <string name="tickle_snoozed">スヌーズしました</string>
+    <string name="group_member_removed">%1$s を削除しました</string>
+    <string name="template_deleted">テンプレートを削除しました</string>
 </resources>
