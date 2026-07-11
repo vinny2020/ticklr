@@ -54,6 +54,60 @@ class ScreenRouteTest {
         assertTrue(route.startsWith("tickle_edit/-1"))
     }
 
+    // --- Group tickle creation + group filter routing (TIC-88) ---
+
+    @Test
+    fun `tickle edit ROUTE template contains the groupId placeholder`() {
+        assertTrue(Screen.TickleEdit.ROUTE.contains("{groupId}"))
+    }
+
+    @Test
+    fun `createRouteWithGroup produces tickleId of -1 with groupId query param`() {
+        assertEquals("tickle_edit/-1?groupId=42", Screen.TickleEdit.createRouteWithGroup(groupId = 42L))
+    }
+
+    @Test
+    fun `createRouteWithGroup always uses -1 as the tickle placeholder`() {
+        assertTrue(Screen.TickleEdit.createRouteWithGroup(groupId = 7L).startsWith("tickle_edit/-1"))
+    }
+
+    @Test
+    fun `createRouteWithGroup carries no contactId query so it defaults to absent`() {
+        // Only the groupId query is present; contactId falls back to its -1 nav default.
+        assertEquals("tickle_edit/-1?groupId=9", Screen.TickleEdit.createRouteWithGroup(groupId = 9L))
+    }
+
+    @Test
+    fun `group and contact tickle routes are distinct`() {
+        assertNotEquals(
+            Screen.TickleEdit.createRouteWithGroup(groupId = 5L),
+            Screen.TickleEdit.createRouteWithContact(contactId = 5L),
+        )
+    }
+
+    @Test
+    fun `group detail ROUTE template contains the openAdd placeholder`() {
+        assertTrue(Screen.GroupDetail.ROUTE.contains("{${Screen.GroupDetail.ARG_OPEN_ADD}}"))
+    }
+
+    @Test
+    fun `group detail createRoute carries no openAdd query`() {
+        assertEquals("group_detail/12", Screen.GroupDetail.createRoute(12L))
+    }
+
+    @Test
+    fun `group detail createRouteWithAddMembers sets openAdd true`() {
+        assertEquals("group_detail/12?openAdd=true", Screen.GroupDetail.createRouteWithAddMembers(12L))
+    }
+
+    @Test
+    fun `group detail plain and add-members routes are distinct`() {
+        assertNotEquals(
+            Screen.GroupDetail.createRoute(3L),
+            Screen.GroupDetail.createRouteWithAddMembers(3L),
+        )
+    }
+
     // --- Compose route + deep link (TIC-82) ---
     // The compose route carries an optional contactId (recipient pre-select) and
     // an optional reminderId (drives the mark-done prompt on return). The -1L

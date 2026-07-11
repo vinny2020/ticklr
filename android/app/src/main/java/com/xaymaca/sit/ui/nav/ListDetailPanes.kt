@@ -109,8 +109,14 @@ fun NetworkPane(
 @Composable
 fun GroupsPane(
     onContactClick: (Long) -> Unit,
+    onAddTickleForGroup: (Long) -> Unit,
 ) {
     val navigator = rememberListDetailPaneScaffoldNavigator<Long?>()
+
+    // TIC-88: id of a just-created group whose detail pane should auto-open the
+    // Add Members sheet once. Cleared as soon as it's consumed so re-selecting
+    // the same group later doesn't re-open the sheet.
+    var autoOpenAddForId by rememberSaveable { mutableStateOf<Long?>(null) }
 
     BackHandler(enabled = navigator.canNavigateBack()) {
         navigator.navigateBack()
@@ -125,6 +131,10 @@ fun GroupsPane(
                     onGroupClick = { id ->
                         navigator.navigateTo(ListDetailPaneScaffoldRole.Detail, id)
                     },
+                    onGroupCreated = { id ->
+                        autoOpenAddForId = id
+                        navigator.navigateTo(ListDetailPaneScaffoldRole.Detail, id)
+                    },
                 )
             }
         },
@@ -132,10 +142,14 @@ fun GroupsPane(
             AnimatedPane {
                 val groupId = navigator.currentDestination?.content
                 if (groupId != null) {
+                    val openAdd = groupId == autoOpenAddForId
+                    if (openAdd) autoOpenAddForId = null
                     GroupDetailScreen(
                         groupId = groupId,
+                        openAddMembersOnLaunch = openAdd,
                         onBack = { navigator.navigateBack() },
                         onContactClick = onContactClick,
+                        onAddTickle = { onAddTickleForGroup(groupId) },
                     )
                 } else {
                     EmptyDetailPlaceholder()

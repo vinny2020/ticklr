@@ -65,6 +65,10 @@ import com.xaymaca.sit.ui.warm.WarmRowDivider
 @Composable
 fun GroupListScreen(
     onGroupClick: (Long) -> Unit,
+    // TIC-88: invoked with the new group's id right after creation so the host
+    // can navigate straight into it with the Add Members sheet open. Defaults to
+    // [onGroupClick] so callers that don't distinguish still land in the group.
+    onGroupCreated: (Long) -> Unit = onGroupClick,
     viewModel: GroupViewModel = hiltViewModel(),
 ) {
     val warmth = Warmth.Subtle
@@ -170,8 +174,8 @@ fun GroupListScreen(
         CreateGroupDialog(
             onDismiss = { showCreateDialog = false },
             onCreate = { name, emoji ->
-                viewModel.createGroup(name, emoji)
                 showCreateDialog = false
+                viewModel.createGroup(name, emoji) { newId -> onGroupCreated(newId) }
             },
             isNameTaken = { viewModel.isGroupNameTaken(it) },
         )

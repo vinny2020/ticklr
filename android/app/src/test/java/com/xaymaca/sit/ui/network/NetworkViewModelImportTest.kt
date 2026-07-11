@@ -54,6 +54,8 @@ class NetworkViewModelImportTest {
 
     private fun buildViewModel(): NetworkViewModel {
         every { contactDao.countContactsInCategory(any()) } returns flowOf(0)
+        // TIC-88: the userGroups filter flow reads getAllGroups() at construction.
+        every { contactRepository.getAllGroups() } returns flowOf(emptyList())
         return NetworkViewModel(
             contactRepository = contactRepository,
             contactImportService = contactImportService,

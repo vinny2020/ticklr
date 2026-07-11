@@ -96,9 +96,11 @@ class TickleActionReceiver : BroadcastReceiver() {
         context: Context,
         reminder: com.xaymaca.sit.data.model.TickleReminder,
     ): String =
-        reminder.contactId?.let { cId ->
-            contactRepository.getContactById(cId)?.fullName?.takeIf { it.isNotBlank() }
-        } ?: context.getString(R.string.tickle_notification_contact_fallback)
+        TickleScheduler.reminderDisplayName(
+            contactName = reminder.contactId?.let { contactRepository.getContactById(it)?.fullName },
+            groupName = reminder.groupId?.let { contactRepository.getGroupById(it)?.name },
+            fallback = context.getString(R.string.tickle_notification_contact_fallback),
+        )
 
     companion object {
         const val EXTRA_REMINDER_ID = "reminder_id"

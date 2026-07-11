@@ -10,18 +10,34 @@ sealed class Screen(val route: String) {
         }
     }
     object GroupList : Screen("groups")
-    data class GroupDetail(val id: Long = 0L) : Screen("group_detail/{groupId}") {
+    data class GroupDetail(val id: Long = 0L) : Screen("group_detail/{groupId}?openAdd={openAdd}") {
         companion object {
-            const val ROUTE = "group_detail/{groupId}"
+            const val ROUTE = "group_detail/{groupId}?openAdd={openAdd}"
+            const val ARG_OPEN_ADD = "openAdd"
             fun createRoute(id: Long) = "group_detail/$id"
+
+            /**
+             * TIC-88 create-with-members: after a new group is created on the
+             * Group list, land straight in its detail with the Add Members sheet
+             * already open. `openAdd=true` drives that one-shot auto-open.
+             */
+            fun createRouteWithAddMembers(id: Long) = "group_detail/$id?openAdd=true"
         }
     }
     object Tickle : Screen("tickle")
-    data class TickleEdit(val id: Long = -1L) : Screen("tickle_edit/{tickleId}?contactId={contactId}") {
+    data class TickleEdit(val id: Long = -1L) : Screen("tickle_edit/{tickleId}?contactId={contactId}&groupId={groupId}") {
         companion object {
-            const val ROUTE = "tickle_edit/{tickleId}?contactId={contactId}"
+            const val ROUTE = "tickle_edit/{tickleId}?contactId={contactId}&groupId={groupId}"
             fun createRoute(id: Long = -1L) = "tickle_edit/$id"
             fun createRouteWithContact(contactId: Long) = "tickle_edit/-1?contactId=$contactId"
+
+            /**
+             * TIC-88 group tickle creation: opens a new tickle bound to a group
+             * (contactId stays absent). The `groupId` query mirrors `contactId`;
+             * both nav args default to the -1 "absent" sentinel, so a route that
+             * carries only one still parses.
+             */
+            fun createRouteWithGroup(groupId: Long) = "tickle_edit/-1?groupId=$groupId"
         }
     }
     object Compose : Screen("compose") {

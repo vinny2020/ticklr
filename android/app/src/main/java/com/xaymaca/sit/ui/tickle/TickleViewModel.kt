@@ -239,11 +239,21 @@ class TickleViewModel @Inject constructor(
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
 
-    /** Resolves the display name used in a reminder's alarm notification. */
+    /**
+     * Resolves the display name used in a reminder's alarm notification.
+     * TIC-88: group tickles (no contact) fall back to the group name before the
+     * generic fallback, so their alarm reads "Time to reach out to <group>".
+     */
     private suspend fun alarmContactName(reminder: TickleReminder): String =
-        reminder.contactId?.let { cId ->
-            contactRepository.getContactById(cId)?.fullName?.takeIf { it.isNotBlank() }
-        } ?: context.getString(R.string.tickle_notification_contact_fallback)
+        TickleScheduler.reminderDisplayName(
+            contactName = reminder.contactId?.let { contactRepository.getContactById(it)?.fullName },
+            groupName = reminder.groupId?.let { contactRepository.getGroupById(it)?.name },
+            fallback = context.getString(R.string.tickle_notification_contact_fallback),
+        )
+
+    /** TIC-88: group lookup for the group-bound tickle edit form. */
+    suspend fun getGroupById(id: Long): com.xaymaca.sit.data.model.ContactGroup? =
+        contactRepository.getGroupById(id)
 
     fun markComplete(reminder: TickleReminder) {
         viewModelScope.launch {

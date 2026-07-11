@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.xaymaca.sit.data.dao.ContactDao
 import com.xaymaca.sit.data.model.Contact
+import com.xaymaca.sit.data.model.ContactGroup
 import com.xaymaca.sit.data.repository.ContactRepository
 import com.xaymaca.sit.service.ContactImportService
 import com.xaymaca.sit.service.ContactPhotoService
@@ -28,6 +29,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -47,14 +49,35 @@ class NetworkViewModel @Inject constructor(
     val searchQuery = MutableStateFlow("")
     /** null = "All" chip; otherwise the WarmCategory.id string. */
     val categoryFilter = MutableStateFlow<String?>(null)
+    /**
+     * TIC-88: null = no user-group filter; otherwise a ContactGroup.id (Long).
+     * Mutually exclusive with [categoryFilter] — selecting one clears the other
+     * so the chip row only ever shows one active selection.
+     */
+    val groupFilter = MutableStateFlow<Long?>(null)
+
+    /** User-created groups (categoryId == null) that back the extra filter chips,
+     *  ordered by creation like the Groups list. */
+    val userGroups: StateFlow<List<ContactGroup>> = contactRepository
+        .getAllGroups()
+        .map { groups -> groups.filter { it.categoryId == null }.sortedBy { it.createdAt } }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
     val filteredContacts: StateFlow<List<Contact>> = combine(
         searchQuery.debounce(300),
         categoryFilter,
-    ) { query, category -> query to category }
-        .flatMapLatest { (query, category) ->
+        groupFilter,
+    ) { query, category, group -> Triple(query, category, group) }
+        .flatMapLatest { (query, category, group) ->
             when {
+                // Group filter wins when set; member search is applied in-memory
+                // (memberships are small) via the pure [NetworkGroupFilter].
+                group != null && query.isBlank() ->
+                    contactRepository.getContactsForGroup(group)
+                group != null ->
+                    contactRepository.getContactsForGroup(group)
+                        .map { NetworkGroupFilter.filter(it, query) }
                 category != null && query.isBlank() ->
                     contactDao.getContactsInCategory(category)
                 category != null ->
@@ -90,6 +113,15 @@ class NetworkViewModel @Inject constructor(
 
     fun setCategoryFilter(categoryId: String?) {
         categoryFilter.value = categoryId
+        // Canonical + user-group filters are mutually exclusive.
+        if (categoryId != null) groupFilter.value = null
+    }
+
+    /** TIC-88: select (or clear) a user-group filter, clearing any canonical
+     *  category selection so only one chip is ever active. */
+    fun setGroupFilter(groupId: Long?) {
+        groupFilter.value = groupId
+        if (groupId != null) categoryFilter.value = null
     }
 
     // NonCancellable on the three mutations below is load-bearing (found via
@@ -184,5 +216,22 @@ class NetworkViewModel @Inject constructor(
         return contactRepository.getRemindersForContact(contactId)
             .firstOrNull { TickleScheduler.isDue(it, now) }
             ?.id
+    }
+}
+
+/**
+ * TIC-88: pure member-search predicate for the user-group Network filter. The
+ * group's members come from the DB; a non-blank query narrows them in-memory on
+ * name or company (case-insensitive), mirroring the DAO category search. Kept
+ * standalone so the filtering is unit-testable without Room.
+ */
+internal object NetworkGroupFilter {
+    fun filter(members: List<Contact>, query: String): List<Contact> {
+        val trimmed = query.trim()
+        if (trimmed.isBlank()) return members
+        return members.filter {
+            it.fullName.contains(trimmed, ignoreCase = true) ||
+                it.company.contains(trimmed, ignoreCase = true)
+        }
     }
 }

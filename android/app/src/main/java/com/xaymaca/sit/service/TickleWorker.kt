@@ -43,9 +43,11 @@ class TickleWorker @AssistedInject constructor(
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         dueReminders.forEach { reminder ->
-            val contactName = reminder.contactId?.let { id ->
-                contactRepository.getContactById(id)?.fullName
-            } ?: context.getString(R.string.tickle_notification_contact_fallback)
+            val contactName = TickleScheduler.reminderDisplayName(
+                contactName = reminder.contactId?.let { contactRepository.getContactById(it)?.fullName },
+                groupName = reminder.groupId?.let { contactRepository.getGroupById(it)?.name },
+                fallback = context.getString(R.string.tickle_notification_contact_fallback),
+            )
 
             val title = context.getString(R.string.tickle_notification_title, contactName)
             val body = reminder.note.ifBlank { context.getString(R.string.tickle_notification_body) }

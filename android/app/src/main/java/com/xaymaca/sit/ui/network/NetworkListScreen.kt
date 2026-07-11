@@ -86,6 +86,8 @@ fun NetworkListScreen(
     val contacts by viewModel.filteredContacts.collectAsState()
     val searchQuery by viewModel.searchQuery.collectAsState()
     val categoryFilter by viewModel.categoryFilter.collectAsState()
+    val groupFilter by viewModel.groupFilter.collectAsState()
+    val userGroups by viewModel.userGroups.collectAsState()
     var showMenu by remember { mutableStateOf(false) }
     var contactToDelete by remember { mutableStateOf<Contact?>(null) }
 
@@ -136,6 +138,8 @@ fun NetworkListScreen(
                 FilterChipRow(
                     viewModel = viewModel,
                     activeCategoryId = categoryFilter,
+                    activeGroupId = groupFilter,
+                    userGroups = userGroups,
                     warmth = warmth,
                 )
             }
@@ -162,7 +166,8 @@ fun NetworkListScreen(
                         modifier = Modifier.fillMaxWidth().padding(top = 40.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                        val msgRes = if (categoryFilter != null) R.string.warm_network_empty_filtered
+                        val msgRes = if (categoryFilter != null || groupFilter != null)
+                                         R.string.warm_network_empty_filtered
                                      else R.string.network_empty_title
                         Text(
                             text = stringResource(msgRes),
@@ -242,6 +247,8 @@ private fun Header(
 private fun FilterChipRow(
     viewModel: NetworkViewModel,
     activeCategoryId: String?,
+    activeGroupId: Long?,
+    userGroups: List<com.xaymaca.sit.data.model.ContactGroup>,
     warmth: Warmth,
 ) {
     LazyRow(
@@ -253,8 +260,9 @@ private fun FilterChipRow(
             WarmFilterChip(
                 kind = FilterChipKind.All,
                 label = stringResource(R.string.warm_network_filter_all),
-                isActive = activeCategoryId == null,
-                onClick = { viewModel.setCategoryFilter(null) },
+                // "All" is active only when no category AND no group filter is set.
+                isActive = activeCategoryId == null && activeGroupId == null,
+                onClick = { viewModel.setCategoryFilter(null); viewModel.setGroupFilter(null) },
                 warmth = warmth,
             )
         }
@@ -270,6 +278,17 @@ private fun FilterChipRow(
                     warmth = warmth,
                 )
             }
+        }
+        // TIC-88: user-created groups follow the canonical categories, each a
+        // neutral pill that filters the list to that group's members.
+        items(userGroups, key = { it.id }) { group ->
+            WarmFilterChip(
+                kind = FilterChipKind.GroupKind,
+                label = group.name,
+                isActive = activeGroupId == group.id,
+                onClick = { viewModel.setGroupFilter(group.id) },
+                warmth = warmth,
+            )
         }
     }
 }

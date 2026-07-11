@@ -187,6 +187,7 @@
     <string name="group_detail_member_added">Ο/Η %1$s προστέθηκε στο %2$s</string>
     <string name="group_detail_member_added_generic">Ο/Η %1$s προστέθηκε στην ομάδα</string>
     <string name="group_detail_edit_group">Επεξεργασία ομάδας</string>
+    <string name="group_detail_create_tickle">Δημιούργησε tickle</string>
     <string name="group_detail_add_members_fab">Προσθήκη μελών</string>
     <string name="group_edit_dialog_title">Επεξεργασία ομάδας</string>
 

@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -41,12 +42,16 @@ fun GroupDetailScreen(
     groupId: Long,
     onBack: () -> Unit,
     onContactClick: (Long) -> Unit,
+    // TIC-88: create-with-members opens this screen with the Add Members sheet
+    // already up; the group tickle action opens a group-bound TickleEdit.
+    openAddMembersOnLaunch: Boolean = false,
+    onAddTickle: () -> Unit = {},
     viewModel: GroupViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     var group by remember { mutableStateOf<ContactGroup?>(null) }
     var members by remember { mutableStateOf(listOf<Contact>()) }
-    var showAddSheet by remember { mutableStateOf(false) }
+    var showAddSheet by remember { mutableStateOf(openAddMembersOnLaunch) }
     var showEditDialog by remember { mutableStateOf(false) }
 
     val allContacts by viewModel.allContacts.collectAsState()
@@ -98,6 +103,12 @@ fun GroupDetailScreen(
                         }
                     },
                     actions = {
+                        IconButton(onClick = onAddTickle) {
+                            Icon(
+                                Icons.Default.Notifications,
+                                contentDescription = stringResource(R.string.group_detail_create_tickle)
+                            )
+                        }
                         IconButton(onClick = { showEditDialog = true }) {
                             Icon(Icons.Default.Edit, contentDescription = stringResource(R.string.group_detail_edit_group))
                         }
