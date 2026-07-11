@@ -1,6 +1,6 @@
-Ez a frissítés a megbízhatóságról szól:
-• Javítottunk egy indításkori összeomlást frissítés után
-• A szundiztatott tickle-ök visszatérnek a szundi végén
-• Az emlékeztetők túlélik az újraindítást, és időben érkeznek
-• Egy névjegy törlésekor az emlékeztetői is törlődnek
-• Gyorsabb névjegyimport és gördülékenyebb görgetés
+Az emlékeztetőid végre úgy működnek, ahogy mindig is kellett volna.
+• Írj valakinek, és a Ticklr felajánlja, hogy készre jelöli a tickle-t
+• Az emlékeztetők újra megbízhatóak — Kész vagy Szundi közvetlenül az értesítésből
+• Az üzenetírás javasolja, kivel beszélj ma
+• Vonj vissza szinte bármit; szundi 1, 3 napra vagy egy hétre
+• A csoportok szűrik a hálózatod, és saját tickle-jük is lehet

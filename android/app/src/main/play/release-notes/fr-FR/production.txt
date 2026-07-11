@@ -1,6 +1,6 @@
-Cette mise à jour est axée sur la fiabilité :
-• Correction d'un plantage au lancement après la mise à jour
-• Les tickles reportés reviennent à la fin du report
-• Les rappels survivent aux redémarrages et arrivent à l'heure
-• Supprimer un contact supprime aussi ses rappels
-• Import des contacts plus rapide et défilement plus fluide
+Tes rappels fonctionnent enfin comme ils l'auraient toujours dû.
+• Écris à quelqu'un et Ticklr propose de marquer son tickle comme fait
+• Les rappels sont à nouveau fiables — Fait ou Reporter depuis la notification
+• La rédaction suggère qui contacter aujourd'hui
+• Annule presque tout ; reporte d'1 jour, 3 ou une semaine
+• Les groupes filtrent ton réseau et ont leurs propres tickles

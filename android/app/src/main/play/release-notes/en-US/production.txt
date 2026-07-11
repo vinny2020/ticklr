@@ -1,6 +1,6 @@
-This update is all about reliability:
-• Fixed a crash some users hit at launch after updating
-• Snoozed tickles now come back when the snooze ends
-• Reminders survive phone restarts and fire on time
-• Deleting a contact now removes their reminders too
-• Faster contact import and smoother scrolling
+Your reminders now work the way they always should have.
+• Text someone and Ticklr offers to mark their tickle done
+• Reminders are reliable again — Done or Snooze right from the notification
+• Compose suggests who's due today
+• Undo almost anything; snooze for 1 day, 3, or a week
+• Groups can filter your network and carry their own tickles

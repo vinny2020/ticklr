@@ -1,6 +1,6 @@
-Den här uppdateringen handlar om tillförlitlighet:
-• Åtgärdade en krasch vid start efter uppdatering
-• Snoozade tickles kommer tillbaka när snoozen är slut
-• Påminnelser överlever omstarter och kommer i tid
-• När du raderar en kontakt raderas även dess påminnelser
-• Snabbare kontaktimport och mjukare rullning
+Dina påminnelser funkar äntligen som de alltid borde ha gjort.
+• Skriv till någon så erbjuder Ticklr att bocka av deras tickle
+• Påminnelser är pålitliga igen — Klar eller Snooza direkt från notisen
+• Skriv-fliken föreslår vem som står på tur idag
+• Ångra nästan allt; snooza 1 dag, 3 eller en vecka
+• Grupper kan filtrera ditt nätverk och ha egna tickles

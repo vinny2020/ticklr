@@ -1,6 +1,6 @@
-Această actualizare pune accent pe fiabilitate:
-• Am corectat o blocare la pornire după actualizare
-• Tickles amânate revin când se încheie amânarea
-• Mementourile supraviețuiesc repornirilor și sosesc la timp
-• Ștergerea unui contact îi șterge și mementourile
-• Import de contacte mai rapid și derulare mai fluidă
+Mementourile tale funcționează în sfârșit cum ar fi trebuit mereu.
+• Scrie cuiva și Ticklr îți propune să marchezi tickle-ul ca făcut
+• Mementourile sunt din nou de încredere — Gata sau Amână direct din notificare
+• Compunerea îți sugerează cu cine să vorbești azi
+• Anulează aproape orice; amână 1 zi, 3 sau o săptămână
+• Grupurile îți filtrează rețeaua și au propriile tickle-uri
