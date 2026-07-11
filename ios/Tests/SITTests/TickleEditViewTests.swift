@@ -159,6 +159,127 @@ final class TickleEditViewTests: XCTestCase {
         XCTAssertEqual(closeCount, 1, "Save must close the editor immediately, with no delay")
     }
 
+    // MARK: - TIC-91: Settings default frequency seeds new tickles
+
+    /// `seededFrequency`/`resolvedDefaultFrequency` are pure static helpers
+    /// (no SwiftUI rendering, no ModelContext) so — unlike the new-tickle
+    /// save path noted above — they're directly assertable here.
+    private var priorDefaultFrequencyRaw: String?
+
+    override func setUp() {
+        super.setUp()
+        priorDefaultFrequencyRaw = UserDefaults.standard.string(forKey: "defaultTickleFrequency")
+    }
+
+    override func tearDown() {
+        if let prior = priorDefaultFrequencyRaw {
+            UserDefaults.standard.set(prior, forKey: "defaultTickleFrequency")
+        } else {
+            UserDefaults.standard.removeObject(forKey: "defaultTickleFrequency")
+        }
+        super.tearDown()
+    }
+
+    func testStoredDefaultFlowsIntoNewNonMilestoneTickle() {
+        UserDefaults.standard.set(TickleFrequency.quarterly.rawValue, forKey: "defaultTickleFrequency")
+
+        let resolved = TickleEditView.seededFrequency(prefilledCategory: nil)
+
+        XCTAssertEqual(resolved, .quarterly, "A plain new tickle must seed from the Settings default, not a hardcoded .monthly")
+    }
+
+    func testStoredDefaultFlowsIntoNewTickleForNonMilestoneCategory() {
+        // The seeding rule keys off "is this the Milestones hero", not "was
+        // some prefilledCategory passed" — any other category must still
+        // honor the stored default.
+        UserDefaults.standard.set(TickleFrequency.weekly.rawValue, forKey: "defaultTickleFrequency")
+
+        let resolved = TickleEditView.seededFrequency(prefilledCategory: .family)
+
+        XCTAssertEqual(resolved, .weekly)
+    }
+
+    func testMilestonesHeroStaysAnnualRegardlessOfStoredDefault() {
+        // Set the stored default to something that would visibly betray a
+        // wiring mistake if Milestones ever started reading it.
+        UserDefaults.standard.set(TickleFrequency.weekly.rawValue, forKey: "defaultTickleFrequency")
+
+        let resolved = TickleEditView.seededFrequency(prefilledCategory: .milestones)
+
+        XCTAssertEqual(resolved, .annual, "The Milestones hero must always seed .annual, independent of Settings")
+    }
+
+    func testMissingStoredDefaultFallsBackToMonthly() {
+        UserDefaults.standard.removeObject(forKey: "defaultTickleFrequency")
+
+        let resolved = TickleEditView.seededFrequency(prefilledCategory: nil)
+
+        XCTAssertEqual(resolved, .monthly)
+    }
+
+    func testUnrecognizedStoredDefaultFallsBackToMonthly() {
+        // Simulates a stale/garbage value (e.g. a removed rawValue from an
+        // older build) rather than a value that was ever a legal case.
+        UserDefaults.standard.set("Fortnightly", forKey: "defaultTickleFrequency")
+
+        let resolved = TickleEditView.seededFrequency(prefilledCategory: nil)
+
+        XCTAssertEqual(resolved, .monthly)
+    }
+
+    func testCustomStoredDefaultFallsBackToMonthly() {
+        // .custom has no stored interval to seed a new reminder with. The
+        // Settings picker already excludes it as a selectable option, but the
+        // resolver still defends against it (e.g. a value written before that
+        // exclusion existed, or edited directly via UserDefaults).
+        UserDefaults.standard.set(TickleFrequency.custom.rawValue, forKey: "defaultTickleFrequency")
+
+        let resolved = TickleEditView.seededFrequency(prefilledCategory: nil)
+
+        XCTAssertEqual(resolved, .monthly)
+    }
+
+    func testEditingExistingTickleIgnoresStoredDefault() throws {
+        // The stored Settings default must only influence brand-new tickles.
+        // Editing an existing one keeps its own frequency even when the
+        // stored default now points somewhere else entirely.
+        UserDefaults.standard.set(TickleFrequency.quarterly.rawValue, forKey: "defaultTickleFrequency")
+
+        let contact = makeContact()
+        let reminder = TickleReminder(
+            contact: contact,
+            note: "before",
+            frequency: .weekly,
+            startDate: Date().addingTimeInterval(20 * 24 * 60 * 60)
+        )
+
+        let view = TickleEditView(existing: reminder)
+        let sut = try view.inspect()
+        try sut.find(button: String(localized: "common.save")).tap()
+
+        XCTAssertEqual(reminder.frequency, .weekly, "Editing an existing tickle must not be overridden by the Settings default")
+    }
+
+    func testNewTickleInitSeedsPickerFromStoredDefault() {
+        // Belt-and-suspenders check on the actual init path (not just the
+        // extracted helper) for the plain "+" entry point used across the
+        // app (Tickle tab, Contact Detail "Create a tickle").
+        UserDefaults.standard.set(TickleFrequency.bimonthly.rawValue, forKey: "defaultTickleFrequency")
+
+        let contact = makeContact()
+        let view = TickleEditView(contact: contact)
+
+        XCTAssertEqual(view.frequency, .bimonthly)
+    }
+
+    func testNewTickleInitForMilestonesHeroStaysAnnual() {
+        UserDefaults.standard.set(TickleFrequency.weekly.rawValue, forKey: "defaultTickleFrequency")
+
+        let view = TickleEditView(prefilledCategory: .milestones)
+
+        XCTAssertEqual(view.frequency, .annual)
+    }
+
     // NOTE on rapid-tap regression: a true end-to-end test on iOS would need
     // the ViewInspector inspection-callback pattern (adding a
     // `didAppear: ((Self) -> Void)?` to TickleEditView), because
