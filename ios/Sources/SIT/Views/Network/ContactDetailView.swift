@@ -28,6 +28,9 @@ struct ContactDetailView: View {
     /// Non-nil while a plain save-confirmation toast is showing after the
     /// "Create a tickle" sheet dismissed (TIC-84).
     @State private var saveToastMessage: String?
+    /// Drives the "Create a tickle for [name]?" offer toast after a plain
+    /// (reminder-less) send from the "Send a text" chip (TIC-86).
+    @State private var tickleSuggestion: TickleSuggestion?
 
     private let warmth: Warmth = .subtle
     private var palette: WarmPalette { WarmTheme.palette(for: warmth) }
@@ -84,7 +87,8 @@ struct ContactDetailView: View {
                 ComposeView(onClose: { activeSheet = nil },
                             initialContact: contact,
                             dueReminder: dueReminder,
-                            onTickleCompleted: { completionSnapshot = $0 })
+                            onTickleCompleted: { completionSnapshot = $0 },
+                            onSuggestTickle: { tickleSuggestion = $0 })
             }
         }
         .tickleCompletionToast(snapshot: $completionSnapshot, warmth: warmth) {
@@ -93,6 +97,11 @@ struct ContactDetailView: View {
             }
         }
         .saveConfirmationToast(message: $saveToastMessage, warmth: warmth)
+        .suggestTickleToast(suggestion: $tickleSuggestion, warmth: warmth) { _ in
+            // Already on this contact — the offer opens the same new-tickle sheet
+            // the "Create a tickle" chip uses, prefilled with this contact.
+            activeSheet = .addTickle
+        }
         .confirmationDialog(
             String(localized: "contactDetail.deleteConfirm.title \(contact.fullName)"),
             isPresented: $showingDeleteConfirm,

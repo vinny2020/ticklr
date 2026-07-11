@@ -205,8 +205,22 @@ final class LocalizationTests: XCTestCase {
             "compose.button.send",
             "compose.alert.cannotSend.title",
             "compose.alert.cannotSend.message",
+            // TIC-86 recipient suggestions + create-a-tickle offer
+            "compose.suggest.section.dueToday",
+            "compose.suggest.section.recents",
+            "compose.suggest.browseAll",
         ]
         assertKeysAreLocalized(keys)
+    }
+
+    /// TIC-86: the create-a-tickle offer interpolates the contact's name.
+    func testInterpolatedSuggestTickleOffer() {
+        let name = "Jane Doe"
+        let result = String(localized: "compose.suggestTickle.offer \(name)")
+        XCTAssertFalse(result.isEmpty, "offer text should not be empty")
+        XCTAssertTrue(result.contains("Jane Doe"), "offer should contain the contact name")
+        XCTAssertNotEqual(result, "compose.suggestTickle.offer \(name)",
+                          "key must resolve, not return the raw key")
     }
 
     func testOnboardingAndImportKeysResolve() {

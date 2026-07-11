@@ -29,6 +29,13 @@ struct TickleListView: View {
     /// TickleEditView sheet (add, edit, or the Milestones hero) or the iPad
     /// detail-pane editor dismissed (TIC-84).
     @State private var saveToastMessage: String?
+    /// Drives the "Create a tickle for [name]?" offer toast after a plain
+    /// (reminder-less) send (TIC-86). In practice a compose launched from here
+    /// always carries a due reminder, so this only fires in the edge case where
+    /// none was attached — wired for parity with `onTickleCompleted`.
+    @State private var tickleSuggestion: TickleSuggestion?
+    /// The contact whose new-tickle editor is presented when the offer is tapped.
+    @State private var suggestionEditContact: Contact?
 
     /// A contact to compose to, paired with the due tickle (if any) that a send
     /// should auto-complete. Identifiable so it can drive a `.sheet(item:)`.
@@ -84,6 +91,17 @@ struct TickleListView: View {
             }
         }
         .saveConfirmationToast(message: $saveToastMessage, warmth: warmth)
+        .suggestTickleToast(suggestion: $tickleSuggestion, warmth: warmth) { suggestion in
+            suggestionEditContact = fetchContact(suggestion.contactID)
+        }
+        .sheet(item: $suggestionEditContact) { contact in
+            TickleEditView(contact: contact, onSaved: { saveToastMessage = $0 })
+        }
+    }
+
+    private func fetchContact(_ id: UUID) -> Contact? {
+        let descriptor = FetchDescriptor<Contact>(predicate: #Predicate { $0.id == id })
+        return try? modelContext.fetch(descriptor).first
     }
 
     // MARK: - Compact (iPhone)
@@ -122,7 +140,8 @@ struct TickleListView: View {
                     onClose: { composeTarget = nil },
                     initialContact: target.contact,
                     dueReminder: target.reminder,
-                    onTickleCompleted: { completionSnapshot = $0 }
+                    onTickleCompleted: { completionSnapshot = $0 },
+                    onSuggestTickle: { tickleSuggestion = $0 }
                 )
             }
         }
@@ -160,7 +179,8 @@ struct TickleListView: View {
                     onClose: { composeTarget = nil },
                     initialContact: target.contact,
                     dueReminder: target.reminder,
-                    onTickleCompleted: { completionSnapshot = $0 }
+                    onTickleCompleted: { completionSnapshot = $0 },
+                    onSuggestTickle: { tickleSuggestion = $0 }
                 )
             }
         } detail: {

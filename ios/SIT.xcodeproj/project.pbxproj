@@ -31,6 +31,7 @@
 		4C29624DE74EE0486B690D76 /* WarmIllustration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A9372A30F13F2165F2EF8F /* WarmIllustration.swift */; };
 		4C98B38D7EF3EE65F2FD1A58 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EBB61C7877871E721045C7 /* Contact.swift */; };
 		5188A4195E2A5CA01730175F /* MessageTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72098A45B6ACBC527F5DF0B9 /* MessageTemplate.swift */; };
+		54BB9954F9130CC0C824745F /* ComposeSuggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283ABBFE8086AB5A46F32B3D /* ComposeSuggestions.swift */; };
 		568B2F7E2C0A37B9505FFDE4 /* ContactGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC789856C13EA9BCE0A6EC /* ContactGroup.swift */; };
 		5A2E74BD7F7B979AE5B1C4F3 /* TickleReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB38137353FDCD5606A5A8FF /* TickleReminder.swift */; };
 		5C6F6974D1ED58434BB9CFDF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C7E0EBE485C198DCF9669E /* SettingsView.swift */; };
@@ -65,6 +66,7 @@
 		AA02325BB0CA65EB315DF2F1 /* BebasNeue-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D3DCE02125449F9E013629EF /* BebasNeue-Regular.ttf */; };
 		AF7B9499DE3B99B9194191B5 /* GroupDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033862D2DB3D8A467AAFFA5D /* GroupDetailView.swift */; };
 		BD81ED295562938D457E136B /* TickleEditViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C371A80FA068A7BCAF4918 /* TickleEditViewTests.swift */; };
+		C23579AC5E693D90584F9F24 /* SuggestTickleToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEEA22C38A02D1319831F49 /* SuggestTickleToast.swift */; };
 		C5DD09913350E877AE4008CF /* TickleReminderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBC29B891A9D2602E4C6122 /* TickleReminderTests.swift */; };
 		C7BDC5C1B15460DAF7B84796 /* TicklePrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420A93FB5239884112A3FF47 /* TicklePrompt.swift */; };
 		C841C01A99444F20DEC56868 /* MonogramAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37449EAD55331D513415867C /* MonogramAvatar.swift */; };
@@ -86,6 +88,7 @@
 		F23284FE6EFA2F4A8A6A1F89 /* NotoSerifDevanagari-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE5F28CBE2FCC020F374E286 /* NotoSerifDevanagari-SemiBold.ttf */; };
 		F270284BAF01A90FDA75B306 /* ImportFeedbackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901EF7F333375E781CF94056 /* ImportFeedbackTests.swift */; };
 		F48BE3B2B06B47E783EAAC70 /* SITApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1887449FF664ADCCCB1BFC3 /* SITApp.swift */; };
+		F7C2BA68004D3CB0EAD61E65 /* ComposeSuggestionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9011EA9BBCA9401B1D965CD2 /* ComposeSuggestionsTests.swift */; };
 		F9083A1023AD45547A74C994 /* PostOnboardingLanding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02568199B7DB12DE7A3BA2D4 /* PostOnboardingLanding.swift */; };
 		FCEBEAFB511E04C6C968B5BA /* TickleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A933C06096E53F2DAD773D26 /* TickleListView.swift */; };
 /* End PBXBuildFile section */
@@ -130,6 +133,7 @@
 		205CDD9B8C3402B672E5E739 /* ComposeViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeViewTests.swift; sourceTree = "<group>"; };
 		209311518915490C7F72039B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		22EE33928D41292F74DBD608 /* SaveConfirmationToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveConfirmationToast.swift; sourceTree = "<group>"; };
+		283ABBFE8086AB5A46F32B3D /* ComposeSuggestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeSuggestions.swift; sourceTree = "<group>"; };
 		2A12E96AE23E8405CF010707 /* ur */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ur; path = ur.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		30D196741B99B788C9E325C3 /* LinkedInCSVParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedInCSVParserTests.swift; sourceTree = "<group>"; };
 		3590E3652E129205BDF65A19 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -165,6 +169,7 @@
 		8B1914E51A7708868BB45255 /* WarmEyebrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmEyebrow.swift; sourceTree = "<group>"; };
 		8C5907E434D833533D8A7EBC /* WarmListContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmListContainer.swift; sourceTree = "<group>"; };
 		8FBD25432AF93E7B78C501EE /* ImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportView.swift; sourceTree = "<group>"; };
+		9011EA9BBCA9401B1D965CD2 /* ComposeSuggestionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeSuggestionsTests.swift; sourceTree = "<group>"; };
 		901EF7F333375E781CF94056 /* ImportFeedbackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportFeedbackTests.swift; sourceTree = "<group>"; };
 		9125614ECAB9E4D8E5428E51 /* ContactRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRowView.swift; sourceTree = "<group>"; };
 		9413278558DA1F8BBE00FF96 /* SeedDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedDataService.swift; sourceTree = "<group>"; };
@@ -212,6 +217,7 @@
 		E8175776A2DEBC88B756C24E /* ComposeFlowUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeFlowUITests.swift; sourceTree = "<group>"; };
 		EA9ED8CB5E6D9F8E216A7470 /* ContactImportServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactImportServiceTests.swift; sourceTree = "<group>"; };
 		EDBC29B891A9D2602E4C6122 /* TickleReminderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleReminderTests.swift; sourceTree = "<group>"; };
+		FAEEA22C38A02D1319831F49 /* SuggestTickleToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestTickleToast.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,6 +262,7 @@
 		16BA4BF3954F9E307BBE0AA8 /* Compose */ = {
 			isa = PBXGroup;
 			children = (
+				283ABBFE8086AB5A46F32B3D /* ComposeSuggestions.swift */,
 				E07B4E4B1B6C11A40612610C /* ComposeView.swift */,
 			);
 			path = Compose;
@@ -339,6 +346,7 @@
 		60300655470A93BADC68B71C /* SITTests */ = {
 			isa = PBXGroup;
 			children = (
+				9011EA9BBCA9401B1D965CD2 /* ComposeSuggestionsTests.swift */,
 				205CDD9B8C3402B672E5E739 /* ComposeViewTests.swift */,
 				EA9ED8CB5E6D9F8E216A7470 /* ContactImportServiceTests.swift */,
 				10D31DBFE56E32631DD7B650 /* ContactTests.swift */,
@@ -375,6 +383,7 @@
 				C203898862FA7D9FC0D26AB9 /* ContactsAccessBanner.swift */,
 				37449EAD55331D513415867C /* MonogramAvatar.swift */,
 				22EE33928D41292F74DBD608 /* SaveConfirmationToast.swift */,
+				FAEEA22C38A02D1319831F49 /* SuggestTickleToast.swift */,
 				A314B38B2AF7A4C04B0699DE /* TickleCompletionToast.swift */,
 				420A93FB5239884112A3FF47 /* TicklePrompt.swift */,
 				A6A494ADD27B9C55B5B86A4D /* WarmCard.swift */,
@@ -625,6 +634,7 @@
 				0C41C7D26198E0DC2C958072 /* AddContactView.swift in Sources */,
 				A47CF298C3FF9F43615F03D1 /* CanonicalGroupSeed.swift in Sources */,
 				D7093B43ACD10588484F4A32 /* CategoryBadge.swift in Sources */,
+				54BB9954F9130CC0C824745F /* ComposeSuggestions.swift in Sources */,
 				D2644F8AB791907856A6E389 /* ComposeView.swift in Sources */,
 				4C98B38D7EF3EE65F2FD1A58 /* Contact.swift in Sources */,
 				D85DBFDBA2D0DACA843EA1A9 /* ContactDetailView.swift in Sources */,
@@ -654,6 +664,7 @@
 				7426C06388B7B7F1AB72B2DE /* SaveConfirmationToast.swift in Sources */,
 				8CF13461108C2CC7E64EB847 /* SeedDataService.swift in Sources */,
 				5C6F6974D1ED58434BB9CFDF /* SettingsView.swift in Sources */,
+				C23579AC5E693D90584F9F24 /* SuggestTickleToast.swift in Sources */,
 				840D3C6377E1F347573EAE19 /* TemplateEditView.swift in Sources */,
 				F01FB1D28CE1BD691A9DD989 /* TemplateListView.swift in Sources */,
 				06F4EDA1D1049DE0D9691453 /* TickleActionSheet.swift in Sources */,
@@ -682,6 +693,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7C2BA68004D3CB0EAD61E65 /* ComposeSuggestionsTests.swift in Sources */,
 				707528D3264086FB42BDD51E /* ComposeViewTests.swift in Sources */,
 				CDE377155C3E8D64FB62AE2F /* ContactImportServiceTests.swift in Sources */,
 				9283E70E0707CC70CFA0AD0F /* ContactTests.swift in Sources */,
