@@ -17,6 +17,7 @@ struct SettingsView: View {
     @State private var importToastMessage: String?
     #if DEBUG
     @State private var showClearConfirm = false
+    @State private var showResetOnboardingConfirm = false
     #endif
 
     @Environment(\.horizontalSizeClass) private var hSize
@@ -119,13 +120,6 @@ struct SettingsView: View {
                     warmHeader(String(localized: "settings.section.about"))
                 }
 
-                // MARK: — Reset
-                Section {
-                    Button(String(localized: "settings.button.resetOnboarding"), role: .destructive) {
-                        hasCompletedOnboarding = false
-                    }
-                }
-
                 // MARK: — Debug (compiled out in Release)
                 #if DEBUG
                 Section {
@@ -134,8 +128,7 @@ struct SettingsView: View {
                     }
 
                     Button("Reset Onboarding") {
-                        hasCompletedOnboarding = false
-                        seedMessage = "Onboarding reset — relaunch app"
+                        showResetOnboardingConfirm = true
                     }
 
                     Button("Load Test Contacts") {
@@ -206,6 +199,19 @@ struct SettingsView: View {
                     Button("Cancel", role: .cancel) {}
                 } message: {
                     Text("This will permanently delete all contacts, groups, and tickles. This cannot be undone.")
+                }
+                .confirmationDialog(
+                    "Reset onboarding?",
+                    isPresented: $showResetOnboardingConfirm,
+                    titleVisibility: .visible
+                ) {
+                    Button("Reset Onboarding", role: .destructive) {
+                        hasCompletedOnboarding = false
+                        seedMessage = "Onboarding reset — relaunch app"
+                    }
+                    Button("Cancel", role: .cancel) {}
+                } message: {
+                    Text("This will send you back through onboarding the next time you launch the app.")
                 }
                 #endif
             }
