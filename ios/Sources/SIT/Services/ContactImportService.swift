@@ -7,8 +7,10 @@ struct ContactImportService {
     /// Sendable snapshot of the fields pulled off a `CNContact`, plus its
     /// precomputed dedup fingerprint. `CNContact` itself is not Sendable,
     /// so instances never leave the detached task that enumerates them —
-    /// only these plain values cross back to the main actor.
-    private struct ImportedFields: Sendable {
+    /// only these plain values cross back to the main actor. Not `private`
+    /// (TIC-85) so `applyImport` — the CNContactStore-free dedup/insert core —
+    /// is directly unit-testable against an in-memory `ModelContext`.
+    struct ImportedFields: Sendable {
         let firstName: String
         let lastName: String
         let phoneNumbers: [String]
@@ -19,18 +21,13 @@ struct ContactImportService {
     }
 
     /// Requests Contacts permission and imports all contacts into SwiftData.
-    /// Call from onboarding only — requires CNContactStore access.
+    /// Call from onboarding or any recurring "import from iPhone Contacts"
+    /// entry point — requires CNContactStore access. Returns the (imported,
+    /// skipped) counts (TIC-85) so callers can surface real feedback instead
+    /// of the old silent `print()`.
     @MainActor
-    static func importFromiOS(context: ModelContext) async throws {
-        // Fetch existing fingerprints to detect duplicates. Mutated as we go so
-        // duplicates *within* this same import are also caught, not just ones
-        // that already existed in the store before the loop started.
-        var seenFingerprints: Set<String> = {
-            let descriptor = FetchDescriptor<Contact>()
-            let all = (try? context.fetch(descriptor)) ?? []
-            return Set(all.map(\.fingerprint).filter { !$0.isEmpty })
-        }()
-
+    @discardableResult
+    static func importFromiOS(context: ModelContext) async throws -> (imported: Int, skipped: Int) {
         // Requesting access and enumerating are both blocking, synchronous
         // CNContactStore calls — run them off the main actor so onboarding
         // doesn't freeze for the whole import (mirrors ContactPhotoFetcher's
@@ -74,31 +71,52 @@ struct ContactImportService {
             return results
         }.value
 
+        let result = applyImport(fields: fetched, context: context)
+        try context.save()
+        return result
+    }
+
+    /// The CNContactStore-free dedup/insert core (TIC-85): given already-fetched
+    /// `fields`, skips anything matching an existing (or earlier-in-this-batch)
+    /// fingerprint and inserts the rest as `Contact`s. Split out from
+    /// `importFromiOS` so it's unit-testable against an in-memory `ModelContext`
+    /// without touching the real Contacts store. Does not call `context.save()`
+    /// itself — callers control when persistence happens.
+    @MainActor
+    static func applyImport(fields: [ImportedFields], context: ModelContext) -> (imported: Int, skipped: Int) {
+        // Fetch existing fingerprints to detect duplicates. Mutated as we go so
+        // duplicates *within* this same import are also caught, not just ones
+        // that already existed in the store before the loop started.
+        var seenFingerprints: Set<String> = {
+            let descriptor = FetchDescriptor<Contact>()
+            let all = (try? context.fetch(descriptor)) ?? []
+            return Set(all.map(\.fingerprint).filter { !$0.isEmpty })
+        }()
+
         var imported = 0
         var skipped = 0
 
-        for fields in fetched {
-            if !fields.fingerprint.isEmpty && seenFingerprints.contains(fields.fingerprint) {
+        for field in fields {
+            if !field.fingerprint.isEmpty && seenFingerprints.contains(field.fingerprint) {
                 skipped += 1
                 continue
             }
 
             let contact = Contact(
-                firstName: fields.firstName,
-                lastName: fields.lastName,
-                phoneNumbers: fields.phoneNumbers,
-                emails: fields.emails,
-                company: fields.company,
-                jobTitle: fields.jobTitle,
+                firstName: field.firstName,
+                lastName: field.lastName,
+                phoneNumbers: field.phoneNumbers,
+                emails: field.emails,
+                company: field.company,
+                jobTitle: field.jobTitle,
                 importSource: .ios,
-                fingerprint: fields.fingerprint
+                fingerprint: field.fingerprint
             )
             context.insert(contact)
-            if !fields.fingerprint.isEmpty { seenFingerprints.insert(fields.fingerprint) }
+            if !field.fingerprint.isEmpty { seenFingerprints.insert(field.fingerprint) }
             imported += 1
         }
 
-        try context.save()
-        print("Ticklr: Imported \(imported) contacts from iOS, skipped \(skipped) duplicates")
+        return (imported, skipped)
     }
 }

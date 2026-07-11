@@ -3,6 +3,25 @@ import SwiftData
 import UniformTypeIdentifiers
 
 struct ImportView: View {
+    /// Where this import is happening from (TIC-85). `.onboarding` is only
+    /// used from `OnboardingView`'s sheet: a success both completes onboarding
+    /// and requests the one-shot Network-tab landing (with the result toast
+    /// attached). `.recurring` covers every re-entry — Settings → Import
+    /// Contacts, Network "+" → Get started — where the presenting screen
+    /// stays on screen and shows the toast itself via `onImportFinished`.
+    enum Context {
+        case onboarding
+        case recurring
+    }
+
+    var context: Context = .recurring
+    /// Called with the result message on a successful `.recurring` import,
+    /// right before `dismiss()` — mirrors `TickleEditView`'s `onSaved` pattern.
+    /// Unused in `.onboarding` context (that path posts through
+    /// `PostOnboardingLanding` instead, since the presenter — `OnboardingView`
+    /// — is about to be torn down, not left on screen).
+    var onImportFinished: ((String) -> Void)? = nil
+
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
@@ -86,9 +105,8 @@ struct ImportView: View {
         isImporting = true
         defer { isImporting = false }
         do {
-            try await ContactImportService.importFromiOS(context: modelContext)
-            hasCompletedOnboarding = true
-            dismiss()
+            let result = try await ContactImportService.importFromiOS(context: modelContext)
+            finishImport(imported: result.imported, skipped: result.skipped)
         } catch {
             importError = error.localizedDescription
             showingError = true
@@ -96,17 +114,31 @@ struct ImportView: View {
     }
 
     private func importFromLinkedIn(url: URL) {
-
         let accessed = url.startAccessingSecurityScopedResource()
         defer { if accessed { url.stopAccessingSecurityScopedResource() } }
         do {
-            try LinkedInCSVParser.parse(url: url, context: modelContext)
-            hasCompletedOnboarding = true
-            dismiss()
+            let result = try LinkedInCSVParser.parse(url: url, context: modelContext)
+            finishImport(imported: result.imported, skipped: result.skipped)
         } catch {
             importError = error.localizedDescription
             showingError = true
         }
+    }
+
+    /// Shared success tail for both import sources (TIC-85): builds the
+    /// result toast once, then routes it per `context` — see the `Context`
+    /// doc comment above for why onboarding and recurring diverge here.
+    @MainActor
+    private func finishImport(imported: Int, skipped: Int) {
+        let message = ImportFeedback.message(imported: imported, skipped: skipped)
+        switch context {
+        case .onboarding:
+            hasCompletedOnboarding = true
+            PostOnboardingLanding.requestNetworkLanding(toast: message)
+        case .recurring:
+            onImportFinished?(message)
+        }
+        dismiss()
     }
 }
 

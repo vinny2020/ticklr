@@ -144,6 +144,12 @@ struct AddContactView: View {
     }
 
     private func save() {
+        // Captured before the flag flips below, so the Network-tab landing
+        // request (TIC-85) only fires the one time this save is actually
+        // completing onboarding — not when this sheet is reopened later from
+        // the Network "+" menu, where `hasCompletedOnboarding` is already true.
+        let isOnboardingCompletion = !hasCompletedOnboarding
+
         let contact = Contact(
             firstName: firstName.trimmingCharacters(in: .whitespaces),
             lastName: lastName.trimmingCharacters(in: .whitespaces),
@@ -162,6 +168,9 @@ struct AddContactView: View {
         // (idempotent) when this screen is opened from the Network tab, where
         // the flag is already set. Mirrors ImportView's own completion signal.
         hasCompletedOnboarding = true
+        if isOnboardingCompletion {
+            PostOnboardingLanding.requestNetworkLanding()
+        }
         dismiss()
     }
 }

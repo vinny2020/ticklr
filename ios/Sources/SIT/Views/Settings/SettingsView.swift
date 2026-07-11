@@ -12,6 +12,9 @@ struct SettingsView: View {
 
     @State private var systemAuthStatus: UNAuthorizationStatus = .notDetermined
     @State private var seedMessage: String? = nil
+    /// Import result toast (TIC-85) — surfaced here after the pushed
+    /// "Import Contacts" screen pops back on a successful import.
+    @State private var importToastMessage: String?
     #if DEBUG
     @State private var showClearConfirm = false
     #endif
@@ -55,7 +58,7 @@ struct SettingsView: View {
                 Section {
                     LabeledContent(String(localized: "settings.row.contacts"), value: contacts.count.formatted())
                     NavigationLink(String(localized: "settings.row.importContacts")) {
-                        ImportView()
+                        ImportView(onImportFinished: { importToastMessage = $0 })
                     }
                     NavigationLink(String(localized: "settings.row.messageTemplates")) {
                         TemplateListView()
@@ -221,6 +224,7 @@ struct SettingsView: View {
                     Task { await fetchNotificationStatus() }
                 }
             }
+            .saveConfirmationToast(message: $importToastMessage, warmth: warmth)
         }
     }
 
