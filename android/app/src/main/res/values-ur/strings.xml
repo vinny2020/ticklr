@@ -18,6 +18,9 @@
     <string name="common_update">اپ ڈیٹ کریں</string>
     <string name="common_send">بھیجیں</string>
     <string name="common_change">تبدیل کریں</string>
+    <string name="common_done">ہو گیا</string>
+    <!-- TIC-96: shared empty-database CTA -->
+    <string name="common_add_or_import_contacts">رابطے شامل کریں یا درآمد کریں</string>
     <string name="common_edit">ترمیم کریں</string>
 
     <!-- Settings -->
@@ -102,6 +105,8 @@
     <string name="tickle_edit_create_group_button">گروپ بنائیں</string>
     <string name="tickle_edit_new_group_dialog_title">نیا گروپ</string>
     <string name="tickle_edit_group_name_label">گروپ کا نام</string>
+    <!-- TIC-96: empty-database dead-end fix for the contact picker -->
+    <string name="tickle_edit_empty_contacts_title">ابھی آپ کے پاس کوئی رابطہ نہیں ہے۔</string>
     <string name="tickle_saved">یاددہانی محفوظ ہو گئی</string>
     <string name="tickle_updated">یاددہانی اپ ڈیٹ ہو گئی</string>
     <string name="tickle_notification_contact_fallback">آپ کا رابطہ</string>
@@ -197,6 +202,10 @@
     <string name="compose_to_label">کو</string>
     <string name="compose_search_placeholder">رابطے تلاش کریں…</string>
     <string name="compose_no_phone">فون نمبر موجود نہیں</string>
+    <!-- TIC-96: inline no-phone dead-end fix -->
+    <string name="compose_add_number">نمبر شامل کریں</string>
+    <!-- TIC-96: empty-database dead-end fix -->
+    <string name="compose_empty_contacts_title">ابھی آپ کے پاس کوئی رابطہ نہیں ہے۔</string>
     <string name="compose_select_template">ٹیمپلیٹ منتخب کریں</string>
     <string name="compose_message_label">پیغام</string>
     <string name="compose_message_placeholder">اپنا پیغام لکھیں…</string>
@@ -361,4 +370,8 @@
     <string name="tickle_snoozed">مؤخر کر دیا</string>
     <string name="group_member_removed">%1$s کو ہٹا دیا گیا</string>
     <string name="template_deleted">ٹیمپلیٹ حذف کر دیا گیا</string>
+    <!-- TIC-96: multi-phone chooser -->
+    <string name="phone_chooser_title">ایک نمبر منتخب کریں</string>
+    <!-- TIC-96: honest picker-cap hint -->
+    <string name="picker_showing_hint">%2$d میں سے %1$d دکھائے جا رہے ہیں</string>
 </resources>

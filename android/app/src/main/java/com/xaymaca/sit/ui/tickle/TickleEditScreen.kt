@@ -31,6 +31,9 @@ import com.xaymaca.sit.data.model.TickleReminder
 import com.xaymaca.sit.data.model.TickleStatus
 import com.xaymaca.sit.service.TickleScheduler
 import com.xaymaca.sit.ui.network.NetworkViewModel
+import com.xaymaca.sit.ui.shared.EmptyContactsCta
+import com.xaymaca.sit.ui.shared.PickerCap
+import com.xaymaca.sit.ui.shared.PickerCapHintText
 import com.xaymaca.sit.ui.shared.displayNameResId
 import com.xaymaca.sit.ui.theme.WarmCategory
 import kotlinx.coroutines.CancellationException
@@ -55,6 +58,8 @@ fun TickleEditScreen(
     preselectedGroupId: Long? = null,
     onSaved: () -> Unit,
     onBack: () -> Unit,
+    /** TIC-96: "Add or import contacts" when the picker has nothing to bind to. */
+    onAddContact: () -> Unit = {},
     tickleViewModel: TickleViewModel = hiltViewModel(),
     networkViewModel: NetworkViewModel = hiltViewModel()
 ) {
@@ -322,14 +327,27 @@ fun TickleEditScreen(
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Spacer(modifier = Modifier.height(8.dp))
-                        OutlinedTextField(
-                            value = contactSearch,
-                            onValueChange = { contactSearch = it },
-                            label = { Text(stringResource(R.string.tickle_edit_search_contacts)) },
-                            modifier = Modifier.fillMaxWidth(),
-                            singleLine = true,
-                            shape = RoundedCornerShape(10.dp)
-                        )
+                        // TIC-96: an empty database leaves nothing to search for or
+                        // bind this tickle to — swap the pointless search field for
+                        // a CTA into the picker's more natural destination here
+                        // (a single specific person to remember, so Add Contact
+                        // beats a bulk Import).
+                        if (contacts.isEmpty() && selectedContact == null) {
+                            EmptyContactsCta(
+                                title = stringResource(R.string.tickle_edit_empty_contacts_title),
+                                accent = WarmCategory.Community.palette.accent,
+                                onAddOrImport = onAddContact,
+                            )
+                        } else {
+                            OutlinedTextField(
+                                value = contactSearch,
+                                onValueChange = { contactSearch = it },
+                                label = { Text(stringResource(R.string.tickle_edit_search_contacts)) },
+                                modifier = Modifier.fillMaxWidth(),
+                                singleLine = true,
+                                shape = RoundedCornerShape(10.dp)
+                            )
+                        }
                     }
                 }
 
@@ -356,7 +374,10 @@ fun TickleEditScreen(
                     val showContactList = !groupBound && (contactSearch.isNotBlank() ||
                         (tickleId == null && selectedContact == null))
                     if (showContactList) {
-                        items(filteredContacts.take(8)) { contact ->
+                        // TIC-96: capped honestly — a "Showing N of Total" hint row
+                        // appears when the search matches more than fit.
+                        val capped = PickerCap.cap(filteredContacts)
+                        items(capped.shown) { contact ->
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -383,6 +404,15 @@ fun TickleEditScreen(
                                 }
                                 Spacer(modifier = Modifier.width(10.dp))
                                 Text(contact.fullName, style = MaterialTheme.typography.bodyLarge)
+                            }
+                        }
+                        if (capped.isTruncated) {
+                            item {
+                                PickerCapHintText(
+                                    capped.shown.size,
+                                    capped.total,
+                                    MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
                             }
                         }
                     }

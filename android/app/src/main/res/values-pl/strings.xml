@@ -18,6 +18,9 @@
     <string name="common_update">Zaktualizuj</string>
     <string name="common_send">Wyślij</string>
     <string name="common_change">Zmień</string>
+    <string name="common_done">Gotowe</string>
+    <!-- TIC-96: shared empty-database CTA -->
+    <string name="common_add_or_import_contacts">Dodaj lub zaimportuj kontakty</string>
     <string name="common_edit">Edytuj</string>
 
     <!-- Settings -->
@@ -104,6 +107,8 @@
     <string name="tickle_edit_create_group_button">Utwórz grupę</string>
     <string name="tickle_edit_new_group_dialog_title">Nowa grupa</string>
     <string name="tickle_edit_group_name_label">Nazwa grupy</string>
+    <!-- TIC-96: empty-database dead-end fix for the contact picker -->
+    <string name="tickle_edit_empty_contacts_title">Nie masz jeszcze żadnych kontaktów.</string>
     <string name="tickle_saved">Tickle zapisany</string>
     <string name="tickle_updated">Tickle zaktualizowany</string>
     <string name="tickle_notification_contact_fallback">Twój kontakt</string>
@@ -201,6 +206,10 @@
     <string name="compose_to_label">Do</string>
     <string name="compose_search_placeholder">Szukaj kontaktów…</string>
     <string name="compose_no_phone">Brak numeru telefonu</string>
+    <!-- TIC-96: inline no-phone dead-end fix -->
+    <string name="compose_add_number">Dodaj numer</string>
+    <!-- TIC-96: empty-database dead-end fix -->
+    <string name="compose_empty_contacts_title">Nie masz jeszcze żadnych kontaktów.</string>
     <string name="compose_select_template">Wybierz szablon</string>
     <string name="compose_message_label">Wiadomość</string>
     <string name="compose_message_placeholder">Wpisz wiadomość…</string>
@@ -366,4 +375,8 @@
     <string name="tickle_snoozed">Odłożono</string>
     <string name="group_member_removed">Usunięto %1$s</string>
     <string name="template_deleted">Usunięto szablon</string>
+    <!-- TIC-96: multi-phone chooser -->
+    <string name="phone_chooser_title">Wybierz numer</string>
+    <!-- TIC-96: honest picker-cap hint -->
+    <string name="picker_showing_hint">Wyświetlono %1$d z %2$d</string>
 </resources>

@@ -69,6 +69,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.xaymaca.sit.R
 import com.xaymaca.sit.data.model.TickleFrequency
 import com.xaymaca.sit.data.model.TickleReminder
+import com.xaymaca.sit.ui.shared.PendingPhoneChoice
+import com.xaymaca.sit.ui.shared.PhoneChoice
+import com.xaymaca.sit.ui.shared.PhoneChooser
+import com.xaymaca.sit.ui.shared.PhoneNumberChooserDialog
 import com.xaymaca.sit.ui.shared.displayNameResId
 import com.xaymaca.sit.ui.theme.WarmCategory
 import com.xaymaca.sit.ui.theme.WarmHeadingFont
@@ -118,6 +122,10 @@ fun TickleListScreen(
     // first showSnackbar returns rather than cancelling it.
     val snackbarHostState = remember { SnackbarHostState() }
     val undoLabel = stringResource(R.string.common_undo)
+    // TIC-96: a resolved multi-number choice awaiting the user's pick for the
+    // action sheet's Call row — see PhoneChooser. A single number keeps the
+    // direct-dial fast path.
+    var phoneChoice by remember { mutableStateOf<PendingPhoneChoice?>(null) }
     LaunchedEffect(Unit) {
         viewModel.undoRequest.collect { request ->
             val result = snackbarHostState.showSnackbar(
@@ -256,8 +264,16 @@ fun TickleListScreen(
                     if (contactId != null) onCompose(contactId, target.reminder.id)
                 },
                 onCall = {
-                    target.phones.firstOrNull()?.let { number ->
-                        context.startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:$number")))
+                    // TIC-96: more than one number used to silently dial
+                    // whichever was first — now the user picks.
+                    when (val choice = PhoneChooser.choose(target.phones)) {
+                        is PhoneChoice.Direct ->
+                            context.startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:${choice.number}")))
+                        is PhoneChoice.NeedsChoice ->
+                            phoneChoice = PendingPhoneChoice(choice.numbers) { number ->
+                                context.startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:$number")))
+                            }
+                        PhoneChoice.None -> {}
                     }
                     viewModel.dismissActionSheet()
                 },
@@ -271,6 +287,14 @@ fun TickleListScreen(
                 onSnooze = { days -> viewModel.snooze(target.reminder, days); viewModel.dismissActionSheet() },
                 onEdit = { onEditTickle(target.reminder.id); viewModel.dismissActionSheet() },
                 onDismiss = { viewModel.dismissActionSheet() },
+            )
+        }
+
+        phoneChoice?.let { pending ->
+            PhoneNumberChooserDialog(
+                numbers = pending.numbers,
+                onSelect = { number -> pending.onChosen(number); phoneChoice = null },
+                onDismiss = { phoneChoice = null },
             )
         }
     }

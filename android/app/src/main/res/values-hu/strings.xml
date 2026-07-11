@@ -18,6 +18,9 @@
     <string name="common_update">Frissítés</string>
     <string name="common_send">Küldés</string>
     <string name="common_change">Módosítás</string>
+    <string name="common_done">Kész</string>
+    <!-- TIC-96: shared empty-database CTA -->
+    <string name="common_add_or_import_contacts">Kontaktok hozzáadása vagy importálása</string>
     <string name="common_edit">Szerkesztés</string>
 
     <!-- Settings -->
@@ -102,6 +105,8 @@
     <string name="tickle_edit_create_group_button">Csoport létrehozása</string>
     <string name="tickle_edit_new_group_dialog_title">Új csoport</string>
     <string name="tickle_edit_group_name_label">Csoport neve</string>
+    <!-- TIC-96: empty-database dead-end fix for the contact picker -->
+    <string name="tickle_edit_empty_contacts_title">Még nincsenek kontaktjaid.</string>
     <string name="tickle_saved">Tickle mentve</string>
     <string name="tickle_updated">Tickle frissítve</string>
     <string name="tickle_notification_contact_fallback">a névjegyed</string>
@@ -197,6 +202,10 @@
     <string name="compose_to_label">Címzett</string>
     <string name="compose_search_placeholder">Névjegyek keresése…</string>
     <string name="compose_no_phone">Nincs telefonszám megadva</string>
+    <!-- TIC-96: inline no-phone dead-end fix -->
+    <string name="compose_add_number">Szám hozzáadása</string>
+    <!-- TIC-96: empty-database dead-end fix -->
+    <string name="compose_empty_contacts_title">Még nincsenek kontaktjaid.</string>
     <string name="compose_select_template">Sablon kiválasztása</string>
     <string name="compose_message_label">Üzenet</string>
     <string name="compose_message_placeholder">Írja be az üzenetét…</string>
@@ -356,4 +365,8 @@
     <string name="tickle_snoozed">Elhalasztva</string>
     <string name="group_member_removed">%1$s eltávolítva</string>
     <string name="template_deleted">Sablon törölve</string>
+    <!-- TIC-96: multi-phone chooser -->
+    <string name="phone_chooser_title">Válassz egy számot</string>
+    <!-- TIC-96: honest picker-cap hint -->
+    <string name="picker_showing_hint">%1$d / %2$d megjelenítve</string>
 </resources>

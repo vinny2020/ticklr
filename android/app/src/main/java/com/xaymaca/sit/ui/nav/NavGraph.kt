@@ -330,7 +330,20 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
             }
 
             // Network
-            composable(Screen.Network.route) {
+            composable(
+                route = Screen.Network.ROUTE,
+                arguments = listOf(
+                    navArgument(Screen.Network.ARG_FOCUS_CONTACT_ID) {
+                        type = NavType.LongType
+                        defaultValue = -1L
+                    }
+                )
+            ) { backStackEntry ->
+                // TIC-96: carried by cross-section jumps (GroupsPane's member tap)
+                // that want to land on a specific contact's detail pane instead of
+                // the plain list — absent for the ordinary tab entry.
+                val focusContactId = backStackEntry.arguments
+                    ?.getLong(Screen.Network.ARG_FOCUS_CONTACT_ID)?.takeIf { it != -1L }
                 if (useTwoPane) {
                     NetworkPane(
                         onAddContact = { navController.navigate(Screen.AddContact.route) },
@@ -348,6 +361,7 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
                                 launchSingleTop = true
                             }
                         },
+                        initialContactId = focusContactId,
                     )
                 } else {
                     NetworkListScreen(
@@ -357,7 +371,15 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
                         onAddContact = { navController.navigate(Screen.AddContact.route) },
                         onImport = {
                             navController.navigate(Screen.Import.createRoute(Screen.Import.ORIGIN_IN_APP))
-                        }
+                        },
+                        onCompose = { id, reminderId ->
+                            navController.navigate(Screen.Compose.createRoute(id, reminderId)) {
+                                launchSingleTop = true
+                            }
+                        },
+                        onAddTickleForContact = { id ->
+                            navController.navigate(Screen.TickleEdit.createRouteWithContact(id))
+                        },
                     )
                 }
             }
@@ -405,8 +427,12 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
             composable(Screen.GroupList.route) {
                 if (useTwoPane) {
                     GroupsPane(
+                        // TIC-96: at expanded width this stays inside the pane
+                        // world — Network's detail pane, not the full-screen
+                        // ContactDetail route — instead of abandoning the panes
+                        // for a member tap.
                         onContactClick = { id ->
-                            navController.navigate(Screen.ContactDetail.createRoute(id))
+                            navController.navigate(Screen.Network.createRouteFocusingContact(id))
                         },
                         onAddTickleForGroup = { id ->
                             navController.navigate(Screen.TickleEdit.createRouteWithGroup(id))
@@ -459,6 +485,7 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
                                 launchSingleTop = true
                             }
                         },
+                        onAddContact = { navController.navigate(Screen.AddContact.route) },
                     )
                 } else {
                     TickleListScreen(
@@ -489,7 +516,8 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
                     preselectedContactId = contactId,
                     preselectedGroupId = groupId,
                     onSaved = { navController.popBackStack() },
-                    onBack = { navController.popBackStack() }
+                    onBack = { navController.popBackStack() },
+                    onAddContact = { navController.navigate(Screen.AddContact.route) },
                 )
             }
 
@@ -520,6 +548,17 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
                     // on the back stack (no popUpTo), so returning restores
                     // the draft exactly as it was.
                     onManageTemplates = { navController.navigate(Screen.TemplateList.route) },
+                    // TIC-96: "Add a number" for a selected contact with no
+                    // phone on file. Compose stays on the back stack, so
+                    // returning re-reads the (now updated) contact.
+                    onEditContact = { id -> navController.navigate("edit_contact/$id") },
+                    // TIC-96: "Add or import contacts" when the whole database
+                    // is empty — Import wins here since Compose is a bulk
+                    // messaging surface, so getting many contacts in fast beats
+                    // adding one.
+                    onImportContacts = {
+                        navController.navigate(Screen.Import.createRoute(Screen.Import.ORIGIN_IN_APP))
+                    },
                     onDone = {
                         // Flow back to wherever Compose was opened from
                         // (Contact Detail, Tickle list, or the previous tab).

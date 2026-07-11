@@ -18,6 +18,9 @@
     <string name="common_update">تحديث</string>
     <string name="common_send">إرسال</string>
     <string name="common_change">تغيير</string>
+    <string name="common_done">تم</string>
+    <!-- TIC-96: shared empty-database CTA -->
+    <string name="common_add_or_import_contacts">إضافة أو استيراد جهات الاتصال</string>
     <string name="common_edit">تعديل</string>
 
     <!-- Settings -->
@@ -106,6 +109,8 @@
     <string name="tickle_edit_create_group_button">إنشاء مجموعة</string>
     <string name="tickle_edit_new_group_dialog_title">مجموعة جديدة</string>
     <string name="tickle_edit_group_name_label">اسم المجموعة</string>
+    <!-- TIC-96: empty-database dead-end fix for the contact picker -->
+    <string name="tickle_edit_empty_contacts_title">ليس لديك أي جهات اتصال بعد.</string>
     <string name="tickle_saved">تم حفظ التذكير</string>
     <string name="tickle_updated">تم تحديث التذكير</string>
     <string name="tickle_notification_contact_fallback">جهة الاتصال</string>
@@ -205,6 +210,10 @@
     <string name="compose_to_label">إلى</string>
     <string name="compose_search_placeholder">بحث في جهات الاتصال…</string>
     <string name="compose_no_phone">لا يوجد رقم هاتف مسجَّل</string>
+    <!-- TIC-96: inline no-phone dead-end fix -->
+    <string name="compose_add_number">إضافة رقم</string>
+    <!-- TIC-96: empty-database dead-end fix -->
+    <string name="compose_empty_contacts_title">ليس لديك أي جهات اتصال بعد.</string>
     <string name="compose_select_template">اختيار قالب</string>
     <string name="compose_message_label">الرسالة</string>
     <string name="compose_message_placeholder">اكتب رسالتك…</string>
@@ -376,4 +385,8 @@
     <string name="tickle_snoozed">تم التأجيل</string>
     <string name="group_member_removed">تمت إزالة %1$s</string>
     <string name="template_deleted">تم حذف القالب</string>
+    <!-- TIC-96: multi-phone chooser -->
+    <string name="phone_chooser_title">اختر رقمًا</string>
+    <!-- TIC-96: honest picker-cap hint -->
+    <string name="picker_showing_hint">عرض %1$d من %2$d</string>
 </resources>

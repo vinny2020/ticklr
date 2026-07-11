@@ -22,6 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
@@ -48,9 +49,11 @@ class ComposeViewModelTest {
 
     // ---- Stub DAOs (only the reminder store carries meaningful state) --------
 
-    private class StubContactDao : ContactDao {
-        override fun getAll(): Flow<List<Contact>> = flowOf(emptyList())
-        override suspend fun getById(id: Long): Contact? = null
+    // TIC-96: mutable so `hasContacts` and `refreshSelectedContact` tests can
+    // seed / update the backing contact list at construction time.
+    private class StubContactDao(val contacts: MutableList<Contact> = mutableListOf()) : ContactDao {
+        override fun getAll(): Flow<List<Contact>> = flowOf(contacts.toList())
+        override suspend fun getById(id: Long): Contact? = contacts.find { it.id == id }
         override suspend fun getContactWithGroups(id: Long): ContactWithGroups? = null
         override suspend fun insert(contact: Contact): Long = 0L
         override suspend fun countByFingerprint(fingerprint: String): Int = 0
@@ -113,6 +116,7 @@ class ComposeViewModelTest {
     }
 
     private lateinit var tickleDao: FakeTickleReminderDao
+    private lateinit var contactDao: StubContactDao
     private lateinit var store: PendingTickleCompletionStore
     private lateinit var offerStore: PendingTickleOfferStore
     private lateinit var viewModel: ComposeViewModel
@@ -120,21 +124,30 @@ class ComposeViewModelTest {
     private val alice = Contact(id = 1L, firstName = "Alice", lastName = "Smith")
     private val bob = Contact(id = 2L, firstName = "Bob", lastName = "Jones")
 
-    @Before
-    fun setUp() {
-        Dispatchers.setMain(testDispatcher)
-        tickleDao = FakeTickleReminderDao()
+    /** Builds a fresh ComposeViewModel backed by [contactDao]'s current contact
+     *  list — used by TIC-96 tests that need contacts present at construction
+     *  time (the eagerly-collected `hasContacts` StateFlow snapshots the DAO's
+     *  flow when it starts collecting, not on later mutation). */
+    private fun buildViewModel(): ComposeViewModel {
         val contactGroupDao = StubContactGroupDao()
-        store = PendingTickleCompletionStore()
-        offerStore = PendingTickleOfferStore()
-        viewModel = ComposeViewModel(
-            contactRepository = ContactRepository(StubContactDao(), contactGroupDao, tickleDao),
+        return ComposeViewModel(
+            contactRepository = ContactRepository(contactDao, contactGroupDao, tickleDao),
             messageTemplateRepository = MessageTemplateRepository(StubMessageTemplateDao()),
             contactGroupDao = contactGroupDao,
             tickleRepository = TickleRepository(tickleDao),
             pendingTickleCompletionStore = store,
             pendingTickleOfferStore = offerStore,
         )
+    }
+
+    @Before
+    fun setUp() {
+        Dispatchers.setMain(testDispatcher)
+        tickleDao = FakeTickleReminderDao()
+        contactDao = StubContactDao()
+        store = PendingTickleCompletionStore()
+        offerStore = PendingTickleOfferStore()
+        viewModel = buildViewModel()
     }
 
     @After
@@ -316,5 +329,50 @@ class ComposeViewModelTest {
         viewModel.clearCompose()
         assertEquals("", viewModel.messageBody.value)
         assertFalse(viewModel.shouldConfirmTemplateReplace())
+    }
+
+    // ---- TIC-96: hasContacts empty-database CTA + refreshSelectedContact -----
+
+    @Test
+    fun `hasContacts is false when the database is empty`() = runTest {
+        val collected = mutableListOf<Boolean>()
+        val job = launch { viewModel.hasContacts.collect { collected.add(it) } }
+        advanceUntilIdle()
+        job.cancel()
+        assertEquals(false, collected.last())
+    }
+
+    @Test
+    fun `hasContacts is true once a contact exists`() = runTest {
+        contactDao.contacts.add(alice)
+        val vm = buildViewModel()
+        val collected = mutableListOf<Boolean>()
+        val job = launch { vm.hasContacts.collect { collected.add(it) } }
+        advanceUntilIdle()
+        job.cancel()
+        assertEquals(true, collected.last())
+    }
+
+    @Test
+    fun `refreshSelectedContact re-reads the selected contact by id`() = runTest {
+        contactDao.contacts.add(alice)
+        val vm = buildViewModel()
+        vm.selectContact(alice)
+
+        // Simulate "Add a number" editing the contact elsewhere in the DB.
+        val updated = alice.copy(phoneNumbers = "[\"555-1234\"]")
+        contactDao.contacts[0] = updated
+
+        vm.refreshSelectedContact()
+        advanceUntilIdle()
+
+        assertEquals("[\"555-1234\"]", vm.selectedContact.value?.phoneNumbers)
+    }
+
+    @Test
+    fun `refreshSelectedContact is a no-op when nothing is selected`() = runTest {
+        viewModel.refreshSelectedContact()
+        advanceUntilIdle()
+        assertNull(viewModel.selectedContact.value)
     }
 }

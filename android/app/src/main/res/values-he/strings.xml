@@ -18,6 +18,9 @@
     <string name="common_update">עדכון</string>
     <string name="common_send">שליחה</string>
     <string name="common_change">שינוי</string>
+    <string name="common_done">סיום</string>
+    <!-- TIC-96: shared empty-database CTA -->
+    <string name="common_add_or_import_contacts">הוספה או ייבוא של אנשי קשר</string>
     <string name="common_edit">עריכה</string>
 
     <!-- Settings -->
@@ -102,6 +105,8 @@
     <string name="tickle_edit_create_group_button">יצירת קבוצה</string>
     <string name="tickle_edit_new_group_dialog_title">קבוצה חדשה</string>
     <string name="tickle_edit_group_name_label">שם הקבוצה</string>
+    <!-- TIC-96: empty-database dead-end fix for the contact picker -->
+    <string name="tickle_edit_empty_contacts_title">עדיין אין לך אנשי קשר.</string>
     <string name="tickle_saved">התזכורת נשמרה</string>
     <string name="tickle_updated">התזכורת עודכנה</string>
     <string name="tickle_notification_contact_fallback">איש הקשר שלך</string>
@@ -197,6 +202,10 @@
     <string name="compose_to_label">אל</string>
     <string name="compose_search_placeholder">חיפוש אנשי קשר…</string>
     <string name="compose_no_phone">אין מספר טלפון בקובץ</string>
+    <!-- TIC-96: inline no-phone dead-end fix -->
+    <string name="compose_add_number">הוספת מספר</string>
+    <!-- TIC-96: empty-database dead-end fix -->
+    <string name="compose_empty_contacts_title">עדיין אין לך אנשי קשר.</string>
     <string name="compose_select_template">בחירת תבנית</string>
     <string name="compose_message_label">הודעה</string>
     <string name="compose_message_placeholder">הקלידו הודעה…</string>
@@ -361,4 +370,8 @@
     <string name="tickle_snoozed">נדחה</string>
     <string name="group_member_removed">%1$s הוסר</string>
     <string name="template_deleted">התבנית נמחקה</string>
+    <!-- TIC-96: multi-phone chooser -->
+    <string name="phone_chooser_title">בחירת מספר</string>
+    <!-- TIC-96: honest picker-cap hint -->
+    <string name="picker_showing_hint">מוצגים %1$d מתוך %2$d</string>
 </resources>

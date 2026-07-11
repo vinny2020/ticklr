@@ -87,6 +87,10 @@ import com.xaymaca.sit.ui.theme.WarmRadius
 import com.xaymaca.sit.ui.theme.WarmSpacing
 import com.xaymaca.sit.ui.theme.WarmTheme
 import com.xaymaca.sit.ui.theme.Warmth
+import com.xaymaca.sit.ui.shared.PendingPhoneChoice
+import com.xaymaca.sit.ui.shared.PhoneChoice
+import com.xaymaca.sit.ui.shared.PhoneChooser
+import com.xaymaca.sit.ui.shared.PhoneNumberChooserDialog
 import com.xaymaca.sit.ui.warm.ContactPhotoStyle
 import com.xaymaca.sit.ui.warm.ContactPhotoView
 import com.xaymaca.sit.ui.warm.ContactsAccessBanner
@@ -121,6 +125,9 @@ fun ContactDetailScreen(
     var showDeleteDialog by remember { mutableStateOf(false) }
     var showGroupSheet by remember { mutableStateOf(false) }
     var photoRefreshKey by remember { mutableStateOf(UUID.randomUUID()) }
+    // TIC-96: a resolved multi-number choice awaiting the user's pick for the
+    // Call chip — see PhoneChooser. A single number keeps the direct-dial path.
+    var phoneChoice by remember { mutableStateOf<PendingPhoneChoice?>(null) }
 
     val allGroups by groupViewModel.groups.collectAsState()
     val contactGroups by groupViewModel.getGroupsForContact(contactId)
@@ -226,9 +233,16 @@ fun ContactDetailScreen(
                         onSendText = { onCompose(contactId, dueReminderId) },
                         onCreateTickle = onAddTickle,
                         onCall = {
-                            phoneNumbers.firstOrNull()?.let { number ->
-                                val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$number"))
-                                context.startActivity(intent)
+                            // TIC-96: more than one number used to silently dial
+                            // whichever was first — now the user picks.
+                            when (val choice = PhoneChooser.choose(phoneNumbers)) {
+                                is PhoneChoice.Direct ->
+                                    context.startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:${choice.number}")))
+                                is PhoneChoice.NeedsChoice ->
+                                    phoneChoice = PendingPhoneChoice(choice.numbers) { number ->
+                                        context.startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:$number")))
+                                    }
+                                PhoneChoice.None -> {}
                             }
                         },
                     )
@@ -392,6 +406,14 @@ fun ContactDetailScreen(
                 },
             )
         }
+    }
+
+    phoneChoice?.let { pending ->
+        PhoneNumberChooserDialog(
+            numbers = pending.numbers,
+            onSelect = { number -> pending.onChosen(number); phoneChoice = null },
+            onDismiss = { phoneChoice = null },
+        )
     }
 }
 
