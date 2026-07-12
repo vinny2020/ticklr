@@ -82,7 +82,7 @@ git add assets/design-system && git commit -m "Bump design-system pin"
 | Tickle calendar (recurring reminders) | ✅ | ✅ |
 | Compose SMS/MMS with templates | ✅ | ✅ |
 | Settings | ✅ | ✅ |
-| Localization | ✅ Spanish | ✅ 12 languages |
+| Localization | ✅ Spanish | ✅ 20 languages (incl. RTL: ar/he/ur) |
 | Unit tests | — | ✅ |
 | Adaptive/Pulse icon | ✅ | ✅ |
 | Debug seed / clear contacts | ✅ | ✅ |
