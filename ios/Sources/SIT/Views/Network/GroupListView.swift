@@ -22,10 +22,17 @@ struct GroupListView: View {
     private var palette: WarmPalette { WarmTheme.palette(for: warmth) }
 
     var body: some View {
-        NavigationSplitView {
+        // A NavigationStack (not NavigationSplitView) drives group navigation.
+        // The sidebar is a custom warm ScrollView of WarmCards rather than a
+        // `List(selection:)`, so a split view has nothing to observe and never
+        // pushes the detail column on compact (iPhone) widths — tapping a group
+        // silently did nothing. `navigationDestination(item:)` pushes correctly
+        // on both iPhone and iPad while preserving the warm sidebar layout.
+        NavigationStack {
             sidebar
-        } detail: {
-            detail
+                .navigationDestination(item: $selectedGroup) { group in
+                    GroupDetailView(group: group)
+                }
         }
     }
 
@@ -115,24 +122,6 @@ struct GroupListView: View {
                     )
                 }
             }
-    }
-
-    @ViewBuilder
-    private var detail: some View {
-        if let selectedGroup {
-            NavigationStack {
-                GroupDetailView(group: selectedGroup)
-            }
-        } else {
-            ContentUnavailableView(
-                String(localized: "warm.groups.detail.empty.title",
-                       defaultValue: "Pick a circle"),
-                systemImage: "person.3.sequence",
-                description: Text(String(localized: "warm.groups.detail.empty.description",
-                                          defaultValue: "Choose a group to see its members."))
-            )
-            .background(palette.paper.ignoresSafeArea())
-        }
     }
 
     // MARK: - Pieces
