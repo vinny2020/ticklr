@@ -160,6 +160,10 @@ struct GroupListView: View {
                 contactsCount: group.contacts.count,
                 onTap: { selectedGroup = group }
             )
+            // Stable, locale-independent hook so UI tests can tap a specific
+            // canonical row and assert it navigates (regression guard for the
+            // tap-doesn't-open bug fixed alongside this).
+            .accessibilityIdentifier("groupRow.canonical.\(category.rawValue)")
             .contextMenu {
                 Button(String(localized: "common.edit"), systemImage: "pencil") {
                     editingGroup = group
@@ -200,6 +204,7 @@ struct GroupListView: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .accessibilityIdentifier("groupRow.user.\(group.id.uuidString)")
         .contextMenu {
             Button(String(localized: "common.edit"), systemImage: "pencil") {
                 editingGroup = group
