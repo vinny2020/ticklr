@@ -3,6 +3,7 @@ import SwiftData
 
 struct GroupListView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Query(sort: \ContactGroup.name) private var groups: [ContactGroup]
 
     @State private var showingAddGroup = false
@@ -22,17 +23,30 @@ struct GroupListView: View {
     private var palette: WarmPalette { WarmTheme.palette(for: warmth) }
 
     var body: some View {
-        // A NavigationStack (not NavigationSplitView) drives group navigation.
-        // The sidebar is a custom warm ScrollView of WarmCards rather than a
-        // `List(selection:)`, so a split view has nothing to observe and never
-        // pushes the detail column on compact (iPhone) widths — tapping a group
-        // silently did nothing. `navigationDestination(item:)` pushes correctly
-        // on both iPhone and iPad while preserving the warm sidebar layout.
-        NavigationStack {
-            sidebar
-                .navigationDestination(item: $selectedGroup) { group in
-                    GroupDetailView(group: group)
-                }
+        // Adaptive navigation by width. The sidebar is a custom warm ScrollView
+        // of WarmCards whose rows set `selectedGroup` on tap — NOT a
+        // `List(selection:)`, so a split view has nothing to observe.
+        //
+        // • Regular width (iPad): keep the master-detail NavigationSplitView.
+        //   Both columns are visible, so tapping a card updates the always-on-
+        //   screen detail pane — this already worked and is preserved here.
+        // • Compact width (iPhone): a collapsed split view won't push the detail
+        //   column without a List(selection:) binding, so tapping silently did
+        //   nothing (regression since 1.9.0). Drive it with a NavigationStack +
+        //   `.navigationDestination(item:)` instead.
+        if horizontalSizeClass == .compact {
+            NavigationStack {
+                sidebar
+                    .navigationDestination(item: $selectedGroup) { group in
+                        GroupDetailView(group: group)
+                    }
+            }
+        } else {
+            NavigationSplitView {
+                sidebar
+            } detail: {
+                detail
+            }
         }
     }
 
@@ -122,6 +136,27 @@ struct GroupListView: View {
                     )
                 }
             }
+    }
+
+    /// The iPad (regular-width) detail column. Shows the selected group, or a
+    /// placeholder prompting the user to pick one. The compact-width path uses
+    /// `.navigationDestination` instead and never renders this.
+    @ViewBuilder
+    private var detail: some View {
+        if let selectedGroup {
+            NavigationStack {
+                GroupDetailView(group: selectedGroup)
+            }
+        } else {
+            ContentUnavailableView(
+                String(localized: "warm.groups.detail.empty.title",
+                       defaultValue: "Pick a circle"),
+                systemImage: "person.3.sequence",
+                description: Text(String(localized: "warm.groups.detail.empty.description",
+                                          defaultValue: "Choose a group to see its members."))
+            )
+            .background(palette.paper.ignoresSafeArea())
+        }
     }
 
     // MARK: - Pieces
