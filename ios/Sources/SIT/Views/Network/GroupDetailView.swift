@@ -54,6 +54,10 @@ struct GroupDetailView: View {
                 } label: {
                     Label(String(localized: "groupDetail.menu.addMembers"), systemImage: "person.badge.plus")
                 }
+                // Detail-only, locale-independent marker: its presence proves a
+                // group row actually navigated into GroupDetailView. UI tests
+                // assert on this to catch the tap-doesn't-open regression.
+                .accessibilityIdentifier("groupDetail.addMembers")
             }
             ToolbarItem(placement: .topBarTrailing) {
                 Menu {

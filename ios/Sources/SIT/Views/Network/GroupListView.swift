@@ -3,6 +3,7 @@ import SwiftData
 
 struct GroupListView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Query(sort: \ContactGroup.name) private var groups: [ContactGroup]
 
     @State private var showingAddGroup = false
@@ -22,10 +23,30 @@ struct GroupListView: View {
     private var palette: WarmPalette { WarmTheme.palette(for: warmth) }
 
     var body: some View {
-        NavigationSplitView {
-            sidebar
-        } detail: {
-            detail
+        // Adaptive navigation by width. The sidebar is a custom warm ScrollView
+        // of WarmCards whose rows set `selectedGroup` on tap — NOT a
+        // `List(selection:)`, so a split view has nothing to observe.
+        //
+        // • Regular width (iPad): keep the master-detail NavigationSplitView.
+        //   Both columns are visible, so tapping a card updates the always-on-
+        //   screen detail pane — this already worked and is preserved here.
+        // • Compact width (iPhone): a collapsed split view won't push the detail
+        //   column without a List(selection:) binding, so tapping silently did
+        //   nothing (regression since 1.9.0). Drive it with a NavigationStack +
+        //   `.navigationDestination(item:)` instead.
+        if horizontalSizeClass == .compact {
+            NavigationStack {
+                sidebar
+                    .navigationDestination(item: $selectedGroup) { group in
+                        GroupDetailView(group: group)
+                    }
+            }
+        } else {
+            NavigationSplitView {
+                sidebar
+            } detail: {
+                detail
+            }
         }
     }
 
@@ -117,6 +138,9 @@ struct GroupListView: View {
             }
     }
 
+    /// The iPad (regular-width) detail column. Shows the selected group, or a
+    /// placeholder prompting the user to pick one. The compact-width path uses
+    /// `.navigationDestination` instead and never renders this.
     @ViewBuilder
     private var detail: some View {
         if let selectedGroup {
@@ -171,6 +195,10 @@ struct GroupListView: View {
                 contactsCount: group.contacts.count,
                 onTap: { selectedGroup = group }
             )
+            // Stable, locale-independent hook so UI tests can tap a specific
+            // canonical row and assert it navigates (regression guard for the
+            // tap-doesn't-open bug fixed alongside this).
+            .accessibilityIdentifier("groupRow.canonical.\(category.rawValue)")
             .contextMenu {
                 Button(String(localized: "common.edit"), systemImage: "pencil") {
                     editingGroup = group
@@ -211,6 +239,7 @@ struct GroupListView: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .accessibilityIdentifier("groupRow.user.\(group.id.uuidString)")
         .contextMenu {
             Button(String(localized: "common.edit"), systemImage: "pencil") {
                 editingGroup = group

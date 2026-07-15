@@ -11,6 +11,24 @@ final class GroupsScreenUITests: XCTestCase {
         continueAfterFailure = false
     }
 
+    /// Opens the Groups tab on iPhone and iPad. On iPhone the TabView renders
+    /// as a bottom tab bar, found locale-independently by index. On iPadOS it
+    /// renders as a top tab strip that XCUITest does not expose under
+    /// `tabBars`, and whose items each match twice (the floating-tab-bar cell
+    /// wraps a button with the same label) — hence the labeled firstMatch
+    /// fallback. UI tests run in the simulator's default English locale.
+    private func openGroupsTab(in app: XCUIApplication) {
+        let bottomBar = app.tabBars.element
+        if bottomBar.waitForExistence(timeout: 15) {
+            bottomBar.buttons.element(boundBy: 1).tap()
+        } else {
+            let stripItem = app.buttons["Groups"].firstMatch
+            XCTAssertTrue(stripItem.waitForExistence(timeout: 5),
+                          "Groups tab should exist in the top tab strip")
+            stripItem.tap()
+        }
+    }
+
     func testGroupsTabShowsCanonicalCategoryCards() {
         let app = XCUIApplication()
         app.launchArguments += [
@@ -19,9 +37,7 @@ final class GroupsScreenUITests: XCTestCase {
         ]
         app.launch()
 
-        let groupsTab = app.tabBars.buttons.element(boundBy: 1)
-        XCTAssertTrue(groupsTab.waitForExistence(timeout: 15))
-        groupsTab.tap()
+        openGroupsTab(in: app)
 
         // Groups header + the canonical cards' tickle prompts confirm the
         // illustrated card stack rendered.
@@ -34,5 +50,35 @@ final class GroupsScreenUITests: XCTestCase {
 
         // Hold the screen so external captures can grab the artwork.
         sleep(6)
+    }
+
+    /// Regression guard for the tap-doesn't-open bug (groups navigation broke in
+    /// 1.9.0 when the screen moved from NavigationStack + navigationDestination
+    /// to a NavigationSplitView that never pushed the detail column on iPhone).
+    /// Tapping a canonical group card must navigate into GroupDetailView — proven
+    /// by the detail-only "Add Members" toolbar button appearing. This test fails
+    /// against the broken NavigationSplitView and passes once tap-to-open works.
+    func testTappingCanonicalGroupOpensDetail() {
+        let app = XCUIApplication()
+        app.launchArguments += [
+            "-hasCompletedOnboarding", "YES",
+            "-debugSeedDemoData", "YES",
+        ]
+        app.launch()
+
+        openGroupsTab(in: app)
+
+        // The first canonical card (Family) is a stable, locale-independent hook.
+        let familyCard = app.buttons["groupRow.canonical.family"]
+        XCTAssertTrue(familyCard.waitForExistence(timeout: 5),
+                      "Family canonical group card should render on the Groups tab")
+        familyCard.tap()
+
+        // The Add Members button lives only on GroupDetailView, so its presence
+        // confirms the tap actually pushed the detail screen.
+        XCTAssertTrue(
+            app.buttons["groupDetail.addMembers"].waitForExistence(timeout: 5),
+            "Tapping a group should navigate into its detail screen"
+        )
     }
 }
