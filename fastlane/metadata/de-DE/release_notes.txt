@@ -1,7 +1,3 @@
-Deine Erinnerungen funktionieren endlich so, wie sie immer sollten.
-• Schick eine Nachricht und der Tickle hakt sich selbst ab — mit Rückgängig
-• Tippe auf eine Erinnerung und lande direkt in der Nachricht; Erledigt oder Später aus der Benachrichtigung
-• Verfassen schlägt vor, wer heute dran ist
-• Wische über einen Kontakt zum Schreiben oder Tickle-Anlegen; die neue A–Z-Leiste macht große Netzwerke schnell
-• Mach fast alles rückgängig; schlummere 1 Tag, 3 oder eine Woche
-• Gruppen filtern dein Netzwerk und haben eigene Tickles
+Eine kleine Korrektur mit großer Wirkung: Gruppen öffnen sich wieder.
+• Behoben: Das Antippen einer Gruppe im Tab „Gruppen“ bewirkte nichts — jetzt öffnet sich die Gruppe wie vorgesehen, auf iPhone und iPad
+• Gruppendetails, Bearbeiten, Mitglieder hinzufügen und Gruppen-Tickles sind wieder erreichbar

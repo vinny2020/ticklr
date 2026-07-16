@@ -1,7 +1,3 @@
-Tvoje připomenutí konečně fungují tak, jak vždycky měla.
-• Pošli zprávu a tickle se odškrtne sám — s možností vrácení
-• Klepni na připomenutí a přejdi rovnou do zprávy; Hotovo nebo Odložit přímo z oznámení
-• Psaní zprávy napoví, s kým se dnes ozvat
-• Přejeď po kontaktu a napiš mu nebo vytvoř tickle; nová lišta A–Z zrychluje velké sítě
-• Vrať zpět skoro cokoli; odlož o 1 den, 3 nebo týden
-• Skupiny filtrují tvou síť a mají vlastní tickle
+Malá oprava s velkým dopadem: skupiny se znovu otevírají.
+• Opraveno: klepnutí na skupinu na kartě Skupiny nic nedělalo — teď se skupina otevře, jak má, na iPhonu i iPadu
+• Detaily skupiny, úpravy, přidávání členů i skupinové tickle jsou zase na dosah

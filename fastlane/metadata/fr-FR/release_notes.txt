@@ -1,7 +1,3 @@
-Tes rappels fonctionnent enfin comme ils l'auraient toujours dû.
-• Envoie un message et le tickle se coche tout seul — avec annulation
-• Touche un rappel pour passer directement au message ; Fait ou Reporter depuis la notification
-• La rédaction suggère qui contacter aujourd'hui
-• Balaye un contact pour lui écrire ou créer un tickle ; le nouveau rail A–Z accélère les grands réseaux
-• Annule presque tout ; reporte d'1 jour, 3 ou une semaine
-• Les groupes filtrent ton réseau et ont leurs propres tickles
+Un petit correctif qui change tout : les groupes s'ouvrent à nouveau.
+• Corrigé : toucher un groupe dans l'onglet Groupes ne faisait rien — il s'ouvre désormais comme il se doit, sur iPhone et iPad
+• Détails du groupe, modification, ajout de membres et tickles de groupe sont à nouveau à portée de main

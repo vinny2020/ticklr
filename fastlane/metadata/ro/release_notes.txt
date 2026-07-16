@@ -1,7 +1,3 @@
-Mementourile tale funcționează în sfârșit cum ar fi trebuit mereu.
-• Trimite un mesaj și tickle-ul se bifează singur — cu anulare
-• Atinge un memento și treci direct la mesaj; Gata sau Amână din notificare
-• Compunerea îți sugerează cu cine să vorbești azi
-• Glisează pe un contact ca să-i scrii sau să creezi un tickle; noua bară A–Z face rețelele mari rapide
-• Anulează aproape orice; amână 1 zi, 3 sau o săptămână
-• Grupurile îți filtrează rețeaua și au propriile tickle-uri
+O corecție mică, cu impact mare: grupurile se deschid din nou.
+• Remediat: atingerea unui grup din fila Grupuri nu făcea nimic — acum grupul se deschide cum trebuie, pe iPhone și iPad
+• Detaliile grupului, editarea, adăugarea de membri și tickle-urile de grup sunt din nou la îndemână

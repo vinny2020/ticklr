@@ -1,7 +1,3 @@
-I tuoi promemoria funzionano finalmente come avrebbero sempre dovuto.
-• Invia un messaggio e il tickle si spunta da solo — con annulla
-• Tocca un promemoria per passare subito al messaggio; Fatto o Posticipa dalla notifica
-• Componi ti suggerisce chi sentire oggi
-• Scorri su un contatto per scrivergli o creare un tickle; la nuova barra A–Z velocizza le reti grandi
-• Annulla quasi tutto; posticipa di 1 giorno, 3 o una settimana
-• I gruppi filtrano la tua rete e hanno i propri tickles
+Una piccola correzione dal grande impatto: i gruppi si aprono di nuovo.
+• Risolto: toccare un gruppo nella scheda Gruppi non faceva nulla — ora il gruppo si apre come dovrebbe, su iPhone e iPad
+• Dettagli del gruppo, modifica, aggiunta di membri e tickles di gruppo sono di nuovo a portata di mano

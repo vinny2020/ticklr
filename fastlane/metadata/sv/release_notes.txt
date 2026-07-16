@@ -1,7 +1,3 @@
-Dina påminnelser funkar äntligen som de alltid borde ha gjort.
-• Skicka ett sms så bockar tickeln av sig själv — med ångra
-• Tryck på en påminnelse och hoppa direkt till meddelandet; Klar eller Snooza från notisen
-• Skriv-fliken föreslår vem som står på tur idag
-• Svep på en kontakt för att skriva eller skapa en tickle; nya A–Ö-listen gör stora nätverk snabba
-• Ångra nästan allt; snooza 1 dag, 3 eller en vecka
-• Grupper kan filtrera ditt nätverk och ha egna tickles
+En liten fix med stor effekt: grupper öppnas igen.
+• Åtgärdat: att trycka på en grupp i fliken Grupper gjorde ingenting — nu öppnas gruppen som den ska, på iPhone och iPad
+• Gruppdetaljer, redigering, lägga till medlemmar och gruppens tickles är åter inom räckhåll
