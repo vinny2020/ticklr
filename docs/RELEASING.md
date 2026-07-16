@@ -88,6 +88,10 @@ credentials in `android/local.properties`. Never commit keystores,
 repo — there is no workflow YAML to read. It triggers on tags matching
 `ios/v*`.
 
+Step-by-step checklist (notes, bump, tag, ASC handoff) lives in the
+`.claude/skills/ios-release` skill — the iOS counterpart to
+`android-release`.
+
 The only in-repo piece is `ios/ci_scripts/ci_post_clone.sh`, which Xcode Cloud
 runs after cloning:
 
