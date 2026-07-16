@@ -1,7 +1,3 @@
-Twoje przypomnienia w końcu działają tak, jak zawsze powinny.
-• Wyślij wiadomość, a tickle sam się odhaczy — z możliwością cofnięcia
-• Stuknij przypomnienie, by przejść prosto do wiadomości; Zrobione lub Drzemka z powiadomienia
-• Tworzenie podpowiada, z kim się dziś odezwać
-• Przesuń kontakt, by napisać lub utworzyć tickle; nowy pasek A–Z przyspiesza duże sieci
-• Cofnij prawie wszystko; drzemka na 1 dzień, 3 lub tydzień
-• Grupy filtrują twoją sieć i mają własne tickle
+Mała poprawka, duża różnica: grupy znów się otwierają.
+• Naprawiono: stuknięcie grupy na karcie Grupy nic nie robiło — teraz grupa otwiera się jak należy, na iPhonie i iPadzie
+• Szczegóły grupy, edycja, dodawanie członków i tickle grupy znów są w zasięgu ręki

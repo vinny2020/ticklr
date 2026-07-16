@@ -1,7 +1,3 @@
-Tus recordatorios por fin funcionan como siempre debieron.
-• Envía un mensaje y el tickle se marca solo como hecho — con deshacer
-• Toca un recordatorio para ir directo al mensaje; Hecho o Posponer desde la notificación
-• Redactar te sugiere con quién toca hablar hoy
-• Desliza un contacto para escribirle o crear un tickle; la nueva barra A–Z agiliza redes grandes
-• Deshaz casi todo; pospón 1 día, 3 o una semana
-• Los grupos filtran tu red y tienen sus propios tickles
+Un arreglo pequeño con gran impacto: los grupos vuelven a abrirse.
+• Corregido: tocar un grupo en la pestaña Grupos no hacía nada — ahora se abre como debe, en iPhone y iPad
+• Los detalles del grupo, la edición, añadir miembros y los tickles de grupo vuelven a estar a tu alcance

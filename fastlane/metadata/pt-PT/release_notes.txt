@@ -1,7 +1,3 @@
-Os teus lembretes funcionam finalmente como sempre deviam.
-• Envia uma mensagem e o tickle marca-se sozinho como feito — com anular
-• Toca num lembrete para ires direto à mensagem; Feito ou Adiar a partir da notificação
-• O compor sugere com quem falar hoje
-• Desliza num contacto para escrever ou criar um tickle; a nova barra A–Z acelera redes grandes
-• Anula quase tudo; adia 1 dia, 3 ou uma semana
-• Os grupos filtram a tua rede e têm os seus próprios tickles
+Uma pequena correção com grande impacto: os grupos voltam a abrir.
+• Corrigido: tocar num grupo no separador Grupos não fazia nada — agora o grupo abre como deve, no iPhone e no iPad
+• Detalhes do grupo, edição, adicionar membros e tickles de grupo estão de novo ao teu alcance

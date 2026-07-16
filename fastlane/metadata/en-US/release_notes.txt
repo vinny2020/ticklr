@@ -1,7 +1,3 @@
-Your reminders now work the way they always should have.
-• Send a text and the tickle checks itself off — with undo
-• Tap a reminder to jump straight into a message; Done or Snooze right from the notification
-• Compose suggests who's due today
-• Swipe a contact to text or tickle them; the new A–Z rail makes big networks fast
-• Undo almost anything; snooze for 1 day, 3, or a week
-• Groups can filter your network and carry their own tickles
+A small fix with a big impact: groups open again.
+• Fixed: tapping a group in the Groups tab did nothing — now it opens the group like it should, on iPhone and iPad
+• Group details, editing, adding members, and group tickles are all back within reach

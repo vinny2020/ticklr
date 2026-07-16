@@ -1,7 +1,3 @@
-Je herinneringen werken eindelijk zoals het altijd had gemoeten.
-• Stuur een bericht en de tickle vinkt zichzelf af — met ongedaan maken
-• Tik op een herinnering en spring direct naar het bericht; Klaar of Uitstellen vanuit de melding
-• Opstellen stelt voor wie vandaag aan de beurt is
-• Veeg over een contact om te appen of een tickle te maken; de nieuwe A–Z-balk maakt grote netwerken snel
-• Maak bijna alles ongedaan; stel 1 dag, 3 of een week uit
-• Groepen filteren je netwerk en hebben eigen tickles
+Een kleine fix met groot effect: groepen openen weer.
+• Opgelost: tikken op een groep in het tabblad Groepen deed niets — nu opent de groep zoals het hoort, op iPhone en iPad
+• Groepsdetails, bewerken, leden toevoegen en groeps-tickles zijn weer binnen handbereik
