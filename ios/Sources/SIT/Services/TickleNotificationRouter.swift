@@ -112,7 +112,8 @@ enum TickleNotificationRouter {
     @MainActor
     @discardableResult
     static func completeReminder(_ reminderID: UUID, context: ModelContext) -> Bool {
-        guard let reminder = fetchReminder(reminderID, context: context) else { return false }
+        guard let reminder = fetchReminder(reminderID, context: context),
+              TickleScheduler.isDue(reminder) else { return false }
         TickleScheduler.markComplete(reminder: reminder, context: context)
         return true
     }
@@ -122,7 +123,8 @@ enum TickleNotificationRouter {
     @MainActor
     @discardableResult
     static func snoozeReminder(_ reminderID: UUID, days: Int = 7, context: ModelContext) -> Bool {
-        guard let reminder = fetchReminder(reminderID, context: context) else { return false }
+        guard let reminder = fetchReminder(reminderID, context: context),
+              TickleScheduler.isDue(reminder) else { return false }
         TickleScheduler.snooze(reminder: reminder, days: days, context: context)
         return true
     }

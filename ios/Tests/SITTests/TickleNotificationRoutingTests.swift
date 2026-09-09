@@ -145,6 +145,15 @@ final class TickleNotificationRoutingTests: XCTestCase {
         XCTAssertFalse(handled, "completing a deleted reminder is a no-op")
     }
 
+    func testCompleteReminderIsNoOpWhenNotificationIsStale() {
+        let reminder = makeDueContactReminder()
+        reminder.nextDueDate = Date().addingTimeInterval(7 * 86_400)
+        try? context.save()
+
+        XCTAssertFalse(TickleNotificationRouter.completeReminder(reminder.id, context: context))
+        XCTAssertNil(reminder.lastCompletedDate)
+    }
+
     // MARK: - Background actions: Snooze
 
     func testSnoozeReminderSnoozesSevenDays() {
@@ -160,6 +169,15 @@ final class TickleNotificationRoutingTests: XCTestCase {
     func testSnoozeReminderIsNoOpWhenMissing() {
         let handled = TickleNotificationRouter.snoozeReminder(UUID(), context: context)
         XCTAssertFalse(handled, "snoozing a deleted reminder is a no-op")
+    }
+
+    func testSnoozeReminderIsNoOpWhenNotificationIsStale() {
+        let reminder = makeDueContactReminder()
+        reminder.nextDueDate = Date().addingTimeInterval(7 * 86_400)
+        try? context.save()
+
+        XCTAssertFalse(TickleNotificationRouter.snoozeReminder(reminder.id, context: context))
+        XCTAssertEqual(reminder.status, .active)
     }
 
     // MARK: - userInfo payload round-trip

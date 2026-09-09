@@ -191,12 +191,8 @@ class NetworkViewModel @Inject constructor(
     /** CSV counterpart of [importFromContacts] — same TIC-85 summary-posting contract. */
     suspend fun importFromCSV(inputStream: InputStream): ImportResult {
         val contacts = linkedInCSVParser.parse(inputStream)
-        // insertContact returns -1L for duplicates; tally both so the summary
-        // can report genuine inserts and duplicates skipped separately.
-        var inserted = 0
-        var skipped = 0
-        contacts.forEach { if (contactRepository.insertContact(it) != -1L) inserted++ else skipped++ }
-        val result = ImportResult(inserted, skipped)
+        val batch = contactRepository.importContacts(contacts)
+        val result = ImportResult(batch.inserted, batch.skipped)
         pendingSnackbarMessageStore.set(formatImportSummaryMessage(context, result))
         return result
     }

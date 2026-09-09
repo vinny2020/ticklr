@@ -27,15 +27,8 @@ class ContactImportService @Inject constructor(
      */
     suspend fun importPhoneContacts(): ImportResult {
         val contacts = withContext(Dispatchers.IO) { readDeviceContacts(context.contentResolver) }
-        var inserted = 0
-        var skipped = 0
-        contacts.forEach { contact ->
-            // insertContact returns -1L when the row is a duplicate and skipped.
-            // Count both so callers can report "Imported N" without overstating
-            // on re-import, and (TIC-85) surface a duplicates-skipped count.
-            if (contactRepository.insertContact(contact) != -1L) inserted++ else skipped++
-        }
-        return ImportResult(inserted, skipped)
+        val result = contactRepository.importContacts(contacts)
+        return ImportResult(result.inserted, result.skipped)
     }
 
     private fun readDeviceContacts(resolver: ContentResolver): List<Contact> {

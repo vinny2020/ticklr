@@ -157,4 +157,24 @@ final class TickleSchedulerTests: XCTestCase {
         XCTAssertEqual(resultComponents.day, 1)
         XCTAssertEqual(resultComponents.hour, 9)
     }
+
+    func testExpiredSnoozeIsDueRatherThanWaiting() {
+        let reminder = TickleReminder(frequency: .weekly)
+        reminder.status = .snoozed
+        reminder.nextDueDate = Date(timeIntervalSinceReferenceDate: 1_000)
+        let now = Date(timeIntervalSinceReferenceDate: 2_000)
+
+        XCTAssertTrue(TickleScheduler.isDue(reminder, now: now))
+        XCTAssertFalse(TickleScheduler.isSnoozedWaiting(reminder, now: now))
+    }
+
+    func testFutureSnoozeWaitsRatherThanBecomingDue() {
+        let reminder = TickleReminder(frequency: .weekly)
+        reminder.status = .snoozed
+        reminder.nextDueDate = Date(timeIntervalSinceReferenceDate: 3_000)
+        let now = Date(timeIntervalSinceReferenceDate: 2_000)
+
+        XCTAssertFalse(TickleScheduler.isDue(reminder, now: now))
+        XCTAssertTrue(TickleScheduler.isSnoozedWaiting(reminder, now: now))
+    }
 }

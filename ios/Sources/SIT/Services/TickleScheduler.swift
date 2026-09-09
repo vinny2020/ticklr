@@ -113,8 +113,13 @@ struct TickleScheduler {
     }
 
     static func cancelNotification(for reminder: TickleReminder) {
-        UNUserNotificationCenter.current()
-            .removePendingNotificationRequests(withIdentifiers: ["tickle-\(reminder.id.uuidString)"])
+        let identifier = "tickle-\(reminder.id.uuidString)"
+        let center = UNUserNotificationCenter.current()
+        center.removePendingNotificationRequests(withIdentifiers: [identifier])
+        // A notification may already be delivered when the reminder is changed
+        // or completed in-app. Removing only its pending request leaves stale
+        // Done/Snooze controls in Notification Center.
+        center.removeDeliveredNotifications(withIdentifiers: [identifier])
     }
 
     /// Deletes a contact together with every tickle that belongs to it,
@@ -183,6 +188,18 @@ struct TickleScheduler {
     /// (upcoming or freshly-snoozed) or already-completed tickle returns false.
     static func isDueForSendCompletion(_ reminder: TickleReminder, now: Date = Date()) -> Bool {
         (reminder.status == .active || reminder.status == .snoozed) && reminder.nextDueDate <= now
+    }
+
+    /// Shared list/action definition of due-ness. A snooze is a date shift, not
+    /// a permanent bucket: once its date elapses it returns to Due.
+    static func isDue(_ reminder: TickleReminder, now: Date = Date()) -> Bool {
+        isDueForSendCompletion(reminder, now: now)
+    }
+
+    /// A snoozed reminder remains in the Snoozed section only while its snooze
+    /// date is still ahead.
+    static func isSnoozedWaiting(_ reminder: TickleReminder, now: Date = Date()) -> Bool {
+        reminder.status == .snoozed && reminder.nextDueDate > now
     }
 
     /// Snapshots `reminder`'s exact pre-completion state, then completes it via

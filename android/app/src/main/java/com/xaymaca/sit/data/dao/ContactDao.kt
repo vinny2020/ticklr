@@ -5,6 +5,8 @@ import com.xaymaca.sit.data.model.Contact
 import com.xaymaca.sit.data.model.ContactWithGroups
 import kotlinx.coroutines.flow.Flow
 
+data class ContactImportBatchResult(val inserted: Int, val skipped: Int)
+
 @Dao
 interface ContactDao {
 
@@ -23,6 +25,36 @@ interface ContactDao {
 
     @Query("SELECT COUNT(*) FROM contacts WHERE fingerprint = :fingerprint AND fingerprint != ''")
     suspend fun countByFingerprint(fingerprint: String): Int
+
+    /** Existing non-empty fingerprints for a single import pass. */
+    @Query("SELECT fingerprint FROM contacts WHERE fingerprint != ''")
+    suspend fun getFingerprints(): List<String>
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertAll(contacts: List<Contact>): List<Long>
+
+    /**
+     * Keeps the fingerprint snapshot and bulk write in one Room transaction.
+     * Callers provide contacts whose blank fingerprints have already been
+     * computed by the repository.
+     */
+    @Transaction
+    suspend fun insertImportBatch(contacts: List<Contact>): ContactImportBatchResult {
+        val seen = getFingerprints().toMutableSet()
+        val accepted = ArrayList<Contact>(contacts.size)
+        var skipped = 0
+        for (contact in contacts) {
+            if (contact.fingerprint.isNotBlank() && !seen.add(contact.fingerprint)) {
+                skipped += 1
+            } else {
+                accepted += contact
+            }
+        }
+        if (accepted.isEmpty()) return ContactImportBatchResult(0, skipped)
+        val ids = insertAll(accepted)
+        val inserted = ids.count { it != -1L }
+        return ContactImportBatchResult(inserted, skipped + accepted.size - inserted)
+    }
 
     @Update
     suspend fun update(contact: Contact)

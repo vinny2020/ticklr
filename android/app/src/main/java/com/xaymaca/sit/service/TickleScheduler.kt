@@ -130,6 +130,17 @@ object TickleScheduler {
         customDays: Int? = null,
         now: Long = System.currentTimeMillis()
     ): Long {
+        // A future start date is the first occurrence, not an anchor from
+        // which to add an interval. This matches the date-picker contract:
+        // choosing next Tuesday for a weekly tickle means it first becomes due
+        // next Tuesday. One-time and annual have their own selected-date rules.
+        if (
+            frequency != TickleFrequency.ONE_TIME.name &&
+                frequency != TickleFrequency.ANNUAL.name &&
+                startDate > now
+        ) {
+            return startDate
+        }
         return when (frequency) {
             TickleFrequency.ONE_TIME.name -> startDate
             TickleFrequency.ANNUAL.name -> nextAnnualDate(after = now, matchingMonthDayOf = startDate)
