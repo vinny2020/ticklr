@@ -15,4 +15,6 @@ data class ContactGroup(
      * user-created groups. See WarmCategory.id.
      */
     val categoryId: String? = null,
+    /** Optional visual treatment selected by a user-created group. */
+    val cardStyleId: String? = null,
 )

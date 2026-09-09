@@ -533,6 +533,56 @@ private func hex(_ value: String) -> Color {
     )
 }
 
+// MARK: - Custom group styles (TIC-107)
+
+enum CustomGroupStyle: String, CaseIterable, Identifiable {
+    case studio, garden, journeys, books, creative, gathering, wellness, sports, night
+    var id: String { rawValue }
+    var label: String { switch self {
+    case .studio: "Studio & Ideas"; case .garden: "Garden & Growth"; case .journeys: "Journeys"
+    case .books: "Books & Learning"; case .creative: "Creative Practice"; case .gathering: "Food & Gathering"
+    case .wellness: "Wellness"; case .sports: "Sports & Play"; case .night: "Night Out" } }
+    var symbol: String { switch self {
+    case .studio: "✦"; case .garden: "❋"; case .journeys: "⌁"; case .books: "▤"; case .creative: "✎"
+    case .gathering: "◒"; case .wellness: "☼"; case .sports: "◉"; case .night: "☾" } }
+    var colors: [Color] { switch self {
+    case .studio: [hex("#EED6C2"), hex("#C98672")]; case .garden: [hex("#D8E6C8"), hex("#7CA776")]
+    case .journeys: [hex("#D8E5EF"), hex("#6F98B5")]; case .books: [hex("#E7D9B7"), hex("#9A7145")]
+    case .creative: [hex("#E4D3E8"), hex("#9D719F")]; case .gathering: [hex("#F1D4B9"), hex("#BE704E")]
+    case .wellness: [hex("#D2E6E1"), hex("#568E88")]; case .sports: [hex("#D7E0F2"), hex("#5E7BB5")]
+    case .night: [hex("#DCD7EE"), hex("#5E578C")] } }
+}
+
+struct CustomGroupArtwork: View {
+    let styleID: String?
+    private var style: CustomGroupStyle { CustomGroupStyle(rawValue: styleID ?? "") ?? .studio }
+    var body: some View {
+        ZStack {
+            LinearGradient(colors: style.colors, startPoint: .topLeading, endPoint: .bottomTrailing)
+            RoundedRectangle(cornerRadius: 12).fill(.white.opacity(0.30)).frame(width: 36, height: 36).frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing).padding(10)
+            Text(style.symbol).font(.system(size: 38)).foregroundStyle(.white.opacity(0.9))
+            Capsule().fill(.white.opacity(0.65)).frame(width: 46, height: 5).frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading).padding(10)
+        }.clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous)).accessibilityHidden(true)
+    }
+}
+
+struct CustomGroupStylePicker: View {
+    @Binding var selectedStyleID: String
+    private let columns = Array(repeating: GridItem(.flexible(), spacing: 10), count: 3)
+    var body: some View {
+        LazyVGrid(columns: columns, spacing: 10) {
+            ForEach(CustomGroupStyle.allCases) { style in
+                Button { selectedStyleID = style.id } label: {
+                    VStack(spacing: 5) {
+                        CustomGroupArtwork(styleID: style.id).aspectRatio(1.35, contentMode: .fit)
+                        Text(style.label).font(.caption2).multilineTextAlignment(.center).lineLimit(2).frame(maxWidth: .infinity)
+                    }.padding(5).overlay(RoundedRectangle(cornerRadius: 14).stroke(selectedStyleID == style.id ? Color.accentColor : Color.secondary.opacity(0.25), lineWidth: selectedStyleID == style.id ? 2 : 1))
+                }.buttonStyle(.plain).accessibilityLabel(style.label).accessibilityAddTraits(selectedStyleID == style.id ? .isSelected : [])
+            }
+        }
+    }
+}
+
 #Preview {
     ScrollView {
         VStack(spacing: 16) {

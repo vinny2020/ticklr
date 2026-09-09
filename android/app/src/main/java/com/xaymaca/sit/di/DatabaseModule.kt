@@ -71,8 +71,15 @@ object DatabaseModule {
         }
     }
 
+    /** v5 → v6: persist an optional native illustration choice for custom groups. */
+    val MIGRATION_5_6 = object : Migration(5, 6) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE contact_groups ADD COLUMN cardStyleId TEXT DEFAULT NULL")
+        }
+    }
+
     /** Single source of truth for the migration chain — used by the provider and by tests. */
-    val ALL_MIGRATIONS = arrayOf<Migration>(MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
+    val ALL_MIGRATIONS = arrayOf<Migration>(MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6)
 
     @Provides
     @Singleton

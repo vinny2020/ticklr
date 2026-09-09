@@ -494,7 +494,7 @@ private struct AddToGroupSheet: View {
                             Button(String(localized: "common.create")) {
                                 let trimmed = newGroupName.trimmingCharacters(in: .whitespaces)
                                 guard !trimmed.isEmpty else { return }
-                                let group = ContactGroup(name: trimmed, emoji: "👥")
+                                let group = ContactGroup(name: trimmed, emoji: "👥", cardStyleId: CustomGroupStyle.studio.id)
                                 modelContext.insert(group)
                                 contact.groups.append(group)
                                 try? modelContext.save()

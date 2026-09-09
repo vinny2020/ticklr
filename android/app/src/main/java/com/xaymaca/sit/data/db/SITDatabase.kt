@@ -23,7 +23,7 @@ import com.xaymaca.sit.data.model.TickleReminder
         MessageTemplate::class,
         TickleReminder::class
     ],
-    version = 5,
+    version = 6,
     exportSchema = true
 )
 abstract class SITDatabase : RoomDatabase() {

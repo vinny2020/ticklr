@@ -35,6 +35,12 @@ struct GroupDetailView: View {
                     .listRowInsets(EdgeInsets())
                     .listRowBackground(Color.clear)
                 }
+            } else {
+                Section {
+                    CustomGroupHeader(title: group.displayName, memberCount: group.contacts.count, styleID: group.cardStyleId)
+                        .listRowInsets(EdgeInsets())
+                        .listRowBackground(Color.clear)
+                }
             }
 
             Section {
@@ -113,6 +119,27 @@ struct GroupDetailView: View {
             // NavigationStack and dismisses via the sheet.
             TickleEditView(group: group)
         }
+    }
+}
+
+private struct CustomGroupHeader: View {
+    let title: String
+    let memberCount: Int
+    let styleID: String?
+    private let warmth: Warmth = .subtle
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            CustomGroupArtwork(styleID: styleID).aspectRatio(16.0 / 9.0, contentMode: .fit)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title).font(WarmHeadingFont.font(size: 24, warmth: warmth)).foregroundStyle(WarmTheme.palette(for: warmth).ink)
+                Text("\\(memberCount) members").font(.subheadline).foregroundStyle(WarmTheme.palette(for: warmth).ink2)
+            }.padding(WarmSpacing.lg)
+        }
+        .background(WarmTheme.palette(for: warmth).cardBg)
+        .clipShape(RoundedRectangle(cornerRadius: WarmRadius.cardHero, style: .continuous))
+        .overlay(RoundedRectangle(cornerRadius: WarmRadius.cardHero, style: .continuous).stroke(WarmTheme.palette(for: warmth).cardBorder, lineWidth: 1))
+        .padding(.horizontal, WarmSpacing.lg).padding(.vertical, 8)
     }
 }
 

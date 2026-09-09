@@ -39,6 +39,8 @@ import com.xaymaca.sit.ui.theme.WarmSpacing
 import com.xaymaca.sit.ui.theme.WarmTheme
 import com.xaymaca.sit.ui.theme.Warmth
 import com.xaymaca.sit.ui.warm.WarmIllustration
+import com.xaymaca.sit.ui.warm.CustomGroupArtwork
+import com.xaymaca.sit.ui.warm.CustomGroupStylePicker
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -149,6 +151,14 @@ fun GroupDetailScreen(
                             memberCount = members.size,
                         )
                     }
+                } else if (group != null) {
+                    item {
+                        CustomGroupHeader(
+                            title = group!!.name,
+                            memberCount = members.size,
+                            styleId = group!!.cardStyleId,
+                        )
+                    }
                 }
                 if (members.isEmpty()) {
                     item {
@@ -198,8 +208,8 @@ fun GroupDetailScreen(
             EditGroupDialog(
                 group = currentGroup,
                 onDismiss = { showEditDialog = false },
-                onSave = { name, emoji ->
-                    viewModel.updateGroup(currentGroup.copy(name = name, emoji = emoji))
+                onSave = { name, emoji, cardStyleId ->
+                    viewModel.updateGroup(currentGroup.copy(name = name, emoji = emoji, cardStyleId = cardStyleId))
                     showEditDialog = false
                 },
                 isNameTaken = { viewModel.isGroupNameTaken(it, excludeId = currentGroup.id) }
@@ -222,6 +232,21 @@ fun GroupDetailScreen(
                 },
                 onDismiss = { showAddSheet = false }
             )
+        }
+    }
+}
+
+@Composable
+private fun CustomGroupHeader(title: String, memberCount: Int, styleId: String?) {
+    val palette = WarmTheme.palette(Warmth.Subtle)
+    Column(
+        modifier = Modifier.fillMaxWidth().padding(horizontal = WarmSpacing.Lg, vertical = 12.dp)
+            .clip(RoundedCornerShape(20.dp)).background(palette.cardBg),
+    ) {
+        CustomGroupArtwork(styleId, Modifier.fillMaxWidth().aspectRatio(16f / 7f))
+        Column(Modifier.padding(WarmSpacing.Lg)) {
+            Text(title, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold)
+            Text("$memberCount members", style = MaterialTheme.typography.bodyMedium, color = palette.ink2)
         }
     }
 }
@@ -466,11 +491,12 @@ private fun AddMembersBottomSheet(
 private fun EditGroupDialog(
     group: ContactGroup,
     onDismiss: () -> Unit,
-    onSave: (name: String, emoji: String) -> Unit,
+    onSave: (name: String, emoji: String, cardStyleId: String) -> Unit,
     isNameTaken: suspend (String) -> Boolean
 ) {
     var name by remember { mutableStateOf(group.name) }
     var emoji by remember { mutableStateOf(group.emoji) }
+    var cardStyleId by remember { mutableStateOf(group.cardStyleId ?: "studio") }
     var isDuplicate by remember { mutableStateOf(false) }
 
     LaunchedEffect(name) {
@@ -493,6 +519,12 @@ private fun EditGroupDialog(
                     modifier = Modifier.width(80.dp),
                     shape = RoundedCornerShape(8.dp)
                 )
+                if (group.categoryId == null) {
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text("Choose a look", style = MaterialTheme.typography.titleSmall)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    CustomGroupStylePicker(selectedStyleId = cardStyleId, onSelect = { cardStyleId = it })
+                }
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
                     value = name,
@@ -529,7 +561,7 @@ private fun EditGroupDialog(
         },
         confirmButton = {
             TextButton(
-                onClick = { onSave(name.trim(), emoji.trim().ifBlank { "👥" }) },
+                onClick = { onSave(name.trim(), emoji.trim().ifBlank { "👥" }, cardStyleId) },
                 enabled = canSave
             ) {
                 Text(stringResource(R.string.common_save), color = MaterialTheme.colorScheme.primary)
