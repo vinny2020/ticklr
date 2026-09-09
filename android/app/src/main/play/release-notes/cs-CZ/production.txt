@@ -1,3 +1,4 @@
-Interní vylepšení pro ověřitelná sestavení.
-• Úpravy sestavení, aby nezávislé obchody s aplikacemi mohly Ticklr sestavit a ověřit přímo z veřejného zdrojového kódu
-• Žádné změny funkcí — vše funguje přesně jako dřív
+Výraznější prostředí Skupin.
+• Bohaté ilustrace dělají vestavěné skupiny teplejšími a osobnějšími
+• Vyberte si z devíti detailních vizuálních stylů pro vlastní skupiny
+• Členy uvidíte pod krásnou novou hlavičkou skupiny

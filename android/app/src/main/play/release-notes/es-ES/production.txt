@@ -1,3 +1,4 @@
-Mejoras internas para compilaciones verificables.
-• Ajustes de compilación para que tiendas de aplicaciones independientes puedan compilar y verificar Ticklr directamente desde su código fuente público
-• Sin cambios de funciones: todo funciona exactamente igual que antes
+Una experiencia de Grupos más expresiva.
+• Ilustraciones ricas dan a los grupos integrados un aire más cálido y personal
+• Elige entre nueve estilos visuales detallados para grupos personalizados
+• Ve los miembros de cada grupo bajo un nuevo y bonito encabezado

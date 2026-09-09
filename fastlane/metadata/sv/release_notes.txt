@@ -1,3 +1,4 @@
-En liten fix med stor effekt: grupper öppnas igen.
-• Åtgärdat: att trycka på en grupp i fliken Grupper gjorde ingenting — nu öppnas gruppen som den ska, på iPhone och iPad
-• Gruppdetaljer, redigering, lägga till medlemmar och gruppens tickles är åter inom räckhåll
+En mer uttrycksfull gruppupplevelse.
+• Rika illustrationer gör inbyggda grupper varmare och mer personliga
+• Välj bland nio detaljerade visuella stilar för egna grupper
+• Se medlemmar under en vacker ny gruppheader

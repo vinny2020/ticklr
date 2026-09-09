@@ -1,3 +1,4 @@
-Malá oprava s velkým dopadem: skupiny se znovu otevírají.
-• Opraveno: klepnutí na skupinu na kartě Skupiny nic nedělalo — teď se skupina otevře, jak má, na iPhonu i iPadu
-• Detaily skupiny, úpravy, přidávání členů i skupinové tickle jsou zase na dosah
+Výraznější prostředí Skupin.
+• Bohaté ilustrace dělají vestavěné skupiny teplejšími a osobnějšími
+• Vyberte si z devíti detailních stylů pro vlastní skupiny
+• Členy uvidíte pod krásnou novou hlavičkou

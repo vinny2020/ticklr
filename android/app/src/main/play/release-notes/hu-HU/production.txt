@@ -1,3 +1,4 @@
-Belső fejlesztések az ellenőrizhető buildekhez.
-• Build-finomítások, hogy független alkalmazásboltok közvetlenül a nyilvános forráskódból fordíthassák és ellenőrizhessék a Ticklr-t
-• Nincs funkcióváltozás — minden pontosan úgy működik, mint eddig
+Kifejezőbb Csoportok élmény.
+• Gazdag illusztrációk teszik a beépített csoportokat melegebbé és személyesebbé
+• Kilenc részletes vizuális stílus közül választhatsz saját csoportokhoz
+• A tagokat gyönyörű új csoportfejléc alatt láthatod

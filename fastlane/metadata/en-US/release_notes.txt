@@ -1,3 +1,4 @@
-A small fix with a big impact: groups open again.
-• Fixed: tapping a group in the Groups tab did nothing — now it opens the group like it should, on iPhone and iPad
-• Group details, editing, adding members, and group tickles are all back within reach
+A more expressive Groups experience.
+• Rich illustrations give built-in groups a warmer, more personal feel
+• Choose from nine detailed visual styles for custom groups
+• See every group’s members beneath a beautiful new header

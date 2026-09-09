@@ -2,6 +2,14 @@
 
 All notable changes to Ticklr: Your People Matter are documented here.
 
+## [1.13.0] — 2026-09-09
+
+### Groups
+
+- Added nine detailed, selectable visual styles for custom groups.
+- Added full visual group headers above member lists, with back navigation preserved.
+- Replaced the built-in Family, Friends, Work, Milestones, and Community card art with richer warm paper-collage illustrations.
+
 ## [Unreleased] — 2026-04-12
 
 ### Android — Internationalization (Phase 1–3)

@@ -1,3 +1,4 @@
-O corecție mică, cu impact mare: grupurile se deschid din nou.
-• Remediat: atingerea unui grup din fila Grupuri nu făcea nimic — acum grupul se deschide cum trebuie, pe iPhone și iPad
-• Detaliile grupului, editarea, adăugarea de membri și tickle-urile de grup sunt din nou la îndemână
+O experiență Grupuri mai expresivă.
+• Ilustrațiile bogate fac grupurile integrate mai calde și personale
+• Alege dintre nouă stiluri vizuale detaliate pentru grupuri personalizate
+• Vezi membrii sub un nou antet elegant

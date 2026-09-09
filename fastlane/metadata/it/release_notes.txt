@@ -1,3 +1,4 @@
-Una piccola correzione dal grande impatto: i gruppi si aprono di nuovo.
-• Risolto: toccare un gruppo nella scheda Gruppi non faceva nulla — ora il gruppo si apre come dovrebbe, su iPhone e iPad
-• Dettagli del gruppo, modifica, aggiunta di membri e tickles di gruppo sono di nuovo a portata di mano
+Un’esperienza Gruppi più espressiva.
+• Illustrazioni ricche rendono i gruppi integrati più caldi e personali
+• Scegli tra nove stili visivi dettagliati per i gruppi personalizzati
+• Guarda i membri sotto una nuova splendida intestazione

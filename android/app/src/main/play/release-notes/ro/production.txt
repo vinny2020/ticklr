@@ -1,3 +1,4 @@
-Îmbunătățiri interne pentru versiuni verificabile.
-• Ajustări de compilare astfel încât magazinele de aplicații independente să poată compila și verifica Ticklr direct din codul sursă public
-• Nicio modificare de funcționalități — totul funcționează exact ca înainte
+O experiență Grupuri mai expresivă.
+• Ilustrațiile bogate fac grupurile integrate mai calde și personale
+• Alege dintre nouă stiluri vizuale detaliate pentru grupuri personalizate
+• Vezi membrii sub un nou antet de grup elegant

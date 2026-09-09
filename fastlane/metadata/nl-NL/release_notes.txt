@@ -1,3 +1,4 @@
-Een kleine fix met groot effect: groepen openen weer.
-• Opgelost: tikken op een groep in het tabblad Groepen deed niets — nu opent de groep zoals het hoort, op iPhone en iPad
-• Groepsdetails, bewerken, leden toevoegen en groeps-tickles zijn weer binnen handbereik
+Een expressievere Groepen-ervaring.
+• Rijke illustraties maken ingebouwde groepen warmer en persoonlijker
+• Kies uit negen gedetailleerde visuele stijlen voor eigen groepen
+• Bekijk leden onder een prachtige nieuwe groepskop
