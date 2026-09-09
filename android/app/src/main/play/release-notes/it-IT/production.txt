@@ -1,3 +1,4 @@
-Miglioramenti interni per build verificabili.
-• Ottimizzazioni di build che consentono agli app store indipendenti di compilare e verificare Ticklr direttamente dal suo codice sorgente pubblico
-• Nessuna modifica alle funzioni: tutto funziona esattamente come prima
+Un’esperienza Gruppi più espressiva.
+• Illustrazioni ricche rendono i gruppi integrati più caldi e personali
+• Scegli tra nove stili visivi dettagliati per i gruppi personalizzati
+• Guarda i membri sotto una nuova splendida intestazione del gruppo

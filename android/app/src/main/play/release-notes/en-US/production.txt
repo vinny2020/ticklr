@@ -1,3 +1,4 @@
-Under-the-hood improvements for verifiable builds.
-• Build refinements so independent app stores can compile and verify Ticklr directly from its public source code
-• No feature changes — everything works exactly as before
+A more expressive Groups experience.
+• Rich illustrations give built-in groups a warmer, more personal feel
+• Choose from nine detailed visual styles for custom groups
+• See every group’s members beneath a beautiful new header

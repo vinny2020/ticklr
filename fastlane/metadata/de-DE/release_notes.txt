@@ -1,3 +1,4 @@
-Eine kleine Korrektur mit großer Wirkung: Gruppen öffnen sich wieder.
-• Behoben: Das Antippen einer Gruppe im Tab „Gruppen“ bewirkte nichts — jetzt öffnet sich die Gruppe wie vorgesehen, auf iPhone und iPad
-• Gruppendetails, Bearbeiten, Mitglieder hinzufügen und Gruppen-Tickles sind wieder erreichbar
+Ein ausdrucksstärkeres Gruppenerlebnis.
+• Reichhaltige Illustrationen machen integrierte Gruppen wärmer und persönlicher
+• Wähle aus neun detaillierten visuellen Stilen für eigene Gruppen
+• Sieh Mitglieder unter einem schönen neuen Gruppen-Kopfbereich

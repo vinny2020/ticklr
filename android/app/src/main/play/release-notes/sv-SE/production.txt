@@ -1,3 +1,4 @@
-Interna förbättringar för verifierbara byggen.
-• Byggjusteringar så att oberoende appbutiker kan kompilera och verifiera Ticklr direkt från dess publika källkod
-• Inga funktionsändringar — allt fungerar precis som tidigare
+En mer uttrycksfull gruppupplevelse.
+• Rika illustrationer gör inbyggda grupper varmare och mer personliga
+• Välj bland nio detaljerade visuella stilar för egna grupper
+• Se alla medlemmar under en vacker ny gruppheader
