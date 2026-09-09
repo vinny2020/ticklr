@@ -214,13 +214,11 @@ struct GroupListView: View {
             selectedGroup = group
         } label: {
             HStack(spacing: 14) {
-                Text(group.emoji)
-                    .font(.system(size: 28))
-                    .frame(width: 64, height: 64)
-                    .background(palette.paperSurface)
-                    .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                CustomGroupArtwork(styleID: group.cardStyleId)
+                .frame(width: 64, height: 64)
+                .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(group.displayName)
+                    Text("\(group.emoji) \(group.displayName)")
                         .font(.system(size: 17, weight: .semibold))
                         .foregroundStyle(palette.ink)
                         .lineLimit(1)
@@ -323,6 +321,7 @@ struct GroupEditSheet: View {
 
     @State private var name: String
     @State private var emoji: String
+    @State private var cardStyleId: String
 
     private let suggestedEmoji = [
         "👥", "⭐️", "💼", "🏠", "🎓", "❤️",
@@ -335,6 +334,7 @@ struct GroupEditSheet: View {
         self.onCreated = onCreated
         _name = State(initialValue: group?.displayName ?? "")
         _emoji = State(initialValue: group?.emoji ?? "👥")
+        _cardStyleId = State(initialValue: group?.cardStyleId ?? CustomGroupStyle.studio.id)
     }
 
     private var isEditing: Bool { group != nil }
@@ -414,6 +414,11 @@ struct GroupEditSheet: View {
                         }
                     }
                 }
+                if !isCanonical {
+                    Section("Choose a look") {
+                        CustomGroupStylePicker(selectedStyleID: $cardStyleId)
+                    }
+                }
             }
             .navigationTitle(isEditing ? String(localized: "groupEdit.navTitle.edit") : String(localized: "groupEdit.navTitle.new"))
             .navigationBarTitleDisplayMode(.inline)
@@ -436,9 +441,10 @@ struct GroupEditSheet: View {
         if let group {
             if !isCanonical { group.name = trimmedName }   // canonical name is derived
             group.emoji = trimmedEmoji
+            if !isCanonical { group.cardStyleId = cardStyleId }
             try? modelContext.save()
         } else {
-            let newGroup = ContactGroup(name: trimmedName, emoji: trimmedEmoji)
+            let newGroup = ContactGroup(name: trimmedName, emoji: trimmedEmoji, cardStyleId: cardStyleId)
             modelContext.insert(newGroup)
             try? modelContext.save()
             // TIC-88: hand the persisted group back so the Groups list can

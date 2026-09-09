@@ -60,6 +60,8 @@ import com.xaymaca.sit.ui.warm.WarmCardVariant
 import com.xaymaca.sit.ui.warm.WarmEyebrow
 import com.xaymaca.sit.ui.warm.WarmListContainer
 import com.xaymaca.sit.ui.warm.WarmRowDivider
+import com.xaymaca.sit.ui.warm.CustomGroupArtwork
+import com.xaymaca.sit.ui.warm.CustomGroupStylePicker
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -173,9 +175,9 @@ fun GroupListScreen(
     if (showCreateDialog) {
         CreateGroupDialog(
             onDismiss = { showCreateDialog = false },
-            onCreate = { name, emoji ->
+            onCreate = { name, emoji, cardStyleId ->
                 showCreateDialog = false
-                viewModel.createGroup(name, emoji) { newId -> onGroupCreated(newId) }
+                viewModel.createGroup(name, emoji, cardStyleId) { newId -> onGroupCreated(newId) }
             },
             isNameTaken = { viewModel.isGroupNameTaken(it) },
         )
@@ -247,14 +249,11 @@ private fun UserGroupRow(
                 .background(palette.paperSurface),
             contentAlignment = Alignment.Center,
         ) {
-            Text(
-                text = groupWithContacts.group.emoji,
-                style = TextStyle(fontSize = 28.sp),
-            )
+            CustomGroupArtwork(groupWithContacts.group.cardStyleId, Modifier.fillMaxSize())
         }
         Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-            Text(
-                text = groupWithContacts.group.name,
+                Text(
+                    text = "${groupWithContacts.group.emoji} ${groupWithContacts.group.name}",
                 style = TextStyle(fontSize = 17.sp, fontWeight = FontWeight.SemiBold, color = palette.ink),
                 maxLines = 1,
             )
@@ -276,11 +275,12 @@ private fun UserGroupRow(
 @Composable
 private fun CreateGroupDialog(
     onDismiss: () -> Unit,
-    onCreate: (String, String) -> Unit,
+    onCreate: (String, String, String) -> Unit,
     isNameTaken: suspend (String) -> Boolean,
 ) {
     var name by remember { mutableStateOf("") }
     var emoji by remember { mutableStateOf("👥") }
+    var cardStyleId by remember { mutableStateOf("studio") }
     var isDuplicate by remember { mutableStateOf(false) }
 
     LaunchedEffect(name) {
@@ -332,11 +332,15 @@ private fun CreateGroupDialog(
                         }
                     },
                 )
+                Spacer(modifier = Modifier.height(16.dp))
+                Text("Choose a look", style = MaterialTheme.typography.titleSmall)
+                Spacer(modifier = Modifier.height(8.dp))
+                CustomGroupStylePicker(selectedStyleId = cardStyleId, onSelect = { cardStyleId = it })
             }
         },
         confirmButton = {
             TextButton(
-                onClick = { if (name.isNotBlank() && !isDuplicate) onCreate(name, emoji) },
+                onClick = { if (name.isNotBlank() && !isDuplicate) onCreate(name, emoji, cardStyleId) },
                 enabled = name.isNotBlank() && !isDuplicate,
             ) {
                 Text(stringResource(R.string.common_create))

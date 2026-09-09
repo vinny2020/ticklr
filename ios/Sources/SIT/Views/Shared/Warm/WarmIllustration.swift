@@ -16,24 +16,20 @@ struct WarmIllustration: View {
     let category: WarmCategory
 
     var body: some View {
-        Canvas { context, size in
-            let ref = CGSize(width: 320, height: 180)
-            let scale = max(size.width / ref.width, size.height / ref.height)
-            context.scaleBy(x: scale, y: scale)
-            context.translateBy(
-                x: (size.width / scale - ref.width) / 2,
-                y: (size.height / scale - ref.height) / 2
-            )
+        Image(assetName)
+            .resizable()
+            .scaledToFill()
+            .accessibilityHidden(true)
+    }
 
-            switch category {
-            case .family:     drawFamily(in: &context)
-            case .friends:    drawFriends(in: &context)
-            case .work:       drawWork(in: &context)
-            case .milestones: drawMilestones(in: &context)
-            case .community:  drawCommunity(in: &context)
-            }
+    private var assetName: String {
+        switch category {
+        case .family: "CanonicalFamily"
+        case .friends: "CanonicalFriends"
+        case .work: "CanonicalWork"
+        case .milestones: "CanonicalMilestones"
+        case .community: "CanonicalCommunity"
         }
-        .accessibilityHidden(true)
     }
 }
 
@@ -531,6 +527,50 @@ private func hex(_ value: String) -> Color {
         green: Double((h & 0x00FF00) >> 8) / 255,
         blue:  Double(h & 0x0000FF) / 255
     )
+}
+
+// MARK: - Custom group styles (TIC-107)
+
+enum CustomGroupStyle: String, CaseIterable, Identifiable {
+    case studio, garden, journeys, books, creative, gathering, wellness, sports, night
+    var id: String { rawValue }
+    var label: String { switch self {
+    case .studio: "Studio & Ideas"; case .garden: "Garden & Growth"; case .journeys: "Journeys"
+    case .books: "Books & Learning"; case .creative: "Creative Practice"; case .gathering: "Food & Gathering"
+    case .wellness: "Wellness"; case .sports: "Sports & Play"; case .night: "Night Out" } }
+    var symbol: String { switch self {
+    case .studio: "✦"; case .garden: "❋"; case .journeys: "⌁"; case .books: "▤"; case .creative: "✎"
+    case .gathering: "◒"; case .wellness: "☼"; case .sports: "◉"; case .night: "☾" } }
+    var assetName: String { "CustomGroup" + rawValue.capitalized }
+}
+
+struct CustomGroupArtwork: View {
+    let styleID: String?
+    private var style: CustomGroupStyle { CustomGroupStyle(rawValue: styleID ?? "") ?? .studio }
+    var body: some View {
+        Image(style.assetName)
+            .resizable()
+            .scaledToFill()
+            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .accessibilityHidden(true)
+    }
+}
+
+struct CustomGroupStylePicker: View {
+    @Binding var selectedStyleID: String
+    private let columns = Array(repeating: GridItem(.flexible(), spacing: 10), count: 3)
+    var body: some View {
+        LazyVGrid(columns: columns, spacing: 10) {
+            ForEach(CustomGroupStyle.allCases) { style in
+                Button { selectedStyleID = style.id } label: {
+                    VStack(spacing: 5) {
+                        CustomGroupArtwork(styleID: style.id).aspectRatio(1.35, contentMode: .fit)
+                        Text(style.label).font(.caption2).multilineTextAlignment(.center).lineLimit(2).frame(maxWidth: .infinity)
+                    }.padding(5).overlay(RoundedRectangle(cornerRadius: 14).stroke(selectedStyleID == style.id ? Color.accentColor : Color.secondary.opacity(0.25), lineWidth: selectedStyleID == style.id ? 2 : 1))
+                }.buttonStyle(.plain).accessibilityLabel(style.label).accessibilityAddTraits(selectedStyleID == style.id ? .isSelected : [])
+            }
+        }
+    }
 }
 
 #Preview {

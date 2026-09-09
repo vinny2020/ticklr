@@ -55,10 +55,10 @@ class GroupViewModel @Inject constructor(
      * group's detail). [onCreated] runs on the main dispatcher after the insert
      * completes, so it can drive navigation directly.
      */
-    fun createGroup(name: String, emoji: String, onCreated: (Long) -> Unit = {}) {
+    fun createGroup(name: String, emoji: String, cardStyleId: String, onCreated: (Long) -> Unit = {}) {
         viewModelScope.launch {
             val id = contactRepository.insertGroup(
-                ContactGroup(name = name.trim(), emoji = emoji.trim().ifBlank { "👥" })
+                ContactGroup(name = name.trim(), emoji = emoji.trim().ifBlank { "👥" }, cardStyleId = cardStyleId)
             )
             onCreated(id)
         }
@@ -110,7 +110,7 @@ class GroupViewModel @Inject constructor(
     fun createGroupAndAddContact(groupName: String, contactId: Long) {
         viewModelScope.launch {
             val groupId = contactRepository.insertGroup(
-                ContactGroup(name = groupName.trim(), emoji = "👥")
+                ContactGroup(name = groupName.trim(), emoji = "👥", cardStyleId = "studio")
             )
             contactRepository.addContactToGroup(contactId, groupId)
         }
