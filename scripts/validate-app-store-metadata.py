@@ -30,6 +30,10 @@ EXPECTED_LOCALES = {
     "zh-Hans",
 }
 
+# F-Droid metadata is generated from Play listing data into this sibling
+# directory. It is intentionally not App Store Connect metadata.
+IGNORED_METADATA_DIRS = {"android"}
+
 FIELD_LIMITS = {
     "name.txt": 30,
     "subtitle.txt": 30,
@@ -52,7 +56,11 @@ def main() -> None:
     if not METADATA_DIR.is_dir():
         fail(f"Missing {METADATA_DIR}")
 
-    actual_locales = {p.name for p in METADATA_DIR.iterdir() if p.is_dir()}
+    actual_locales = {
+        p.name
+        for p in METADATA_DIR.iterdir()
+        if p.is_dir() and p.name not in IGNORED_METADATA_DIRS
+    }
     missing = sorted(EXPECTED_LOCALES - actual_locales)
     extra = sorted(actual_locales - EXPECTED_LOCALES)
     errors: list[str] = []
