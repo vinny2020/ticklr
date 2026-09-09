@@ -34,6 +34,12 @@ class ContactRepositoryTest {
             return contact.id
         }
         override suspend fun countByFingerprint(fingerprint: String): Int = contacts.count { it.fingerprint == fingerprint }
+        override suspend fun getFingerprints(): List<String> =
+            contacts.map { it.fingerprint }.filter { it.isNotBlank() }
+        override suspend fun insertAll(contacts: List<Contact>): List<Long> {
+            this.contacts.addAll(contacts)
+            return contacts.map { it.id }
+        }
         override suspend fun update(contact: Contact) {
             val idx = contacts.indexOfFirst { it.id == contact.id }
             if (idx >= 0) contacts[idx] = contact
@@ -136,6 +142,21 @@ class ContactRepositoryTest {
     fun `deleteAllContacts delegates to dao deleteAll`() = runBlocking {
         repository.deleteAllContacts()
         assertEquals(1, contactDao.deleteAllCallCount)
+    }
+
+    @Test
+    fun `importContacts deduplicates existing and in-batch fingerprints`() = runBlocking {
+        val existing = Contact(id = 1L, firstName = "Ada", lastName = "Existing", fingerprint = "existing")
+        contactDao.contacts += existing
+        val first = Contact(id = 2L, firstName = "Bob", lastName = "Batch", fingerprint = "batch")
+        val duplicate = Contact(id = 3L, firstName = "Bob", lastName = "Again", fingerprint = "batch")
+        val duplicateExisting = Contact(id = 4L, firstName = "Ada", lastName = "Existing", fingerprint = "existing")
+
+        val result = repository.importContacts(listOf(first, duplicate, duplicateExisting))
+
+        assertEquals(1, result.inserted)
+        assertEquals(2, result.skipped)
+        assertTrue(contactDao.contacts.any { it.id == first.id })
     }
 
     @Test

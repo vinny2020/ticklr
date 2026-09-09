@@ -167,6 +167,22 @@ class TickleSchedulerTest {
     }
 
     @Test
+    fun `nextDueDateForSave on new recurring tickle honors a future start date`() {
+        val now = calAt(2026, 3, 15)
+        val selected = calAt(2026, 4, 1)
+
+        val result = TickleScheduler.nextDueDateForSave(
+            original = null,
+            frequency = TickleFrequency.WEEKLY.name,
+            customDays = null,
+            now = now,
+            startDate = selected,
+        )
+
+        assertEquals(selected, result)
+    }
+
+    @Test
     fun `nextDueDateForSave on new annual tickle uses next matching month day`() {
         val now = calAt(2026, 6, 2)
         val selected = calAt(2025, 6, 1)

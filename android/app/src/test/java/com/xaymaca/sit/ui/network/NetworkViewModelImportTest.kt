@@ -122,9 +122,8 @@ class NetworkViewModelImportTest {
     @Test
     fun `importFromCSV tallies genuine inserts separately from duplicates and posts the combined message`() = runTest {
         every { linkedInCSVParser.parse(inputStream) } returns listOf(alice, bob, carol)
-        coEvery { contactRepository.insertContact(alice) } returns 1L
-        coEvery { contactRepository.insertContact(bob) } returns -1L // duplicate
-        coEvery { contactRepository.insertContact(carol) } returns 3L
+        coEvery { contactRepository.importContacts(listOf(alice, bob, carol)) } returns
+            ContactRepository.ImportBatchResult(inserted = 2, skipped = 1)
         val viewModel = buildViewModel()
 
         val result = viewModel.importFromCSV(inputStream)
@@ -136,8 +135,8 @@ class NetworkViewModelImportTest {
     @Test
     fun `importFromCSV of entirely duplicate rows posts the all-duplicates message`() = runTest {
         every { linkedInCSVParser.parse(inputStream) } returns listOf(alice, bob)
-        coEvery { contactRepository.insertContact(alice) } returns -1L
-        coEvery { contactRepository.insertContact(bob) } returns -1L
+        coEvery { contactRepository.importContacts(listOf(alice, bob)) } returns
+            ContactRepository.ImportBatchResult(inserted = 0, skipped = 2)
         val viewModel = buildViewModel()
 
         val result = viewModel.importFromCSV(inputStream)
@@ -149,6 +148,8 @@ class NetworkViewModelImportTest {
     @Test
     fun `importFromCSV of an empty file posts the empty-source message with no duplicates clause`() = runTest {
         every { linkedInCSVParser.parse(inputStream) } returns emptyList()
+        coEvery { contactRepository.importContacts(emptyList()) } returns
+            ContactRepository.ImportBatchResult(inserted = 0, skipped = 0)
         val viewModel = buildViewModel()
 
         val result = viewModel.importFromCSV(inputStream)

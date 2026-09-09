@@ -20,6 +20,7 @@ class ContactRepository @Inject constructor(
     private val contactGroupDao: ContactGroupDao,
     private val tickleReminderDao: TickleReminderDao
 ) {
+    data class ImportBatchResult(val inserted: Int, val skipped: Int)
     fun getAllContacts(): Flow<List<Contact>> = contactDao.getAll()
 
     fun searchContacts(query: String): Flow<List<Contact>> = contactDao.search(query)
@@ -48,6 +49,34 @@ class ContactRepository @Inject constructor(
             return -1L // duplicate, skip
         }
         return contactDao.insert(stamped)
+    }
+
+    /**
+     * Inserts one import batch with a single read of existing fingerprints.
+     *
+     * This deliberately does not add a database fingerprint index: TIC-60
+     * established that an index not modeled by Room can break upgrade schema
+     * validation. Import callers already run off the main thread; batching cuts
+     * their previous N duplicate COUNT queries and N individual inserts. The
+     * DAO holds the fingerprint snapshot and write in one Room transaction.
+     */
+    suspend fun importContacts(contacts: List<Contact>): ImportBatchResult {
+        if (contacts.isEmpty()) return ImportBatchResult(inserted = 0, skipped = 0)
+
+        val stamped = contacts.map { contact ->
+            if (contact.fingerprint.isBlank()) {
+                contact.copy(
+                    fingerprint = ContactFingerprint.compute(
+                        contact.firstName, contact.lastName,
+                        contact.phoneNumbers, contact.emails
+                    )
+                )
+            } else {
+                contact
+            }
+        }
+        val result = contactDao.insertImportBatch(stamped)
+        return ImportBatchResult(result.inserted, result.skipped)
     }
 
     suspend fun updateContact(contact: Contact) = contactDao.update(contact)

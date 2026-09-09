@@ -66,7 +66,7 @@ struct TickleListView: View {
 
     private var dueAndOverdue: [TickleReminder] {
         allReminders
-            .filter { $0.status == .active && $0.nextDueDate <= Date() }
+            .filter { TickleScheduler.isDue($0) }
             .sorted { $0.nextDueDate < $1.nextDueDate }
     }
 
@@ -78,7 +78,7 @@ struct TickleListView: View {
 
     private var snoozed: [TickleReminder] {
         allReminders
-            .filter { $0.status == .snoozed }
+            .filter { TickleScheduler.isSnoozedWaiting($0) }
             .sorted { $0.nextDueDate < $1.nextDueDate }
     }
 

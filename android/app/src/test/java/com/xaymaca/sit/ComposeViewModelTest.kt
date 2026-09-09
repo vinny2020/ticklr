@@ -57,6 +57,8 @@ class ComposeViewModelTest {
         override suspend fun getContactWithGroups(id: Long): ContactWithGroups? = null
         override suspend fun insert(contact: Contact): Long = 0L
         override suspend fun countByFingerprint(fingerprint: String): Int = 0
+        override suspend fun getFingerprints(): List<String> = emptyList()
+        override suspend fun insertAll(contacts: List<Contact>): List<Long> = contacts.map { 0L }
         override suspend fun update(contact: Contact) {}
         override suspend fun delete(contact: Contact) {}
         override suspend fun deleteAll() {}
