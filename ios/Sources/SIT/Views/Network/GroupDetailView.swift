@@ -20,17 +20,36 @@ struct GroupDetailView: View {
         }
     }
 
+    private var canonicalCategory: WarmCategory? {
+        WarmCategory.from(groupId: group.id)
+    }
+
     var body: some View {
-        List(members) { contact in
-            NavigationLink(destination: ContactDetailView(contact: contact)) {
-                ContactRowView(contact: contact)
+        List {
+            if let category = canonicalCategory {
+                Section {
+                    CanonicalGroupHeader(
+                        category: category,
+                        memberCount: group.contacts.count
+                    )
+                    .listRowInsets(EdgeInsets())
+                    .listRowBackground(Color.clear)
+                }
             }
-            .swipeActions(edge: .trailing) {
-                Button(role: .destructive) {
-                    group.contacts.removeAll(where: { $0.id == contact.id })
-                    try? modelContext.save()
-                } label: {
-                    Label(String(localized: "groupDetail.action.remove"), systemImage: "person.badge.minus")
+
+            Section {
+                ForEach(members) { contact in
+                    NavigationLink(destination: ContactDetailView(contact: contact)) {
+                        ContactRowView(contact: contact)
+                    }
+                    .swipeActions(edge: .trailing) {
+                        Button(role: .destructive) {
+                            group.contacts.removeAll(where: { $0.id == contact.id })
+                            try? modelContext.save()
+                        } label: {
+                            Label(String(localized: "groupDetail.action.remove"), systemImage: "person.badge.minus")
+                        }
+                    }
                 }
             }
         }
@@ -94,6 +113,44 @@ struct GroupDetailView: View {
             // NavigationStack and dismisses via the sheet.
             TickleEditView(group: group)
         }
+    }
+}
+
+private struct CanonicalGroupHeader: View {
+    let category: WarmCategory
+    let memberCount: Int
+
+    private let warmth: Warmth = .subtle
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            WarmIllustration(category: category)
+                .aspectRatio(16.0 / 9.0, contentMode: .fit)
+                .clipShape(UnevenRoundedRectangle(
+                    topLeadingRadius: WarmRadius.cardHero,
+                    topTrailingRadius: WarmRadius.cardHero,
+                    style: .continuous
+                ))
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text(category.localizedLabel)
+                    .font(WarmHeadingFont.font(size: 24, warmth: warmth))
+                    .foregroundStyle(category.palette.accent)
+                Text("\(memberCount) members")
+                    .font(.subheadline)
+                    .foregroundStyle(WarmTheme.palette(for: warmth).ink2)
+            }
+            .padding(WarmSpacing.lg)
+        }
+        .background(WarmTheme.palette(for: warmth).cardBg)
+        .clipShape(RoundedRectangle(cornerRadius: WarmRadius.cardHero, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: WarmRadius.cardHero, style: .continuous)
+                .stroke(WarmTheme.palette(for: warmth).cardBorder, lineWidth: 1)
+        )
+        .padding(.horizontal, WarmSpacing.lg)
+        .padding(.vertical, 8)
+        .accessibilityElement(children: .combine)
     }
 }
 
