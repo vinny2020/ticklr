@@ -545,24 +545,18 @@ enum CustomGroupStyle: String, CaseIterable, Identifiable {
     var symbol: String { switch self {
     case .studio: "✦"; case .garden: "❋"; case .journeys: "⌁"; case .books: "▤"; case .creative: "✎"
     case .gathering: "◒"; case .wellness: "☼"; case .sports: "◉"; case .night: "☾" } }
-    var colors: [Color] { switch self {
-    case .studio: [hex("#EED6C2"), hex("#C98672")]; case .garden: [hex("#D8E6C8"), hex("#7CA776")]
-    case .journeys: [hex("#D8E5EF"), hex("#6F98B5")]; case .books: [hex("#E7D9B7"), hex("#9A7145")]
-    case .creative: [hex("#E4D3E8"), hex("#9D719F")]; case .gathering: [hex("#F1D4B9"), hex("#BE704E")]
-    case .wellness: [hex("#D2E6E1"), hex("#568E88")]; case .sports: [hex("#D7E0F2"), hex("#5E7BB5")]
-    case .night: [hex("#DCD7EE"), hex("#5E578C")] } }
+    var assetName: String { "CustomGroup" + rawValue.capitalized }
 }
 
 struct CustomGroupArtwork: View {
     let styleID: String?
     private var style: CustomGroupStyle { CustomGroupStyle(rawValue: styleID ?? "") ?? .studio }
     var body: some View {
-        ZStack {
-            LinearGradient(colors: style.colors, startPoint: .topLeading, endPoint: .bottomTrailing)
-            RoundedRectangle(cornerRadius: 12).fill(.white.opacity(0.30)).frame(width: 36, height: 36).frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing).padding(10)
-            Text(style.symbol).font(.system(size: 38)).foregroundStyle(.white.opacity(0.9))
-            Capsule().fill(.white.opacity(0.65)).frame(width: 46, height: 5).frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading).padding(10)
-        }.clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous)).accessibilityHidden(true)
+        Image(style.assetName)
+            .resizable()
+            .scaledToFill()
+            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .accessibilityHidden(true)
     }
 }
 
