@@ -35,6 +35,10 @@ import com.xaymaca.sit.data.model.Contact
 import com.xaymaca.sit.data.model.ContactGroup
 import com.xaymaca.sit.ui.theme.Cobalt
 import com.xaymaca.sit.ui.theme.WarmCategory
+import com.xaymaca.sit.ui.theme.WarmSpacing
+import com.xaymaca.sit.ui.theme.WarmTheme
+import com.xaymaca.sit.ui.theme.Warmth
+import com.xaymaca.sit.ui.warm.WarmIllustration
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -131,26 +135,35 @@ fun GroupDetailScreen(
             },
             containerColor = MaterialTheme.colorScheme.background
         ) { paddingValues ->
-            if (members.isEmpty()) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        stringResource(R.string.group_detail_empty),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
+                contentPadding = PaddingValues(bottom = 88.dp)
+            ) {
+                val category = group?.categoryId?.let(WarmCategory::from)
+                if (category != null) {
+                    item {
+                        CanonicalGroupHeader(
+                            category = category,
+                            memberCount = members.size,
+                        )
+                    }
                 }
-            } else {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues),
-                    contentPadding = PaddingValues(bottom = 88.dp)
-                ) {
+                if (members.isEmpty()) {
+                    item {
+                        Box(
+                            modifier = Modifier.fillMaxWidth().padding(top = 40.dp),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Text(
+                                stringResource(R.string.group_detail_empty),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                    }
+                } else {
                     items(members, key = { it.id }) { contact ->
                         SwipeToRemoveMemberRow(
                             contact = contact,
@@ -208,6 +221,39 @@ fun GroupDetailScreen(
                     viewModel.showToast(toastStr)
                 },
                 onDismiss = { showAddSheet = false }
+            )
+        }
+    }
+}
+
+@Composable
+private fun CanonicalGroupHeader(category: WarmCategory, memberCount: Int) {
+    val palette = WarmTheme.palette(Warmth.Subtle)
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = WarmSpacing.Lg, vertical = 12.dp)
+            .clip(RoundedCornerShape(20.dp))
+            .background(palette.cardBg),
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(16f / 7f)
+                .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)),
+        ) {
+            WarmIllustration(category = category)
+        }
+        Column(modifier = Modifier.padding(WarmSpacing.Lg)) {
+            Text(
+                stringResource(category.labelRes),
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.SemiBold,
+            )
+            Text(
+                "$memberCount members",
+                style = MaterialTheme.typography.bodyMedium,
+                color = palette.ink2,
             )
         }
     }
