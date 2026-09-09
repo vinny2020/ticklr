@@ -1,6 +1,7 @@
 package com.xaymaca.sit.ui.warm
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
@@ -18,6 +19,9 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.drawscope.translate
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import com.xaymaca.sit.R
 import com.xaymaca.sit.ui.theme.WarmCategory
 
 /**
@@ -35,27 +39,19 @@ fun WarmIllustration(
     category: WarmCategory,
     modifier: Modifier = Modifier,
 ) {
-    Canvas(modifier = modifier.fillMaxWidth().aspectRatio(16f / 9f)) {
-        // Reference space matches the SVG viewBox 320x180; scale to fit.
-        val sx = size.width / 320f
-        val sy = size.height / 180f
-        val s = maxOf(sx, sy)
-        translate(
-            left = (size.width / s - 320f) / 2f * s,
-            top = (size.height / s - 180f) / 2f * s,
-        ) {
-            // SwiftUI's scaleBy isn't exposed cleanly here; we instead
-            // multiply geometry by `s` inside each draw call via the
-            // helper at the bottom.
-            when (category) {
-                WarmCategory.Family -> drawFamily(s)
-                WarmCategory.Friends -> drawFriends(s)
-                WarmCategory.Work -> drawWork(s)
-                WarmCategory.Milestones -> drawMilestones(s)
-                WarmCategory.Community -> drawCommunity(s)
-            }
-        }
+    val illustration = when (category) {
+        WarmCategory.Family -> R.drawable.canonical_family
+        WarmCategory.Friends -> R.drawable.canonical_friends
+        WarmCategory.Work -> R.drawable.canonical_work
+        WarmCategory.Milestones -> R.drawable.canonical_milestones
+        WarmCategory.Community -> R.drawable.canonical_community
     }
+    Image(
+        painter = painterResource(illustration),
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = modifier.fillMaxWidth().aspectRatio(16f / 9f),
+    )
 }
 
 // ── Family ──────────────────────────────────────────────────────────

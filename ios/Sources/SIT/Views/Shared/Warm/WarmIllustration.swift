@@ -16,24 +16,20 @@ struct WarmIllustration: View {
     let category: WarmCategory
 
     var body: some View {
-        Canvas { context, size in
-            let ref = CGSize(width: 320, height: 180)
-            let scale = max(size.width / ref.width, size.height / ref.height)
-            context.scaleBy(x: scale, y: scale)
-            context.translateBy(
-                x: (size.width / scale - ref.width) / 2,
-                y: (size.height / scale - ref.height) / 2
-            )
+        Image(assetName)
+            .resizable()
+            .scaledToFill()
+            .accessibilityHidden(true)
+    }
 
-            switch category {
-            case .family:     drawFamily(in: &context)
-            case .friends:    drawFriends(in: &context)
-            case .work:       drawWork(in: &context)
-            case .milestones: drawMilestones(in: &context)
-            case .community:  drawCommunity(in: &context)
-            }
+    private var assetName: String {
+        switch category {
+        case .family: "CanonicalFamily"
+        case .friends: "CanonicalFriends"
+        case .work: "CanonicalWork"
+        case .milestones: "CanonicalMilestones"
+        case .community: "CanonicalCommunity"
         }
-        .accessibilityHidden(true)
     }
 }
 
