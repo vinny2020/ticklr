@@ -1,4 +1,4 @@
-Kifejezőbb Csoportok élmény.
-• Gazdag illusztrációk teszik a beépített csoportokat melegebbé és személyesebbé
-• Kilenc részletes vizuális stílus közül választhatsz saját csoportokhoz
-• A tagokat gyönyörű új csoportfejléc alatt láthatod
+A tickle emlékeztetőid közvetlenül a profilokon.
+• Lásd az egyes személyek aktív és elhalasztott tickle emlékeztetőit.
+• Koppints egy tickle emlékeztetőre a szerkesztéshez.
+• Mentés vagy megszakítás után térj vissza ugyanahhoz a profilhoz.

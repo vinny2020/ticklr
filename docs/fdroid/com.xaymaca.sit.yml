@@ -16,6 +16,13 @@ Binaries:
   https://github.com/vinny2020/ticklr/releases/download/android/v%v-production/ticklr-v%v.apk
 
 Builds:
+  - versionName: 1.14.0
+    versionCode: 136
+    commit: android/v1.14.0-production
+    subdir: android/app
+    gradle:
+      - yes
+
   - versionName: 1.12.3
     versionCode: 134
     commit: b9c619eadbee9f666796708bd2f680b5b682336b
@@ -27,5 +34,5 @@ AllowedAPKSigningKeys: 31f8074d5334b02df4a5a8d9862c33a46694a99442adf08f360e9a4fd
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags ^android/v[0-9.]+-production$
-CurrentVersion: 1.12.3
-CurrentVersionCode: 134
+CurrentVersion: 1.14.0
+CurrentVersionCode: 136
