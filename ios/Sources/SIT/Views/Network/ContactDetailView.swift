@@ -4,7 +4,17 @@ import PhotosUI
 
 private enum ActiveSheet: Identifiable {
     case edit, addTickle, addToGroup, compose
-    var id: Int { hashValue }
+    case editTickle(TickleReminder)
+
+    var id: String {
+        switch self {
+        case .edit: "edit"
+        case .addTickle: "addTickle"
+        case .addToGroup: "addToGroup"
+        case .compose: "compose"
+        case .editTickle(let reminder): "editTickle.\(reminder.id)"
+        }
+    }
 }
 
 struct ContactDetailView: View {
@@ -55,7 +65,9 @@ struct ContactDetailView: View {
                 actionChipRow
                     .padding(.horizontal, WarmSpacing.lg)
 
-                ContactTicklesSection(contactID: contact.id, warmth: warmth)
+                ContactTicklesSection(contactID: contact.id, warmth: warmth) { reminder in
+                    activeSheet = .editTickle(reminder)
+                }
                     .id(contact.id)
 
                 detailCards
@@ -85,6 +97,8 @@ struct ContactDetailView: View {
             switch sheet {
             case .edit:        ContactEditSheet(contact: contact)
             case .addTickle:   TickleEditView(contact: contact, onSaved: { saveToastMessage = $0 })
+            case .editTickle(let reminder):
+                TickleEditView(existing: reminder, onSaved: { saveToastMessage = $0 })
             case .addToGroup:  AddToGroupSheet(contact: contact)
             case .compose:
                 ComposeView(onClose: { activeSheet = nil },
@@ -545,9 +559,11 @@ private struct AddToGroupSheet: View {
 struct ContactTicklesSection: View {
     @Query private var reminders: [TickleReminder]
     let warmth: Warmth
+    let onEdit: (TickleReminder) -> Void
 
-    init(contactID: UUID, warmth: Warmth = .subtle) {
+    init(contactID: UUID, warmth: Warmth = .subtle, onEdit: @escaping (TickleReminder) -> Void) {
         self.warmth = warmth
+        self.onEdit = onEdit
         _reminders = Query(Self.descriptor(contactID: contactID))
     }
 
@@ -579,31 +595,44 @@ struct ContactTicklesSection: View {
                         .accessibilityIdentifier("contactDetail.tickles.empty")
                 } else {
                     ForEach(Array(scheduled.enumerated()), id: \.element.id) { index, reminder in
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text(reminder.note.isEmpty ? String(localized: "tickleEdit.default.note") : reminder.note)
-                                .font(.system(size: 15, weight: .semibold))
-                                .foregroundStyle(palette.ink)
-                            Text(reminder.frequency.localizedName)
-                                .font(.system(size: 12, weight: .semibold))
-                                .foregroundStyle(palette.ink2)
-                            if reminder.frequency == .custom, let days = reminder.customIntervalDays {
-                                Text(String(localized: "tickleEdit.stepper.customInterval \(days)"))
-                                    .font(.system(size: 12))
+                        Button { onEdit(reminder) } label: {
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text(reminder.note.isEmpty ? String(localized: "tickleEdit.default.note") : reminder.note)
+                                    .font(.system(size: 15, weight: .semibold))
+                                    .foregroundStyle(palette.ink)
+                                Text(reminder.frequency.localizedName)
+                                    .font(.system(size: 12, weight: .semibold))
                                     .foregroundStyle(palette.ink2)
+                                if reminder.frequency == .custom, let days = reminder.customIntervalDays {
+                                    Text(String(localized: "tickleEdit.stepper.customInterval \(days)"))
+                                        .font(.system(size: 12))
+                                        .foregroundStyle(palette.ink2)
+                                }
+                                Text(reminder.nextDueDate.formatted(date: .abbreviated, time: .shortened))
+                                    .font(.system(size: 13))
+                                    .foregroundStyle(TickleScheduler.isDueForSendCompletion(reminder)
+                                                     ? (reminder.contact.map { WarmCategory.resolve(for: $0) } ?? .community).palette.accent
+                                                     : palette.ink2)
+                                if reminder.status == .snoozed {
+                                    Text(String(localized: "tickleList.section.snoozed"))
+                                        .font(.system(size: 12))
+                                        .foregroundStyle(palette.ink3)
+                                }
                             }
-                            Text(reminder.nextDueDate.formatted(date: .abbreviated, time: .shortened))
-                                .font(.system(size: 13))
-                                .foregroundStyle(TickleScheduler.isDueForSendCompletion(reminder)
-                                                 ? (reminder.contact.map { WarmCategory.resolve(for: $0) } ?? .community).palette.accent
-                                                 : palette.ink2)
-                            if reminder.status == .snoozed {
-                                Text(String(localized: "tickleList.section.snoozed"))
-                                    .font(.system(size: 12))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.trailing, 20)
+                            .padding(WarmSpacing.md)
+                            .contentShape(Rectangle())
+                            .overlay(alignment: .trailing) {
+                                Image(systemName: "chevron.right")
+                                    .accessibilityHidden(true)
+                                    .flipsForRightToLeftLayoutDirection(true)
+                                    .font(.system(size: 14, weight: .semibold))
                                     .foregroundStyle(palette.ink3)
+                                    .padding(.trailing, WarmSpacing.md)
                             }
                         }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(WarmSpacing.md)
+                        .buttonStyle(.plain)
                         .accessibilityElement(children: .combine)
                         .accessibilityIdentifier("contactDetail.tickle.\(reminder.id)")
                         if index < scheduled.count - 1 { WarmRowDivider(warmth: warmth) }
