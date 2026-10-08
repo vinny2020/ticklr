@@ -374,4 +374,7 @@
     <string name="phone_chooser_title">Alege un număr</string>
     <!-- TIC-96: honest picker-cap hint -->
     <string name="picker_showing_hint">Se afișează %1$d din %2$d</string>
+    <!-- TIC-108: scheduled tickles on an individual profile -->
+    <string name="contact_detail_tickles_title">Mementouri</string>
+    <string name="contact_detail_tickles_empty">Nu există mementouri programate pentru această persoană.</string>
 </resources>

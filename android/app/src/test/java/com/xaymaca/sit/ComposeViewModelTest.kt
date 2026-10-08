@@ -110,6 +110,8 @@ class ComposeViewModelTest {
         override fun getByStatus(status: String): Flow<List<TickleReminder>> = flowOf(emptyList())
         override suspend fun getDueReminders(now: Long): List<TickleReminder> = emptyList()
         override suspend fun getArmableReminders(now: Long): List<TickleReminder> = emptyList()
+        override fun observeScheduledForContact(contactId: Long): Flow<List<TickleReminder>> =
+            flowOf(emptyList())
         override suspend fun getByContactId(contactId: Long): List<TickleReminder> = reminders.filter { it.contactId == contactId }
         override suspend fun getByGroupId(groupId: Long): List<TickleReminder> = emptyList()
         override suspend fun deleteByContactId(contactId: Long) {}

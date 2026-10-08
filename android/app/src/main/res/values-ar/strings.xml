@@ -389,4 +389,7 @@
     <string name="phone_chooser_title">اختر رقمًا</string>
     <!-- TIC-96: honest picker-cap hint -->
     <string name="picker_showing_hint">عرض %1$d من %2$d</string>
+    <!-- TIC-108: scheduled tickles on an individual profile -->
+    <string name="contact_detail_tickles_title">التذكيرات</string>
+    <string name="contact_detail_tickles_empty">لا توجد تذكيرات مجدولة لهذا الشخص.</string>
 </resources>

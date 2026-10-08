@@ -379,4 +379,7 @@
     <string name="phone_chooser_title">Wybierz numer</string>
     <!-- TIC-96: honest picker-cap hint -->
     <string name="picker_showing_hint">Wyświetlono %1$d z %2$d</string>
+    <!-- TIC-108: scheduled tickles on an individual profile -->
+    <string name="contact_detail_tickles_title">Przypomnienia</string>
+    <string name="contact_detail_tickles_empty">Nie zaplanowano przypomnień dla tej osoby.</string>
 </resources>

@@ -108,6 +108,8 @@ class ContactRepositoryTest {
             reminders.filter { it.nextDueDate <= now }
         override suspend fun getArmableReminders(now: Long): List<TickleReminder> =
             reminders.filter { it.nextDueDate > now }
+        override fun observeScheduledForContact(contactId: Long): Flow<List<TickleReminder>> =
+            flowOf(emptyList())
         override suspend fun getByContactId(contactId: Long): List<TickleReminder> =
             reminders.filter { it.contactId == contactId }
         override suspend fun getByGroupId(groupId: Long): List<TickleReminder> =

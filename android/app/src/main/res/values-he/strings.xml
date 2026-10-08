@@ -374,4 +374,7 @@
     <string name="phone_chooser_title">בחירת מספר</string>
     <!-- TIC-96: honest picker-cap hint -->
     <string name="picker_showing_hint">מוצגים %1$d מתוך %2$d</string>
+    <!-- TIC-108: scheduled tickles on an individual profile -->
+    <string name="contact_detail_tickles_title">תזכורות</string>
+    <string name="contact_detail_tickles_empty">אין תזכורות מתוזמנות לאדם הזה.</string>
 </resources>

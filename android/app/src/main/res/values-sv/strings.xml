@@ -369,4 +369,7 @@
     <string name="phone_chooser_title">Välj ett nummer</string>
     <!-- TIC-96: honest picker-cap hint -->
     <string name="picker_showing_hint">Visar %1$d av %2$d</string>
+    <!-- TIC-108: scheduled tickles on an individual profile -->
+    <string name="contact_detail_tickles_title">Påminnelser</string>
+    <string name="contact_detail_tickles_empty">Inga påminnelser är schemalagda för den här personen.</string>
 </resources>
