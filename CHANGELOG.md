@@ -2,6 +2,15 @@
 
 All notable changes to Ticklr: Your People Matter are documented here.
 
+## [1.14.0] — 2026-10-08
+
+### Network profiles — iOS and Android
+
+- Show each person's active and snoozed tickles on their profile, with notes, frequency, and next scheduled date.
+- Tap a profile tickle to edit it. Saving or cancelling returns to the originating profile.
+- Keep the profile's tickle list current after changes and show an empty state when nothing is scheduled.
+- Localize the new profile text across all 21 app languages.
+
 ## [1.13.0] — 2026-09-09
 
 ### Groups

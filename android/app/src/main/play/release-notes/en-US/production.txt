@@ -1,4 +1,4 @@
-A more expressive Groups experience.
-• Rich illustrations give built-in groups a warmer, more personal feel
-• Choose from nine detailed visual styles for custom groups
-• See every group’s members beneath a beautiful new header
+Your tickles, right on each profile.
+• See active and snoozed tickles for each person.
+• Tap a tickle to edit it.
+• Save or cancel and return to the same profile.
