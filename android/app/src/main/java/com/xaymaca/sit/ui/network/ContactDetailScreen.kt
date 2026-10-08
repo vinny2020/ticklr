@@ -27,6 +27,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.ui.semantics.Role
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Edit
@@ -117,6 +119,7 @@ fun ContactDetailScreen(
     onBack: () -> Unit,
     onAddTickle: () -> Unit,
     onEdit: () -> Unit,
+    onEditTickle: (Long) -> Unit,
     onCompose: (contactId: Long, reminderId: Long?) -> Unit = { _, _ -> },
     viewModel: NetworkViewModel = hiltViewModel(),
     groupViewModel: GroupViewModel = hiltViewModel(),
@@ -124,7 +127,7 @@ fun ContactDetailScreen(
     // Tablet navigation can reuse this screen for a new selection. Scope all
     // collectors, lazy-list slots and remembered UI state to that person.
     key(contactId) {
-        ContactDetailContent(contactId, onBack, onAddTickle, onEdit, onCompose, viewModel, groupViewModel)
+        ContactDetailContent(contactId, onBack, onAddTickle, onEdit, onEditTickle, onCompose, viewModel, groupViewModel)
     }
 }
 
@@ -135,6 +138,7 @@ private fun ContactDetailContent(
     onBack: () -> Unit,
     onAddTickle: () -> Unit,
     onEdit: () -> Unit,
+    onEditTickle: (Long) -> Unit,
     onCompose: (Long, Long?) -> Unit,
     viewModel: NetworkViewModel,
     groupViewModel: GroupViewModel,
@@ -279,7 +283,7 @@ private fun ContactDetailContent(
                 }
 
                 item {
-                    ContactTicklesSection(tickles = tickles, warmth = warmth)
+                    ContactTicklesSection(tickles = tickles, warmth = warmth, onEdit = onEditTickle)
                 }
 
                 if (phoneNumbers.isNotEmpty()) {
@@ -709,7 +713,7 @@ private fun GroupsSection(
 }
 
 @Composable
-private fun ContactTicklesSection(tickles: List<TickleReminder>?, warmth: Warmth = Warmth.Subtle) {
+private fun ContactTicklesSection(tickles: List<TickleReminder>?, warmth: Warmth, onEdit: (Long) -> Unit) {
     val palette = WarmTheme.palette(warmth)
     DetailSection(title = stringResource(R.string.contact_detail_tickles_title), warmth = warmth) {
         when {
@@ -719,34 +723,47 @@ private fun ContactTicklesSection(tickles: List<TickleReminder>?, warmth: Warmth
                 style = TextStyle(fontSize = 14.sp, color = palette.ink2),
             )
             else -> tickles.forEachIndexed { index, reminder ->
-                Column(
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
-                    verticalArrangement = Arrangement.spacedBy(6.dp),
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                        .clickable(role = Role.Button, onClickLabel = stringResource(R.string.common_edit)) { onEdit(reminder.id) }
+                        .padding(vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Text(
-                        text = reminder.note.ifBlank { stringResource(R.string.tickle_edit_default_note) },
-                        style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.SemiBold, color = palette.ink),
-                    )
-                    Text(
-                        text = stringResource(TickleFrequency.valueOf(reminder.frequency).displayNameResId),
-                        style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = palette.ink2),
-                    )
-                    if (reminder.frequency == TickleFrequency.CUSTOM.name && reminder.customIntervalDays != null) {
+                    Column(
+                        modifier = Modifier.weight(1f),
+                        verticalArrangement = Arrangement.spacedBy(6.dp),
+                    ) {
                         Text(
-                            text = stringResource(R.string.tickle_edit_custom_interval_days, reminder.customIntervalDays),
-                            style = TextStyle(fontSize = 12.sp, color = palette.ink2),
+                            text = reminder.note.ifBlank { stringResource(R.string.tickle_edit_default_note) },
+                            style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.SemiBold, color = palette.ink),
                         )
-                    }
-                    Text(
-                        text = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(Date(reminder.nextDueDate)),
-                        style = TextStyle(fontSize = 13.sp, color = palette.ink2),
-                    )
-                    if (reminder.status == TickleStatus.SNOOZED.name) {
                         Text(
-                            text = stringResource(R.string.tickle_list_section_snoozed),
-                            style = TextStyle(fontSize = 12.sp, color = palette.ink3),
+                            text = stringResource(TickleFrequency.valueOf(reminder.frequency).displayNameResId),
+                            style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = palette.ink2),
                         )
+                        if (reminder.frequency == TickleFrequency.CUSTOM.name && reminder.customIntervalDays != null) {
+                            Text(
+                                text = stringResource(R.string.tickle_edit_custom_interval_days, reminder.customIntervalDays),
+                                style = TextStyle(fontSize = 12.sp, color = palette.ink2),
+                            )
+                        }
+                        Text(
+                            text = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(Date(reminder.nextDueDate)),
+                            style = TextStyle(fontSize = 13.sp, color = palette.ink2),
+                        )
+                        if (reminder.status == TickleStatus.SNOOZED.name) {
+                            Text(
+                                text = stringResource(R.string.tickle_list_section_snoozed),
+                                style = TextStyle(fontSize = 12.sp, color = palette.ink3),
+                            )
+                        }
                     }
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                        contentDescription = null,
+                        tint = palette.ink3,
+                        modifier = Modifier.size(20.dp),
+                    )
                 }
                 if (index < tickles.size - 1) WarmRowDivider(warmth = warmth)
             }

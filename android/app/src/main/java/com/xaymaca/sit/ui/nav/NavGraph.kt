@@ -351,6 +351,7 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
                             navController.navigate(Screen.Import.createRoute(Screen.Import.ORIGIN_IN_APP))
                         },
                         onEditContact = { id -> navController.navigate("edit_contact/$id") },
+                        onEditTickle = { id -> navController.navigate(Screen.TickleEdit.createRoute(id)) },
                         onAddTickleForContact = { id ->
                             navController.navigate(Screen.TickleEdit.createRouteWithContact(id))
                         },
@@ -402,6 +403,7 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
                     onBack = { navController.popBackStack() },
                     onAddTickle = { navController.navigate(Screen.TickleEdit.createRouteWithContact(contactId)) },
                     onEdit = { navController.navigate("edit_contact/$contactId") },
+                    onEditTickle = { id -> navController.navigate(Screen.TickleEdit.createRoute(id)) },
                     onCompose = { id, reminderId ->
                         navController.navigate(Screen.Compose.createRoute(id, reminderId)) {
                             launchSingleTop = true

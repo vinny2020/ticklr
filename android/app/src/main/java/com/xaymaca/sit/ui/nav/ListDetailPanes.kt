@@ -70,6 +70,7 @@ fun NetworkPane(
     onImport: () -> Unit,
     onEditContact: (Long) -> Unit,
     onAddTickleForContact: (Long) -> Unit,
+    onEditTickle: (Long) -> Unit,
     onCompose: (contactId: Long, reminderId: Long?) -> Unit,
     /**
      * TIC-96: a contact to land on directly in the detail slot, e.g. when a
@@ -122,6 +123,7 @@ fun NetworkPane(
                         onBack = { navigator.navigateBack() },
                         onAddTickle = { onAddTickleForContact(contactId) },
                         onEdit = { onEditContact(contactId) },
+                        onEditTickle = onEditTickle,
                         onCompose = onCompose,
                     )
                 } else {
