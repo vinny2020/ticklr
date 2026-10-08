@@ -54,6 +54,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.key
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -75,6 +76,10 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.xaymaca.sit.R
 import com.xaymaca.sit.data.model.Contact
+import com.xaymaca.sit.data.model.TickleReminder
+import com.xaymaca.sit.data.model.TickleFrequency
+import com.xaymaca.sit.data.model.TickleStatus
+import com.xaymaca.sit.service.TickleScheduler
 import com.xaymaca.sit.service.ContactPhotoService
 import com.xaymaca.sit.service.LocalPhotoStore
 import com.xaymaca.sit.service.StringListConverter
@@ -87,6 +92,7 @@ import com.xaymaca.sit.ui.theme.WarmRadius
 import com.xaymaca.sit.ui.theme.WarmSpacing
 import com.xaymaca.sit.ui.theme.WarmTheme
 import com.xaymaca.sit.ui.theme.Warmth
+import com.xaymaca.sit.ui.shared.displayNameResId
 import com.xaymaca.sit.ui.shared.PendingPhoneChoice
 import com.xaymaca.sit.ui.shared.PhoneChoice
 import com.xaymaca.sit.ui.shared.PhoneChooser
@@ -100,6 +106,8 @@ import com.xaymaca.sit.ui.warm.WarmEyebrow
 import com.xaymaca.sit.ui.warm.WarmListContainer
 import com.xaymaca.sit.ui.warm.WarmRowDivider
 import kotlinx.coroutines.launch
+import java.text.DateFormat
+import java.util.Date
 import java.util.UUID
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
@@ -113,15 +121,33 @@ fun ContactDetailScreen(
     viewModel: NetworkViewModel = hiltViewModel(),
     groupViewModel: GroupViewModel = hiltViewModel(),
 ) {
+    // Tablet navigation can reuse this screen for a new selection. Scope all
+    // collectors, lazy-list slots and remembered UI state to that person.
+    key(contactId) {
+        ContactDetailContent(contactId, onBack, onAddTickle, onEdit, onCompose, viewModel, groupViewModel)
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+@Composable
+private fun ContactDetailContent(
+    contactId: Long,
+    onBack: () -> Unit,
+    onAddTickle: () -> Unit,
+    onEdit: () -> Unit,
+    onCompose: (Long, Long?) -> Unit,
+    viewModel: NetworkViewModel,
+    groupViewModel: GroupViewModel,
+) {
     val warmth = Warmth.Subtle
     val palette = WarmTheme.palette(warmth)
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
-    var contact by remember { mutableStateOf<Contact?>(null) }
-    // TIC-82: id of this contact's currently-due tickle (if any), resolved once
-    // the screen loads. Attached to the compose the "Send a text" chip opens so
-    // returning from the SMS handoff can prompt to mark that tickle done.
-    var dueReminderId by remember { mutableStateOf<Long?>(null) }
+    var contact by remember(contactId) { mutableStateOf<Contact?>(null) }
+    // Remember the scoped Room flow across recompositions. A new contact gets
+    // a fresh collector instead of briefly showing the previous person's list.
+    val ticklesFlow = remember(contactId, viewModel) { viewModel.scheduledTicklesForContact(contactId) }
+    val tickles = ticklesFlow.collectAsState(initial = null).value
     var showDeleteDialog by remember { mutableStateOf(false) }
     var showGroupSheet by remember { mutableStateOf(false) }
     var photoRefreshKey by remember { mutableStateOf(UUID.randomUUID()) }
@@ -143,7 +169,6 @@ fun ContactDetailScreen(
 
     LaunchedEffect(contactId) {
         contact = viewModel.getContactById(contactId)
-        dueReminderId = viewModel.dueReminderIdForContact(contactId)
     }
 
     val photoPicker = rememberLauncherForActivityResult(
@@ -230,7 +255,12 @@ fun ContactDetailScreen(
                         palette = palette,
                         canText = phoneNumbers.isNotEmpty(),
                         canCall = phoneNumbers.isNotEmpty(),
-                        onSendText = { onCompose(contactId, dueReminderId) },
+                        onSendText = {
+                            // Resolve at tap time so edits and crossing the due
+                            // time cannot leave the send action with stale state.
+                            val dueId = tickles?.firstOrNull { TickleScheduler.isDue(it, System.currentTimeMillis()) }?.id
+                            onCompose(contactId, dueId)
+                        },
                         onCreateTickle = onAddTickle,
                         onCall = {
                             // TIC-96: more than one number used to silently dial
@@ -246,6 +276,10 @@ fun ContactDetailScreen(
                             }
                         },
                     )
+                }
+
+                item {
+                    ContactTicklesSection(tickles = tickles, warmth = warmth)
                 }
 
                 if (phoneNumbers.isNotEmpty()) {
@@ -670,6 +704,52 @@ private fun GroupsSection(
                 text = stringResource(R.string.contact_detail_add_to_group),
                 style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = category.palette.accent),
             )
+        }
+    }
+}
+
+@Composable
+private fun ContactTicklesSection(tickles: List<TickleReminder>?, warmth: Warmth = Warmth.Subtle) {
+    val palette = WarmTheme.palette(warmth)
+    DetailSection(title = stringResource(R.string.contact_detail_tickles_title), warmth = warmth) {
+        when {
+            tickles == null -> CircularProgressIndicator(modifier = Modifier.size(24.dp), color = palette.ink2)
+            tickles.isEmpty() -> Text(
+                text = stringResource(R.string.contact_detail_tickles_empty),
+                style = TextStyle(fontSize = 14.sp, color = palette.ink2),
+            )
+            else -> tickles.forEachIndexed { index, reminder ->
+                Column(
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+                    verticalArrangement = Arrangement.spacedBy(6.dp),
+                ) {
+                    Text(
+                        text = reminder.note.ifBlank { stringResource(R.string.tickle_edit_default_note) },
+                        style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.SemiBold, color = palette.ink),
+                    )
+                    Text(
+                        text = stringResource(TickleFrequency.valueOf(reminder.frequency).displayNameResId),
+                        style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = palette.ink2),
+                    )
+                    if (reminder.frequency == TickleFrequency.CUSTOM.name && reminder.customIntervalDays != null) {
+                        Text(
+                            text = stringResource(R.string.tickle_edit_custom_interval_days, reminder.customIntervalDays),
+                            style = TextStyle(fontSize = 12.sp, color = palette.ink2),
+                        )
+                    }
+                    Text(
+                        text = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(Date(reminder.nextDueDate)),
+                        style = TextStyle(fontSize = 13.sp, color = palette.ink2),
+                    )
+                    if (reminder.status == TickleStatus.SNOOZED.name) {
+                        Text(
+                            text = stringResource(R.string.tickle_list_section_snoozed),
+                            style = TextStyle(fontSize = 12.sp, color = palette.ink3),
+                        )
+                    }
+                }
+                if (index < tickles.size - 1) WarmRowDivider(warmth = warmth)
+            }
         }
     }
 }

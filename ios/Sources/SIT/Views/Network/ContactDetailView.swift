@@ -55,6 +55,9 @@ struct ContactDetailView: View {
                 actionChipRow
                     .padding(.horizontal, WarmSpacing.lg)
 
+                ContactTicklesSection(contactID: contact.id, warmth: warmth)
+                    .id(contact.id)
+
                 detailCards
 
                 groupsSection
@@ -534,6 +537,81 @@ private struct AddToGroupSheet: View {
                 }
             }
         }
+    }
+}
+
+/// A scoped live query keeps the profile up to date after tickle saves,
+/// snoozes, completions and deletions, including in the iPad detail pane.
+struct ContactTicklesSection: View {
+    @Query private var reminders: [TickleReminder]
+    let warmth: Warmth
+
+    init(contactID: UUID, warmth: Warmth = .subtle) {
+        self.warmth = warmth
+        _reminders = Query(Self.descriptor(contactID: contactID))
+    }
+
+    static func descriptor(contactID: UUID) -> FetchDescriptor<TickleReminder> {
+        FetchDescriptor(
+            predicate: #Predicate<TickleReminder> { $0.contact?.id == contactID },
+            sortBy: [SortDescriptor(\TickleReminder.nextDueDate), SortDescriptor(\TickleReminder.createdAt)]
+        )
+    }
+
+    // Completed one-time tickles are history, as in the Tickle tab.
+    static func scheduled(_ reminders: [TickleReminder]) -> [TickleReminder] {
+        reminders.filter { $0.status == .active || $0.status == .snoozed }
+    }
+
+    private var palette: WarmPalette { WarmTheme.palette(for: warmth) }
+
+    var body: some View {
+        let scheduled = Self.scheduled(reminders)
+        VStack(alignment: .leading, spacing: 6) {
+            WarmEyebrow(text: String(localized: "contactDetail.tickles.title"), warmth: warmth)
+            WarmListContainer(warmth: warmth) {
+                if scheduled.isEmpty {
+                    Text(String(localized: "contactDetail.tickles.empty"))
+                        .font(.system(size: 14))
+                        .foregroundStyle(palette.ink2)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(WarmSpacing.md)
+                        .accessibilityIdentifier("contactDetail.tickles.empty")
+                } else {
+                    ForEach(Array(scheduled.enumerated()), id: \.element.id) { index, reminder in
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text(reminder.note.isEmpty ? String(localized: "tickleEdit.default.note") : reminder.note)
+                                .font(.system(size: 15, weight: .semibold))
+                                .foregroundStyle(palette.ink)
+                            Text(reminder.frequency.localizedName)
+                                .font(.system(size: 12, weight: .semibold))
+                                .foregroundStyle(palette.ink2)
+                            if reminder.frequency == .custom, let days = reminder.customIntervalDays {
+                                Text(String(localized: "tickleEdit.stepper.customInterval \(days)"))
+                                    .font(.system(size: 12))
+                                    .foregroundStyle(palette.ink2)
+                            }
+                            Text(reminder.nextDueDate.formatted(date: .abbreviated, time: .shortened))
+                                .font(.system(size: 13))
+                                .foregroundStyle(TickleScheduler.isDueForSendCompletion(reminder)
+                                                 ? (reminder.contact.map { WarmCategory.resolve(for: $0) } ?? .community).palette.accent
+                                                 : palette.ink2)
+                            if reminder.status == .snoozed {
+                                Text(String(localized: "tickleList.section.snoozed"))
+                                    .font(.system(size: 12))
+                                    .foregroundStyle(palette.ink3)
+                            }
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(WarmSpacing.md)
+                        .accessibilityElement(children: .combine)
+                        .accessibilityIdentifier("contactDetail.tickle.\(reminder.id)")
+                        if index < scheduled.count - 1 { WarmRowDivider(warmth: warmth) }
+                    }
+                }
+            }
+        }
+        .padding(.horizontal, WarmSpacing.lg)
     }
 }
 

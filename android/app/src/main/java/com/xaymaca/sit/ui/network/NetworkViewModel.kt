@@ -201,6 +201,9 @@ class NetworkViewModel @Inject constructor(
         return result
     }
 
+    fun scheduledTicklesForContact(contactId: Long) =
+        contactRepository.observeScheduledTicklesForContact(contactId)
+
     suspend fun getContactById(id: Long): Contact? =
         contactRepository.getContactById(id)
 

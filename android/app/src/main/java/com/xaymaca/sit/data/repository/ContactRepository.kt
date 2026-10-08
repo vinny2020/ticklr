@@ -56,6 +56,9 @@ class ContactRepository @Inject constructor(
     suspend fun getRemindersForContact(contactId: Long): List<TickleReminder> =
         tickleReminderDao.getByContactId(contactId)
 
+    fun observeScheduledTicklesForContact(contactId: Long): Flow<List<TickleReminder>> =
+        tickleReminderDao.observeScheduledForContact(contactId)
+
     /**
      * Deletes a contact and everything that only makes sense while it exists:
      * its tickle reminders (which otherwise survive as name "?" with alarms

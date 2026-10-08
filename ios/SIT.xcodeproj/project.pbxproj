@@ -11,6 +11,7 @@
 		048D506A93074FACAA1865EC /* WarmCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0C8A1F9EAC9226E7D717720 /* WarmCategory.swift */; };
 		06F4EDA1D1049DE0D9691453 /* TickleActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F93D464D33962932C5C942 /* TickleActionSheet.swift */; };
 		0A15CDA437196AAA901C1371 /* ContactPhotoFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0245F8A1C0C8EF0E794507B1 /* ContactPhotoFetcher.swift */; };
+		0BFFF3E987BDD45D37650F79 /* ContactTicklesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E13C67C14F0A08295E6DB5 /* ContactTicklesUITests.swift */; };
 		0C03E3E93AEAAEAB358CF5C3 /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACA061EE9A732D89FD3E0F3 /* GroupListView.swift */; };
 		0C41C7D26198E0DC2C958072 /* AddContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77347A9F53BFBE3E1672671 /* AddContactView.swift */; };
 		0EA9C2254CEDC3F5A8E9033B /* OFL-NotoNaskhArabic.txt in Resources */ = {isa = PBXBuildFile; fileRef = D0E4D04216FC720E233AA609 /* OFL-NotoNaskhArabic.txt */; };
@@ -80,6 +81,7 @@
 		CDE377155C3E8D64FB62AE2F /* ContactImportServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9ED8CB5E6D9F8E216A7470 /* ContactImportServiceTests.swift */; };
 		D2644F8AB791907856A6E389 /* ComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07B4E4B1B6C11A40612610C /* ComposeView.swift */; };
 		D4C1A48DAA2D66E88EFC5692 /* WarmListContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5907E434D833533D8A7EBC /* WarmListContainer.swift */; };
+		D6455E6972A833B2068E23D5 /* ContactTicklesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248832A537A6EE482BB17FF3 /* ContactTicklesTests.swift */; };
 		D7093B43ACD10588484F4A32 /* CategoryBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06BB941D9F261F754634A26D /* CategoryBadge.swift */; };
 		D7662319C587D3965757B1B7 /* ComposeFlowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8175776A2DEBC88B756C24E /* ComposeFlowUITests.swift */; };
 		D85DBFDBA2D0DACA843EA1A9 /* ContactDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60220490DD5F5ED7374E537 /* ContactDetailView.swift */; };
@@ -143,6 +145,7 @@
 		205CDD9B8C3402B672E5E739 /* ComposeViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeViewTests.swift; sourceTree = "<group>"; };
 		209311518915490C7F72039B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		22EE33928D41292F74DBD608 /* SaveConfirmationToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveConfirmationToast.swift; sourceTree = "<group>"; };
+		248832A537A6EE482BB17FF3 /* ContactTicklesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTicklesTests.swift; sourceTree = "<group>"; };
 		283ABBFE8086AB5A46F32B3D /* ComposeSuggestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeSuggestions.swift; sourceTree = "<group>"; };
 		2A12E96AE23E8405CF010707 /* ur */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ur; path = ur.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		30D196741B99B788C9E325C3 /* LinkedInCSVParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedInCSVParserTests.swift; sourceTree = "<group>"; };
@@ -225,6 +228,7 @@
 		E0FC442532093F4D73692AC7 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E41F74FBB6970BCE328664AF /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E5F765EEB318998C9E229F0F /* TemplateEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateEditView.swift; sourceTree = "<group>"; };
+		E6E13C67C14F0A08295E6DB5 /* ContactTicklesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTicklesUITests.swift; sourceTree = "<group>"; };
 		E77347A9F53BFBE3E1672671 /* AddContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactView.swift; sourceTree = "<group>"; };
 		E7F93D464D33962932C5C942 /* TickleActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleActionSheet.swift; sourceTree = "<group>"; };
 		E8175776A2DEBC88B756C24E /* ComposeFlowUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeFlowUITests.swift; sourceTree = "<group>"; };
@@ -367,6 +371,7 @@
 				205CDD9B8C3402B672E5E739 /* ComposeViewTests.swift */,
 				EA9ED8CB5E6D9F8E216A7470 /* ContactImportServiceTests.swift */,
 				10D31DBFE56E32631DD7B650 /* ContactTests.swift */,
+				248832A537A6EE482BB17FF3 /* ContactTicklesTests.swift */,
 				C3416D505AC168ABA8379A68 /* GroupFeatureTests.swift */,
 				901EF7F333375E781CF94056 /* ImportFeedbackTests.swift */,
 				30D196741B99B788C9E325C3 /* LinkedInCSVParserTests.swift */,
@@ -442,6 +447,7 @@
 			isa = PBXGroup;
 			children = (
 				E8175776A2DEBC88B756C24E /* ComposeFlowUITests.swift */,
+				E6E13C67C14F0A08295E6DB5 /* ContactTicklesUITests.swift */,
 				5D5C85FA1377676F93CC23F9 /* GroupsScreenUITests.swift */,
 			);
 			name = SITUITests;
@@ -721,6 +727,7 @@
 				707528D3264086FB42BDD51E /* ComposeViewTests.swift in Sources */,
 				CDE377155C3E8D64FB62AE2F /* ContactImportServiceTests.swift in Sources */,
 				9283E70E0707CC70CFA0AD0F /* ContactTests.swift in Sources */,
+				D6455E6972A833B2068E23D5 /* ContactTicklesTests.swift in Sources */,
 				9DC847FCC2BFE02BF343C577 /* GroupFeatureTests.swift in Sources */,
 				F270284BAF01A90FDA75B306 /* ImportFeedbackTests.swift in Sources */,
 				9CA0D612EF182E101FDE37A4 /* LinkedInCSVParserTests.swift in Sources */,
@@ -743,6 +750,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D7662319C587D3965757B1B7 /* ComposeFlowUITests.swift in Sources */,
+				0BFFF3E987BDD45D37650F79 /* ContactTicklesUITests.swift in Sources */,
 				121B201A777B373F894B4D35 /* GroupsScreenUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

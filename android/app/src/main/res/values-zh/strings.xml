@@ -364,4 +364,7 @@
     <string name="phone_chooser_title">选择一个号码</string>
     <!-- TIC-96: honest picker-cap hint -->
     <string name="picker_showing_hint">显示 %1$d / %2$d</string>
+    <!-- TIC-108: scheduled tickles on an individual profile -->
+    <string name="contact_detail_tickles_title">提醒</string>
+    <string name="contact_detail_tickles_empty">尚未为此人安排提醒。</string>
 </resources>

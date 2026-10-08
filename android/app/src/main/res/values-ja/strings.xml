@@ -364,4 +364,7 @@
     <string name="phone_chooser_title">番号を選択</string>
     <!-- TIC-96: honest picker-cap hint -->
     <string name="picker_showing_hint">%2$d件中%1$d件を表示</string>
+    <!-- TIC-108: scheduled tickles on an individual profile -->
+    <string name="contact_detail_tickles_title">リマインダー</string>
+    <string name="contact_detail_tickles_empty">この人へのリマインダーは設定されていません。</string>
 </resources>

@@ -369,4 +369,7 @@
     <string name="phone_chooser_title">एक नंबर चुनें</string>
     <!-- TIC-96: honest picker-cap hint -->
     <string name="picker_showing_hint">%2$d में से %1$d दिखाए जा रहे हैं</string>
+    <!-- TIC-108: scheduled tickles on an individual profile -->
+    <string name="contact_detail_tickles_title">रिमाइंडर</string>
+    <string name="contact_detail_tickles_empty">इस व्यक्ति के लिए कोई रिमाइंडर निर्धारित नहीं है।</string>
 </resources>

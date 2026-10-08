@@ -375,4 +375,7 @@
     <string name="phone_chooser_title">Choose a number</string>
     <!-- TIC-96: honest picker-cap hint (ComposeScreen recipient dropdown, TickleEditScreen contact picker) -->
     <string name="picker_showing_hint">Showing %1$d of %2$d</string>
+    <!-- TIC-108: scheduled tickles on an individual profile -->
+    <string name="contact_detail_tickles_title">Tickles</string>
+    <string name="contact_detail_tickles_empty">No tickles scheduled for this person.</string>
 </resources>

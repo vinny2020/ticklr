@@ -369,4 +369,7 @@
     <string name="phone_chooser_title">Válassz egy számot</string>
     <!-- TIC-96: honest picker-cap hint -->
     <string name="picker_showing_hint">%1$d / %2$d megjelenítve</string>
+    <!-- TIC-108: scheduled tickles on an individual profile -->
+    <string name="contact_detail_tickles_title">Emlékeztetők</string>
+    <string name="contact_detail_tickles_empty">Ehhez a személyhez nincs ütemezett emlékeztető.</string>
 </resources>

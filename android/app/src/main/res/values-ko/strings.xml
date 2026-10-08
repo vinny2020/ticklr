@@ -364,4 +364,7 @@
     <string name="phone_chooser_title">번호 선택</string>
     <!-- TIC-96: honest picker-cap hint -->
     <string name="picker_showing_hint">%2$d개 중 %1$d개 표시</string>
+    <!-- TIC-108: scheduled tickles on an individual profile -->
+    <string name="contact_detail_tickles_title">리마인더</string>
+    <string name="contact_detail_tickles_empty">이 사람에 대해 예약된 리마인더가 없습니다.</string>
 </resources>

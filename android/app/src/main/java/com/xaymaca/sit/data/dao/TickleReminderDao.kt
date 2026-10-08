@@ -41,6 +41,11 @@ interface TickleReminderDao {
     @Query("SELECT * FROM tickle_reminders WHERE contactId = :contactId")
     suspend fun getByContactId(contactId: Long): List<TickleReminder>
 
+    /** Live scheduled tickles for an individual profile; group-only and
+     *  completed tickles do not belong in this list. */
+    @Query("SELECT * FROM tickle_reminders WHERE contactId = :contactId AND status IN ('ACTIVE', 'SNOOZED') ORDER BY nextDueDate ASC, createdAt ASC, id ASC")
+    fun observeScheduledForContact(contactId: Long): Flow<List<TickleReminder>>
+
     /** Reminders attached to a group — same purpose as [getByContactId]. */
     @Query("SELECT * FROM tickle_reminders WHERE groupId = :groupId")
     suspend fun getByGroupId(groupId: Long): List<TickleReminder>
