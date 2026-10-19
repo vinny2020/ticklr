@@ -1,4 +1,5 @@
-Deine Tickles, direkt in jedem Profil.
-• Sieh die aktiven und verschobenen Tickles jeder Person.
-• Tippe auf einen Tickle, um ihn zu bearbeiten.
-• Speichere oder brich ab und kehre zum selben Profil zurück.
+Kurze Anleitungen für deinen Einstieg.
+• Lerne, Telefonkontakte und LinkedIn-CSV-Dateien zu importieren.
+• Erfahre, wie du einen Tickle erstellst und Kontakte in Gruppen organisierst.
+• Schließe Anleitungen und öffne sie unter Einstellungen → Tutorials erneut.
+• Die Tutorials sind derzeit auf Englisch.

@@ -1,4 +1,5 @@
-Your tickles, right on each profile.
-• See active and snoozed tickles for each person.
-• Tap a tickle to edit it.
-• Save or cancel and return to the same profile.
+Short guides to help you get started.
+• Learn to import phone contacts and LinkedIn CSV files.
+• See how to create a tickle and organize people into groups.
+• Dismiss any guide and replay it from Settings → Tutorials.
+• Tutorials are currently in English.

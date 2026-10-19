@@ -1,4 +1,5 @@
-Tickle-urile tale, direct în fiecare profil.
-• Vezi tickle-urile active și amânate pentru fiecare persoană.
-• Atinge un tickle pentru a-l edita.
-• Salvează sau anulează și revino la același profil.
+Ghiduri scurte care te ajută să începi.
+• Învață să imporți contacte din telefon și fișiere CSV de pe LinkedIn.
+• Vezi cum creezi un tickle și organizezi persoanele în grupuri.
+• Închide orice ghid și revino la el din Setări → Tutoriale.
+• Tutorialele sunt momentan în engleză.

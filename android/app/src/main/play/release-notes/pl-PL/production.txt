@@ -1,4 +1,5 @@
-Twoje tickles, bezpośrednio na każdym profilu.
-• Zobacz aktywne i odłożone tickles każdej osoby.
-• Dotknij tickle, aby go edytować.
-• Zapisz lub anuluj i wróć do tego samego profilu.
+Krótkie poradniki, które pomogą Ci zacząć.
+• Naucz się importować kontakty z telefonu i pliki CSV z LinkedIn.
+• Zobacz, jak tworzyć tickle i organizować osoby w grupy.
+• Zamknij dowolny poradnik i otwórz go ponownie w Ustawienia → Poradniki.
+• Poradniki są obecnie dostępne po angielsku.

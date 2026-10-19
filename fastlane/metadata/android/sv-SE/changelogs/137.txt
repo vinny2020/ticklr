@@ -1,0 +1,5 @@
+Korta guider som hjälper dig att komma igång.
+• Lär dig importera telefonkontakter och CSV-filer från LinkedIn.
+• Se hur du skapar en tickle och ordnar personer i grupper.
+• Stäng valfri guide och öppna den igen via Inställningar → Guider.
+• Guiderna är för närvarande på engelska.

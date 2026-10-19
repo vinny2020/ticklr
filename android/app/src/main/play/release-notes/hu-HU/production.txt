@@ -1,4 +1,5 @@
-A tickle emlékeztetőid közvetlenül a profilokon.
-• Lásd az egyes személyek aktív és elhalasztott tickle emlékeztetőit.
-• Koppints egy tickle emlékeztetőre a szerkesztéshez.
-• Mentés vagy megszakítás után térj vissza ugyanahhoz a profilhoz.
+Rövid útmutatók az első lépésekhez.
+• Tanuld meg a telefonos névjegyek és a LinkedIn CSV-fájlok importálását.
+• Nézd meg, hogyan hozhatsz létre tickle emlékeztetőt és rendezheted csoportokba az embereket.
+• Zárj be bármely útmutatót, és nyisd meg újra a Beállítások → Útmutatók menüben.
+• Az útmutatók egyelőre angolul érhetők el.
