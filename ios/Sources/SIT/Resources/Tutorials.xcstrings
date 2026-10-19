@@ -9,6 +9,126 @@
             "state": "translated",
             "value": "Import phone contacts"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "استيراد جهات اتصال الهاتف"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import kontaktů z telefonu"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Telefonkontakte importieren"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Εισαγωγή επαφών τηλεφώνου"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importar contactos del teléfono"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importer les contacts du téléphone"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ייבוא אנשי קשר מהטלפון"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "फ़ोन के संपर्क आयात करें"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Telefonos névjegyek importálása"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importa i contatti del telefono"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "電話の連絡先を読み込む"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "휴대전화 연락처 가져오기"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Telefooncontacten importeren"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importuj kontakty z telefonu"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importar contactos do telefone"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importă contactele din telefon"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Импорт контактов телефона"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importera telefonkontakter"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "فون کے رابطے درآمد کریں"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "导入手机联系人"
+          }
         }
       }
     },
@@ -19,6 +139,126 @@
           "stringUnit": {
             "state": "translated",
             "value": "Import LinkedIn connections"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "استيراد علاقات LinkedIn"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import spojení z LinkedIn"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LinkedIn-Kontakte importieren"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Εισαγωγή συνδέσεων LinkedIn"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importar conexiones de LinkedIn"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importer les relations LinkedIn"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ייבוא קשרים מ־LinkedIn"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LinkedIn के संपर्क आयात करें"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LinkedIn-kapcsolatok importálása"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importa i collegamenti LinkedIn"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LinkedInのつながりを読み込む"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LinkedIn 인맥 가져오기"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LinkedIn-connecties importeren"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importuj kontakty z LinkedIn"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importar ligações do LinkedIn"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importă conexiunile LinkedIn"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Импорт контактов LinkedIn"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importera LinkedIn-kontakter"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LinkedIn کے رابطے درآمد کریں"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "导入 LinkedIn 联系人"
           }
         }
       }
@@ -31,6 +271,126 @@
             "state": "translated",
             "value": "Create your first tickle"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أنشئ أول tickle"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vytvoř svůj první tickle"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erstelle deinen ersten Tickle"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Δημιούργησε το πρώτο σου tickle"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crea tu primer tickle"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crée ton premier tickle"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "יצירת ה־tickle הראשון שלך"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अपना पहला tickle बनाएँ"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hozd létre az első tickle emlékeztetődet"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crea il tuo primo tickle"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最初のtickleを作成する"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "첫 tickle 만들기"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maak je eerste tickle"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utwórz swój pierwszy tickle"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cria o teu primeiro tickle"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Creează primul tău tickle"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Создай свой первый tickle"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skapa din första tickle"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اپنا پہلا tickle بنائیں"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "创建第一个 tickle"
+          }
         }
       }
     },
@@ -41,6 +401,126 @@
           "stringUnit": {
             "state": "translated",
             "value": "Organize people into groups"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تنظيم الأشخاص في مجموعات"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uspořádej lidi do skupin"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kontakte in Gruppen organisieren"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Οργάνωσε τα άτομα σε ομάδες"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Organiza a las personas en grupos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Organise tes contacts en groupes"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ארגון אנשים בקבוצות"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "लोगों को समूहों में व्यवस्थित करें"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rendezd csoportokba az embereket"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Organizza le persone in gruppi"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "連絡先をグループに整理する"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "사람들을 그룹으로 정리하기"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deel mensen in groepen in"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uporządkuj osoby w grupach"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Organiza as pessoas em grupos"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Organizează persoanele în grupuri"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Организуй людей в группы"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ordna personer i grupper"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لوگوں کو گروپوں میں ترتیب دیں"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "将联系人整理到群组"
           }
         }
       }
@@ -53,6 +533,126 @@
             "state": "translated",
             "value": "Choose CSV file"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختيار ملف CSV"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vybrat soubor CSV"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CSV-Datei auswählen"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Επιλογή αρχείου CSV"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Elegir archivo CSV"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisir un fichier CSV"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בחירת קובץ CSV"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CSV फ़ाइल चुनें"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CSV-fájl kiválasztása"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scegli file CSV"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CSVファイルを選択"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CSV 파일 선택"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CSV-bestand kiezen"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wybierz plik CSV"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolher ficheiro CSV"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alege fișierul CSV"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выбрать CSV-файл"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Välj CSV-fil"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CSV فائل منتخب کریں"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择 CSV 文件"
+          }
         }
       }
     },
@@ -63,6 +663,126 @@
           "stringUnit": {
             "state": "translated",
             "value": "Explore groups"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "استكشاف المجموعات"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prohlédnout skupiny"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gruppen entdecken"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Εξερεύνηση ομάδων"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Explorar grupos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Explorer les groupes"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "עיון בקבוצות"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "समूह देखें"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Csoportok felfedezése"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esplora i gruppi"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "グループを見る"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "그룹 둘러보기"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Groepen bekijken"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Przeglądaj grupy"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Explorar grupos"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Explorează grupurile"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Посмотреть группы"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utforska grupper"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "گروپ دیکھیں"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "浏览群组"
           }
         }
       }
@@ -75,6 +795,126 @@
             "state": "translated",
             "value": "Your people, already here"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الأشخاص الذين يهمونك موجودون هنا"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tvoji lidé už jsou tady"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deine Kontakte sind schon da"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Οι δικοί σου άνθρωποι είναι ήδη εδώ"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu gente ya está aquí"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tes proches sont déjà là"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "האנשים שלך כבר כאן"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपके लोग पहले से यहाँ हैं"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A kapcsolataid már itt vannak"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le tue persone sono già qui"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "大切な人は、もうここに"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "소중한 사람들, 이미 여기에"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je mensen zijn er al"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Twoje kontakty już tu są"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As tuas pessoas já estão aqui"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Persoanele tale sunt deja aici"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Твои контакты уже здесь"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dina kontakter finns redan här"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "آپ کے لوگ پہلے سے یہاں ہیں"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "你熟悉的人，已经在这里"
+          }
         }
       }
     },
@@ -84,7 +924,127 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Start with the contacts on your iPhone. Your Ticklr network stays on this device."
+            "value": "Start with the contacts on your phone. Your Ticklr network stays on this device."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ابدأ بجهات اتصال هاتفك. تبقى شبكة Ticklr على هذا الجهاز."
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Začni kontakty v telefonu. Tvoje síť Ticklr zůstává na tomto zařízení."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beginne mit den Kontakten auf deinem Telefon. Dein Ticklr-Netzwerk bleibt auf diesem Gerät."
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ξεκίνα με τις επαφές του τηλεφώνου σου. Το δίκτυό σου στο Ticklr παραμένει σε αυτή τη συσκευή."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empieza con los contactos de tu teléfono. Tu red de Ticklr permanece en este dispositivo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Commence avec les contacts de ton téléphone. Ton réseau Ticklr reste sur cet appareil."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אפשר להתחיל עם אנשי הקשר בטלפון. רשת ה־Ticklr שלך נשארת במכשיר הזה."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अपने फ़ोन के संपर्कों से शुरू करें। आपका Ticklr नेटवर्क इसी डिवाइस पर रहता है।"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kezdd a telefonod névjegyeivel. A Ticklr-hálózatod ezen az eszközön marad."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inizia dai contatti del telefono. La tua rete Ticklr rimane su questo dispositivo."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "電話の連絡先から始めましょう。Ticklrのネットワークはこの端末内に保存されます。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "휴대전화 연락처로 시작하세요. Ticklr 인맥은 이 기기에 저장됩니다."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Begin met de contacten op je telefoon. Je Ticklr-netwerk blijft op dit apparaat."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zacznij od kontaktów w telefonie. Twoja sieć Ticklr pozostaje na tym urządzeniu."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Começa pelos contactos do teu telefone. A tua rede Ticklr fica neste dispositivo."
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Începe cu contactele din telefon. Rețeaua ta Ticklr rămâne pe acest dispozitiv."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начни с контактов в телефоне. Твоя сеть Ticklr остаётся на этом устройстве."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Börja med kontakterna på din telefon. Ditt Ticklr-nätverk stannar på den här enheten."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اپنے فون کے رابطوں سے شروع کریں۔ آپ کا Ticklr نیٹ ورک اسی آلے پر رہتا ہے۔"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "从手机联系人开始。你的 Ticklr 人脉网络保存在此设备上。"
           }
         }
       }
@@ -95,7 +1055,127 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Choose who to bring in"
+            "value": "Bring in your contacts"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "استورد جهات اتصالك"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importuj své kontakty"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importiere deine Kontakte"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Εισήγαγε τις επαφές σου"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importa tus contactos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importe tes contacts"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ייבוא אנשי הקשר שלך"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अपने संपर्क आयात करें"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importáld a névjegyeidet"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importa i tuoi contatti"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "連絡先を読み込もう"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "연락처를 가져오세요"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importeer je contacten"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zaimportuj swoje kontakty"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importa os teus contactos"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importă-ți contactele"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Импортируй свои контакты"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importera dina kontakter"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اپنے رابطے درآمد کریں"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "导入你的联系人"
           }
         }
       }
@@ -108,6 +1188,126 @@
             "state": "translated",
             "value": "Choose individual people with the contact picker, or import all contacts Ticklr can access."
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختر أشخاصًا عبر منتقي جهات الاتصال، أو استورد كل جهات الاتصال التي يستطيع Ticklr الوصول إليها."
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vyber jednotlivé lidi pomocí výběru kontaktů nebo importuj všechny kontakty dostupné pro Ticklr."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wähle einzelne Personen in der Kontaktauswahl oder importiere alle Kontakte, auf die Ticklr zugreifen kann."
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Επίλεξε άτομα με τον επιλογέα επαφών ή εισήγαγε όλες τις επαφές στις οποίες έχει πρόσβαση το Ticklr."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Elige personas con el selector de contactos o importa todos los contactos a los que Ticklr puede acceder."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisis des personnes dans le sélecteur de contacts ou importe tous les contacts accessibles à Ticklr."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אפשר לבחור אנשים באמצעות בורר אנשי הקשר, או לייבא את כל אנשי הקשר של־Ticklr יש גישה אליהם."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "संपर्क चयनकर्ता से लोगों को चुनें या वे सभी संपर्क आयात करें जिन तक Ticklr की पहुँच है।"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Válassz ki embereket a névjegyválasztóval, vagy importáld az összes névjegyet, amelyhez a Ticklr hozzáfér."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scegli le persone nel selettore dei contatti oppure importa tutti i contatti accessibili a Ticklr."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "連絡先ピッカーで相手を選ぶか、Ticklrがアクセスできるすべての連絡先を読み込みます。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "연락처 선택기에서 사람을 선택하거나 Ticklr가 접근할 수 있는 모든 연락처를 가져오세요."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kies personen met de contactkiezer of importeer alle contacten waartoe Ticklr toegang heeft."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wybierz osoby za pomocą selektora kontaktów lub zaimportuj wszystkie kontakty dostępne dla Ticklr."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolhe pessoas no seletor de contactos ou importa todos os contactos a que o Ticklr tem acesso."
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alege persoane din selectorul de contacte sau importă toate contactele la care Ticklr are acces."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выбери отдельных людей через выбор контактов или импортируй все контакты, к которым у Ticklr есть доступ."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Välj personer med kontaktväljaren eller importera alla kontakter som Ticklr har åtkomst till."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "رابطوں کے انتخاب کے ذریعے افراد چنیں، یا وہ تمام رابطے درآمد کریں جن تک Ticklr کی رسائی ہے۔"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用联系人选择器选择特定联系人，或导入 Ticklr 有权访问的所有联系人。"
+          }
         }
       }
     },
@@ -119,6 +1319,126 @@
             "state": "translated",
             "value": "Make your first connection"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ابدأ أول تواصل"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Navaž první spojení"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Knüpfe die erste Verbindung"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Κάνε την πρώτη σου σύνδεση"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Haz tu primera conexión"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Renoue un premier lien"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "יצירת הקשר הראשון"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अपना पहला जुड़ाव बनाएँ"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vedd fel az első kapcsolatot"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crea il primo legame"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最初のつながりを作ろう"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "첫 인맥을 이어 보세요"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leg je eerste verbinding"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nawiąż pierwszy kontakt"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cria a tua primeira ligação"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Creează prima conexiune"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Установи первую связь"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ta din första kontakt"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اپنا پہلا تعلق بنائیں"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "建立第一份联系"
+          }
         }
       }
     },
@@ -128,7 +1448,127 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Find your imported people in Network. Open a profile to create a tickle or add them to a group."
+            "value": "Find your imported people in Network. Open a profile to create a tickle or add someone to a group."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اعثر على جهات الاتصال المستوردة في الشبكة. افتح ملفًا شخصيًا لإنشاء tickle أو إضافة شخص إلى مجموعة."
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importované kontakty najdeš v Síti. Otevři profil a vytvoř tickle nebo někoho přidej do skupiny."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finde deine importierten Kontakte unter Netzwerk. Öffne ein Profil, um einen Tickle zu erstellen oder jemanden einer Gruppe hinzuzufügen."
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Βρες τις εισηγμένες επαφές στο Δίκτυο. Άνοιξε ένα προφίλ για να δημιουργήσεις ένα tickle ή να προσθέσεις κάποιον σε ομάδα."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Encuentra tus contactos importados en Red. Abre un perfil para crear un tickle o añadir a alguien a un grupo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Retrouve tes contacts importés dans Réseau. Ouvre un profil pour créer un tickle ou ajouter une personne à un groupe."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אנשי הקשר המיובאים מופיעים ברשת. אפשר לפתוח פרופיל כדי ליצור tickle או להוסיף אדם לקבוצה."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आयात किए गए संपर्क नेटवर्क में देखें। tickle बनाने या किसी को समूह में जोड़ने के लिए प्रोफ़ाइल खोलें।"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Az importált névjegyeket a Hálózatban találod. Nyiss meg egy profilt tickle létrehozásához vagy valakinek a csoportba helyezéséhez."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trova i contatti importati in Rete. Apri un profilo per creare un tickle o aggiungere qualcuno a un gruppo."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "読み込んだ連絡先は「ネットワーク」に表示されます。プロフィールを開いてtickleを作成したり、グループに追加したりできます。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "가져온 연락처를 네트워크에서 찾아보세요. 프로필을 열어 tickle을 만들거나 그룹에 추가할 수 있어요."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vind je geïmporteerde contacten in Netwerk. Open een profiel om een tickle te maken of iemand aan een groep toe te voegen."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Znajdź zaimportowane kontakty w Sieci. Otwórz profil, aby utworzyć tickle lub dodać kogoś do grupy."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Encontra os contactos importados em Rede. Abre um perfil para criar um tickle ou adicionar alguém a um grupo."
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Găsește contactele importate în Rețea. Deschide un profil pentru a crea un tickle sau a adăuga pe cineva într-un grup."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Найди импортированные контакты в разделе Сеть. Открой профиль, чтобы создать tickle или добавить человека в группу."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hitta importerade kontakter i Nätverk. Öppna en profil för att skapa en tickle eller lägga till någon i en grupp."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "درآمد شدہ رابطے نیٹ ورک میں دیکھیں۔ tickle بنانے یا کسی شخص کو گروپ میں شامل کرنے کے لیے پروفائل کھولیں۔"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在“人脉”中找到已导入的联系人。打开个人资料，创建 tickle 或将联系人加入群组。"
           }
         }
       }
@@ -141,6 +1581,126 @@
             "state": "translated",
             "value": "Keep connections warm"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حافظ على دفء العلاقات"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Udržuj spojení živá"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Halte Verbindungen lebendig"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Διατήρησε ζωντανές τις συνδέσεις"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mantén el contacto"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Entretiens tes relations"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שומרים על קשרים חמים"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "संबंधों में गर्मजोशी बनाए रखें"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ápold a kapcsolataidat"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coltiva i tuoi legami"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "つながりを大切に"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "인맥을 따뜻하게 이어 가세요"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Houd je contacten warm"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pielęgnuj swoje relacje"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mantém as ligações próximas"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Păstrează legăturile apropiate"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поддерживай связи"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Håll kontakterna levande"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعلقات کو زندہ رکھیں"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "让联系保持温度"
+          }
         }
       }
     },
@@ -151,6 +1711,126 @@
           "stringUnit": {
             "state": "translated",
             "value": "Bring professional connections into Ticklr using your LinkedIn connections CSV."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "انقل علاقاتك المهنية إلى Ticklr باستخدام ملف CSV لعلاقات LinkedIn."
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Přenes pracovní kontakty do Ticklr pomocí CSV souboru se spojeními z LinkedIn."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importiere berufliche Kontakte mit deiner LinkedIn-Kontakt-CSV in Ticklr."
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Μετάφερε επαγγελματικές συνδέσεις στο Ticklr με το CSV των συνδέσεών σου στο LinkedIn."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importa tus conexiones profesionales a Ticklr con el CSV de conexiones de LinkedIn."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importe tes relations professionnelles dans Ticklr avec le CSV de tes relations LinkedIn."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אפשר לייבא קשרים מקצועיים ל־Ticklr באמצעות קובץ ה־CSV של הקשרים שלך ב־LinkedIn."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LinkedIn के संपर्कों की CSV फ़ाइल से अपने पेशेवर संपर्क Ticklr में लाएँ।"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importáld szakmai kapcsolataidat a Ticklrbe a LinkedIn-kapcsolataid CSV-fájljával."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Porta i contatti professionali in Ticklr usando il CSV dei tuoi collegamenti LinkedIn."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LinkedInのつながりのCSVを使って、仕事のつながりをTicklrに読み込みましょう。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LinkedIn 인맥 CSV로 직장 인맥을 Ticklr에 가져오세요."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Breng zakelijke contacten naar Ticklr met het CSV-bestand van je LinkedIn-connecties."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Przenieś kontakty zawodowe do Ticklr za pomocą pliku CSV z kontaktami z LinkedIn."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Traz os contactos profissionais para o Ticklr com o CSV das tuas ligações do LinkedIn."
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adu conexiunile profesionale în Ticklr folosind fișierul CSV cu conexiunile LinkedIn."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Перенеси профессиональные контакты в Ticklr с помощью CSV-файла контактов LinkedIn."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importera yrkeskontakter till Ticklr med CSV-filen med dina LinkedIn-kontakter."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LinkedIn کے رابطوں کی CSV فائل سے اپنے پیشہ ورانہ رابطے Ticklr میں لائیں۔"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用 LinkedIn 联系人 CSV 文件，将工作人脉导入 Ticklr。"
           }
         }
       }
@@ -163,6 +1843,126 @@
             "state": "translated",
             "value": "Start with your export"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ابدأ بملف التصدير"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Začni exportem"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beginne mit deinem Export"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ξεκίνα με την εξαγωγή σου"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empieza con tu exportación"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Commence par ton export"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מתחילים בייצוא"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अपनी निर्यात फ़ाइल से शुरू करें"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kezdd az exportálással"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inizia dall’esportazione"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "エクスポートから始めよう"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "내보내기부터 시작하세요"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Begin met je export"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zacznij od eksportu"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Começa pela exportação"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Începe cu exportul"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начни с экспорта"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Börja med din export"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اپنی برآمد شدہ فائل سے شروع کریں"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "从导出文件开始"
+          }
         }
       }
     },
@@ -172,7 +1972,127 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Request a copy of your connections data from LinkedIn, then save the downloaded CSV in Files. The import screen has the full export instructions."
+            "value": "Request your connections data from LinkedIn and save the downloaded CSV on your phone. The import screen has the export instructions."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اطلب بيانات علاقاتك من LinkedIn، واحفظ ملف CSV الذي تم تنزيله على هاتفك. تتضمن شاشة الاستيراد إرشادات التصدير."
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Požádej LinkedIn o data svých spojení a ulož stažený CSV soubor do telefonu. Pokyny k exportu najdeš na obrazovce importu."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fordere deine Kontaktdaten bei LinkedIn an und speichere die heruntergeladene CSV auf deinem Telefon. Die Importansicht enthält die Exportanleitung."
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ζήτησε τα δεδομένα συνδέσεών σου από το LinkedIn και αποθήκευσε το CSV που κατέβασες στο τηλέφωνο. Η οθόνη εισαγωγής περιέχει τις οδηγίες εξαγωγής."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solicita tus datos de conexiones a LinkedIn y guarda el CSV descargado en tu teléfono. La pantalla de importación incluye las instrucciones para exportar."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Demande tes données de relations à LinkedIn et enregistre le CSV téléchargé sur ton téléphone. L’écran d’importation contient les instructions d’export."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "יש לבקש מ־LinkedIn את נתוני הקשרים ולשמור את קובץ ה־CSV שהורד בטלפון. במסך הייבוא מופיעות הוראות הייצוא."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LinkedIn से अपने संपर्कों का डेटा माँगें और डाउनलोड की गई CSV फ़ोन में सहेजें। आयात स्क्रीन पर निर्यात के निर्देश दिए गए हैं।"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kérd le a kapcsolataid adatait a LinkedIntől, és mentsd a letöltött CSV-fájlt a telefonodra. Az importálási képernyőn megtalálod az exportálási útmutatót."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Richiedi i dati dei collegamenti a LinkedIn e salva il CSV scaricato sul telefono. La schermata di importazione contiene le istruzioni per l’esportazione."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LinkedInでつながりのデータをリクエストし、ダウンロードしたCSVを電話に保存します。読み込み画面にエクスポートの手順があります。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LinkedIn에 인맥 데이터를 요청하고 내려받은 CSV를 휴대전화에 저장하세요. 가져오기 화면에 내보내기 안내가 있어요."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vraag je connectiegegevens op bij LinkedIn en sla het gedownloade CSV-bestand op je telefoon op. Het importscherm bevat de exportinstructies."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Poproś LinkedIn o dane swoich kontaktów i zapisz pobrany plik CSV w telefonie. Instrukcje eksportu znajdziesz na ekranie importowania."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pede os dados das tuas ligações ao LinkedIn e guarda o CSV transferido no telefone. O ecrã de importação tem as instruções de exportação."
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solicită datele conexiunilor de la LinkedIn și salvează fișierul CSV descărcat pe telefon. Ecranul de import conține instrucțiunile de export."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запроси данные своих контактов в LinkedIn и сохрани скачанный CSV-файл на телефоне. Инструкции по экспорту есть на экране импорта."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Begär dina kontaktuppgifter från LinkedIn och spara den hämtade CSV-filen på telefonen. Importskärmen har instruktioner för exporten."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LinkedIn سے اپنے رابطوں کا ڈیٹا طلب کریں اور ڈاؤن لوڈ شدہ CSV فون میں محفوظ کریں۔ درآمد کی اسکرین پر برآمد کرنے کی ہدایات موجود ہیں۔"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "向 LinkedIn 申请联系人数据，并将下载的 CSV 文件保存到手机。导入页面提供了导出说明。"
           }
         }
       }
@@ -185,6 +2105,126 @@
             "state": "translated",
             "value": "One file, a familiar network"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ملف واحد، وشبكة مألوفة"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jeden soubor, známá síť"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eine Datei, ein vertrautes Netzwerk"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ένα αρχείο, ένα γνώριμο δίκτυο"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un archivo, una red conocida"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un fichier, un réseau familier"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "קובץ אחד, רשת מוכרת"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "एक फ़ाइल, परिचित नेटवर्क"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Egy fájl, egy ismerős hálózat"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un file, una rete familiare"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ひとつのファイルで、いつものつながりを"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "파일 하나로 익숙한 인맥을"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eén bestand, een vertrouwd netwerk"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jeden plik, znajoma sieć"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um ficheiro, uma rede familiar"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un fișier, o rețea familiară"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Один файл — знакомая сеть"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En fil, ett välbekant nätverk"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ایک فائل، مانوس نیٹ ورک"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一个文件，熟悉的人脉"
+          }
         }
       }
     },
@@ -194,7 +2234,127 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Choose your connections CSV. After import, your connections appear in Network, ready for a tickle."
+            "value": "Choose your connections CSV. After import, find your connections in Network and add any missing contact details."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختر ملف CSV لعلاقاتك. بعد الاستيراد، اعثر عليها في الشبكة وأضف تفاصيل الاتصال الناقصة."
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vyber CSV soubor se spojeními. Po importu je najdeš v Síti a můžeš doplnit chybějící kontaktní údaje."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wähle deine Kontakt-CSV. Nach dem Import findest du deine Kontakte unter Netzwerk und kannst fehlende Kontaktdaten ergänzen."
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Επίλεξε το CSV των συνδέσεών σου. Μετά την εισαγωγή, βρες τις στο Δίκτυο και συμπλήρωσε τα στοιχεία επικοινωνίας που λείπουν."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Elige el CSV de tus conexiones. Tras importarlo, busca tus conexiones en Red y añade los datos de contacto que falten."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisis le CSV de tes relations. Après l’importation, retrouve-les dans Réseau et ajoute les coordonnées manquantes."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "יש לבחור את קובץ ה־CSV של הקשרים. לאחר הייבוא, אפשר למצוא אותם ברשת ולהשלים פרטי קשר חסרים."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अपने संपर्कों की CSV चुनें। आयात के बाद उन्हें नेटवर्क में खोजें और संपर्क की छूटी हुई जानकारी जोड़ें।"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Válaszd ki a kapcsolataid CSV-fájlját. Importálás után keresd meg őket a Hálózatban, és pótold a hiányzó elérhetőségeket."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scegli il CSV dei collegamenti. Dopo l’importazione, trovali in Rete e aggiungi i recapiti mancanti."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "つながりのCSVを選択します。読み込み後は「ネットワーク」で相手を見つけ、不足する連絡先情報を追加できます。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "인맥 CSV를 선택하세요. 가져온 뒤 네트워크에서 인맥을 찾고 빠진 연락처 정보를 추가하세요."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kies het CSV-bestand van je connecties. Vind ze na de import in Netwerk en vul ontbrekende contactgegevens aan."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wybierz plik CSV kontaktów. Po imporcie znajdź kontakty w Sieci i uzupełnij brakujące dane kontaktowe."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolhe o CSV das tuas ligações. Depois de importar, encontra-as em Rede e adiciona os dados de contacto em falta."
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alege fișierul CSV al conexiunilor. După import, găsește-le în Rețea și adaugă datele de contact care lipsesc."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выбери CSV-файл контактов. После импорта найди их в разделе Сеть и добавь недостающие контактные данные."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Välj din kontakt-CSV. Efter importen hittar du kontakterna i Nätverk och kan lägga till kontaktuppgifter som saknas."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اپنے رابطوں کی CSV منتخب کریں۔ درآمد کے بعد انہیں نیٹ ورک میں تلاش کریں اور رابطے کی نامکمل تفصیلات شامل کریں۔"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择联系人 CSV 文件。导入后，在“人脉”中找到联系人，并补充缺失的联系方式。"
           }
         }
       }
@@ -207,6 +2367,126 @@
             "state": "translated",
             "value": "A little reminder to reconnect"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تذكير صغير لتجديد التواصل"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Malá připomínka k obnovení kontaktu"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eine kleine Erinnerung zum Kontaktaufnehmen"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Μια μικρή υπενθύμιση για επανασύνδεση"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un pequeño recordatorio para reconectar"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un petit rappel pour reprendre contact"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "תזכורת קטנה לחדש את הקשר"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "फिर संपर्क करने का एक छोटा रिमाइंडर"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Egy kis emlékeztető, hogy újra beszéljetek"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un piccolo promemoria per risentirsi"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "また連絡するための小さなリマインダー"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "다시 연락할 작은 알림"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Een kleine herinnering om contact te houden"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Małe przypomnienie, by się odezwać"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um pequeno lembrete para retomar o contacto"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un mic memento pentru a relua legătura"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Небольшое напоминание снова связаться"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En liten påminnelse om att höras"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "دوبارہ رابطے کے لیے ایک چھوٹی یاددہانی"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用一个小提醒，重新联系"
+          }
         }
       }
     },
@@ -216,7 +2496,127 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Open someone’s profile and tap Create a tickle. Start with a person you’d like to hear from more often."
+            "value": "Open a profile and tap Create a tickle to set a reminder to reconnect."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "افتح ملفًا شخصيًا واضغط على «أنشئ تذكيرًا» لضبط تذكير بالتواصل مجددًا."
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Otevři profil a klepnutím na Vytvořit tickle nastav připomínku, abyste se znovu spojili."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Öffne ein Profil und tippe auf Tickle erstellen, um eine Erinnerung zum Kontaktaufnehmen einzurichten."
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Άνοιξε ένα προφίλ και πάτησε Δημιούργησε tickle για να ορίσεις υπενθύμιση να επικοινωνήσεις ξανά."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abre un perfil y toca Crear un tickle para programar un recordatorio y retomar el contacto."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ouvre un profil et appuie sur Créer un tickle pour programmer un rappel et reprendre contact."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אפשר לפתוח פרופיל וללחוץ על “צור tickle” כדי להגדיר תזכורת ליצירת קשר מחדש."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "प्रोफ़ाइल खोलें और फिर संपर्क करने का रिमाइंडर सेट करने के लिए “टिकल बनाएँ” पर टैप करें।"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nyiss meg egy profilt, és koppints a Tickle létrehozása lehetőségre, hogy emlékeztetőt állíts be a kapcsolatfelvételhez."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apri un profilo e tocca Crea un tickle per impostare un promemoria e riprendere i contatti."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プロフィールを開き、「リマインドを作る」をタップして、また連絡するためのリマインダーを設定します。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "프로필을 열고 Tickle 만들기를 눌러 다시 연락할 알림을 설정하세요."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open een profiel en tik op Tickle maken om een herinnering in te stellen en weer contact op te nemen."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Otwórz profil i dotknij Utwórz tickle, aby ustawić przypomnienie o ponownym kontakcie."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abre um perfil e toca em Criar um tickle para definir um lembrete para retomar o contacto."
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deschide un profil și atinge Creează un tickle pentru a seta un memento de a relua legătura."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открой профиль и нажми Создать tickle, чтобы настроить напоминание снова связаться."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Öppna en profil och tryck på Skapa ett tickle för att ställa in en påminnelse om att höras."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "پروفائل کھولیں اور دوبارہ رابطے کی یاددہانی مقرر کرنے کے لیے “ٹِکل بنائیں” پر ٹیپ کریں۔"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打开个人资料并点按“创建 tickle”，设置重新联系的提醒。"
           }
         }
       }
@@ -229,6 +2629,126 @@
             "state": "translated",
             "value": "Pick a rhythm or a special date"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختر وتيرة أو تاريخًا مميزًا"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vyber rytmus nebo zvláštní datum"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wähle einen Rhythmus oder ein besonderes Datum"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Επίλεξε ρυθμό ή ιδιαίτερη ημερομηνία"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Elige una frecuencia o una fecha especial"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisis un rythme ou une date spéciale"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בחירת תדירות או תאריך מיוחד"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "तय अंतराल या कोई खास तारीख चुनें"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Válassz ritmust vagy különleges dátumot"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scegli un ritmo o una data speciale"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ペースや特別な日を選ぼう"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "주기나 특별한 날짜를 고르세요"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kies een ritme of een bijzondere datum"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wybierz rytm lub wyjątkową datę"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolhe um ritmo ou uma data especial"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alege un ritm sau o dată specială"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выбери ритм или особую дату"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Välj en rytm eller ett särskilt datum"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تکرار یا کوئی خاص تاریخ منتخب کریں"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择频率或特别的日期"
+          }
         }
       }
     },
@@ -238,7 +2758,127 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Choose a frequency and starting date. For a birthday, tap Birthday and set the date; the tickle repeats annually."
+            "value": "Choose a frequency and starting date. For a birthday, choose Birthday and set the date; the tickle repeats annually."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختر التكرار وتاريخ البدء. لعيد ميلاد، اختر عيد ميلاد وحدد التاريخ؛ يتكرر tickle سنويًا."
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vyber četnost a počáteční datum. Pro narozeniny vyber Narozeniny a nastav datum; tickle se bude opakovat každý rok."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wähle Häufigkeit und Startdatum. Für einen Geburtstag wähle Geburtstag und lege das Datum fest; der Tickle wiederholt sich jährlich."
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Επίλεξε συχνότητα και ημερομηνία έναρξης. Για γενέθλια, επίλεξε Γενέθλια και όρισε την ημερομηνία· το tickle επαναλαμβάνεται ετησίως."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Elige una frecuencia y una fecha de inicio. Para un cumpleaños, elige Cumpleaños y establece la fecha; el tickle se repite cada año."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisis une fréquence et une date de début. Pour un anniversaire, choisis Anniversaire et indique la date ; le tickle se répète chaque année."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "יש לבחור תדירות ותאריך התחלה. ליום הולדת, יש לבחור יום הולדת ולהגדיר את התאריך; ה־tickle חוזר מדי שנה."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आवृत्ति और आरंभ की तारीख चुनें। जन्मदिन के लिए जन्मदिन चुनकर तारीख सेट करें; tickle हर साल दोहराया जाता है।"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Válaszd ki a gyakoriságot és a kezdődátumot. Születésnaphoz válaszd a Születésnap lehetőséget és állítsd be a dátumot; a tickle évente ismétlődik."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scegli frequenza e data di inizio. Per un compleanno, scegli Compleanno e imposta la data; il tickle si ripete ogni anno."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "頻度と開始日を選びます。誕生日の場合は「誕生日」を選んで日付を設定すると、tickleが毎年繰り返されます。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "반복 주기와 시작 날짜를 선택하세요. 생일은 생일을 선택하고 날짜를 설정하면 tickle이 매년 반복됩니다."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kies een frequentie en begindatum. Kies voor een verjaardag Verjaardag en stel de datum in; de tickle herhaalt zich jaarlijks."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wybierz częstotliwość i datę rozpoczęcia. W przypadku urodzin wybierz Urodziny i ustaw datę; tickle będzie powtarzać się co roku."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolhe a frequência e a data de início. Para um aniversário, escolhe Aniversário e define a data; o tickle repete-se anualmente."
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alege frecvența și data de început. Pentru o zi de naștere, alege Zi de naștere și setează data; tickle-ul se repetă anual."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выбери частоту и дату начала. Для дня рождения выбери День рождения и укажи дату; tickle будет повторяться ежегодно."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Välj frekvens och startdatum. För en födelsedag väljer du Födelsedag och anger datumet; tickeln upprepas årligen."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تکرار اور آغاز کی تاریخ منتخب کریں۔ سالگرہ کے لیے سالگرہ منتخب کر کے تاریخ مقرر کریں؛ tickle ہر سال دہرایا جاتا ہے۔"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择频率和开始日期。设置生日提醒时，选择“生日”并设置日期；tickle 会每年重复。"
           }
         }
       }
@@ -251,6 +2891,126 @@
             "state": "translated",
             "value": "Remember the little things"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تذكّر التفاصيل الصغيرة"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pamatuj na drobnosti"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Denk an die kleinen Dinge"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Θυμήσου τα μικρά πράγματα"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recuerda los pequeños detalles"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Souviens-toi des petits détails"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "זוכרים את הדברים הקטנים"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "छोटी-छोटी बातें याद रखें"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Emlékezz az apróságokra"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ricorda i piccoli dettagli"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "小さなことも忘れずに"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "작은 일도 기억하세요"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Onthoud de kleine dingen"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pamiętaj o drobiazgach"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lembra-te dos pequenos detalhes"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Amintește-ți lucrurile mici"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Помни о мелочах"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kom ihåg de små sakerna"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "چھوٹی باتیں یاد رکھیں"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "记住那些小事"
+          }
         }
       }
     },
@@ -260,7 +3020,127 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Add a note, then save. Your tickle appears on the profile and in the Tickle tab. You can allow notifications when you save your first tickle."
+            "value": "Add a note, then save. Find your reminder on the profile and in the Tickle tab."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أضف ملاحظة ثم احفظ. ستجد التذكير في الملف الشخصي وعلامة تبويب Tickle."
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Přidej poznámku a ulož. Připomínku najdeš na profilu a na kartě Tickle."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Füge eine Notiz hinzu und speichere. Deine Erinnerung findest du im Profil und im Tickle-Tab."
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Πρόσθεσε σημείωση και αποθήκευσε. Βρες την υπενθύμιση στο προφίλ και στην καρτέλα Tickle."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Añade una nota y guarda. Encontrarás tu recordatorio en el perfil y en la pestaña Tickle."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajoute une note, puis enregistre. Retrouve ton rappel dans le profil et l’onglet Tickle."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אפשר להוסיף הערה ולשמור. התזכורת מופיעה בפרופיל ובלשונית תזכורות."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "नोट जोड़ें और सहेजें। रिमाइंडर प्रोफ़ाइल और Tickle टैब में मिलेगा।"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adj hozzá jegyzetet, majd mentsd el. Az emlékeztetőt a profilon és a Tickle lapon találod."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aggiungi una nota e salva. Trova il promemoria sul profilo e nella scheda Tickle."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "メモを追加して保存します。リマインダーはプロフィールと「Tickle」タブで確認できます。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "메모를 추가하고 저장하세요. 프로필과 Tickle 탭에서 알림을 확인할 수 있어요."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voeg een notitie toe en sla op. Je herinnering staat op het profiel en in het tabblad Tickle."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dodaj notatkę i zapisz. Przypomnienie znajdziesz na profilu i na karcie Tickle."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adiciona uma nota e guarda. Encontra o lembrete no perfil e no separador Tickle."
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adaugă o notă și salvează. Găsești mementoul pe profil și în fila Tickle."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавь заметку и сохрани. Напоминание появится в профиле и на вкладке Tickle."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lägg till en anteckning och spara. Du hittar påminnelsen i profilen och på fliken Tickle."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نوٹ شامل کر کے محفوظ کریں۔ یاددہانی پروفائل اور یاددہانیاں ٹیب میں ملے گی۔"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "添加备注并保存。在个人资料和 Tickle 标签页中查看提醒。"
           }
         }
       }
@@ -273,6 +3153,126 @@
             "state": "translated",
             "value": "A place for every circle"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مكان لكل دائرة"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Místo pro každý okruh"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein Platz für jeden Kreis"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Μια θέση για κάθε κύκλο"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un lugar para cada círculo"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une place pour chaque cercle"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מקום לכל מעגל"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "हर दायरे के लिए एक जगह"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Minden körnek megvan a helye"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un posto per ogni cerchia"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "どのつながりにも居場所を"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "모든 모임을 위한 자리"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Een plek voor elke kring"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Miejsce dla każdego kręgu"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um lugar para cada círculo"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un loc pentru fiecare cerc"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Место для каждого круга"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En plats för varje krets"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ہر حلقے کے لیے ایک جگہ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每个圈子都有自己的位置"
+          }
         }
       }
     },
@@ -283,6 +3283,126 @@
           "stringUnit": {
             "state": "translated",
             "value": "Keep family, friends, and work connections together in groups."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اجمع العائلة والأصدقاء وعلاقات العمل في مجموعات."
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sdružuj rodinu, přátele a pracovní kontakty do skupin."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Organisiere Familie, Freunde und berufliche Kontakte in Gruppen."
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Κράτησε μαζί οικογένεια, φίλους και επαγγελματικές επαφές σε ομάδες."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reúne a familiares, amigos y contactos de trabajo en grupos."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rassemble ta famille, tes amis et tes relations professionnelles dans des groupes."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אפשר לארגן משפחה, חברים וקשרים מקצועיים בקבוצות."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "परिवार, दोस्तों और काम के संपर्कों को समूहों में साथ रखें।"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rendezd csoportokba a családtagokat, barátokat és munkakapcsolatokat."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Riunisci familiari, amici e contatti di lavoro in gruppi."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "家族、友人、仕事の連絡先をグループにまとめましょう。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "가족, 친구, 직장 인맥을 그룹으로 모아 보세요."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Breng familie, vrienden en werkcontacten samen in groepen."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Łącz rodzinę, przyjaciół i kontakty zawodowe w grupy."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reúne familiares, amigos e contactos de trabalho em grupos."
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reunește familia, prietenii și contactele profesionale în grupuri."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Объединяй семью, друзей и рабочие контакты в группы."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Samla familj, vänner och arbetskontakter i grupper."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "گھر والوں، دوستوں اور کام کے رابطوں کو گروپوں میں اکٹھا رکھیں۔"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "将家人、朋友和工作联系人整理到群组中。"
           }
         }
       }
@@ -295,6 +3415,126 @@
             "state": "translated",
             "value": "Put your people together"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اجمع الأشخاص الذين يهمونك"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dej své lidi dohromady"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bring deine Kontakte zusammen"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Φέρε τους ανθρώπους σου κοντά"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Agrupa a tu gente"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rassemble tes proches"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מרכזים את האנשים שלך"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अपने लोगों को साथ लाएँ"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hozd össze a kapcsolataidat"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Riunisci le tue persone"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "大切な人をひとつに"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "소중한 사람들을 함께 모으세요"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Breng je mensen samen"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zbierz swoich bliskich"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Junta as tuas pessoas"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adună-ți persoanele apropiate"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Собери своих людей вместе"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Samla dina kontakter"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اپنے لوگوں کو اکٹھا کریں"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "把你在乎的人聚在一起"
+          }
         }
       }
     },
@@ -304,7 +3544,127 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Open a person’s profile, tap Add to group, and select a group. A person can belong to more than one."
+            "value": "Open a profile, find Groups, and choose Add to Group. Select a group to add the person. A person can belong to more than one group."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "افتح ملفًا شخصيًا، وابحث عن المجموعات، واختر إضافة إلى مجموعة. حدد مجموعة لإضافة الشخص إليها. يمكن للشخص الانتماء إلى أكثر من مجموعة."
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Otevři profil, najdi Skupiny a vyber Přidat do skupiny. Vyber skupinu pro danou osobu. Člověk může patřit do více skupin."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Öffne ein Profil, suche Gruppen und wähle Zur Gruppe hinzufügen. Wähle eine Gruppe für die Person. Eine Person kann mehreren Gruppen angehören."
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Άνοιξε προφίλ, βρες τις Ομάδες και επίλεξε Προσθήκη σε ομάδα. Επίλεξε ομάδα για το άτομο. Ένα άτομο μπορεί να ανήκει σε πολλές ομάδες."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abre un perfil, busca Grupos y elige Agregar al grupo. Selecciona un grupo para añadir a la persona. Una persona puede pertenecer a varios grupos."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ouvre un profil, repère Groupes et choisis Ajouter au groupe. Sélectionne un groupe pour y ajouter la personne. Une personne peut appartenir à plusieurs groupes."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "יש לפתוח פרופיל, למצוא את קבוצות ולבחור הוספה לקבוצה. בוחרים קבוצה כדי להוסיף אליה את האדם. אדם יכול להשתייך לכמה קבוצות."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "प्रोफ़ाइल खोलें, समूह ढूँढें और समूह में जोड़ें चुनें। व्यक्ति को जोड़ने के लिए समूह चुनें। एक व्यक्ति कई समूहों में हो सकता है।"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nyiss meg egy profilt, keresd meg a Csoportok részt, és válaszd a Hozzáadás csoporthoz lehetőséget. Válassz csoportot a személynek. Egy személy több csoport tagja is lehet."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apri un profilo, trova Gruppi e scegli Aggiungi al gruppo. Seleziona un gruppo per aggiungere la persona. Una persona può appartenere a più gruppi."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プロフィールを開き、「グループ」で「グループに追加」を選びます。追加先のグループを選択してください。複数のグループに参加できます。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "프로필을 열고 그룹에서 그룹에 추가를 선택하세요. 그룹을 선택해 사람을 추가하세요. 한 사람은 여러 그룹에 속할 수 있어요."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open een profiel, zoek Groepen en kies Aan groep toevoegen. Kies een groep om de persoon toe te voegen. Iemand kan bij meerdere groepen horen."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Otwórz profil, znajdź Grupy i wybierz Dodaj do grupy. Wybierz grupę, aby dodać osobę. Jedna osoba może należeć do kilku grup."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abre um perfil, encontra Grupos e escolhe Adicionar ao grupo. Seleciona um grupo para adicionar a pessoa. Uma pessoa pode pertencer a vários grupos."
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deschide un profil, găsește Grupuri și alege Adaugă în grup. Selectează un grup pentru persoană. O persoană poate aparține mai multor grupuri."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открой профиль, найди Группы и выбери Добавить в группу. Выбери группу для человека. Один человек может состоять в нескольких группах."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Öppna en profil, hitta Grupper och välj Lägg till i grupp. Välj en grupp för personen. En person kan tillhöra flera grupper."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "پروفائل کھولیں، گروپس تلاش کریں اور گروپ میں شامل کریں منتخب کریں۔ فرد کو شامل کرنے کے لیے گروپ چنیں۔ ایک فرد کئی گروپوں میں ہو سکتا ہے۔"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打开个人资料，找到“群组”并选择“添加到群组”。选择一个群组来添加此联系人。一个联系人可以加入多个群组。"
           }
         }
       }
@@ -317,6 +3677,126 @@
             "state": "translated",
             "value": "Your circles, your way"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "دوائرك بطريقتك"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tvoje okruhy po tvém"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deine Kreise, ganz nach dir"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Οι κύκλοι σου, όπως τους θέλεις"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tus círculos, a tu manera"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tes cercles, à ta façon"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "המעגלים שלך, בדרך שלך"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपके दायरे, आपका तरीका"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A te köreid, a te szabályaid"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le tue cerchie, a modo tuo"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自分らしいつながり方を"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "나만의 방식으로 만드는 모임"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jouw kringen, op jouw manier"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Twoje kręgi na Twoich zasadach"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Os teus círculos, à tua maneira"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cercurile tale, în stilul tău"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Твои круги — твои правила"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dina kretsar, på ditt sätt"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "آپ کے حلقے، آپ کا انداز"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "你的圈子，由你决定"
+          }
         }
       }
     },
@@ -327,6 +3807,126 @@
           "stringUnit": {
             "state": "translated",
             "value": "Use the plus button in Groups to create your own circle, then choose its members."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "استخدم زر الإضافة في المجموعات لإنشاء دائرتك واختيار أعضائها."
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tlačítkem plus ve Skupinách vytvoř vlastní okruh a vyber jeho členy."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erstelle mit der Plus-Schaltfläche unter Gruppen deinen eigenen Kreis und wähle seine Mitglieder."
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Χρησιμοποίησε το κουμπί συν στις Ομάδες για να δημιουργήσεις τον δικό σου κύκλο και να επιλέξεις τα μέλη του."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usa el botón más de Grupos para crear tu propio círculo y elegir sus miembros."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utilise le bouton plus dans Groupes pour créer ton cercle et choisir ses membres."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אפשר להשתמש בלחצן הפלוס בקבוצות כדי ליצור מעגל משלך ולבחור את חבריו."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "समूह में प्लस बटन से अपना दायरा बनाएँ और उसके सदस्य चुनें।"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A Csoportok plusz gombjával hozd létre saját körödet, majd válaszd ki a tagjait."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usa il pulsante più in Gruppi per creare la tua cerchia e scegliere i membri."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "「グループ」のプラスボタンで自分のグループを作り、メンバーを選びます。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "그룹의 더하기 버튼으로 나만의 모임을 만들고 구성원을 선택하세요."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maak met de plusknop in Groepen je eigen kring en kies de leden."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Użyj przycisku plus w Grupach, aby utworzyć własny krąg i wybrać jego członków."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usa o botão mais em Grupos para criar o teu círculo e escolher os membros."
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Folosește butonul plus din Grupuri pentru a crea propriul cerc și a alege membrii."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажми плюс в разделе Группы, чтобы создать свой круг и выбрать участников."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Använd plusknappen i Grupper för att skapa din egen krets och välja medlemmar."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "گروپ میں جمع کا بٹن استعمال کر کے اپنا حلقہ بنائیں اور اس کے ارکان منتخب کریں۔"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用“群组”中的加号按钮创建自己的圈子，再选择成员。"
           }
         }
       }
@@ -339,6 +3939,126 @@
             "state": "translated",
             "value": "Close tutorial"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إغلاق الدليل"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zavřít návod"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tutorial schließen"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Κλείσιμο οδηγού"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cerrar tutorial"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fermer le tutoriel"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סגירת המדריך"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ट्यूटोरियल बंद करें"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Útmutató bezárása"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chiudi tutorial"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "チュートリアルを閉じる"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "튜토리얼 닫기"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tutorial sluiten"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zamknij poradnik"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fechar tutorial"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Închide tutorialul"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть инструкцию"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stäng guiden"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ٹیوٹوریل بند کریں"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "关闭教程"
+          }
         }
       }
     },
@@ -349,6 +4069,126 @@
           "stringUnit": {
             "state": "translated",
             "value": "Example only · Sample contacts"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مثال فقط · جهات اتصال تجريبية"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jen ukázka · Ukázkové kontakty"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nur ein Beispiel · Beispielkontakte"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Μόνο παράδειγμα · Δείγματα επαφών"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solo un ejemplo · Contactos de muestra"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exemple uniquement · Contacts fictifs"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "דוגמה בלבד · אנשי קשר לדוגמה"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "केवल उदाहरण · नमूना संपर्क"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Csak példa · Mintanévjegyek"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solo un esempio · Contatti di esempio"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "表示例 · サンプルの連絡先"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "예시 · 샘플 연락처"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alleen een voorbeeld · Voorbeeldcontacten"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tylko przykład · Przykładowe kontakty"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apenas um exemplo · Contactos de exemplo"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Doar un exemplu · Contacte de exemplu"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Только пример · Вымышленные контакты"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endast exempel · Exempelkontakter"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "صرف مثال · نمونہ رابطے"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仅为示例 · 示例联系人"
           }
         }
       }
@@ -361,6 +4201,126 @@
             "state": "translated",
             "value": "Next"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "التالي"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Další"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weiter"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Επόμενο"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siguiente"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suivant"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הבא"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अगला"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tovább"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avanti"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "次へ"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "다음"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volgende"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dalej"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seguinte"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Înainte"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Далее"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nästa"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اگلا"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "下一步"
+          }
         }
       }
     },
@@ -371,6 +4331,126 @@
           "stringUnit": {
             "state": "translated",
             "value": "Back"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "رجوع"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zpět"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zurück"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Πίσω"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Atrás"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Retour"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "חזרה"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "वापस"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vissza"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Indietro"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "戻る"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "뒤로"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Terug"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wstecz"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voltar"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Înapoi"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Назад"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tillbaka"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "واپس"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "返回"
           }
         }
       }
@@ -383,6 +4463,126 @@
             "state": "translated",
             "value": "%1$lld of %2$lld"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld من %2$lld"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld z %2$lld"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld von %2$lld"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld από %2$lld"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld de %2$lld"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld sur %2$lld"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld מתוך %2$lld"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%2$lld में से %1$lld"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld / %2$lld"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld di %2$lld"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%2$lldページ中%1$lldページ"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%2$lld개 중 %1$lld"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld van %2$lld"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld z %2$lld"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld de %2$lld"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld din %2$lld"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld из %2$lld"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld av %2$lld"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%2$lld میں سے %1$lld"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "第 %1$lld 页，共 %2$lld 页"
+          }
         }
       }
     },
@@ -393,6 +4593,126 @@
           "stringUnit": {
             "state": "translated",
             "value": "Call"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اتصال"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zavolat"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anrufen"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Κλήση"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Llamar"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appeler"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שיחה"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कॉल करें"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hívás"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chiama"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "電話する"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "전화하기"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bellen"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zadzwoń"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ligar"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sună"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Позвонить"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ring"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "کال کریں"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "拨打电话"
           }
         }
       }
@@ -405,6 +4725,126 @@
             "state": "translated",
             "value": "Annual"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "سنوي"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ročně"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jährlich"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ετησίως"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anual"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Annuel"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מדי שנה"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "हर साल"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Évente"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Annuale"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "毎年"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "매년"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jaarlijks"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Co rok"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anual"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anual"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ежегодно"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Årligen"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "سالانہ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每年"
+          }
         }
       }
     },
@@ -415,6 +4855,126 @@
           "stringUnit": {
             "state": "translated",
             "value": "June 10"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10 يونيو"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10. června"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10. Juni"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10 Ιουνίου"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10 de junio"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10 juin"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10 ביוני"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10 जून"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "június 10."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10 giugno"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "6月10日"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "6월 10일"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10 juni"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10 czerwca"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10 de junho"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10 iunie"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10 июня"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10 juni"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10 جون"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "6月10日"
           }
         }
       }
@@ -427,6 +4987,126 @@
             "state": "translated",
             "value": "Ask how the new role is going."
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اسأل كيف تسير الأمور في الوظيفة الجديدة."
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zeptej se, jak se daří v nové práci."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Frag, wie es in der neuen Stelle läuft."
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ρώτησε πώς πάει ο νέος ρόλος."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pregunta qué tal va el nuevo puesto."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Demande comment se passe le nouveau poste."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "לשאול איך הולך בתפקיד החדש."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "पूछें कि नई भूमिका कैसी चल रही है।"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kérdezd meg, hogy megy az új munkakör."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chiedi come va il nuovo ruolo."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新しい仕事の様子を聞いてみよう。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "새로운 역할은 어떤지 물어보세요."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vraag hoe het gaat met de nieuwe baan."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zapytaj, jak idzie na nowym stanowisku."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pergunta como está a correr a nova função."
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Întreabă cum merge noul rol."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спроси, как дела на новой работе."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fråga hur det går på det nya jobbet."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "پوچھیں کہ نیا عہدہ کیسا جا رہا ہے۔"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "问问新工作进展如何。"
+          }
         }
       }
     },
@@ -437,6 +5117,126 @@
           "stringUnit": {
             "state": "translated",
             "value": "Catch up"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تبادل الأخبار"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Popovídat si"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neuigkeiten austauschen"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Πείτε τα νέα σας"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ponerse al día"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prendre des nouvelles"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "להתעדכן"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "हालचाल पूछें"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beszélgetés"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aggiornarsi"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "近況を話す"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "안부 나누기"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bijpraten"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nadrobić zaległości"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pôr a conversa em dia"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puneți-vă la curent"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Обменяться новостями"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prata ikapp"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حال احوال پوچھیں"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "聊聊近况"
           }
         }
       }
@@ -449,6 +5249,126 @@
             "state": "translated",
             "value": "Monthly"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "شهري"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Měsíčně"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Monatlich"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Μηνιαίως"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mensual"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mensuel"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מדי חודש"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "हर महीने"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Havonta"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mensile"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "毎月"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "매월"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maandelijks"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Co miesiąc"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mensal"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lunar"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ежемесячно"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Månadsvis"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ماہانہ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每月"
+          }
         }
       }
     },
@@ -459,6 +5379,126 @@
           "stringUnit": {
             "state": "translated",
             "value": "First name · Last name · Company"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الاسم الأول · اسم العائلة · الشركة"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jméno · Příjmení · Firma"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vorname · Nachname · Unternehmen"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Όνομα · Επώνυμο · Εταιρεία"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nombre · Apellidos · Empresa"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prénom · Nom · Entreprise"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שם פרטי · שם משפחה · חברה"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "पहला नाम · उपनाम · कंपनी"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utónév · Vezetéknév · Cég"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nome · Cognome · Azienda"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "名 · 姓 · 会社"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "이름 · 성 · 회사"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voornaam · Achternaam · Bedrijf"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Imię · Nazwisko · Firma"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nome próprio · Apelido · Empresa"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prenume · Nume · Companie"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Имя · Фамилия · Компания"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Förnamn · Efternamn · Företag"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "پہلا نام · آخری نام · کمپنی"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "名字 · 姓氏 · 公司"
           }
         }
       }
@@ -471,6 +5511,126 @@
             "state": "translated",
             "value": "Running club"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نادي الجري"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Běžecký klub"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Laufgruppe"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Λέσχη τρεξίματος"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Club de corredores"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Club de course"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מועדון ריצה"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "रनिंग क्लब"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Futóklub"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gruppo di corsa"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ランニングクラブ"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "러닝 클럽"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hardloopclub"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klub biegowy"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clube de corrida"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Club de alergare"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Беговой клуб"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Löparklubb"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "دوڑنے کا کلب"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "跑步俱乐部"
+          }
         }
       }
     },
@@ -481,6 +5641,126 @@
           "stringUnit": {
             "state": "translated",
             "value": "Dismiss tutorial suggestion"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إخفاء اقتراح الدليل"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skrýt návrh návodu"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tutorial-Vorschlag ausblenden"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Απόκρυψη πρότασης οδηγού"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Descartar sugerencia de tutorial"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Masquer la suggestion de tutoriel"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הסתרת הצעת המדריך"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ट्यूटोरियल सुझाव छिपाएँ"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Útmutatójavaslat elrejtése"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nascondi suggerimento del tutorial"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "チュートリアルの提案を非表示"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "튜토리얼 제안 숨기기"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tutorialsuggestie verbergen"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ukryj sugestię poradnika"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ocultar sugestão de tutorial"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ascunde sugestia de tutorial"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скрыть предложение инструкции"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dölj guideförslag"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ٹیوٹوریل کی تجویز چھپائیں"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "隐藏教程建议"
           }
         }
       }
@@ -493,6 +5773,126 @@
             "state": "translated",
             "value": "Tutorials"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الأدلة التعليمية"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Návody"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tutorials"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Οδηγοί"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tutoriales"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tutoriels"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מדריכים"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ट्यूटोरियल"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Útmutatók"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tutorial"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "チュートリアル"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "튜토리얼"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tutorials"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Poradniki"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tutoriais"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tutoriale"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Инструкции"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guider"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ٹیوٹوریلز"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "教程"
+          }
         }
       }
     },
@@ -503,6 +5903,126 @@
           "stringUnit": {
             "state": "translated",
             "value": "Import contacts"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "استيراد جهات الاتصال"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importovat kontakty"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kontakte importieren"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Εισαγωγή επαφών"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importar contactos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importer des contacts"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ייבוא אנשי קשר"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "संपर्क आयात करें"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Névjegyek importálása"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importa contatti"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "連絡先を読み込む"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "연락처 가져오기"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contacten importeren"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importuj kontakty"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importar contactos"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importă contacte"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Импортировать контакты"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importera kontakter"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "رابطے درآمد کریں"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "导入联系人"
           }
         }
       }

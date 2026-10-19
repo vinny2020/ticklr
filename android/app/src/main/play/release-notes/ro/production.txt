@@ -2,4 +2,4 @@ Ghiduri scurte care te ajută să începi.
 • Învață să imporți contacte din telefon și fișiere CSV de pe LinkedIn.
 • Vezi cum creezi un tickle și organizezi persoanele în grupuri.
 • Închide orice ghid și revino la el din Setări → Tutoriale.
-• Tutorialele sunt momentan în engleză.
+• Tutorialele și exemplele folosesc acum limba aplicației.

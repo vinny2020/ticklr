@@ -27,6 +27,7 @@ android {
         // Plain literals, bumped by PR before each release tag — F-Droid's checkupdates
         // regexes this file at the tagged commit and cannot evaluate Gradle expressions.
         // CI reads these values too; the release tag must match versionName (TIC-101).
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         versionCode = 137
         versionName = "1.15.1"
         // "iw" is the legacy ISO code for Hebrew. java.util.Locale normalizes
@@ -171,6 +172,11 @@ tasks.register<JacocoReport>("jacocoUnitTestReport") {
 }
 
 dependencies {
+    androidTestImplementation(platform(libs.compose.bom))
+    androidTestImplementation(libs.compose.ui.test.junit4)
+    androidTestImplementation("androidx.test:runner:1.7.0")
+    androidTestImplementation("androidx.test:rules:1.7.0")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
     // Compose BOM
     implementation(platform(libs.compose.bom))
     implementation(libs.compose.ui)

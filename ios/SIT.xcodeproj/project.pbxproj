@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		037157B81CD05A72B68B6176 /* TutorialUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EF459959E1A7278F1C07F8 /* TutorialUITests.swift */; };
+		03BCE17F1A3A57C526366E50 /* TutorialLocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F19B7BBBBE6E51DC5A87AA /* TutorialLocalizationTests.swift */; };
 		0416C761CFE00886D364C29D /* ContactPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F5DAC52A66CB6C37894078 /* ContactPhotoView.swift */; };
 		048D506A93074FACAA1865EC /* WarmCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0C8A1F9EAC9226E7D717720 /* WarmCategory.swift */; };
 		06F4EDA1D1049DE0D9691453 /* TickleActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F93D464D33962932C5C942 /* TickleActionSheet.swift */; };
@@ -27,6 +28,7 @@
 		20030189F6FC7FC341A0510D /* LaunchScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F033D809DFE50DA44209A95 /* LaunchScreenView.swift */; };
 		2085C634C34E1699E983C564 /* PhotoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD57FB9BA4F1EF1E2F57E1F /* PhotoStore.swift */; };
 		265A935CA61F3A729B86AF7A /* NotoNaskhArabic-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D17BF625C611E15E9751DE74 /* NotoNaskhArabic-SemiBold.ttf */; };
+		275979006D6F8218B0EF00D4 /* TutorialLocalizationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA244305894FDAC6D06BC29 /* TutorialLocalizationUITests.swift */; };
 		34A284E142196787F146D1B3 /* test_contacts.csv in Resources */ = {isa = PBXBuildFile; fileRef = C3BA80FD4DE962EB1F107E78 /* test_contacts.csv */; };
 		353AA993FFB1A862D307ED9F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 209311518915490C7F72039B /* Assets.xcassets */; };
 		43434A6ACC0CD3146036A11C /* TickleSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8316646A179885792C4004 /* TickleSchedulerTests.swift */; };
@@ -181,6 +183,7 @@
 		70C371A80FA068A7BCAF4918 /* TickleEditViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleEditViewTests.swift; sourceTree = "<group>"; };
 		72098A45B6ACBC527F5DF0B9 /* MessageTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTemplate.swift; sourceTree = "<group>"; };
 		7A27D41F38F9FB5871748B89 /* LocalizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationTests.swift; sourceTree = "<group>"; };
+		7EA244305894FDAC6D06BC29 /* TutorialLocalizationUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialLocalizationUITests.swift; sourceTree = "<group>"; };
 		827C1AC8395B5CB14C1B8B66 /* ImportFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportFeedback.swift; sourceTree = "<group>"; };
 		87AED7CFC7935978FFBCCCE3 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		89A8592D7BE1A77F3A839568 /* OFL-NotoSerifDevanagari.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "OFL-NotoSerifDevanagari.txt"; sourceTree = "<group>"; };
@@ -241,6 +244,7 @@
 		EA9ED8CB5E6D9F8E216A7470 /* ContactImportServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactImportServiceTests.swift; sourceTree = "<group>"; };
 		ED2AFEC2B5F4768EB219A20D /* TickleUndoActionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleUndoActionsTests.swift; sourceTree = "<group>"; };
 		EDBC29B891A9D2602E4C6122 /* TickleReminderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleReminderTests.swift; sourceTree = "<group>"; };
+		F6F19B7BBBBE6E51DC5A87AA /* TutorialLocalizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialLocalizationTests.swift; sourceTree = "<group>"; };
 		FAEEA22C38A02D1319831F49 /* SuggestTickleToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestTickleToast.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -393,6 +397,7 @@
 				0B8316646A179885792C4004 /* TickleSchedulerTests.swift */,
 				700285F29EFC6ABAA469B3A8 /* TickleSendCompletionTests.swift */,
 				ED2AFEC2B5F4768EB219A20D /* TickleUndoActionsTests.swift */,
+				F6F19B7BBBBE6E51DC5A87AA /* TutorialLocalizationTests.swift */,
 				A918968E165DDF7AEA4E39A8 /* WarmCategoryTests.swift */,
 			);
 			name = SITTests;
@@ -457,6 +462,7 @@
 				E8175776A2DEBC88B756C24E /* ComposeFlowUITests.swift */,
 				E6E13C67C14F0A08295E6DB5 /* ContactTicklesUITests.swift */,
 				5D5C85FA1377676F93CC23F9 /* GroupsScreenUITests.swift */,
+				7EA244305894FDAC6D06BC29 /* TutorialLocalizationUITests.swift */,
 				08EF459959E1A7278F1C07F8 /* TutorialUITests.swift */,
 			);
 			name = SITUITests;
@@ -760,6 +766,7 @@
 				43434A6ACC0CD3146036A11C /* TickleSchedulerTests.swift in Sources */,
 				6706B55EB7F80995CDC4F63C /* TickleSendCompletionTests.swift in Sources */,
 				84AAC106F3794B9B11DC7133 /* TickleUndoActionsTests.swift in Sources */,
+				03BCE17F1A3A57C526366E50 /* TutorialLocalizationTests.swift in Sources */,
 				8C3BA4EA1B30E83F38FCF45E /* WarmCategoryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -771,6 +778,7 @@
 				D7662319C587D3965757B1B7 /* ComposeFlowUITests.swift in Sources */,
 				0BFFF3E987BDD45D37650F79 /* ContactTicklesUITests.swift in Sources */,
 				121B201A777B373F894B4D35 /* GroupsScreenUITests.swift in Sources */,
+				275979006D6F8218B0EF00D4 /* TutorialLocalizationUITests.swift in Sources */,
 				037157B81CD05A72B68B6176 /* TutorialUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

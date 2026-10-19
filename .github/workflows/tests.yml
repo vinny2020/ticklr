@@ -7,6 +7,18 @@ on:
     branches: [main]
 
 jobs:
+  tutorial-localization:
+    name: Tutorial localization resources
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Validate translated text and native screenshots
+        run: |
+          python3 scripts/sync-tutorial-localizations.py --check
+          python3 scripts/validate-tutorial-screenshots.py
+          python3 scripts/validate-app-store-metadata.py
+          python3 scripts/sync-fdroid-metadata.py --check
+
   ios-tests:
     name: iOS Unit Tests
     runs-on: macos-15
