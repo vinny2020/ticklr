@@ -180,14 +180,14 @@ private struct TutorialExample: View {
     let topic: TutorialTopic
     let page: Int
     private var palette: WarmPalette { WarmTheme.palette(for: .subtle) }
-    private var blue: Color { WarmCategory.community.palette.accent }
+    private var blue: Color { WarmCategory.friends.palette.accent }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
             switch (topic, page) {
             case (.tickle, 0):
                 VStack(spacing: 16) {
-                    MonogramAvatar(initials: "AN", category: .community, size: 80)
+                    MonogramAvatar(initials: "AN", category: .friends, size: 80)
                     Text(verbatim: "Alice Nguyen")
                         .font(WarmHeadingFont.font(size: 28, warmth: .subtle))
                     ViewThatFits(in: .horizontal) {
@@ -271,7 +271,7 @@ private struct TutorialExample: View {
     }
     private func person(_ name: String, initials: String) -> some View {
         HStack(spacing: 12) {
-            MonogramAvatar(initials: initials, category: .community, size: 40)
+            MonogramAvatar(initials: initials, category: .friends, size: 40)
             Text(verbatim: name).font(.body.weight(.medium))
         }
     }
@@ -341,7 +341,7 @@ struct TutorialInvitation: View {
                 }
                 .accessibilityLabel(String(localized: "tutorial.dismissInvitation", defaultValue: "Dismiss tutorial suggestion", table: "Tutorials"))
             }
-            .foregroundStyle(WarmCategory.work.palette.accent)
+            .foregroundStyle(WarmCategory.friends.palette.accent)
             .padding(.leading, 14)
             .background(palette.cardBg, in: RoundedRectangle(cornerRadius: 16))
         }
