@@ -1,4 +1,5 @@
-Tvé tickle připomínky přímo v každém profilu.
-• Zobraz aktivní a odložené tickle připomínky každé osoby.
-• Klepni na tickle připomínku a uprav ji.
-• Ulož nebo zruš změny a vrať se do stejného profilu.
+Krátké návody, které ti pomohou začít.
+• Nauč se importovat kontakty z telefonu a soubory CSV z LinkedIn.
+• Podívej se, jak vytvořit tickle a uspořádat lidi do skupin.
+• Zavři libovolný návod a vrať se k němu v Nastavení → Návody.
+• Návody jsou zatím v angličtině.

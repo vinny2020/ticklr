@@ -1,4 +1,5 @@
-Je tickles, direct op elk profiel.
-• Bekijk actieve en uitgestelde tickles per persoon.
-• Tik op een tickle om deze te bewerken.
-• Sla op of annuleer en keer terug naar hetzelfde profiel.
+Korte uitleg om je op weg te helpen.
+• Leer telefooncontacten en LinkedIn-CSV-bestanden importeren.
+• Ontdek hoe je een tickle maakt en mensen in groepen indeelt.
+• Sluit elke uitleg en bekijk deze opnieuw via Instellingen → Tutorials.
+• De tutorials zijn momenteel in het Engels.
