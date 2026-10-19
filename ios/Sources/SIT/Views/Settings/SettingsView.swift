@@ -68,6 +68,15 @@ struct SettingsView: View {
                     warmHeader(String(localized: "settings.section.data"))
                 }
 
+                Section {
+                    NavigationLink {
+                        TutorialLibraryView()
+                    } label: {
+                        Label(String(localized: "tutorial.library", defaultValue: "Tutorials", table: "Tutorials"), systemImage: "questionmark.circle")
+                    }
+                    .accessibilityIdentifier("settings.tutorials")
+                }
+
                 // MARK: — Notifications
                 Section {
                     if systemAuthStatus == .denied {

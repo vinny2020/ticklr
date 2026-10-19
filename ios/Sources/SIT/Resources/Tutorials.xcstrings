@@ -1,0 +1,501 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "tutorial.phone.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import phone contacts"
+          }
+        }
+      }
+    },
+    "tutorial.linkedin.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import LinkedIn connections"
+          }
+        }
+      }
+    },
+    "tutorial.tickle.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create your first tickle"
+          }
+        }
+      }
+    },
+    "tutorial.groups.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Organize people into groups"
+          }
+        }
+      }
+    },
+    "tutorial.linkedin.action": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose CSV file"
+          }
+        }
+      }
+    },
+    "tutorial.groups.action": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Explore groups"
+          }
+        }
+      }
+    },
+    "tutorial.phone.1.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your people, already here"
+          }
+        }
+      }
+    },
+    "tutorial.phone.1.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start with the contacts on your iPhone. Your Ticklr network stays on this device."
+          }
+        }
+      }
+    },
+    "tutorial.phone.2.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose who to bring in"
+          }
+        }
+      }
+    },
+    "tutorial.phone.2.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use Choose contacts to pick individual people, or Import iPhone Contacts to import the contacts Ticklr can access."
+          }
+        }
+      }
+    },
+    "tutorial.phone.3.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Make your first connection"
+          }
+        }
+      }
+    },
+    "tutorial.phone.3.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Find your imported people in Network. Open a profile to create a tickle or add them to a group."
+          }
+        }
+      }
+    },
+    "tutorial.linkedin.1.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep connections warm"
+          }
+        }
+      }
+    },
+    "tutorial.linkedin.1.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bring professional connections into Ticklr using your LinkedIn connections CSV."
+          }
+        }
+      }
+    },
+    "tutorial.linkedin.2.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start with your export"
+          }
+        }
+      }
+    },
+    "tutorial.linkedin.2.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Request a copy of your connections data from LinkedIn, then save the downloaded CSV in Files. The import screen has the full export instructions."
+          }
+        }
+      }
+    },
+    "tutorial.linkedin.3.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "One file, a familiar network"
+          }
+        }
+      }
+    },
+    "tutorial.linkedin.3.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose your connections CSV. After import, your connections appear in Network, ready for a tickle."
+          }
+        }
+      }
+    },
+    "tutorial.tickle.1.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A little reminder to reconnect"
+          }
+        }
+      }
+    },
+    "tutorial.tickle.1.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open someone’s profile and tap Create a tickle. Start with a person you’d like to hear from more often."
+          }
+        }
+      }
+    },
+    "tutorial.tickle.2.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pick a rhythm or a special date"
+          }
+        }
+      }
+    },
+    "tutorial.tickle.2.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a frequency and starting date. For a birthday, tap Birthday and set the date; the tickle repeats annually."
+          }
+        }
+      }
+    },
+    "tutorial.tickle.3.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remember the little things"
+          }
+        }
+      }
+    },
+    "tutorial.tickle.3.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add a note, then save. Your tickle appears on the profile and in the Tickle tab. You can allow notifications when you save your first tickle."
+          }
+        }
+      }
+    },
+    "tutorial.groups.1.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A place for every circle"
+          }
+        }
+      }
+    },
+    "tutorial.groups.1.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep family, friends, and work connections together in groups."
+          }
+        }
+      }
+    },
+    "tutorial.groups.2.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Put your people together"
+          }
+        }
+      }
+    },
+    "tutorial.groups.2.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open a person’s profile, tap Add to group, and select a group. A person can belong to more than one."
+          }
+        }
+      }
+    },
+    "tutorial.groups.3.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your circles, your way"
+          }
+        }
+      }
+    },
+    "tutorial.groups.3.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use the plus button in Groups to create your own circle, then choose its members."
+          }
+        }
+      }
+    },
+    "tutorial.close": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Close tutorial"
+          }
+        }
+      }
+    },
+    "tutorial.sample": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Example only · Sample contacts"
+          }
+        }
+      }
+    },
+    "tutorial.next": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next"
+          }
+        }
+      }
+    },
+    "tutorial.back": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back"
+          }
+        }
+      }
+    },
+    "tutorial.progress": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld of %2$lld"
+          }
+        }
+      }
+    },
+    "tutorial.call": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Call"
+          }
+        }
+      }
+    },
+    "tutorial.annual": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Annual"
+          }
+        }
+      }
+    },
+    "tutorial.exampleDate": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "June 10"
+          }
+        }
+      }
+    },
+    "tutorial.exampleNote": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ask how the new role is going."
+          }
+        }
+      }
+    },
+    "tutorial.catchUp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Catch up"
+          }
+        }
+      }
+    },
+    "tutorial.monthly": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Monthly"
+          }
+        }
+      }
+    },
+    "tutorial.csvFields": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "First name · Last name · Company"
+          }
+        }
+      }
+    },
+    "tutorial.runningClub": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Running club"
+          }
+        }
+      }
+    },
+    "tutorial.dismissInvitation": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dismiss tutorial suggestion"
+          }
+        }
+      }
+    },
+    "tutorial.library": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tutorials"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

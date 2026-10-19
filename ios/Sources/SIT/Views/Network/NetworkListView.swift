@@ -6,6 +6,9 @@ struct NetworkListView: View {
     @Query(sort: \Contact.lastName) private var contacts: [Contact]
     @Query(sort: \ContactGroup.name) private var allGroups: [ContactGroup]
 
+    @Query private var tutorialReminders: [TickleReminder]
+    @State private var tutorialTopic: TutorialTopic?
+    @State private var showingTutorialTickle = false
     @State private var searchText = ""
     @State private var filter: Filter = .all
     @State private var showingImport = false
@@ -87,6 +90,14 @@ struct NetworkListView: View {
                             .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 8, trailing: 0))
                     }
 
+                    if !contacts.isEmpty && tutorialReminders.isEmpty {
+                        Section {
+                            TutorialInvitation(topic: .tickle) { tutorialTopic = .tickle }
+                                .listRowBackground(Color.clear)
+                                .listRowSeparator(.hidden)
+                        }
+                    }
+
                     // MARK: Contacts, sectioned A–Z (TIC-92)
                     ForEach(sections) { section in
                         Section {
@@ -139,6 +150,10 @@ struct NetworkListView: View {
                             .foregroundStyle(palette.ink)
                     }
                 }
+            }
+            .tutorialSheet(topic: $tutorialTopic) { _ in showingTutorialTickle = true }
+            .sheet(isPresented: $showingTutorialTickle) {
+                TickleEditView(onSaved: { saveToastMessage = $0 })
             }
             .sheet(isPresented: $showingImport) {
                 ImportView(onImportFinished: { importToastMessage = $0 })

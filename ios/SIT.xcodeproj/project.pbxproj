@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		037157B81CD05A72B68B6176 /* TutorialUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EF459959E1A7278F1C07F8 /* TutorialUITests.swift */; };
 		0416C761CFE00886D364C29D /* ContactPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F5DAC52A66CB6C37894078 /* ContactPhotoView.swift */; };
 		048D506A93074FACAA1865EC /* WarmCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0C8A1F9EAC9226E7D717720 /* WarmCategory.swift */; };
 		06F4EDA1D1049DE0D9691453 /* TickleActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F93D464D33962932C5C942 /* TickleActionSheet.swift */; };
@@ -17,6 +18,7 @@
 		0EA9C2254CEDC3F5A8E9033B /* OFL-NotoNaskhArabic.txt in Resources */ = {isa = PBXBuildFile; fileRef = D0E4D04216FC720E233AA609 /* OFL-NotoNaskhArabic.txt */; };
 		121B201A777B373F894B4D35 /* GroupsScreenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C85FA1377676F93CC23F9 /* GroupsScreenUITests.swift */; };
 		12FCF35AA80528F2EF325924 /* ContactRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9125614ECAB9E4D8E5428E51 /* ContactRowView.swift */; };
+		13747B88AF1A22809C8601E3 /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C87054CD004A88D34E03693 /* TutorialView.swift */; };
 		1423BBA388EC43ABC386281F /* OFL-NotoSerifDevanagari.txt in Resources */ = {isa = PBXBuildFile; fileRef = 89A8592D7BE1A77F3A839568 /* OFL-NotoSerifDevanagari.txt */; };
 		1538B4A01D22876B74D30A26 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 69286CB7AAC699E4A7076063 /* PrivacyInfo.xcprivacy */; };
 		16BE362388D0211580E586D0 /* TickleScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F298878BB7FB2F2C63DC2B /* TickleScheduler.swift */; };
@@ -32,6 +34,7 @@
 		4C29624DE74EE0486B690D76 /* WarmIllustration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A9372A30F13F2165F2EF8F /* WarmIllustration.swift */; };
 		4C98B38D7EF3EE65F2FD1A58 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EBB61C7877871E721045C7 /* Contact.swift */; };
 		5188A4195E2A5CA01730175F /* MessageTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72098A45B6ACBC527F5DF0B9 /* MessageTemplate.swift */; };
+		54BB61E5D3A3951EF79DED08 /* Tutorials.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C245997E3728FE92A239393D /* Tutorials.xcstrings */; };
 		54BB9954F9130CC0C824745F /* ComposeSuggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283ABBFE8086AB5A46F32B3D /* ComposeSuggestions.swift */; };
 		568B2F7E2C0A37B9505FFDE4 /* ContactGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC789856C13EA9BCE0A6EC /* ContactGroup.swift */; };
 		5A2E74BD7F7B979AE5B1C4F3 /* TickleReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB38137353FDCD5606A5A8FF /* TickleReminder.swift */; };
@@ -131,11 +134,13 @@
 		04BA66919BA28C74AF7545BD /* ContactSearchFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactSearchFilter.swift; sourceTree = "<group>"; };
 		06BB941D9F261F754634A26D /* CategoryBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBadge.swift; sourceTree = "<group>"; };
 		08D5F612DBE4C97D54645CC3 /* ContactSectionIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactSectionIndex.swift; sourceTree = "<group>"; };
+		08EF459959E1A7278F1C07F8 /* TutorialUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialUITests.swift; sourceTree = "<group>"; };
 		09AB7ED7B5278EEB477C1E9F /* WarmGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmGalleryView.swift; sourceTree = "<group>"; };
 		09EFBEBE9D718FAA0B157914 /* WordmarkLockup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordmarkLockup.swift; sourceTree = "<group>"; };
 		0A9EDE946F2D00EC70ED4A84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0AF3C92E132BED810AD99ED8 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0B8316646A179885792C4004 /* TickleSchedulerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleSchedulerTests.swift; sourceTree = "<group>"; };
+		0C87054CD004A88D34E03693 /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
 		0E0F2BEFDB04603DDFE7CC60 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0EFE5D9B2591E4B4A53F5EEC /* LinkedInCSVParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedInCSVParser.swift; sourceTree = "<group>"; };
 		0F033D809DFE50DA44209A95 /* LaunchScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenView.swift; sourceTree = "<group>"; };
@@ -210,6 +215,7 @@
 		BB38137353FDCD5606A5A8FF /* TickleReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleReminder.swift; sourceTree = "<group>"; };
 		BE5F28CBE2FCC020F374E286 /* NotoSerifDevanagari-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSerifDevanagari-SemiBold.ttf"; sourceTree = "<group>"; };
 		C203898862FA7D9FC0D26AB9 /* ContactsAccessBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsAccessBanner.swift; sourceTree = "<group>"; };
+		C245997E3728FE92A239393D /* Tutorials.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Tutorials.xcstrings; sourceTree = "<group>"; };
 		C3416D505AC168ABA8379A68 /* GroupFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupFeatureTests.swift; sourceTree = "<group>"; };
 		C3936B5E7A48687C98F2843D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C3BA80FD4DE962EB1F107E78 /* test_contacts.csv */ = {isa = PBXFileReference; path = test_contacts.csv; sourceTree = "<group>"; };
@@ -273,6 +279,7 @@
 				52B2D827FDB5FDABB740E34A /* Localizable.xcstrings */,
 				69286CB7AAC699E4A7076063 /* PrivacyInfo.xcprivacy */,
 				C3BA80FD4DE962EB1F107E78 /* test_contacts.csv */,
+				C245997E3728FE92A239393D /* Tutorials.xcstrings */,
 				246A6BE6253EB732E2F4A838 /* Fonts */,
 				FE39C5E32CF68501239897AF /* InfoPlist.strings */,
 			);
@@ -340,6 +347,7 @@
 				64A945003494BD80EC9A3181 /* Settings */,
 				CE212FAC96E6037A2548E540 /* Shared */,
 				79DA010937C896B33F1B0252 /* Tickle */,
+				BCA22EDF4E27BBD820BB9327 /* Tutorials */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -449,6 +457,7 @@
 				E8175776A2DEBC88B756C24E /* ComposeFlowUITests.swift */,
 				E6E13C67C14F0A08295E6DB5 /* ContactTicklesUITests.swift */,
 				5D5C85FA1377676F93CC23F9 /* GroupsScreenUITests.swift */,
+				08EF459959E1A7278F1C07F8 /* TutorialUITests.swift */,
 			);
 			name = SITUITests;
 			path = Tests/SITUITests;
@@ -462,6 +471,14 @@
 				4EEF74492B5B4A7268A80E2D /* TicklrUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		BCA22EDF4E27BBD820BB9327 /* Tutorials */ = {
+			isa = PBXGroup;
+			children = (
+				0C87054CD004A88D34E03693 /* TutorialView.swift */,
+			);
+			path = Tutorials;
 			sourceTree = "<group>";
 		};
 		C532A26F70A9D247411068B0 /* SIT */ = {
@@ -647,6 +664,7 @@
 				1423BBA388EC43ABC386281F /* OFL-NotoSerifDevanagari.txt in Resources */,
 				9CC3A189563F711043FF4F77 /* OFL-NotoSerifJP.txt in Resources */,
 				1538B4A01D22876B74D30A26 /* PrivacyInfo.xcprivacy in Resources */,
+				54BB61E5D3A3951EF79DED08 /* Tutorials.xcstrings in Resources */,
 				34A284E142196787F146D1B3 /* test_contacts.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -706,6 +724,7 @@
 				5A2E74BD7F7B979AE5B1C4F3 /* TickleReminder.swift in Sources */,
 				949EFAA2F52FC214F6E65F95 /* TickleRowView.swift in Sources */,
 				16BE362388D0211580E586D0 /* TickleScheduler.swift in Sources */,
+				13747B88AF1A22809C8601E3 /* TutorialView.swift in Sources */,
 				DB552985EAEB5E7CFE713185 /* WarmCard.swift in Sources */,
 				048D506A93074FACAA1865EC /* WarmCategory.swift in Sources */,
 				D97E7DA6F424B3BBF191D702 /* WarmEyebrow.swift in Sources */,
@@ -752,6 +771,7 @@
 				D7662319C587D3965757B1B7 /* ComposeFlowUITests.swift in Sources */,
 				0BFFF3E987BDD45D37650F79 /* ContactTicklesUITests.swift in Sources */,
 				121B201A777B373F894B4D35 /* GroupsScreenUITests.swift in Sources */,
+				037157B81CD05A72B68B6176 /* TutorialUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

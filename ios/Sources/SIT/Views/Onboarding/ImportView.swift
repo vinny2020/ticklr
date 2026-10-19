@@ -15,7 +15,9 @@ struct ImportView: View {
         case recurring
     }
 
+    enum InitialAction { case chooseContacts, linkedin }
     var context: Context = .recurring
+    var initialAction: InitialAction? = nil
     /// Called with the result message on a successful `.recurring` import,
     /// right before `dismiss()` — mirrors `TickleEditView`'s `onSaved` pattern.
     /// Unused in `.onboarding` context (that path posts through
@@ -27,6 +29,8 @@ struct ImportView: View {
     @Environment(\.modelContext) private var modelContext
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
 
+    @State private var tutorialTopic: TutorialTopic?
+    @State private var didOpenInitialAction = false
     @State private var isImporting = false
     @State private var showingDocumentPicker = false
     @State private var importError: String?
@@ -38,6 +42,12 @@ struct ImportView: View {
     var body: some View {
         NavigationStack {
             List {
+                Section {
+                    TutorialInvitation(topic: .phone) { tutorialTopic = .phone }
+                    TutorialInvitation(topic: .linkedin) { tutorialTopic = .linkedin }
+                }
+                .listRowSeparator(.hidden)
+
                 Section {
                     Button {
                         Task { await importFromiOS() }
@@ -115,6 +125,22 @@ struct ImportView: View {
                     importSelected(contacts)
                 }
                 .ignoresSafeArea()
+            }
+        }
+        .tutorialSheet(topic: $tutorialTopic) { guide in
+            switch guide {
+            case .phone: showingContactPicker = true
+            case .linkedin: showingDocumentPicker = true
+            default: break
+            }
+        }
+        .task {
+            guard !didOpenInitialAction else { return }
+            didOpenInitialAction = true
+            switch initialAction {
+            case .chooseContacts: showingContactPicker = true
+            case .linkedin: showingDocumentPicker = true
+            case nil: break
             }
         }
     }
