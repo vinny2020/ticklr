@@ -21,18 +21,22 @@ final class ComposeFlowUITests: XCTestCase {
             "-hasCompletedOnboarding", "YES",
             "-debugSeedDemoData", "YES",
             "-debugForceCanSendMessages", "YES",
+            "-AppleLanguages", "(en)", "-AppleLocale", "en_US",
         ]
         app.launch()
         return app
     }
 
-    /// The seeded overdue tickle row on the Tickle home ("Quick hello" is
-    /// created 2 days overdue by SeedDataService.seedDemoData, so exactly one
-    /// row carries an "overdue" label).
+    /// Use the seeded reminder's note rather than a relative-date label.
+    /// List rows can exist in the accessibility tree before they are on screen.
     private func firstDueRow(in app: XCUIApplication) -> XCUIElement {
-        app.staticTexts.matching(
-            NSPredicate(format: "label CONTAINS[c] 'overdue'")
-        ).firstMatch
+        app.staticTexts["Quick hello"].firstMatch
+    }
+
+    private func reveal(_ element: XCUIElement, in app: XCUIApplication) {
+        XCTAssertTrue(element.waitForExistence(timeout: 15), "Demo reminder must be present")
+        for _ in 0..<6 where !element.isHittable { app.swipeUp() }
+        XCTAssertTrue(element.isHittable, "Demo reminder must be visible before tapping")
     }
 
     /// Tickle row → connect action sheet → Compose message → Cancel
@@ -43,6 +47,7 @@ final class ComposeFlowUITests: XCTestCase {
         let dueRow = firstDueRow(in: app)
         XCTAssertTrue(dueRow.waitForExistence(timeout: 15),
                       "Tickle home should show a due tickle from the demo seed")
+        reveal(dueRow, in: app)
         dueRow.tap()
 
         let composeAction = app.buttons["Compose message"]

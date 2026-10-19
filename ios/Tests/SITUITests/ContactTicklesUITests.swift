@@ -1,6 +1,22 @@
 import XCTest
 
 final class ContactTicklesUITests: XCTestCase {
+    private func reveal(_ row: XCUIElement, in app: XCUIApplication) {
+        let profile = app.scrollViews.firstMatch
+        XCTAssertTrue(profile.waitForExistence(timeout: 5))
+        // Saving can restore the previous scroll position above OR below the
+        // row. Small gestures in the profile avoid overshooting it on phones.
+        for _ in 0..<10 where !row.isHittable {
+            let rowFrame = row.frame
+            let viewport = profile.frame
+            let above = rowFrame != .zero && rowFrame.midY < viewport.midY
+            let start = profile.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: above ? 0.35 : 0.75))
+            let end = profile.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: above ? 0.75 : 0.35))
+            start.press(forDuration: 0.05, thenDragTo: end)
+        }
+        XCTAssertTrue(row.isHittable, "Saved tickle should be readable by scrolling the profile")
+    }
+
     func testCreateEditAndCancelReturnToSameProfile() {
         continueAfterFailure = false
         let app = XCUIApplication()
@@ -25,8 +41,7 @@ final class ContactTicklesUITests: XCTestCase {
         // The entire row is a button whose label includes note, frequency and date.
         let saved = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", marker)).firstMatch
         XCTAssertTrue(saved.waitForExistence(timeout: 5), "Saved tickle must appear immediately on the profile")
-        for _ in 0..<4 where !saved.isHittable { app.swipeUp() }
-        XCTAssertTrue(saved.isHittable, "Saved tickle should be readable by scrolling the profile")
+        reveal(saved, in: app)
         let rowID = saved.identifier
         saved.tap()
         XCTAssertTrue(note.waitForExistence(timeout: 5), "Tapping a profile tickle should open its editor")
@@ -43,7 +58,7 @@ final class ContactTicklesUITests: XCTestCase {
         XCTAssertTrue(editedRow.label.contains(edited), "Saving edits must update the same tickle row")
         XCTAssertTrue(person.exists, "The originating person's profile must remain visible")
 
-        for _ in 0..<4 where !editedRow.isHittable { app.swipeUp() }
+        reveal(editedRow, in: app)
         editedRow.tap()
         XCTAssertTrue(note.waitForExistence(timeout: 5))
         XCTAssertEqual(note.value as? String, edited)
