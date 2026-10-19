@@ -28,10 +28,12 @@ jobs:
       - name: Run tests
         working-directory: ios
         run: |
+          set -o pipefail
           xcodebuild test \
             -project SIT.xcodeproj \
-            -scheme SIT \
+            -scheme Ticklr \
             -destination 'platform=iOS Simulator,OS=18.0,name=iPhone 16' \
+            -only-testing:TicklrTests \
             -resultBundlePath TestResults \
             CODE_SIGNING_ALLOWED=NO \
             | xcpretty --report junit --output test-results.xml
