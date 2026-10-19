@@ -2,4 +2,4 @@ Krótkie poradniki, które pomogą Ci zacząć.
 • Naucz się importować kontakty z telefonu i pliki CSV z LinkedIn.
 • Zobacz, jak tworzyć tickle i organizować osoby w grupy.
 • Zamknij dowolny poradnik i otwórz go ponownie w Ustawienia → Poradniki.
-• Poradniki są obecnie dostępne po angielsku.
+• Poradniki i przykłady są teraz wyświetlane w języku aplikacji.

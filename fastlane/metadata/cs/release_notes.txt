@@ -2,4 +2,4 @@ Krátké návody, které ti pomohou začít.
 • Nauč se importovat kontakty z telefonu a soubory CSV z LinkedIn.
 • Podívej se, jak vytvořit tickle a uspořádat lidi do skupin.
 • Zavři libovolný návod a vrať se k němu v Nastavení → Návody.
-• Návody jsou zatím v angličtině.
+• Návody i ukázky teď používají jazyk aplikace.

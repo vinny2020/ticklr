@@ -35,33 +35,33 @@ enum TutorialTopic: String, CaseIterable, Identifiable {
         switch self {
         case .phone: [
             (String(localized: "tutorial.phone.1.title", defaultValue: "Your people, already here", table: "Tutorials"),
-             String(localized: "tutorial.phone.1.body", defaultValue: "Start with the contacts on your iPhone. Your Ticklr network stays on this device.", table: "Tutorials")),
-            (String(localized: "tutorial.phone.2.title", defaultValue: "Choose who to bring in", table: "Tutorials"),
+             String(localized: "tutorial.phone.1.body", defaultValue: "Start with the contacts on your phone. Your Ticklr network stays on this device.", table: "Tutorials")),
+            (String(localized: "tutorial.phone.2.title", defaultValue: "Bring in your contacts", table: "Tutorials"),
              String(localized: "tutorial.phone.2.body", defaultValue: "Choose individual people with the contact picker, or import all contacts Ticklr can access.", table: "Tutorials")),
             (String(localized: "tutorial.phone.3.title", defaultValue: "Make your first connection", table: "Tutorials"),
-             String(localized: "tutorial.phone.3.body", defaultValue: "Find your imported people in Network. Open a profile to create a tickle or add them to a group.", table: "Tutorials"))
+             String(localized: "tutorial.phone.3.body", defaultValue: "Find your imported people in Network. Open a profile to create a tickle or add someone to a group.", table: "Tutorials"))
         ]
         case .linkedin: [
             (String(localized: "tutorial.linkedin.1.title", defaultValue: "Keep connections warm", table: "Tutorials"),
              String(localized: "tutorial.linkedin.1.body", defaultValue: "Bring professional connections into Ticklr using your LinkedIn connections CSV.", table: "Tutorials")),
             (String(localized: "tutorial.linkedin.2.title", defaultValue: "Start with your export", table: "Tutorials"),
-             String(localized: "tutorial.linkedin.2.body", defaultValue: "Request a copy of your connections data from LinkedIn, then save the downloaded CSV in Files. The import screen has the full export instructions.", table: "Tutorials")),
+             String(localized: "tutorial.linkedin.2.body", defaultValue: "Request your connections data from LinkedIn and save the downloaded CSV on your phone. The import screen has the export instructions.", table: "Tutorials")),
             (String(localized: "tutorial.linkedin.3.title", defaultValue: "One file, a familiar network", table: "Tutorials"),
-             String(localized: "tutorial.linkedin.3.body", defaultValue: "Choose your connections CSV. After import, your connections appear in Network, ready for a tickle.", table: "Tutorials"))
+             String(localized: "tutorial.linkedin.3.body", defaultValue: "Choose your connections CSV. After import, find your connections in Network and add any missing contact details.", table: "Tutorials"))
         ]
         case .tickle: [
             (String(localized: "tutorial.tickle.1.title", defaultValue: "A little reminder to reconnect", table: "Tutorials"),
-             String(localized: "tutorial.tickle.1.body", defaultValue: "Open someone’s profile and tap Create a tickle. Start with a person you’d like to hear from more often.", table: "Tutorials")),
+             String(localized: "tutorial.tickle.1.body", defaultValue: "Open a profile and tap Create a tickle to set a reminder to reconnect.", table: "Tutorials")),
             (String(localized: "tutorial.tickle.2.title", defaultValue: "Pick a rhythm or a special date", table: "Tutorials"),
-             String(localized: "tutorial.tickle.2.body", defaultValue: "Choose a frequency and starting date. For a birthday, tap Birthday and set the date; the tickle repeats annually.", table: "Tutorials")),
+             String(localized: "tutorial.tickle.2.body", defaultValue: "Choose a frequency and starting date. For a birthday, choose Birthday and set the date; the tickle repeats annually.", table: "Tutorials")),
             (String(localized: "tutorial.tickle.3.title", defaultValue: "Remember the little things", table: "Tutorials"),
-             String(localized: "tutorial.tickle.3.body", defaultValue: "Add a note, then save. Your tickle appears on the profile and in the Tickle tab. You can allow notifications when you save your first tickle.", table: "Tutorials"))
+             String(localized: "tutorial.tickle.3.body", defaultValue: "Add a note, then save. Find your reminder on the profile and in the Tickle tab.", table: "Tutorials"))
         ]
         case .groups: [
             (String(localized: "tutorial.groups.1.title", defaultValue: "A place for every circle", table: "Tutorials"),
              String(localized: "tutorial.groups.1.body", defaultValue: "Keep family, friends, and work connections together in groups.", table: "Tutorials")),
             (String(localized: "tutorial.groups.2.title", defaultValue: "Put your people together", table: "Tutorials"),
-             String(localized: "tutorial.groups.2.body", defaultValue: "Open a person’s profile, tap Add to group, and select a group. A person can belong to more than one.", table: "Tutorials")),
+             String(localized: "tutorial.groups.2.body", defaultValue: "Open a profile, find Groups, and choose Add to Group. Select a group to add the person. A person can belong to more than one group.", table: "Tutorials")),
             (String(localized: "tutorial.groups.3.title", defaultValue: "Your circles, your way", table: "Tutorials"),
              String(localized: "tutorial.groups.3.body", defaultValue: "Use the plus button in Groups to create your own circle, then choose its members.", table: "Tutorials"))
         ]

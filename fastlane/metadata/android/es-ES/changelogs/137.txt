@@ -2,4 +2,4 @@ Guías breves para ayudarte a empezar.
 • Aprende a importar contactos del teléfono y archivos CSV de LinkedIn.
 • Descubre cómo crear un tickle y organizar personas en grupos.
 • Cierra cualquier guía y vuelve a verla en Ajustes → Tutoriales.
-• Los tutoriales están disponibles por ahora en inglés.
+• Los tutoriales y ejemplos ahora usan el idioma de la app.

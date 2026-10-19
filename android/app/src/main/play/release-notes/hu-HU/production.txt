@@ -2,4 +2,4 @@ Rövid útmutatók az első lépésekhez.
 • Tanuld meg a telefonos névjegyek és a LinkedIn CSV-fájlok importálását.
 • Nézd meg, hogyan hozhatsz létre tickle emlékeztetőt és rendezheted csoportokba az embereket.
 • Zárj be bármely útmutatót, és nyisd meg újra a Beállítások → Útmutatók menüben.
-• Az útmutatók egyelőre angolul érhetők el.
+• Az útmutatók és a példák most az alkalmazás nyelvét követik.
