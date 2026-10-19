@@ -35,10 +35,10 @@ final class ComposeViewTests: XCTestCase {
         // typed had no way out except tapping another tab.
         var cancelCount = 0
         let view = ComposeView(onClose: { cancelCount += 1 })
-            .modelContainer(container)
 
-        let sut = try view.inspect()
-        try sut.find(button: String(localized: "common.cancel")).tap()
+        let cancel = try view.cancelButton.inspect().button()
+        XCTAssertEqual(try cancel.labelView().text().string(), String(localized: "common.cancel"))
+        try cancel.tap()
 
         XCTAssertEqual(cancelCount, 1, "Cancel must fire onClose even when the form is empty")
     }
@@ -57,10 +57,10 @@ final class ComposeViewTests: XCTestCase {
             onClose: { cancelCount += 1 },
             initialContact: contact
         )
-        .modelContainer(container)
 
-        let sut = try view.inspect()
-        try sut.find(button: String(localized: "common.cancel")).tap()
+        let cancel = try view.cancelButton.inspect().button()
+        XCTAssertEqual(try cancel.labelView().text().string(), String(localized: "common.cancel"))
+        try cancel.tap()
 
         XCTAssertEqual(cancelCount, 1, "Cancel must fire onClose regardless of form state")
     }
@@ -84,10 +84,11 @@ final class ComposeViewTests: XCTestCase {
         // dialog in the way — same contract as before TIC-93, just now
         // routed through `cancelDecision` instead of an unconditional close.
         var cancelCount = 0
-        let view = ComposeView(onClose: { cancelCount += 1 }).modelContainer(container)
+        let view = ComposeView(onClose: { cancelCount += 1 })
 
-        let sut = try view.inspect()
-        try sut.find(button: String(localized: "common.cancel")).tap()
+        let cancel = try view.cancelButton.inspect().button()
+        XCTAssertEqual(try cancel.labelView().text().string(), String(localized: "common.cancel"))
+        try cancel.tap()
 
         XCTAssertEqual(cancelCount, 1, "an empty draft has nothing to protect — Cancel should exit directly")
     }
