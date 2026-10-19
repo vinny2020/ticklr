@@ -1,0 +1,5 @@
+Short guides to help you get started.
+• Learn to import phone contacts and LinkedIn CSV files.
+• See how to create a tickle and organize people into groups.
+• Dismiss any guide and replay it from Settings → Tutorials.
+• Tutorials are currently in English.

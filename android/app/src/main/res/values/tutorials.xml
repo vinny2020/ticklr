@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- First tutorial test release is English, including the captured Android UI. -->
+<resources>
+    <string name="tutorial_library" translatable="false">Tutorials</string>
+    <string name="tutorial_language" translatable="false">Short guides in English. Open any guide to replay it.</string>
+    <string name="tutorial_phone_title" translatable="false">Import phone contacts</string>
+    <string name="tutorial_linkedin_title" translatable="false">Import LinkedIn connections</string>
+    <string name="tutorial_tickle_title" translatable="false">Create your first tickle</string>
+    <string name="tutorial_groups_title" translatable="false">Organize people into groups</string>
+    <string name="tutorial_phone_action" translatable="false">Import contacts</string>
+    <string name="tutorial_import_action" translatable="false">Open import</string>
+    <string name="tutorial_tickle_action" translatable="false">Create a tickle</string>
+    <string name="tutorial_groups_action" translatable="false">Explore groups</string>
+    <string name="tutorial_phone_1_title" translatable="false">Your people, already here</string>
+    <string name="tutorial_phone_1_body" translatable="false">Start with the contacts on your Android phone. Your Ticklr network stays on this device.</string>
+    <string name="tutorial_phone_2_title" translatable="false">Bring in your contacts</string>
+    <string name="tutorial_phone_2_body" translatable="false">Tap Import from Phone Contacts and allow contacts access when Android asks. Ticklr imports the contacts it can access.</string>
+    <string name="tutorial_phone_3_title" translatable="false">Make your first connection</string>
+    <string name="tutorial_phone_3_body" translatable="false">Find your imported people in Network. Open a profile to create a tickle or add someone to a group.</string>
+    <string name="tutorial_linkedin_1_title" translatable="false">Keep connections warm</string>
+    <string name="tutorial_linkedin_1_body" translatable="false">Bring professional connections into Ticklr using your LinkedIn connections CSV.</string>
+    <string name="tutorial_linkedin_2_title" translatable="false">Start with your export</string>
+    <string name="tutorial_linkedin_2_body" translatable="false">Follow the export instructions on the import screen. Request your connections from LinkedIn and download the CSV to your phone.</string>
+    <string name="tutorial_linkedin_3_title" translatable="false">One file, a familiar network</string>
+    <string name="tutorial_linkedin_3_body" translatable="false">Choose the LinkedIn CSV import option and select your file. LinkedIn exports usually contain names and companies; add missing contact details later.</string>
+    <string name="tutorial_tickle_1_title" translatable="false">A little reminder to reconnect</string>
+    <string name="tutorial_tickle_1_body" translatable="false">Open a profile and tap Create a tickle. Here, Fatima is one of the sample contacts.</string>
+    <string name="tutorial_tickle_2_title" translatable="false">Pick a rhythm or a special date</string>
+    <string name="tutorial_tickle_2_body" translatable="false">Choose a frequency. For a birthday, tap Birthday, then Change to set the date. The tickle repeats annually.</string>
+    <string name="tutorial_tickle_3_title" translatable="false">Remember the little things</string>
+    <string name="tutorial_tickle_3_body" translatable="false">Add a note about what to talk about, then tap Save. Find the reminder on the profile and in the Tickle tab.</string>
+    <string name="tutorial_groups_1_title" translatable="false">A place for every circle</string>
+    <string name="tutorial_groups_1_body" translatable="false">Keep family, friends, and work connections together in Groups.</string>
+    <string name="tutorial_groups_2_title" translatable="false">Put your people together</string>
+    <string name="tutorial_groups_2_body" translatable="false">Open a profile, scroll to Groups, and tap Add to Group. Tap a group to add the person. A person can belong to more than one group.</string>
+    <string name="tutorial_groups_3_title" translatable="false">Your circles, your way</string>
+    <string name="tutorial_groups_3_body" translatable="false">Tap the plus button in Groups. Pick a name, emoji, and look, then create the group and choose its members.</string>
+    <string name="tutorial_close" translatable="false">Close tutorial</string>
+    <string name="tutorial_dismiss_suggestion" translatable="false">Dismiss tutorial suggestion</string>
+    <string name="tutorial_next" translatable="false">Next</string>
+    <string name="tutorial_progress" translatable="false">%1$d of %2$d</string>
+    <string name="tutorial_sample" translatable="false">Android screenshots · Sample contacts only</string>
+    <string name="tutorial_view_screenshot" translatable="false">View full screenshot</string>
+    <string name="tutorial_screenshot_description" translatable="false">Android app example: %1$s. Tap to view the full screenshot.</string>
+    <string name="tutorial_close_screenshot" translatable="false">Close screenshot</string>
+    <string name="tutorial_full_screenshot" translatable="false">Full Android example screenshot. All contacts shown are fake.</string>
+</resources>

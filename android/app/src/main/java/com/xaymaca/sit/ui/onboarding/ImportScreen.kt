@@ -1,5 +1,7 @@
 package com.xaymaca.sit.ui.onboarding
 
+import com.xaymaca.sit.ui.tutorials.TutorialInvitation
+import com.xaymaca.sit.ui.tutorials.TutorialTopic
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
@@ -8,6 +10,8 @@ import android.net.Uri
 import android.provider.Settings
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -183,9 +187,12 @@ fun ImportScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(horizontal = 24.dp, vertical = 16.dp),
+                .padding(horizontal = 24.dp, vertical = 16.dp)
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            TutorialInvitation(TutorialTopic.Phone, onAction = {})
+            TutorialInvitation(TutorialTopic.LinkedIn, onAction = {})
             if (isImporting) {
                 Box(
                     modifier = Modifier.fillMaxWidth(),
@@ -277,7 +284,7 @@ fun ImportScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.height(16.dp))
 
             // TIC-85: success no longer routes through here — it auto-advances
             // via onImportSuccess() from the import handlers above. This

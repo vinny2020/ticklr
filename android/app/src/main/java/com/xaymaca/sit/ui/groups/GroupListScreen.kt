@@ -1,5 +1,7 @@
 package com.xaymaca.sit.ui.groups
 
+import com.xaymaca.sit.ui.tutorials.TutorialInvitation
+import com.xaymaca.sit.ui.tutorials.TutorialTopic
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -71,6 +73,7 @@ fun GroupListScreen(
     // can navigate straight into it with the Add Members sheet open. Defaults to
     // [onGroupClick] so callers that don't distinguish still land in the group.
     onGroupCreated: (Long) -> Unit = onGroupClick,
+    onTutorialAction: (TutorialTopic) -> Unit = {},
     viewModel: GroupViewModel = hiltViewModel(),
 ) {
     val warmth = Warmth.Subtle
@@ -108,6 +111,12 @@ fun GroupListScreen(
         ) {
             item {
                 WarmHeader(palette = palette, warmth = warmth)
+            }
+
+            item {
+                Box(Modifier.padding(horizontal = 16.dp)) {
+                    TutorialInvitation(TutorialTopic.Groups, onTutorialAction)
+                }
             }
 
             items(canonicalGroups, key = { it.group.id }) { gwc ->

@@ -1,5 +1,7 @@
 package com.xaymaca.sit.ui.network
 
+import com.xaymaca.sit.ui.tutorials.TutorialInvitation
+import com.xaymaca.sit.ui.tutorials.TutorialTopic
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -94,6 +96,8 @@ fun NetworkListScreen(
     onCompose: (contactId: Long, reminderId: Long?) -> Unit = { _, _ -> },
     /** TIC-96: long-press "Create a tickle" quick action. */
     onAddTickleForContact: (Long) -> Unit = {},
+    onTutorialAction: (TutorialTopic) -> Unit = {},
+    showTickleTutorial: Boolean = true,
     viewModel: NetworkViewModel = hiltViewModel(),
 ) {
     val warmth = Warmth.Subtle
@@ -152,6 +156,14 @@ fun NetworkListScreen(
                         unfocusedContainerColor = palette.cardBg,
                     ),
                 )
+            }
+
+            if (contacts.isNotEmpty() && showTickleTutorial) {
+                item {
+                    Box(Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
+                        TutorialInvitation(TutorialTopic.Tickle, onTutorialAction)
+                    }
+                }
             }
 
             item {

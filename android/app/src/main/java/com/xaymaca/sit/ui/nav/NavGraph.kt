@@ -1,5 +1,7 @@
 package com.xaymaca.sit.ui.nav
 
+import com.xaymaca.sit.ui.tutorials.TutorialLibraryScreen
+import com.xaymaca.sit.ui.tutorials.TutorialTopic
 import android.content.Context
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Row
@@ -79,6 +81,12 @@ internal enum class ImportExit { FreshStart, ReturnToCaller }
 internal fun importExitFor(origin: ImportOrigin): ImportExit =
     if (origin == ImportOrigin.Onboarding) ImportExit.FreshStart else ImportExit.ReturnToCaller
 
+internal fun tutorialDestination(topic: TutorialTopic): String = when (topic) {
+    TutorialTopic.Phone, TutorialTopic.LinkedIn -> Screen.Import.createRoute(Screen.Import.ORIGIN_IN_APP)
+    TutorialTopic.Tickle -> Screen.TickleEdit.createRoute()
+    TutorialTopic.Groups -> Screen.GroupList.route
+}
+
 private data class BottomNavItem(
     val screen: Screen,
     @StringRes val labelResId: Int,
@@ -122,6 +130,13 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
     }
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
+    val openTutorialAction: (TutorialTopic) -> Unit = { topic ->
+        val target = tutorialDestination(topic)
+        if (navController.currentDestination?.route?.substringBefore('?') != target.substringBefore('?')) {
+            navController.navigate(target) { launchSingleTop = true }
+        }
+    }
+
 
     // Primary navigation chrome (rail or bottom bar) shows only on the five
     // top-level destinations, not on detail/edit screens.
@@ -366,6 +381,8 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
                     )
                 } else {
                     NetworkListScreen(
+                        onTutorialAction = openTutorialAction,
+                        showTickleTutorial = tickleViewModel.allReminders.collectAsState().value.isEmpty(),
                         onContactClick = { id ->
                             navController.navigate(Screen.ContactDetail.createRoute(id))
                         },
@@ -442,6 +459,7 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
                     )
                 } else {
                     GroupListScreen(
+                        onTutorialAction = openTutorialAction,
                         onGroupClick = { id -> navController.navigate(Screen.GroupDetail.createRoute(id)) },
                         // TIC-88 create-with-members: jump straight into the new
                         // group with the Add Members sheet already open.
@@ -582,6 +600,7 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
             // Settings
             composable(Screen.Settings.route) {
                 SettingsScreen(
+                    onTutorials = { navController.navigate(Screen.Tutorials.route) },
                     onImport = {
                         navController.navigate(Screen.Import.createRoute(Screen.Import.ORIGIN_IN_APP))
                     },
@@ -593,6 +612,10 @@ fun NavGraph(widthSizeClass: WindowWidthSizeClass) {
                         }
                     }
                 )
+            }
+
+            composable(Screen.Tutorials.route) {
+                TutorialLibraryScreen(onBack = { navController.popBackStack() }, onAction = openTutorialAction)
             }
 
             // Template management

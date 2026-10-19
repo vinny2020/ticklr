@@ -30,12 +30,20 @@ final class ComposeFlowUITests: XCTestCase {
     /// Use the seeded reminder's note rather than a relative-date label.
     /// List rows can exist in the accessibility tree before they are on screen.
     private func firstDueRow(in app: XCUIApplication) -> XCUIElement {
-        app.staticTexts["Quick hello"].firstMatch
+        app.cells.containing(.staticText, identifier: "Quick hello").firstMatch
     }
 
     private func reveal(_ element: XCUIElement, in app: XCUIApplication) {
         XCTAssertTrue(element.waitForExistence(timeout: 15), "Demo reminder must be present")
-        for _ in 0..<6 where !element.isHittable { app.swipeUp() }
+        // Full-screen swipes can skip past this row on shorter iPhones.
+        // Tap its containing cell and use bounded, bidirectional scrolling.
+        for _ in 0..<10 where !element.isHittable {
+            let frame = element.frame
+            let above = frame != .zero && frame.midY < app.frame.midY
+            let start = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: above ? 0.35 : 0.7))
+            let end = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: above ? 0.7 : 0.35))
+            start.press(forDuration: 0.05, thenDragTo: end)
+        }
         XCTAssertTrue(element.isHittable, "Demo reminder must be visible before tapping")
     }
 
