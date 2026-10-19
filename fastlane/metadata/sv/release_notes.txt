@@ -1,4 +1,5 @@
-Dina tickles, direkt på varje profil.
-• Se aktiva och uppskjutna tickles för varje person.
-• Tryck på en tickle för att redigera den.
-• Spara eller avbryt och återgå till samma profil.
+Korta guider som hjälper dig att komma igång.
+• Lär dig importera telefonkontakter och CSV-filer från LinkedIn.
+• Se hur du skapar en tickle och ordnar personer i grupper.
+• Stäng valfri guide och öppna den igen via Inställningar → Guider.
+• Guiderna är för närvarande på engelska.

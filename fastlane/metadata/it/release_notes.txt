@@ -1,4 +1,5 @@
-I tuoi tickle, direttamente in ogni profilo.
-• Vedi i tickle attivi e rimandati di ogni persona.
-• Tocca un tickle per modificarlo.
-• Salva o annulla e torna allo stesso profilo.
+Brevi guide per aiutarti a iniziare.
+• Impara a importare i contatti del telefono e i file CSV di LinkedIn.
+• Scopri come creare un tickle e organizzare le persone in gruppi.
+• Chiudi qualsiasi guida e rivedila da Impostazioni → Tutorial.
+• I tutorial sono attualmente in inglese.
