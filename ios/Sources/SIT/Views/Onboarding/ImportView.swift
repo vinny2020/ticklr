@@ -15,7 +15,7 @@ struct ImportView: View {
         case recurring
     }
 
-    enum InitialAction { case chooseContacts, linkedin }
+    enum InitialAction { case linkedin }
     var context: Context = .recurring
     var initialAction: InitialAction? = nil
     /// Called with the result message on a successful `.recurring` import,
@@ -129,7 +129,7 @@ struct ImportView: View {
         }
         .tutorialSheet(topic: $tutorialTopic) { guide in
             switch guide {
-            case .phone: showingContactPicker = true
+            case .phone: break
             case .linkedin: showingDocumentPicker = true
             default: break
             }
@@ -138,7 +138,6 @@ struct ImportView: View {
             guard !didOpenInitialAction else { return }
             didOpenInitialAction = true
             switch initialAction {
-            case .chooseContacts: showingContactPicker = true
             case .linkedin: showingDocumentPicker = true
             case nil: break
             }

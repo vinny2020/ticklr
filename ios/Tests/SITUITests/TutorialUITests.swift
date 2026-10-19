@@ -100,7 +100,7 @@ final class TutorialUITests: XCTestCase {
         XCTAssertTrue(app.buttons["Done"].waitForExistence(timeout: 5))
     }
 
-    func testPhoneFinalActionOpensContactPicker() {
+    func testPhoneFinalActionOpensImportChoices() {
         let app = openLibrary()
         app.buttons["tutorial.library.phone"].tap()
         let next = app.buttons["tutorial.next"]
@@ -108,11 +108,12 @@ final class TutorialUITests: XCTestCase {
         next.tap()
         next.tap()
         next.tap()
-        // Newer iOS contact pickers label dismissal Close; older ones use Cancel.
-        let close = app.buttons.matching(NSPredicate(format: "label IN %@", ["Close", "Cancel"])).firstMatch
-        XCTAssertTrue(close.waitForExistence(timeout: 10))
-        close.tap()
-        XCTAssertTrue(app.buttons["Done"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["Choose contacts…"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["Select iPhone Contacts"].exists)
+        let done = app.buttons["Done"]
+        XCTAssertTrue(done.exists)
+        done.tap()
+        XCTAssertTrue(app.buttons["tutorial.library.phone"].waitForExistence(timeout: 5))
     }
 
     func testAccessibilityTextKeepsNavigationAvailable() {

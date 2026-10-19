@@ -106,7 +106,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Use Choose contacts to pick individual people, or Import iPhone Contacts to import the contacts Ticklr can access."
+            "value": "Choose individual people with the contact picker, or import all contacts Ticklr can access."
           }
         }
       }
@@ -492,6 +492,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tutorials"
+          }
+        }
+      }
+    },
+    "tutorial.phone.action": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import contacts"
           }
         }
       }

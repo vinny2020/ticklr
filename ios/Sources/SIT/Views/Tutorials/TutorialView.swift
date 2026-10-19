@@ -25,7 +25,7 @@ enum TutorialTopic: String, CaseIterable, Identifiable {
     }
     var actionTitle: String {
         switch self {
-        case .phone: String(localized: "import.button.chooseContacts")
+        case .phone: String(localized: "tutorial.phone.action", defaultValue: "Import contacts", table: "Tutorials")
         case .linkedin: String(localized: "tutorial.linkedin.action", defaultValue: "Choose CSV file", table: "Tutorials")
         case .tickle: String(localized: "warm.contact.createTickle", defaultValue: "Create a tickle")
         case .groups: String(localized: "tutorial.groups.action", defaultValue: "Explore groups", table: "Tutorials")
@@ -37,7 +37,7 @@ enum TutorialTopic: String, CaseIterable, Identifiable {
             (String(localized: "tutorial.phone.1.title", defaultValue: "Your people, already here", table: "Tutorials"),
              String(localized: "tutorial.phone.1.body", defaultValue: "Start with the contacts on your iPhone. Your Ticklr network stays on this device.", table: "Tutorials")),
             (String(localized: "tutorial.phone.2.title", defaultValue: "Choose who to bring in", table: "Tutorials"),
-             String(localized: "tutorial.phone.2.body", defaultValue: "Use Choose contacts to pick individual people, or Import iPhone Contacts to import the contacts Ticklr can access.", table: "Tutorials")),
+             String(localized: "tutorial.phone.2.body", defaultValue: "Choose individual people with the contact picker, or import all contacts Ticklr can access.", table: "Tutorials")),
             (String(localized: "tutorial.phone.3.title", defaultValue: "Make your first connection", table: "Tutorials"),
              String(localized: "tutorial.phone.3.body", defaultValue: "Find your imported people in Network. Open a profile to create a tickle or add them to a group.", table: "Tutorials"))
         ]
@@ -368,7 +368,7 @@ struct TutorialLibraryView: View {
         .tutorialSheet(topic: $topic) { destination = $0 }
         .sheet(item: $destination) { guide in
             switch guide {
-            case .phone: ImportView(initialAction: .chooseContacts)
+            case .phone: ImportView()
             case .linkedin: ImportView(initialAction: .linkedin)
             case .tickle: TickleEditView()
             case .groups:
