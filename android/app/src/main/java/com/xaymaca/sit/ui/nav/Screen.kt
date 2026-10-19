@@ -81,6 +81,7 @@ sealed class Screen(val route: String) {
             return if (reminderId != null) "$base&reminderId=$reminderId" else base
         }
     }
+    object Tutorials : Screen("tutorials")
     object Settings : Screen("settings")
     object Onboarding : Screen("onboarding")
     object Import : Screen("import") {

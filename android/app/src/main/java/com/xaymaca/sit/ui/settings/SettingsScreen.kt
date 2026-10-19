@@ -35,6 +35,7 @@ fun SettingsScreen(
     onImport: () -> Unit,
     onTemplates: () -> Unit,
     onResetOnboarding: () -> Unit,
+    onTutorials: () -> Unit = {},
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -140,6 +141,13 @@ fun SettingsScreen(
             )
 
             HorizontalDivider(color = warmPalette.cardBorder, modifier = Modifier.padding(start = 56.dp))
+
+            SettingsRow(
+                icon = Icons.Default.Refresh,
+                title = stringResource(R.string.tutorial_library),
+                subtitle = stringResource(R.string.tutorial_language),
+                onClick = onTutorials,
+            )
 
             // About section
             SettingsSectionHeader(stringResource(R.string.settings_section_about))
