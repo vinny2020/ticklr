@@ -91,6 +91,21 @@ struct ComposeView: View {
         selectedContact != nil && recipientPhone != nil && !messageBody.trimmingCharacters(in: .whitespaces).isEmpty
     }
 
+    /// Shared with the wiring tests so they don't depend on SwiftUI's
+    /// private toolbar storage. UI tests exercise its placement and dismissal.
+    var cancelButton: some View {
+        Button(String(localized: "common.cancel")) {
+            switch Self.cancelDecision(messageBody: messageBody) {
+            case .clearSilently:
+                clearCompose()
+                onClose?()
+            case .confirmDiscard:
+                showingDiscardDraftConfirm = true
+            }
+        }
+        .foregroundStyle(palette.ink2)
+    }
+
     // MARK: — Body
 
     var body: some View {
@@ -275,16 +290,7 @@ struct ComposeView: View {
                     // Compose tab passes nil so it stays put; sheet presenters
                     // still dismiss). A non-empty draft is protected behind a
                     // confirmation instead of being silently discarded.
-                    Button(String(localized: "common.cancel")) {
-                        switch Self.cancelDecision(messageBody: messageBody) {
-                        case .clearSilently:
-                            clearCompose()
-                            onClose?()
-                        case .confirmDiscard:
-                            showingDiscardDraftConfirm = true
-                        }
-                    }
-                    .foregroundStyle(palette.ink2)
+                    cancelButton
                 }
             }
             .sheet(isPresented: $showingComposer, onDismiss: handleComposerDismiss) {
