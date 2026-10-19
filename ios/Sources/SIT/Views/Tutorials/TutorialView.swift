@@ -179,8 +179,11 @@ struct TutorialView: View {
 private struct TutorialExample: View {
     let topic: TutorialTopic
     let page: Int
+    @Environment(\.colorScheme) private var colorScheme
     private var palette: WarmPalette { WarmTheme.palette(for: .subtle) }
-    private var blue: Color { WarmCategory.friends.palette.accent }
+    private var blue: Color {
+        colorScheme == .dark ? WarmCategory.friends.palette.accentSoft : WarmCategory.friends.palette.accent
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
@@ -318,6 +321,7 @@ struct TutorialInvitation: View {
     let topic: TutorialTopic
     let onOpen: () -> Void
     @AppStorage private var dismissed: Bool
+    @Environment(\.colorScheme) private var colorScheme
     private var palette: WarmPalette { WarmTheme.palette(for: .subtle) }
 
     init(topic: TutorialTopic, onOpen: @escaping () -> Void) {
@@ -341,7 +345,7 @@ struct TutorialInvitation: View {
                 }
                 .accessibilityLabel(String(localized: "tutorial.dismissInvitation", defaultValue: "Dismiss tutorial suggestion", table: "Tutorials"))
             }
-            .foregroundStyle(WarmCategory.friends.palette.accent)
+            .foregroundStyle(colorScheme == .dark ? WarmCategory.friends.palette.accentSoft : WarmCategory.friends.palette.accent)
             .padding(.leading, 14)
             .background(palette.cardBg, in: RoundedRectangle(cornerRadius: 16))
         }
