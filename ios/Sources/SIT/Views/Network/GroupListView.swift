@@ -6,6 +6,7 @@ struct GroupListView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Query(sort: \ContactGroup.name) private var groups: [ContactGroup]
 
+    @State private var tutorialTopic: TutorialTopic?
     @State private var showingAddGroup = false
     @State private var editingGroup: ContactGroup?
     @State private var selectedGroup: ContactGroup?
@@ -58,6 +59,9 @@ struct GroupListView: View {
                 .padding(.horizontal, WarmSpacing.lg)
                 .padding(.top, 8)
 
+            TutorialInvitation(topic: .groups) { tutorialTopic = .groups }
+                .padding(.horizontal, WarmSpacing.lg)
+
             ForEach(canonicalGroups, id: \.persistentModelID) { group in
                 canonicalRow(group)
                     .padding(.horizontal, WarmSpacing.lg)
@@ -99,6 +103,7 @@ struct GroupListView: View {
                     }
                 }
             }
+            .tutorialSheet(topic: $tutorialTopic) { _ in }
             .sheet(isPresented: $showingAddGroup, onDismiss: { creationFlow.createSheetDismissed() }) {
                 GroupEditSheet(group: nil, onCreated: { creationFlow.groupCreated($0) })
             }
