@@ -9,7 +9,8 @@ final class TutorialUITests: XCTestCase {
         app.launchArguments += ["-hasCompletedOnboarding", "YES", "-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launchArguments += extraArguments
         app.launch()
-        let settings = app.tabBars.buttons.element(boundBy: 4)
+        // iPadOS exposes the top tab strip outside XCUIElementTypeTabBar.
+        let settings = app.buttons["Settings"].firstMatch
         XCTAssertTrue(settings.waitForExistence(timeout: 15))
         settings.tap()
         let tutorials = app.buttons["settings.tutorials"]

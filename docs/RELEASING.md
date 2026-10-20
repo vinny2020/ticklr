@@ -5,8 +5,8 @@ are **tag-driven**: pushing a tag is the deploy button. Everything before the
 tag is ordinary PR work; everything after is automated (Android) or
 semi-automated (iOS).
 
-Most recent walkthrough of this whole flow: v1.12.0, tagged on commit `7f49f6c`
-(July 2026).
+Most recent audit: [1.15.1](releases/1.15.1-audit.md), 19 October 2026.
+Check the recorded store states before announcing a joint public release.
 
 ## The flow at a glance
 
@@ -17,9 +17,9 @@ Most recent walkthrough of this whole flow: v1.12.0, tagged on commit `7f49f6c`
 4. Tag the release commit:
      android/v<x.y.z>-production   ──►  GitHub Actions builds AAB → publishes to Play
      ios/v<x.y.z>                  ──►  Xcode Cloud builds → TestFlight/ASC
-5. iOS manual steps in App Store Connect:
-     create the version, attach build, Submit for Review
-6. iOS store metadata (if changed): fastlane ios store_metadata
+5. iOS: create editable version, upload metadata/screenshots, attach passed build
+6. Enable the build for the intended TestFlight group; verify IN_BETA_TESTING
+7. Submit the App Store version for review; verify the public store after approval
 ```
 
 ---
@@ -62,7 +62,9 @@ What the workflow does:
 
 **Scope caveat:** `publishReleaseBundle` ships the bundle + release notes only.
 The store **listing** (title, descriptions, screenshots, contact/privacy URLs)
-is not touched — listing changes are made in the Play Console by hand.
+is not touched. Publish repository listing changes separately with
+`./gradlew :app:publishReleaseListing` from `android/`. Validate a draft first
+with `-PplayCommit=false`; listing edits affect the live listing across tracks.
 
 ### Android release notes
 
@@ -116,12 +118,25 @@ So the tag is the version of record; the pbxproj value is a fallback. Keep
 `ios/project.yml`'s `MARKETING_VERSION` in sync anyway (the version-bump PR)
 so local builds agree.
 
-**Manual steps after the build** (nothing in the repo does these):
+**App Store Connect steps after the build** (UI or authenticated ASC API;
+the tag and metadata lane do not perform these):
 
 1. In App Store Connect, create the new version on the app page ("+" version)
    if it doesn't exist.
-2. Attach the Xcode Cloud build to it.
-3. Submit for Review.
+2. Require successful Test and Archive actions, then attach the processed build.
+   A successful archive alone does not mean the workflow passed.
+3. Assign the build to the intended TestFlight beta group and verify
+   `buildBetaDetail.internalBuildState == IN_BETA_TESTING`.
+4. Upload current release notes and update App Review instructions for this
+   version. Upload changed screenshots for both iPhone 6.9-inch and iPad
+   13-inch classes; language fallback does not replace device-class coverage.
+5. Submit for Review and verify `WAITING_FOR_REVIEW` (or a later review state).
+   The ASC API supports `reviewSubmissions` plus `reviewSubmissionItems`;
+   create the submission, add the app version, then set `submitted: true`.
+   Preserve the chosen release policy. `AFTER_APPROVAL` releases publicly
+   after Apple approves; review submission alone is not public availability.
+6. Keep Apple-silicon Mac distribution opted out: the SMS handoff is not
+   supported there.
 
 ### iOS store metadata — fastlane
 
@@ -155,8 +170,9 @@ fastlane ios store_metadata
 
 One PR, both platforms, so the version numbers stay aligned:
 
-- `android/app/build.gradle.kts` — the `versionName` fallback default
-  (the tag overrides it in CI, but keep it honest).
+- `android/app/build.gradle.kts` — set the plain `versionName` literal and
+  increment the plain `versionCode` literal. The tag does not override them;
+  CI verifies the tag against the checked-in version before building.
 - `ios/project.yml` — `MARKETING_VERSION`, then `cd ios && xcodegen generate`
   and commit the regenerated pbxproj.
 
@@ -181,9 +197,23 @@ version bump are already on the tagged commit. Tag conventions history:
 ## Post-release checklist
 
 - Watch the **Android Release** run in GitHub Actions to green.
-- Watch Xcode Cloud in ASC; then version → attach build → Submit for Review.
-- Run `fastlane ios store_metadata` if metadata changed (after the ASC version
-  exists).
-- Play Console listing changes (URLs, descriptions, screenshots) — by hand in
-  the console; the pipeline never touches them.
+- Watch Xcode Cloud Test and Archive to success; attach the processed build,
+  enable TestFlight, and submit the App Store version for review.
+- Run `fastlane ios store_metadata` if metadata changed (after the editable ASC
+  version exists and before review submission). Read back all 20 locale notes
+  from ASC to verify. For a notes-only correction, stage only release-note
+  files, pin `app_version`, and set `skip_app_version_update: true` to avoid
+  replacing unrelated live metadata or changing the version.
+- Publish changed Play listing text/graphics separately with
+  `publishReleaseListing`; skip it when the listing is unchanged.
+- Regenerate `fastlane/metadata/android/` after source metadata changes; compare
+  the current version-code changelogs as well as validating the sources. Keep
+  historical changelogs when committing the regenerated tree.
+- Verify the GitHub release APK download, SHA-256, and signing certificate
+  against `AllowedAPKSigningKeys` in `docs/fdroid/com.xaymaca.sit.yml`.
+- Check the actual F-Droid submission state. Its initial MR must be merged
+  before automatic tag polling can distribute releases; see
+  [F-Droid status and follow-up](fdroid/README.md).
+- Update `CHANGELOG.md` and Linear with the released version and any external
+  review still pending. Do not mark public availability until verified.
 - Verify the store pages once each platform goes live.
