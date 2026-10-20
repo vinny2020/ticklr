@@ -34,11 +34,11 @@ final class ComposeFlowUITests: XCTestCase {
     }
 
     private func reveal(_ element: XCUIElement, in app: XCUIApplication) {
-        XCTAssertTrue(element.waitForExistence(timeout: 15), "Demo reminder must be present")
-        // Full-screen swipes can skip past this row on shorter iPhones.
-        // Tap its containing cell and use bounded, bidirectional scrolling.
-        for _ in 0..<10 where !element.isHittable {
-            let frame = element.frame
+        // A lazy List may not create an off-screen cell on an iPhone SE.
+        // Search by scrolling before requiring it to exist in the AX tree.
+        for _ in 0..<10 {
+            if element.exists && element.isHittable { return }
+            let frame = element.exists ? element.frame : .zero
             let above = frame != .zero && frame.midY < app.frame.midY
             let start = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: above ? 0.35 : 0.7))
             let end = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: above ? 0.7 : 0.35))
@@ -53,8 +53,7 @@ final class ComposeFlowUITests: XCTestCase {
         let app = launchApp()
 
         let dueRow = firstDueRow(in: app)
-        XCTAssertTrue(dueRow.waitForExistence(timeout: 15),
-                      "Tickle home should show a due tickle from the demo seed")
+        XCTAssertTrue(app.tabBars.firstMatch.waitForExistence(timeout: 15))
         reveal(dueRow, in: app)
         dueRow.tap()
 
@@ -114,7 +113,8 @@ final class ComposeFlowUITests: XCTestCase {
         let app = launchApp()
 
         let dueRow = firstDueRow(in: app)
-        XCTAssertTrue(dueRow.waitForExistence(timeout: 15))
+        XCTAssertTrue(app.tabBars.firstMatch.waitForExistence(timeout: 15))
+        reveal(dueRow, in: app)
 
         let composeTab = app.tabBars.buttons.element(boundBy: 3)
         XCTAssertTrue(composeTab.waitForExistence(timeout: 5))

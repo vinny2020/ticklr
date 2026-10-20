@@ -6,11 +6,15 @@ final class TutorialLocalizationTests: XCTestCase {
 
     func testEveryTutorialPageAndExampleResolvesInEveryAppLanguage() throws {
         let appBundle = Bundle(for: Contact.self)
-        let catalogURL = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
-            .deletingLastPathComponent().deletingLastPathComponent()
-            .appendingPathComponent("Sources/SIT/Resources/Tutorials.xcstrings")
-        let catalog = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(contentsOf: catalogURL)) as? [String: Any])
-        let keys = try XCTUnwrap(catalog["strings"] as? [String: Any]).keys
+        // Cloud tests run on a separate machine from compilation. Only the app
+        // bundle travels with them; the compiler's source path does not.
+        let englishPath = try XCTUnwrap(appBundle.path(forResource: "en", ofType: "lproj"))
+        let englishBundle = try XCTUnwrap(Bundle(path: englishPath))
+        let tableURL = try XCTUnwrap(englishBundle.url(forResource: "Tutorials", withExtension: "strings"))
+        let table = try XCTUnwrap(PropertyListSerialization.propertyList(
+            from: Data(contentsOf: tableURL), format: nil) as? [String: String])
+        XCTAssertEqual(table.count, 46, "The compiled tutorial table must include every page and example")
+        let keys = table.keys
         for locale in locales {
             let path = try XCTUnwrap(appBundle.path(forResource: locale, ofType: "lproj"), locale)
             let bundle = try XCTUnwrap(Bundle(path: path))
