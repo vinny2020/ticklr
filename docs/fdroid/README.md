@@ -1,10 +1,33 @@
 # F-Droid submission (TIC-101)
 
-Ticklr Android is submitted to F-Droid's main repo via a merge request to
-[fdroiddata](https://gitlab.com/fdroid/fdroiddata). `com.xaymaca.sit.yml` in
-this directory is the reviewed copy of that metadata — the fdroiddata MR is the
-authoritative one once merged; keep this copy in sync when release mechanics
-change (tag scheme, subdir, Binaries URL).
+Ticklr Android is **not yet available in F-Droid's main repository**. The initial
+[submission !45665](https://gitlab.com/fdroid/fdroiddata/-/merge_requests/45665)
+was closed on 18 October 2026 for inactivity after reviewer feedback; it was
+never merged. The maintainer explicitly allows reopening when work resumes.
+
+`com.xaymaca.sit.yml` is a local submission draft, not proof that F-Droid has
+accepted or published a release. The current draft targets 1.15.1 (137).
+
+## Outstanding submission work (audit: 19 October 2026)
+
+The 18 September review of **1.12.3 (134)** reported:
+
+1. The listing advertises composing to multiple contacts, but Compose selects
+   one recipient at a time. The current source and English listing still
+   disagree. Correct the claim across all listing translations, or implement
+   and verify multi-recipient composition in a future app release.
+2. Choosing the app's Light theme while Android uses Dark makes status-bar
+   icons unreadable. The current `MainActivity` still sets edge-to-edge once
+   without updating system-bar appearance for the app theme. Fix and verify
+   both theme override directions in a future release.
+
+The older submission's reproducible build CI passed; that does not resolve
+these functional findings or establish reproducibility of 1.15.1. Resolve the
+feedback, update the GitLab source branch to the intended released commit,
+rerun F-Droid CI and device review, then reopen the existing MR. Keep build
+`commit` fields as full hashes, as requested by the maintainer. Publication
+requires maintainer acceptance and indexing; a GitHub release tag alone cannot
+complete this initial submission. Track this work in TIC-101.
 
 ## How the F-Droid pipeline works for Ticklr
 
@@ -15,7 +38,8 @@ change (tag scheme, subdir, Binaries URL).
   **our** signed APK. Users get a binary provably built from this source.
 - `Binaries:` points at the GitHub Release asset `ticklr-v<x.y.z>.apk`, which
   `.github/workflows/android-release.yml` uploads on every release tag.
-- `UpdateCheckMode: Tags ^android/v[0-9.]+-production$` — F-Droid polls our
+- **After the initial submission is merged:**
+  `UpdateCheckMode: Tags ^android/v[0-9.]+-production$` lets F-Droid poll our
   production tags; `AutoUpdateMode: Version` opens their version-bump MRs
   automatically. Nothing extra to do per release beyond the normal tag flow,
   as long as the version-bump PR keeps `versionCode`/`versionName` literals

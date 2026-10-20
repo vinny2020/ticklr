@@ -18,14 +18,14 @@ Binaries:
 Builds:
   - versionName: 1.15.1
     versionCode: 137
-    commit: android/v1.15.1-production
+    commit: a5729b14d14a710fa3b620a340766c46b3a43c46
     subdir: android/app
     gradle:
       - yes
 
   - versionName: 1.14.0
     versionCode: 136
-    commit: android/v1.14.0-production
+    commit: d20b78986f66a149ea4564361556bb362f10ebfc
     subdir: android/app
     gradle:
       - yes

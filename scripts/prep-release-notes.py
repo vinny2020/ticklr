@@ -29,6 +29,7 @@ from pathlib import Path
 # These cover the 21 app locales declared in resourceConfigurations.
 # Notes:
 #   - These match the Play listing directories that the API accepted.
+#   - Hebrew uses iw-IL only; he-IL aliases it in Play and causes duplicate notes.
 #   - Arabic, Romanian, and Urdu are unqualified (no region).
 #   - Portuguese is pt-PT to match Ticklr's existing Play listing locale.
 #   - Chinese is zh-CN (Simplified) — add zh-TW separately if Taiwan matters.
@@ -53,7 +54,7 @@ LOCALES: dict[str, str] = {
     "ko-KR": "Korean",
     "hi-IN": "Hindi",
     "ar": "Arabic",
-    "he-IL": "Hebrew",
+    "iw-IL": "Hebrew",
     "ur": "Urdu",
 }
 

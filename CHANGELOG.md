@@ -2,6 +2,21 @@
 
 All notable changes to Ticklr: Your People Matter are documented here.
 
+## [1.15.1] — 2026-10-19
+
+### Tutorials — iOS and Android
+
+- Add four short, dismissible guides for phone contact import, LinkedIn CSV import, creating a tickle, and organizing people into groups.
+- Replay guides from Settings → Tutorials; remember each guide's dismissal locally across updates and language changes.
+- Translate tutorial copy, controls, accessibility labels, and examples across all 21 app languages. Android examples use localized native Android screenshots; iOS examples render as native, localized views.
+- Keep example contacts separate from real data and open the real app flow only from each guide's final action.
+- Match Android's welcome card to the app's current card style.
+
+### Release validation
+
+- Fix iOS localization tests to use bundled strings on Xcode Cloud test devices and scroll to off-screen Compose rows before interacting with them.
+- Update localized release notes for all 20 App Store locales and 21 Google Play locales.
+
 ## [1.14.0] — 2026-10-08
 
 ### Network profiles — iOS and Android
