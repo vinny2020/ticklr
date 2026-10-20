@@ -1,5 +1,9 @@
 # F-Droid submission (TIC-101)
 
+**Deferred by user, 19 October 2026.** F-Droid is outside the current 1.15.1
+App Store / Google Play release scope. Preserve this record and TIC-101 in
+Backlog; resume submission work only when requested.
+
 Ticklr Android is **not yet available in F-Droid's main repository**. The initial
 [submission !45665](https://gitlab.com/fdroid/fdroiddata/-/merge_requests/45665)
 was closed on 18 October 2026 for inactivity after reviewer feedback; it was
