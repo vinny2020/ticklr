@@ -32,6 +32,9 @@ Evidence retained locally:
 - Results and archive: `$TMPDIR/ticklr-duo.j0C6Y1/`
 - `logs/duo/archive-configuration.json`
 - `logs/duo/screenshots-duo/` (exported XCTest attachments and manifest)
+- Representative portrait captures: [Duo](tic-110-screenshots/duo-portrait.png),
+  [iPhone](tic-110-screenshots/iphone-portrait.png),
+  [iPad](tic-110-screenshots/ipad-portrait.png)
 
 The baseline test requests portrait and both landscape orientations,
 then checks that native navigation remains available and attaches screenshots.
