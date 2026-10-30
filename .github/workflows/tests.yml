@@ -60,6 +60,7 @@ jobs:
           xcodebuild test \
             -project SIT.xcodeproj \
             -scheme Ticklr \
+            -collect-test-diagnostics never \
             -destination 'platform=iOS Simulator,OS=27.1,name=iPhone Duo' \
             -only-testing:TicklrTests \
             -only-testing:TicklrUITests/BaselineLaunchUITests \
@@ -77,6 +78,7 @@ jobs:
           xcodebuild test \
             -project SIT.xcodeproj \
             -scheme Ticklr \
+            -collect-test-diagnostics never \
             -destination 'platform=iOS Simulator,OS=27.0,name=iPhone 17' \
             -destination 'platform=iOS Simulator,OS=27.0,name=iPad Pro 11-inch (M5)' \
             -only-testing:TicklrUITests/BaselineLaunchUITests \

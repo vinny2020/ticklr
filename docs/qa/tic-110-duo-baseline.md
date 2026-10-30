@@ -126,3 +126,9 @@ string: `object(forKey:) as? Bool` returns nil while `bool(forKey:)` returns
 false. Updated the scheduler preference reader to use the Boolean getter
 when a value exists, retaining enabled-by-default when absent. This makes
 notification-disable launch overrides effective as well as stored preferences.
+
+After the final local run passed all 244 unit and 7 UI tests, xcodebuild
+remained in `collectSimulatorDiagnostics` → `simCtlDiagnose`, confirmed by a
+process sample. Validation and CI now pass `-collect-test-diagnostics never`
+to omit optional verbose sysdiagnose collection. Raw logs, screenshots,
+assertions, exit status, and xcresult bundles remain enabled.

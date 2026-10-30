@@ -43,7 +43,10 @@ for devices in groups.values():
 raise SystemExit('No available iPhone Duo. In Xcode, install the iOS 27.1 or later simulator runtime and add an iPhone Duo simulator, then rerun.')
 PY
 )
+# Keep xcresult/screenshots, but avoid optional sysdiagnose collection hanging
+# after simulator snapshot retries (even when all test assertions pass).
 xcodebuild test -project SIT.xcodeproj -scheme Ticklr \
+  -collect-test-diagnostics never \
   -destination "platform=iOS Simulator,id=$DUO_ID" \
   -derivedDataPath "$RESULTS/DerivedData" \
   -clonedSourcePackagesDirPath "$RESULTS/SourcePackages" \
