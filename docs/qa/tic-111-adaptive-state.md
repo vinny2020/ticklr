@@ -79,3 +79,18 @@ failure; `RestoredFinal.xcresult`, `RegressionFixed.xcresult`, and
 records binary inspection. Earlier failed runs are retained for diagnosis.
 
 Native navigation API reference: [Apple NavigationSplitView documentation](https://developer.apple.com/documentation/swiftui/navigationsplitview).
+
+## Final hosted-test corrections
+
+Run `41083374819` uploaded diagnostics successfully. Its Compose spindump shows
+XCTest timing out inside an all-descendants accessibility query; the template
+menu is now queried specifically as a button. The group screenshot shows the
+retained draft in a scrolled form with navigation minimized. Scrolling the form
+back up reveals Cancel; `GroupToolbarReveal.xcresult` and
+`FinalRecordedFailures.xcresult` pass cancellation with all draft assertions
+unchanged. The final recorded-failures run passed both previously failing cases.
+
+Experimental UIKit/trait-harness and toolbar-role changes were discarded. Their
+patch and logs remain under the ignored local log folder for diagnosis; they
+are not part of the PR. The original opt-in SwiftUI environment harness remains
+explicitly a controlled class test, not a physical-window/fold test.

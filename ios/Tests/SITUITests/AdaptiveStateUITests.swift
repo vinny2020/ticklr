@@ -86,7 +86,7 @@ final class AdaptiveStateUITests: XCTestCase {
         app.staticTexts["Fatima Al-Hassan"].firstMatch.tap()
         app.buttons["Send a text"].tap()
         XCTAssertTrue(app.buttons["compose.cancel"].waitForExistence(timeout: 5))
-        let template = app.descendants(matching: .any).matching(identifier: "compose.template").firstMatch
+        let template = app.buttons["compose.template"].firstMatch
         for _ in 0..<3 {
             if template.exists { break }
             app.swipeUp()
@@ -110,7 +110,7 @@ final class AdaptiveStateUITests: XCTestCase {
         cycle(app) {
             XCTAssertEqual(editor.value as? String, draft)
             XCTAssertTrue(app.staticTexts["Fatima Al-Hassan"].firstMatch.exists)
-            XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "compose.template").firstMatch.label.contains("Checking in"))
+            XCTAssertTrue(app.buttons["compose.template"].firstMatch.label.contains("Checking in"))
         }
     }
 
@@ -211,7 +211,22 @@ final class AdaptiveStateUITests: XCTestCase {
         name.tap()
         name.typeText("Resize circle\n")
         cycle(app) { XCTAssertEqual(name.value as? String, "Resize circle") }
-        app.buttons["groupEdit.cancel"].tap()
+        let cancel = app.buttons["groupEdit.cancel"]
+        if !cancel.exists {
+            let before = XCTAttachment(screenshot: app.screenshot())
+            before.name = "Group toolbar before revealing navigation"
+            before.lifetime = .keepAlways
+            add(before)
+            app.collectionViews.firstMatch.swipeDown()
+        }
+        if !cancel.waitForExistence(timeout: 10) {
+            let screenshot = XCTAttachment(screenshot: app.screenshot())
+            screenshot.name = "Group sheet after layout transitions"
+            screenshot.lifetime = .keepAlways
+            add(screenshot)
+            XCTFail("Group cancellation action must remain reachable")
+        }
+        cancel.tap()
         XCTAssertFalse(name.exists)
         XCTAssertTrue(app.buttons["groupRow.canonical.family"].exists)
     }
