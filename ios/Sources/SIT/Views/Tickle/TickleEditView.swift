@@ -88,6 +88,16 @@ struct TickleEditView: View {
         }
     }
 
+    /// Inspect the actual action directly in wiring tests. Searching the full
+    /// form walks SwiftUI's private focus/submit storage and can stall CI.
+    var saveButton: some View {
+        Button(String(localized: "common.save")) { save() }
+            .accessibilityLabel(Text(String(localized: "common.save")))
+            .accessibilityIdentifier("tickleEdit.save")
+            .disabled(!canSave)
+            .fontWeight(.semibold)
+    }
+
     var body: some View {
         NavigationStack {
             Form {
@@ -165,11 +175,7 @@ struct TickleEditView: View {
                         .accessibilityIdentifier("tickleEdit.cancel")
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(String(localized: "common.save")) { save() }
-                        .accessibilityLabel(Text(String(localized: "common.save")))
-                        .accessibilityIdentifier("tickleEdit.save")
-                        .disabled(!canSave)
-                        .fontWeight(.semibold)
+                    saveButton
                 }
             }
             .sheet(isPresented: $showingContactPicker) {

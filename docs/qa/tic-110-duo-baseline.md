@@ -104,3 +104,10 @@ local run had not exposed that keyboard state. Added an explicit Done submit
 label and focus dismissal to the note field; the UI test now submits the note
 before Save/Cancel, exercising the real keyboard dismissal route. The editor
 retains the entered text. The next CI run validates this correction.
+
+The subsequent remote run stopped advancing inside the editor unit test's
+full-form Save search after adding focus/submit modifiers. Local editor tests
+still passed but took 8.6 seconds. Extracted the exact toolbar Save view as an
+internal property, following Compose's existing approach, and inspect that
+action directly in the eight wiring tests. Rendered toolbar, keyboard, and
+persistence behavior remain covered by the contact UI flow.

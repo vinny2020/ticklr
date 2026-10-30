@@ -39,8 +39,7 @@ final class TickleEditViewTests: XCTestCase {
         XCTAssertEqual(originalNextDue, futureDue)
 
         let view = TickleEditView(existing: reminder)
-        let sut = try view.inspect()
-        try sut.find(button: String(localized: "common.save")).tap()
+        try view.saveButton.inspect().button().tap()
 
         XCTAssertEqual(
             reminder.nextDueDate, originalNextDue,
@@ -64,8 +63,7 @@ final class TickleEditViewTests: XCTestCase {
         reminder.nextDueDate = pastStart
 
         let view = TickleEditView(existing: reminder)
-        let sut = try view.inspect()
-        try sut.find(button: String(localized: "common.save")).tap()
+        try view.saveButton.inspect().button().tap()
 
         XCTAssertEqual(
             reminder.nextDueDate, pastStart,
@@ -86,8 +84,7 @@ final class TickleEditViewTests: XCTestCase {
         )
 
         let view = TickleEditView(existing: reminder)
-        let sut = try view.inspect()
-        try sut.find(button: String(localized: "common.save")).tap()
+        try view.saveButton.inspect().button().tap()
 
         let expected = String(localized: "tickleEdit.default.note")
         XCTAssertEqual(reminder.note, expected)
@@ -109,8 +106,7 @@ final class TickleEditViewTests: XCTestCase {
         )
 
         let view = TickleEditView(existing: reminder)
-        let sut = try view.inspect()
-        try sut.find(button: String(localized: "common.save")).tap()
+        try view.saveButton.inspect().button().tap()
 
         XCTAssertEqual(reminder.note, "", "Whitespace-only must be trimmed, not defaulted")
     }
@@ -134,8 +130,7 @@ final class TickleEditViewTests: XCTestCase {
         let view = TickleEditView(existing: reminder, onClose: { closeCount += 1 }) { message in
             savedMessage = message
         }
-        let sut = try view.inspect()
-        try sut.find(button: String(localized: "common.save")).tap()
+        try view.saveButton.inspect().button().tap()
 
         XCTAssertEqual(savedMessage, String(localized: "tickleEdit.toast.updated"))
         XCTAssertEqual(closeCount, 1, "Save must close the editor immediately, with no delay")
@@ -152,8 +147,7 @@ final class TickleEditViewTests: XCTestCase {
         let view = TickleEditView(contact: contact, onClose: { closeCount += 1 }) { message in
             savedMessage = message
         }
-        let sut = try view.inspect()
-        try sut.find(button: String(localized: "common.save")).tap()
+        try view.saveButton.inspect().button().tap()
 
         XCTAssertEqual(savedMessage, String(localized: "tickleEdit.toast.saved"))
         XCTAssertEqual(closeCount, 1, "Save must close the editor immediately, with no delay")
@@ -254,8 +248,7 @@ final class TickleEditViewTests: XCTestCase {
         )
 
         let view = TickleEditView(existing: reminder)
-        let sut = try view.inspect()
-        try sut.find(button: String(localized: "common.save")).tap()
+        try view.saveButton.inspect().button().tap()
 
         XCTAssertEqual(reminder.frequency, .weekly, "Editing an existing tickle must not be overridden by the Settings default")
     }
@@ -312,8 +305,7 @@ final class TickleEditViewTests: XCTestCase {
         XCTAssertNotNil(reminder.group)
 
         let view = TickleEditView(existing: reminder)
-        let sut = try view.inspect()
-        try sut.find(button: String(localized: "common.save")).tap()
+        try view.saveButton.inspect().button().tap()
 
         XCTAssertNil(reminder.contact, "Saving a group tickle without a picked contact must leave contact nil")
         XCTAssertEqual(reminder.group?.id, group.id, "The group link must be preserved on save")
