@@ -46,12 +46,30 @@ this deterministic regression suite (TIC-115).
 - Unsigned release archive passed. Binary string checks found no `test.resize`,
   `debugTestAdaptiveResize`, or `AdaptiveResizeTestState`; the app has no bundled
   third-party frameworks.
-- The expanded UI suite covers 11 state scenarios plus existing navigation
-  regressions. Final combined verification is in progress. Native overlay
-  sidebars are explicitly reopened before asserting retained search/scroll
-  state; these tests do not assume both columns fit in the fixed test frame.
+- All 11 adaptive scenarios and all five existing Groups/Compose navigation
+  cases passed locally. The combined run's sole failure was an assertion that
+  assumed TextEditor typing appends at the end; capturing the actual entered
+  draft before resizing corrected the test, and its focused rerun passed.
+- The final editor checks also pass after re-querying controls across layout
+  changes. Native overlay sidebars are reopened before asserting retained
+  search/scroll state; the tests do not assume both columns fit in the fixed
+  test frame.
+- Negative control: using the old `TickleListView` from `edfa109` with the same
+  instrumented editor and final test, the first compact-to-regular transition
+  removed the draft TextField and failed `testCompactTickleDraftSurvivesResize`.
+  Restoring the fixed source preserves the draft. Source SHA-256 before/after
+  the temporary baseline substitution matches; no baseline code was committed.
+- GitHub CI is linked from [PR #140](https://github.com/vinny2020/ticklr/pull/140).
+  It includes all adaptive cases, the existing Duo core UI suite, the 244 unit
+  tests, unsigned archive, standard iPhone/iPad launch, Android, and localization.
 - Apple Device Interaction workspace/session verification is pending approval
   of the isolated project in Xcode's MCP menu. No approval settings were changed
   by automation and no simulator data was erased.
 
-Local logs and result bundles: `ios/logs/tic111/` in the isolated worktree.
+Local logs and result bundles: `logs/duo/tic111/` in the isolated worktree.
+`negative-fresh.log` / `NegativeFresh.xcresult` record the direct draft-loss
+failure; `RestoredFinal.xcresult`, `RegressionFixed.xcresult`, and
+`FinalFocused.xcresult` record passing editor checks. `release-verification.json`
+records binary inspection. Earlier failed runs are retained for diagnosis.
+
+Native navigation API reference: [Apple NavigationSplitView documentation](https://developer.apple.com/documentation/swiftui/navigationsplitview).

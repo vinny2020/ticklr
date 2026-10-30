@@ -22,8 +22,11 @@ final class AdaptiveStateUITests: XCTestCase {
         XCTAssertTrue(controls.firstMatch.waitForExistence(timeout: 5))
         let control = controls.allElementsBoundByIndex.first(where: { $0.isHittable }) ?? controls.firstMatch
         control.tap()
-        XCTAssertTrue(control.waitForExistence(timeout: 5))
-        XCTAssertEqual(control.value as? String, size)
+        // Re-resolve after adapting: the tappable control can move between
+        // the root and a modal, so a bound index may no longer identify it.
+        let updated = controls.firstMatch
+        XCTAssertTrue(updated.waitForExistence(timeout: 5))
+        XCTAssertEqual(updated.value as? String, size)
     }
 
     private func cycle(_ app: XCUIApplication, verify: () -> Void) {
