@@ -56,7 +56,7 @@ The run returned TEST SUCCEEDED; results are in
 uses the documented `xcode-27` runner and explicitly selects
 `/Applications/Xcode_27.1.app`. It archives unsigned, runs all unit tests and
 core Duo UI tests, and runs baseline launches on standard iPhone/iPad.
-Raw logs and both result bundles are uploaded as `ios-test-results`.
+Raw logs and all three result bundles are uploaded as `ios-test-results`.
 [GitHub's runner inventory](https://github.com/actions/runner-images/blob/main/images/macos/xcode-27-arm64-Readme.md)
 confirmed these Xcode and simulator destinations on the validation date.
 
@@ -132,3 +132,9 @@ remained in `collectSimulatorDiagnostics` → `simCtlDiagnose`, confirmed by a
 process sample. Validation and CI now pass `-collect-test-diagnostics never`
 to omit optional verbose sysdiagnose collection. Raw logs, screenshots,
 assertions, exit status, and xcresult bundles remain enabled.
+
+The hosted runner passed Duo but spent over ten minutes in the concurrent
+standard-device step, versus about two minutes locally. CI now runs phone and
+iPad launches in separate sequential steps and shuts down simulator runtimes
+between destinations to reduce resource contention. Each destination has its
+own result bundle and raw log.

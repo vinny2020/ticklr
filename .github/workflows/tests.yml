@@ -71,7 +71,24 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             | tee xcodebuild-test.log
 
-      - name: Verify standard iPhone and iPad launches
+      # Keep one simulator runtime active at a time on the hosted runner.
+      - name: Verify standard iPhone launch
+        working-directory: ios
+        run: |
+          set -o pipefail
+          xcrun simctl shutdown all
+          xcodebuild test \
+            -project SIT.xcodeproj \
+            -scheme Ticklr \
+            -collect-test-diagnostics never \
+            -destination 'platform=iOS Simulator,OS=27.0,name=iPhone 17' \
+            -only-testing:TicklrUITests/BaselineLaunchUITests \
+            -resultBundlePath PhoneBaselineResults \
+            CODE_SIGNING_ALLOWED=NO \
+            | tee xcodebuild-phone-baseline.log
+          xcrun simctl shutdown all
+
+      - name: Verify standard iPad launch
         working-directory: ios
         run: |
           set -o pipefail
@@ -79,12 +96,12 @@ jobs:
             -project SIT.xcodeproj \
             -scheme Ticklr \
             -collect-test-diagnostics never \
-            -destination 'platform=iOS Simulator,OS=27.0,name=iPhone 17' \
             -destination 'platform=iOS Simulator,OS=27.0,name=iPad Pro 11-inch (M5)' \
             -only-testing:TicklrUITests/BaselineLaunchUITests \
-            -resultBundlePath BaselineResults \
+            -resultBundlePath PadBaselineResults \
             CODE_SIGNING_ALLOWED=NO \
-            | tee xcodebuild-baseline.log
+            | tee xcodebuild-pad-baseline.log
+          xcrun simctl shutdown all
 
       - name: Upload test results
         if: always()
@@ -94,8 +111,10 @@ jobs:
           path: |
             ios/TestResults.xcresult
             ios/xcodebuild-test.log
-            ios/BaselineResults.xcresult
-            ios/xcodebuild-baseline.log
+            ios/PhoneBaselineResults.xcresult
+            ios/PadBaselineResults.xcresult
+            ios/xcodebuild-phone-baseline.log
+            ios/xcodebuild-pad-baseline.log
 
   android-tests:
     name: Android Unit Tests
