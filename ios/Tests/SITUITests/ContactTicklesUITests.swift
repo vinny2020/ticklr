@@ -33,7 +33,7 @@ final class ContactTicklesUITests: XCTestCase {
         XCTAssertTrue(note.waitForExistence(timeout: 5))
         note.tap()
         let marker = "Profile tickle \(UUID().uuidString.prefix(8))"
-        note.typeText(marker)
+        note.typeText(marker + "\n")
         let save = app.buttons["tickleEdit.save"]
         XCTAssertTrue(save.waitForExistence(timeout: 5))
         save.tap()
@@ -50,7 +50,7 @@ final class ContactTicklesUITests: XCTestCase {
         // Tap beyond the short note's text so deletion starts at its end.
         note.coordinate(withNormalizedOffset: CGVector(dx: 0.95, dy: 0.5)).tap()
         note.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: marker.count))
-        note.typeText(edited)
+        note.typeText(edited + "\n")
         save.tap()
         XCTAssertTrue(create.waitForExistence(timeout: 5), "Saving should return to the same profile")
         let editedRow = app.buttons[rowID]
@@ -63,7 +63,7 @@ final class ContactTicklesUITests: XCTestCase {
         XCTAssertTrue(note.waitForExistence(timeout: 5))
         XCTAssertEqual(note.value as? String, edited)
         note.coordinate(withNormalizedOffset: CGVector(dx: 0.95, dy: 0.5)).tap()
-        note.typeText(" unsaved")
+        note.typeText(" unsaved\n")
         app.buttons["tickleEdit.cancel"].tap()
         XCTAssertTrue(editedRow.waitForExistence(timeout: 5), "Cancelling should return to the same profile")
         XCTAssertTrue(editedRow.label.contains(edited))

@@ -1,7 +1,8 @@
 import XCTest
 
-/// TIC-110 baseline: the app reaches its main interface in both supported
-/// phone orientations, including on the standard iPhone and iPad destinations.
+/// TIC-110 baseline: native navigation remains available after launch and
+/// orientation requests on Duo, standard iPhone, and iPad. This checks launch
+/// continuity; actual fold/pose geometry is validated separately in TIC-115.
 final class BaselineLaunchUITests: XCTestCase {
     func testLaunchAndRotate() {
         continueAfterFailure = false

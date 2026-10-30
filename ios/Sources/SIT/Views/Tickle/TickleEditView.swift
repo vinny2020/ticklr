@@ -2,6 +2,7 @@ import SwiftUI
 import SwiftData
 
 struct TickleEditView: View {
+    @FocusState private var noteIsFocused: Bool
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
 
@@ -150,6 +151,9 @@ struct TickleEditView: View {
 
                 Section(String(localized: "tickleEdit.section.note")) {
                     TextField(String(localized: "tickleEdit.placeholder.note"), text: $note)
+                        .focused($noteIsFocused)
+                        .submitLabel(.done)
+                        .onSubmit { noteIsFocused = false }
                 }
             }
             .navigationTitle(isEditing ? String(localized: "tickleEdit.navTitle.edit") : String(localized: "tickleEdit.navTitle.new"))
