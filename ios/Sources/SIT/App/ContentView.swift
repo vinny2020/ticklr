@@ -37,6 +37,11 @@ struct ContentView: View {
     }
 
     var body: some View {
+        content.adaptiveResizeTestHost()
+    }
+
+    @ViewBuilder
+    private var content: some View {
         if hasCompletedOnboarding {
             TabView(selection: $selectedTab) {
                 NetworkListView()

@@ -227,6 +227,7 @@ struct ComposeView: View {
                                     .stroke(palette.cardBorder, lineWidth: 1)
                             )
                         }
+                        .accessibilityIdentifier("compose.template")
                         .padding(.horizontal)
                     }
 
@@ -375,6 +376,7 @@ struct ComposeView: View {
                             defaultValue: "Something went wrong. Your message is still here — try sending it again."))
             }
         }
+        .adaptiveResizeTestHost()
     }
 
     // MARK: — Recipient suggestions (TIC-86)

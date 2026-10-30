@@ -64,6 +64,7 @@ jobs:
             -destination 'platform=iOS Simulator,OS=27.1,name=iPhone Duo' \
             -only-testing:TicklrTests \
             -only-testing:TicklrUITests/BaselineLaunchUITests \
+            -only-testing:TicklrUITests/AdaptiveStateUITests \
             -only-testing:TicklrUITests/ComposeFlowUITests \
             -only-testing:TicklrUITests/ContactTicklesUITests \
             -only-testing:TicklrUITests/GroupsScreenUITests \

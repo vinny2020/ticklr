@@ -161,6 +161,7 @@ struct TickleEditView: View {
 
                 Section(String(localized: "tickleEdit.section.note")) {
                     TextField(String(localized: "tickleEdit.placeholder.note"), text: $note)
+                        .accessibilityIdentifier("tickleEdit.note")
                         .focused($noteIsFocused)
                         .submitLabel(.done)
                         .onSubmit { noteIsFocused = false }
@@ -182,6 +183,7 @@ struct TickleEditView: View {
                 ContactPickerSheet(selected: $selectedContact)
             }
         }
+        .adaptiveResizeTestHost()
     }
 
     private func save() {
