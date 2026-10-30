@@ -77,11 +77,20 @@ jobs:
         run: |
           set -o pipefail
           xcrun simctl shutdown all
+          SIMULATOR_ID=$(xcrun simctl list devices available --json | python3 -c '
+          import json, sys
+          devices = json.load(sys.stdin)["devices"].get("com.apple.CoreSimulator.SimRuntime.iOS-27-0", [])
+          matches = [d for d in devices if d.get("isAvailable") and d["name"] == sys.argv[1]]
+          if not matches:
+              sys.exit("No available iOS 27.0 simulator: " + sys.argv[1])
+          print(matches[0]["udid"])
+          ' 'iPhone 17')
+          xcrun simctl bootstatus "$SIMULATOR_ID" -b
           xcodebuild test \
             -project SIT.xcodeproj \
             -scheme Ticklr \
             -collect-test-diagnostics never \
-            -destination 'platform=iOS Simulator,OS=27.0,name=iPhone 17' \
+            -destination "platform=iOS Simulator,id=$SIMULATOR_ID" \
             -only-testing:TicklrUITests/BaselineLaunchUITests \
             -resultBundlePath PhoneBaselineResults \
             CODE_SIGNING_ALLOWED=NO \
@@ -92,11 +101,20 @@ jobs:
         working-directory: ios
         run: |
           set -o pipefail
+          SIMULATOR_ID=$(xcrun simctl list devices available --json | python3 -c '
+          import json, sys
+          devices = json.load(sys.stdin)["devices"].get("com.apple.CoreSimulator.SimRuntime.iOS-27-0", [])
+          matches = [d for d in devices if d.get("isAvailable") and d["name"] == sys.argv[1]]
+          if not matches:
+              sys.exit("No available iOS 27.0 simulator: " + sys.argv[1])
+          print(matches[0]["udid"])
+          ' 'iPad Pro 11-inch (M5)')
+          xcrun simctl bootstatus "$SIMULATOR_ID" -b
           xcodebuild test \
             -project SIT.xcodeproj \
             -scheme Ticklr \
             -collect-test-diagnostics never \
-            -destination 'platform=iOS Simulator,OS=27.0,name=iPad Pro 11-inch (M5)' \
+            -destination "platform=iOS Simulator,id=$SIMULATOR_ID" \
             -only-testing:TicklrUITests/BaselineLaunchUITests \
             -resultBundlePath PadBaselineResults \
             CODE_SIGNING_ALLOWED=NO \

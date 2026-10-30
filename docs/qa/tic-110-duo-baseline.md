@@ -138,3 +138,10 @@ standard-device step, versus about two minutes locally. CI now runs phone and
 iPad launches in separate sequential steps and shuts down simulator runtimes
 between destinations to reduce resource contention. Each destination has its
 own result bundle and raw log.
+
+The sequential run confirmed the failure was simulator infrastructure, before
+the app test began: DTServiceHub could not connect on iPhone 17, followed by
+`Timed out waiting for AX loaded notification`. CI now resolves each standard
+device's UUID and explicitly waits with `simctl bootstatus -b` before starting
+XCTest. The same branch's remote archive, 244 unit tests, and 7 Duo UI tests
+passed in that run.
