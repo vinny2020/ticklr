@@ -120,3 +120,9 @@ those tests by disabling notification scheduling in setup and restoring the
 prior preference in teardown, matching the existing notification/undo test
 suites. Core navigation UI tests also launch with notifications disabled;
 notification permission and routing acceptance remains in TIC-113/115.
+
+A direct Foundation check confirmed that command-line `NO` is stored as a
+string: `object(forKey:) as? Bool` returns nil while `bool(forKey:)` returns
+false. Updated the scheduler preference reader to use the Boolean getter
+when a value exists, retaining enabled-by-default when absent. This makes
+notification-disable launch overrides effective as well as stored preferences.

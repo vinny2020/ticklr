@@ -36,7 +36,11 @@ struct TickleScheduler {
         // In-app "Tickle reminders" toggle (TIC-68) — checked synchronously
         // before any async work so a disabled pref never even requests
         // authorization.
-        let notificationsEnabled = (UserDefaults.standard.object(forKey: "tickleNotificationsEnabled") as? Bool) ?? true
+        let preferences = UserDefaults.standard
+        // bool(forKey:) also interprets Foundation's command-line overrides,
+        // whose values are strings. Keep notifications enabled when unset.
+        let notificationsEnabled = preferences.object(forKey: "tickleNotificationsEnabled") == nil
+            || preferences.bool(forKey: "tickleNotificationsEnabled")
         guard notificationsEnabled else { return }
 
         // Snapshot everything the async Task needs as plain value types BEFORE the
