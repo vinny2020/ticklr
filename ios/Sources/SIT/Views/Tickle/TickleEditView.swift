@@ -157,9 +157,13 @@ struct TickleEditView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button(String(localized: "common.cancel")) { close() }
+                        .accessibilityLabel(Text(String(localized: "common.cancel")))
+                        .accessibilityIdentifier("tickleEdit.cancel")
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(String(localized: "common.save")) { save() }
+                        .accessibilityLabel(Text(String(localized: "common.save")))
+                        .accessibilityIdentifier("tickleEdit.save")
                         .disabled(!canSave)
                         .fontWeight(.semibold)
                 }
