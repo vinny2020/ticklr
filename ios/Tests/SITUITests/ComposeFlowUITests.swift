@@ -18,7 +18,7 @@ final class ComposeFlowUITests: XCTestCase {
     private func launchApp() -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments += [
-            "-hasCompletedOnboarding", "YES",
+            "-tickleNotificationsEnabled", "NO", "-hasCompletedOnboarding", "YES",
             "-debugSeedDemoData", "YES",
             "-debugForceCanSendMessages", "YES",
             "-AppleLanguages", "(en)", "-AppleLocale", "en_US",

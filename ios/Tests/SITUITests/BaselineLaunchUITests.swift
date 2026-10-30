@@ -7,7 +7,7 @@ final class BaselineLaunchUITests: XCTestCase {
     func testLaunchAndRotate() {
         continueAfterFailure = false
         let app = XCUIApplication()
-        app.launchArguments += ["-hasCompletedOnboarding", "YES", "-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchArguments += ["-tickleNotificationsEnabled", "NO", "-hasCompletedOnboarding", "YES", "-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         XCUIDevice.shared.orientation = .portrait
         defer { XCUIDevice.shared.orientation = .portrait }
         app.launch()

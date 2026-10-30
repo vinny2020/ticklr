@@ -159,10 +159,15 @@ final class TickleEditViewTests: XCTestCase {
     /// (no SwiftUI rendering, no ModelContext) so — unlike the new-tickle
     /// save path noted above — they're directly assertable here.
     private var priorDefaultFrequencyRaw: String?
+    private var priorNotificationsEnabled: Any?
 
     override func setUp() {
         super.setUp()
         priorDefaultFrequencyRaw = UserDefaults.standard.string(forKey: "defaultTickleFrequency")
+        // Save wiring tests must not schedule real notifications or leave an
+        // authorization prompt for the next UI test process.
+        priorNotificationsEnabled = UserDefaults.standard.object(forKey: "tickleNotificationsEnabled")
+        UserDefaults.standard.set(false, forKey: "tickleNotificationsEnabled")
     }
 
     override func tearDown() {
@@ -170,6 +175,11 @@ final class TickleEditViewTests: XCTestCase {
             UserDefaults.standard.set(prior, forKey: "defaultTickleFrequency")
         } else {
             UserDefaults.standard.removeObject(forKey: "defaultTickleFrequency")
+        }
+        if let priorNotificationsEnabled {
+            UserDefaults.standard.set(priorNotificationsEnabled, forKey: "tickleNotificationsEnabled")
+        } else {
+            UserDefaults.standard.removeObject(forKey: "tickleNotificationsEnabled")
         }
         super.tearDown()
     }

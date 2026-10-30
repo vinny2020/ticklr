@@ -19,7 +19,7 @@ final class GroupsScreenUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments += [
             "-AppleLanguages", "(en)", "-AppleLocale", "en_US",
-            "-hasCompletedOnboarding", "YES",
+            "-tickleNotificationsEnabled", "NO", "-hasCompletedOnboarding", "YES",
             "-debugSeedDemoData", "YES",
         ]
         app.launch()
@@ -49,7 +49,7 @@ final class GroupsScreenUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments += [
             "-AppleLanguages", "(en)", "-AppleLocale", "en_US",
-            "-hasCompletedOnboarding", "YES",
+            "-tickleNotificationsEnabled", "NO", "-hasCompletedOnboarding", "YES",
             "-debugSeedDemoData", "YES",
         ]
         app.launch()

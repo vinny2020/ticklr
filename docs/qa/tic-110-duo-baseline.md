@@ -105,9 +105,18 @@ label and focus dismissal to the note field; the UI test now submits the note
 before Save/Cancel, exercising the real keyboard dismissal route. The editor
 retains the entered text. The next CI run validates this correction.
 
-The subsequent remote run stopped advancing inside the editor unit test's
-full-form Save search after adding focus/submit modifiers. Local editor tests
-still passed but took 8.6 seconds. Extracted the exact toolbar Save view as an
-internal property, following Compose's existing approach, and inspect that
-action directly in the eight wiring tests. Rendered toolbar, keyboard, and
-persistence behavior remain covered by the contact UI flow.
+The subsequent remote run's full-form editor inspection was slow: all 244
+unit tests passed, but took 145 seconds. Local editor tests passed in 8.6
+seconds. Extracted the exact toolbar Save view as an internal property,
+following Compose's existing approach, and inspect that action directly in
+the eight wiring tests. The same 17 editor tests then passed in 0.272 seconds.
+Rendered toolbar, keyboard, and persistence remain covered by the contact UI
+flow.
+
+That remote run also exposed a notification authorization alert interrupting
+the Network tab selection immediately before an accessibility snapshot timeout.
+The editor wiring tests were scheduling real notifications on Save. Isolated
+those tests by disabling notification scheduling in setup and restoring the
+prior preference in teardown, matching the existing notification/undo test
+suites. Core navigation UI tests also launch with notifications disabled;
+notification permission and routing acceptance remains in TIC-113/115.

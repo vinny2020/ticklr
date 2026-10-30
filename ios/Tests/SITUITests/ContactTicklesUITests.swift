@@ -20,7 +20,7 @@ final class ContactTicklesUITests: XCTestCase {
     func testCreateEditAndCancelReturnToSameProfile() {
         continueAfterFailure = false
         let app = XCUIApplication()
-        app.launchArguments += ["-hasCompletedOnboarding", "YES", "-debugSeedDemoData", "YES", "-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchArguments += ["-tickleNotificationsEnabled", "NO", "-hasCompletedOnboarding", "YES", "-debugSeedDemoData", "YES", "-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launch()
         app.openTab("network")
         let person = app.staticTexts["Fatima Al-Hassan"].firstMatch
