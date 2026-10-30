@@ -313,6 +313,7 @@ struct GroupEditSheet: View {
     @Environment(\.dismiss) private var dismiss
     @Query(sort: \ContactGroup.name) private var allGroups: [ContactGroup]
 
+    @FocusState private var nameIsFocused: Bool
     @State private var name: String
     @State private var emoji: String
     @State private var cardStyleId: String
@@ -395,6 +396,9 @@ struct GroupEditSheet: View {
                     } else {
                         TextField(String(localized: "groupEdit.placeholder.name"), text: $name)
                             .accessibilityIdentifier("groupEdit.name")
+                            .focused($nameIsFocused)
+                            .submitLabel(.done)
+                            .onSubmit { nameIsFocused = false }
                         HStack {
                             if isDuplicate {
                                 Text(String(localized: "groupEdit.error.duplicate"))
@@ -420,6 +424,8 @@ struct GroupEditSheet: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button(String(localized: "common.cancel")) { dismiss() }
+                        .accessibilityLabel(Text(String(localized: "common.cancel")))
+                        .accessibilityIdentifier("groupEdit.cancel")
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(String(localized: "common.save")) { save() }

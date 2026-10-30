@@ -62,9 +62,15 @@ this deterministic regression suite (TIC-115).
 - GitHub CI is linked from [PR #140](https://github.com/vinny2020/ticklr/pull/140).
   It includes all adaptive cases, the existing Duo core UI suite, the 244 unit
   tests, unsigned archive, standard iPhone/iPad launch, Android, and localization.
-- Apple Device Interaction workspace/session verification is pending approval
-  of the isolated project in Xcode's MCP menu. No approval settings were changed
-  by automation and no simulator data was erased.
+- The isolated project and scoped Python agent are permitted by Xcode MCP.
+  Workspace-backed InstallAndRun succeeded; live verification is in progress.
+  No broad access was granted and no simulator data was erased.
+- Hosted run `41075813966` retained draft text but failed two Cancel-control
+  checks. The group name field now supports Done to dismiss the keyboard and
+  exposes a stable Cancel identifier. The Compose assertion checks the native
+  tab's selected state rather than availability of a toolbar control. Artifact
+  upload also failed with runner DNS `ENOTFOUND`; the full job log is retained
+  locally as `ci-123fd85.log`. These fixes require a fresh CI run.
 
 Local logs and result bundles: `logs/duo/tic111/` in the isolated worktree.
 `negative-fresh.log` / `NegativeFresh.xcresult` record the direct draft-loss

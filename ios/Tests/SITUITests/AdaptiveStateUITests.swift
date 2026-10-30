@@ -209,9 +209,9 @@ final class AdaptiveStateUITests: XCTestCase {
         let name = app.textFields["groupEdit.name"]
         XCTAssertTrue(name.waitForExistence(timeout: 5))
         name.tap()
-        name.typeText("Resize circle")
+        name.typeText("Resize circle\n")
         cycle(app) { XCTAssertEqual(name.value as? String, "Resize circle") }
-        app.buttons["Cancel"].firstMatch.tap()
+        app.buttons["groupEdit.cancel"].tap()
         XCTAssertFalse(name.exists)
         XCTAssertTrue(app.buttons["groupRow.canonical.family"].exists)
     }
@@ -262,7 +262,9 @@ final class AdaptiveStateUITests: XCTestCase {
         editor.typeText("A message I have not sent")
         cycle(app) {
             XCTAssertEqual(editor.value as? String, "A message I have not sent")
-            XCTAssertTrue(app.buttons["compose.cancel"].exists, "Compose tab must remain selected")
+            let symbol = app.buttons["square.and.pencil"].firstMatch
+            let tab = symbol.exists ? symbol : app.buttons["Compose"].firstMatch
+            XCTAssertTrue(tab.isSelected, "Compose tab must remain selected")
         }
     }
 }
