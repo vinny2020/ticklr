@@ -104,6 +104,8 @@ struct ComposeView: View {
             }
         }
         .foregroundStyle(palette.ink2)
+        .accessibilityLabel(Text(String(localized: "common.cancel")))
+        .accessibilityIdentifier("compose.cancel")
     }
 
     // MARK: — Body

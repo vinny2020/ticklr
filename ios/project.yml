@@ -3,7 +3,7 @@ options:
   bundleIdPrefix: com.xaymaca
   deploymentTarget:
     iOS: "17.0"
-  xcodeVersion: "16.0"
+  xcodeVersion: "27.1"
 
 # SwiftUI view-tree introspection for SwiftUI unit tests. Test-only — scoped
 # below to TicklrTests, NOT the Ticklr app target. Must not appear in the
@@ -65,6 +65,8 @@ targets:
         NSContactsUsageDescription: "Ticklr needs access to your contacts to help you build your personal network."
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
         UISupportedInterfaceOrientations~ipad:
           - UIInterfaceOrientationPortrait
           - UIInterfaceOrientationPortraitUpsideDown

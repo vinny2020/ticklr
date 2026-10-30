@@ -32,6 +32,7 @@
 		34A284E142196787F146D1B3 /* test_contacts.csv in Resources */ = {isa = PBXBuildFile; fileRef = C3BA80FD4DE962EB1F107E78 /* test_contacts.csv */; };
 		353AA993FFB1A862D307ED9F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 209311518915490C7F72039B /* Assets.xcassets */; };
 		43434A6ACC0CD3146036A11C /* TickleSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8316646A179885792C4004 /* TickleSchedulerTests.swift */; };
+		468AF8C74690167D9E378F99 /* BaselineLaunchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CBD1CCCC1C9EB3691A4688 /* BaselineLaunchUITests.swift */; };
 		4BE808CBAA4EA9D55409DD82 /* ContactImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AD38DE9F1FCCBD8B82DEED /* ContactImportService.swift */; };
 		4C29624DE74EE0486B690D76 /* WarmIllustration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A9372A30F13F2165F2EF8F /* WarmIllustration.swift */; };
 		4C98B38D7EF3EE65F2FD1A58 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EBB61C7877871E721045C7 /* Contact.swift */; };
@@ -69,6 +70,7 @@
 		9CA0D612EF182E101FDE37A4 /* LinkedInCSVParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D196741B99B788C9E325C3 /* LinkedInCSVParserTests.swift */; };
 		9CC3A189563F711043FF4F77 /* OFL-NotoSerifJP.txt in Resources */ = {isa = PBXBuildFile; fileRef = B202F00A260D45CDA07CAB8E /* OFL-NotoSerifJP.txt */; };
 		9DC847FCC2BFE02BF343C577 /* GroupFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3416D505AC168ABA8379A68 /* GroupFeatureTests.swift */; };
+		9DCB9190CE9F4FB635545947 /* TabNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAA120F403860075BD1791B /* TabNavigation.swift */; };
 		A0DF94177BA2698341980E2A /* TickleNotificationRoutingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74FD20F0EB3B04BC7402FCA /* TickleNotificationRoutingTests.swift */; };
 		A12D6BFE761485462744D2F9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FE39C5E32CF68501239897AF /* InfoPlist.strings */; };
 		A47CF298C3FF9F43615F03D1 /* CanonicalGroupSeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71E34F441267292176C85B0 /* CanonicalGroupSeed.swift */; };
@@ -216,6 +218,7 @@
 		B71E34F441267292176C85B0 /* CanonicalGroupSeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanonicalGroupSeed.swift; sourceTree = "<group>"; };
 		BAE539205850900E86911453 /* WarmTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmTheme.swift; sourceTree = "<group>"; };
 		BB38137353FDCD5606A5A8FF /* TickleReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleReminder.swift; sourceTree = "<group>"; };
+		BBAA120F403860075BD1791B /* TabNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabNavigation.swift; sourceTree = "<group>"; };
 		BE5F28CBE2FCC020F374E286 /* NotoSerifDevanagari-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSerifDevanagari-SemiBold.ttf"; sourceTree = "<group>"; };
 		C203898862FA7D9FC0D26AB9 /* ContactsAccessBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsAccessBanner.swift; sourceTree = "<group>"; };
 		C245997E3728FE92A239393D /* Tutorials.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Tutorials.xcstrings; sourceTree = "<group>"; };
@@ -244,6 +247,7 @@
 		EA9ED8CB5E6D9F8E216A7470 /* ContactImportServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactImportServiceTests.swift; sourceTree = "<group>"; };
 		ED2AFEC2B5F4768EB219A20D /* TickleUndoActionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleUndoActionsTests.swift; sourceTree = "<group>"; };
 		EDBC29B891A9D2602E4C6122 /* TickleReminderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleReminderTests.swift; sourceTree = "<group>"; };
+		F2CBD1CCCC1C9EB3691A4688 /* BaselineLaunchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaselineLaunchUITests.swift; sourceTree = "<group>"; };
 		F6F19B7BBBBE6E51DC5A87AA /* TutorialLocalizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialLocalizationTests.swift; sourceTree = "<group>"; };
 		FAEEA22C38A02D1319831F49 /* SuggestTickleToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestTickleToast.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -459,9 +463,11 @@
 		A69DC64A7B6BA5F86467E1A7 /* SITUITests */ = {
 			isa = PBXGroup;
 			children = (
+				F2CBD1CCCC1C9EB3691A4688 /* BaselineLaunchUITests.swift */,
 				E8175776A2DEBC88B756C24E /* ComposeFlowUITests.swift */,
 				E6E13C67C14F0A08295E6DB5 /* ContactTicklesUITests.swift */,
 				5D5C85FA1377676F93CC23F9 /* GroupsScreenUITests.swift */,
+				BBAA120F403860075BD1791B /* TabNavigation.swift */,
 				7EA244305894FDAC6D06BC29 /* TutorialLocalizationUITests.swift */,
 				08EF459959E1A7278F1C07F8 /* TutorialUITests.swift */,
 			);
@@ -596,7 +602,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1600;
+				LastUpgradeCheck = 2710;
 				TargetAttributes = {
 					1CADC66CDEC975B92B6E11C1 = {
 						DevelopmentTeam = "";
@@ -775,9 +781,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				468AF8C74690167D9E378F99 /* BaselineLaunchUITests.swift in Sources */,
 				D7662319C587D3965757B1B7 /* ComposeFlowUITests.swift in Sources */,
 				0BFFF3E987BDD45D37650F79 /* ContactTicklesUITests.swift in Sources */,
 				121B201A777B373F894B4D35 /* GroupsScreenUITests.swift in Sources */,
+				9DCB9190CE9F4FB635545947 /* TabNavigation.swift in Sources */,
 				275979006D6F8218B0EF00D4 /* TutorialLocalizationUITests.swift in Sources */,
 				037157B81CD05A72B68B6176 /* TutorialUITests.swift in Sources */,
 			);

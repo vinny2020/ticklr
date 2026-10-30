@@ -18,7 +18,7 @@ final class ComposeFlowUITests: XCTestCase {
     private func launchApp() -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments += [
-            "-hasCompletedOnboarding", "YES",
+            "-tickleNotificationsEnabled", "NO", "-hasCompletedOnboarding", "YES",
             "-debugSeedDemoData", "YES",
             "-debugForceCanSendMessages", "YES",
             "-AppleLanguages", "(en)", "-AppleLocale", "en_US",
@@ -53,7 +53,7 @@ final class ComposeFlowUITests: XCTestCase {
         let app = launchApp()
 
         let dueRow = firstDueRow(in: app)
-        XCTAssertTrue(app.tabBars.firstMatch.waitForExistence(timeout: 15))
+        XCTAssertTrue(app.buttons["person.2.fill"].firstMatch.waitForExistence(timeout: 15))
         reveal(dueRow, in: app)
         dueRow.tap()
 
@@ -64,7 +64,7 @@ final class ComposeFlowUITests: XCTestCase {
 
         // Compose sheet: recipient pre-filled (To field shows a name, not the
         // search placeholder) and a message editor present.
-        let cancel = app.buttons["Cancel"]
+        let cancel = app.buttons["compose.cancel"]
         XCTAssertTrue(cancel.waitForExistence(timeout: 5),
                       "Compose sheet should appear after the action sheet dismisses")
         XCTAssertTrue(app.textViews.firstMatch.waitForExistence(timeout: 3),
@@ -81,9 +81,7 @@ final class ComposeFlowUITests: XCTestCase {
     func testComposeFromContactDetailReturnsToDetailOnCancel() {
         let app = launchApp()
 
-        let networkTab = app.tabBars.buttons.element(boundBy: 0)
-        XCTAssertTrue(networkTab.waitForExistence(timeout: 15))
-        networkTab.tap()
+        app.openTab("network")
 
         // Open a known seeded contact — the network list sorts by last name,
         // so Fatima Al-Hassan (test_contacts.csv) is at the top.
@@ -97,7 +95,7 @@ final class ComposeFlowUITests: XCTestCase {
                       "Contact detail should show the Send a text chip")
         sendText.tap()
 
-        let cancel = app.buttons["Cancel"]
+        let cancel = app.buttons["compose.cancel"]
         XCTAssertTrue(cancel.waitForExistence(timeout: 5),
                       "Compose sheet should appear from contact detail")
         cancel.tap()
@@ -113,14 +111,12 @@ final class ComposeFlowUITests: XCTestCase {
         let app = launchApp()
 
         let dueRow = firstDueRow(in: app)
-        XCTAssertTrue(app.tabBars.firstMatch.waitForExistence(timeout: 15))
+        XCTAssertTrue(app.buttons["person.2.fill"].firstMatch.waitForExistence(timeout: 15))
         reveal(dueRow, in: app)
 
-        let composeTab = app.tabBars.buttons.element(boundBy: 3)
-        XCTAssertTrue(composeTab.waitForExistence(timeout: 5))
-        composeTab.tap()
+        app.openTab("compose")
 
-        let cancel = app.buttons["Cancel"]
+        let cancel = app.buttons["compose.cancel"]
         XCTAssertTrue(cancel.waitForExistence(timeout: 5),
                       "Compose tab should show its Cancel button")
         cancel.tap()

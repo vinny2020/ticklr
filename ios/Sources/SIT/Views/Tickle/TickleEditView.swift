@@ -2,6 +2,7 @@ import SwiftUI
 import SwiftData
 
 struct TickleEditView: View {
+    @FocusState private var noteIsFocused: Bool
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
 
@@ -87,6 +88,16 @@ struct TickleEditView: View {
         }
     }
 
+    /// Inspect the actual action directly in wiring tests. Searching the full
+    /// form walks SwiftUI's private focus/submit storage and can stall CI.
+    var saveButton: some View {
+        Button(String(localized: "common.save")) { save() }
+            .accessibilityLabel(Text(String(localized: "common.save")))
+            .accessibilityIdentifier("tickleEdit.save")
+            .disabled(!canSave)
+            .fontWeight(.semibold)
+    }
+
     var body: some View {
         NavigationStack {
             Form {
@@ -150,6 +161,9 @@ struct TickleEditView: View {
 
                 Section(String(localized: "tickleEdit.section.note")) {
                     TextField(String(localized: "tickleEdit.placeholder.note"), text: $note)
+                        .focused($noteIsFocused)
+                        .submitLabel(.done)
+                        .onSubmit { noteIsFocused = false }
                 }
             }
             .navigationTitle(isEditing ? String(localized: "tickleEdit.navTitle.edit") : String(localized: "tickleEdit.navTitle.new"))
@@ -157,11 +171,11 @@ struct TickleEditView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button(String(localized: "common.cancel")) { close() }
+                        .accessibilityLabel(Text(String(localized: "common.cancel")))
+                        .accessibilityIdentifier("tickleEdit.cancel")
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(String(localized: "common.save")) { save() }
-                        .disabled(!canSave)
-                        .fontWeight(.semibold)
+                    saveButton
                 }
             }
             .sheet(isPresented: $showingContactPicker) {

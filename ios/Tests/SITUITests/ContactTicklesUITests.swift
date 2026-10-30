@@ -20,11 +20,9 @@ final class ContactTicklesUITests: XCTestCase {
     func testCreateEditAndCancelReturnToSameProfile() {
         continueAfterFailure = false
         let app = XCUIApplication()
-        app.launchArguments += ["-hasCompletedOnboarding", "YES", "-debugSeedDemoData", "YES", "-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchArguments += ["-tickleNotificationsEnabled", "NO", "-hasCompletedOnboarding", "YES", "-debugSeedDemoData", "YES", "-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launch()
-        let networkTab = app.buttons["Network"].firstMatch
-        XCTAssertTrue(networkTab.waitForExistence(timeout: 15))
-        networkTab.tap()
+        app.openTab("network")
         let person = app.staticTexts["Fatima Al-Hassan"].firstMatch
         XCTAssertTrue(person.waitForExistence(timeout: 5))
         person.tap()
@@ -35,8 +33,10 @@ final class ContactTicklesUITests: XCTestCase {
         XCTAssertTrue(note.waitForExistence(timeout: 5))
         note.tap()
         let marker = "Profile tickle \(UUID().uuidString.prefix(8))"
-        note.typeText(marker)
-        app.buttons["Save"].tap()
+        note.typeText(marker + "\n")
+        let save = app.buttons["tickleEdit.save"]
+        XCTAssertTrue(save.waitForExistence(timeout: 5))
+        save.tap()
         XCTAssertTrue(create.waitForExistence(timeout: 5))
         // The entire row is a button whose label includes note, frequency and date.
         let saved = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", marker)).firstMatch
@@ -50,8 +50,8 @@ final class ContactTicklesUITests: XCTestCase {
         // Tap beyond the short note's text so deletion starts at its end.
         note.coordinate(withNormalizedOffset: CGVector(dx: 0.95, dy: 0.5)).tap()
         note.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: marker.count))
-        note.typeText(edited)
-        app.buttons["Save"].tap()
+        note.typeText(edited + "\n")
+        save.tap()
         XCTAssertTrue(create.waitForExistence(timeout: 5), "Saving should return to the same profile")
         let editedRow = app.buttons[rowID]
         XCTAssertTrue(editedRow.waitForExistence(timeout: 5))
@@ -63,8 +63,8 @@ final class ContactTicklesUITests: XCTestCase {
         XCTAssertTrue(note.waitForExistence(timeout: 5))
         XCTAssertEqual(note.value as? String, edited)
         note.coordinate(withNormalizedOffset: CGVector(dx: 0.95, dy: 0.5)).tap()
-        note.typeText(" unsaved")
-        app.buttons["Cancel"].tap()
+        note.typeText(" unsaved\n")
+        app.buttons["tickleEdit.cancel"].tap()
         XCTAssertTrue(editedRow.waitForExistence(timeout: 5), "Cancelling should return to the same profile")
         XCTAssertTrue(editedRow.label.contains(edited))
         XCTAssertFalse(editedRow.label.contains("unsaved"), "Cancel must discard draft changes")
