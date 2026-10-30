@@ -15,6 +15,7 @@ struct TickleListView: View {
     /// List selection drives the detail pane's connect actions.
     @State private var selectedReminder: TickleReminder?
     @State private var compactColumn: NavigationSplitViewColumn = .sidebar
+    @State private var columnVisibility: NavigationSplitViewVisibility = .automatic
     /// Non-nil while editing an existing reminder in the detail pane.
     @State private var paneEditTarget: TickleReminder?
     /// True while a new tickle is being created in the detail pane.
@@ -171,7 +172,7 @@ struct TickleListView: View {
     private var splitBody: some View {
         // Do not swap navigation containers on size-class changes: doing so
         // destroys editor drafts, sheet hosts, and the list's scroll position.
-        NavigationSplitView(preferredCompactColumn: $compactColumn) {
+        NavigationSplitView(columnVisibility: $columnVisibility, preferredCompactColumn: $compactColumn) {
             List(selection: $selectedReminder) {
                 listSections
             }
@@ -181,9 +182,12 @@ struct TickleListView: View {
             .navigationTitle("")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { addToolbarItem }
+            .foldableSidebarColumn()
         } detail: {
             detailPane
+                .foldableDetailColumn()
         }
+        .foldableSplitColumns(columnVisibility: $columnVisibility)
     }
 
     @ViewBuilder

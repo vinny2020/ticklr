@@ -63,7 +63,7 @@ this deterministic regression suite (TIC-115).
   It includes all adaptive cases, the existing Duo core UI suite, the 244 unit
   tests, unsigned archive, standard iPhone/iPad launch, Android, and localization.
 - The isolated project and scoped Python agent are permitted by Xcode MCP.
-  Workspace-backed InstallAndRun succeeded; live verification is in progress.
+  Workspace-backed InstallAndRun and seeded live checks succeeded.
   No broad access was granted and no simulator data was erased.
 - Hosted run `41075813966` retained draft text but failed two Cancel-control
   checks. The group name field now supports Done to dismiss the keyboard and
@@ -94,3 +94,40 @@ Experimental UIKit/trait-harness and toolbar-role changes were discarded. Their
 patch and logs remain under the ignored local log folder for diagnosis; they
 are not part of the PR. The original opt-in SwiftUI environment harness remains
 explicitly a controlled class test, not a physical-window/fold test.
+
+
+## Equal panes on the open Duo
+
+Review of the seeded native simulator showed that the automatic fully open
+layout used a narrow sidebar and a wide detail pane. The requested Duo layout
+uses two equal content panes for Network, Groups, and Tickle. iPad retains the
+system's automatic proportions.
+
+`FoldableSplitColumns` identifies folding context through the local hinge and
+reserved-division APIs on iOS 27.1. It retains that capability across display
+changes, measures the local split-view area, requests half its width for the
+sidebar, permits the detail to shrink to the other half, and uses the balanced
+native split style with both columns visible when open. It retains the last
+positive measurement during transient layout updates. Nonfolding contexts and
+older systems receive no column-width preference.
+
+The native open Duo has 867pt of app content beside the 84pt system rail.
+The verified list width is 433.7pt; the detail occupies the remaining 433.3pt
+(one physical pixel of rounding). Initial attempts that sized only the list
+produced an overlay and were rejected; setting the detail minimum and open
+column visibility produced two tiled panes automatically.
+
+Build output and native captures are retained in
+`logs/duo/tic111/equal-columns/`. The final binary cold-launched while closed preserved the unsaved 16-character
+`Final fold draft` through its first native opening. The disposable draft was
+canceled without saving. Native previews show the populated Network contact
+detail, Family group, and Carlos reminder in tiled equal panes.
+
+The iPad baseline and the same final binary both use a 320pt sidebar at a
+1210×834pt landscape window on iOS 27.0. After the final portrait launch was
+rotated to landscape, Show Sidebar was tapped before measuring. This verifies
+unchanged column proportions, not every automatic visibility transition.
+The before/after screenshots and hierarchies are retained in the local evidence.
+The earlier hosted run for `8cd1704` finished successfully, including 244 unit
+tests, 18 Duo UI tests, the unsigned archive, and standard iPhone/iPad launch.
+A fresh hosted run is required for the equal-pane change.

@@ -10,6 +10,7 @@ struct GroupListView: View {
     @State private var editingGroup: ContactGroup?
     @State private var selectedGroup: ContactGroup?
     @State private var compactColumn: NavigationSplitViewColumn = .sidebar
+    @State private var columnVisibility: NavigationSplitViewVisibility = .automatic
     /// The user group awaiting delete confirmation. Deleting a group cascades to
     /// every tickle attached to it (TickleScheduler.deleteGroup), so — unlike the
     /// undoable mark-done/snooze — it's guarded by a destructive confirmation that
@@ -26,11 +27,14 @@ struct GroupListView: View {
     var body: some View {
         // Keep one navigation hierarchy as the available width changes. Custom
         // cards explicitly select the detail column, including on compact widths.
-        NavigationSplitView(preferredCompactColumn: $compactColumn) {
+        NavigationSplitView(columnVisibility: $columnVisibility, preferredCompactColumn: $compactColumn) {
             sidebar
+                .foldableSidebarColumn()
         } detail: {
             detail
+                .foldableDetailColumn()
         }
+        .foldableSplitColumns(columnVisibility: $columnVisibility)
     }
 
     // MARK: - Columns

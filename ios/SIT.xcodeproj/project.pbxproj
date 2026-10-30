@@ -41,6 +41,7 @@
 		54BB61E5D3A3951EF79DED08 /* Tutorials.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C245997E3728FE92A239393D /* Tutorials.xcstrings */; };
 		54BB9954F9130CC0C824745F /* ComposeSuggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283ABBFE8086AB5A46F32B3D /* ComposeSuggestions.swift */; };
 		568B2F7E2C0A37B9505FFDE4 /* ContactGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC789856C13EA9BCE0A6EC /* ContactGroup.swift */; };
+		58A039951FBF3FD4AC640398 /* FoldableSplitColumns.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD63E2214CC43F4E8159FB7 /* FoldableSplitColumns.swift */; };
 		5A2E74BD7F7B979AE5B1C4F3 /* TickleReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB38137353FDCD5606A5A8FF /* TickleReminder.swift */; };
 		5C6F6974D1ED58434BB9CFDF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C7E0EBE485C198DCF9669E /* SettingsView.swift */; };
 		5EEE9B7F0C3F8AE5BBC0C128 /* TickleNotificationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA54EAB5F02BB7EFA494EEC1 /* TickleNotificationRouter.swift */; };
@@ -239,6 +240,7 @@
 		D74FD20F0EB3B04BC7402FCA /* TickleNotificationRoutingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleNotificationRoutingTests.swift; sourceTree = "<group>"; };
 		D9AF1474FC4894325F2747AA /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DA54EAB5F02BB7EFA494EEC1 /* TickleNotificationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickleNotificationRouter.swift; sourceTree = "<group>"; };
+		DBD63E2214CC43F4E8159FB7 /* FoldableSplitColumns.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldableSplitColumns.swift; sourceTree = "<group>"; };
 		E07B4E4B1B6C11A40612610C /* ComposeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeView.swift; sourceTree = "<group>"; };
 		E0C8A1F9EAC9226E7D717720 /* WarmCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmCategory.swift; sourceTree = "<group>"; };
 		E0FC442532093F4D73692AC7 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -516,6 +518,7 @@
 		CE212FAC96E6037A2548E540 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				DBD63E2214CC43F4E8159FB7 /* FoldableSplitColumns.swift */,
 				09EFBEBE9D718FAA0B157914 /* WordmarkLockup.swift */,
 				71081D5F4B1DDD705424F807 /* Warm */,
 			);
@@ -713,6 +716,7 @@
 				EF683AA90E53B19365458B90 /* ContactSectionIndex.swift in Sources */,
 				6D27B6C9F09AC21A760AF14D /* ContactsAccessBanner.swift in Sources */,
 				87572A827C3A4DED6D5E968C /* ContentView.swift in Sources */,
+				58A039951FBF3FD4AC640398 /* FoldableSplitColumns.swift in Sources */,
 				AF7B9499DE3B99B9194191B5 /* GroupDetailView.swift in Sources */,
 				0C03E3E93AEAAEAB358CF5C3 /* GroupListView.swift in Sources */,
 				C9DED7817017DED20F57A874 /* ImportFeedback.swift in Sources */,
