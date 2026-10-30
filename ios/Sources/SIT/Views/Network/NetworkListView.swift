@@ -149,6 +149,7 @@ struct NetworkListView: View {
                         Image(systemName: "plus")
                             .foregroundStyle(palette.ink)
                     }
+                    .accessibilityIdentifier("network.add")
                 }
             }
             .tutorialSheet(topic: $tutorialTopic) { _ in showingTutorialTickle = true }

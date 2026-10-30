@@ -5,15 +5,16 @@ struct TickleListView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var allReminders: [TickleReminder]
 
-    // MARK: Compact (iPhone) — modal sheet flow
+    // Modal presentations stay on this persistent host across width changes.
     @State private var showingAdd = false
     @State private var editingReminder: TickleReminder?
     @State private var actionSheetReminder: TickleReminder?
     @State private var pendingAction: PendingAction?
 
-    // MARK: Regular (iPad) — two-pane flow (TIC-46)
+    // Editors opened in the detail column stay there when the split collapses.
     /// List selection drives the detail pane's connect actions.
     @State private var selectedReminder: TickleReminder?
+    @State private var compactColumn: NavigationSplitViewColumn = .sidebar
     /// Non-nil while editing an existing reminder in the detail pane.
     @State private var paneEditTarget: TickleReminder?
     /// True while a new tickle is being created in the detail pane.
@@ -83,12 +84,33 @@ struct TickleListView: View {
     }
 
     var body: some View {
-        Group {
-            if isRegular {
-                regularBody    // iPad: NavigationSplitView, two-pane
-            } else {
-                compactBody    // iPhone: NavigationStack + modal sheets
-            }
+        splitBody
+        .sheet(isPresented: $showingAdd) {
+            TickleEditView(prefilledCategory: prefilledCategory, onSaved: { saveToastMessage = $0 })
+        }
+        .sheet(item: $editingReminder) { reminder in
+            TickleEditView(existing: reminder, onSaved: { saveToastMessage = $0 })
+        }
+        .sheet(item: $actionSheetReminder, onDismiss: runPendingAction) { reminder in
+            TickleActionSheet(
+                reminder: reminder,
+                warmth: warmth,
+                onCompose: { pendingAction = .compose(reminder) },
+                onMarkDone: { markDone(reminder) },
+                onSnooze: { days in snoozeReminder(reminder, days: days) },
+                onEdit: { pendingAction = .edit(reminder) }
+            )
+            .presentationDetents([.height(TickleActionSheet.estimatedHeight(for: reminder))])
+            .presentationDragIndicator(.visible)
+        }
+        .sheet(item: $composeTarget) { target in
+            ComposeView(
+                onClose: { composeTarget = nil },
+                initialContact: target.contact,
+                dueReminder: target.reminder,
+                onTickleCompleted: { completionSnapshot = $0 },
+                onSuggestTickle: { tickleSuggestion = $0 }
+            )
         }
         .tickleCompletionToast(snapshot: $completionSnapshot, warmth: warmth) {
             if let snapshot = completionSnapshot {
@@ -130,49 +152,6 @@ struct TickleListView: View {
         snoozeSnapshot = TickleScheduler.snoozeWithSnapshot(reminder: reminder, days: days, context: modelContext)
     }
 
-    // MARK: - Compact (iPhone)
-
-    private var compactBody: some View {
-        NavigationStack {
-            List {
-                listSections
-            }
-            .listStyle(.plain)
-            .scrollContentBackground(.hidden)
-            .background(palette.paper.ignoresSafeArea())
-            .navigationTitle("")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar { addToolbarItem }
-            .sheet(isPresented: $showingAdd) {
-                TickleEditView(prefilledCategory: prefilledCategory, onSaved: { saveToastMessage = $0 })
-            }
-            .sheet(item: $editingReminder) { reminder in
-                TickleEditView(existing: reminder, onSaved: { saveToastMessage = $0 })
-            }
-            .sheet(item: $actionSheetReminder, onDismiss: runPendingAction) { reminder in
-                TickleActionSheet(
-                    reminder: reminder,
-                    warmth: warmth,
-                    onCompose: { pendingAction = .compose(reminder) },
-                    onMarkDone: { markDone(reminder) },
-                    onSnooze: { days in snoozeReminder(reminder, days: days) },
-                    onEdit: { pendingAction = .edit(reminder) }
-                )
-                .presentationDetents([.height(TickleActionSheet.estimatedHeight(for: reminder))])
-                .presentationDragIndicator(.visible)
-            }
-            .sheet(item: $composeTarget) { target in
-                ComposeView(
-                    onClose: { composeTarget = nil },
-                    initialContact: target.contact,
-                    dueReminder: target.reminder,
-                    onTickleCompleted: { completionSnapshot = $0 },
-                    onSuggestTickle: { tickleSuggestion = $0 }
-                )
-            }
-        }
-    }
-
     /// Runs after the action sheet has fully dismissed, presenting whichever
     /// follow-up surface the user requested.
     private func runPendingAction() {
@@ -187,10 +166,12 @@ struct TickleListView: View {
         pendingAction = nil
     }
 
-    // MARK: - Regular (iPad) — two-pane
+    // MARK: - Adaptive navigation
 
-    private var regularBody: some View {
-        NavigationSplitView {
+    private var splitBody: some View {
+        // Do not swap navigation containers on size-class changes: doing so
+        // destroys editor drafts, sheet hosts, and the list's scroll position.
+        NavigationSplitView(preferredCompactColumn: $compactColumn) {
             List(selection: $selectedReminder) {
                 listSections
             }
@@ -200,15 +181,6 @@ struct TickleListView: View {
             .navigationTitle("")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { addToolbarItem }
-            .sheet(item: $composeTarget) { target in
-                ComposeView(
-                    onClose: { composeTarget = nil },
-                    initialContact: target.contact,
-                    dueReminder: target.reminder,
-                    onTickleCompleted: { completionSnapshot = $0 },
-                    onSuggestTickle: { tickleSuggestion = $0 }
-                )
-            }
         } detail: {
             detailPane
         }
@@ -219,7 +191,10 @@ struct TickleListView: View {
         if paneAddingNew {
             TickleEditView(
                 prefilledCategory: prefilledCategory,
-                onClose: { paneAddingNew = false },
+                onClose: {
+                    paneAddingNew = false
+                    compactColumn = .sidebar
+                },
                 onSaved: { saveToastMessage = $0 }
             )
                 .id("new-tickle")
@@ -243,12 +218,14 @@ struct TickleListView: View {
                 onMarkDone: {
                     markDone(reminder)
                     selectedReminder = nil
+                    compactColumn = .sidebar
                 },
                 onSnooze: { days in
                     snoozeReminder(reminder, days: days)
                     selectedReminder = nil
+                    compactColumn = .sidebar
                 },
-                onEdit: { paneEditTarget = reminder }
+                onEdit: { editInDetail(reminder) }
             )
             .id(reminder.persistentModelID)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -263,6 +240,13 @@ struct TickleListView: View {
             )
             .background(palette.paper.ignoresSafeArea())
         }
+    }
+
+    private func editInDetail(_ reminder: TickleReminder) {
+        selectedReminder = reminder
+        paneAddingNew = false
+        paneEditTarget = reminder
+        compactColumn = .detail
     }
 
     // MARK: - Shared list content
@@ -280,11 +264,18 @@ struct TickleListView: View {
 
     /// Open a new-tickle editor — in the detail pane on iPad, as a sheet on iPhone.
     private func startNewTickle(category: WarmCategory?) {
+        // A collapsed detail can be backed out of without closing its editor.
+        // Resume that draft rather than opening a second editor over it.
+        if paneAddingNew || paneEditTarget != nil {
+            compactColumn = .detail
+            return
+        }
         prefilledCategory = category
         if isRegular {
             paneEditTarget = nil
             selectedReminder = nil
             paneAddingNew = true
+            compactColumn = .detail
         } else {
             showingAdd = true
         }
@@ -388,7 +379,10 @@ struct TickleListView: View {
         .swipeActions(edge: .trailing) {
             Button(role: .destructive) {
                 TickleScheduler.cancelNotification(for: reminder)
-                if selectedReminder == reminder { selectedReminder = nil }
+                if selectedReminder == reminder {
+                    selectedReminder = nil
+                    compactColumn = .sidebar
+                }
                 if paneEditTarget == reminder { paneEditTarget = nil }
                 modelContext.delete(reminder)
                 try? modelContext.save()
@@ -397,8 +391,7 @@ struct TickleListView: View {
             }
             Button {
                 if isRegular {
-                    selectedReminder = reminder
-                    paneEditTarget = reminder
+                    editInDetail(reminder)
                 } else {
                     editingReminder = reminder
                 }
@@ -414,12 +407,15 @@ struct TickleListView: View {
             .tint(.orange)
         }
 
-        // iPad uses List selection to drive the detail pane; iPhone taps open the
-        // modal action sheet. (A tap gesture here would swallow List selection.)
-        if isRegular {
-            content
-        } else {
-            content.onTapGesture { actionSheetReminder = reminder }
+        // Explicit selection keeps the row identity stable across widths. A
+        // compact action sheet remains a sheet if the window expands mid-flow.
+        content.onTapGesture {
+            if isRegular {
+                selectedReminder = reminder
+                compactColumn = .detail
+            } else {
+                actionSheetReminder = reminder
+            }
         }
     }
 }

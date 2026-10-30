@@ -36,6 +36,7 @@
 		4BE808CBAA4EA9D55409DD82 /* ContactImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AD38DE9F1FCCBD8B82DEED /* ContactImportService.swift */; };
 		4C29624DE74EE0486B690D76 /* WarmIllustration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A9372A30F13F2165F2EF8F /* WarmIllustration.swift */; };
 		4C98B38D7EF3EE65F2FD1A58 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EBB61C7877871E721045C7 /* Contact.swift */; };
+		4F755D00AFD2A5AEC17F8D65 /* AdaptiveResizeTestHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308732ADC7F0F683B0983289 /* AdaptiveResizeTestHost.swift */; };
 		5188A4195E2A5CA01730175F /* MessageTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72098A45B6ACBC527F5DF0B9 /* MessageTemplate.swift */; };
 		54BB61E5D3A3951EF79DED08 /* Tutorials.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C245997E3728FE92A239393D /* Tutorials.xcstrings */; };
 		54BB9954F9130CC0C824745F /* ComposeSuggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283ABBFE8086AB5A46F32B3D /* ComposeSuggestions.swift */; };
@@ -54,6 +55,7 @@
 		7426C06388B7B7F1AB72B2DE /* SaveConfirmationToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EE33928D41292F74DBD608 /* SaveConfirmationToast.swift */; };
 		7785F964126C098C3EE58EAD /* TickleCompletionToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = A314B38B2AF7A4C04B0699DE /* TickleCompletionToast.swift */; };
 		7BDB0ED4DF1D16C8F54EE670 /* WarmFilterChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D79AFAFDF53D4ACDAE74AF /* WarmFilterChip.swift */; };
+		7CD420635E3F05CE7240456F /* AdaptiveStateUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06445A7F9A5D71E9752632E9 /* AdaptiveStateUITests.swift */; };
 		7D2E16C11970003125067AF0 /* WarmHeadingFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1BCE2A47ECF0711BF683C2 /* WarmHeadingFont.swift */; };
 		840D3C6377E1F347573EAE19 /* TemplateEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F765EEB318998C9E229F0F /* TemplateEditView.swift */; };
 		84AAC106F3794B9B11DC7133 /* TickleUndoActionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2AFEC2B5F4768EB219A20D /* TickleUndoActionsTests.swift */; };
@@ -136,6 +138,7 @@
 		02B1CFCC3988DCAF2034813A /* NetworkListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkListView.swift; sourceTree = "<group>"; };
 		033862D2DB3D8A467AAFFA5D /* GroupDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailView.swift; sourceTree = "<group>"; };
 		04BA66919BA28C74AF7545BD /* ContactSearchFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactSearchFilter.swift; sourceTree = "<group>"; };
+		06445A7F9A5D71E9752632E9 /* AdaptiveStateUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveStateUITests.swift; sourceTree = "<group>"; };
 		06BB941D9F261F754634A26D /* CategoryBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBadge.swift; sourceTree = "<group>"; };
 		08D5F612DBE4C97D54645CC3 /* ContactSectionIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactSectionIndex.swift; sourceTree = "<group>"; };
 		08EF459959E1A7278F1C07F8 /* TutorialUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialUITests.swift; sourceTree = "<group>"; };
@@ -157,6 +160,7 @@
 		248832A537A6EE482BB17FF3 /* ContactTicklesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTicklesTests.swift; sourceTree = "<group>"; };
 		283ABBFE8086AB5A46F32B3D /* ComposeSuggestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeSuggestions.swift; sourceTree = "<group>"; };
 		2A12E96AE23E8405CF010707 /* ur */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ur; path = ur.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		308732ADC7F0F683B0983289 /* AdaptiveResizeTestHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveResizeTestHost.swift; sourceTree = "<group>"; };
 		30D196741B99B788C9E325C3 /* LinkedInCSVParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedInCSVParserTests.swift; sourceTree = "<group>"; };
 		3590E3652E129205BDF65A19 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		37449EAD55331D513415867C /* MonogramAvatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonogramAvatar.swift; sourceTree = "<group>"; };
@@ -330,6 +334,7 @@
 		268D22584D3F23A50170B179 /* Debug */ = {
 			isa = PBXGroup;
 			children = (
+				308732ADC7F0F683B0983289 /* AdaptiveResizeTestHost.swift */,
 				09AB7ED7B5278EEB477C1E9F /* WarmGalleryView.swift */,
 			);
 			path = Debug;
@@ -463,6 +468,7 @@
 		A69DC64A7B6BA5F86467E1A7 /* SITUITests */ = {
 			isa = PBXGroup;
 			children = (
+				06445A7F9A5D71E9752632E9 /* AdaptiveStateUITests.swift */,
 				F2CBD1CCCC1C9EB3691A4688 /* BaselineLaunchUITests.swift */,
 				E8175776A2DEBC88B756C24E /* ComposeFlowUITests.swift */,
 				E6E13C67C14F0A08295E6DB5 /* ContactTicklesUITests.swift */,
@@ -688,6 +694,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F755D00AFD2A5AEC17F8D65 /* AdaptiveResizeTestHost.swift in Sources */,
 				0C41C7D26198E0DC2C958072 /* AddContactView.swift in Sources */,
 				A47CF298C3FF9F43615F03D1 /* CanonicalGroupSeed.swift in Sources */,
 				D7093B43ACD10588484F4A32 /* CategoryBadge.swift in Sources */,
@@ -781,6 +788,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CD420635E3F05CE7240456F /* AdaptiveStateUITests.swift in Sources */,
 				468AF8C74690167D9E378F99 /* BaselineLaunchUITests.swift in Sources */,
 				D7662319C587D3965757B1B7 /* ComposeFlowUITests.swift in Sources */,
 				0BFFF3E987BDD45D37650F79 /* ContactTicklesUITests.swift in Sources */,
