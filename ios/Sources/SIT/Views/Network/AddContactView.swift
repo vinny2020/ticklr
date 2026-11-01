@@ -31,6 +31,7 @@ struct AddContactView: View {
             Form {
                 Section(String(localized: "contact.section.name")) {
                     TextField(String(localized: "contact.placeholder.firstName"), text: $firstName)
+                        .accessibilityIdentifier("contactEdit.firstName")
                     TextField(String(localized: "contact.placeholder.lastName"), text: $lastName)
                 }
 
@@ -141,6 +142,7 @@ struct AddContactView: View {
                 }
             }
         }
+        .adaptiveResizeTestHost()
     }
 
     private func save() {

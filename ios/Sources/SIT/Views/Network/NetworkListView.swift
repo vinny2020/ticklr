@@ -14,6 +14,7 @@ struct NetworkListView: View {
     @State private var showingImport = false
     @State private var showingAddContact = false
     @State private var selectedContact: Contact?
+    @State private var columnVisibility: NavigationSplitViewVisibility = .automatic
     /// Import result toast (TIC-85) — set either by the "Get started" sheet's
     /// own completion callback, or picked up in `onAppear` when onboarding just
     /// landed here via `PostOnboardingLanding`.
@@ -62,7 +63,7 @@ struct NetworkListView: View {
         [.family, .friends, .work, .community]
 
     var body: some View {
-        NavigationSplitView {
+        NavigationSplitView(columnVisibility: $columnVisibility) {
             ScrollViewReader { proxy in
                 List(selection: $selectedContact) {
                     // MARK: Inline title + subtitle (scrolls away)
@@ -149,6 +150,7 @@ struct NetworkListView: View {
                         Image(systemName: "plus")
                             .foregroundStyle(palette.ink)
                     }
+                    .accessibilityIdentifier("network.add")
                 }
             }
             .tutorialSheet(topic: $tutorialTopic) { _ in showingTutorialTickle = true }
@@ -184,9 +186,11 @@ struct NetworkListView: View {
                     importToastMessage = toast
                 }
             }
+            .foldableSidebarColumn()
         } detail: {
             if let selectedContact {
                 ContactDetailView(contact: selectedContact, onDeleted: { self.selectedContact = nil })
+                    .foldableDetailColumn()
             } else {
                 ContentUnavailableView(
                     String(localized: "warm.network.detail.empty.title",
@@ -196,8 +200,10 @@ struct NetworkListView: View {
                                               defaultValue: "Choose a contact from the list to see their details."))
                 )
                 .background(palette.paper.ignoresSafeArea())
+                .foldableDetailColumn()
             }
         }
+        .foldableSplitColumns(columnVisibility: $columnVisibility)
     }
 
     // MARK: - Contact row + quick actions (TIC-92)

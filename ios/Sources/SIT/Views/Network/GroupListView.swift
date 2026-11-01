@@ -3,13 +3,14 @@ import SwiftData
 
 struct GroupListView: View {
     @Environment(\.modelContext) private var modelContext
-    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Query(sort: \ContactGroup.name) private var groups: [ContactGroup]
 
     @State private var tutorialTopic: TutorialTopic?
     @State private var showingAddGroup = false
     @State private var editingGroup: ContactGroup?
     @State private var selectedGroup: ContactGroup?
+    @State private var compactColumn: NavigationSplitViewColumn = .sidebar
+    @State private var columnVisibility: NavigationSplitViewVisibility = .automatic
     /// The user group awaiting delete confirmation. Deleting a group cascades to
     /// every tickle attached to it (TickleScheduler.deleteGroup), so — unlike the
     /// undoable mark-done/snooze — it's guarded by a destructive confirmation that
@@ -24,31 +25,16 @@ struct GroupListView: View {
     private var palette: WarmPalette { WarmTheme.palette(for: warmth) }
 
     var body: some View {
-        // Adaptive navigation by width. The sidebar is a custom warm ScrollView
-        // of WarmCards whose rows set `selectedGroup` on tap — NOT a
-        // `List(selection:)`, so a split view has nothing to observe.
-        //
-        // • Regular width (iPad): keep the master-detail NavigationSplitView.
-        //   Both columns are visible, so tapping a card updates the always-on-
-        //   screen detail pane — this already worked and is preserved here.
-        // • Compact width (iPhone): a collapsed split view won't push the detail
-        //   column without a List(selection:) binding, so tapping silently did
-        //   nothing (regression since 1.9.0). Drive it with a NavigationStack +
-        //   `.navigationDestination(item:)` instead.
-        if horizontalSizeClass == .compact {
-            NavigationStack {
-                sidebar
-                    .navigationDestination(item: $selectedGroup) { group in
-                        GroupDetailView(group: group)
-                    }
-            }
-        } else {
-            NavigationSplitView {
-                sidebar
-            } detail: {
-                detail
-            }
+        // Keep one navigation hierarchy as the available width changes. Custom
+        // cards explicitly select the detail column, including on compact widths.
+        NavigationSplitView(columnVisibility: $columnVisibility, preferredCompactColumn: $compactColumn) {
+            sidebar
+                .foldableSidebarColumn()
+        } detail: {
+            detail
+                .foldableDetailColumn()
         }
+        .foldableSplitColumns(columnVisibility: $columnVisibility)
     }
 
     // MARK: - Columns
@@ -125,7 +111,10 @@ struct GroupListView: View {
                 presenting: groupPendingDeletion
             ) { group in
                 Button(String(localized: "common.delete"), role: .destructive) {
-                    if selectedGroup == group { selectedGroup = nil }
+                    if selectedGroup == group {
+                        selectedGroup = nil
+                        compactColumn = .sidebar
+                    }
                     TickleScheduler.deleteGroup(group, context: modelContext)
                     try? modelContext.save()
                 }
@@ -143,15 +132,14 @@ struct GroupListView: View {
             }
     }
 
-    /// The iPad (regular-width) detail column. Shows the selected group, or a
-    /// placeholder prompting the user to pick one. The compact-width path uses
-    /// `.navigationDestination` instead and never renders this.
+    /// The same detail subtree survives native split-view collapse and expansion.
     @ViewBuilder
     private var detail: some View {
         if let selectedGroup {
             NavigationStack {
                 GroupDetailView(group: selectedGroup)
             }
+            .id(selectedGroup.id)
         } else {
             ContentUnavailableView(
                 String(localized: "warm.groups.detail.empty.title",
@@ -198,7 +186,7 @@ struct GroupListView: View {
                 warmth: warmth,
                 showPrompt: true,
                 contactsCount: group.contacts.count,
-                onTap: { selectedGroup = group }
+                onTap: { select(group) }
             )
             // Stable, locale-independent hook so UI tests can tap a specific
             // canonical row and assert it navigates (regression guard for the
@@ -216,7 +204,7 @@ struct GroupListView: View {
 
     private func userGroupRow(_ group: ContactGroup) -> some View {
         Button {
-            selectedGroup = group
+            select(group)
         } label: {
             HStack(spacing: 14) {
                 CustomGroupArtwork(styleID: group.cardStyleId)
@@ -251,6 +239,11 @@ struct GroupListView: View {
                 groupPendingDeletion = group
             }
         }
+    }
+
+    private func select(_ group: ContactGroup) {
+        selectedGroup = group
+        compactColumn = .detail
     }
 
     // MARK: - Sorting
@@ -324,6 +317,7 @@ struct GroupEditSheet: View {
     @Environment(\.dismiss) private var dismiss
     @Query(sort: \ContactGroup.name) private var allGroups: [ContactGroup]
 
+    @FocusState private var nameIsFocused: Bool
     @State private var name: String
     @State private var emoji: String
     @State private var cardStyleId: String
@@ -405,6 +399,10 @@ struct GroupEditSheet: View {
                             .foregroundStyle(.secondary)
                     } else {
                         TextField(String(localized: "groupEdit.placeholder.name"), text: $name)
+                            .accessibilityIdentifier("groupEdit.name")
+                            .focused($nameIsFocused)
+                            .submitLabel(.done)
+                            .onSubmit { nameIsFocused = false }
                         HStack {
                             if isDuplicate {
                                 Text(String(localized: "groupEdit.error.duplicate"))
@@ -430,6 +428,8 @@ struct GroupEditSheet: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button(String(localized: "common.cancel")) { dismiss() }
+                        .accessibilityLabel(Text(String(localized: "common.cancel")))
+                        .accessibilityIdentifier("groupEdit.cancel")
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(String(localized: "common.save")) { save() }
@@ -438,6 +438,7 @@ struct GroupEditSheet: View {
                 }
             }
         }
+        .adaptiveResizeTestHost()
     }
 
     private func save() {
