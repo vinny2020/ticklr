@@ -57,11 +57,12 @@ jobs:
         working-directory: ios
         run: |
           set -o pipefail
+          SIMULATOR_ID=$(bash ../scripts/ios/prepare-duo-simulator.sh)
           xcodebuild test \
             -project SIT.xcodeproj \
             -scheme Ticklr \
             -collect-test-diagnostics never \
-            -destination 'platform=iOS Simulator,OS=27.1,name=iPhone Duo' \
+            -destination "platform=iOS Simulator,id=$SIMULATOR_ID" \
             -only-testing:TicklrTests \
             -only-testing:TicklrUITests/BaselineLaunchUITests \
             -only-testing:TicklrUITests/AdaptiveStateUITests \
